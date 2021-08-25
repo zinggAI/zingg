@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+<parent>
+	<groupId>zingg</groupId>
+	<artifactId>parent</artifactId>
+	<version>0.3.0-SNAPSHOT</version>
+</parent>
+		<artifactId>core</artifactId>
+		<packaging>jar</packaging>
+<dependencies>
+<dependency>
+	<groupId>zingg</groupId>
+	<artifactId>client</artifactId>
+	<version>0.3.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+	<groupId>com.wcohen.ss</groupId>
+	<artifactId>secondstring</artifactId>
+	<version>2021</version>
+</dependency>
+</dependencies>
+</project>

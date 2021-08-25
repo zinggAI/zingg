@@ -1,0 +1,16 @@
+**/target/**
+*.swp
+*.swn
+*.swo
+debug/**
+diagnose.txt
+run.txt
+train.txt
+log/**
+license/zinggLicense
+client/src/test/resources/large.xlsx
+.idea/**
+**/*.iml
+/target/
+/zingg/*
+**/snow.json

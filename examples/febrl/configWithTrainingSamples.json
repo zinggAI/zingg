@@ -1,0 +1,126 @@
+{	
+	"trainingSamples" : [{
+		"name":"trainingPos", 
+		"format":"csv", 
+		"props": {
+			"location": "examples/febrl/training.csv",
+			"delimiter": ",",
+			"header":false,
+			"badRecordsPath":"/tmp/bad"					
+			},
+		"schema":  
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					
+					 {\"name\" : \"z_cluster\",\"type\" : \"string\",\"nullable\" : false, \"metadata\" : {}}, 
+					{\"name\":\"z_ismatch\",\"type\":\"integer\",\"nullable\":true,\"metadata\" : {}},
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false,\"metadata\" : {}}, 
+					{\"name\":\"fname\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}},
+					{\"name\":\"lname\",\"type\":\"string\",\"nullable\":true,\"metadata\" : {}},
+					{\"name\":\"stNo\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}}, 
+					{\"name\":\"add1\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}},
+					{\"name\":\"add2\",\"type\":\"string\",\"nullable\":true,\"metadata\" : {}},
+					{\"name\":\"city\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}}, 
+					{\"name\":\"state\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}},
+					{\"name\":\"dob\",\"type\":\"string\",\"nullable\":true,\"metadata\" : {}},
+					{\"name\":\"ssn\",\"type\":\"string\",\"nullable\":true,\"metadata\" : {}}
+					
+				]
+				}"
+				
+		}],
+	"fieldDefinition":[
+		{
+			"fieldName" : "fname",
+			"matchType" : "fuzzy",
+			"fields" : "fname",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "lname",
+			"matchType" : "fuzzy",
+			"fields" : "lname",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "stNo",
+			"matchType": "fuzzy",
+			"fields" : "stNo",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "add1",
+			"matchType": "fuzzy",
+			"fields" : "add1",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "add2",
+			"matchType": "fuzzy",
+			"fields" : "add2",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "city",
+			"matchType": "fuzzy",
+			"fields" : "city",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "state",
+			"matchType": "fuzzy",
+			"fields" : "state",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "dob",
+			"matchType": "fuzzy",
+			"fields" : "dob",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "ssn",
+			"matchType": "fuzzy",
+			"fields" : "ssn",
+			"dataType": "\"string\"" 
+		}
+		],
+		"output" : [{
+			"name":"output", 
+			"format":"csv", 
+			"props": {
+				"location": "/tmp/zinggOutput",
+				"delimiter": ",",
+				"header":false
+			}
+		}],
+		"data" : [{
+			"name":"test", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/febrl/test.csv",
+				"delimiter": ",",
+				"header":false					
+			},
+			"schema": 
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
+					{\"name\":\"fname\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"lname\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"stNo\", \"type\":\"string\", \"nullable\":true}, 
+					{\"name\":\"add1\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"add2\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"city\", \"type\":\"string\", \"nullable\":true}, 
+					{\"name\":\"state\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"dob\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"ssn\",\"type\":\"string\",\"nullable\":true}
+				]
+			}"
+		}],
+		"labelDataSampleSize" : 0.5,
+		"numPartitions":4,
+		"modelId": 100,
+		"zinggDir": "models"
+
+}

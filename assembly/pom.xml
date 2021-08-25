@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+<parent>
+	<groupId>zingg</groupId>
+	<artifactId>parent</artifactId>
+	<version>0.3.0-SNAPSHOT</version>
+</parent>
+	<artifactId>zingg</artifactId>
+	<packaging>jar</packaging>
+<dependencies>
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>core</artifactId>
+			<version>0.3.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>client</artifactId>
+			<version>0.3.0-SNAPSHOT</version>
+		</dependency>
+</dependencies>
+	<build>
+			<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>${shade.plugin.version}</version>
+				<configuration>
+<!--					<transformers>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+							<resource>reference.conf</resource>
+						</transformer>
+					</transformers>
+    -->  <filters>
+         <filter>
+            <artifact>*:*</artifact>
+               <excludes>
+                  <exclude>META-INF/*.SF</exclude>
+                  <exclude>META-INF/*.DSA</exclude>
+                  <exclude>META-INF/*.RSA</exclude>
+                  <exclude>DUMMY.SF</exclude>
+                  <exclude>DUMMY.DSA</exclude>
+                  <exclude>**/*.RSA</exclude>
+               </excludes>
+            </filter>
+	   <filter>
+	 	<artifact>zingg:client</artifact>
+	  </filter>
+	   <filter>
+	 	<artifact>zingg:core</artifact>
+	  </filter>
+	
+         </filters>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+        			<version>2.4.1</version>
+        			<configuration>
+          				<descriptors>
+            					<descriptor>${project.basedir}/src/assembly/dist.xml</descriptor>
+          				</descriptors>
+        			</configuration>
+				<executions>
+          <execution>
+            <id>make-assembly</id> <!-- this is used for inheritance merges -->
+            <phase>package</phase> <!-- bind to the packaging phase -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,47 @@
+21/07/30 22:24:26 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+21/07/30 22:24:27 INFO Client: 
+21/07/30 22:24:27 INFO Client: ********************************************************
+21/07/30 22:24:27 INFO Client: *                    Zingg AI                           *
+21/07/30 22:24:27 INFO Client: *               (C) 2021 Zingg.AI                       *
+21/07/30 22:24:27 INFO Client: ********************************************************
+21/07/30 22:24:27 INFO Client: 
+21/07/30 22:24:27 INFO Client: using: Zingg v0.3
+21/07/30 22:24:27 INFO Client: 
+21/07/30 22:24:27 WARN Arguments: Config Argument is examples/febrl120k/config.json
+21/07/30 22:24:27 WARN Arguments: phase is match
+21/07/30 22:24:27 WARN SparkConf: Note that spark.local.dir will be overridden by the value set by the cluster manager (via SPARK_LOCAL_DIRS in mesos/standalone/kubernetes and LOCAL_DIRS in YARN).
+21/07/30 22:24:27 WARN SparkConf: Note that spark.local.dir will be overridden by the value set by the cluster manager (via SPARK_LOCAL_DIRS in mesos/standalone/kubernetes and LOCAL_DIRS in YARN).
+21/07/30 22:24:29 WARN SimpleFunctionRegistry: The function round replaced a previously registered function.
+21/07/30 22:24:29 WARN SimpleFunctionRegistry: The function round replaced a previously registered function.
+21/07/30 22:24:29 INFO ZinggBase: Start reading internal configurations and functions
+21/07/30 22:24:29 INFO ZinggBase: Finished reading internal configurations and functions
+21/07/30 22:24:29 WARN PipeUtil: Reading input csv
+21/07/30 22:25:19 INFO Matcher: Read 500000
+21/07/30 22:26:11 INFO Matcher: Blocked 500000
+21/07/30 22:26:51 INFO Instrumentation: [b087cb59] training finished
+21/07/30 22:26:51 INFO Instrumentation: [b087cb59] training finished
+21/07/30 22:26:51 INFO Instrumentation: [b087cb59] training finished
+21/07/30 22:26:51 INFO Instrumentation: [573d8f49] training finished
+21/07/30 22:26:51 INFO Instrumentation: [573d8f49] training finished
+21/07/30 22:26:51 INFO Instrumentation: [573d8f49] training finished
+21/07/30 22:26:52 INFO Instrumentation: [4fc09385] training finished
+21/07/30 22:26:52 INFO Instrumentation: [4fc09385] training finished
+21/07/30 22:26:52 INFO Instrumentation: [4fc09385] training finished
+21/07/30 22:26:52 INFO Instrumentation: [c5e62203] training finished
+21/07/30 22:26:52 INFO Instrumentation: [c5e62203] training finished
+21/07/30 22:26:52 INFO Instrumentation: [c5e62203] training finished
+21/07/30 22:26:52 INFO Model: threshold while predicting is 0.5
+21/07/30 22:26:53 INFO Instrumentation: [ab12841a] training finished
+21/07/30 22:26:53 INFO Instrumentation: [ab12841a] training finished
+21/07/30 22:26:53 INFO Instrumentation: [ab12841a] training finished
+21/07/30 22:26:53 WARN package: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+21/07/30 22:26:53 WARN package: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+21/07/30 22:48:04 WARN BLAS: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+21/07/30 22:48:05 WARN BLAS: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+21/07/31 03:21:52 WARN DAGScheduler: Broadcasting large task binary with size 1042.4 KiB
+21/07/31 03:21:52 WARN DAGScheduler: Broadcasting large task binary with size 1042.4 KiB
+21/07/31 03:22:50 WARN PipeUtil: Writing output Pipe [name=output, format=CSV, preprocessors=null, props={location=/tmp/zinggOutput, delimiter=,, header=true}, schema=null]
+21/07/31 03:22:50 WARN PipeUtil: Writing file
+21/07/31 03:24:57 WARN DAGScheduler: Broadcasting large task binary with size 1042.4 KiB
+21/07/31 03:24:57 WARN DAGScheduler: Broadcasting large task binary with size 1042.4 KiB
+21/07/31 03:26:09 WARN Client: Zingg processing has completed

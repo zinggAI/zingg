@@ -1,0 +1,103 @@
+21/07/28 02:06:55 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+21/07/28 02:06:55 INFO Client: 
+21/07/28 02:06:55 INFO Client: ********************************************************
+21/07/28 02:06:55 INFO Client: *                    Zingg AI                           *
+21/07/28 02:06:55 INFO Client: *               (C) 2021 Zingg.AI                       *
+21/07/28 02:06:55 INFO Client: ********************************************************
+21/07/28 02:06:55 INFO Client: 
+21/07/28 02:06:55 INFO Client: using: Zingg v0.3
+21/07/28 02:06:55 INFO Client: 
+21/07/28 02:06:56 WARN Arguments: Config Argument is examples/febrl120k/config.json
+21/07/28 02:06:57 WARN Arguments: phase is match
+21/07/28 02:06:57 WARN SparkConf: Note that spark.local.dir will be overridden by the value set by the cluster manager (via SPARK_LOCAL_DIRS in mesos/standalone/kubernetes and LOCAL_DIRS in YARN).
+21/07/28 02:06:57 WARN SparkConf: Note that spark.local.dir will be overridden by the value set by the cluster manager (via SPARK_LOCAL_DIRS in mesos/standalone/kubernetes and LOCAL_DIRS in YARN).
+21/07/28 02:07:04 WARN SimpleFunctionRegistry: The function round replaced a previously registered function.
+21/07/28 02:07:04 WARN SimpleFunctionRegistry: The function round replaced a previously registered function.
+21/07/28 02:07:04 INFO ZinggBase: Start reading internal configurations and functions
+21/07/28 02:07:04 INFO ZinggBase: Finished reading internal configurations and functions
+21/07/28 02:07:04 WARN PipeUtil: Reading input csv
+21/07/28 02:07:23 INFO Matcher: Read 500000
+21/07/28 02:07:23 INFO DSUtil: All equals done
+21/07/28 02:07:25 INFO Instrumentation: [4d20ef0d] training finished
+21/07/28 02:07:25 INFO Instrumentation: [4d20ef0d] training finished
+21/07/28 02:07:25 INFO Instrumentation: [4d20ef0d] training finished
+21/07/28 02:07:25 INFO Instrumentation: [5e6ec5c3] training finished
+21/07/28 02:07:25 INFO Instrumentation: [5e6ec5c3] training finished
+21/07/28 02:07:25 INFO Instrumentation: [5e6ec5c3] training finished
+21/07/28 02:07:27 INFO Instrumentation: [002d3db3] training finished
+21/07/28 02:07:27 INFO Instrumentation: [002d3db3] training finished
+21/07/28 02:07:27 INFO Instrumentation: [002d3db3] training finished
+21/07/28 02:07:27 INFO Instrumentation: [d30d6ac0] training finished
+21/07/28 02:07:27 INFO Instrumentation: [d30d6ac0] training finished
+21/07/28 02:07:27 INFO Instrumentation: [d30d6ac0] training finished
+21/07/28 02:07:27 INFO Model: threshold while predicting is 0.5
+21/07/28 02:07:28 WARN package: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+21/07/28 02:07:28 WARN package: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+21/07/28 02:07:28 INFO Instrumentation: [2ef4f97a] training finished
+21/07/28 02:07:28 INFO Instrumentation: [2ef4f97a] training finished
+21/07/28 02:07:28 INFO Instrumentation: [2ef4f97a] training finished
+21/07/28 02:07:29 WARN CacheManager: Asked to cache already cached data.
+21/07/28 02:07:29 WARN CacheManager: Asked to cache already cached data.
+21/07/28 02:10:07 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:10:07 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:10:13 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:10:13 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:10:27 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:10:27 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:10:36 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:10:36 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:10:43 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:10:43 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:10:48 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:10:48 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:00 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:00 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:11 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:11 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:16 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:16 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:21 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:21 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:32 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:32 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:43 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:43 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:43 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:11:43 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:26:49 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:26:49 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:26:49 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:26:49 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:27:14 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:27:14 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:27:15 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:27:15 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:06 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:06 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:07 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:07 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:08 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:08 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:09 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:09 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:43 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:43 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:44 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:44 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:53 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:53 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:53 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:28:53 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:29:50 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:29:50 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:29:51 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:29:51 WARN RowBasedKeyValueBatch: Calling spill() on RowBasedKeyValueBatch. Will not spill but return 0.
+21/07/28 02:45:44 WARN BLAS: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+21/07/28 02:45:44 WARN BLAS: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+21/07/28 03:41:04 WARN HeartbeatReceiver: Removing executor driver with no recent heartbeats: 267720 ms exceeds timeout 120000 ms
+21/07/28 03:41:04 WARN HeartbeatReceiver: Removing executor driver with no recent heartbeats: 267720 ms exceeds timeout 120000 ms
+21/07/28 03:41:12 WARN SparkContext: Killing executors is not supported by current scheduler.
+21/07/28 03:41:12 WARN SparkContext: Killing executors is not supported by current scheduler.
+21/07/28 05:01:13 WARN PipeUtil: Writing output Pipe [name=output, format=CSV, preprocessors=null, props={location=/tmp/zinggOutput, delimiter=,, header=true}, schema=null]
+21/07/28 05:01:13 WARN PipeUtil: Writing file
+21/07/28 05:02:14 WARN Client: Zingg processing has completed

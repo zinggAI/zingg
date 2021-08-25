@@ -1,0 +1,83 @@
+[
+{
+	"name" :"identityString",
+	"returnType" : "java.lang.String",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "return a.toLowerCase();"
+},
+{
+	"name" :"isNull",
+	"returnType" : "java.lang.Integer",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "if (a == null || a.trim().length() == 0) {return 0;} else {return 1;}"
+},
+{
+	"name" :"first3Characters",
+	"returnType" : "java.lang.String",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "if (a == null || a.trim().length() <= 3) {
+		return a; 
+		}
+		else {
+			String sub = a.trim().substring(0, 3);
+			return sub;
+		}"
+},
+{
+	"name" :"first5Characters",
+	"returnType" : "java.lang.String",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "if (a == null || a.trim().length() <= 5) {
+		return a; 
+		}
+		else {
+			String sub = a.trim().substring(0, 5);
+			return sub;
+		}"
+},
+{
+	"name" :"round",
+	"returnType" : "java.lang.Integer",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.Float"],
+	"block" : "return Math.round(a);"
+	
+},
+{
+	"name" :"first2Characters",
+	"returnType" : "java.lang.String",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "if (a == null || a.trim().length() <= 2) {
+		return a; 
+		}
+		else {
+			String sub = a.trim().substring(0, 2);
+			return sub;
+		}"
+},
+{
+	"name" :"first4Characters",
+	"returnType" : "java.lang.String",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "if (a == null || a.trim().length() <= 4) {
+		return a; 
+		}
+		else {
+			String sub = a.trim().substring(0, 4);
+			return sub;
+		}"
+},
+{
+	"name" :"identityInteger",
+	"returnType" : "java.lang.Integer",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.Integer"],
+	"block" : "return a;"
+}
+]
