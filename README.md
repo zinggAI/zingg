@@ -13,13 +13,11 @@
 
 ## Why?
 
-Because analytics engineers and data scientists have better stuff to do than prepare data all the time!!
-
 Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together. And as the number of records increase, the complexity of matching them with each other increases too. This hurts customer analytics - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is unlean. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. No warehouse can live upto its promise if the dimension tables have duplicates. It is the same story with suppliers and other entities. 
 
-Through DataOps, we have come a long way with established patterns for E and L in ETL for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of work.
+Through DataOps, we have come a long way with established patterns for E and L in ETL for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like [DBT](https://www.getdbt.com) are actively and successfuly addressing this. What is missing is a quick and scalable way to build single source of truth. 
 
-With Zingg, we promise to change that!
+With Zingg, the analytics engineer can unify data at scale!
 
 ![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
 
@@ -32,7 +30,7 @@ Zingg integrates different records of an entity like customer, supplier, product
 - Reference Data Management
 - Data enrichment from external sources
 
-Zingg is a no-code way for BI engineers, data analysts and scientists to quickly intergate data silos and build unified views.
+Zingg is a no-code way for analytics engineers to quickly intergate data silos and build unified views.
 
 ## Key Zingg Concepts
 
@@ -58,8 +56,6 @@ To build these models, training data is needed. Zingg comes with an interactive 
 ## Installation
 
 Zingg runs on [Spark](https://spark.apache.org) and can be used on all major Spark distributions. Zingg can run on all major Linux flavours.
-
-The follwing steps assume that Zingg is being installed on a Ubuntu environment at /home/ubuntu. For other Linux flavours, please replace /home/ubuntu with location of your home folder.
 
 ### Prerequisites 
 A) Java JDK - version "1.8.0_131" 
@@ -154,7 +150,7 @@ For example for the csv under examples/febrl ![febrl](assets/febrl.gif)
     "props" : {
       "delimiter" : ",",
       "header" : "true",
-      "location" : "/home/ubuntu/zingg/examples/febrl/test.csv"
+      "location" : "examples/febrl/test.csv"
     },
     "schema" : "{
       \"type\":\"struct\",
@@ -323,7 +319,7 @@ Zingg comes with pretrained models for the Febrl dataset under  the models folde
   }
 }
 ````
-## Acknowledgements
+  ## Acknowledgements
 
 Zingg would have not have been possible without the excellent work below:
 - [Apache Spark](https://spark.apache.org)
