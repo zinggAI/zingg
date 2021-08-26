@@ -1,8 +1,8 @@
+## Why?
 
+Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together. And as the number of records increase, the complexity of matching them with each other increases too. This hurts customer analytics - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is unlean. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. No warehouse can live upto its promise if the dimension tables have duplicates. It is the same story with suppliers and other entities. 
 
-Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together. And as the number of records increase, the complexity of matching them with each other increases too. This hurts customer analytics - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is unlean. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. It is the same story with suppliers and other entities. 
-
-In ETL, while building data warehouses and data lakes, we have come a long way with established patterns for E and L, but the T - getting data ready for analytics still needs a lot of work.
+Through DataOps, we have come a long way with established patterns for E and L in ETL for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of work.
 
 With Zingg, we promise to change that!
 
@@ -17,7 +17,7 @@ Zingg integrates different records of an entity like customer, supplier, product
 - Reference Data Management
 - Data enrichment from external sources
 
-Zingg runs on [Spark](https://spark.apache.org) and can be used on all major Spark distributions. Zingg can run on all major Linux flavours.
+Zingg is a no-code way for BI engineers, data analysts and scientists to quickly intergate data silos and build unified views.
 
 ## Key Zingg Concepts
 
@@ -42,12 +42,12 @@ To build these models, training data is needed. Zingg comes with an interactive 
 
 ## Zingg Installation
 
+Zingg runs on [Spark](https://spark.apache.org) and can be used on all major Spark distributions. Zingg can run on all major Linux flavours.
+
 The follwing steps assume that Zingg is being installed on a Ubuntu environment at /home/ubuntu. For other Linux flavours, please replace /home/ubuntu with location of your home folder.
 
 ### Prerequisites 
-A) Java JDK java version "1.8.0_131" 
-Java(TM) SE Runtime Environment (build 1.8.0_131-b11) 
-Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode) 
+A) Java JDK - version "1.8.0_131" 
 
 B) Apache Spark - version spark-3.0.1-bin-hadoop2.7 
 
@@ -59,11 +59,11 @@ B) Apache Spark - Download the specified version from spark.apache.org and unzip
 
 Please add the following entries to ~/.bash_aliases 
 
-export JAVA_HOME=path to jdk-11.0.9
+>export JAVA_HOME=path to jdk-11.0.9
 
-export SPARK_HOME=path to spark-3.0.1-bin-hadoop2.7
+>export SPARK_HOME=path to spark-3.0.1-bin-hadoop2.7
 
-export SPARK_MASTER=local[*]
+>export SPARK_MASTER=local[*]
 
 C) Correct entry of host under /etc/hosts 
 
@@ -73,9 +73,9 @@ Run ifconfig to find the ip of the machine and make sure it is added to the /etc
 If you have a ready Spark cluster, you can run Zingg by configuring the following environment on your driver machine
 export JAVA_HOME=path to jdk-11.0.9
 
-export SPARK_HOME=path to spark-3.0.1-bin-hadoop2.7
+>export SPARK_HOME=path to spark-3.0.1-bin-hadoop2.7
 
-export SPARK_MASTER=spark://master-host:master-port
+>export SPARK_MASTER=spark://master-host:master-port
 
 
 ### Installation Steps 
