@@ -2,9 +2,18 @@
 - [Why?](#why?)
 - [Key Zingg Concepts](#key-zingg-concepts)
 - [Installation](#installation)
-
+- [Configuration](#cofiguration)
+- [Zingg phases](#zingg-phases)
+- [Hardware Sizing](#hardware-sizing)
+- [Pretrained models](#pretrained-models)
+- [Running on Amazon EMR](#running-on-amazon-elastic-map-reduce)
+- [Running on Databricks](#running-on-databricks)
+- [Acknowledgements](#acknowledgements)
+- [License](#license)
 
 ## Why?
+
+Because analytics engineers and data scientists have better stuff to do than prepare data all the time!!
 
 Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together. And as the number of records increase, the complexity of matching them with each other increases too. This hurts customer analytics - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is unlean. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. No warehouse can live upto its promise if the dimension tables have duplicates. It is the same story with suppliers and other entities. 
 
@@ -316,7 +325,7 @@ Zingg comes with pretrained models for the Febrl dataset under  the models folde
 ````
 ## Acknowledgements
 
-Zingg leverages 
+Zingg would have not have been possible without the excellent work below:
 - [Apache Spark](https://spark.apache.org)
 - [SecondString](http://secondstring.sourceforge.net/)
 - [Febrl](http://users.cecs.anu.edu.au/~Peter.Christen/Febrl/febrl-0.3/febrldoc-0.3/)
