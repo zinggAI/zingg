@@ -1,3 +1,9 @@
+# Contents
+- [Why?](#why?)
+- [Key Zingg Concepts](#key-zingg-concepts)
+- [Installation](#installation)
+
+
 ## Why?
 
 Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together. And as the number of records increase, the complexity of matching them with each other increases too. This hurts customer analytics - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is unlean. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. No warehouse can live upto its promise if the dimension tables have duplicates. It is the same story with suppliers and other entities. 
@@ -40,7 +46,7 @@ Similarity model helps Zingg to predict which records are similar to each other.
 
 To build these models, training data is needed. Zingg comes with an interactive learner to rapidly build training sets. 
 
-## Zingg Installation
+## Installation
 
 Zingg runs on [Spark](https://spark.apache.org) and can be used on all major Spark distributions. Zingg can run on all major Linux flavours.
 
@@ -118,7 +124,7 @@ The above will find duplicates in the examples/febl/test.csv file. You will see 
 
 Congratulations, Zingg has been installed! 
 
-## Zingg Configuration
+## Configuration
 
  Zingg comes with a command line script that invokes spark-submit. This script needs a json configuration file to define the input data and match types, location of training data, models and output. 
 
