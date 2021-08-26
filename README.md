@@ -1,4 +1,4 @@
-![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
+
 
 Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together. And as the number of records increase, the complexity of matching them with each other increases too. This hurts customer analytics - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is unlean. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. It is the same story with suppliers and other entities. 
 
@@ -6,7 +6,9 @@ In ETL, while building data warehouses and data lakes, we have come a long way w
 
 With Zingg, we promise to change that!
 
-Zingg is a data mastering tool to integrate different records of an entity like customer, supplier, product etc in same or disparate data sources. Zingg can be used in 
+![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
+
+Zingg integrates different records of an entity like customer, supplier, product etc in same or disparate data sources. Zingg can be used for
 
 - Master Data Management - building unified and trusted views of customers and suppliers across multiple systems
 - Large Scale Entity Resolution for fraud and compliance
@@ -14,9 +16,6 @@ Zingg is a data mastering tool to integrate different records of an entity like 
 - Integrating data silos during mergers and acquisitions
 - Reference Data Management
 - Data enrichment from external sources
-- Combining unstructured data with structured data *Coming soon*
-- Supplies Classification into UNSPSC *Coming soon*
-- Schema Mapping of lots of columns to desired target schema *Coming soon*
 
 Zingg runs on [Spark](https://spark.apache.org) and can be used on all major Spark distributions. Zingg can run on all major Linux flavours.
 
@@ -60,9 +59,9 @@ B) Apache Spark - Download the specified version from spark.apache.org and unzip
 
 Please add the following entries to ~/.bash_aliases 
 
-export JAVA_HOME=<path to jdk-11.0.9> 
+export JAVA_HOME=path to jdk-11.0.9
 
-export SPARK_HOME=<path to spark-3.0.1-bin-hadoop2.7>
+export SPARK_HOME=path to spark-3.0.1-bin-hadoop2.7
 
 export SPARK_MASTER=local[*]
 
@@ -72,9 +71,9 @@ Run ifconfig to find the ip of the machine and make sure it is added to the /etc
 
 #### Prerequisites for running Zingg on a Spark cluster
 If you have a ready Spark cluster, you can run Zingg by configuring the following environment on your driver machine
-export JAVA_HOME=<path to jdk-11.0.9> 
+export JAVA_HOME=path to jdk-11.0.9
 
-export SPARK_HOME=<path to spark-3.0.1-bin-hadoop2.7>
+export SPARK_HOME=path to spark-3.0.1-bin-hadoop2.7
 
 export SPARK_MASTER=spark://master-host:master-port
 
@@ -91,7 +90,7 @@ Move the above folder to zingg.
 
 >mv zingg-0.3.0-SNAPSHOT-bin ~/zingg 
 
-export ZINGG_HOME=<path to zingg>
+export ZINGG_HOME=path to zingg
 
 export PATH=$PATH:$JAVA_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:ZINGG_HOME/scripts 
  
