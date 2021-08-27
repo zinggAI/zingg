@@ -13,11 +13,11 @@
 
 ## Why?
 
-Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together. And as the number of records increase, the complexity of matching them with each other increases too. This hurts customer analytics - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is unlean. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. No warehouse can live upto its promise if the dimension tables have duplicates. It is the same story with suppliers and other entities. 
+Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together, especially with growing data volumes. This hurts customer analytics - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is unlean. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. No warehouse can live upto its promise if the dimension tables have duplicates. It is the same story with suppliers and other entities. 
 
-Through DataOps, we have come a long way with established patterns for E and L in ETL for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like [DBT](https://www.getdbt.com) are actively and successfuly addressing this. What is missing is a quick and scalable way to build single source of truth. 
+Through DataOps, we have come a long way with established patterns for E and L in ETL for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like [DBT](https://www.getdbt.com) are actively and successfuly addressing this. What is missing is a quick and scalable way to build the single source of truth. 
 
-With Zingg, the analytics engineer can unify data at scale!
+With Zingg, the analytics engineer can quickly intergate data silos and build unified views at scale!
 
 ![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
 
@@ -30,8 +30,6 @@ Zingg integrates different records of an entity like customer, supplier, product
 - Reference Data Management
 - Data enrichment from external sources
 
-Zingg is a no-code way for analytics engineers to quickly intergate data silos and build unified views.
-
 ## Key Zingg Concepts
 
 For data mastering, Zingg learns 2 models from the training data. 
@@ -42,12 +40,12 @@ One fundamental problem will scaling data mastering is that the number of compar
 
 ![Data Mastering At Scale](/assets/fuzzymatchingcomparisons.jpg)
 
-Zingg learns a clustering model to index near similar records together to avoid this problem. Typical Zingg comparisons are 0.05-1% of the possible problem space.
+Zingg learns a clustering/blocking model to index near similar records together to avoid this problem. Typical Zingg comparisons are 0.05-1% of the possible problem space.
 
 
 2. Similarity Model 
 
-Similarity model helps Zingg to predict which records are similar to each other. Similarity is run only on records within the same block to scale the problem to larger datasets. The similarity model is a classifier which predicts similarity of records wchich are not exactly same, but could belong together.
+The similarity model helps Zingg to predict which record pairs match. Similarity is run only on records within the same block to scale the problem to larger datasets. The similarity model is a classifier which predicts similarity of records wchich are not exactly same, but could belong together.
 
 ![Fuzzy matching comparisons](/assets/dataMatching.jpg) 
 
@@ -70,7 +68,7 @@ B) Apache Spark - Download the specified version from spark.apache.org and unzip
 
 Please add the following entries to ~/.bash_aliases 
 
->export JAVA_HOME=path to jdk-11.0.9
+>export JAVA_HOME=path to jdk
 
 >export SPARK_HOME=path to spark-3.0.1-bin-hadoop2.7
 
@@ -82,7 +80,7 @@ Run ifconfig to find the ip of the machine and make sure it is added to the /etc
 
 #### Prerequisites for running Zingg on a Spark cluster
 If you have a ready Spark cluster, you can run Zingg by configuring the following environment on your driver machine
-export JAVA_HOME=path to jdk-11.0.9
+>export JAVA_HOME=path to jdk
 
 >export SPARK_HOME=path to spark-3.0.1-bin-hadoop2.7
 
@@ -101,9 +99,9 @@ Move the above folder to zingg.
 
 >mv zingg-0.3.0-SNAPSHOT-bin ~/zingg 
 
-export ZINGG_HOME=path to zingg
+>export ZINGG_HOME=path to zingg
 
-export PATH=$PATH:$JAVA_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:ZINGG_HOME/scripts 
+>export PATH=$PATH:$JAVA_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:ZINGG_HOME/scripts 
  
 Run bash and print the aliases to ensure that they are set correctly. 
 
@@ -141,7 +139,7 @@ Here are the json variables which you will need to define to work with your data
 
 Array of input data. If the data is self describing, for eg avro or parquet, there is no need to define the schema. Else field definitions with name and types need to be provided. Different formats are csv, jdbc, parquet and avro.
 
-For example for the csv under examples/febrl ![febrl](assets/febrl.gif)
+For example for the csv under [examples/febrl/test.csv](examples/febrl/test.csv) ![febrl](assets/febrl.gif)
 
 ```json
  "data" : [ {
@@ -173,11 +171,11 @@ For example for the csv under examples/febrl ![febrl](assets/febrl.gif)
 
 ### zinggDir
 
-Location where trained models will be persisted. Defaults to /tmp/zingg
+Location where trained models will be saved. Defaults to /tmp/zingg
 
 ### modelId 
 
-Identifier for the model. You can train multiple models which get saved under zinggDir/modelId
+Identifier for the model. You can train multiple models - say one for customers matching names, age and other personal details and one for households matching addresses. Each model gets saved under zinggDir/modelId
 
 ### fieldDefinition
 
@@ -207,16 +205,16 @@ Name says it :-) Appears in the output but no computation is done on these. Help
   ]
 ````
 
-Here, fields id from input are output in the final results.   
+In the above example, field id from input is present in the output but not used for comparisons.   
 
 ### numPartitions
 Number of Spark partitions over which the input data is distributed. Keep it equal to the 20-30 times the number of cores. This is an important configuration for performance.
 
 ### labelDataSampleSize
-Fraction of the data to be used for training the models. Adjust it between 0.0001 and 0.1 to keep the sample size small enough so that it finds enough edge cases fast. If the size is bigger, the findTrainingData job will spend more time combing through samples. If the size is too small, Zingg may not find the right edge cases.
+Fraction of the data to be used for training the models. Adjust it between 0.0001 and 0.1 to keep the sample size small enough so that it finds enough edge cases fast. If the size is bigger, the findTrainingData job will spend more time combing through samples. If the size is too small, Zingg may not find the right edge cases. 
 
 ## Zingg Phases
-Zingg runs Spark jobs for building training data(findTrainingData and label), building actual models(train) and applying these models on the data to get mastered entities(match). If you need to match records in one dataset against other, you can run the link phase. The phase to be run is passed as a command line argument. Here are some more details about the phases and how they can be invoked.
+Zingg runs Spark jobs for building training data(findTrainingData and label), building actual models(train) and applying these models on the data to get mastered entities(match). If you need to match records in one dataset against other, you can run the link phase. The phase to be run is passed as a command line argument. Here are more details about the phases and how they can be invoked.
 
 ### findTrainingData - finding pairs of records which could be similar to train Zingg
 Zingg builds models to predict similarity. Training data is needed to build these models. The findTrainingData phase prompts Zingg to search for edge cases in the data. During findTrainingData, Zingg combs through the data samples and judiciously selects limited pairs for the user to mark. Zingg is very frugal about the training so that user effort is minimized and models can be built and deployed quickly.
@@ -265,11 +263,11 @@ Zingg has been built to scale. Performance is dependent on
 
 Here are some performance numbers you can use to determine the appropriate hardware for your data.
 - 120k records of examples/febrl120k/test.csv take 5 minutes to run on a 4 core, 10 GB RAM local Spark cluster.
-<TODO> - Add 0.5 and 1 m specs here
+- TODO: Add 0.5 and 1 m numbers here
 - 9m records with 3 fields - first name, last name, email take 45 minutes to run on AWS m5.24xlarge instance with 96 cores, 384 gb RAM 
 
 ## Pretrained models
-Zingg comes with pretrained models for the Febrl dataset under  the models folder.
+Zingg comes with pretrained models for the Febrl dataset under the models folder.
 
 
 ## Running on AWS Elastic Map Reduce
