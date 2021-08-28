@@ -26,6 +26,7 @@ Zingg integrates different records of an entity like customer, supplier, product
 - Master Data Management - building unified and trusted views of customers and suppliers across multiple systems
 - Large Scale Entity Resolution for fraud and compliance
 - Deduplication and data quality
+- Identoty Resolution 
 - Integrating data silos during mergers and acquisitions
 - Reference Data Management
 - Data enrichment from external sources

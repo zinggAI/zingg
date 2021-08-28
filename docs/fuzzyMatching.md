@@ -9,32 +9,15 @@ Real-world data is far from perfect. Organizations often struggle with a plethor
 
 Here are two variant customer specifications.
 
-| **First Name** | **Middle Name** | **Last Name** | **Phone** | **Address 1** | **Address 2** | **City** | **State** | **Country** |
-| :-----------: | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: |
-Mr. Adam R. Smith | 1-777-888-9999 | 112 Bell Street | Near Church Tower | Oakland | California | US | 
-Dr. Raksha Ranganathan |+91-8383838383| 21, Brigade Road| Opposite McD | Bengaluru | Karnataka | India
+| First Name | Middle Name | Last Name | Phone | Address 1 | Address 2 | City | State | Country |
+| ------------- |:-------------:| -----:| ------------- |:-------------:| -----:|-----:|-----:|-----:|
+| Mr. Adam | R. | Smith | 1-777-888-9999 | 112 Bell Street | Near Church Tower | Oakland | California | US | 
+| Dr. Raksha | | Ranganathan |+91-8383838383| 21, Brigade Road| Opposite McD | Bengaluru | Karnataka | India |
 
 |**Name**|**Age**|**Address**|**State**|**Phone**|
--------------- -------- -------- --------
-Smith, Adam
-
-33
-
-112, Bell Street, Near Church Tower, Oakland
-
-CA
-
-+1-777-888-9999
-
-PhD. Raksha Rangnathan
-
-40
-
-21, Brigade Road, Opp. McDonalds, Bangalore
-
-Karnataka, India
-
-918383838383
+--------|------|--------|--------|--------|
+|Smith, Adam | 33 | 112, Bell Street, Near Church Tower, Oakland | CA | +1-777-888-9999|
+| PhD. Raksha Rangnathan | 40 | 21, Brigade Road, Opp. McDonalds, Bangalore | Karnataka, India | 918383838383
 
 In the above records, names are either divided into first, middle, last name, initials, or are combined. Names are sometimes clubbed with salutations, titles are different, middle names are missing, phone numbers are written differently, addresses are split and combined, the old and the new name of a city have been recorded for the same address, abbreviations are used, punctuations vary, and some fields are omitted.
 
@@ -43,26 +26,13 @@ As you read these records, you would have understood that both the data sources 
 For understanding the data, computers need to identify records that refer to the same real-world entity\*. This process to recognize who is who — irrespective of the myriad representations — is Fuzzy Matching or Record Matching. Fuzzy matching is also known as entity resolution, merge purge and data matching. When used in the context of a person, fuzzy matching is referred to as identity resolution. When a single source of data is involved and the purpose is to remove the duplicate entries, fuzzy data matching is termed as record deduplication or deduplication. 
 
 A corporate service provider can use fuzzy matching to resolve organization names despite the different representations, misspellings, abbreviations, and typographical errors. 
-
-Susheel Enterprises
-
-Sushil Enterprises
-
-Joylukkas
-
-Joylukas
-
-McDonald’s
-
-McD
-
-Walls Limited Liability Partnership
-
-Walls LLP
-
-Google India Pvt Ltd
-
-Google India
+| | |
+--- | --- |
+Susheel Enterprises | Sushil Enterprises
+Joylukkas | Joylukkas
+McDonald’s | McD
+Walls Limited Liability Partnership | Walls LLP
+Google India Pvt Ltd | Google India
 
 Udhyam Foundation
 
