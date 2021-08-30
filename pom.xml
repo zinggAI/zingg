@@ -97,6 +97,16 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+                        <groupId>net.snowflake</groupId>
+                        <artifactId>spark-snowflake_2.12</artifactId>
+                        <version>2.9.0-spark_3.1</version>
+                </dependency>
+                <dependency>
+                        <groupId>net.snowflake</groupId>
+                        <artifactId>snowflake-jdbc</artifactId>
+                        <version>3.13.5</version>
+                </dependency>
+		<dependency>
 			<!-- https://mvnrepository.com/artifact/com.datastax.spark/spark-cassandra-connector -->
 			<groupId>com.datastax.spark</groupId>
 			<artifactId>spark-cassandra-connector_2.12</artifactId>

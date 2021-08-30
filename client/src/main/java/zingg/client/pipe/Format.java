@@ -18,7 +18,8 @@ public enum Format implements Serializable{
 	XLS("com.crealytics.spark.excel"),
 	XLSX("com.crealytics.spark.excel"),
 	PARQUET("PARQUET"),
-	AVRO("avro");
+	AVRO("avro"),
+	SNOWFLAKE("net.snowflake.spark.snowflake");
 	
 	String type;
 	static Map<String, Format> map;
@@ -43,8 +44,7 @@ public enum Format implements Serializable{
 	public String type() {
 		return type;
 	}
-	
-	
+
 	
 	
 	
