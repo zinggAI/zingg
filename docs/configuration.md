@@ -41,6 +41,9 @@ For example for the csv under [examples/febrl/test.csv](examples/febrl/test.csv)
   }
 ```
 
+### output
+Definitions are same as [data](#data) but reflect where you want the Zingg output to get saved
+
 ### zinggDir
 
 Location where trained models will be saved. Defaults to /tmp/zingg

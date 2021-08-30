@@ -8,6 +8,7 @@
 - [Pretrained models](#pretrained-models)
 - [Running on Amazon EMR](docs/aws.md)
 - [Running on Databricks](docs/databricks.md)
+- [Connectors](docs/pipes.md)
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
 
@@ -15,7 +16,7 @@
 
 Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together, especially with growing data volumes. This hurts customer analytics - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is unlean. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. No warehouse can live upto its promise if the dimension tables have duplicates. 
 
-Through DataOps, we have come a long way with established patterns for E and L in ETL for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like [DBT](https://www.getdbt.com) are actively and successfuly addressing this. What is missing is a quick and scalable way to build the single source of truth of core business entities pre and post EL. 
+With a modern data stack and DataOps, we have established patterns for E and L in ELT for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like [DBT](https://www.getdbt.com) are actively and successfuly addressing this. What is missing is a quick and scalable way to build the single source of truth of core business entities post Extraction and pre or post Loading. 
 
 With Zingg, the analytics engineer and the data scientist can quickly intergate data silos and build unified views at scale! For customers, suppliers, organizations , addresses and other entities.
 
@@ -54,9 +55,14 @@ To build these models, training data is needed. Zingg comes with an interactive 
 
 ![Shows records and asks user to mark yes, no, cant say on the cli.](assets/label2.gif) 
 
-## Pretrained models
-Zingg comes with pretrained models for the Febrl dataset under the models folder.
+## Connectors
 
+Zingg connects, reads and writes to most on-premise and cloud data sources. Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBMSes and any other Spark supported data sources. Zingg also works with all major file formats like Parquet, Avro, JSON, XLSX, CSV, TSV etc. Read more about the Zingg [pipe][docs/pipe.md) interface].  
+
+
+## Pretrained models
+
+Zingg comes with pretrained models for the Febrl dataset under the models folder.
 
 ## Acknowledgements
 
@@ -66,5 +72,6 @@ Zingg would have not have been possible without the excellent work below:
 - [Febrl](http://users.cecs.anu.edu.au/~Peter.Christen/Febrl/febrl-0.3/febrldoc-0.3/)
 
 ## License
+
 Zingg is licensed under [AGPL v3.0](https://www.gnu.org/licenses/agpl-3.0.en.html) - which means you have the freedom to distribute copies of free software (and charge for them if you wish), that you receive source code or can get it if you want it, that you can change the software or use pieces of it in new free programs, and that you know you can do these things.
 
