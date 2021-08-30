@@ -62,7 +62,7 @@ To build these models, training data is needed. Zingg comes with an interactive 
 Zingg connects, reads and writes to most on-premise and cloud data sources. Zingg also runs on any private or cloud based Spark service. 
 
 ![zinggConnectors](assets/zinggOSS.png)
-Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBMSes and any other Spark supported data sources. Zingg also works with all major file formats like Parquet, Avro, JSON, XLSX, CSV, TSV etc. Read more about the Zingg [pipe](docs/pipe.md) interface.  
+Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBMSes and any other Spark supported data sources. Zingg also works with all major file formats like Parquet, Avro, JSON, XLSX, CSV, TSV etc. Read more about the Zingg [pipe](docs/pipes.md) interface.  
 
 
 ## Pretrained models
