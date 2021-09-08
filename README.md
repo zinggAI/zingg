@@ -49,10 +49,9 @@ One fundamental problem will scaling data mastering is that the number of compar
 
 Zingg learns a clustering/blocking model to index near similar records together to avoid this problem. Typical Zingg comparisons are 0.05-1% of the possible problem space.
 
-
 2. Similarity Model 
 
-The similarity model helps Zingg to predict which record pairs match. Similarity is run only on records within the same block to scale the problem to larger datasets. The similarity model is a classifier which predicts similarity of records wchich are not exactly same, but could belong together.
+The similarity model helps Zingg to predict which record pairs match. Similarity is run only on records within the same block to scale the problem to larger datasets. The similarity model is a classifier which predicts similarity of records which are not exactly same, but could belong together.
 
 ![Fuzzy matching comparisons](/assets/dataMatching.jpg) 
 
