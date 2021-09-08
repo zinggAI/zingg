@@ -18,13 +18,15 @@ Real world data contains multiple records belonging to the same customer. These 
 
 ![data silos](assets/dataSilos.png)
 
+
 With a modern data stack and DataOps, we have established patterns for E and L in ELT for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like [DBT](https://www.getdbt.com) are actively and successfuly addressing this. What is missing is a quick and scalable way to build the single source of truth of core business entities post Extraction and pre or post Loading. 
 
 With Zingg, the analytics engineer and the data scientist can quickly intergate data silos and build unified views at scale! For customers, suppliers, organizations , addresses and other entities.
 
 ![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
 
-  Zingg integrates different records of an entity like customer, supplier, product etc in same or disparate data sources. Zingg can be used for
+
+Zingg integrates different records of an entity like customer, supplier, product etc in same or disparate data sources. Zingg can be used for
 
 - Master Data Management - building unified and trusted views of customers and suppliers across multiple systems
 - Large Scale Entity Resolution for fraud and compliance
@@ -44,6 +46,7 @@ One fundamental problem will scaling data mastering is that the number of compar
 
 ![Data Mastering At Scale](/assets/fuzzymatchingcomparisons.jpg)
 
+
 Zingg learns a clustering/blocking model to index near similar records together to avoid this problem. Typical Zingg comparisons are 0.05-1% of the possible problem space.
 
 
@@ -62,6 +65,8 @@ To build these models, training data is needed. Zingg comes with an interactive 
 Zingg connects, reads and writes to most on-premise and cloud data sources. Zingg also runs on any private or cloud based Spark service. 
 
 ![zinggConnectors](assets/zinggOSS.png)
+
+
 Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBMSes and any other Spark supported data sources. Zingg also works with all major file formats like Parquet, Avro, JSON, XLSX, CSV, TSV etc. Read more about the Zingg [pipe](docs/pipes.md) interface.  
 
 
