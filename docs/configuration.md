@@ -9,7 +9,7 @@ Here are the json variables which you will need to define to work with your data
 
 ### data
 
-Array of input data. If the data is self describing, for eg avro or parquet, there is no need to define the schema. Else field definitions with name and types need to be provided. Different formats are csv, jdbc, parquet and avro.
+Array of input data. Each array entry here refers to a [Zingg Pipe](pipes.md). If the data is self describing, for eg avro or parquet, there is no need to define the schema. Else field definitions with name and types need to be provided. 
 
 For example for the csv under [examples/febrl/test.csv](examples/febrl/test.csv) ![febrl](assets/febrl.gif)
 
@@ -40,6 +40,8 @@ For example for the csv under [examples/febrl/test.csv](examples/febrl/test.csv)
       }"
   }
 ```
+
+Read more about Zingg Pipes for datastore connections [here](pipes.md). 
 
 ### output
 Definitions are same as [data](#data) but reflect where you want the Zingg output to get saved
