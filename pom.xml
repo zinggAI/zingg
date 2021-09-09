@@ -42,14 +42,10 @@
 			<properties>
 				<spark.version>3.1.2</spark.version>
 				<scala.version>2.12.11</scala.version>
+				<spark.binary.version>3.1</spark.binary.version>
+				<scala.binary.version>2.12</scala.binary.version>
 				<graphframes.version>0.8.1-spark3.0-s_2.12</graphframes.version>
-				<spark.core.artifactId>spark-core_2.12</spark.core.artifactId>
-				<spark.mllib.artifactId>spark-mllib_2.12</spark.mllib.artifactId>
-				<spark.snowflake.artifactId>spark-snowflake_2.12</spark.snowflake.artifactId>
-				<snow.spark.version>2.9.0-spark_3.1</snow.spark.version>
-				<spark.cassandra.connector.artifactId>spark-cassandra-connector_2.12</spark.cassandra.connector.artifactId>
 				<cassandra.conn.version>3.0.0</cassandra.conn.version>
-				<spark.graphx.artifactId>spark-graphx_2.12</spark.graphx.artifactId>
 			</properties>
 		</profile>
 		<profile>
@@ -68,14 +64,10 @@
 			<properties>
 				<spark.version>3.0.3</spark.version>
 				<scala.version>2.12.11</scala.version>
+				<spark.binary.version>3.0</spark.binary.version>
+				<scala.binary.version>2.12</scala.binary.version>
 				<graphframes.version>0.8.1-spark3.0-s_2.12</graphframes.version>
-				<spark.core.artifactId>spark-core_2.12</spark.core.artifactId>
-				<spark.mllib.artifactId>spark-mllib_2.12</spark.mllib.artifactId>
-				<spark.snowflake.artifactId>spark-snowflake_2.12</spark.snowflake.artifactId>
-				<snow.spark.version>2.9.0-spark_3.0</snow.spark.version>
-				<spark.cassandra.connector.artifactId>spark-cassandra-connector_2.12</spark.cassandra.connector.artifactId>
 				<cassandra.conn.version>3.0.0</cassandra.conn.version>
-				<spark.graphx.artifactId>spark-graphx_2.12</spark.graphx.artifactId>
 			</properties>
 		</profile>
 		<profile>
@@ -94,14 +86,10 @@
 			<properties>
 				<spark.version>2.4.8</spark.version>
 				<scala.version>2.11.10</scala.version>
+				<spark.binary.version>2.4</spark.binary.version>
+				<scala.binary.version>2.11</scala.binary.version>
 				<graphframes.version>0.8.1-spark2.4-s_2.11</graphframes.version>
-				<spark.core.artifactId>spark-core_2.11</spark.core.artifactId>
-				<spark.mllib.artifactId>spark-mllib_2.11</spark.mllib.artifactId>
-				<spark.snowflake.artifactId>spark-snowflake_2.11</spark.snowflake.artifactId>
-				<snow.spark.version>2.9.0-spark_2.4</snow.spark.version>
-				<spark.cassandra.connector.artifactId>spark-cassandra-connector_2.11</spark.cassandra.connector.artifactId>
 				<cassandra.conn.version>3.0.0-alpha2</cassandra.conn.version>
-				<spark.graphx.artifactId>spark-graphx_2.11</spark.graphx.artifactId>
 			</properties>
 		</profile>
 	</profiles>
@@ -120,7 +108,6 @@
 		<commons.lang.version>2.3</commons.lang.version>
 		<shade.plugin.version>2.4.3</shade.plugin.version>
 		<log4j.version>1.2.17</log4j.version>
-		<scala.binary.version>2.12</scala.binary.version>
 		<mainClass>zingg.client.Client</mainClass>
 		<spark.master>spark://pc-sonal2:7077</spark.master>
 	</properties>
@@ -148,8 +135,8 @@
 		</dependency>
 		<dependency>
 						<groupId>net.snowflake</groupId>
-						<artifactId>${spark.snowflake.artifactId}</artifactId>
-						<version>${snow.spark.version}</version>
+						<artifactId>spark-snowflake_${scala.binary.version}</artifactId>
+						<version>2.9.0-spark_${spark.binary.version}</version>
 				</dependency>
 				<dependency>
 						<groupId>net.snowflake</groupId>
@@ -159,7 +146,7 @@
 		<dependency>
 			<!-- https://mvnrepository.com/artifact/com.datastax.spark/spark-cassandra-connector -->
 			<groupId>com.datastax.spark</groupId>
-			<artifactId>${spark.cassandra.connector.artifactId}</artifactId>
+			<artifactId>spark-cassandra-connector_${scala.binary.version}</artifactId>
 			<version>${cassandra.conn.version}</version>
 			<exclusions>
 				<exclusion>
@@ -170,19 +157,19 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.spark</groupId>
-			<artifactId>${spark.mllib.artifactId}</artifactId>
+			<artifactId>spark-mllib_${scala.binary.version}</artifactId>
 			<version>${spark.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.spark</groupId>
-			<artifactId>${spark.core.artifactId}</artifactId>
+			<artifactId>spark-core_${scala.binary.version}</artifactId>
 			<version>${spark.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.spark</groupId>
-			<artifactId>${spark.graphx.artifactId}</artifactId>
+			<artifactId>spark-graphx_${scala.binary.version}</artifactId>
 			<version>${spark.version}</version>
 			<scope>provided</scope>
 		</dependency>
