@@ -14,12 +14,12 @@
 
 ## Why?
 
-Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together, especially with growing data volumes. This hurts customer analytics - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is unlean. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. No warehouse can live up to its promise if the dimension tables have duplicates. 
+Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together, especially with growing data volumes. This hurts customer analytics - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is not linked. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. No warehouse can live up to its promise if the dimension tables have duplicates. 
 
 ![data silos](assets/dataSilos.png)
 
 
-With a modern data stack and DataOps, we have established patterns for E and L in ELT for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like [DBT](https://www.getdbt.com) are actively and successfuly addressing this. What is missing is a quick and scalable way to build the single source of truth of core business entities post Extraction and pre or post Loading. 
+With a modern data stack and DataOps, we have established patterns for E and L in ELT for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like [DBT](https://www.getdbt.com) are actively and successfuly addressing this. What is also needed is a quick and scalable way to build the single source of truth of core business entities post Extraction and pre or post Loading. 
 
 With Zingg, the analytics engineer and the data scientist can quickly intergate data silos and build unified views at scale! For customers, suppliers, organizations , addresses and other entities.
 
@@ -28,12 +28,11 @@ With Zingg, the analytics engineer and the data scientist can quickly intergate 
 
 Zingg integrates different records of an entity like customer, supplier, product etc in same or disparate data sources. Zingg can be used for
 
-- Master Data Management - building unified and trusted views of customers and suppliers across multiple systems
+- Building unified and trusted views of customers and suppliers across multiple systems
 - Large Scale Entity Resolution for fraud and compliance
 - Deduplication and data quality
 - Identity Resolution 
 - Integrating data silos during mergers and acquisitions
-- Reference Data Management
 - Data enrichment from external sources
 
 ## Key Zingg Concepts
