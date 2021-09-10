@@ -1,6 +1,7 @@
 # Contents
 - [Why?](#why?)
 - [Connectors](docs/pipes.md)
+- [Security](#security)
 - [Key Zingg Concepts](#key-zingg-concepts)
 - [Installation](docs/installation.md)
 - [Configuration](docs/configuration.md)
@@ -14,7 +15,7 @@
 
 ## Why?
 
-Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together, especially with growing data volumes. This hurts customer analytics - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is not linked. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. No warehouse can live up to its promise if the dimension tables have duplicates. 
+Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together, especially with growing data volumes. This hurts [customer analytics](docs/bizLeaderSurvey.md) - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is not linked. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. No warehouse can live up to its promise if the dimension tables have duplicates. 
 
 ![data silos](assets/dataSilos.png)
 
@@ -25,16 +26,17 @@ With Zingg, the analytics engineer and the data scientist can quickly intergate 
 
 ![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
 
-Zingg integrates different records of an entity like customer, supplier, product etc in same or disparate data sources. Zingg is useful for
+Zingg integrates different records of an entity like customer, patient, supplier, product etc in same or disparate data sources. Zingg is useful for
 
 - Building unified and trusted views of customers and suppliers across multiple systems
 - Large Scale Entity Resolution for AML, KYC and other fraud and compliance scenarios
-- Deduplication and data quality
+- [Deduplication](docs/patient.md) and data quality
 - Identity Resolution 
 - Integrating data silos during mergers and acquisitions
 - Data enrichment from external sources
+- Establishing customer [households](docs/households.md)
 
-Zingg is a no code ML based tool for data unification. It scales well to enterprise data volumes. It works for English as well as Chinese, Thai, Japanese, Hindi and other languages.   
+Zingg is a no code ML based tool for data unification. It scales well to enterprise data volumes and entity variety. It works for English as well as Chinese, Thai, Japanese, Hindi and other languages.   
 
 ## Connectors
 
@@ -45,6 +47,7 @@ Zingg connects, reads and writes to most on-premise and cloud data sources. Zing
 
 Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBMSes and any other Spark supported data sources. Zingg also works with all major file formats like Parquet, Avro, JSON, XLSX, CSV, TSV etc. Read more about the Zingg [pipe](docs/pipes.md) interface.  
 
+##S
 ## Key Zingg Concepts
 
 For data mastering, Zingg learns 2 models from the training data. 

@@ -314,5 +314,3 @@ Entity representation often varies across systems. The number of attributes coul
 
 \*Entity Definition: An entity, as we know, is a unique thing — a person, a business, a product, a supplier, a drug, an organization. Every entity comes with its describing attributes such as name, address, date, color, shape, price, age, website, brand, model, capacity et cetera. 
 
-Fuzzy matching is a great technique to match non-identical data but it comes with its challenges. At Nube, we solve the problem of fuzzy matching by employing artificial intelligence. Do reach out to us if you need help in reconciling your organization’s data. 
-
