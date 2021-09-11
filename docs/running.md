@@ -18,7 +18,7 @@ This phase opens an interactive learner where the user can mark the pairs found 
 
 The findTrainingData phase is run first and then the label phase is run and this cycle repeated so that the Zingg models get smarter from user feedback.This generates edge cases for labelling and the user marks them. At each stage, the user will get different variations of attributes across the records. 
 
-Proceed till you have at least 30-40 positives, or when you see the predictions by Zingg converging with the output you want. Zingg performs pretty well with even small number of training, as the samples are chosen by the algorithm itself. 
+Proceed till you have at least 30-40 positives, or when you see the predictions by Zingg converging with the output you want. Zingg performs pretty well with even small number of training, as the samples to be labelled are chosen by the algorithm itself. 
 
 ### train - training and saving the models
 Builds up the Zingg models using the training data from the above phases and writes them to the folder zinggDir/modelId as specified in the config.
@@ -26,9 +26,11 @@ Builds up the Zingg models using the training data from the above phases and wri
 `./zingg.sh --phase train --conf config.json`
 
 ### match
-Finds the records whioch match with each other. Matching records are given the same z_cluster id. Each record also gets a z_minScore and z_maxScore which shows the least/greatest it matched with other records in the same cluster. 
+Finds the records whioch match with each other. 
 
 `./zingg.sh --phase match --conf config.json`
+
+As can be seen in the image below, matching records are given the same z_cluster id. Each record also gets a z_minScore and z_maxScore which shows the least/greatest it matched with other records in the same cluster. 
 
 ![Match results](../assets/match.gif)
 
