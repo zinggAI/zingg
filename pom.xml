@@ -11,19 +11,24 @@
 	</organization>
 	<licenses>
 		<license>
-			<name>Zingg EULA</name>
-			<url></url>
+			<name>GNU AGPL v3.0</name>
+			<url>https://www.gnu.org/licenses/agpl-3.0.en.html</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
 	<developers>
 		<developer>
 			<id>zingg</id>
-			<name>Zingg Dev </name>
+			<name>Zingg Dev</name>
 			<organization>Zingg</organization>
 			<organizationUrl>http://www.zingg.ai</organizationUrl>
 		</developer>
 	</developers>
+		<modules>
+			<module>core</module>
+			<module>client</module>
+			<module>assembly</module>
+		</modules>
 	<profiles>
 		<profile>
 			<id>spark-3.1</id>
@@ -34,11 +39,6 @@
 					<value>3.1</value>
 				</property>
 			</activation>
-			<modules>
-				<module>core</module>
-				<module>client</module>
-				<module>assembly</module>
-			</modules>
 			<properties>
 				<spark.version>3.1.2</spark.version>
 				<scala.version>2.12.11</scala.version>
@@ -56,11 +56,6 @@
 					<value>3.0</value>
 				</property>
 			</activation>
-			<modules>
-				<module>core</module>
-				<module>client</module>
-				<module>assembly</module>
-			</modules>
 			<properties>
 				<spark.version>3.0.3</spark.version>
 				<scala.version>2.12.11</scala.version>
@@ -78,14 +73,9 @@
 					<value>2.4</value>
 				</property>
 			</activation>
-			<modules>
-				<module>core</module>
-				<module>client</module>
-				<module>assembly</module>
-			</modules>
 			<properties>
 				<spark.version>2.4.8</spark.version>
-				<scala.version>2.11.10</scala.version>
+				<scala.version>2.11.12</scala.version>
 				<spark.binary.version>2.4</spark.binary.version>
 				<scala.binary.version>2.11</scala.binary.version>
 				<graphframes.version>0.8.1-spark2.4-s_2.11</graphframes.version>
@@ -104,7 +94,6 @@
 		<mjavadoc.version>2.9.1</mjavadoc.version>
 		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
 		<maven-jar-plugin.version>2.3.2</maven-jar-plugin.version>
-		<mahout.version>0.8</mahout.version>
 		<commons.lang.version>2.3</commons.lang.version>
 		<shade.plugin.version>2.4.3</shade.plugin.version>
 		<log4j.version>1.2.17</log4j.version>
@@ -134,15 +123,15 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-						<groupId>net.snowflake</groupId>
-						<artifactId>spark-snowflake_${scala.binary.version}</artifactId>
-						<version>2.9.0-spark_${spark.binary.version}</version>
-				</dependency>
-				<dependency>
-						<groupId>net.snowflake</groupId>
-						<artifactId>snowflake-jdbc</artifactId>
-						<version>3.13.5</version>
-				</dependency>
+				<groupId>net.snowflake</groupId>
+				<artifactId>spark-snowflake_${scala.binary.version}</artifactId>
+				<version>2.9.0-spark_${spark.binary.version}</version>
+		</dependency>
+		<dependency>
+				<groupId>net.snowflake</groupId>
+				<artifactId>snowflake-jdbc</artifactId>
+				<version>3.13.5</version>
+		</dependency>
 		<dependency>
 			<!-- https://mvnrepository.com/artifact/com.datastax.spark/spark-cassandra-connector -->
 			<groupId>com.datastax.spark</groupId>
@@ -178,11 +167,6 @@
 			<artifactId>scala-library</artifactId>
 			<version>${scala.version}</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-all</artifactId>
-			<version>4.1.17.Final</version>
 		</dependency>
 		<!--
 		<dependency>
@@ -244,10 +228,6 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-
-
-
-
 	</dependencies>
 	<build>
 		<pluginManagement>
@@ -313,6 +293,9 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+          				<scalaVersion>${scala.version}</scalaVersion>
+        			</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
