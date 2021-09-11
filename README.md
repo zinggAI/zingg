@@ -40,30 +40,33 @@ Zingg is a no code ML based tool for data unification. It scales well to enterpr
 
 ## Connectors
 
-Zingg connects, reads and writes to most on-premise and cloud data sources. Zingg also runs on any private or cloud based Spark service. 
+Zingg connects, reads and writes to most on-premise and cloud data sources. Zingg runs on any private or cloud based Spark service. 
 
 ![zinggConnectors](assets/zinggOSS.png)
 
 
-Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBMSes and any other Spark supported data sources. Zingg also works with all major file formats like Parquet, Avro, JSON, XLSX, CSV, TSV etc. Read more about the Zingg [pipe](docs/pipes.md) interface.  
+Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBMSes and any other Spark supported data sources. Zingg also works with all major file formats like Parquet, Avro, JSON, XLSX, CSV, TSV etc. This is done through the Zingg [pipe](docs/pipes.md) abstraction.  
 
-##S
+## Security
+
+Zingg models are built on your data, deployed within your network. No data leaves your environment. 
+
 ## Key Zingg Concepts
 
-For data mastering, Zingg learns 2 models from the training data. 
+Zingg learns 2 models on the data. 
 
 1. Blocking Model
 
-One fundamental problem will scaling data mastering is that the number of comparisons increase quadratically as the size of input record increases. A blocking model helps Zingg to index close records together, so that it does not compare every record with every other record. 
+One fundamental problem with scaling data mastering is that the number of comparisons increase quadratically as the number of input record increases. 
 
 ![Data Mastering At Scale](/assets/fuzzymatchingcomparisons.jpg)
 
 
-Zingg learns a clustering/blocking model to index near similar records together to avoid this problem. Typical Zingg comparisons are 0.05-1% of the possible problem space.
+Zingg learns a clustering/blocking model which indexes near similar records. This means that Zingg does not compare every record with every other record. Typical Zingg comparisons are 0.05-1% of the possible problem space.
 
 2. Similarity Model 
 
-The similarity model helps Zingg to predict which record pairs match. Similarity is run only on records within the same block to scale the problem to larger datasets. The similarity model is a classifier which predicts similarity of records which are not exactly same, but could belong together.
+The similarity model helps Zingg to predict which record pairs match. Similarity is run only on records within the same block/cluster to scale the problem to larger datasets. The similarity model is a classifier which predicts similarity of records which are not exactly same, but could belong together.
 
 ![Fuzzy matching comparisons](/assets/dataMatching.jpg) 
 
@@ -73,7 +76,7 @@ To build these models, training data is needed. Zingg comes with an interactive 
 
 ## Pretrained models
 
-Zingg comes with pretrained models for the Febrl dataset under the models folder.
+Zingg comes with pretrained models for the Febrl dataset under the [models](models) folder.
 
 ## Acknowledgements
 
