@@ -6,7 +6,7 @@
 - [Installation](docs/installation.md)
 - [Configuration](docs/configuration.md)
 - [Running Zingg](docs/running.md)
-- [Hardware Sizing](docs/hardware-sizing.md)
+- [Hardware Sizing](docs/hardwareSizing.md)
 - [Pretrained models](#pretrained-models)
 - [Compiling from source, other Spark versions](docs/compiling.md)
 - [Running on Databricks](docs/databricks.md)
