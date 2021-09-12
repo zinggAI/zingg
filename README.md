@@ -8,6 +8,7 @@
 - [Running Zingg](docs/running.md)
 - [Hardware Sizing](docs/hardware-sizing.md)
 - [Pretrained models](#pretrained-models)
+- [Compiling from source, other Spark versions](docs/compiling.md)
 - [Running on Databricks](docs/databricks.md)
 - [Running on Amazon EMR](docs/aws.md)
 - [Acknowledgements](#acknowledgements)
