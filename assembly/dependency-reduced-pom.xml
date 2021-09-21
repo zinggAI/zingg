@@ -66,28 +66,28 @@
   <dependencies>
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-mllib_2.11</artifactId>
-      <version>2.4.8</version>
+      <artifactId>spark-mllib_2.12</artifactId>
+      <version>3.0.3</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
-          <artifactId>scala-parser-combinators_2.11</artifactId>
+          <artifactId>scala-parser-combinators_2.12</artifactId>
           <groupId>org.scala-lang.modules</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-streaming_2.11</artifactId>
+          <artifactId>spark-streaming_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-sql_2.11</artifactId>
+          <artifactId>spark-sql_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-mllib-local_2.11</artifactId>
+          <artifactId>spark-mllib-local_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>breeze_2.11</artifactId>
+          <artifactId>breeze_2.12</artifactId>
           <groupId>org.scalanlp</groupId>
         </exclusion>
         <exclusion>
@@ -95,7 +95,11 @@
           <groupId>org.apache.commons</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-tags_2.11</artifactId>
+          <artifactId>jaxb-runtime</artifactId>
+          <groupId>org.glassfish.jaxb</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>spark-tags_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
@@ -106,8 +110,8 @@
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-core_2.11</artifactId>
-      <version>2.4.8</version>
+      <artifactId>spark-core_2.12</artifactId>
+      <version>3.0.3</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -119,7 +123,7 @@
           <groupId>org.apache.avro</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>chill_2.11</artifactId>
+          <artifactId>chill_2.12</artifactId>
           <groupId>com.twitter</groupId>
         </exclusion>
         <exclusion>
@@ -127,7 +131,7 @@
           <groupId>com.twitter</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>xbean-asm6-shaded</artifactId>
+          <artifactId>xbean-asm7-shaded</artifactId>
           <groupId>org.apache.xbean</groupId>
         </exclusion>
         <exclusion>
@@ -135,23 +139,23 @@
           <groupId>org.apache.hadoop</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-launcher_2.11</artifactId>
+          <artifactId>spark-launcher_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-kvstore_2.11</artifactId>
+          <artifactId>spark-kvstore_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-network-common_2.11</artifactId>
+          <artifactId>spark-network-common_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-network-shuffle_2.11</artifactId>
+          <artifactId>spark-network-shuffle_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-unsafe_2.11</artifactId>
+          <artifactId>spark-unsafe_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
@@ -167,7 +171,15 @@
           <groupId>javax.servlet</groupId>
         </exclusion>
         <exclusion>
+          <artifactId>commons-text</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>jul-to-slf4j</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jcl-over-slf4j</artifactId>
           <groupId>org.slf4j</groupId>
         </exclusion>
         <exclusion>
@@ -199,7 +211,11 @@
           <groupId>commons-net</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>json4s-jackson_2.11</artifactId>
+          <artifactId>scala-xml_2.12</artifactId>
+          <groupId>org.scala-lang.modules</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>json4s-jackson_2.12</artifactId>
           <groupId>org.json4s</groupId>
         </exclusion>
         <exclusion>
@@ -223,11 +239,11 @@
           <groupId>org.glassfish.jersey.containers</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>netty-all</artifactId>
-          <groupId>io.netty</groupId>
+          <artifactId>jersey-hk2</artifactId>
+          <groupId>org.glassfish.jersey.inject</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>netty</artifactId>
+          <artifactId>netty-all</artifactId>
           <groupId>io.netty</groupId>
         </exclusion>
         <exclusion>
@@ -247,11 +263,15 @@
           <groupId>io.dropwizard.metrics</groupId>
         </exclusion>
         <exclusion>
+          <artifactId>metrics-jmx</artifactId>
+          <groupId>io.dropwizard.metrics</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>jackson-databind</artifactId>
           <groupId>com.fasterxml.jackson.core</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>jackson-module-scala_2.11</artifactId>
+          <artifactId>jackson-module-scala_2.12</artifactId>
           <groupId>com.fasterxml.jackson.module</groupId>
         </exclusion>
         <exclusion>
@@ -279,7 +299,7 @@
           <groupId>org.apache.commons</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-tags_2.11</artifactId>
+          <artifactId>spark-tags_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
@@ -290,8 +310,8 @@
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-graphx_2.11</artifactId>
-      <version>2.4.8</version>
+      <artifactId>spark-graphx_2.12</artifactId>
+      <version>3.0.3</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -303,15 +323,15 @@
           <groupId>net.sourceforge.f2j</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-mllib-local_2.11</artifactId>
+          <artifactId>spark-mllib-local_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>xbean-asm6-shaded</artifactId>
+          <artifactId>xbean-asm7-shaded</artifactId>
           <groupId>org.apache.xbean</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-tags_2.11</artifactId>
+          <artifactId>spark-tags_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
@@ -323,7 +343,7 @@
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>
-      <version>2.11.12</version>
+      <version>2.12.11</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
