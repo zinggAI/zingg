@@ -13,6 +13,8 @@
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
 - [FAQ](docs/faq.md)
+- [Community](#community)
+- [Contributing](#contributing)
 
 ## Why?
 
@@ -21,9 +23,9 @@ Real world data contains multiple records belonging to the same customer. These 
 ![data silos](assets/dataSilos.png)
 
 
-With a modern data stack and DataOps, we have established patterns for E and L in ELT for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like [DBT](https://www.getdbt.com) are actively and successfuly addressing this. What is also needed is a quick and scalable way to build the single source of truth of core business entities post Extraction and pre or post Loading. 
+With a modern data stack and DataOps, we have established patterns for E and L in ELT for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like [DBT](https://www.getdbt.com) are actively and successfully addressing this. What is also needed is a quick and scalable way to build the single source of truth of core business entities post Extraction and pre or post Loading. 
 
-With Zingg, the analytics engineer and the data scientist can quickly intergate data silos and build unified views at scale! 
+With Zingg, the analytics engineer and the data scientist can quickly integrate data silos and build unified views at scale! 
 
 ![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
 
@@ -91,5 +93,17 @@ Zingg would have not have been possible without the excellent work below:
 Zingg is licensed under [AGPL v3.0](https://www.gnu.org/licenses/agpl-3.0.en.html) - which means you have the freedom to distribute copies of free software (and charge for them if you wish), that you receive source code or can get it if you want it, that you can change the software or use pieces of it in new free programs, and that you know you can do these things.
 
 Need a different license? Write to us.
+
+## Community
+
+Be part of the conversation in the [Zingg Community Slack](https://zinggai.slack.com/)
+
+
+### Reporting bugs and contributing 
+
+Want to report a bug or request a feature? Let us know on  [Slack](https://zinggai.slack.com/), or open an [issue](https://github.com/zinggAI/zingg/issues/new/choose)
+
+Want to commit code? Lets talk on  [Slack](https://zinggai.slack.com/)
+
 
 

@@ -1,7 +1,7 @@
 ## A step by step guide to running Zingg
 
 ### Step 1: Install
-Installation instructions [here](installation.md)
+Installation instructions [here](installation.md). If you need to build from the sources or compile for a different flavor of Spark, check [compiling](compiling.md)
 
 ## Step 2: Build the config for your data
 Zingg needs a configuration file which defines the data and what kind of matching is needed. You can create the configuration file by following the instructions [here](configuration.md)
