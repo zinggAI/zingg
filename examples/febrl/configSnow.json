@@ -59,40 +59,35 @@
 			"matchType": "fuzzy",
 			"fields" : "SSN",
 			"dataType": "\"string\"" 
-		],
+		}],
 		"output" : [{
-			"name":"output", 
-			"format":"csv", 
+			"name":"unifiedCustomers", 
+			"format":"net.snowflake.spark.snowflake", 
 			"props": {
-				"location": "/tmp/zinggOutput",
-				"delimiter": ",",
-				"header":true
-			}
+				"sfUrl": "tsa87485.snowflakecomputing.com",
+				"sfUser": "sonalgoyal",
+				"sfPassword":"ZZZZZ",					
+				"sfDatabase":"DEMO_DB",				
+				"sfSchema":"PUBLIC",					
+				"sfWarehouse":"COMPUTE_WH",
+				"dbtable": "UNIFIED_CUSTOMERS"
+				}
 		}],
 		"data" : [{
-			"name":"test", 
-			"format":"csv", 
+			"name":"customers", 
+			"format":"net.snowflake.spark.snowflake", 
 			"props": {
-				"location": "examples/febrl/test.csv",
-				"delimiter": ",",
-				"header":false					
-			},
-			"schema": 
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
-					{\"name\":\"fname\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"lname\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"stNo\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"add1\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"add2\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"city\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"state\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"dob\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"ssn\",\"type\":\"string\",\"nullable\":true}
-				]
-			}"
-		}],
+				"sfUrl": "tsa87485.snowflakecomputing.com",
+				"sfUser": "sonalgoyal",
+				"sfPassword":"ZZZZZ",					
+				"sfDatabase":"DEMO_DB",				
+				"sfSchema":"PUBLIC",					
+				"sfWarehouse":"COMPUTE_WH",
+				"dbtable": "CUSTOMERS"
+				}
+			}],
+
+
 		"labelDataSampleSize" : 0.5,
 		"numPartitions":4,
 		"modelId": 1000,
