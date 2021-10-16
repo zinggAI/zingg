@@ -56,7 +56,7 @@
 		},
 		{
 			"fieldName" : "SSN",
-			"matchType": "fuzzy",
+			"matchType": "do_not_match",
 			"fields" : "SSN",
 			"dataType": "\"string\"" 
 		}],
