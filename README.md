@@ -96,7 +96,7 @@ Need a different license? Write to us.
 
 ## Community
 
-Be part of the conversation in the [Zingg Community Slack](https://zinggai.slack.com/)
+Be part of the conversation in the [Zingg Community Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA)
 
 
 ### Reporting bugs and contributing 
