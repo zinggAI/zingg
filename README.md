@@ -1,12 +1,14 @@
 # Contents
 - [Why?](#why?)
-- [Connectors](docs/pipes.md)
+- [Demo](https://www.youtube.com/watch?v=zOabyZxN9b0&t=0)
 - [Security](#security)
 - [Key Zingg Concepts](#key-zingg-concepts)
-- [Installation](docs/installation.md) | [Compiling from source, other Spark versions](docs/compiling.md)
-- [Configuration](docs/configuration.md)
-- [Running Zingg](docs/running.md) 
-- [Step by step guide](docs/stepByStep.md) | [Demo](https://www.youtube.com/watch?v=zOabyZxN9b0&t=0)
+- Running Zingg
+    - [Installation](docs/installation.md) | [Compiling from source, other Spark versions](docs/compiling.md)
+    - [Step by step guide](docs/stepByStep.md) | [Snowflake Configuration](https://towardsdatascience.com/identifying-duplicates-in-snowflake-e95b3f3fce2b)
+    - [Configuration](docs/configuration.md)
+    - [Connectors](docs/pipes.md)
+    - [Running Zingg](docs/running.md) 
 - [Hardware Sizing](docs/hardwareSizing.md)
 - [Pretrained models](#pretrained-models)
 - Running on [Databricks](docs/databricks.md) | [Amazon EMR](docs/aws.md)
@@ -16,6 +18,9 @@
 - [Community](#community)
 - [Contributing](#contributing)
 - [Book Office Hours](#book-office-hours)
+- Reading Material 
+    - [Entity Resolution](https://towardsdatascience.com/an-introduction-to-entity-resolution-needs-and-challenges-97fba052dde5)
+    - [Agile Data Mastering](https://towardsdatascience.com/a-guide-to-agile-data-mastering-with-ai-3bf38f103709)
 
 ## Why?
 
