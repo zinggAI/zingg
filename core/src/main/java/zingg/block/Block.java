@@ -346,6 +346,9 @@ public class Block implements Serializable {
 	public static StringBuilder applyTree(Row tuple, Tree<Canopy> tree,
 			Canopy root, StringBuilder result) {
 		if (root.function != null) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("applying " + root.function);
+			}
 			Object hash = root.function.apply(tuple, root.context.fieldName);
 			
 			result = result.append("|").append(hash);
@@ -400,6 +403,9 @@ public class Block implements Serializable {
 		@Override
 		public Row call(Row r) {
 			StringBuilder bf = new StringBuilder();
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("blocking row " + r);
+			}
 			bf = Block.applyTree(r, tree, tree.getHead(), bf);
 			Seq<Object> s = r.toSeq();
 			List<Object> seqList = JavaConversions.seqAsJavaList(s);

@@ -68,5 +68,17 @@ public abstract class HashFunction implements Serializable{
 		}
 		
 		public abstract Object apply(Row ds, String column);
+
+
+	@Override
+	public String toString() {
+		return "{" +
+			" dataType='" + getDataType() + "'" +
+			", name='" + getName() + "'" +
+			", isUdf='" + isUdf + "'" +
+			", returnType='" + getReturnType() + "'" +
+			"}";
+	}
+
 }
 
