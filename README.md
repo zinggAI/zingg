@@ -5,8 +5,8 @@
 - [Key Zingg Concepts](#key-zingg-concepts)
 - Running Zingg
     - [Installation](docs/installation.md) | [Compiling from source, other Spark versions](docs/compiling.md)
-    - [Step by step guide](docs/stepByStep.md) | [Snowflake Configuration](https://towardsdatascience.com/identifying-duplicates-in-snowflake-e95b3f3fce2b)
-    - [Configuration](docs/configuration.md)
+    - [Step by step guide](docs/stepByStep.md) 
+    - [Configuration](docs/configuration.md) | [Snowflake Config](https://towardsdatascience.com/identifying-duplicates-in-snowflake-e95b3f3fce2b)
     - [Connectors](docs/pipes.md)
     - [Running Zingg](docs/running.md) 
 - [Hardware Sizing](docs/hardwareSizing.md)

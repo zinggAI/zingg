@@ -6,7 +6,7 @@ Typically 30-40 positive pairs (matches) should build a good model. While markin
 
 ### Do I need to train for every new dataset?
 
-No, absoltely not! Train only if the schema(attributes or their types) have changed. 
+No, absolutely not! Train only if the schema(attributes or their types) have changed. 
 
 ### Do I need to use a Spark cluster or can I run on a single machine?
 
