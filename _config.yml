@@ -1,6 +1,5 @@
 theme: just-the-docs
 
-
 # Welcome to Jekyll!
 #
 # This config file is meant for settings that affect your whole site, values
@@ -18,7 +17,7 @@ theme: just-the-docs
 # in the templates via {{ site.myvariable }}.
 title: Just the Docs
 description: A Jekyll theme for documentation
-baseurl: "/zingg" # the subpath of your site, e.g. /blog
+baseurl: "/" # the subpath of your site, e.g. /blog
 url: "http://docs.zingg.ai" # the base hostname & protocol for your site, e.g. http://example.com
 
 permalink: pretty
