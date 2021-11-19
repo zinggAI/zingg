@@ -1,11 +1,13 @@
 ---
 layout: default
 title: Zingg Command Line Phases
-parent: running Zingg
-nav_order: 2
+parent: Running Zingg
+nav_order: 3
 ---
 ## Zingg Command Line Phases
 Zingg runs Spark jobs for building training data(findTrainingData and label), building actual models(train) and applying these models on the data to get mastered entities(match). If you need to match records in one dataset against other, you can run the link phase. The phase to be run is passed as a command line argument. Here are more details about the phases and how they can be invoked.
+
+{:toc}
 
 ### findTrainingData - finding pairs of records which could be similar to train Zingg
 Zingg builds models to predict similarity. Training data is needed to build these models. The findTrainingData phase prompts Zingg to search for edge cases in the data. During findTrainingData, Zingg combs through the data samples and judiciously selects limited pairs for the user to mark. Zingg is very frugal about the training so that user effort is minimized and models can be built and deployed quickly.
