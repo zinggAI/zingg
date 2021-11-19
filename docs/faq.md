@@ -1,4 +1,4 @@
-# Frequently Asked Questions about Zingg# Navigation Structure
+# Frequently Asked Questions about Zingg
 {: .no_toc }
 
 ## Table of contents
