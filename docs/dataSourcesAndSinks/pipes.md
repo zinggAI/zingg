@@ -1,3 +1,6 @@
+---
+nav_exclude: true
+---
 ## Zingg Pipes
 
 Zingg Pipes are an abstraction for a data source from which Zingg fetches data for matching or to which Zingg writes its output. This lets users connect to literally any datastore that has a Spark connector.
