@@ -13,3 +13,6 @@ This findTrainingData job writes the edge cases to the folder configured throgh 
 
 `./zingg.sh --phase findTrainingData --conf config.json`
 
+
+The findTrainingData phase is run first and then the label phase is run and this cycle repeated so that the Zingg models get smarter from user feedback.
+
