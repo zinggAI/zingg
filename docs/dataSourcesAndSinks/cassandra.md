@@ -2,7 +2,7 @@
 layout: default
 title: Cassandra
 parent: Data Sources and Sinks
-nav_order: 2
+nav_order: 3
 ---
 ## Using Cassandra as the Data Source or Data Sink
 ```json
