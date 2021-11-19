@@ -23,18 +23,7 @@ Zingg integrates different records of an entity like customer, patient, supplier
 
 Zingg is a no code ML based tool for data unification. It scales well to enterprise data volumes and entity variety. It works for English as well as Chinese, Thai, Japanese, Hindi and other languages.   
 
-## Connectors
 
-Zingg connects, reads and writes to most on-premise and cloud data sources. Zingg runs on any private or cloud based Spark service. 
-
-![zinggConnectors](assets/zinggOSS.png)
-
-
-Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBMS and any Spark supported data sources. Zingg also works with all major file formats like Parquet, Avro, JSON, XLSX, CSV, TSV etc. This is done through the Zingg [pipe](docs/pipes.md) abstraction.  
-
-## Security
-
-Zingg models are built on your data, deployed within your network. No data leaves your environment. 
 
 ## Key Zingg Concepts
 
@@ -68,11 +57,7 @@ Zingg comes with pretrained models for the Febrl dataset under the [models](mode
 
 
 
-## Reporting bugs and contributing 
 
-Want to report a bug or request a feature? Let us know on  [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA), or open an [issue](https://github.com/zinggAI/zingg/issues/new/choose)
-
-Want to commit code? Lets talk on  [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA)
 
 ## Book Office Hours
 If you want to schedule a 30-min call with our team to help you get set up, please select some time directly [here](https://calendly.com/sonalgoyal/30min)
