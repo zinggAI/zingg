@@ -19,4 +19,4 @@ The similarity model helps Zingg to predict which record pairs match. Similarity
 
 To build these models, training data is needed. Zingg comes with an interactive learner to rapidly build training sets. 
 
-![Shows records and asks user to mark yes, no, cant say on the cli.](assets/label2.gif) 
+![Shows records and asks user to mark yes, no, cant say on the cli.](/assets/label2.gif) 
