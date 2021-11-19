@@ -24,30 +24,6 @@ Let us look at some common datasources and their configurations.
 
 
 
-## MongoDB
 
-```json
-"data" : [{
-		"name":"mongodb", 
-		"format":"mongo", 
-		"props": {
-			"uri": "mongodb://127.0.0.1/people.contacts"		
-			}	
-		}]
 
-```
-
-## Neo4j
-
-```json
-"data" : [{
-		"name":"neo", 
-		"format":"org.neo4j.spark.DataSource", 
-		"props": {
-			"url": "bolt://localhost:7687",
-            "labels":"Person"		
-			}	
-		}]
-
-```
 

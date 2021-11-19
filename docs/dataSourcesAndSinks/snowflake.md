@@ -1,3 +1,9 @@
+---
+layout: default
+title: Snowflake
+parent: Data Sources and Sinks
+nav_order: 2
+---
 ## Using Snowflake As the Data Source or Data Sink
 
 ```json
