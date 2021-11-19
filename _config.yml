@@ -1,1 +1,6 @@
 remote_theme: pmarsceill/just-the-docs
+# Google Analytics Tracking (optional)
+# e.g, UA-1234567-89
+ga_tracking: G-PYYRRX61EG
+ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (true/nil by default)
+
