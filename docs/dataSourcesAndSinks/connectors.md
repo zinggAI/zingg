@@ -1,3 +1,9 @@
+---
+layout: default
+title: Data Sources and Sinks
+nav_order: 2
+has_children: true
+---
 ## Data Sources and Sinks
 
 Zingg connects, reads and writes to most on-premise and cloud data sources. Zingg runs on any private or cloud based Spark service. 
