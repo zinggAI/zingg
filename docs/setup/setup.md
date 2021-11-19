@@ -6,3 +6,4 @@ has_children: true
 ---
 
 ## Setup
+{: .no_toc }
