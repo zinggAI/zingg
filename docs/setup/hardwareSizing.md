@@ -1,3 +1,9 @@
+---
+layout: default
+title: Hardware Sizing
+parent: Setup
+nav_order: 5
+---
 ## Hardware Sizing 
 Zingg has been built to scale. Performance is dependent on 
 - The number of records to be matched.
