@@ -3,4 +3,12 @@ remote_theme: pmarsceill/just-the-docs
 # e.g, UA-1234567-89
 ga_tracking: G-PYYRRX61EG
 ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (true/nil by default)
+logo: "/assets/zingg.png
+# Aux links for the upper right navigation
+aux_links:
+  "Just the Docs on GitHub":
+    - "//github.com/zinggai/zingg"
+
+# Makes Aux links open in a new tab. Default is false
+aux_links_new_tab: false"
 
