@@ -4,15 +4,7 @@ title: Data Sources and Sinks
 nav_order: 2
 has_children: true
 ---
-{: .no_toc }
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
+
 
 ## Data Sources and Sinks
 
