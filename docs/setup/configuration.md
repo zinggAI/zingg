@@ -13,9 +13,6 @@ Sample configuration files are defined at examples/febrl and examples/febrl120k
 
 Here are the json variables which you will need to define to work with your data.
 
-## Table of contents
-{: .no_toc .text-delta }
-
 {:toc}
 
 
