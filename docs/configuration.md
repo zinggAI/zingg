@@ -2,15 +2,16 @@
 ## Configuration
 {: .no_toc }
 
+ Zingg comes with a command line script that invokes spark-submit. This script needs a json configuration file to define the input data and match types, location of training data, models and output. 
+
+Sample configuration files are defined at examples/febrl and examples/febrl120k
+
+
 ## Table of contents
 {: .no_toc .text-delta }
 
 1. TOC
 {:toc}
-
- Zingg comes with a command line script that invokes spark-submit. This script needs a json configuration file to define the input data and match types, location of training data, models and output. 
-
-Sample configuration files are defined at examples/febrl and examples/febrl120k
 
 Here are the json variables which you will need to define to work with your data.
 
