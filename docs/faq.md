@@ -1,4 +1,11 @@
-# Frequently Asked Questions about Zingg
+# Frequently Asked Questions about Zingg# Navigation Structure
+{: .no_toc }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
 
 ### How much training is enough?
 
