@@ -21,7 +21,7 @@ This phase opens an interactive learner where the user can mark the pairs found 
 
 `./zingg.sh --phase label --conf config.json`
 
-![Shows records and asks user to mark yes, no, cant say on the cli.](../assets/label.gif) 
+![Shows records and asks user to mark yes, no, cant say on the cli.](/assets/label.gif) 
 
 The findTrainingData phase is run first and then the label phase is run and this cycle repeated so that the Zingg models get smarter from user feedback.This generates edge cases for labelling and the user marks them. At each stage, the user will get different variations of attributes across the records. 
 
@@ -39,7 +39,7 @@ Finds the records whioch match with each other.
 
 As can be seen in the image below, matching records are given the same z_cluster id. Each record also gets a z_minScore and z_maxScore which shows the least/greatest it matched with other records in the same cluster. 
 
-![Match results](../assets/match.gif)
+![Match results](/assets/match.gif)
 
 ### link
 
