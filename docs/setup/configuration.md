@@ -12,9 +12,8 @@ nav_order: 5
 Sample configuration files are defined at examples/febrl and examples/febrl120k
 
 Here are the json variables which you will need to define to work with your data.
-
+- TOC
 {:toc}
-
 
 ### data
 
