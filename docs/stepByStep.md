@@ -1,4 +1,12 @@
-## A step by step guide to running Zingg
+# Navigation Structure
+{: .no_toc }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+## Step by step guide to running Zingg
 
 ### Step 1: Install
 Installation instructions [here](installation.md). If you need to build from the sources or compile for a different flavor of Spark, check [compiling](compiling.md)
