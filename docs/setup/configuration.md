@@ -1,4 +1,9 @@
-
+---
+layout: default
+title: Configuration
+parent: Setup
+nav_order: 5
+---
 ## Configuration
 {: .no_toc }
 
