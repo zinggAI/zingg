@@ -12,5 +12,7 @@ If you need to compile the latest code or build for a different Spark version, y
 - Set JAVA_HOME to JDK base directory
 - Run the following
 
-`mvn clean compile package -Dspark=sparkVer` where sparkVer is one of 2.4, 3.0 or 3.1
+`mvn clean compile package -Dspark=sparkVer` 
+
+where sparkVer is one of 2.4, 3.0 or 3.1
 

@@ -19,7 +19,7 @@ Here are the json variables which you will need to define to work with your data
 
 Array of input data. Each array entry here refers to a [Zingg Pipe](dataSourcesAndSinks/pipes.md). If the data is self describing, for eg avro or parquet, there is no need to define the schema. Else field definitions with name and types need to be provided. 
 
-For example for the csv under [examples/febrl/test.csv](examples/febrl/test.csv) ![febrl](../assets/febrl.gif)
+For example for the csv under [examples/febrl/test.csv](/examples/febrl/test.csv) ![febrl](/assets/febrl.gif)
 
 ```json
  "data" : [ {
