@@ -1,5 +1,3 @@
-
-
 ## Key Zingg Concepts
 
 Zingg learns 2 models on the data. 
