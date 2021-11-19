@@ -9,9 +9,7 @@ nav_order: 3
 Zingg runs on [Spark](https://spark.apache.org) and can be used on all major Spark distributions. Zingg can run on all major Linux flavours.
 Zingg is prebuilt for common Spark versions so you can use those directly. The following document assumes that we are installing Zingg 0.3.0 on Spark 3.0.1, but you can follow the same process for other versions too
 
-## Table of contents
-{: .no_toc .text-delta }
-
+- TOC
 {:toc}
 
 ### Prerequisites 
