@@ -1,11 +1,5 @@
-# Contents
-- [Why?](#why?)
-- [Demo](https://www.youtube.com/watch?v=zOabyZxN9b0&t=0)
-- [Security](#security)
-- [Key Zingg Concepts](#key-zingg-concepts)
-- [Contributing](#contributing)
-- [Book Office Hours](#book-office-hours)
-- Reading Material 
+# Welcome to Zingg
+Reading Material 
     - [Entity Resolution](https://towardsdatascience.com/an-introduction-to-entity-resolution-needs-and-challenges-97fba052dde5)
     - [Agile Data Mastering](https://towardsdatascience.com/a-guide-to-agile-data-mastering-with-ai-3bf38f103709)
 
@@ -16,7 +10,7 @@ Real world data contains multiple records belonging to the same customer. These 
 ![data silos](assets/dataSilos.png)
 
 
-With a modern data stack and DataOps, we have established patterns for E and L in ELT for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like [DBT](https://www.getdbt.com) are actively and successfully addressing this. What is also needed is a quick and scalable way to build the single source of truth of core business entities post Extraction and pre or post Loading. 
+With a modern data stack and DataOps, we have established patterns for E and L in ELT for  building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like [dbt](https://www.getdbt.com) are actively and successfully addressing this. What is also needed is a quick and scalable way to build the single source of truth of core business entities post Extraction and pre or post Loading. 
 
 With Zingg, the analytics engineer and the data scientist can quickly integrate data silos and build unified views at scale! 
 
@@ -70,22 +64,6 @@ To build these models, training data is needed. Zingg comes with an interactive 
 
 ![Shows records and asks user to mark yes, no, cant say on the cli.](assets/label2.gif) 
 
-## Pretrained models
-
-Zingg comes with pretrained models for the Febrl dataset under the [models](models) folder.
-
-## Acknowledgements
-
-Zingg would have not have been possible without the excellent work below:
-- [Apache Spark](https://spark.apache.org)
-- [SecondString](http://secondstring.sourceforge.net/)
-- [Febrl](http://users.cecs.anu.edu.au/~Peter.Christen/Febrl/febrl-0.3/febrldoc-0.3/)
-
-## License
-
-Zingg is licensed under [AGPL v3.0](https://www.gnu.org/licenses/agpl-3.0.en.html) - which means you have the freedom to distribute copies of free software (and charge for them if you wish), that you receive source code or can get it if you want it, that you can change the software or use pieces of it in new free programs, and that you know you can do these things.
-
-Need a different license? Write to us.
 
 ## Community
 
