@@ -1,4 +1,4 @@
-## Step by step guide to running Zingg
+## Step by step guide 
 {: .no_toc }
 
 ## Table of contents
