@@ -2,7 +2,7 @@
 layout: default
 title: Running on AWS
 parent: Running Zingg
-nav_order: 4
+nav_order: 5
 ---
 ## Running on AWS Elastic Map Reduce
 `aws emr create-cluster --name "Add Spark Step Cluster" --release-label emr-6.2.0 --applications Name=Zingg \

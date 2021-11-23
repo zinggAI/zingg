@@ -1,3 +1,9 @@
+---
+layout: default
+title: Customization
+nav_order: 1
+---
+
 ## Step by step guide 
 {: .no_toc }
 
