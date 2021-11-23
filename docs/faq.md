@@ -2,7 +2,7 @@
 layout: default
 nav_order: 9
 ---
-# Frequently Asked Questions about Zingg
+# Frequently Asked Questions
 {: .no_toc }
 
 ## Table of contents
