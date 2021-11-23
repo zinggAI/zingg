@@ -6,6 +6,10 @@ nav_order: 2
 ---
 ## Using Snowflake As the Data Source or Data Sink
 
+Check a step by step tutorial at https://towardsdatascience.com/identifying-duplicates-in-snowflake-e95b3f3fce2b
+
+The config value for the data and output attributes of the JSON is
+
 ```json
  "data" : [ {
 			"name":"test", 
