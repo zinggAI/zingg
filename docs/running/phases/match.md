@@ -1,4 +1,3 @@
-
 ---
 layout: default
 title: Match
@@ -6,6 +5,7 @@ parent: Zingg Command Line Phases
 grand_parent: Running Zingg
 nav_order: 7
 ---
+
 ### match
 Finds the records whioch match with each other. 
 
