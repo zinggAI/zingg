@@ -1,3 +1,7 @@
+---
+layout: default
+nav_order: 9
+---
 # Frequently Asked Questions about Zingg
 {: .no_toc }
 

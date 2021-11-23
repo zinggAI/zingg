@@ -1,3 +1,7 @@
+---
+layout: default
+nav_order: 10
+---
 ## Acknowledgements
 
 Zingg would have not have been possible without the excellent work below:
