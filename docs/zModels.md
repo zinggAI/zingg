@@ -1,10 +1,11 @@
 ---
 layout: default
-title: Zingg ML Models
-nav_order: 2
+title: Zingg Models
+nav_order: 5
+has_children: true
 ---
 
-## Zingg ML Models
+## Zingg Models
 
 Zingg learns 2 models on the data. 
 
