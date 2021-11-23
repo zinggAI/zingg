@@ -49,7 +49,7 @@ For example for the csv under [examples/febrl/test.csv](/examples/febrl/test.csv
   }
 ```
 
-Read more about Zingg Pipes for datastore connections [here](../../dataSourcesAndSinks/pipes.md)). 
+Read more about Zingg Pipes for datastore connections [here](../../dataSourcesAndSinks/pipes.md). 
 
 ### output
 Definitions are same as [data](#data) but reflect where you want the Zingg output to get saved
