@@ -1,4 +1,10 @@
-## Key Zingg Concepts
+---
+layout: default
+title: Zingg ML Models
+nav_order: 2
+---
+
+## Zingg ML Models
 
 Zingg learns 2 models on the data. 
 
