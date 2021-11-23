@@ -1,5 +1,8 @@
 ---
-nav_exclude: true
+layout: default
+title: Snowflake
+parent: Data Sources and Sinks
+nav_order: 4
 ---
 ## Zingg Pipes
 

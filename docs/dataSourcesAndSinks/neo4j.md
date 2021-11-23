@@ -2,7 +2,7 @@
 layout: default
 title: Neo4j
 parent: Data Sources and Sinks
-nav_order: 3
+nav_order: 5
 ---
 ## Neo4j
 

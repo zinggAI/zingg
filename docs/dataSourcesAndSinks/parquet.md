@@ -2,7 +2,7 @@
 layout: default
 title: Parquet
 parent: Data Sources and Sinks
-nav_order: 2
+nav_order: 5
 ---
 
 

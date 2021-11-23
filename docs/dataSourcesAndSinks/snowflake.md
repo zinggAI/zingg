@@ -2,7 +2,7 @@
 layout: default
 title: Snowflake
 parent: Data Sources and Sinks
-nav_order: 2
+nav_order: 4
 ---
 ## Using Snowflake As the Data Source or Data Sink
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Customization
+title: Step By Step Guide
 nav_order: 1
 ---
 
