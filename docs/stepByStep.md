@@ -2,6 +2,7 @@
 layout: default
 title: Step By Step Guide
 nav_order: 1
+has_children: true
 ---
 
 ## Step by step guide 

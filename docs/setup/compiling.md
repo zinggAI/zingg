@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Compiling
-parent: Setup
+parent: Step By Step Guide
 nav_order: 4
 ---
 ## Compiling from sources

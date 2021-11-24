@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Hardware Sizing
-parent: Setup
+parent: Step By Step Guide
 nav_order: 5
 ---
 ## Hardware Sizing 
