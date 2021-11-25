@@ -7,7 +7,7 @@ nav_order: 7
 ---
 
 ### match
-Finds the records whioch match with each other. 
+Finds the records which match with each other. 
 
 `./zingg.sh --phase match --conf config.json`
 
