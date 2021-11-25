@@ -2,7 +2,7 @@
 layout: default
 title: Hardware Sizing
 parent: Step By Step Guide
-nav_order: 5
+nav_order: 4
 ---
 ## Hardware Sizing 
 Zingg has been built to scale. Performance is dependent on 
