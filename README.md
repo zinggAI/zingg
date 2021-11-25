@@ -9,7 +9,7 @@ Zingg is an ML based tool for entity resolution. The following features set Zing
 - Ability to handle any entity like customer, patient, supplier, product etc 
 - Ability to connect to [disparate data sources](https://docs.zingg.ai/docs/dataSourcesAndSinks/connectors.html). Local and cloud file systems in any format, enterprise applications and relational, NoSQL and cloud databases and warehouses
 - Ability to scale to large volumes of data. [See why this is important](https://docs.zingg.ai/docs/zModels.html) and [Zingg performance numbers](https://docs.zingg.ai/docs/setup/hardwareSizing.html)
-- [Interactive training data builder](https://docs.zingg.ai/docs/setup/createtrainingData.html) using active learning that builds models on frugally small training samples to high accuracy.
+- [Interactive training data builder](https://docs.zingg.ai/docs/setup/createTrainingData.html#label---user-feedback-on-the-training-pairs) using active learning that builds models on frugally small training samples to high accuracy.
 - Ability to define domain specific functions to improve matching  
 - Out of the box support for English as well as Chinese, Thai, Japanese, Hindi and other languages
 
