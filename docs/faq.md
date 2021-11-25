@@ -2,7 +2,7 @@
 layout: default
 nav_order: 9
 ---
-# Frequently Asked Questions
+## Frequently Asked Questions
 {: .no_toc }
 
 ## Table of contents
