@@ -29,6 +29,6 @@ Zingg builds a new set of models(blocking and similarity) for every new schema d
 The training data in Step 4 above is used to train Zingg and build and save the models. This is done by running the *train* phase. Read more [here](setup/train.md)
 
 ### Step 6: Voila, lets match!
-Its now time to apply the model above on our data. This si done by running the *match* or the *link* phases depending on whether you are matching within a single source or linking multiple sources respectively. You can read more about [matching](setup/match.md) and [linking](linking.md)
+Its now time to apply the model above on our data. This si done by running the *match* or the *link* phases depending on whether you are matching within a single source or linking multiple sources respectively. You can read more about [matching](setup/match.md) and [linking](setup/linking.md)
 
 As long as your input columns and the field types are not changing, the same model should work and you do not need to build a new model. 

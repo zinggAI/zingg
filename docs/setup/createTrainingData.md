@@ -1,9 +1,7 @@
 ---
 layout: default
-title: Create Training Data
 parent: Step By Step Guide
-grand_parent: Running Zingg
-nav_order: 4
+nav_order: 5
 ---
 
 Zingg builds models to predict similarity. Training data is needed to build these models. 
