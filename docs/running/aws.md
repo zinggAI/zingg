@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Running on AWS
-parent: Running Zingg
+parent: Running Zingg on Cloud
 nav_order: 5
 ---
 ## Running on AWS Elastic Map Reduce

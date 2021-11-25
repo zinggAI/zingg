@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Running on Databricks
-parent: Running Zingg
+parent: Running Zingg on Cloud
 nav_order: 6
 ---
 ## Running on Databricks

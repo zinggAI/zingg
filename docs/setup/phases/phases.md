@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Zingg Command Line Phases
-parent: Running Zingg
-nav_order: 3
+parent: Step By Step Guide
+nav_order: 6
 has_children: true
 ---
 ## Zingg Command Line Phases
