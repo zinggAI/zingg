@@ -31,52 +31,52 @@ import zingg.util.GraphUtil;
 import zingg.util.ModelUtil;
 import zingg.util.PipeUtil;
 
-
 import zingg.scala.TypeTags;
 import zingg.scala.DFUtil;
 
-public class Linker extends Matcher{
+public class Linker extends Matcher {
 
 	protected static String name = "zingg.Linker";
-	public static final Log LOG = LogFactory.getLog(Linker.class);    
+	public static final Log LOG = LogFactory.getLog(Linker.class);
 
-    public Linker() {
-        setZinggOptions(ZinggOptions.LINK);
-    }
+	public Linker() {
+		setZinggOptions(ZinggOptions.LINK);
+	}
 
-	protected Dataset<Row> getBlocks(Dataset<Row> blocked) throws Exception{
+	protected Dataset<Row> getBlocks(Dataset<Row> blocked, Dataset<Row> bAll) throws Exception{
 		return DSUtil.joinWithItselfSourceSensitive(blocked, ColName.HASH_COL, args).cache();
 	}
 
-    public void writeOutput(Dataset<Row> blocked, Dataset<Row> dupes) {
-		try{
-			//input dupes are pairs
-			///pick ones according to the threshold by user
+	protected Dataset<Row> selectColsFromBlocked(Dataset<Row> blocked) {
+		return blocked;
+	}
+
+	public void writeOutput(Dataset<Row> blocked, Dataset<Row> dupes) {
+		try {
+			// input dupes are pairs
+			/// pick ones according to the threshold by user
 			Dataset<Row> dupesActual = getDupesActualForGraph(dupes);
-				
-			//all clusters consolidated in one place
+
+			// all clusters consolidated in one place
 			if (args.getOutput() != null) {
 
-				//input dupes are pairs
+				// input dupes are pairs
 				dupesActual = DFUtil.addClusterRowNumber(dupesActual, spark);
-				dupesActual = Util.addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN );		
+				dupesActual = Util.addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN);
 				Dataset<Row> dupes1 = DSUtil.alignLinked(dupesActual, args);
 				Dataset<Row> dupes2 = dupes1.orderBy(ColName.CLUSTER_COLUMN);
 				LOG.debug("uncertain output schema is " + dupes2.schema());
-				PipeUtil.write(dupes2 , args, ctx, args.getOutput());
+				PipeUtil.write(dupes2, args, ctx, args.getOutput());
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		catch(Exception e) {
-			e.printStackTrace(); 
-		}		
 	}
-
 
 	protected Dataset<Row> getDupesActualForGraph(Dataset<Row> dupes) {
-		Dataset<Row> dupesActual = dupes.filter(dupes.col(ColName.PREDICTION_COL).equalTo(ColValues.IS_MATCH_PREDICTION));
-		return dupesActual;	
+		Dataset<Row> dupesActual = dupes
+				.filter(dupes.col(ColName.PREDICTION_COL).equalTo(ColValues.IS_MATCH_PREDICTION));
+		return dupesActual;
 	}
-	
 
-	    
 }

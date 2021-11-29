@@ -90,6 +90,10 @@ public class Matcher extends ZinggBase{
 		return model;
 	}
 
+	protected Dataset<Row> selectColsFromBlocked(Dataset<Row> blocked) {
+		return blocked.select(ColName.ID_COL, ColName.HASH_COL);
+	}
+
     public void execute() throws ZinggClientException {
         try {
 			// read input, filter, remove self joins
@@ -107,7 +111,7 @@ public class Matcher extends ZinggBase{
 				LOG.debug("Num distinct hashes " + blocked.select(ColName.HASH_COL).distinct().count());
 			}
 				//LOG.warn("Num distinct hashes " + blocked.agg(functions.approx_count_distinct(ColName.HASH_COL)).count());
-			Dataset<Row> blocks = getBlocks(blocked.select(ColName.ID_COL, ColName.HASH_COL), testData);
+			Dataset<Row> blocks = getBlocks(selectColsFromBlocked(blocked), testData);
 			//blocks.explain();
 			//LOG.info("Blocks " + blocks.count());
 			if (LOG.isDebugEnabled()) {
