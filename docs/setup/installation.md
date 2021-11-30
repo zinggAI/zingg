@@ -6,8 +6,10 @@ nav_order: 3
 ---
 ## Running from Docker image from Docker hub
 The easiest way to get started is pulling the Docker image with the last release of Zingg.
-`docker pull zingg/zingg:0.3.0`
-`docker run -it zingg/zingg:0.3.0 bash`
+```
+docker pull zingg/zingg:0.3.0
+docker run -it zingg/zingg:0.3.0 bash
+```
 
 ## Installation
 
