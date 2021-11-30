@@ -10,6 +10,7 @@ Zingg is an ML based tool for entity resolution. The following features set Zing
 - Ability to connect to [disparate data sources](https://docs.zingg.ai/docs/dataSourcesAndSinks/connectors.html). Local and cloud file systems in any format, enterprise applications and relational, NoSQL and cloud databases and warehouses
 - Ability to scale to large volumes of data. [See why this is important](https://docs.zingg.ai/docs/zModels.html) and [Zingg performance numbers](https://docs.zingg.ai/docs/setup/hardwareSizing.html)
 - [Interactive training data builder](https://docs.zingg.ai/docs/setup/createTrainingData.html#label---user-feedback-on-the-training-pairs) using active learning that builds models on frugally small training samples to high accuracy.
+![Shows records and asks user to mark yes, no, cant say on the cli.](/assets/label.gif) 
 - Ability to define domain specific functions to improve matching  
 - Out of the box support for English as well as Chinese, Thai, Japanese, Hindi and other languages
 
@@ -27,6 +28,14 @@ Zingg is useful for
 
 ## Demo
 See Zingg in action [here](https://www.youtube.com/watch?v=zOabyZxN9b0)
+
+## Getting Started
+The easiest way to get started with Zingg is through Docker and by running the prebuilt models.
+`docker pull zingg/zingg:0.3.0`
+`docker run -it zingg/zingg:0.3.0 bash`
+`./scripts/zingg.sh --phase match examples/febrl/config.json` 
+
+Check the [step by step guide](https://docs.zingg.ai/docs/stepByStep.html) for more details.
 
 ## Documentation
 Check detailed Zingg [documentation](https://docs.zingg.ai) 

@@ -4,9 +4,15 @@ title: Installation
 parent: Step By Step Guide
 nav_order: 3
 ---
+## Running from Docker image from Docker hub
+The easiest way to get started is pulling the Docker image with the last release of Zingg.
+`docker pull zingg/zingg:0.3.0`
+`docker run -it zingg/zingg:0.3.0 bash`
+
 ## Installation
 
 Zingg runs on [Spark](https://spark.apache.org) and can be used on all major Spark distributions. Zingg can run on all major Linux flavours.
+
 Zingg is prebuilt for common Spark versions so you can use those directly. The following document assumes that we are installing Zingg 0.3.0 on Spark 3.0.1, but you can follow the same process for other versions too
 
 - TOC

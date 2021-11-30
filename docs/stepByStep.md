@@ -14,7 +14,7 @@ has_children: true
 1. TOC
 {:toc}
 ### Step 1: Install
-Installation instructions [here](setup/installation.md). If you need to build from the sources or compile for a different flavor of Spark, check [compiling](setup/installation.md#compiling-from-sources)
+Installation instructions for docker as well as github release are [here](setup/installation.md). If you need to build from the sources or compile for a different flavor of Spark, check [compiling](setup/installation.md#compiling-from-sources)
 
 ### Step 2: Plan for Hardware
 Decide your hardware based on the [performance numbers](setup/hardwareSizing.md)
