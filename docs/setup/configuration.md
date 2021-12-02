@@ -9,7 +9,7 @@ nav_order: 5
 
  Zingg comes with a command line script that invokes spark-submit. This script needs a json configuration file to define the input data and match types, location of training data, models and output. 
 
-Sample configuration files are defined at [examples/febrl](/examples/febrl) and [/examples/febrl120k]([examples/febrl120k])
+Sample configuration files are defined at [examples/febrl](/examples/febrl) and [/examples/febrl120k](/examples/febrl120k)
 
 Here are the json variables which you will need to define to work with your data.
 - TOC
@@ -17,7 +17,7 @@ Here are the json variables which you will need to define to work with your data
 
 ### data
 
-Array of input data. Each array entry here refers to a [Zingg Pipe](../../dataSourcesAndSinks/pipes.md). If the data is self describing, for eg avro or parquet, there is no need to define the schema. Else field definitions with name and types need to be provided. 
+Array of input data. Each array entry here refers to a [Zingg Pipe](../dataSourcesAndSinks/pipes.md). If the data is self describing, for eg avro or parquet, there is no need to define the schema. Else field definitions with name and types need to be provided.
 
 For example for the csv under [examples/febrl/test.csv](/examples/febrl/test.csv) ![febrl](/assets/febrl.gif)
 
