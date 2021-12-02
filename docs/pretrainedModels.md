@@ -7,5 +7,5 @@ parent: Zingg Models
 
 ## Pretrained models
 
-Zingg comes with pretrained models for the Febrl dataset under the [models](/models) folder.
+Zingg comes with pretrained models for the Febrl dataset under the [models](/../models) folder.
 
