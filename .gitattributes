@@ -1,7 +1,0 @@
-examples/febrl120k/test1l20k.csv.orig.sorted filter=lfs diff=lfs merge=lfs -text
-examples/febrl120k/test500k.csv filter=lfs diff=lfs merge=lfs -text
-examples/febrl120k/test.csv filter=lfs diff=lfs merge=lfs -text
-examples/febrl120k/test.csv.1 filter=lfs diff=lfs merge=lfs -text
-examples/febrl120k/test.csv.1m filter=lfs diff=lfs merge=lfs -text
-examples/febrl120k/test.csv.orig filter=lfs diff=lfs merge=lfs -text
-examples/febrl120k/test1l20k.csv.orig filter=lfs diff=lfs merge=lfs -text
