@@ -21,7 +21,7 @@ No, absolutely not! Train only if the schema(attributes or their types) have cha
 
 ### Do I need to use a Spark cluster or can I run on a single machine?
 
-Depends on the data size you have. Check [hardware sizing](hardwareSizing.md) for more details.
+Depends on the data size you have. Check [hardware sizing](setup/hardwareSizing.md) for more details.
 
 ### I dont have much background in ML or Spark. Can I still use Zingg ?
 

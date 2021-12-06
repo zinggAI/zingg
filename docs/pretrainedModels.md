@@ -7,5 +7,6 @@ parent: Zingg Models
 
 ## Pretrained models
 
-Zingg comes with pretrained models for the Febrl dataset which are located under the [models]({{ gh_edit_repository }}/models) folder.
+
+Zingg comes with pretrained models for the Febrl dataset under the [models](https://github.com/zinggAI/zingg/tree/main/models) folder.
 
