@@ -40,9 +40,7 @@ nav_order: 6
     "findTrainingData",
     "--conf",
     "dbfs:/config.json"
-  ]
-  }
-}
+    ]
   }
 }
 ````
