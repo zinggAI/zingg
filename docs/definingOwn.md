@@ -2,7 +2,7 @@
 layout: default
 nav_order: 6
 ---
-## Improving Accuracy 
+## Improving Accuracy By Defining Own Functions 
 
 You can add your own [blocking functions](https://github.com/zinggAI/zingg/tree/main/core/src/main/java/zingg/hash) which will be evaluated by Zingg to build the [blocking tree.](zModels.md)
 
