@@ -100,6 +100,7 @@ public class Arguments implements Serializable {
 	String modelId = "1";
 	double threshold = 0.5d;
 	int jobId = 1;
+	boolean collectMetricsFlag = true; 
 	
 	
 	public double getThreshold() {
@@ -151,6 +152,7 @@ public class Arguments implements Serializable {
 					true);
 			LOG.warn("Config Argument is " + filePath);
 			Arguments args = mapper.readValue(new File(filePath), Arguments.class);
+			LOG.warn("CollectMetricsFlag is " + args.getCollectMetricsFlag());
 			LOG.warn("phase is " + phase);
 			checkValid(args, phase);
 			return args;			
@@ -528,6 +530,14 @@ public class Arguments implements Serializable {
 
 	public void setJobId(int jobId) {
 		this.jobId = jobId;
+	}
+
+	public boolean getCollectMetricsFlag() {
+		return collectMetricsFlag;
+	}
+
+	public void setCollectMetricsFlag(boolean collectMetricsFlag) {
+		this.collectMetricsFlag = collectMetricsFlag;
 	}
 
 	public String[] getPipeNames() {

@@ -15,6 +15,7 @@ import org.apache.spark.sql.functions;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.client.pipe.Pipe;
+import zingg.client.util.Analytics;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.util.DSUtil;
@@ -34,6 +35,9 @@ public class Labeller extends ZinggBase {
 			LOG.info("Reading inputs for labelling phase ...");
 			Dataset<Row> unmarkedRecords = getUnmarkedRecords();
 			processRecordsCli(unmarkedRecords);
+			if (args.getCollectMetricsFlag()) {
+				Analytics.getSpecificParams().put("labelData", String.valueOf(unmarkedRecords.count()));
+			}
 			LOG.info("Finished labelling phase");
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,11 +1,16 @@
 package zingg.client;
 
 import java.io.Serializable;
+  
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaSparkContext;
 
+import zingg.client.pipe.Pipe;
+import zingg.client.util.Analytics;
 import zingg.client.util.Email;
 import zingg.client.util.EmailBody;
 
@@ -96,7 +101,20 @@ public class Client implements Serializable {
 		LOG.info("");
 	}
 	
-	
+	public static void printAnalyticsBanner() {
+		LOG.info("");
+		LOG.info("****************************************************************************");
+		LOG.info("*            ** Note about analytics collection by Zingg AI **             *");
+		LOG.info("*                                                                          *");
+		LOG.info("*   Please note that Zingg captures a few metrics about application's      *");
+		LOG.info("*   runtime parameters. In no case, any user's personal data or application*");
+		LOG.info("*   data or its part is captured. If you want to switch off this feature,  *");
+		LOG.info("*   please set the flag collectMetricsFlag to false in config.             *");
+		LOG.info("*   For more details, refer to the analytics document(docs.zingg.ai)       *");
+		LOG.info("****************************************************************************");
+		LOG.info("");
+	}
+
 	public static void main(String... args) {
 		printBanner();
 		Client client = null;
@@ -117,10 +135,15 @@ public class Client implements Serializable {
 			else {
 				arguments = Arguments.createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
-			
+			if (arguments.getCollectMetricsFlag()) {
+				printAnalyticsBanner();
+			}
 			client = new Client(arguments, options);	
 			client.init();
 			client.execute();
+			if (client.getArguments().getCollectMetricsFlag()) {
+				client.trackMetrics(phase);
+			}
 			LOG.warn("Zingg processing has completed");				
 		} 
 		catch(ZinggClientException e) {
@@ -190,7 +213,31 @@ public class Client implements Serializable {
 		this.options = options;
 	}
 	
+	private void trackMetrics(String phase) {
+		if (!getArguments().getCollectMetricsFlag()) {
+			return;
+		}
+		ObjectMapper mapper = new ObjectMapper();
 
-	
+		ObjectNode eventNode = mapper.createObjectNode();
+		eventNode.put("name", "phase");
+	  
+		ObjectNode paramsNode = mapper.createObjectNode();
+		paramsNode.put("phase", phase);
+		paramsNode.put("features", String.valueOf(getArguments().getFieldDefinition().size()));
+		
+		Pipe[] dataPipes = getArguments().getData();
+		for (Pipe p : dataPipes) {
+			paramsNode.put("dataType", p.getFormat().type());
+		}
+		Pipe[] outputPipes = getArguments().getOutput();
+		for (Pipe p : outputPipes) {
+			paramsNode.put("outputType", p.getFormat().type());
+		}
 
+		eventNode.set("params", paramsNode);
+		String param = Analytics.trackParameters(eventNode);
+
+		Analytics.track(param);
+	}
 }
