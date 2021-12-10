@@ -24,6 +24,7 @@ import zingg.client.ZinggOptions;
 import zingg.client.util.Analytics;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
+import zingg.client.util.Metric;
 import zingg.client.util.Util;
 import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
@@ -101,9 +102,10 @@ public class Matcher extends ZinggBase{
 			Dataset<Row> testData = getTestData();
 			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
-			LOG.info("Read " + testData.count());
-			if (args.getCollectMetricsFlag()) {
-				Analytics.getSpecificParams().put("testData", String.valueOf(testData.count()));
+			double count = testData.count();
+			LOG.info("Read " + count);
+			if (args.getCollectMetrics()) {
+				Analytics.track(Metric.METRIC_TOTAL_COUNT, count);
 			}
 			Dataset<Row> blocked = getBlocked(testData);
 			LOG.info("Blocked ");

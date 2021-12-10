@@ -14,6 +14,7 @@ import zingg.client.ZinggOptions;
 import zingg.client.util.Analytics;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
+import zingg.client.util.Metric;
 import zingg.client.util.Util;
 import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
@@ -54,9 +55,9 @@ public class Trainer extends ZinggBase{
 			Model model = ModelUtil.createModel(positives, negatives, new Model(this.featurers), spark);
 			model.save(args.getModel());
 			LOG.info("Learnt similarity rules and saved output at " + args.getZinggDir());
-			if (args.getCollectMetricsFlag()) {
-				Analytics.getSpecificParams().put("testData", String.valueOf(testData.count()));
-				Analytics.getSpecificParams().put("features", String.valueOf(getFeaturers().size()));
+			if (args.getCollectMetrics()) {
+				Analytics.track(Metric.METRIC_POSITIVE_COUNT, Metric.approxCount(positives));
+				Analytics.track(Metric.METRIC_NEGATIVE_COUNT, Metric.approxCount(negatives));
 			}
 			LOG.info("Finished Learning phase");			
 		} catch (Exception e) {

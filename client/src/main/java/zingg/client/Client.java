@@ -1,9 +1,6 @@
 package zingg.client;
 
 import java.io.Serializable;
-  
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,6 +10,7 @@ import zingg.client.pipe.Pipe;
 import zingg.client.util.Analytics;
 import zingg.client.util.Email;
 import zingg.client.util.EmailBody;
+import zingg.client.util.Metric;
 
 
 /**
@@ -101,21 +99,31 @@ public class Client implements Serializable {
 		LOG.info("");
 	}
 	
-	public static void printAnalyticsBanner() {
-		LOG.info("");
-		LOG.info("****************************************************************************");
-		LOG.info("*            ** Note about analytics collection by Zingg AI **             *");
-		LOG.info("*                                                                          *");
-		LOG.info("*   Please note that Zingg captures a few metrics about application's      *");
-		LOG.info("*   runtime parameters. In no case, any user's personal data or application*");
-		LOG.info("*   data or its part is captured. If you want to switch off this feature,  *");
-		LOG.info("*   please set the flag collectMetricsFlag to false in config.             *");
-		LOG.info("*   For more details, refer to the analytics document(docs.zingg.ai)       *");
-		LOG.info("****************************************************************************");
-		LOG.info("");
+	public static void printAnalyticsBanner(boolean collectMetrics) {
+		if(collectMetrics) {
+			LOG.info("");
+			LOG.info("****************************************************************************");
+			LOG.info("*            ** Note about analytics collection by Zingg AI **             *");
+			LOG.info("*                                                                          *");
+			LOG.info("*  Please note that Zingg captures a few metrics about application's       *");
+			LOG.info("*  runtime parameters. However, no user's personal data or application     *");
+			LOG.info("*  data is captured. If you want to switch off this feature, please        *");
+			LOG.info("*  set the flag collectMetrics to false in config. For details,            *");
+			LOG.info("*  please refer to the zingg docs (https://docs.zingg.ai/docs/analytics.html)     *");
+			LOG.info("****************************************************************************");
+			LOG.info("");
+		}
+		else {
+			LOG.info("");
+			LOG.info("********************************************************");
+			LOG.info("*    Zingg is not collecting any analytics data        *");
+			LOG.info("********************************************************");
+			LOG.info("");
+		}
 	}
 
 	public static void main(String... args) {
+		long startTime = System.currentTimeMillis();
 		printBanner();
 		Client client = null;
 		ClientOptions options = null;
@@ -135,15 +143,13 @@ public class Client implements Serializable {
 			else {
 				arguments = Arguments.createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
-			if (arguments.getCollectMetricsFlag()) {
-				printAnalyticsBanner();
-			}
+			printAnalyticsBanner(arguments.getCollectMetrics());
+
 			client = new Client(arguments, options);	
 			client.init();
 			client.execute();
-			if (client.getArguments().getCollectMetricsFlag()) {
-				client.trackMetrics(phase);
-			}
+			Analytics.track(Metric.METRIC_EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000);
+			client.trackMetrics(phase);
 			LOG.warn("Zingg processing has completed");				
 		} 
 		catch(ZinggClientException e) {
@@ -214,30 +220,18 @@ public class Client implements Serializable {
 	}
 	
 	private void trackMetrics(String phase) {
-		if (!getArguments().getCollectMetricsFlag()) {
+		if (!getArguments().getCollectMetrics()) {
 			return;
 		}
-		ObjectMapper mapper = new ObjectMapper();
-
-		ObjectNode eventNode = mapper.createObjectNode();
-		eventNode.put("name", "phase");
-	  
-		ObjectNode paramsNode = mapper.createObjectNode();
-		paramsNode.put("phase", phase);
-		paramsNode.put("features", String.valueOf(getArguments().getFieldDefinition().size()));
-		
+		Analytics.track(Metric.METRIC_FEATURE_COUNT, getArguments().getFieldDefinition().size());
 		Pipe[] dataPipes = getArguments().getData();
 		for (Pipe p : dataPipes) {
-			paramsNode.put("dataType", p.getFormat().type());
+			Analytics.track(Metric.METRIC_SOURCE_TYPE, p.getFormat().type());
 		}
-		Pipe[] outputPipes = getArguments().getOutput();
+ 		Pipe[] outputPipes = getArguments().getOutput();
 		for (Pipe p : outputPipes) {
-			paramsNode.put("outputType", p.getFormat().type());
+			Analytics.track(Metric.METRIC_SINK_TYPE, p.getFormat().type());
 		}
-
-		eventNode.set("params", paramsNode);
-		String param = Analytics.trackParameters(eventNode);
-
-		Analytics.track(param);
-	}
+		Analytics.trackEvent(phase);
+ 	}
 }

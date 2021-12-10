@@ -29,57 +29,50 @@ public class Analytics {
 	private static final String API_VERSION = "2";
 	private static final String MEASUREMENT_ID = "G-VFQXB5JFC1";
 
-	private static ArrayNode eventList;
-	private static Map<String, String> specificParams;
+	private static Map<String, String> metrics;
 
-	public static ArrayNode getEventList() {
-		if(eventList == null) {
-			ObjectMapper mapper = new ObjectMapper();
-			eventList = mapper.createArrayNode();
+	private static Map<String, String> getMetrics() {
+		if(metrics == null) {
+			metrics =  new HashMap<String, String>();
 		}
-		return eventList;
+		return metrics;
 	}
 
-	public static Map<String, String> getSpecificParams() {
-		if(specificParams == null) {
-			specificParams =  new HashMap<String, String>();
-		}
-		return specificParams;
+	public static void track(String metricName, String metricValue) {
+		getMetrics().put(metricName, metricValue);
 	}
 
-	public static void addEvent(String name, String value) {
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectNode eventNode = mapper.createObjectNode();
-		eventNode.put("name",  name);
-		ObjectNode paramNode = mapper.createObjectNode();
-		paramNode.put(name, value);
- 		eventNode.set("params", paramNode);
-
-		getEventList().add(eventNode);
+	public static void track(String metricName, double metricValue) {
+		track(metricName, String.valueOf(metricValue));
 	}
 
-	public static String trackParameters(ObjectNode eventNode) {
-
+	public static void trackEvent(String phase) {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode rootNode = mapper.createObjectNode();
 
 		rootNode.put("client_id", "555");
-		ObjectNode paramNode = (ObjectNode) eventNode.get("params");
-		for (Map.Entry<String, String> entry : specificParams.entrySet()) {
+
+		ObjectNode eventNode = mapper.createObjectNode();
+		eventNode.put("name", phase);
+
+		ObjectNode paramNode = mapper.createObjectNode();
+		for (Map.Entry<String, String> entry : metrics.entrySet()) {
 			paramNode.put(entry.getKey(), entry.getValue());
 		}
+		eventNode.set("params", paramNode); 
 
-		getEventList().add(eventNode);
-		rootNode.set("events", getEventList());
-
-		return rootNode.toString();
+		ArrayNode eventList;
+		eventList = mapper.createArrayNode();
+		eventList.add(eventNode);
+		rootNode.set("events", eventList);
+		
+		Analytics.sendEvents(rootNode.toString());
 	}
 
 	public static final Log LOG = LogFactory.getLog(Analytics.class); 
 
-	public static void track(String param) {
-		LOG.warn("Entering Analytics.track()");
-		URIBuilder builder = new URIBuilder();
+	private static void sendEvents(String param) {
+ 		URIBuilder builder = new URIBuilder();
 		builder
 				.setScheme("https")
 				.setHost(HOST)
@@ -96,11 +89,8 @@ public class Analytics {
 		}
 		try {
 			URL url = uri.toURL();
-			LOG.warn("URL: " + url.toString());
-			LOG.warn("param: " + param);
- 			String response = executePostRequest(url.toString(), param);
-			LOG.warn("Response: " + response);
-  		} catch (IOException e) {
+   			String response = executePostRequest(url.toString(), param);
+   		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		LOG.debug("Event tracked.");
@@ -139,7 +129,6 @@ public class Analytics {
 			reader.close();
 			return response.toString();
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		} finally {
 			if (connection != null) {

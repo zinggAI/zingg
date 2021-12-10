@@ -25,7 +25,6 @@ import zingg.client.util.ColValues;
 import zingg.client.util.Util;
 import zingg.model.LabelModel;
 import zingg.model.Model;
-import zingg.client.util.Analytics;
 import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
 import zingg.util.ModelUtil;
@@ -53,9 +52,6 @@ public class TrainingDataFinder extends ZinggBase{
 				Dataset<Row> data = PipeUtil.read(spark, true, true, args.getData());
 				LOG.warn("Read input data " + data.count());
 				//create 20 pos pairs
-				if (args.getCollectMetricsFlag()) {
-					Analytics.getSpecificParams().put("trainingData", String.valueOf(data.count()));
-				}
 
 				Dataset<Row> posPairs = null;
 				Dataset<Row> negPairs = null;

@@ -97,3 +97,10 @@ Number of Spark partitions over which the input data is distributed. Keep it equ
 
 ### labelDataSampleSize
 Fraction of the data to be used for training the models. Adjust it between 0.0001 and 0.1 to keep the sample size small enough so that it finds enough edge cases fast. If the size is bigger, the findTrainingData job will spend more time combing through samples. If the size is too small, Zingg may not find the right edge cases. 
+
+### collectMetrics
+Application captures a few measurements for runtime metrics such as *no. of data records, no. of features, running phase* and a few more. 
+
+<span style="color:maroon">**Zingg does not capture any user data or input data and will never do so.**</span>
+
+This feature may be disabled by setting this flag to false. Default value is true. For details, refer to [Zingg Analytics](../analytics.md)
