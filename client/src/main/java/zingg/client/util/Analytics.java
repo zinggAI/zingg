@@ -38,15 +38,20 @@ public class Analytics {
 		return metrics;
 	}
 
-	public static void track(String metricName, String metricValue) {
-		getMetrics().put(metricName, metricValue);
+	public static void track(String metricName, String metricValue, boolean collectMetrics) {
+		if (collectMetrics) {
+			getMetrics().put(metricName, metricValue);
+		}
 	}
 
-	public static void track(String metricName, double metricValue) {
-		track(metricName, String.valueOf(metricValue));
+	public static void track(String metricName, double metricValue, boolean collectMetrics) {
+		track(metricName, String.valueOf(metricValue), collectMetrics);
 	}
 
-	public static void trackEvent(String phase) {
+	public static void postEvent(String phase, boolean collectMetrics) {
+		if (collectMetrics == false) {
+			return;
+		}
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode rootNode = mapper.createObjectNode();
 
@@ -90,13 +95,13 @@ public class Analytics {
 		try {
 			URL url = uri.toURL();
    			String response = executePostRequest(url.toString(), param);
-   		} catch (IOException e) {
+    		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		LOG.debug("Event tracked.");
 	}
 
-	public static String executePostRequest(String targetURL, String urlParameters) {
+	private static String executePostRequest(String targetURL, String urlParameters) {
 		HttpURLConnection connection = null;
 		try {
 			//Create connection

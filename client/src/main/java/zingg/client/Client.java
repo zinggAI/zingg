@@ -1,6 +1,8 @@
 package zingg.client;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -108,8 +110,8 @@ public class Client implements Serializable {
 			LOG.info("*  Please note that Zingg captures a few metrics about application's       *");
 			LOG.info("*  runtime parameters. However, no user's personal data or application     *");
 			LOG.info("*  data is captured. If you want to switch off this feature, please        *");
-			LOG.info("*  set the flag collectMetrics to false in config. For details,            *");
-			LOG.info("*  please refer to the zingg docs (https://docs.zingg.ai/docs/analytics.html)     *");
+			LOG.info("*  set the flag collectMetrics to false in config. For details, please     *");
+			LOG.info("*  refer to the zingg docs (https://docs.zingg.ai/docs/analytics.html)     *");
 			LOG.info("****************************************************************************");
 			LOG.info("");
 		}
@@ -148,8 +150,8 @@ public class Client implements Serializable {
 			client = new Client(arguments, options);	
 			client.init();
 			client.execute();
-			Analytics.track(Metric.METRIC_EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000);
-			client.trackMetrics(phase);
+			Analytics.track(Metric.METRIC_EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000, arguments.getCollectMetrics());
+			client.postMetrics(phase, arguments.getCollectMetrics());
 			LOG.warn("Zingg processing has completed");				
 		} 
 		catch(ZinggClientException e) {
@@ -218,20 +220,20 @@ public class Client implements Serializable {
 	public void setOptions(ClientOptions options) {
 		this.options = options;
 	}
-	
-	private void trackMetrics(String phase) {
-		if (!getArguments().getCollectMetrics()) {
-			return;
-		}
-		Analytics.track(Metric.METRIC_FEATURE_COUNT, getArguments().getFieldDefinition().size());
+
+	private void postMetrics(String phase, boolean collectMetrics) {
+		Analytics.track(Metric.METRIC_FIELDS_COUNT, getArguments().getFieldDefinition().size(), collectMetrics);
+
 		Pipe[] dataPipes = getArguments().getData();
-		for (Pipe p : dataPipes) {
-			Analytics.track(Metric.METRIC_SOURCE_TYPE, p.getFormat().type());
-		}
- 		Pipe[] outputPipes = getArguments().getOutput();
-		for (Pipe p : outputPipes) {
-			Analytics.track(Metric.METRIC_SINK_TYPE, p.getFormat().type());
-		}
-		Analytics.trackEvent(phase);
- 	}
+		String inPipesStr = Arrays.stream(dataPipes).map(p -> p.getFormat().type()).collect(Collectors.toList())
+				.stream().reduce((p1, p2) -> p1 + "," + p2).map(Object::toString).orElse("");
+		Analytics.track(Metric.METRIC_DATA_FORMAT, inPipesStr, collectMetrics);
+
+		Pipe[] outputPipes = getArguments().getOutput();
+		String outPipesStr = Arrays.stream(outputPipes).map(p -> p.getFormat().type()).collect(Collectors.toList())
+				.stream().reduce((p1, p2) -> p1 + "," + p2).map(Object::toString).orElse("");
+		Analytics.track(Metric.METRIC_OUTPUT_FORMAT, outPipesStr, collectMetrics);
+
+		Analytics.postEvent(phase, collectMetrics);
+	}
 }

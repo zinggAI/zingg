@@ -104,9 +104,8 @@ public class Matcher extends ZinggBase{
 			//testData = dropDuplicates(testData);
 			double count = testData.count();
 			LOG.info("Read " + count);
-			if (args.getCollectMetrics()) {
-				Analytics.track(Metric.METRIC_TOTAL_COUNT, count);
-			}
+			Analytics.track(Metric.METRIC_DATA_COUNT, count, args.getCollectMetrics());
+
 			Dataset<Row> blocked = getBlocked(testData);
 			LOG.info("Blocked ");
 			/*blocked = blocked.cache();
