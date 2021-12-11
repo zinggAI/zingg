@@ -7,6 +7,11 @@ import org.junit.Test;
 
 
 public class TestToCSV {
+
+	@Test
+	public void dummy() {
+		//placeholder
+	}
 	
 	/*
 	

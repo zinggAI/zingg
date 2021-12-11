@@ -19,6 +19,7 @@ public class ZFactory implements IZinggFactory{
         zinggers.put(ZinggOptions.MATCH, Matcher.name);
         zinggers.put(ZinggOptions.TRAIN_MATCH, TrainMatcher.name);
         zinggers.put(ZinggOptions.LINK, Linker.name);
+        zinggers.put(ZinggOptions.GENERATE_DOCS, Documenter.name);
     }
 
     public IZingg get(ZinggOptions z) throws InstantiationException, IllegalAccessException, ClassNotFoundException {

@@ -455,6 +455,11 @@ public class Arguments implements Serializable {
 		return zinggDir + "/" + modelId + "/model";
 	}
 
+	@JsonIgnore
+	public String getZinggDocDir() {
+		return getZinggBaseModelDir() + "/doc/";
+	}
+
 	/**
 	 * Location for internal Zingg use.
 	 * 

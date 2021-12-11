@@ -9,7 +9,8 @@ public enum ZinggOptions {
     TRAIN_MATCH("trainMatch"), 
     FIND_TRAINING_DATA("findTrainingData"), 
     LABEL("label"),
-    LINK("link");
+    LINK("link"),
+    GENERATE_DOCS("generateDocs");
 
     private String value;
 

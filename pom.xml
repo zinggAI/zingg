@@ -84,7 +84,7 @@
 		</profile>
 	</profiles>
 	<properties>
-		<skipTests>true</skipTests>
+		<skipTests>false</skipTests>
 		<failIfNoTests>false</failIfNoTests>
 		<maven.compiler.source>8</maven.compiler.source>
 		<maven.compiler.target>8</maven.compiler.target>
@@ -321,6 +321,9 @@
 							<value>${project.parent.basedir}/license/zinggLicense</value>
 						</property>
 					</systemProperties>
+        				<additionalClasspathElements>
+          					<additionalClasspathElement>${project.parent.basedir}/client/target/classes</additionalClasspathElement>
+        				</additionalClasspathElements>
 				</configuration>
 			</plugin>
 		</plugins>
