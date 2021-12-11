@@ -8,8 +8,8 @@ public class Metric {
     public static final String METRIC_OUTPUT_FORMAT = "outputFormat";
     public static final String METRIC_FIELDS_COUNT = "numFields";
     public static final String METRIC_EXEC_TIME = "executionTime";
-    public static final String METRIC_TRAINING_POSITIVES = "trainingDataPositives";
-    public static final String METRIC_TRAINING_NEGATIVES = "trainingDataNegatives";
+    public static final String METRIC_TRAINING_MATCHES = "trainingDataMatches";
+    public static final String METRIC_TRAINING_NONMATCHES = "trainingDataNonmatches";
     public static final String METRIC_DATA_COUNT = "dataCount";
 
     public static final long timeout = 1200L;
