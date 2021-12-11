@@ -55,8 +55,8 @@ public class Trainer extends ZinggBase{
 			Model model = ModelUtil.createModel(positives, negatives, new Model(this.featurers), spark);
 			model.save(args.getModel());
 			LOG.info("Learnt similarity rules and saved output at " + args.getZinggDir());
-			Analytics.track(Metric.METRIC_TRAINING_MATCHES, Metric.approxCount(positives), args.getCollectMetrics());
-			Analytics.track(Metric.METRIC_TRAINING_NONMATCHES, Metric.approxCount(negatives), args.getCollectMetrics());
+			Analytics.track(Metric.TRAINING_MATCHES, Metric.approxCount(positives), args.getCollectMetrics());
+			Analytics.track(Metric.TRAINING_NONMATCHES, Metric.approxCount(negatives), args.getCollectMetrics());
 			LOG.info("Finished Learning phase");			
 		} catch (Exception e) {
 			e.printStackTrace();

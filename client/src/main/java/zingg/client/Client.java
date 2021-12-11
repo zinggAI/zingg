@@ -111,7 +111,7 @@ public class Client implements Serializable {
 			LOG.info("*  runtime parameters. However, no user's personal data or application     *");
 			LOG.info("*  data is captured. If you want to switch off this feature, please        *");
 			LOG.info("*  set the flag collectMetrics to false in config. For details, please     *");
-			LOG.info("*  refer to the zingg docs (https://docs.zingg.ai/docs/analytics.html)     *");
+			LOG.info("*  refer to the Zingg docs (https://docs.zingg.ai/docs/analytics.html)     *");
 			LOG.info("****************************************************************************");
 			LOG.info("");
 		}
@@ -150,7 +150,7 @@ public class Client implements Serializable {
 			client = new Client(arguments, options);	
 			client.init();
 			client.execute();
-			Analytics.track(Metric.METRIC_EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000, arguments.getCollectMetrics());
+			Analytics.track(Metric.EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000, arguments.getCollectMetrics());
 			client.postMetrics(phase, arguments.getCollectMetrics());
 			LOG.warn("Zingg processing has completed");				
 		} 
@@ -222,17 +222,32 @@ public class Client implements Serializable {
 	}
 
 	private void postMetrics(String phase, boolean collectMetrics) {
-		Analytics.track(Metric.METRIC_FIELDS_COUNT, getArguments().getFieldDefinition().size(), collectMetrics);
+		Analytics.track(Metric.TOTAL_FIELDS_COUNT, getArguments().getFieldDefinition().size(), collectMetrics);
+		int matchFieldCount = getArguments().getFieldDefinition()
+				.stream()
+				.filter(f -> !(f.getMatchType() == null || f.getMatchType().equals(MatchType.DONT_USE)))
+				.collect(Collectors.toList())
+				.size();
+		Analytics.track(Metric.MATCH_FIELDS_COUNT, matchFieldCount, collectMetrics);
 
 		Pipe[] dataPipes = getArguments().getData();
-		String inPipesStr = Arrays.stream(dataPipes).map(p -> p.getFormat().type()).collect(Collectors.toList())
-				.stream().reduce((p1, p2) -> p1 + "," + p2).map(Object::toString).orElse("");
-		Analytics.track(Metric.METRIC_DATA_FORMAT, inPipesStr, collectMetrics);
+		String inPipesStr = Arrays.stream(dataPipes)
+				.map(p -> p.getFormat().type())
+				.collect(Collectors.toList())
+				.stream()
+				.reduce((p1, p2) -> p1 + "," + p2)
+				.map(Object::toString)
+				.orElse("");
+		Analytics.track(Metric.DATA_FORMAT, inPipesStr, collectMetrics);
 
 		Pipe[] outputPipes = getArguments().getOutput();
-		String outPipesStr = Arrays.stream(outputPipes).map(p -> p.getFormat().type()).collect(Collectors.toList())
-				.stream().reduce((p1, p2) -> p1 + "," + p2).map(Object::toString).orElse("");
-		Analytics.track(Metric.METRIC_OUTPUT_FORMAT, outPipesStr, collectMetrics);
+		String outPipesStr = Arrays.stream(outputPipes)
+				.map(p -> p.getFormat().type())
+				.collect(Collectors.toList())
+				.stream().reduce((p1, p2) -> p1 + "," + p2)
+				.map(Object::toString)
+				.orElse("");
+		Analytics.track(Metric.OUTPUT_FORMAT, outPipesStr, collectMetrics);
 
 		Analytics.postEvent(phase, collectMetrics);
 	}

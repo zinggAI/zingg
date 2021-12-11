@@ -30,6 +30,7 @@ public class Analytics {
 	private static final String MEASUREMENT_ID = "G-VFQXB5JFC1";
 
 	private static Map<String, String> metrics;
+	public static final Log LOG = LogFactory.getLog(Analytics.class); 
 
 	private static Map<String, String> getMetrics() {
 		if(metrics == null) {
@@ -74,8 +75,6 @@ public class Analytics {
 		Analytics.sendEvents(rootNode.toString());
 	}
 
-	public static final Log LOG = LogFactory.getLog(Analytics.class); 
-
 	private static void sendEvents(String param) {
  		URIBuilder builder = new URIBuilder();
 		builder
@@ -89,13 +88,9 @@ public class Analytics {
 		URI uri = null;
 		try {
 			uri = builder.build();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		try {
 			URL url = uri.toURL();
    			String response = executePostRequest(url.toString(), param);
-    		} catch (IOException e) {
+    	} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 		}
 		LOG.debug("Event tracked.");

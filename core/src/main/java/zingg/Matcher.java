@@ -102,9 +102,9 @@ public class Matcher extends ZinggBase{
 			Dataset<Row> testData = getTestData();
 			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
-			double count = testData.count();
+			long count = testData.count();
 			LOG.info("Read " + count);
-			Analytics.track(Metric.METRIC_DATA_COUNT, count, args.getCollectMetrics());
+			Analytics.track(Metric.DATA_COUNT, count, args.getCollectMetrics());
 
 			Dataset<Row> blocked = getBlocked(testData);
 			LOG.info("Blocked ");
