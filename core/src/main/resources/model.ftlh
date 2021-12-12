@@ -8,12 +8,21 @@
   <p>Datasets</p>
   <p>
 
-  |<#list clusters as c> Cluster ${c?counter} <#sep>|</#list>|
-|<#list clusters as c>--- <#sep>|</#list>|
-<#list 0 ..< maxEntities as entityIndex>
-|<#list clusters as c> ${c[entityIndex]!} <#sep>|</#list>|
-</#list>
 
-  </p>
+  <#list clusters as c> 
+  
+  Cluster ${c?counter} 
+  
+  </#list>
+  
+  <#list clusters as c>
+  <#list 0 ..< numColumns as entityIndex>
+  ${c[entityIndex]!}
+  </#list>
+  </#list>
+  
+   
+
+</p>
 </body>
 </html>

@@ -19,7 +19,9 @@ import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.util.DSUtil;
 import zingg.util.PipeUtil;
-
+import zingg.util.RowAdapter;
+import zingg.util.RowWrapper;
+import freemarker.ext.rhino.RhinoWrapper;
 import freemarker.template.*;
 import java.util.*;
 import java.io.*;
@@ -41,14 +43,19 @@ public class Documenter extends ZinggBase {
 			List<Column> displayCols = DSUtil.getFieldDefColumns(markedRecords, args, false);
 			List<Row> clusterIDs = markedRecords.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();
 			int totalPairs = clusterIDs.size();
-			test(markedRecords);
+			/* Create a data-model */
+			Map<String, Object> root = new HashMap<String, Object>();
+			root.put("modelId", args.getModelId());
+			root.put("clusters", markedRecords.collectAsList());
+			root.put("numColumns", displayCols.size());
+			test(root);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ZinggClientException(e.getMessage());
 		}
 	}
 
-	public void test(Dataset<Row> pairs) throws Exception {
+	public void test(Map<String, Object> root) throws Exception {
 
         /* ------------------------------------------------------------------------ */
         /* You should do this ONLY ONCE in the whole application life-cycle:        */
@@ -63,14 +70,12 @@ public class Documenter extends ZinggBase {
         cfg.setLogTemplateExceptions(false);
         cfg.setWrapUncheckedExceptions(true);
         cfg.setFallbackOnNullLoopVariable(false);
+		cfg.setObjectWrapper(new RowWrapper(cfg.getIncompatibleImprovements()));
 
         /* ------------------------------------------------------------------------ */
         /* You usually do these for MULTIPLE TIMES in the application life-cycle:   */
 
-        /* Create a data-model */
-        Map root = new HashMap();
-        root.put("user", "Big Joe");
-		root.put("clusters", pairs.collectAsList());
+        
        
         /* Get the template (uses cache internally) */
         Template temp = cfg.getTemplate("model.ftlh");
@@ -82,48 +87,7 @@ public class Documenter extends ZinggBase {
         // This is usually the case for file output, but not for servlet output.
     }
 
-	/*	
-		try {
-			double score;
-			double prediction;
-			Dataset<Row> updatedRecords = null;
-			int selected_option = -1;
-			String msg1, msg2;
-			
-			
-			for (int index = 0; index < totalPairs; index++){	
-				Dataset<Row> currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).equalTo(
-						clusterIDs.get(index).getAs(ColName.CLUSTER_COLUMN))).cache();
-				
-				score = currentPair.head().getAs(ColName.SCORE_COL);
-				prediction = currentPair.head().getAs(ColName.PREDICTION_COL);
- 
-				msg1 = String.format("\tRecord pair %d out of %d records to be labelled by the user.\n", index, totalPairs);
-				String matchType = LabelMatchType.get(prediction).msg;
-				msg2 = String.format("\tZingg predicts the records %s with a similarity score of %.2f\n", 
-					matchType, score);
-				String msgHeader = msg1 + msg2;
-
-				selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msgHeader);
-				if (selected_option == 9) {
-					LOG.info("User has quit in the middle. Updating the records.");
-					break;
-				}
-				updatedRecords = updateRecords(selected_option, currentPair, updatedRecords);				
-			}
-			writeLabelledOutput(updatedRecords);
-			LOG.warn("Processing finished.");
-		} catch (Exception e) {
-			if (LOG.isDebugEnabled()) {
-				e.printStackTrace();
-			}
-			LOG.warn("Labelling error has occured " + e.getMessage());
-			throw new ZinggClientException(e.getMessage());
-		}
-		return;
-	}
-	*/
-
+	
 	
 	
 }

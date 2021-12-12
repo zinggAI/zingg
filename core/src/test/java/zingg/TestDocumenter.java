@@ -12,14 +12,15 @@ import zingg.client.ZinggClientException;
 
 public class TestDocumenter {
     Arguments args;
-
+    JavaSparkContext sc;
+    
     @Before
     public void setUp(){
 
         try {
-			args = Arguments.createArgumentsFromJSON(getClass()
-					.getResource("/testConfig.json").getFile());
-			//fail("Exception was expected for missing config file");
+			args = Arguments.createArgumentsFromJSON(getClass().getResource("/testConfig.json").getFile());
+            sc = new JavaSparkContext("local", "JavaAPISuite");
+         	//fail("Exception was expected for missing config file");
 		} catch (Throwable e) {
             e.printStackTrace();
 			System.out.println("Unexpected exception received " + e.getMessage());
@@ -30,6 +31,7 @@ public class TestDocumenter {
     @Test
     public void testOutput() throws Throwable{
         Documenter doc = new Documenter();
+        doc.init(args, "");
         doc.setArgs(args);
         doc.execute();
     }
