@@ -47,7 +47,8 @@ public class Documenter extends ZinggBase {
 			Map<String, Object> root = new HashMap<String, Object>();
 			root.put("modelId", args.getModelId());
 			root.put("clusters", markedRecords.collectAsList());
-			root.put("numColumns", displayCols.size());
+			root.put("numColumns", markedRecords.columns().length);
+			root.put("columns", markedRecords.columns());
 			test(root);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,10 +82,13 @@ public class Documenter extends ZinggBase {
         Template temp = cfg.getTemplate("model.ftlh");
 
         /* Merge data-model with template */
-        Writer out = new OutputStreamWriter(System.out);
-        temp.process(root, out);
+        //Writer out = new OutputStreamWriter(System.out);
+		Writer file = new FileWriter (new File(args.getZinggDocFile()));
+        temp.process(root, file);
         // Note: Depending on what `out` is, you may need to call `out.close()`.
         // This is usually the case for file output, but not for servlet output.
+		file.flush();
+        file.close();
     }
 
 	

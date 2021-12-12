@@ -1,26 +1,33 @@
 <html>
 <head>
   <title>Zingg model documentation</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
   <h1>Model ${modelId}</h1>
   <p>Field Definitions</p>
   <p>Datasets</p>
   <p>
+  <table>
 
-
-  <#list clusters as c> 
-  
-  Cluster ${c?counter} 
-  
-  </#list>
+  <th>
+    <td>Cluster</td>
+    <#list 3 ..< numColumns as entityIndex>
+    <td> ${columns[entityIndex]!}</td>
+    </#list>
+  </th>
   
   <#list clusters as c>
-  <#list 0 ..< numColumns as entityIndex>
-  ${c[entityIndex]!}
+  <tr>
+   <td>${c[0]!}</td>
+    <#list 3 ..< numColumns as entityIndex>
+    <td>
+      ${c[entityIndex]!}
+     </td>
+    </#list>
+  </tr>
   </#list>
-  </#list>
-  
+  </table>
    
 
 </p>
