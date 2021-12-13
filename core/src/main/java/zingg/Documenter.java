@@ -49,6 +49,7 @@ public class Documenter extends ZinggBase {
 			root.put("clusters", markedRecords.collectAsList());
 			root.put("numColumns", markedRecords.columns().length);
 			root.put("columns", markedRecords.columns());
+			root.put("fieldDefinitionCount", args.getFieldDefinition().size());
 			test(root);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,6 +90,7 @@ public class Documenter extends ZinggBase {
         // This is usually the case for file output, but not for servlet output.
 		file.flush();
         file.close();
+		LOG.warn("written documentation at " + args.getZinggDocFile());
     }
 
 	
