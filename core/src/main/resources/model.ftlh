@@ -24,7 +24,16 @@
   </thead>
   <tbody>
   <#list clusters as c>
-  <tr>
+  <tr
+  <#if c?is_even_item>
+    <#if c[numColumns-1] == 0>  class="border-danger">
+     </#if>
+    <#if c[numColumns -1] == 1> class="border-success"
+    </#if>
+  <#else>
+  >
+  </#if>
+  
   <#if c?is_odd_item>
     <td rowspan="2"
     <#if c[numColumns-1] == 0>  class="table-danger"
@@ -32,10 +41,8 @@
     <#if c[numColumns -1] == 1> class="table-success"
     </#if>
     >
-  <#if c?is_odd_item>
-  ${c[0]!}
-  </#if>
-  </td>
+    ${c[0]!}
+    </td>
   </#if>
   
   
