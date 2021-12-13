@@ -11,10 +11,10 @@
   <div class="justify-content-end">Model ${modelId}</div>
 </nav>
    <p>
-  <table class="table">
+  <table class="table table-borderless">
 
   
-  <thead class="thead">
+  <thead class="thead thead-light">
   <tr>
     <th>Cluster</th>
     <#list 3 ..< numColumns -1 as entityIndex>
@@ -24,40 +24,44 @@
   </thead>
   <tbody>
   <#list clusters as c>
-  <tr
-  <#if c?is_even_item>
-    <#if c[numColumns-1] == 0>  class="border-danger">
-     </#if>
-    <#if c[numColumns -1] == 1> class="border-success"
+  <tr>
+    <#if c?is_odd_item>
+      <td rowspan="2"
+      <#if c[numColumns-1] == 0>  class="table-danger"
+      </#if>
+      <#if c[numColumns -1] == 1> class="table-success"
+      </#if>
+      >
+      ${c[0]!}
+      </td>
     </#if>
-  <#else>
-  >
-  </#if>
-  
-  <#if c?is_odd_item>
-    <td rowspan="2"
-    <#if c[numColumns-1] == 0>  class="table-danger"
-    </#if>
-    <#if c[numColumns -1] == 1> class="table-success"
-    </#if>
-    >
-    ${c[0]!}
-    </td>
-  </#if>
   
   
     <#list 3 ..< numColumns -1 as entityIndex>
-    <td>
+    <td 
+     <#if c?is_even_item>
+      <#if c[numColumns-1] == 0>  class="border-bottom bottom-danger"
+      </#if>
+      <#if c[numColumns -1] == 1> class="border-bottom border-success"
+      </#if>
+     </#if>
+     >
       ${c[entityIndex]!}
      </td>
     </#list>
   </tr>
   
   </#list>
- <tbody>
+ </tbody>
   </table>
    
 
 </p>
 </body>
 </html>
+<style>
+    .header{
+        position:sticky;
+        top: 0 ;
+    }
+</style>
