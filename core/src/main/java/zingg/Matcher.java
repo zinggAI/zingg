@@ -21,10 +21,10 @@ import zingg.model.Model;
 
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
-import zingg.client.util.Analytics;
+import zingg.util.Analytics;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
-import zingg.client.util.Metric;
+import zingg.util.Metric;
 import zingg.client.util.Util;
 import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Zingg Models
+title: Analytics
 nav_order: 8
 ---
 

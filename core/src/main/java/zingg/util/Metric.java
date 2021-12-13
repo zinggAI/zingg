@@ -1,4 +1,4 @@
-package zingg.client.util;
+package zingg.util;
 
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;

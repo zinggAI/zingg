@@ -1,4 +1,4 @@
-package zingg.client.util;
+package zingg.util;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

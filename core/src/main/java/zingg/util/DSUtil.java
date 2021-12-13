@@ -15,8 +15,8 @@ import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -241,5 +241,11 @@ public class DSUtil {
 		if (trFile == null) LOG.warn("No training data found");
 		return trFile;		
 	}
-	   
+
+	public static List<FieldDefinition> getFieldDefinitionFiltered(Arguments args, MatchType type) {
+		return args.getFieldDefinition()
+				.stream()
+				.filter(f -> !(f.getMatchType() == null || f.getMatchType().equals(MatchType.DONT_USE)))
+				.collect(Collectors.toList());
+	}
 }

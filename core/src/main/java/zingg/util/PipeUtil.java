@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -300,7 +301,14 @@ public class PipeUtil {
 		return p;
 	}
 
-	
+	public static String getPipesAsString(Pipe[] pipes) {
+		return Arrays.stream(pipes)
+			.map(p -> p.getFormat().type())
+			.collect(Collectors.toList())
+			.stream().reduce((p1, p2) -> p1 + "," + p2)
+			.map(Object::toString)
+			.orElse("");
+	}
 
 	/*
 	 * public static String getTableCreateCQL(Pipe p, Dataset<Row> df) {

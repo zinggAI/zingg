@@ -1,19 +1,13 @@
 package zingg.client;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaSparkContext;
 
-import zingg.client.pipe.Pipe;
-import zingg.client.util.Analytics;
 import zingg.client.util.Email;
 import zingg.client.util.EmailBody;
-import zingg.client.util.Metric;
-
 
 /**
  * This is the main point of interface with the Zingg matching product.
@@ -93,8 +87,8 @@ public class Client implements Serializable {
 		String versionStr = "0.3";
 		LOG.info("");
 		LOG.info("********************************************************");
-		LOG.info("*                    Zingg AI                           *");
-		LOG.info("*               (C) 2021 Zingg.AI                       *");
+		LOG.info("*                    Zingg AI                          *");
+		LOG.info("*               (C) 2021 Zingg.AI                      *");
 		LOG.info("********************************************************");
 		LOG.info("");
 		LOG.info("using: Zingg v" + versionStr);
@@ -104,15 +98,15 @@ public class Client implements Serializable {
 	public static void printAnalyticsBanner(boolean collectMetrics) {
 		if(collectMetrics) {
 			LOG.info("");
-			LOG.info("****************************************************************************");
-			LOG.info("*            ** Note about analytics collection by Zingg AI **             *");
-			LOG.info("*                                                                          *");
-			LOG.info("*  Please note that Zingg captures a few metrics about application's       *");
-			LOG.info("*  runtime parameters. However, no user's personal data or application     *");
-			LOG.info("*  data is captured. If you want to switch off this feature, please        *");
-			LOG.info("*  set the flag collectMetrics to false in config. For details, please     *");
-			LOG.info("*  refer to the Zingg docs (https://docs.zingg.ai/docs/analytics.html)     *");
-			LOG.info("****************************************************************************");
+			LOG.info("**************************************************************************");
+			LOG.info("*            ** Note about analytics collection by Zingg AI **           *");
+			LOG.info("*                                                                        *");
+			LOG.info("*  Please note that Zingg captures a few metrics about application's     *");
+			LOG.info("*  runtime parameters. However, no user's personal data or application   *");
+			LOG.info("*  data is captured. If you want to switch off this feature, please      *");
+			LOG.info("*  set the flag collectMetrics to false in config. For details, please   *");
+			LOG.info("*  refer to the Zingg docs (https://docs.zingg.ai/docs/analytics.html)   *");
+			LOG.info("**************************************************************************");
 			LOG.info("");
 		}
 		else {
@@ -125,7 +119,6 @@ public class Client implements Serializable {
 	}
 
 	public static void main(String... args) {
-		long startTime = System.currentTimeMillis();
 		printBanner();
 		Client client = null;
 		ClientOptions options = null;
@@ -150,8 +143,7 @@ public class Client implements Serializable {
 			client = new Client(arguments, options);	
 			client.init();
 			client.execute();
-			Analytics.track(Metric.EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000, arguments.getCollectMetrics());
-			client.postMetrics(phase, arguments.getCollectMetrics());
+			client.postMetrics();
 			LOG.warn("Zingg processing has completed");				
 		} 
 		catch(ZinggClientException e) {
@@ -208,7 +200,12 @@ public class Client implements Serializable {
 
 	public void execute() throws ZinggClientException {
 		zingg.execute();
+ 	}
+
+	public void postMetrics() throws ZinggClientException {
+		zingg.postMetrics();
 	}
+
 	public void setArguments(Arguments args) {
 		this.arguments = args;				
 	}
@@ -219,36 +216,5 @@ public class Client implements Serializable {
 
 	public void setOptions(ClientOptions options) {
 		this.options = options;
-	}
-
-	private void postMetrics(String phase, boolean collectMetrics) {
-		Analytics.track(Metric.TOTAL_FIELDS_COUNT, getArguments().getFieldDefinition().size(), collectMetrics);
-		int matchFieldCount = getArguments().getFieldDefinition()
-				.stream()
-				.filter(f -> !(f.getMatchType() == null || f.getMatchType().equals(MatchType.DONT_USE)))
-				.collect(Collectors.toList())
-				.size();
-		Analytics.track(Metric.MATCH_FIELDS_COUNT, matchFieldCount, collectMetrics);
-
-		Pipe[] dataPipes = getArguments().getData();
-		String inPipesStr = Arrays.stream(dataPipes)
-				.map(p -> p.getFormat().type())
-				.collect(Collectors.toList())
-				.stream()
-				.reduce((p1, p2) -> p1 + "," + p2)
-				.map(Object::toString)
-				.orElse("");
-		Analytics.track(Metric.DATA_FORMAT, inPipesStr, collectMetrics);
-
-		Pipe[] outputPipes = getArguments().getOutput();
-		String outPipesStr = Arrays.stream(outputPipes)
-				.map(p -> p.getFormat().type())
-				.collect(Collectors.toList())
-				.stream().reduce((p1, p2) -> p1 + "," + p2)
-				.map(Object::toString)
-				.orElse("");
-		Analytics.track(Metric.OUTPUT_FORMAT, outPipesStr, collectMetrics);
-
-		Analytics.postEvent(phase, collectMetrics);
 	}
 }
