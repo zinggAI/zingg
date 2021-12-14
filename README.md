@@ -39,6 +39,9 @@ docker run -it zingg/zingg:0.3.0 bash
 
 Check the [step by step guide](https://docs.zingg.ai/docs/stepByStep.html) for more details.
 
+## The Story
+What is the [backstory behind Zingg](https://sonalgoyal.substack.com/p/time-to-zingg)? 
+
 ## Documentation
 Check detailed Zingg [documentation](https://docs.zingg.ai) 
 
