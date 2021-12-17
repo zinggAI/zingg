@@ -462,7 +462,7 @@ public class Arguments implements Serializable {
 
 	@JsonIgnore
 	public String getZinggDocFile() {
-		return zinggDir + "/" + modelId + "/model.html";
+		return zinggDir + "/" + modelId + "/docs";
 	}
 
 

@@ -19,7 +19,8 @@ public enum Format implements Serializable{
 	XLSX("com.crealytics.spark.excel"),
 	PARQUET("PARQUET"),
 	AVRO("avro"),
-	SNOWFLAKE("net.snowflake.spark.snowflake");
+	SNOWFLAKE("net.snowflake.spark.snowflake"),
+	TEXT("text");
 	
 	String type;
 	static Map<String, Format> map;

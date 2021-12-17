@@ -14,7 +14,7 @@
   <table class="table table-borderless">
 
   
-  <thead class="thead thead-light">
+  <thead class="thead thead-dark">
   <tr>
     <th>Cluster</th>
     <#list 3 ..< numColumns -1 as entityIndex>

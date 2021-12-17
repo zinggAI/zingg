@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.functions;
 
@@ -84,12 +85,19 @@ public class Documenter extends ZinggBase {
 
         /* Merge data-model with template */
         //Writer out = new OutputStreamWriter(System.out);
-		Writer file = new FileWriter (new File(args.getZinggDocFile()));
-        temp.process(root, file);
+		//Writer file = new FileWriter (new File(args.getZinggDocFile()));
+		StringWriter writer = new StringWriter();
+        temp.process(root, writer);
         // Note: Depending on what `out` is, you may need to call `out.close()`.
         // This is usually the case for file output, but not for servlet output.
-		file.flush();
-        file.close();
+		//file.flush();
+
+		List<String> textList = Collections.singletonList(writer.toString());
+		
+		Dataset<Row> data = spark.createDataset(textList, Encoders.STRING()).toDF();
+
+		PipeUtil.write(data, args, ctx, PipeUtil.getModelDocumentationPipe(args));
+        //file.close();
 		LOG.warn("written documentation at " + args.getZinggDocFile());
     }
 
