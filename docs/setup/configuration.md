@@ -97,3 +97,27 @@ Number of Spark partitions over which the input data is distributed. Keep it equ
 
 ### labelDataSampleSize
 Fraction of the data to be used for training the models. Adjust it between 0.0001 and 0.1 to keep the sample size small enough so that it finds enough edge cases fast. If the size is bigger, the findTrainingData job will spend more time combing through samples. If the size is too small, Zingg may not find the right edge cases. 
+
+## Passing Configuration value through system environment variable
+If a user does not want to pass value of any JSON parameter through config file for security reasons or otherwise, they can configure that value through system environment variable. The system variable name needs to be put in the config file in place of its json value. At runtime, the config file gets updated with the value of the environment variable.
+
+Below is config file snippet that references few environment variables. 
+````json
+"output" : [{
+  "name":"unifiedCustomers", 
+  "format":"net.snowflake.spark.snowflake",
+  "props": {
+    "location": "$location$",
+    "delimiter": ",",
+    "header": false,				
+    "password": "$passwd",					
+  }
+}],
+
+"labelDataSampleSize" : 0.5,
+"numPartitions":4,
+"modelId": $modelId$,
+"zinggDir": "models",
+"collectMetrics": $collectMetrics$
+````
+Environment variable must be enclosed within Dollar signs **(\$var$)** to take effect. As usual, String variables need to put within Quotes **("\$var\$")**, Boolean and Numeric values should be put without quotes **(\$var$)**.

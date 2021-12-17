@@ -114,6 +114,9 @@ public class Client implements Serializable {
 			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
 					arguments = Arguments.createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
 			}
+			else if (options.get(ClientOptions.CONF).value.endsWith("env")) {
+				arguments = Arguments.createArgumentsFromJSONTemplate(options.get(ClientOptions.CONF).value, phase);
+			}
 			else {
 				arguments = Arguments.createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}

@@ -8,13 +8,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import zingg.client.pipe.Pipe;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -23,6 +23,12 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.scala.DefaultScalaModule;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import zingg.client.pipe.Pipe;
+
 
 /**
  * This class helps supply match arguments to Zingg. There are 3 basic steps
@@ -101,7 +107,11 @@ public class Arguments implements Serializable {
 	double threshold = 0.5d;
 	int jobId = 1;
 	
-	
+	private static final String ENV_VAR_MARKER_START = "$";
+	private static final String ENV_VAR_MARKER_END = "$";
+	private static final String ESC = "\\";
+	private static final String PATTERN_ENV_VAR = ESC + ENV_VAR_MARKER_START + "(.+?)" + ESC + ENV_VAR_MARKER_END;
+
 	public double getThreshold() {
 		return threshold;
 	}
@@ -189,7 +199,46 @@ public class Arguments implements Serializable {
 					". The error is " + e.getMessage());
 		}
 	}
-	
+
+	public static final Arguments createArgumentsFromJSONTemplate(String filePath, String phase)
+			throws ZinggClientException {
+		try {
+			LOG.warn("Config Argument is " + filePath);
+			byte[] encoded = Files.readAllBytes(Paths.get(filePath));
+			String template = new String(encoded, StandardCharsets.UTF_8);
+			Map<String, String> env = System.getenv();
+			String updatedJson = substituteVariables(template, env);
+			Arguments args = createArgumentsFromJSONString(updatedJson, phase);
+			return args;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ZinggClientException("Unable to parse the configuration at " + filePath +
+					". The error is " + e.getMessage());
+		}
+	}
+
+	public static String substituteVariables(String template, Map<String, String> variables) {
+		Pattern pattern = Pattern.compile(PATTERN_ENV_VAR);
+		Matcher matcher = pattern.matcher(template);
+		// StringBuilder cannot be used here because Matcher expects StringBuffer
+		StringBuffer buffer = new StringBuffer();
+		while (matcher.find()) {
+			if (variables.containsKey(matcher.group(1))) {
+				String replacement = variables.get(matcher.group(1));
+				if (replacement == null || replacement.equals("")) {
+					LOG.warn("The environment variable for {" + matcher.group(1) + "} is not set or is empty string");
+				}
+				// quote to work properly with $ and {,} signs
+				matcher.appendReplacement(buffer, replacement != null ? Matcher.quoteReplacement(replacement) : "null");
+			}
+			else {
+				LOG.warn("The environment variable for {" + matcher.group(1) + "} is not set");
+			}
+		}
+		matcher.appendTail(buffer);
+		return buffer.toString();
+	}
+
 	public static final void writeArgumentstoJSON(String filePath, Arguments args) throws ZinggClientException {
 		try{
 			ObjectMapper mapper = new ObjectMapper();
