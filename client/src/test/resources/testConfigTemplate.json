@@ -91,6 +91,5 @@
 		"labelDataSampleSize" : 0.5,
 		"numPartitions":4,
 		"modelId": $modelId$,
-		"zinggDir": "models",
-		"collectMetrics": $collectMetricsFlag$
+		"zinggDir": "models"
 }
