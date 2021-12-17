@@ -120,4 +120,4 @@ Below is config file snippet that references few environment variables.
 "zinggDir": "models",
 "collectMetrics": $collectMetrics$
 ````
-Environment variable must be enclosed within Dollar signs **(\$var$)** to take effect. As usual, String variables need to put within Quotes **("\$var\$")**, Boolean and Numeric values should be put without quotes **(\$var$)**.
+Environment variable must be enclosed within Dollar signs **(\$var$)** to take effect. Also, the config file name must be suffixed with ***.env**. As usual, String variables need to put within quotes **("\$var\$")**, Boolean and Numeric values should be put without quotes **(\$var$)**.

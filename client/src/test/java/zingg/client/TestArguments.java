@@ -47,9 +47,9 @@ public class TestArguments {
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
-			Arguments.createArgumentsFromJSONString(json, "");
+			Arguments args = Arguments.createArgumentsFromJSONString(json, "");
 
-			assertNotNull(json);
+			assertNotNull(args);
 		} catch (IOException | ZinggClientException e) {
 			fail("Unexpected exception" + e.getMessage());
 		}
