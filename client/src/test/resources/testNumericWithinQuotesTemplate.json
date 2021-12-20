@@ -90,6 +90,6 @@
 		}],
 		"labelDataSampleSize" : 0.5,
 		"numPartitions":4,
-		"modelId": $modelId$,
+		"modelId": "$modelId$",
 		"zinggDir": "models"
 	}
