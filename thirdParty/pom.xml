@@ -4,7 +4,7 @@
 <parent>
 	<groupId>zingg</groupId>
 	<artifactId>parent</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>${zingg.version}</version>
 </parent>
 		<artifactId>thirdParty</artifactId>
 <repositories>
