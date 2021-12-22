@@ -8,7 +8,6 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 import zingg.client.util.Email;
 import zingg.client.util.EmailBody;
-import zingg.client.util.Util;
 
 /**
  * This is the main point of interface with the Zingg matching product.
@@ -22,7 +21,6 @@ public class Client implements Serializable {
 	private ClientOptions options;
 
 	public static final Log LOG = LogFactory.getLog(Client.class);
-	public static final int EXIT_STATUS_ILLEGAL_CMD = 127;
 
 
 	/**
@@ -133,11 +131,7 @@ public class Client implements Serializable {
 				System.exit(0);
 			}
 			String phase = options.get(ClientOptions.PHASE).value.trim();
-			if (ZinggOptions.getByValue(phase) == null) {	
-				LOG.error("'" + phase + "' is not a valid phase");
-				LOG.error("Valid phases are: " + Util.join(ZinggOptions.getAllZinggOptions(), "|"));
-				System.exit(EXIT_STATUS_ILLEGAL_CMD);
-			}
+			ZinggOptions.verifyPhase(phase);
 			Arguments arguments = null;
 			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
 					arguments = Arguments.createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
