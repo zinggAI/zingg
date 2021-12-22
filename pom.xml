@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>zingg</groupId>
 	<artifactId>parent</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>${zingg.version}</version>
 	<packaging>pom</packaging>
 	<organization>
 		<name>Zingg</name>
@@ -84,6 +84,7 @@
 		</profile>
 	</profiles>
 	<properties>
+		<zingg.version>0.3.0-SNAPSHOT</zingg.version>
 		<skipTests>true</skipTests>
 		<failIfNoTests>false</failIfNoTests>
 		<maven.compiler.source>8</maven.compiler.source>
