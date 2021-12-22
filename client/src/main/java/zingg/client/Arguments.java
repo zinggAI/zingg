@@ -217,7 +217,7 @@ public class Arguments implements Serializable {
 		}
 	}
 
-	public static String substituteVariables(String template, Map<String, String> variables) {
+	public static String substituteVariables(String template, Map<String, String> variables) throws ZinggClientException {
 		Pattern pattern = Pattern.compile(PATTERN_ENV_VAR);
 		Matcher matcher = pattern.matcher(template);
 		// StringBuilder cannot be used here because Matcher expects StringBuffer
@@ -226,13 +226,13 @@ public class Arguments implements Serializable {
 			if (variables.containsKey(matcher.group(1))) {
 				String replacement = variables.get(matcher.group(1));
 				if (replacement == null || replacement.equals("")) {
-					LOG.warn("The environment variable for {" + matcher.group(1) + "} is not set or is empty string");
+					throw new ZinggClientException("The environment variable for $" + matcher.group(1) + "$ is not set or is empty string");
 				}
 				// quote to work properly with $ and {,} signs
 				matcher.appendReplacement(buffer, replacement != null ? Matcher.quoteReplacement(replacement) : "null");
 			}
 			else {
-				LOG.warn("The environment variable for {" + matcher.group(1) + "} is not set");
+				throw new ZinggClientException("The environment variable for $" + matcher.group(1) + "$ is not set");
 			}
 		}
 		matcher.appendTail(buffer);
