@@ -226,13 +226,16 @@ public class Arguments implements Serializable {
 			if (variables.containsKey(matcher.group(1))) {
 				String replacement = variables.get(matcher.group(1));
 				if (replacement == null || replacement.equals("")) {
-					throw new ZinggClientException("The environment variable for $" + matcher.group(1) + "$ is not set or is empty string");
+					throw new ZinggClientException("The environment variable for " + ENV_VAR_MARKER_START
+							+ matcher.group(1) + ENV_VAR_MARKER_END + " is not set or is empty string");
 				}
 				// quote to work properly with $ and {,} signs
 				matcher.appendReplacement(buffer, replacement != null ? Matcher.quoteReplacement(replacement) : "null");
-			}
-			else {
-				throw new ZinggClientException("The environment variable for $" + matcher.group(1) + "$ is not set");
+				LOG.warn("The variable " + ENV_VAR_MARKER_START + matcher.group(1) + ENV_VAR_MARKER_END
+						+ " has been substituted");
+			} else {
+				throw new ZinggClientException("The environment variable for " + ENV_VAR_MARKER_START + matcher.group(1)
+						+ ENV_VAR_MARKER_END + " is not set");
 			}
 		}
 		matcher.appendTail(buffer);

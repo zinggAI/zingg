@@ -9,6 +9,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 public class TestArguments {
@@ -16,6 +19,8 @@ public class TestArguments {
 	private static final String KEY_HEADER = "header";
 	private static final String KEY_FORMAT = "format";
 	private static final String KEY_MODEL_ID = "modelId";
+
+	public static final Log LOG = LogFactory.getLog(TestArguments.class);
 
 	@Test
 	public void testSubstituteVariablesWithAllEnvVarSet() {
@@ -54,7 +59,7 @@ public class TestArguments {
 			Arguments args = Arguments.createArgumentsFromJSONString(json, "");
 			fail("Exception was expected due to missing environment variable");
  		} catch (IOException | ZinggClientException e) {
-			System.out.println("Expected exception received due to missing environment variable");
+			LOG.warn("Expected exception received due to missing environment variable");
  		}
 	}
 
@@ -75,7 +80,7 @@ public class TestArguments {
 
 			fail("Exception was expected for blank value for an environment variable");
  		} catch (IOException | ZinggClientException e) {
- 			System.out.println("Expected exception received due to blank value for an environment variable");
+ 			LOG.warn("Expected exception received due to blank value for an environment variable");
 		}
 	}
 
@@ -97,7 +102,7 @@ public class TestArguments {
  
 			fail("Exception was expected for invalid value for a Boolean variable");
  		} catch (IOException | ZinggClientException e) {
-			System.out.println("Expected exception received due to invalid value for a Boolean variable");
+			LOG.warn("Expected exception received due to invalid value for a Boolean variable");
  		}
 	}
 
@@ -140,7 +145,7 @@ public class TestArguments {
 
 			fail("Exception was expected for invalid value for a Numeric variable");
 		} catch (IOException | ZinggClientException e) {
-			System.out.println("Expected exception received due to invalid value for a Numeric variable");
+			LOG.warn("Expected exception received due to invalid value for a Numeric variable");
 		}
 	}
 
@@ -185,7 +190,7 @@ public class TestArguments {
 
 			fail("Exception was expected for malformed variable in json");
 		} catch (IOException | ZinggClientException e) {
-			System.out.println("Expected exception received due to malformed variable in json");
+			LOG.warn("Expected exception received due to malformed variable in json");
 		}
 	}
 
@@ -196,7 +201,7 @@ public class TestArguments {
 			Arguments.createArgumentsFromJSONTemplate(filePath, "");
 			fail("Exception was expected for invalid filepath or name");
 		} catch (ZinggClientException e) {
-			System.out.println("Expected exception received: NoSuchFileException");
+			LOG.warn("Expected exception received: NoSuchFileException");
 		}
 	}
 }
