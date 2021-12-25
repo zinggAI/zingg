@@ -131,6 +131,7 @@ public class Client implements Serializable {
 				System.exit(0);
 			}
 			String phase = options.get(ClientOptions.PHASE).value.trim();
+			ZinggOptions.verifyPhase(phase);
 			Arguments arguments = null;
 			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
 					arguments = Arguments.createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
