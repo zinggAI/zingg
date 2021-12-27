@@ -38,6 +38,9 @@ public class Trainer extends ZinggBase{
 			Dataset<Row> positives = null;
 			Dataset<Row> negatives = null;
 			Dataset<Row> tra = DSUtil.getTraining(spark, args);
+			if(tra == null) {
+				throw new ZinggClientException("Training data not found");
+			}
 			tra = DSUtil.joinWithItself(tra, ColName.CLUSTER_COLUMN, true);
 			tra = tra.cache();
 			positives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH));
