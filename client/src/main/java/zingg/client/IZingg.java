@@ -13,4 +13,6 @@ public interface IZingg {
 
 	public String getName();
 
+	public void postMetrics();
+
 }

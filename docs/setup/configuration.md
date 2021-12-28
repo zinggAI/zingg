@@ -98,6 +98,13 @@ Number of Spark partitions over which the input data is distributed. Keep it equ
 ### labelDataSampleSize
 Fraction of the data to be used for training the models. Adjust it between 0.0001 and 0.1 to keep the sample size small enough so that it finds enough edge cases fast. If the size is bigger, the findTrainingData job will spend more time combing through samples. If the size is too small, Zingg may not find the right edge cases. 
 
+### collectMetrics
+Application captures a few measurements for runtime metrics such as *no. of data records, no. of features, running phase* and a few more. 
+
+<span style="color:maroon">**Zingg does not capture any user data or input data and will never do so.**</span>
+
+This feature may be disabled by setting this flag to false. Default value is true. For details, refer to [Zingg Analytics](../analytics.md)
+
 ## Passing Configuration value through system environment variable
 If a user does not want to pass value of any JSON parameter through config file for security reasons or otherwise, they can configure that value through system environment variable. The system variable name needs to be put in the config file in place of its json value. At runtime, the config file gets updated with the value of the environment variable.
 
@@ -121,3 +128,4 @@ Below is config file snippet that references few environment variables.
 "collectMetrics": $collectMetrics$
 ````
 Environment variable must be enclosed within Dollar signs **(\$var$)** to take effect. Also, the config file name must be suffixed with ***.env**. As usual, String variables need to put within quotes **("\$var\$")**, Boolean and Numeric values should be put without quotes **(\$var$)**.
+

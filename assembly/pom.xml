@@ -4,7 +4,7 @@
 <parent>
 	<groupId>zingg</groupId>
 	<artifactId>parent</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>${zingg.version}</version>
 </parent>
 	<artifactId>zingg</artifactId>
 	<packaging>jar</packaging>
@@ -12,12 +12,12 @@
 		<dependency>
 			<groupId>zingg</groupId>
 			<artifactId>core</artifactId>
-			<version>0.3.0-SNAPSHOT</version>
+			<version>${zingg.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>zingg</groupId>
 			<artifactId>client</artifactId>
-			<version>0.3.0-SNAPSHOT</version>
+			<version>${zingg.version}</version>
 		</dependency>
 </dependencies>
 	<build>
@@ -48,11 +48,11 @@
 	   <filter>
 	 	<artifact>zingg:client</artifact>
 	  </filter>
-	   <filter>
-	 	<artifact>zingg:core</artifact>
-	  </filter>
-	
-         </filters>
+					<filter>
+						<artifact>zingg:core</artifact>
+					</filter>
+
+				</filters>
 				</configuration>
 				<executions>
 					<execution>
@@ -65,23 +65,23 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
-        			<version>2.4.1</version>
-        			<configuration>
-          				<descriptors>
-            					<descriptor>${project.basedir}/src/assembly/dist.xml</descriptor>
-          				</descriptors>
-          				<tarLongFileMode>gnu</tarLongFileMode>
-        			</configuration>
+				<version>2.4.1</version>
+				<configuration>
+					<descriptors>
+						<descriptor>${project.basedir}/src/assembly/dist.xml</descriptor>
+					</descriptors>
+					<tarLongFileMode>gnu</tarLongFileMode>
+				</configuration>
 				<executions>
-          <execution>
-            <id>make-assembly</id> <!-- this is used for inheritance merges -->
-            <phase>package</phase> <!-- bind to the packaging phase -->
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
+					<execution>
+						<id>make-assembly</id> <!-- this is used for inheritance merges -->
+						<phase>package</phase> <!-- bind to the packaging phase -->
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
-		</plugins>
+			</plugins>
 	</build>
 </project>

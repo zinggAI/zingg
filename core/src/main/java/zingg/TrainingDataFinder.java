@@ -52,7 +52,7 @@ public class TrainingDataFinder extends ZinggBase{
 				Dataset<Row> data = PipeUtil.read(spark, true, true, args.getData());
 				LOG.warn("Read input data " + data.count());
 				//create 20 pos pairs
-				
+
 				Dataset<Row> posPairs = null;
 				Dataset<Row> negPairs = null;
 				Dataset<Row> trFile = getTraining();					
