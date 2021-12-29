@@ -9,7 +9,6 @@ import org.apache.spark.api.java.JavaSparkContext;
 import zingg.client.util.Email;
 import zingg.client.util.EmailBody;
 
-
 /**
  * This is the main point of interface with the Zingg matching product.
  * 
@@ -89,15 +88,37 @@ public class Client implements Serializable {
 		String versionStr = "0.3";
 		LOG.info("");
 		LOG.info("********************************************************");
-		LOG.info("*                    Zingg AI                           *");
-		LOG.info("*               (C) 2021 Zingg.AI                       *");
+		LOG.info("*                    Zingg AI                          *");
+		LOG.info("*               (C) 2021 Zingg.AI                      *");
 		LOG.info("********************************************************");
 		LOG.info("");
 		LOG.info("using: Zingg v" + versionStr);
 		LOG.info("");
 	}
 	
-	
+	public static void printAnalyticsBanner(boolean collectMetrics) {
+		if(collectMetrics) {
+			LOG.info("");
+			LOG.info("**************************************************************************");
+			LOG.info("*            ** Note about analytics collection by Zingg AI **           *");
+			LOG.info("*                                                                        *");
+			LOG.info("*  Please note that Zingg captures a few metrics about application's     *");
+			LOG.info("*  runtime parameters. However, no user's personal data or application   *");
+			LOG.info("*  data is captured. If you want to switch off this feature, please      *");
+			LOG.info("*  set the flag collectMetrics to false in config. For details, please   *");
+			LOG.info("*  refer to the Zingg docs (https://docs.zingg.ai/docs/analytics.html)   *");
+			LOG.info("**************************************************************************");
+			LOG.info("");
+		}
+		else {
+			LOG.info("");
+			LOG.info("********************************************************");
+			LOG.info("*    Zingg is not collecting any analytics data        *");
+			LOG.info("********************************************************");
+			LOG.info("");
+		}
+	}
+
 	public static void main(String... args) {
 		printBanner();
 		Client client = null;
@@ -111,17 +132,23 @@ public class Client implements Serializable {
 				System.exit(0);
 			}
 			String phase = options.get(ClientOptions.PHASE).value.trim();
+			ZinggOptions.verifyPhase(phase);
 			Arguments arguments = null;
 			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
 					arguments = Arguments.createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
 			}
+			else if (options.get(ClientOptions.CONF).value.endsWith("env")) {
+				arguments = Arguments.createArgumentsFromJSONTemplate(options.get(ClientOptions.CONF).value, phase);
+			}
 			else {
 				arguments = Arguments.createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
-			
+			printAnalyticsBanner(arguments.getCollectMetrics());
+
 			client = new Client(arguments, options);	
 			client.init();
 			client.execute();
+			client.postMetrics();
 			LOG.warn("Zingg processing has completed");				
 		} 
 		catch(ZinggClientException e) {
@@ -178,7 +205,12 @@ public class Client implements Serializable {
 
 	public void execute() throws ZinggClientException {
 		zingg.execute();
+ 	}
+
+	public void postMetrics() throws ZinggClientException {
+		zingg.postMetrics();
 	}
+
 	public void setArguments(Arguments args) {
 		this.arguments = args;				
 	}
@@ -190,8 +222,4 @@ public class Client implements Serializable {
 	public void setOptions(ClientOptions options) {
 		this.options = options;
 	}
-	
-
-	
-
 }

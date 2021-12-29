@@ -2,6 +2,8 @@ package zingg.client;
 
 import java.util.Arrays;
 
+import zingg.client.util.Util;
+
 public enum ZinggOptions {
     
     TRAIN("train"), 
@@ -39,5 +41,11 @@ public enum ZinggOptions {
         return null;
     }
 
-
+	public static void verifyPhase(String phase) throws ZinggClientException {
+		if (getByValue(phase) == null) {	
+			String message = "'" + phase + "' is not a valid phase. "
+			               + "Valid phases are: " + Util.join(getAllZinggOptions(), "|");
+			throw new ZinggClientException(message);
+		}
+	}
 }

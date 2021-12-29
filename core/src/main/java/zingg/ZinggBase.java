@@ -3,6 +3,7 @@ package zingg;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,13 +17,16 @@ import zingg.client.IZingg;
 import zingg.client.MatchType;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
+import zingg.util.Analytics;
+import zingg.util.DSUtil;
 import zingg.client.util.ListMap;
-
+import zingg.util.Metric;
 import zingg.feature.Feature;
 import zingg.feature.FeatureFactory;
 import zingg.hash.HashFunction;
 
 import zingg.util.HashUtil;
+import zingg.util.PipeUtil;
 
 public abstract class ZinggBase implements Serializable, IZingg {
 
@@ -34,6 +38,7 @@ public abstract class ZinggBase implements Serializable, IZingg {
     protected ZinggOptions zinggOptions;
     protected ListMap<DataType, HashFunction> hashFunctions;
 	protected Map<FieldDefinition, Feature> featurers;
+    protected long startTime;
 	public static final String hashFunctionFile = "hashFunctions.json";
 
     public static final Log LOG = LogFactory.getLog(ZinggBase.class);
@@ -41,6 +46,7 @@ public abstract class ZinggBase implements Serializable, IZingg {
     @Override
     public void init(Arguments args, String license)
         throws ZinggClientException {
+        startTime = System.currentTimeMillis();
         this.args = args;
         try{
             spark = SparkSession
@@ -106,6 +112,17 @@ public abstract class ZinggBase implements Serializable, IZingg {
             this.hashFunctions = b.hashFunctions;
     }
 
+	public void postMetrics() {
+        boolean collectMetrics = args.getCollectMetrics();
+        Analytics.track(Metric.EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000, collectMetrics);
+		Analytics.track(Metric.TOTAL_FIELDS_COUNT, args.getFieldDefinition().size(), collectMetrics);
+        Analytics.track(Metric.MATCH_FIELDS_COUNT, DSUtil.getFieldDefinitionFiltered(args, MatchType.DONT_USE).size(),
+                collectMetrics);
+		Analytics.track(Metric.DATA_FORMAT, PipeUtil.getPipesAsString(args.getData()), collectMetrics);
+		Analytics.track(Metric.OUTPUT_FORMAT, PipeUtil.getPipesAsString(args.getOutput()), collectMetrics);
+
+		Analytics.postEvent(zinggOptions.getValue(), collectMetrics);
+	}
 
     public Arguments getArgs() {
         return this.args;

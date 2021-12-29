@@ -11,8 +11,10 @@ import zingg.model.Model;
 
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
+import zingg.util.Analytics;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
+import zingg.util.Metric;
 import zingg.client.util.Util;
 import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
@@ -53,6 +55,8 @@ public class Trainer extends ZinggBase{
 			Model model = ModelUtil.createModel(positives, negatives, new Model(this.featurers), spark);
 			model.save(args.getModel());
 			LOG.info("Learnt similarity rules and saved output at " + args.getZinggDir());
+			Analytics.track(Metric.TRAINING_MATCHES, Metric.approxCount(positives), args.getCollectMetrics());
+			Analytics.track(Metric.TRAINING_NONMATCHES, Metric.approxCount(negatives), args.getCollectMetrics());
 			LOG.info("Finished Learning phase");			
 		} catch (Exception e) {
 			e.printStackTrace();

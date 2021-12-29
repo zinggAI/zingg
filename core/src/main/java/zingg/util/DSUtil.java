@@ -15,8 +15,8 @@ import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -86,7 +86,7 @@ public class DSUtil {
 		Dataset<Row> lines1 = getPrefixedColumnsDS(lines).cache();
 		String[] sourceNames = args.getPipeNames();
 		lines = lines.filter(lines.col(ColName.SOURCE_COL).equalTo(sourceNames[0]));
-		lines1 = lines1.filter(lines1.col(ColName.COL_PREFIX + ColName.SOURCE_COL).equalTo(sourceNames[1]));
+		lines1 = lines1.filter(lines1.col(ColName.COL_PREFIX + ColName.SOURCE_COL).notEqual(sourceNames[0]));
 		return join(lines, lines1, joinColumn, false);
 	}
 
@@ -100,7 +100,7 @@ public class DSUtil {
 		for (FieldDefinition def: args.getFieldDefinition()) {
 			cols.add(dupesActual.col(def.fieldName));					
 		}		
-		
+
 		Dataset<Row> dupes1 = dupesActual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
 	 	List<Column> cols1 = new ArrayList<Column>();
 		cols1.add(dupesActual.col(ColName.CLUSTER_COLUMN));
@@ -241,5 +241,11 @@ public class DSUtil {
 		if (trFile == null) LOG.warn("No training data found");
 		return trFile;		
 	}
-	   
+
+	public static List<FieldDefinition> getFieldDefinitionFiltered(Arguments args, MatchType type) {
+		return args.getFieldDefinition()
+				.stream()
+				.filter(f -> !(f.getMatchType() == null || f.getMatchType().equals(MatchType.DONT_USE)))
+				.collect(Collectors.toList());
+	}
 }

@@ -4,7 +4,7 @@
 <parent>
 	<groupId>zingg</groupId>
 	<artifactId>parent</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>${zingg.version}</version>
 </parent>
 		<artifactId>core</artifactId>
 		<packaging>jar</packaging>
@@ -12,7 +12,7 @@
 <dependency>
 	<groupId>zingg</groupId>
 	<artifactId>client</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>${zingg.version}</version>
 </dependency>
 <dependency>
 	<groupId>com.wcohen.ss</groupId>

@@ -21,8 +21,10 @@ import zingg.model.Model;
 
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
+import zingg.util.Analytics;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
+import zingg.util.Metric;
 import zingg.client.util.Util;
 import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
@@ -100,7 +102,10 @@ public class Matcher extends ZinggBase{
 			Dataset<Row> testData = getTestData();
 			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
-			LOG.info("Read " + testData.count());
+			long count = testData.count();
+			LOG.info("Read " + count);
+			Analytics.track(Metric.DATA_COUNT, count, args.getCollectMetrics());
+
 			Dataset<Row> blocked = getBlocked(testData);
 			LOG.info("Blocked ");
 			/*blocked = blocked.cache();
@@ -181,7 +186,7 @@ public class Matcher extends ZinggBase{
 			graphWithScores = graphWithScores.drop(ColName.COL_PREFIX + ColName.ID_COL);
 			graphWithScores = graphWithScores.drop(ColName.ID_COL);
 			graphWithScores = graphWithScores.drop(ColName.SOURCE_COL);
-			String[] cols = graphWithScores.columns();
+			/*String[] cols = graphWithScores.columns();
 			List<Column> columns = new ArrayList<Column>();
 			//columns.add(graphWithScores.col(ColName.CLUSTER_COLUMN));
 			//go only upto the last col, which is cluster col
@@ -189,6 +194,7 @@ public class Matcher extends ZinggBase{
 				columns.add(graphWithScores.col(cols[i]));
 			}
 			graphWithScores = DSUtil.select(graphWithScores, columns);
+			*/
 			PipeUtil.write(graphWithScores, args, ctx, args.getOutput());
 		}
 		}
