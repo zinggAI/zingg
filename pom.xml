@@ -322,6 +322,9 @@
 							<value>${project.parent.basedir}/license/zinggLicense</value>
 						</property>
 					</systemProperties>
+        				<additionalClasspathElements>
+          					<additionalClasspathElement>${project.parent.basedir}/client/target/classes</additionalClasspathElement>
+        				</additionalClasspathElements>
 				</configuration>
 			</plugin>
 		</plugins>
