@@ -84,21 +84,21 @@ public class Documenter extends ZinggBase {
         Template temp = cfg.getTemplate("model.ftlh");
 
         /* Merge data-model with template */
-        //Writer out = new OutputStreamWriter(System.out);
-		//Writer file = new FileWriter (new File(args.getZinggDocFile()));
-		StringWriter writer = new StringWriter();
-        temp.process(root, writer);
+        Writer out = new OutputStreamWriter(System.out);
+		Writer file = new FileWriter (new File(args.getZinggDocFile()));
+		//StringWriter writer = new StringWriter();
+        temp.process(root, file);
         // Note: Depending on what `out` is, you may need to call `out.close()`.
         // This is usually the case for file output, but not for servlet output.
 		//file.flush();
 
-		List<String> textList = Collections.singletonList(writer.toString());
+		//List<String> textList = Collections.singletonList(writer.toString());
 		
-		Dataset<Row> data = spark.createDataset(textList, Encoders.STRING()).toDF();
+		//Dataset<Row> data = spark.createDataset(textList, Encoders.STRING()).toDF();
 
-		PipeUtil.write(data, args, ctx, PipeUtil.getModelDocumentationPipe(args));
-        //file.close();
-		LOG.warn("written documentation at " + args.getZinggDocFile());
+		//PipeUtil.write(data, args, ctx, PipeUtil.getModelDocumentationPipe(args));
+        file.close();
+		//LOG.warn("written documentation at " + args.getZinggDocFile());
     }
 
 	
