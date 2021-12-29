@@ -51,14 +51,14 @@ public class Documenter extends ZinggBase {
 			root.put("numColumns", markedRecords.columns().length);
 			root.put("columns", markedRecords.columns());
 			root.put("fieldDefinitionCount", args.getFieldDefinition().size());
-			test(root);
+			buildAndWriteHTML(root);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ZinggClientException(e.getMessage());
 		}
 	}
 
-	public void test(Map<String, Object> root) throws Exception {
+	public void buildAndWriteHTML(Map<String, Object> root) throws Exception {
 
         /* ------------------------------------------------------------------------ */
         /* You should do this ONLY ONCE in the whole application life-cycle:        */
@@ -84,7 +84,7 @@ public class Documenter extends ZinggBase {
         Template temp = cfg.getTemplate("model.ftlh");
 
         /* Merge data-model with template */
-        Writer out = new OutputStreamWriter(System.out);
+       // Writer out = new OutputStreamWriter(System.out);
 		Writer file = new FileWriter (new File(args.getZinggDocFile()));
 		//StringWriter writer = new StringWriter();
         temp.process(root, file);
