@@ -17,6 +17,7 @@ import zingg.client.ZinggOptions;
 import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
+import zingg.util.ConsoleStringBuilder;
 import zingg.util.DSUtil;
 import zingg.util.PipeUtil;
 import zingg.util.LabelMatchType;
@@ -96,13 +97,13 @@ public class Labeller extends ZinggBase {
 				score = currentPair.head().getAs(ColName.SCORE_COL);
 				prediction = currentPair.head().getAs(ColName.PREDICTION_COL);
 	
-				msg1 = String.format("\tRecord pair %d out of %d records to be labelled by the user.\n", index, totalPairs);
+				msg1 = String.format("\tCurrent labelling round  : %d/%d pairs labelled\n", index, totalPairs);
 				String matchType = LabelMatchType.get(prediction).msg;
-				msg2 = String.format("\tZingg predicts the records %s with a similarity score of %.2f\n", 
+				msg2 = String.format("\tZingg predicts the above records %s with a similarity score of %.2f", 
 					matchType, score);
-				String msgHeader = msg1 + msg2;
+				//String msgHeader = msg1 + msg2;
 
-				selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msgHeader);
+				selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msg1, msg2);
 				updateLabellerStat(selected_option);
 				if (selected_option == 9) {
 					LOG.info("User has quit in the middle. Updating the records.");
@@ -123,10 +124,12 @@ public class Labeller extends ZinggBase {
 	}
 
 	
-	private int displayRecordsAndGetUserInput(Dataset<Row> records, String preMessage) {
-		System.out.println();
+	private int displayRecordsAndGetUserInput(Dataset<Row> records, String preMessage, String postMessage) {
+		//System.out.println();
 		System.out.println(preMessage);
 		records.show(false);
+		System.out.println(postMessage);
+		System.out.println("\tWhat do you think? Your choices are: ");
 		int selection = readCliInput();
 		return selection;
 	}
@@ -176,18 +179,19 @@ public class Labeller extends ZinggBase {
 	int readCliInput() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println();
-		System.out.println("\tPlease select from the following choices");
+		ConsoleStringBuilder sb = new ConsoleStringBuilder();
+
 		System.out.println("\tNo, they do not match : 0");
 		System.out.println("\tYes, they match       : 1");
 		System.out.println("\tNot sure              : 2");
-		System.out.println("");
+		System.out.println();
 		System.out.println("\tTo exit               : 9");
 		System.out.println();
 		System.out.print("\tPlease enter your choice [0,1,2 or 9]: ");
 
 		while (!sc.hasNext("[0129]")) {
 			sc.next();
-			System.out.println("Nope, enter one of the allowed option!");
+			System.out.println("Nope, please enter one of the allowed options!");
 		}
 		String word = sc.next();
 		int selection = Integer.parseInt(word);
@@ -197,25 +201,27 @@ public class Labeller extends ZinggBase {
 	}
 
 	private void updateLabellerStat(int selected_option) {
+		++totalCount;
 		if (selected_option == ColValues.MATCH_TYPE_MATCH) {
 			++positivePairsCount;
-			++totalCount;
 		}
 		else if (selected_option == ColValues.MATCH_TYPE_NOT_A_MATCH) {
 			++negativePairsCount;
-			++totalCount;
 		}
 		else if (selected_option == ColValues.MATCH_TYPE_NOT_SURE) {
 			++notSurePairsCount;
-			++totalCount;
 		}	
 		printMarkedRecordsStat();
 	}
 
 	private void printMarkedRecordsStat() {
 		String msg = String.format(
-				"\tLabelled Pairs : %d/%d MATCH, %d/%d DO NOT MATCH, %d/%d NOT SURE", positivePairsCount, totalCount,
+				"\tLabelled pairs so far    : %d/%d MATCH, %d/%d DO NOT MATCH, %d/%d NOT SURE", positivePairsCount, totalCount,
 				negativePairsCount, totalCount, notSurePairsCount, totalCount);
+				
+		System.out.println();		
+		System.out.println();
+		System.out.println();					
 		System.out.println(msg);
 	}
 
