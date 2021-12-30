@@ -186,7 +186,7 @@ public class Matcher extends ZinggBase{
 			graphWithScores = graphWithScores.drop(ColName.COL_PREFIX + ColName.ID_COL);
 			graphWithScores = graphWithScores.drop(ColName.ID_COL);
 			graphWithScores = graphWithScores.drop(ColName.SOURCE_COL);
-			String[] cols = graphWithScores.columns();
+			/*String[] cols = graphWithScores.columns();
 			List<Column> columns = new ArrayList<Column>();
 			//columns.add(graphWithScores.col(ColName.CLUSTER_COLUMN));
 			//go only upto the last col, which is cluster col
@@ -194,6 +194,7 @@ public class Matcher extends ZinggBase{
 				columns.add(graphWithScores.col(cols[i]));
 			}
 			graphWithScores = DSUtil.select(graphWithScores, columns);
+			*/
 			PipeUtil.write(graphWithScores, args, ctx, args.getOutput());
 		}
 		}

@@ -104,3 +104,28 @@ Application captures a few measurements for runtime metrics such as *no. of data
 <span style="color:maroon">**Zingg does not capture any user data or input data and will never do so.**</span>
 
 This feature may be disabled by setting this flag to false. Default value is true. For details, refer to [Zingg Analytics](../analytics.md)
+
+## Passing Configuration value through system environment variable
+If a user does not want to pass value of any JSON parameter through config file for security reasons or otherwise, they can configure that value through system environment variable. The system variable name needs to be put in the config file in place of its json value. At runtime, the config file gets updated with the value of the environment variable.
+
+Below is config file snippet that references few environment variables. 
+````json
+"output" : [{
+  "name":"unifiedCustomers", 
+  "format":"net.snowflake.spark.snowflake",
+  "props": {
+    "location": "$location$",
+    "delimiter": ",",
+    "header": false,				
+    "password": "$passwd",					
+  }
+}],
+
+"labelDataSampleSize" : 0.5,
+"numPartitions":4,
+"modelId": $modelId$,
+"zinggDir": "models",
+"collectMetrics": $collectMetrics$
+````
+Environment variable must be enclosed within Dollar signs **(\$var$)** to take effect. Also, the config file name must be suffixed with ***.env**. As usual, String variables need to put within quotes **("\$var\$")**, Boolean and Numeric values should be put without quotes **(\$var$)**.
+

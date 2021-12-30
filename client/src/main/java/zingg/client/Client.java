@@ -41,6 +41,7 @@ public class Client implements Serializable {
 			setZingg(args, options);					
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			throw new ZinggClientException("An error has occured while setting up the client" + e.getMessage());
 		}
 	}
@@ -135,6 +136,9 @@ public class Client implements Serializable {
 			Arguments arguments = null;
 			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
 					arguments = Arguments.createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
+			}
+			else if (options.get(ClientOptions.CONF).value.endsWith("env")) {
+				arguments = Arguments.createArgumentsFromJSONTemplate(options.get(ClientOptions.CONF).value, phase);
 			}
 			else {
 				arguments = Arguments.createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);

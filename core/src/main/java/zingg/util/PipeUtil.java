@@ -300,6 +300,14 @@ public class PipeUtil {
 		p.setProp(FilePipe.LOCATION, args.getZinggTrainingDataMarkedDir());
 		return p;
 	}
+	
+	public static Pipe getModelDocumentationPipe(Arguments args) {
+		Pipe p = new Pipe();
+		p.setFormat(Format.TEXT);
+		p.setProp(FilePipe.LOCATION, args.getZinggDocFile());
+		return p;
+	}
+	
 
 	public static String getPipesAsString(Pipe[] pipes) {
 		return Arrays.stream(pipes)
