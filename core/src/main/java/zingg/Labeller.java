@@ -25,6 +25,8 @@ public class Labeller extends ZinggBase {
 
 	protected static String name = "zingg.Labeller";
 	public static final Log LOG = LogFactory.getLog(Labeller.class);
+	long positivePairsCount, negativePairsCount, notSurePairsCount;
+	long totalCount;
 
 	public Labeller() {
 		setZinggOptions(ZinggOptions.LABEL);
@@ -56,6 +58,10 @@ public class Labeller extends ZinggBase {
 				unmarkedRecords = unmarkedRecords.join(markedRecords,
 						unmarkedRecords.col(ColName.CLUSTER_COLUMN).equalTo(markedRecords.col(ColName.CLUSTER_COLUMN)),
 						"left_anti");
+				positivePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH)).count() / 2;
+				negativePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_A_MATCH)).count() / 2;
+				notSurePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_SURE)).count() / 2;
+				totalCount = markedRecords.count() / 2;
 			} 
 		} catch (Exception e) {
 			LOG.warn("No unmarked record for labelling");
@@ -65,7 +71,7 @@ public class Labeller extends ZinggBase {
 
 	public void processRecordsCli(Dataset<Row> lines) throws ZinggClientException {
 		LOG.info("Processing Records for CLI Labelling");
-
+		printMarkedRecordsStat();
 		if (lines == null || lines.count() == 0) {
 			LOG.info("It seems there are no unmarked records at this moment. Please run findTrainingData job to build some pairs to be labelled and then run this labeler.");
 			return;
@@ -89,7 +95,7 @@ public class Labeller extends ZinggBase {
 				
 				score = currentPair.head().getAs(ColName.SCORE_COL);
 				prediction = currentPair.head().getAs(ColName.PREDICTION_COL);
- 
+	
 				msg1 = String.format("\tRecord pair %d out of %d records to be labelled by the user.\n", index, totalPairs);
 				String matchType = LabelMatchType.get(prediction).msg;
 				msg2 = String.format("\tZingg predicts the records %s with a similarity score of %.2f\n", 
@@ -97,6 +103,7 @@ public class Labeller extends ZinggBase {
 				String msgHeader = msg1 + msg2;
 
 				selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msgHeader);
+				updateLabellerStat(selected_option);
 				if (selected_option == 9) {
 					LOG.info("User has quit in the middle. Updating the records.");
 					break;
@@ -187,6 +194,29 @@ public class Labeller extends ZinggBase {
 		// sc.close();
 
 		return selection;
+	}
+
+	private void updateLabellerStat(int selected_option) {
+		if (selected_option == ColValues.MATCH_TYPE_MATCH) {
+			++positivePairsCount;
+			++totalCount;
+		}
+		else if (selected_option == ColValues.MATCH_TYPE_NOT_A_MATCH) {
+			++negativePairsCount;
+			++totalCount;
+		}
+		else if (selected_option == ColValues.MATCH_TYPE_NOT_SURE) {
+			++notSurePairsCount;
+			++totalCount;
+		}	
+		printMarkedRecordsStat();
+	}
+
+	private void printMarkedRecordsStat() {
+		String msg = String.format(
+				"\tLabelled Pairs : %d/%d MATCH, %d/%d DO NOT MATCH, %d/%d NOT SURE", positivePairsCount, totalCount,
+				negativePairsCount, totalCount, notSurePairsCount, totalCount);
+		System.out.println(msg);
 	}
 
 	void writeLabelledOutput(Dataset<Row> records) {
