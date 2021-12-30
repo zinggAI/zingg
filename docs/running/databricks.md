@@ -7,52 +7,50 @@ nav_order: 6
 ## Running on Databricks
 
 The cloud environment does not have the system console for the labeller to work. Please refer to 
-[Notebook based labelling](https://github.com/zinggAI/zingg/issues/79) to get the notebooks which can run on Databricks
+[Notebook based labelling](https://github.com/zinggAI/zingg/issues/79) to get the notebooks which can run on Databricks. This is the param array submitted through the Spark Submit Task 
+["--class","zingg.client.Client","dbfs:/FileStore/jars/e34dca2a_84a4_45fd_a9fd_fe0e1c7e283c-zingg_0_3_0_SNAPSHOT-aa6ea.jar","--phase=findTrainingData","--conf=/dbfs/FileStore/config.json","--license=abc"]
 
-Zingg is run as a Spark Jar task witht he following parameters
+Zingg is run as a Spark Submit task with the following parameters
 
 ````json
 {
-  "name": "Zingg",
-  "new_cluster": {
-    "spark_version": "7.3.x-scala2.12",
-    "node_type_id": "r3.xlarge",
-    "aws_attributes": {
-      "availability": "ON_DEMAND"
-    },
-    "num_workers": 5
-  },
-  "libraries": [
-    {
-      "jar": "dbfs:/zingg.jar"
-    },
-    {
-      "maven": {
-        "coordinates": "org.jsoup:jsoup:1.7.2"
-      }
-    }
-  ],
-  "email_notifications": {
-    "on_start": [],
-    "on_success": [],
-    "on_failure": []
-  },
-  "timeout_seconds": 3600,
-  "max_retries": 1,
-  "spark_jar_task": {
-    "main_class_name": "zingg.client.Client",
-    "parameters": [
-    "--phase",
-    "findTrainingData",
-    "--conf",
-    "dbfs:/config.json"
-    ]
-  }
+"settings": {
+"new_cluster": {
+"spark_version": "7.3.x-scala2.12",
+"spark_conf": {
+"spark.databricks.cluster.profile": "singleNode",
+"spark.master": "local[*, 4]"
+},
+"aws_attributes": {
+"availability": "SPOT_WITH_FALLBACK",
+"first_on_demand": 1,
+"zone_id": "us-west-2a"
+},
+"node_type_id": "c5d.xlarge",
+"driver_node_type_id": "c5d.xlarge",
+"custom_tags": {
+"ResourceClass": "SingleNode"
+}
+},
+"spark_submit_task": {
+"parameters": [
+"--class",
+"zingg.client.Client",
+"dbfs:/FileStore/jars/e34dca2a_84a4_45fd_a9fd_fe0e1c7e283c-zingg_0_3_0_SNAPSHOT-aa6ea.jar",
+"--phase=findTrainingData",
+"--conf=/dbfs/FileStore/config.json",
+"--license=abc"
+]
+},
+"email_notifications": {},
+"name": "test",
+"max_concurrent_runs": 1
+}
 }
 ````
 
 The config file for Databricks needs modifications to accept dbfs locations. Here is a sample config that worked
-````
+````json
 {	
 	"fieldDefinition":[
 		{
