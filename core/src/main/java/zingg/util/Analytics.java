@@ -25,9 +25,9 @@ public class Analytics {
 	private static final String HOST = "www.google-analytics.com";
 	private static final String PATH = "/mp/collect";
 	//private static final String PATH = "/debug/mp/collect"; //set the path to validate the POST request
-	private static final String API_SECRET = "LWZHm7tASgOl2VHpy_LR8A";
+	private static final String API_SECRET = "IYJgNn8KR2Cr0yZIvrMvng";
 	private static final String API_VERSION = "2";
-	private static final String MEASUREMENT_ID = "G-VFQXB5JFC1";
+	private static final String MEASUREMENT_ID = "G-MWRMGB9652";
 
 	private static Map<String, String> metrics;
 	public static final Log LOG = LogFactory.getLog(Analytics.class); 
