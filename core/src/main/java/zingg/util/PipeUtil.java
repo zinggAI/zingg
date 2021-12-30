@@ -69,6 +69,7 @@ public class PipeUtil {
 
 	private static Dataset<Row> read(DataFrameReader reader, Pipe p, boolean addSource) {
 		Dataset<Row> input = null;
+		LOG.warn("Reading " + p);
 		if (p.getProps().containsKey(FilePipe.LOCATION)) {
 			input = reader.load(p.get(FilePipe.LOCATION));
 		}
