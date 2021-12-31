@@ -12,7 +12,8 @@ public enum ZinggOptions {
     FIND_TRAINING_DATA("findTrainingData"), 
     LABEL("label"),
     LINK("link"),
-    GENERATE_DOCS("generateDocs");
+    GENERATE_DOCS("generateDocs"),
+    UPDATE_LABEL("updateLabel");
 
     private String value;
 
