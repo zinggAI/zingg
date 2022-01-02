@@ -16,6 +16,7 @@ import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.util.DSUtil;
+import zingg.util.LabelMatchType;
 import zingg.util.PipeUtil;
 
 public class LabelUpdater extends Labeller {
@@ -57,7 +58,7 @@ public class LabelUpdater extends Labeller {
 
 			Scanner sc = new Scanner(System.in);
 			do {
-				System.out.print("\tPlease enter the cluster id (or '9' to exit): ");
+				System.out.print("\n\tPlease enter the cluster id (or 9 to exit): ");
 				String cluster_id = sc.next();
 				if (cluster_id.equals("9")) {
 					LOG.info("User has exit in the middle. Updating the records.");
@@ -70,9 +71,12 @@ public class LabelUpdater extends Labeller {
 				}
 
 				matchFlag = currentPair.head().getAs(ColName.MATCH_FLAG_COL);
-				postMsg = String.format("\tCurrent Match type for the above pair is %d\n", matchFlag);
-				selectedOption = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), "", postMsg);
-				updateLabellerStat(selectedOption, matchFlag);
+				String preMsg = String.format("\n\tThe record pairs belonging to the input cluster id %s are:", cluster_id);
+				String matchType = LabelMatchType.get(matchFlag).msg;
+				postMsg = String.format("\tThe above pair is labeled as %s\n", matchType);
+				selectedOption = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), preMsg, postMsg);
+				updateLabellerStat(selectedOption, +1);
+				updateLabellerStat(matchFlag, -1);
 				printMarkedRecordsStat();
 				if (selectedOption == 9) {
 					LOG.info("User has quit in the middle. Updating the records.");
@@ -90,7 +94,7 @@ public class LabelUpdater extends Labeller {
 			if (updatedRecords != null) {
 				updatedRecords = updatedRecords.union(recordsToUpdate);
 			}
-			writeLabelledOutput(updatedRecords, SaveMode.Overwrite);
+			writeLabelledOutput(updatedRecords);
 			sc.close();
 			LOG.info("Processing finished.");
 		} catch (Exception e) {
@@ -103,27 +107,12 @@ public class LabelUpdater extends Labeller {
 		return;
 	}
 
-	private void updateLabellerStat(int selectedOption, int existingType) {
-		--totalCount;
-		if (existingType == ColValues.MATCH_TYPE_MATCH) {
-			--positivePairsCount;
-		}
-		else if (existingType == ColValues.MATCH_TYPE_NOT_A_MATCH) {
-			--negativePairsCount;
-		}
-		else if (existingType == ColValues.MATCH_TYPE_NOT_SURE) {
-			--notSurePairsCount;
-		}
-		updateLabellerStat(selectedOption);
-	}
+	
 
-	void writeLabelledOutput(Dataset<Row> records, SaveMode mode) {
-		if (records == null) {
-			LOG.warn("No marked record has been updated.");
-			return;
-		}
+
+	protected Pipe getOutputPipe() {
 		Pipe p = PipeUtil.getTrainingDataMarkedPipe(args);
-		p.setMode(mode);
-		PipeUtil.write(records, args, ctx, p);
+		p.setMode(SaveMode.Overwrite);
+		return p;
 	}
 }

@@ -17,7 +17,6 @@ import zingg.client.ZinggOptions;
 import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
-import zingg.util.ConsoleStringBuilder;
 import zingg.util.DSUtil;
 import zingg.util.PipeUtil;
 import zingg.util.LabelMatchType;
@@ -108,7 +107,7 @@ public class Labeller extends ZinggBase {
 				//String msgHeader = msg1 + msg2;
 
 				selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msg1, msg2);
-				updateLabellerStat(selected_option);
+				updateLabellerStat(selected_option, 1);
 				printMarkedRecordsStat();
 				if (selected_option == 9) {
 					LOG.info("User has quit in the middle. Updating the records.");
@@ -150,42 +149,12 @@ public class Labeller extends ZinggBase {
 	}
 
 	
-	private List<String> getDisplayColumns(Dataset<Row> lines) {
-		List<String> cols = Arrays.asList(lines.columns());
-		List<String> skipCols = getExcludedColumns();
-		List<String> displayCols = new ArrayList<>();
-		for (String key : cols) {
-			if (!skipCols.contains(key)) {
-				displayCols.add(key);
-			}
-		}	
-		return displayCols;
-	}
-
-	private List<String> getDisplayData(Row row, List<String> cols) {
-		List<String> strArray = new ArrayList<>();
-		for (String key : cols) {
-			strArray.add(row.getAs(key).toString());
-		}
-		return strArray;
-	}
-
-	private List<String> getExcludedColumns() {
-		List<String> columns = new ArrayList<>();
-		columns.add(ColName.ID_COL);
-		columns.add(ColName.CLUSTER_COLUMN);
-		columns.add(ColName.SCORE_COL);
-		columns.add(ColName.PREDICTION_COL);
-		columns.add(ColName.MATCH_FLAG_COL);
-
-		return columns;
-	}
+	
 
 	int readCliInput() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println();
-		ConsoleStringBuilder sb = new ConsoleStringBuilder();
-
+		
 		System.out.println("\tNo, they do not match : 0");
 		System.out.println("\tYes, they match       : 1");
 		System.out.println("\tNot sure              : 2");
@@ -205,16 +174,16 @@ public class Labeller extends ZinggBase {
 		return selection;
 	}
 
-	protected void updateLabellerStat(int selected_option) {
-		++totalCount;
+	protected void updateLabellerStat(int selected_option, int increment) {
+		totalCount += increment;
 		if (selected_option == ColValues.MATCH_TYPE_MATCH) {
-			++positivePairsCount;
+			positivePairsCount += increment;
 		}
 		else if (selected_option == ColValues.MATCH_TYPE_NOT_A_MATCH) {
-			++negativePairsCount;
+			negativePairsCount += increment;
 		}
 		else if (selected_option == ColValues.MATCH_TYPE_NOT_SURE) {
-			++notSurePairsCount;
+			notSurePairsCount += increment;
 		}	
 	}
 
@@ -229,13 +198,16 @@ public class Labeller extends ZinggBase {
 		System.out.println(msg);
 	}
 
-	void writeLabelledOutput(Dataset<Row> records) {
+	protected void writeLabelledOutput(Dataset<Row> records) {
 		if (records == null) {
 			LOG.warn("No records to be labelled.");
 			return;
-		}
-		Pipe p = PipeUtil.getTrainingDataMarkedPipe(args);
-		PipeUtil.write(records, args, ctx, p);
+		}		
+		PipeUtil.write(records, args, ctx, getOutputPipe());
+	}
+
+	protected Pipe getOutputPipe() {
+		return PipeUtil.getTrainingDataMarkedPipe(args);
 	}
 }
 
