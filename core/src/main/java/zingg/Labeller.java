@@ -58,15 +58,19 @@ public class Labeller extends ZinggBase {
 				unmarkedRecords = unmarkedRecords.join(markedRecords,
 						unmarkedRecords.col(ColName.CLUSTER_COLUMN).equalTo(markedRecords.col(ColName.CLUSTER_COLUMN)),
 						"left_anti");
-				positivePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH)).count() / 2;
-				negativePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_A_MATCH)).count() / 2;
-				notSurePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_SURE)).count() / 2;
-				totalCount = markedRecords.count() / 2;
+						getMarkedRecordsStat(markedRecords);
 			} 
 		} catch (Exception e) {
 			LOG.warn("No unmarked record for labelling");
 		}
 		return unmarkedRecords;
+	}
+
+	protected void getMarkedRecordsStat(Dataset<Row> markedRecords) {
+		positivePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH)).count() / 2;
+		negativePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_A_MATCH)).count() / 2;
+		notSurePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_SURE)).count() / 2;
+		totalCount = markedRecords.count() / 2;
 	}
 
 	public void processRecordsCli(Dataset<Row> lines) throws ZinggClientException {
@@ -96,14 +100,15 @@ public class Labeller extends ZinggBase {
 				score = currentPair.head().getAs(ColName.SCORE_COL);
 				prediction = currentPair.head().getAs(ColName.PREDICTION_COL);
 	
-				msg1 = String.format("\tRecord pair %d out of %d records to be labelled by the user.\n", index, totalPairs);
+				msg1 = String.format("\tCurrent labelling round  : %d/%d pairs labelled\n", index, totalPairs);
 				String matchType = LabelMatchType.get(prediction).msg;
-				msg2 = String.format("\tZingg predicts the records %s with a similarity score of %.2f\n", 
+				msg2 = String.format("\tZingg predicts the above records %s with a similarity score of %.2f", 
 					matchType, score);
-				String msgHeader = msg1 + msg2;
+				//String msgHeader = msg1 + msg2;
 
-				selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msgHeader);
-				updateLabellerStat(selected_option);
+				selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msg1, msg2);
+				updateLabellerStat(selected_option, 1);
+				printMarkedRecordsStat();
 				if (selected_option == 9) {
 					LOG.info("User has quit in the middle. Updating the records.");
 					break;
@@ -123,15 +128,17 @@ public class Labeller extends ZinggBase {
 	}
 
 	
-	private int displayRecordsAndGetUserInput(Dataset<Row> records, String preMessage) {
-		System.out.println();
+	protected int displayRecordsAndGetUserInput(Dataset<Row> records, String preMessage, String postMessage) {
+		//System.out.println();
 		System.out.println(preMessage);
 		records.show(false);
+		System.out.println(postMessage);
+		System.out.println("\tWhat do you think? Your choices are: ");
 		int selection = readCliInput();
 		return selection;
 	}
 
-	private Dataset<Row> updateRecords(int matchValue, Dataset<Row> newRecords, Dataset<Row> updatedRecords) {
+	protected Dataset<Row> updateRecords(int matchValue, Dataset<Row> newRecords, Dataset<Row> updatedRecords) {
 		newRecords = newRecords.withColumn(ColName.MATCH_FLAG_COL, functions.lit(matchValue));
 		if (updatedRecords == null) {
 			updatedRecords = newRecords;
@@ -142,52 +149,23 @@ public class Labeller extends ZinggBase {
 	}
 
 	
-	private List<String> getDisplayColumns(Dataset<Row> lines) {
-		List<String> cols = Arrays.asList(lines.columns());
-		List<String> skipCols = getExcludedColumns();
-		List<String> displayCols = new ArrayList<>();
-		for (String key : cols) {
-			if (!skipCols.contains(key)) {
-				displayCols.add(key);
-			}
-		}	
-		return displayCols;
-	}
-
-	private List<String> getDisplayData(Row row, List<String> cols) {
-		List<String> strArray = new ArrayList<>();
-		for (String key : cols) {
-			strArray.add(row.getAs(key).toString());
-		}
-		return strArray;
-	}
-
-	private List<String> getExcludedColumns() {
-		List<String> columns = new ArrayList<>();
-		columns.add(ColName.ID_COL);
-		columns.add(ColName.CLUSTER_COLUMN);
-		columns.add(ColName.SCORE_COL);
-		columns.add(ColName.PREDICTION_COL);
-		columns.add(ColName.MATCH_FLAG_COL);
-
-		return columns;
-	}
+	
 
 	int readCliInput() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println();
-		System.out.println("\tPlease select from the following choices");
+		
 		System.out.println("\tNo, they do not match : 0");
 		System.out.println("\tYes, they match       : 1");
 		System.out.println("\tNot sure              : 2");
-		System.out.println("");
+		System.out.println();
 		System.out.println("\tTo exit               : 9");
 		System.out.println();
 		System.out.print("\tPlease enter your choice [0,1,2 or 9]: ");
 
 		while (!sc.hasNext("[0129]")) {
 			sc.next();
-			System.out.println("Nope, enter one of the allowed option!");
+			System.out.println("Nope, please enter one of the allowed options!");
 		}
 		String word = sc.next();
 		int selection = Integer.parseInt(word);
@@ -196,36 +174,40 @@ public class Labeller extends ZinggBase {
 		return selection;
 	}
 
-	private void updateLabellerStat(int selected_option) {
+	protected void updateLabellerStat(int selected_option, int increment) {
+		totalCount += increment;
 		if (selected_option == ColValues.MATCH_TYPE_MATCH) {
-			++positivePairsCount;
-			++totalCount;
+			positivePairsCount += increment;
 		}
 		else if (selected_option == ColValues.MATCH_TYPE_NOT_A_MATCH) {
-			++negativePairsCount;
-			++totalCount;
+			negativePairsCount += increment;
 		}
 		else if (selected_option == ColValues.MATCH_TYPE_NOT_SURE) {
-			++notSurePairsCount;
-			++totalCount;
+			notSurePairsCount += increment;
 		}	
-		printMarkedRecordsStat();
 	}
 
-	private void printMarkedRecordsStat() {
+	protected void printMarkedRecordsStat() {
 		String msg = String.format(
-				"\tLabelled Pairs : %d/%d MATCH, %d/%d DO NOT MATCH, %d/%d NOT SURE", positivePairsCount, totalCount,
+				"\tLabelled pairs so far    : %d/%d MATCH, %d/%d DO NOT MATCH, %d/%d NOT SURE", positivePairsCount, totalCount,
 				negativePairsCount, totalCount, notSurePairsCount, totalCount);
+				
+		System.out.println();		
+		System.out.println();
+		System.out.println();					
 		System.out.println(msg);
 	}
 
-	void writeLabelledOutput(Dataset<Row> records) {
+	protected void writeLabelledOutput(Dataset<Row> records) {
 		if (records == null) {
 			LOG.warn("No records to be labelled.");
 			return;
-		}
-		Pipe p = PipeUtil.getTrainingDataMarkedPipe(args);
-		PipeUtil.write(records, args, ctx, p);
+		}		
+		PipeUtil.write(records, args, ctx, getOutputPipe());
+	}
+
+	protected Pipe getOutputPipe() {
+		return PipeUtil.getTrainingDataMarkedPipe(args);
 	}
 }
 

@@ -42,6 +42,8 @@ public class Trainer extends ZinggBase{
 			tra = tra.cache();
 			positives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH));
 			negatives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_A_MATCH));
+			LOG.warn("Training on positive pairs - " + positives.count());
+			LOG.warn("Training on negative pairs - " + negatives.count());
 				
 			Dataset<Row> testData = PipeUtil.read(spark, true, args.getNumPartitions(), false, args.getData());
 			Tree<Canopy> blockingTree = BlockingTreeUtil.createBlockingTreeFromSample(testData,  positives, 0.5,
