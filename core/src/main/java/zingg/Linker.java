@@ -61,10 +61,9 @@ public class Linker extends Matcher {
 			if (args.getOutput() != null) {
 
 				// input dupes are pairs
-				dupesActual = DFUtil.addClusterRowNumber(dupesActual, spark);
-				dupesActual = Util.addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN);
-				Dataset<Row> dupes1 = DSUtil.alignLinked(dupesActual, args);
-				Dataset<Row> dupes2 = dupes1.orderBy(ColName.CLUSTER_COLUMN);
+				//dupesActual = DFUtil.addClusterRowNumber(dupesActual, spark);
+				dupesActual = Util.addUniqueCol(dupesActual, ColName.ID_COL);
+				Dataset<Row> dupes2 = DSUtil.alignLinked(dupesActual, args);
 				LOG.debug("uncertain output schema is " + dupes2.schema());
 				PipeUtil.write(dupes2, args, ctx, args.getOutput());
 			}
