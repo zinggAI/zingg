@@ -92,6 +92,7 @@ public class DSUtil {
 
 	public static Dataset<Row> alignLinked(Dataset<Row> dupesActual, Arguments args) {
 		dupesActual = dupesActual.cache();
+		dupesActual = dupesActual.withColumnRenamed(ColName.ID_COL, ColName.CLUSTER_COLUMN);
 		List<Column> cols = new ArrayList<Column>();
 		cols.add(dupesActual.col(ColName.CLUSTER_COLUMN));
 		cols.add(dupesActual.col(ColName.SOURCE_COL));
@@ -102,6 +103,7 @@ public class DSUtil {
 		}		
 
 		Dataset<Row> dupes1 = dupesActual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
+		dupes1 = dupes1.dropDuplicates(ColName.CLUSTER_COLUMN, ColName.SOURCE_COL);
 	 	List<Column> cols1 = new ArrayList<Column>();
 		cols1.add(dupesActual.col(ColName.CLUSTER_COLUMN));
 		cols1.add(dupesActual.col(ColName.COL_PREFIX +ColName.SOURCE_COL));
