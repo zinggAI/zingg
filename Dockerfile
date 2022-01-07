@@ -2,6 +2,7 @@ FROM docker.io/bitnami/spark:3.1.2
 ENV SPARK_MASTER local[*]
 ENV ZINGG_HOME /zingg-0.3.1-SNAPSHOT
 ENV PATH $ZINGG_HOME/scripts:$PATH
+ENV LANG C.UTF-8
 WORKDIR /
 USER root
 WORKDIR /zingg-0.3.1-SNAPSHOT
