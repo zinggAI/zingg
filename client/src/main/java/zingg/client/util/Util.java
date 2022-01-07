@@ -1,5 +1,7 @@
 package zingg.client.util;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -469,7 +471,18 @@ public class Util implements Serializable {
 		return dupesActual;
 	}
 	
-	
-	
+	public static byte[] convertObjectIntoByteArray(Object obj) throws IOException {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutputStream oos = new ObjectOutputStream(bos);
+		oos.writeObject(obj);
+		oos.flush();
+		return bos.toByteArray();
+	}
+
+	public static Object revertObjectFromByteArray(byte[] byteArray) throws IOException, ClassNotFoundException {
+		ByteArrayInputStream bis = new ByteArrayInputStream(byteArray);
+		ObjectInputStream ois = new ObjectInputStream(bis);
+		return ois.readObject();
+	}
 	
 }

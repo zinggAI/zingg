@@ -5,10 +5,16 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.apache.spark.sql.types.DataType;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.RowFactory;
+import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.StructField;
+import org.apache.spark.sql.types.StructType;
 import org.apache.spark.storage.StorageLevel;
 
 import zingg.block.Block;
@@ -18,6 +24,7 @@ import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
 import zingg.client.MatchType;
 import zingg.client.util.ListMap;
+import zingg.client.util.Util;
 import zingg.hash.HashFunction;
 
 public class BlockingTreeUtil {
@@ -69,6 +76,21 @@ public class BlockingTreeUtil {
 		return createBlockingTree(sample, positives, sampleFraction, blockSize, args, hashFunctions);
 	}
 	
-	
-    
+	public static void writeBlockingTree(SparkSession spark, JavaSparkContext ctx, Tree<Canopy> blockingTree, Arguments args) throws Exception {
+		byte[] byteArray  = Util.convertObjectIntoByteArray(blockingTree);
+		StructType schema = DataTypes.createStructType(new StructField[] { DataTypes.createStructField("BlockingTree", DataTypes.BinaryType, false) });
+		List<Object> objList = new ArrayList<>();
+		objList.add(byteArray);
+		JavaRDD<Row> rowRDD = ctx.parallelize(objList).map((Object row) -> RowFactory.create(row));
+		Dataset<Row> df = spark.sqlContext().createDataFrame(rowRDD, schema).toDF();
+		PipeUtil.write(df, args, ctx, PipeUtil.getBlockingTreePipe(args));
+	}
+
+	public static Tree<Canopy> readBlockingTree(SparkSession spark, Arguments args) throws Exception {
+		Dataset<Row> tree = PipeUtil.read(spark, false, args.getNumPartitions(), false, PipeUtil.getBlockingTreePipe(args));
+		byte [] byteArrayBack = (byte[]) tree.head().get(0);
+		Tree<Canopy> blockingTree = null;
+		blockingTree =  (Tree<Canopy>) Util.revertObjectFromByteArray(byteArrayBack);
+		return blockingTree;
+	}
 }
