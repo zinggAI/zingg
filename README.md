@@ -34,7 +34,7 @@ The easiest way to get started with Zingg is through Docker and by running the p
 ```
 docker pull zingg/zingg:0.3.1
 docker run -it zingg/zingg:0.3.1 bash
-./scripts/zingg.sh --phase match examples/febrl/config.json
+./scripts/zingg.sh --phase match --conf examples/febrl/config.json
 ``` 
 
 Check the [step by step guide](https://docs.zingg.ai/docs/stepByStep.html) for more details.
