@@ -3,6 +3,7 @@ layout: default
 parent: Creating training data
 nav_order: 3
 title: Supplementing Zingg with existing training data
+grand_parent: Step By Step Guide
 ---
 
 ### Supplementing Zingg with existing training data

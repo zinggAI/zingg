@@ -1,6 +1,7 @@
 ---
 layout: default
 parent: Creating training data
+grand_parent: Step By Step Guide
 nav_order: 2
 ---
 ### label - user feedback on the training pairs 
