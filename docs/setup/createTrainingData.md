@@ -6,9 +6,8 @@ title: Creating training data
 has_children: true
 ---
 ## Creating training data
-Zingg builds models to predict similarity. Training data is needed to build these models. 
-
 {: .no_toc }
+Zingg builds models to predict similarity. Training data is needed to build these models. 
 
 - TOC
 {:toc}
