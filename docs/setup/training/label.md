@@ -1,6 +1,6 @@
 ---
 layout: default
-parent: Creating training data
+parent: Creating Training Data
 nav_order: 2
 ---
 ### label - user feedback on the training pairs 

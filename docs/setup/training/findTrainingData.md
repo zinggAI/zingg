@@ -1,6 +1,6 @@
 ---
 layout: default
-parent: Creating training data
+parent: Creating Training Data
 nav_order: 1
 ---
 ### findTrainingData - finding pairs of records which could be similar to train Zingg
