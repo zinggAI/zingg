@@ -131,11 +131,11 @@ public class DSUtil {
 		cols.add(dupesActual.col(ColName.ID_COL));
 		cols.add(dupesActual.col(ColName.PREDICTION_COL));
 		cols.add(dupesActual.col(ColName.SCORE_COL));
-		cols.add(dupesActual.col(ColName.SOURCE_COL));
 		
 		for (FieldDefinition def: args.getFieldDefinition()) {
 			cols.add(dupesActual.col(def.fieldName));						
 		}
+		cols.add(dupesActual.col(ColName.SOURCE_COL));
 		
 		Dataset<Row> dupes1 = dupesActual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
 	 	List<Column> cols1 = new ArrayList<Column>();
@@ -145,10 +145,10 @@ public class DSUtil {
 		//cols1.add(dupesActual.col(ColName.PROBABILITY_COL));
 		cols1.add(dupesActual.col(ColName.SCORE_COL));
 
-		cols1.add(dupesActual.col(ColName.COL_PREFIX +ColName.SOURCE_COL));
 		for (FieldDefinition def: args.getFieldDefinition()) {
 			cols1.add(dupesActual.col(ColName.COL_PREFIX + def.fieldName));			
 		}
+		cols1.add(dupesActual.col(ColName.COL_PREFIX +ColName.SOURCE_COL));
 		/*if (args.getJobId() != -1) {
 			cols1.add(dupesActual.col(ColName.SPARK_JOB_ID_COL));
 		}*/
