@@ -5,7 +5,6 @@ grand_parent: Step By Step Guide
 nav_order: 2
 ---
 ### label 
-
 ### Providing user feedback on the training pairs 
 This phase opens an interactive learner where the user can mark the pairs found by findTrainingData phase as matches or non matches. The findTrainingData phase generates edge cases for labelling and the label phase helps the user to mark them. 
 
