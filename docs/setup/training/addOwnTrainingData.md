@@ -1,6 +1,6 @@
 ---
 layout: default
-parent: Creating Training Data
+parent: Creating training data
 nav_order: 3
 ---
 
