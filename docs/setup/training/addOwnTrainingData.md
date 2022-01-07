@@ -2,6 +2,7 @@
 layout: default
 parent: Creating training data
 nav_order: 3
+title: Supplementing Zingg with existing training data
 ---
 
 ### Supplementing Zingg with existing training data
