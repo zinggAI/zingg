@@ -14,7 +14,7 @@
 		},
 		{
 			"fieldName" : "STREETNUMBER",
-			"matchType": "fuzzy",
+			"matchType": "exact",
 			"fields" : "STREETNUMBER",
 			"dataType": "\"string\"" 
 		},
@@ -38,7 +38,7 @@
 		},
 		{
 			"fieldName" : "AREACODE",
-			"matchType": "fuzzy",
+			"matchType": "exact",
 			"fields" : "AREACODE",
 			"dataType": "\"string\"" 
 		},

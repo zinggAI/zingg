@@ -44,7 +44,7 @@
 		},
 		{
 			"fieldName" : "stNo",
-			"matchType": "fuzzy",
+			"matchType": "exact",
 			"fields" : "stNo",
 			"dataType": "\"string\"" 
 		},
@@ -64,6 +64,12 @@
 			"fieldName" : "city",
 			"matchType": "fuzzy",
 			"fields" : "city",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "areacode",
+			"matchType": "exact",
+			"fields" : "areacode",
 			"dataType": "\"string\"" 
 		},
 		{
@@ -112,6 +118,7 @@
 					{\"name\":\"add1\", \"type\":\"string\", \"nullable\":true},
 					{\"name\":\"add2\",\"type\":\"string\",\"nullable\":true} ,
 					{\"name\":\"city\", \"type\":\"string\", \"nullable\":true}, 
+					{\"name\":\"areacode\", \"type\":\"string\", \"nullable\":true}, 
 					{\"name\":\"state\", \"type\":\"string\", \"nullable\":true},
 					{\"name\":\"dob\",\"type\":\"string\",\"nullable\":true} ,
 					{\"name\":\"ssn\",\"type\":\"string\",\"nullable\":true}
