@@ -38,6 +38,7 @@ public class Client implements Serializable {
 		this.options = options;
 		try {
 			buildAndSetArguments(args, options);
+			printAnalyticsBanner(arguments.getCollectMetrics());
 			setZingg(args, options);					
 		}
 		catch (Exception e) {
@@ -80,6 +81,10 @@ public class Client implements Serializable {
 		
 			String j = options.get(options.MODEL_ID).value;
 			args.setModelId(j);
+		}
+		if (options.get(options.COLLECT_METRICS)!= null) {
+			String j = options.get(options.COLLECT_METRICS).value;
+			args.setCollectMetrics(Boolean.valueOf(j));
 		}
 		setArguments(args);
 	}
@@ -143,7 +148,6 @@ public class Client implements Serializable {
 			else {
 				arguments = Arguments.createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
-			printAnalyticsBanner(arguments.getCollectMetrics());
 
 			client = new Client(arguments, options);	
 			client.init();

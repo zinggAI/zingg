@@ -162,7 +162,6 @@ public class Arguments implements Serializable {
 					true);
 			LOG.warn("Config Argument is " + filePath);
 			Arguments args = mapper.readValue(new File(filePath), Arguments.class);
-			LOG.warn("collectMetrics is " + args.getCollectMetrics());
 			LOG.warn("phase is " + phase);
 			checkValid(args, phase);
 			return args;			
