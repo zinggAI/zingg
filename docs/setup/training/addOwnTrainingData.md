@@ -15,6 +15,8 @@ The training data supplied to Zingg should have z_cluster column which groups th
 
 An example is provided at [Github training data](https://github.com/zinggAI/zingg/blob/main/examples/febrl/training.csv)
 
+The training data that is supplied to Zingg needs z_isMatch and z_cluster columns in the beginning, and z_source column in the end. The z_cluster denotes the pair grouping. z_isMatch should be 0 if the pairs do not match, and shuold be 1 if they match.
+
 The above training data can be specified using [trainingSamples attribute in the configuration.](https://github.com/zinggAI/zingg/blob/main/examples/febrl/configWithTrainingSamples.json)
 
 Please note: It is advisable to still run [findTrainingData](./findTrainingData.html) and [label](./label.html) a few rounds to tune Zingg with the supplied training data as well as patterns it needs to learn independently. 
