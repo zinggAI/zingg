@@ -101,9 +101,14 @@ public class Labeller extends ZinggBase {
 				prediction = currentPair.head().getAs(ColName.PREDICTION_COL);
 	
 				msg1 = String.format("\tCurrent labelling round  : %d/%d pairs labelled\n", index, totalPairs);
-				String matchType = LabelMatchType.get(prediction).msg;
-				msg2 = String.format("\tZingg predicts the above records %s with a similarity score of %.2f", 
-					matchType, score);
+				String matchType = LabelMatchType.get(prediction).msg;				
+				if (prediction == ColValues.IS_NOT_KNOWN_PREDICTION) {
+					msg2 = String.format(
+							"\tZingg does not do any prediction for the above pairs as Zingg is still collecting training data to build the preliminary models.");
+				} else {
+					msg2 = String.format("\tZingg predicts the above records %s with a similarity score of %.2f",
+							matchType, score);
+				}
 				//String msgHeader = msg1 + msg2;
 
 				selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msg1, msg2);
