@@ -82,7 +82,7 @@ public class BlockingTreeUtil {
 		List<Object> objList = new ArrayList<>();
 		objList.add(byteArray);
 		JavaRDD<Row> rowRDD = ctx.parallelize(objList).map((Object row) -> RowFactory.create(row));
-		Dataset<Row> df = spark.sqlContext().createDataFrame(rowRDD, schema).toDF();
+		Dataset<Row> df = spark.sqlContext().createDataFrame(rowRDD, schema).toDF().coalesce(1);
 		PipeUtil.write(df, args, ctx, PipeUtil.getBlockingTreePipe(args));
 	}
 
