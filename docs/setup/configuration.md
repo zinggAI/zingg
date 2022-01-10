@@ -103,7 +103,7 @@ Application captures a few measurements for runtime metrics such as *no. of data
 
 <span style="color:maroon">**Zingg does not capture any user data or input data and will never do so.**</span>
 
-This feature may be disabled by setting this flag to false. Default value is true. For details, refer to [Zingg Analytics](../analytics.md)
+This feature may be disabled by setting this flag to false. Default value is true. For details, refer to [Security And Privacy](../security.md)
 
 ## Passing Configuration value through system environment variable
 If a user does not want to pass value of any JSON parameter through config file for security reasons or otherwise, they can configure that value through system environment variable. The system variable name needs to be put in the config file in place of its json value. At runtime, the config file gets updated with the value of the environment variable.
