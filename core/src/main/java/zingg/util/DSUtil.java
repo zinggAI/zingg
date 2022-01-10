@@ -95,23 +95,23 @@ public class DSUtil {
 		dupesActual = dupesActual.withColumnRenamed(ColName.ID_COL, ColName.CLUSTER_COLUMN);
 		List<Column> cols = new ArrayList<Column>();
 		cols.add(dupesActual.col(ColName.CLUSTER_COLUMN));
-		cols.add(dupesActual.col(ColName.SOURCE_COL));
 		cols.add(dupesActual.col(ColName.SCORE_COL));
 		
 		for (FieldDefinition def: args.getFieldDefinition()) {
 			cols.add(dupesActual.col(def.fieldName));					
-		}		
+		}	
+		cols.add(dupesActual.col(ColName.SOURCE_COL));	
 
 		Dataset<Row> dupes1 = dupesActual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
 		dupes1 = dupes1.dropDuplicates(ColName.CLUSTER_COLUMN, ColName.SOURCE_COL);
 	 	List<Column> cols1 = new ArrayList<Column>();
 		cols1.add(dupesActual.col(ColName.CLUSTER_COLUMN));
-		cols1.add(dupesActual.col(ColName.COL_PREFIX +ColName.SOURCE_COL));
 		cols1.add(dupesActual.col(ColName.SCORE_COL));
 		
 		for (FieldDefinition def: args.getFieldDefinition()) {
 			cols1.add(dupesActual.col(ColName.COL_PREFIX + def.fieldName));			
 		}		
+		cols1.add(dupesActual.col(ColName.COL_PREFIX +ColName.SOURCE_COL));
 		/*if (args.getJobId() != -1) {
 			cols1.add(dupesActual.col(ColName.SPARK_JOB_ID_COL));
 		}*/
