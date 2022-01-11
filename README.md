@@ -5,6 +5,7 @@ Real world data contains multiple records belonging to the same customer. These 
 ![# Zingg - Data Silos](/assets/dataSilos.png)
 
 ## Why Zingg
+
 Zingg is an ML based tool for entity resolution. The following features set Zingg apart from other tools and libraries 
 - Ability to handle any entity like customer, patient, supplier, product etc 
 - Ability to connect to [disparate data sources](https://docs.zingg.ai/docs/dataSourcesAndSinks/connectors.html). Local and cloud file systems in any format, enterprise applications and relational, NoSQL and cloud databases and warehouses
@@ -27,9 +28,11 @@ Zingg is useful for
 ![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
 
 ## Demo
+
 See Zingg in action [here](https://www.youtube.com/watch?v=zOabyZxN9b0)
 
 ## Getting Started
+
 The easiest way to get started with Zingg is through Docker and by running the prebuilt models.
 ```
 docker pull zingg/zingg:0.3.1
@@ -40,9 +43,11 @@ docker run -it zingg/zingg:0.3.1 bash
 Check the [step by step guide](https://docs.zingg.ai/docs/stepByStep.html) for more details.
 
 ## The Story
+
 What is the [backstory behind Zingg](https://sonalgoyal.substack.com/p/time-to-zingg)? 
 
 ## Documentation
+
 Check detailed Zingg [documentation](https://docs.zingg.ai) 
 
 ## Community
@@ -57,8 +62,12 @@ Want to report a bug or request a feature? Let us know on  [Slack](https://join.
 Want to commit code? Lets talk on  [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA)
 
 ## Book Office Hours
-If you want to schedule a 30-min call with our team to help you get set up, please book a slot [here](https://calendly.com/sonalgoyal/30min)
 
+If you want to schedule a 30-min call with our team to help you get set up, please book a slot [here](https://calendly.com/sonalgoyal/30min). 
+
+## Asking questions
+
+If you have a question or issue while using Zingg, kindly log a [question](https://github.com/zinggAI/zingg/issues/new/choose) and we will reply very fast :-)
 
 ## License
 
