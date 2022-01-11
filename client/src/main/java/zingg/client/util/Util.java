@@ -1,5 +1,7 @@
 package zingg.client.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -473,7 +475,8 @@ public class Util implements Serializable {
 	
 	public static byte[] convertObjectIntoByteArray(Object obj) throws IOException {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ObjectOutputStream oos = new ObjectOutputStream(bos);
+		BufferedOutputStream bufferedOS = new BufferedOutputStream(bos);
+		ObjectOutputStream oos = new ObjectOutputStream(bufferedOS);
 		oos.writeObject(obj);
 		oos.flush();
 		return bos.toByteArray();
@@ -481,8 +484,9 @@ public class Util implements Serializable {
 
 	public static Object revertObjectFromByteArray(byte[] byteArray) throws IOException, ClassNotFoundException {
 		ByteArrayInputStream bis = new ByteArrayInputStream(byteArray);
-		ObjectInputStream ois = new ObjectInputStream(bis);
-		return ois.readObject();
+		BufferedInputStream bufferedIS = new BufferedInputStream(bis);
+		ObjectInputStream ois = new ObjectInputStream(bufferedIS);
+		return ois.readObject(); 
 	}
 	
 }
