@@ -16,6 +16,7 @@ import org.apache.spark.sql.DataFrameReader;
 import org.apache.spark.sql.DataFrameWriter;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.functions;
 import org.apache.spark.storage.StorageLevel;
@@ -309,6 +310,13 @@ public class PipeUtil {
 		return p;
 	}
 	
+	public static Pipe getBlockingTreePipe(Arguments args) {
+		Pipe p = new Pipe();
+		p.setFormat(Format.PARQUET);
+		p.setProp(FilePipe.LOCATION, args.getBlockFile());
+		p.setMode(SaveMode.Overwrite);
+		return p;
+	}
 
 	public static String getPipesAsString(Pipe[] pipes) {
 		return Arrays.stream(pipes)

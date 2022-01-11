@@ -47,7 +47,7 @@ public class Matcher extends ZinggBase{
 
 	protected Dataset<Row> getBlocked(Dataset<Row> testData) throws Exception{
 		LOG.debug("Blocking model file location is " + args.getBlockFile());
-		Tree<Canopy> tree = (Tree<Canopy>) Util.readfromFile(args.getBlockFile());
+		Tree<Canopy> tree = BlockingTreeUtil.readBlockingTree(spark, args);
 		Dataset<Row> blocked = testData.map(new Block.BlockFunction(tree), RowEncoder.apply(Block.appendHashCol(testData.schema())));
 		Dataset<Row> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)); //.cache();
 		return blocked1;
