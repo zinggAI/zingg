@@ -21,6 +21,7 @@
 					{\"name\":\"add1\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}},
 					{\"name\":\"add2\",\"type\":\"string\",\"nullable\":true,\"metadata\" : {}},
 					{\"name\":\"city\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}}, 
+					{\"name\":\"areacode\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}},
 					{\"name\":\"state\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}},
 					{\"name\":\"dob\",\"type\":\"string\",\"nullable\":true,\"metadata\" : {}},
 					{\"name\":\"ssn\",\"type\":\"string\",\"nullable\":true,\"metadata\" : {}}
@@ -44,7 +45,7 @@
 		},
 		{
 			"fieldName" : "stNo",
-			"matchType": "fuzzy",
+			"matchType": "exact",
 			"fields" : "stNo",
 			"dataType": "\"string\"" 
 		},
@@ -64,6 +65,12 @@
 			"fieldName" : "city",
 			"matchType": "fuzzy",
 			"fields" : "city",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "areacode",
+			"matchType": "exact",
+			"fields" : "areacode",
 			"dataType": "\"string\"" 
 		},
 		{
@@ -112,6 +119,7 @@
 					{\"name\":\"add1\", \"type\":\"string\", \"nullable\":true},
 					{\"name\":\"add2\",\"type\":\"string\",\"nullable\":true} ,
 					{\"name\":\"city\", \"type\":\"string\", \"nullable\":true}, 
+					{\"name\":\"areacode\", \"type\":\"string\", \"nullable\":true}, 
 					{\"name\":\"state\", \"type\":\"string\", \"nullable\":true},
 					{\"name\":\"dob\",\"type\":\"string\",\"nullable\":true} ,
 					{\"name\":\"ssn\",\"type\":\"string\",\"nullable\":true}
@@ -120,7 +128,6 @@
 		}],
 		"labelDataSampleSize" : 0.5,
 		"numPartitions":4,
-		"modelId": 100,
+		"modelId": 102,
 		"zinggDir": "models"
-
 }
