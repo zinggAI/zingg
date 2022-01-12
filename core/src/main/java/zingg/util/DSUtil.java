@@ -235,7 +235,7 @@ public class DSUtil {
 			Dataset<Row> trSamples = PipeUtil.read(spark, 
 				true, false, args.getTrainingSamples()); 
 			LOG.warn("Read all training samples ");
-			trFile = (trFile == null) ? trSamples : trFile.unionByName(trSamples);
+			trFile = (trFile == null) ? trSamples : trFile.unionByName(trSamples, true);
 		} 
 		else {
 			LOG.warn("No configured training samples");
