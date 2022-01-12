@@ -13,7 +13,7 @@ public class Round extends HashFunction implements UDF1<Double, Long>{
 
 	 @Override
 	 public Long call(Double field) {
-		 return Math.round(field);
+		 return field == null ? null : Math.round(field);
 	 }
 
 	 @Override
