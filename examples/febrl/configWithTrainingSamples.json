@@ -14,7 +14,6 @@
 					
 					 {\"name\" : \"z_cluster\",\"type\" : \"string\",\"nullable\" : false, \"metadata\" : {}}, 
 					{\"name\":\"z_ismatch\",\"type\":\"integer\",\"nullable\":true,\"metadata\" : {}},
-					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false,\"metadata\" : {}}, 
 					{\"name\":\"fname\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}},
 					{\"name\":\"lname\",\"type\":\"string\",\"nullable\":true,\"metadata\" : {}},
 					{\"name\":\"stNo\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}}, 
