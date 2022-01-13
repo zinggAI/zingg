@@ -84,7 +84,7 @@
 		</profile>
 	</profiles>
 	<properties>
-		<zingg.version>0.3.1-SNAPSHOT</zingg.version>
+		<zingg.version>0.3.2-SNAPSHOT</zingg.version>
 		<skipTests>true</skipTests>
 		<failIfNoTests>false</failIfNoTests>
 		<maven.compiler.source>8</maven.compiler.source>

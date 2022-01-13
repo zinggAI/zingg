@@ -35,8 +35,8 @@ See Zingg in action [here](https://www.youtube.com/watch?v=zOabyZxN9b0)
 
 The easiest way to get started with Zingg is through Docker and by running the prebuilt models.
 ```
-docker pull zingg/zingg:0.3.1
-docker run -it zingg/zingg:0.3.1 bash
+docker pull zingg/zingg:0.3.2
+docker run -it zingg/zingg:0.3.2 bash
 ./scripts/zingg.sh --phase match --conf examples/febrl/config.json
 ``` 
 
