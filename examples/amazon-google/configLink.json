@@ -1,0 +1,77 @@
+{		
+	"fieldDefinition":[
+		{
+			"fieldName" : "id",
+			"matchType" : "DONT_USE",
+			"fields" : "id",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "title",
+			"matchType" : "text",
+			"fields" : "title",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "manufacturer",
+			"matchType": "fuzzy",
+			"fields" : "manufacturer",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "price",
+			"matchType": "fuzzy",
+			"fields" : "price",
+			"dataType": "\"double\"" 
+		}],
+		"output" : [{
+			"name":"output", 
+			"format":"csv", 
+			"props": {
+				"location": "/tmp/zinggOutput",
+				"delimiter": ",",
+				"header":false
+			}
+		}],
+		"data" : [{
+			"name":"testA", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/amazon-google/testA.csv",
+				"delimiter": ",",
+				"header":true					
+			},
+			"schema": 
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
+					{\"name\":\"title\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"manufacturer\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"price\", \"type\":\"double\", \"nullable\":true}
+				]
+			}"
+		},
+		{
+			"name":"testB", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/amazon-google/testB.csv",
+				"delimiter": ",",
+				"header":true					
+			},
+			"schema": 
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
+					{\"name\":\"title\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"manufacturer\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"price\", \"type\":\"double\", \"nullable\":true}
+				]
+			}"
+		}
+		],
+		"labelDataSampleSize" : 0.4,
+		"numPartitions":4,
+		"modelId": 103,
+		"zinggDir": "models"
+}
