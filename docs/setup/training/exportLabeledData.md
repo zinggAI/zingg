@@ -9,14 +9,14 @@ nav_order: 4
 
 Labelled data of one model can be exported and used as training data for another model.
 
-Here are the instructions to do this. We are going to use pyspark, which comes with the Apache Spark instalaltion. 
+Here are the instructions to do this. We are going to use pyspark, which comes with the Apache Spark installation. 
 
 To run pyspark, 
 
 ```
 $ $SPARK_HOME/bin/pyspark
 ```
-The pyspark command will open a pyspark shell. We will noreathe labeled data from the existing model/labelled rounds. Please run the following commands in the pyspark shell.
+The pyspark command will open a pyspark shell. We will now read the labeled data from the existing model/labelled rounds. Please run the following commands in the pyspark shell.
 
 ### Getting Training data
 Let us first read te labelled data into Spark as follows. You will need to pass the appropriate location of the model folder from where you want to copy the training data. Tyically, this is the zinggDir/modelId/trainingData/marked folder. Zingg examples write the model uder ZINGG_HOME/models/<model id>/trainingData/marked.
