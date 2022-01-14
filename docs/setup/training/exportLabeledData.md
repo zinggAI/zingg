@@ -1,7 +1,7 @@
 ---
 layout: default
 parent: Creating training data
-title: Exporting Labeled data as Training data
+title: Exporting Labeled data as csv 
 grand_parent: Step By Step Guide
 nav_order: 4
 ---
