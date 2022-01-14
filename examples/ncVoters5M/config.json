@@ -1,0 +1,67 @@
+{	
+	"fieldDefinition":[
+		{
+			"fieldName" : "recid",
+			"matchType" : "dont_use",
+			"fields" : "recid",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "givenname",
+			"matchType" : "fuzzy",
+			"fields" : "givenname",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "surname",
+			"matchType": "exact",
+			"fields" : "surname",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "suburb",
+			"matchType": "fuzzy",
+			"fields" : "suburb",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "postcode",
+			"matchType": "exact",
+			"fields" : "postcode",
+			"dataType": "\"string\"" 
+		}
+		],
+		"output" : [{
+			"name":"output", 
+			"format":"csv", 
+			"props": {
+				"location": "/tmp/zinggOutput",
+				"delimiter": ",",
+				"header":true
+			}
+		}],
+		"data" : [{
+			"name":"test", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/ncVoters5M/5Party-ocp20/",
+				"delimiter": ",",
+				"header":false					
+			},
+			"schema": 
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"recid\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"givenname\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"surname\", \"type\":\"string\", \"nullable\":true}, 
+					{\"name\":\"suburb\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"postcode\",\"type\":\"string\",\"nullable\":true} 
+				]
+			}"
+		}],
+		"labelDataSampleSize" : 0.1,
+		"numPartitions":4000,
+		"modelId": 104,
+		"zinggDir": "models"
+
+}

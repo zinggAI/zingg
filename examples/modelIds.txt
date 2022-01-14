@@ -1,6 +1,8 @@
 The following model ids have been used in configuration files provided by the Zingg. The 1XX series is reserved for the Zingg.
 
 Model Id    Description
-100         prebuilt model created with febrl data (65 records) using examples/febrl/config.json
-101         prebuilt model created with febrl data (1,20,000 records) using examples/febrl120k/config.json
-102         model id blocked for working with trainingSamples as configured in examples/febrl/configWithTrainingSamples.json
+100         prebuilt model created with febrl data (65 records) using febrl/
+101         prebuilt model created with febrl data (1,20,000 records) using febrl120k/
+102         model id blocked for working with trainingSamples as configured in febrl/configWithTrainingSamples.json
+103	    Amazon Google under amazon-google/
+104 	    North Carolina Voters 5M under ncVoters5M/
