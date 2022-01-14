@@ -5,56 +5,62 @@ title: Exporting Labeled data as Training data
 grand_parent: Step By Step Guide
 nav_order: 4
 ---
-## Export labeled data from zingg learner and import it to new zingg instance/model
+## Export labeled data from previously labeled Zingg learner pairs and import it to new Zingg instance/model
 
 Labelled data of one model can be exported and used as training data for another model.
 
-Please follow the below instructions to do the same.
+Here are the instructions to do this. We are going to use pyspark, which comes with the Apache Spark instalaltion. 
 
-pyspark can be run from the below location. Please run it from $ZINGG_HOME
+To run pyspark, 
+
 ```
-$ cd $ZINGG_HOME
 $ $SPARK_HOME/bin/pyspark
 ```
-
-The pyspark command will open a pspark shell. The below commands shall be run in pyspark shell.
+The pyspark command will open a pyspark shell. We will noreathe labeled data from the existing model/labelled rounds. Please run the following commands in the pyspark shell.
 
 ### Getting Training data
-The labelled data can be read into spark as follows. Pass appropriate \<modelId\>.
+Let us first read te labelled data into Spark as follows. You will need to pass the appropriate location of the model folder from where you want to copy the training data. Tyically, this is the zinggDir/modelId/trainingData/marked folder. Zingg examples write the model uder ZINGG_HOME/models/<model id>/trainingData/marked.
 ```
-labelledData = spark.read.parquet("models/<modelId>/trainingData/marked")
+labeledData = spark.read.parquet("<fully qualified location of models/modelId>/trainingData/marked")
 ```
-The fields that are added in labelled data by the Zingg. Some of them even become part of final output (match/link).
+The labeled data above has extra attributes added by Zingg beyond the field definitions in the config json. Let us define these in pyspark.
 ```
 baseCols = ['z_cluster', 'z_zid', 'z_prediction', 'z_score', 'z_source', 'z_isMatch']
 ```
-The below columns are needed for sample training data.
+The following command will filter out all the Zingg added columns. After running, sourceDataColumns will contain the original columns which define the user data.
+```
+sourceDataColumns =  [c for c in labeledData.columns if c not in  baseCols]
+```
+But we also need the labels and the clusters assigned to them to utilize the work we did earlier during labelling.
+The following columns contain that information.
+  
 ```
 additionalTrainingColumns = ['z_cluster','z_isMatch']
 ```
-The below command will filter out all the zingg added columns. sourceDataColumns will contain the original columns which define the user data.
-```
-sourceDataColumns =  [c for c in labelledData.columns if c not in  baseCols]
-```
 
-The list of columns needed for training samples in desired sequence.
+Let us now build our dataframe with the list of columns needed for training samples in desired sequence.
 ```
 trainingSampleColumns = [*additionalTrainingColumns, *sourceDataColumns]
 ```
-Select all the required columns from the Labelled data. This data will be our training data.
+
+With the trainingSampleColumns in place, let us now select all the required columns from the labeled data. This data will be exported to csv and become our training data.
 ```
-trainingSamples = labelledData.select(trainingSampleColumns)
+trainingSamples = labeledData.select(trainingSampleColumns)
 ```
-Save the samples in a single csv file. Inside the location folder, a file named like part***.csv will be created. This file may be renamed appropriately and be referred to in zingg config file.
+
+Let us now Save the samples in a single csv file. 
 ```
-trainingSamples.coalesce(1).write.csv("<file-location>")
+trainingSamples.coalesce(1).write.csv("<location>")
 ```
+At the above location folder, a file named part***.csv will get created. This file contains the labeled data so far. 
+
 ### Getting Schema
-The below command will produce schema of training sample data. This will also go into Zingg config file.
+We can generate the schema of this file to feed as part of the trainingSamples schema by the following command. This schema can be used for the trainingSamples schema in the Zingg config file.
 ```
 trainingSamples.schema.jsonValue()
+
 ```
-Anytime, you can view the list of columns or actual labelled data, print columns etc.
+While running pyspark, you can view the list of columns or actual labeled data, print columns etc by using the following commands
 
 ```
 trainingSamples.show()
