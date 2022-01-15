@@ -34,7 +34,7 @@
 			}
 		}],
 		"data" : [{
-			"name":"testA", 
+			"name":"google", 
 			"format":"csv", 
 			"props": {
 				"location": "examples/amazon-google/testA.csv",
@@ -52,7 +52,7 @@
 			}"
 		},
 		{
-			"name":"testB", 
+			"name":"aws", 
 			"format":"csv", 
 			"props": {
 				"location": "examples/amazon-google/testB.csv",
