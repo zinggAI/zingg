@@ -1,0 +1,101 @@
+{		
+	"trainingSamples" : [{
+		"name":"trainingPos", 
+		"format":"csv", 
+		"props": {
+			"location": "examples/amazon-google/training.csv",
+			"delimiter": ",",
+			"header":true,
+			"badRecordsPath":"/tmp/bad"					
+			},
+		"schema":  
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					
+					{\"name\" : \"z_cluster\",\"type\" : \"string\",\"nullable\" : false, \"metadata\" : {}}, 
+					{\"name\":\"z_ismatch\",\"type\":\"integer\",\"nullable\":true,\"metadata\" : {}},
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"title\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"manufacturer\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"price\", \"type\":\"double\", \"nullable\":true}
+					
+				]
+				}"
+				
+		}],
+	"fieldDefinition":[
+		{
+			"fieldName" : "id",
+			"matchType" : "DONT_USE",
+			"fields" : "id",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "title",
+			"matchType" : "text",
+			"fields" : "title",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "manufacturer",
+			"matchType": "fuzzy",
+			"fields" : "manufacturer",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "price",
+			"matchType": "exact",
+			"fields" : "price",
+			"dataType": "\"double\"" 
+		}],
+		"output" : [{
+			"name":"output", 
+			"format":"csv", 
+			"props": {
+				"location": "/tmp/zinggOutput",
+				"delimiter": ",",
+				"header":false
+			}
+		}],
+		"data" : [{
+			"name":"google", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/amazon-google/original/tableA.csv",
+				"delimiter": ",",
+				"header":true					
+			},
+			"schema": 
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
+					{\"name\":\"title\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"manufacturer\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"price\", \"type\":\"double\", \"nullable\":true}
+				]
+			}"
+		},
+		{
+			"name":"aws", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/amazon-google/original/tableB.csv",
+				"delimiter": ",",
+				"header":true					
+			},
+			"schema": 
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
+					{\"name\":\"title\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"manufacturer\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"price\", \"type\":\"double\", \"nullable\":true}
+				]
+			}"
+		}
+		],
+		"labelDataSampleSize" : 0.4,
+		"numPartitions":4,
+		"modelId": 103,
+		"zinggDir": "models"
+}
