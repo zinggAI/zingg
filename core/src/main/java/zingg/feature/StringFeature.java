@@ -43,8 +43,7 @@ public class StringFeature extends BaseFeature<String> {
 			addSimFunction(new JaroWinklerFunction());
 			addSimFunction(new JaccSimFunction());
 		} else if (f.getMatchType() == MatchType.TEXT) {
-			addSimFunction(new SameFirstWordFunction());
-
+			addSimFunction(new JaccSimFunction());
 			//change for azalead
 			//addSimFunction(new AffineGapSimilarityFunction());
 			//addSimFunction(new JaroWinklerFunction());
