@@ -1,8 +1,3 @@
-/**
- * Copyright Nube Technologies
- * All rights reserved.
- */
-
 package zingg.client;
 
 import java.io.IOException;

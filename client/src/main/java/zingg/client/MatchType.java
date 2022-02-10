@@ -1,7 +1,3 @@
-/*
- * Copyright Nube Technologies 2014
- */
-
 package zingg.client;
 
 import java.io.Serializable;
