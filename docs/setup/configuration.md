@@ -5,15 +5,12 @@ parent: Step By Step Guide
 nav_order: 5
 ---
 ## Configuration
-{: .no_toc }
 
  Zingg comes with a command line script that invokes spark-submit. This script needs a json configuration file to define the input data and match types, location of training data, models and output. 
 
 Sample configuration files are defined at [examples/febrl](https://github.com/zinggAI/zingg/tree/main/examples/febrl) and [/examples/febrl120k](https://github.com/zinggAI/zingg/tree/main/examples/febrl120k)
 
 Here are the json variables which you will need to define to work with your data.
-- TOC
-{:toc}
 
 ### data
 
