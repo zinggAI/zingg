@@ -9,7 +9,7 @@ Real world data contains multiple records belonging to the same customer. These 
 Zingg is an ML based tool for entity resolution. The following features set Zingg apart from other tools and libraries 
 - Ability to handle any entity like customer, patient, supplier, product etc 
 - Ability to connect to [disparate data sources](https://docs.zingg.ai/docs/dataSourcesAndSinks/connectors.html). Local and cloud file systems in any format, enterprise applications and relational, NoSQL and cloud databases and warehouses
-- Ability to scale to large volumes of data. [See why this is important](https://docs.zingg.ai/docs/zModels.html) and [Zingg performance numbers](https://docs.zingg.ai/docs/setup/hardwareSizing.html)
+- Ability to scale to large volumes of data. [See why this is important](https://docs.zingg.ai/zingg/zModels.html) and [Zingg performance numbers](https://docs.zingg.ai/zingg/setup/hardwareSizing)
 - [Interactive training data builder](https://docs.zingg.ai/docs/setup/createTrainingData.html#label---user-feedback-on-the-training-pairs) using active learning that builds models on frugally small training samples to high accuracy.
 ![Shows records and asks user to mark yes, no, cant say on the cli.](/assets/label.gif) 
 - Ability to define domain specific functions to improve matching  
