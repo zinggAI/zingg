@@ -12,7 +12,7 @@ The pipe is an easy way to specify properties and formats for the Spark connecto
 
 Pipes can be configured for the data or the output attributes on the [JSON](../setup/configuration.md). 
 
-Each pipe has the following
+Each pipe has the following attributes
 
 ### name
 

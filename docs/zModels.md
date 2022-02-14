@@ -5,11 +5,11 @@ nav_order: 5
 has_children: true
 ---
 
-## Zingg Models
+# Zingg Models
 
 Zingg learns 2 models on the data. 
 
-1. Blocking Model
+## 1. Blocking Model
 
 One fundamental problem with scaling data mastering is that the number of comparisons increase quadratically as the number of input record increases. 
 
@@ -18,7 +18,7 @@ One fundamental problem with scaling data mastering is that the number of compar
 
 Zingg learns a clustering/blocking model which indexes near similar records. This means that Zingg does not compare every record with every other record. Typical Zingg comparisons are 0.05-1% of the possible problem space.
 
-2. Similarity Model 
+## 2. Similarity Model
 
 The similarity model helps Zingg to predict which record pairs match. Similarity is run only on records within the same block/cluster to scale the problem to larger datasets. The similarity model is a classifier which predicts similarity of records which are not exactly same, but could belong together.
 
