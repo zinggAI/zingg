@@ -12,3 +12,6 @@ Understanding Master data and Master Data Management
 
 Entity Resolution and The Modern Data Stack
 - [From Rows to People](https://roundup.getdbt.com/p/from-rows-to-people)
+
+Entity Resolution using a graph database
+- [Entity Resolution with TigerGraph](https://towardsdatascience.com/entity-resolution-with-tigergraph-add-zingg-to-the-mix-95009471ca02)

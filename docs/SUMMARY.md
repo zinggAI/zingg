@@ -10,9 +10,9 @@
     * [findTrainingData](setup/training/findTrainingData.md)
     * [label](setup/training/label.md)
     * [Using preexisting training data](setup/training/addOwnTrainingData.md)
-    * [Exporting Labeled data as csv](setup/training/exportLabeledData.md)
-  * [Build and save the model](setup/train.md)
-  * [Find the matches](setup/match.md)
+    * [Exporting labeled data as csv](setup/training/exportLabeledData.md)
+  * [Building and saving the model](setup/train.md)
+  * [Finding the matches](setup/match.md)
 
 * [Data Sources and Sinks](dataSourcesAndSinks/connectors.md)
   * [Zingg Pipes](dataSourcesAndSinks/pipes.md)
