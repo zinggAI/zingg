@@ -6,9 +6,9 @@ nav_order: 6
 ---
 ## Running on Databricks
 
-The cloud environment does not have the system console for the labeller to work. Please refer to 
-[Notebook based labelling](https://github.com/zinggAI/zingg/issues/79) to get the notebooks which can run on Databricks. This is the param array submitted through the Spark Submit Task 
-["--class","zingg.client.Client","dbfs:/FileStore/jars/e34dca2a_84a4_45fd_a9fd_fe0e1c7e283c-zingg_0_3_0_SNAPSHOT-aa6ea.jar","--phase=findTrainingData","--conf=/dbfs/FileStore/config.json","--license=abc"]
+The cloud environment does not have the system console for the labeller to work. Zingg is run as a Spark Submit Job along with a python ntoebook based labeler specially created to run within the Databricks cloud. 
+
+Please refer to [Databricks Zingg tutorial](https://medium.com/@sonalgoyal/identity-resolution-on-databricks-for-customer-360-591661bcafce) for a detailed tutorial.
 
 Zingg is run as a Spark Submit task with the following parameters
 
