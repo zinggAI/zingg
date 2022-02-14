@@ -6,10 +6,6 @@ has_children: true
 ---
 
 ## Data Sources and Sinks
-{: .no_toc }
-
-- TOC
-{:toc}
 
 Zingg connects, reads and writes to most on-premise and cloud data sources. 
 

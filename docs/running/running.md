@@ -6,4 +6,3 @@ has_children: true
 ---
 
 ## Running Zingg
-{: .no_toc }
