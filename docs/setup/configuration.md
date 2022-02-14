@@ -17,6 +17,7 @@ Here are the json variables which you will need to define to work with your data
 Array of input data. Each array entry here refers to a [Zingg Pipe](../dataSourcesAndSinks/pipes.md). If the data is self describing, for eg avro or parquet, there is no need to define the schema. Else field definitions with name and types need to be provided.
 
 For example for the csv under [examples/febrl/test.csv](/examples/febrl/test.csv)
+
 ![febrl](/assets/febrl.gif)
 
 ```json
@@ -125,5 +126,5 @@ Below is config file snippet that references few environment variables.
 "zinggDir": "models",
 "collectMetrics": $collectMetrics$
 ````
-Environment variable must be enclosed within Dollar signs **(\$var$)** to take effect. Also, the config file name must be suffixed with ***.env**. As usual, String variables need to put within quotes **("\$var\$")**, Boolean and Numeric values should be put without quotes **(\$var$)**.
+Environment variable must be enclosed within dollar signs **\$var$** to take effect. Also, the config file name must be suffixed with ***.env**. As usual, String variables need to put within quotes **"\$var\$"**, Boolean and Numeric values should be put without quotes **\$var$**.
 

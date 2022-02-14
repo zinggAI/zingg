@@ -10,4 +10,4 @@ These business specific blocking functions go into [Hash Functions](https://gith
 
 Also, for similarity, you can define your own measures. Each dataType has predefined features, for example [String](https://github.com/zinggAI/zingg/blob/main/core/src/main/java/zingg/feature/StringFeature.java) fuzzy type is configured for affine and jaro
 
-You can define your own comparisons in https://github.com/zinggAI/zingg/tree/main/core/src/main/java/zingg/similarity/function and use them
+You can define your own [comparisons](https://github.com/zinggAI/zingg/tree/main/core/src/main/java/zingg/similarity/function) and use them
