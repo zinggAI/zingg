@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.VectorAssembler","timestamp":1644903488860,"sparkVersion":"3.1.1","uid":"vecAssembler_ad653a9e5d99","paramMap":{"outputCol":"z_featurevector","inputCols":["z_sim0","z_sim1","z_sim2","z_sim3","z_sim4","z_sim5"]},"defaultParamMap":{"handleInvalid":"error","outputCol":"vecAssembler_ad653a9e5d99__output"}}

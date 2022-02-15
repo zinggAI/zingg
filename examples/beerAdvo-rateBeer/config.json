@@ -1,0 +1,85 @@
+{	
+	"fieldDefinition":[
+		{
+			"fieldName" : "id",
+			"matchType" : "DONT_USE",
+			"fields" : "id",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "Beer_Name",
+			"matchType" : "fuzzy",
+			"fields" : "Beer_Name",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "Brew_Factory_Name",
+			"matchType" : "fuzzy",
+			"fields" : "Brew_Factory_Name",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "Style",
+			"matchType": "fuzzy",
+			"fields" : "Style",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "ABV",
+			"matchType": "fuzzy",
+			"fields" : "ABV",
+			"dataType": "\"double\"" 
+		}],
+		"output" : [{
+			"name":"output", 
+			"format":"csv", 
+			"props": {
+				"location": "/tmp/zinggOutput",
+				"delimiter": ",",
+				"header":false
+			}
+		}],
+		"data" : [{
+			"name":"beerAdvo", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/beerAdvo-rateBeer/BeerAdvo.csv",
+				"delimiter": ",",
+				"header":true					
+			},
+			"schema":
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
+					{\"name\":\"Beer_Name\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"Brew_Factory_Name\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"Style\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"ABV\", \"type\":\"double\", \"nullable\":true}
+				]
+			}"
+		},
+		{
+			"name":"rateBeer", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/beerAdvo-rateBeer/RateBeer.csv",
+				"delimiter": ",",
+				"header":true					
+			},
+			"schema": 
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
+					{\"name\":\"Beer_Name\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"Brew_Factory_Name\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"Style\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"ABV\", \"type\":\"double\", \"nullable\":true}
+				]
+			}"
+		}
+		],
+		"labelDataSampleSize" : 0.4,
+		"numPartitions":4,
+		"modelId": 106,
+		"zinggDir": "models"
+}

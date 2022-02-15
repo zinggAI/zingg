@@ -1,0 +1,117 @@
+{		
+	"fieldDefinition":[
+		{
+			"fieldName" : "id",
+			"matchType" : "DONT_USE",
+			"fields" : "id",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "Song_Name",
+			"matchType" : "fuzzy",
+			"fields" : "Song_Name",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "Artist_Name",
+			"matchType" : "fuzzy",
+			"fields" : "Artist_Name",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "Album_Name",
+			"matchType": "fuzzy",
+			"fields" : "Album_Name",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "Genre",
+			"matchType": "fuzzy",
+			"fields" : "Genre",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "Price",
+			"matchType": "fuzzy",
+			"fields" : "Price",
+			"dataType": "\"double\"" 
+		},
+		{
+			"fieldName" : "CopyRight",
+			"matchType": "fuzzy",
+			"fields" : "CopyRight",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "Time",
+			"matchType": "fuzzy",
+			"fields" : "Time",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "Released",
+			"matchType": "fuzzy",
+			"fields" : "Released",
+			"dataType": "\"string\"" 
+		}],
+		"output" : [{
+			"name":"output", 
+			"format":"csv", 
+			"props": {
+				"location": "/tmp/zinggOutput",
+				"delimiter": ",",
+				"header":false
+			}
+		}],
+		"data" : [{
+			"name":"itunes", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/iTunes-amazon/iTunesMusic.csv",
+				"delimiter": ",",
+				"header":true					
+			},
+			"schema": 
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
+					{\"name\":\"Song_Name\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"Artist_Name\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"Album_Name\",\"type\":\"string\",\"nullable\":true},
+					{\"name\":\"Genre\", \"type\":\"string\", \"nullable\":true}, 
+					{\"name\":\"Price\", \"type\":\"double\", \"nullable\":true},
+					{\"name\":\"CopyRight\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"Time\",\"type\":\"string\",\"nullable\":true},
+					{\"name\":\"Released\", \"type\":\"string\", \"nullable\":true}
+				]
+			}"
+		},
+		{
+			"name":"amazon", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/iTunes-amazon/AmazonMusic.csv",
+				"delimiter": ",",
+				"header":true					
+			},
+			"schema": 
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
+					{\"name\":\"Song_Name\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"Artist_Name\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"Album_Name\",\"type\":\"string\",\"nullable\":true},
+					{\"name\":\"Genre\", \"type\":\"string\", \"nullable\":true}, 
+					{\"name\":\"Price\", \"type\":\"double\", \"nullable\":true},
+					{\"name\":\"CopyRight\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"Time\",\"type\":\"string\",\"nullable\":true},
+					{\"name\":\"Released\", \"type\":\"string\", \"nullable\":true}
+				]
+			}"
+		}
+		],
+		"labelDataSampleSize" : 0.4,
+		"numPartitions":4,
+		"modelId": 105,
+		"zinggDir": "models"
+}
