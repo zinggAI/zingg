@@ -107,7 +107,7 @@ public class Labeller extends ZinggBase {
 							"\tZingg does not do any prediction for the above pairs as Zingg is still collecting training data to build the preliminary models.");
 				} else {
 					msg2 = String.format("\tZingg predicts the above records %s with a similarity score of %.2f",
-							matchType, score);
+							matchType, Math.floor(score * 100) * 0.01);
 				}
 				//String msgHeader = msg1 + msg2;
 
