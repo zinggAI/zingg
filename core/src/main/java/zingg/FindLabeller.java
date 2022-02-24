@@ -14,7 +14,7 @@ public class FindLabeller extends Labeller {
 	private TrainingDataFinder finder;
 
 	public FindLabeller() {
-		setZinggOptions(ZinggOptions.LABEL);
+		setZinggOptions(ZinggOptions.FIND_LABEL);
 		finder = new TrainingDataFinder();
 	}
 
