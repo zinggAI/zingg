@@ -7,14 +7,14 @@ import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 
-public class FindLabeller extends Labeller {
-	protected static String name = "zingg.FindLabeller";
-	public static final Log LOG = LogFactory.getLog(FindLabeller.class);
+public class FindAndLabeller extends Labeller {
+	protected static String name = "zingg.FindAndLabeller";
+	public static final Log LOG = LogFactory.getLog(FindAndLabeller.class);
 
 	private TrainingDataFinder finder;
 
-	public FindLabeller() {
-		setZinggOptions(ZinggOptions.FIND_LABEL);
+	public FindAndLabeller() {
+		setZinggOptions(ZinggOptions.FIND_AND_LABEL);
 		finder = new TrainingDataFinder();
 	}
 
