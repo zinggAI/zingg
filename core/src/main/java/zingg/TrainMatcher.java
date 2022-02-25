@@ -35,7 +35,7 @@ public class TrainMatcher extends Matcher{
 	private Trainer trainer;
 
     public TrainMatcher() {
-        setZinggOptions(ZinggOptions.MATCH);
+        setZinggOptions(ZinggOptions.TRAIN_MATCH);
 		trainer = new Trainer();
     }
 
