@@ -13,7 +13,8 @@ public enum ZinggOptions {
     LABEL("label"),
     LINK("link"),
     GENERATE_DOCS("generateDocs"),
-    UPDATE_LABEL("updateLabel");
+    UPDATE_LABEL("updateLabel"),
+    FIND_AND_LABEL("findAndLabel");
 
     private String value;
 

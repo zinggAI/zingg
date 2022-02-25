@@ -9,6 +9,7 @@
   * [**Creating training data**](setup/training/createTrainingData.md)
     * [findTrainingData](setup/training/findTrainingData.md)
     * [label](setup/training/label.md)
+    * [findAndLabel](setup/training/findAndLabel.md)
     * [Using preexisting training data](setup/training/addOwnTrainingData.md)
     * [Exporting labeled data as csv](setup/training/exportLabeledData.md)
   * [Building and saving the model](setup/train.md)
