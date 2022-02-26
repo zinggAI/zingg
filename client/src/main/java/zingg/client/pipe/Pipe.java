@@ -5,15 +5,11 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-//import org.apache.spark.sql.SaveMode;
+import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.StructType;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonValue;
-
-import com.snowflake.snowpark.*;
-import com.snowflake.snowpark.types.*;
-import com.snowflake.snowpark.functions.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

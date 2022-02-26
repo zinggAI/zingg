@@ -1,22 +1,16 @@
 package zingg;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.list.LazyList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.catalyst.expressions.Left;
 import org.apache.spark.sql.types.DataType;
 
-import javassist.bytecode.stackmap.TypeTag;
-import scala.collection.JavaConverters;
-import scala.collection.Seq;
 import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
 import zingg.client.IZingg;
@@ -31,12 +25,6 @@ import zingg.feature.Feature;
 import zingg.feature.FeatureFactory;
 import zingg.hash.HashFunction;
 
-import com.snowflake.snowpark.types.*;
-import com.snowflake.snowpark.functions.*;
-import com.snowflake.snowpark.*;
-import java.util.ArrayList;
-import java.util.List;
-
 import zingg.util.HashUtil;
 import zingg.util.PipeUtil;
 
@@ -46,7 +34,6 @@ public abstract class ZinggBase implements Serializable, IZingg {
 	
     protected JavaSparkContext ctx;
 	protected SparkSession spark;
-    protected Session snow;
     protected static String name;
     protected ZinggOptions zinggOptions;
     protected ListMap<DataType, HashFunction> hashFunctions;
@@ -61,20 +48,17 @@ public abstract class ZinggBase implements Serializable, IZingg {
         throws ZinggClientException {
         startTime = System.currentTimeMillis();
         this.args = args;
-        
         try{
-            snow = snowparkSession();
-
-            // spark = SparkSession
-            //     .builder()
-            //     .appName("Zingg"+args.getJobId())
-            //     .getOrCreate();
-            // ctx = new JavaSparkContext(spark.sparkContext());
-            // JavaSparkContext.jarOfClass(IZingg.class);
-            // LOG.debug("Context " + ctx.toString());
-            // initHashFns();
-            // loadFeatures();
-            // ctx.setCheckpointDir("/tmp/checkpoint");	
+            spark = SparkSession
+                .builder()
+                .appName("Zingg"+args.getJobId())
+                .getOrCreate();
+            ctx = new JavaSparkContext(spark.sparkContext());
+            JavaSparkContext.jarOfClass(IZingg.class);
+            LOG.debug("Context " + ctx.toString());
+            initHashFns();
+            loadFeatures();
+            ctx.setCheckpointDir("/tmp/checkpoint");	
         }
         catch(Throwable e) {
             if (LOG.isDebugEnabled()) e.printStackTrace();
@@ -82,43 +66,6 @@ public abstract class ZinggBase implements Serializable, IZingg {
         }
     }
 
-    Session snowparkSession() {
-        Map<String, String> map = new HashMap<String, String>(); 
-
-        map.put("URL", "https://nt28656.southeast-asia.azure.snowflakecomputing.com:443");
-        map.put( "USER" , "navinrathore");
-        map.put(  "PASSWORD" , "main5$NAN");
-        map.put(  "ROLE" , "ACCOUNTADMIN");
-        map.put(  "WAREHOUSE" , "COMPUTE_WH");
-        map.put(  "DB" , "SNOWFLAKE_SAMPLE_DATA");
-        map.put(  "SCHEMA" , "WEATHER");
-        
-        // // config file option is Session.builder.configFile("").create
-        // val session = Session.builder.configs(configs).create
-        // //val df = session.sql("desc table DAILY_16_TOTAL")
-        //  //val df = session.sql("select * from DAILY_16_TOTAL")
-        //  session.table("DAILY_16_TOTAL")
-        //df.show(2)
-        //ConsoleHandler cs = new ConsoleHandler();
-        //Session s = new Session();
-        System.out.println( "Hello World! from scala library" );
-        Session ses = Session.builder().configs(map).create();
-        //Session ses = Session.builder().configFile("xyz").create();
-        DataFrame df = ses.sql("SELECT  *  FROM (SELECT 'Hello World SF!' greeting) LIMIT 10");
-        //DataFrame df = ses.sql("desc table DAILY_16_TOTAL");
-        df.show();
-        List<String> a = new ArrayList<String> ();
-        a.add("Buenos Aires");
-        a.add("La Plata");
-        a.add("Córdoba");
-        scala.reflect.api.TypeTags.TypeTag<String> evidence = null;
-        Seq<String> seq = JavaConverters.asScalaIteratorConverter(a.iterator()).asScala().toSeq();
-        DataFrame df2 = ses.createDataFrame(seq, evidence).toDF("Greeting", null);
-
-        System.out.println( "Hello World! from java program" );
-        df2.show();
-       return ses;
-    }
 
     @Override
     public void cleanup() throws ZinggClientException {
