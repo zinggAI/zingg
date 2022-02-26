@@ -5,14 +5,14 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.functions;
-import org.apache.spark.sql.catalyst.encoders.RowEncoder;
-import org.apache.spark.storage.StorageLevel;
+// import org.apache.spark.sql.Dataset;
+// import org.apache.spark.sql.Row;
+// import org.apache.spark.sql.functions;
+// import org.apache.spark.sql.catalyst.encoders.RowEncoder;
+// import org.apache.spark.storage.StorageLevel;
 
-import static org.apache.spark.sql.functions.asc;
-import static org.apache.spark.sql.functions.desc;
+// import static org.apache.spark.sql.functions.asc;
+// import static org.apache.spark.sql.functions.desc;
 
 import zingg.block.Block;
 import zingg.block.Canopy;
@@ -29,8 +29,13 @@ import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
 import zingg.util.ModelUtil;
 import zingg.util.PipeUtil;
+import com.snowflake.snowpark.*;
 
-
+import scala.collection.JavaConverters;
+import scala.collection.Seq;
+import com.snowflake.snowpark.*;
+import com.snowflake.snowpark.types.*;
+import com.snowflake.snowpark.functions.*;
 import zingg.scala.TypeTags;
 import zingg.scala.DFUtil;
 
@@ -43,40 +48,41 @@ public class TrainingDataFinder extends ZinggBase{
         setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
     }
 
-	public Dataset<Row> getTraining() {
+	public DataFrame getTraining() {
 		return DSUtil.getTraining(spark, args);
 	}
 
     public void execute() throws ZinggClientException {
 			try{
-				Dataset<Row> data = PipeUtil.read(spark, true, true, args.getData());
+				System.exit(0);
+				DataFrame data = PipeUtil.read(snow, true, true, args.getData());
 				LOG.warn("Read input data " + data.count());
 				//create 20 pos pairs
 
-				Dataset<Row> posPairs = null;
-				Dataset<Row> negPairs = null;
-				Dataset<Row> trFile = getTraining();					
+				DataFrame posPairs = null;
+				DataFrame negPairs = null;
+				DataFrame trFile = getTraining();					
 				
 				if (trFile != null) {
-					Dataset<Row> trPairs = DSUtil.joinWithItself(trFile, ColName.CLUSTER_COLUMN, true);
+					DataFrame trPairs = DSUtil.joinWithItself(trFile, ColName.CLUSTER_COLUMN, true);
 						
-						posPairs = trPairs.filter(trPairs.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH));
-						negPairs = trPairs.filter(trPairs.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_A_MATCH));
-						posPairs = posPairs.drop(ColName.MATCH_FLAG_COL, 
+						posPairs = trPairs.filter(trPairs.col(ColName.MATCH_FLAG_COL).equals(ColValues.MATCH_TYPE_MATCH));
+						negPairs = trPairs.filter(trPairs.col(ColName.MATCH_FLAG_COL).equals(ColValues.MATCH_TYPE_NOT_A_MATCH));
+						posPairs = posPairs.drop(new String[]{ColName.MATCH_FLAG_COL, 
 								ColName.COL_PREFIX + ColName.MATCH_FLAG_COL,
 								ColName.CLUSTER_COLUMN,
-								ColName.COL_PREFIX + ColName.CLUSTER_COLUMN);
-						negPairs = negPairs.drop(ColName.MATCH_FLAG_COL, 
+								ColName.COL_PREFIX + ColName.CLUSTER_COLUMN});
+						negPairs = negPairs.drop(new String[]{ColName.MATCH_FLAG_COL, 
 								ColName.COL_PREFIX + ColName.MATCH_FLAG_COL,
 								ColName.CLUSTER_COLUMN,
-								ColName.COL_PREFIX + ColName.CLUSTER_COLUMN);
+								ColName.COL_PREFIX + ColName.CLUSTER_COLUMN});
 						
 						LOG.warn("Read training samples " + posPairs.count() + " neg " + negPairs.count());
 				}
 					
 					
 				if (posPairs == null || posPairs.count() <= 5) {
-					Dataset<Row> posSamples = getPositiveSamples(data);
+					DataFrame posSamples = getPositiveSamples(data);
 					//posSamples.printSchema();
 					if (posPairs != null) {
 						//posPairs.printSchema();
@@ -89,14 +95,14 @@ public class TrainingDataFinder extends ZinggBase{
 				posPairs = posPairs.cache();
 				if (negPairs!= null) negPairs = negPairs.cache();
 				//create random samples for blocking
-				Dataset<Row> sample = data.sample(false, args.getLabelDataSampleSize()).repartition(args.getNumPartitions()).persist(StorageLevel.MEMORY_ONLY());
+				DataFrame sample = data.sample(false, args.getLabelDataSampleSize()).repartition(args.getNumPartitions()).persist(StorageLevel.MEMORY_ONLY());
 				Tree<Canopy> tree = BlockingTreeUtil.createBlockingTree(sample, posPairs, 1, -1, args, hashFunctions);			
-				Dataset<Row> blocked = sample.map(new Block.BlockFunction(tree), RowEncoder.apply(Block.appendHashCol(sample.schema())));
+				DataFrame blocked = sample.map(new Block.BlockFunction(tree), RowEncoder.apply(Block.appendHashCol(sample.schema())));
 				blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
-				Dataset<Row> blocks = DSUtil.joinWithItself(blocked, ColName.HASH_COL, true);
-				blocks = blocks.cache();	
+				DataFrame blocks = DSUtil.joinWithItself(blocked, ColName.HASH_COL, true);
+				blocks = blocks.cacheResult();	
 				//TODO HASH Partition
-				if (negPairs!= null) negPairs = negPairs.persist(StorageLevel.MEMORY_ONLY());
+				//if (negPairs!= null) negPairs = negPairs.persist(StorageLevel.MEMORY_ONLY());
 					//train classifier and predict the blocked values from classifier
 					//only if we have some user data
 					if (posPairs != null && negPairs !=null 
@@ -106,20 +112,20 @@ public class TrainingDataFinder extends ZinggBase{
 							LOG.debug("num blocks " + blocks.count());		
 						}
 						Model model = ModelUtil.createModel(posPairs, negPairs, new LabelModel(this.featurers), spark);
-						Dataset<Row> dupes = model.predict(blocks); 
+						DataFrame dupes = model.predict(blocks); 
 						if (LOG.isDebugEnabled()) {
 							LOG.debug("num dupes " + dupes.count());	
 						}
 						LOG.info("Writing uncertain pairs");
 						
 						dupes = dupes.persist(StorageLevel.MEMORY_ONLY());
-						Dataset<Row> uncertain = getUncertain(dupes);
+						DataFrame uncertain = getUncertain(dupes);
 										
 						writeUncertain(uncertain);													
 				}
 				else {
 					LOG.info("Writing uncertain pairs when either positive or negative samples not provided ");
-					Dataset<Row> posFiltered = blocks.sample(false,  20.0d/blocks.count());
+					DataFrame posFiltered = blocks.sample( 20.0d/blocks.count());
 					posFiltered = posFiltered.withColumn(ColName.PREDICTION_COL, functions.lit(ColValues.IS_NOT_KNOWN_PREDICTION));
 					posFiltered = posFiltered.withColumn(ColName.SCORE_COL, functions.lit(ColValues.ZERO_SCORE));
 					writeUncertain(posFiltered);		
@@ -131,14 +137,14 @@ public class TrainingDataFinder extends ZinggBase{
 			}	
     }
 
-	public void writeUncertain(Dataset<Row> dupesActual) {
+	public void writeUncertain(DataFrame dupesActual) {
 		//input dupes are pairs
 		dupesActual = DFUtil.addClusterRowNumber(dupesActual, spark);
 		dupesActual = Util.addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN );		
-		Dataset<Row> dupes1 = DSUtil.alignDupes(dupesActual, args);
-		Dataset<Row> dupes2 = dupes1.orderBy(ColName.CLUSTER_COLUMN);
+		DataFrame dupes1 = DSUtil.alignDupes(dupesActual, args);
+		DataFrame dupes2 = dupes1.orderBy(ColName.CLUSTER_COLUMN);
 		LOG.debug("uncertain output schema is " + dupes2.schema());
-		PipeUtil.write(dupes2 , args, ctx, getUnmarkedLocation());
+		PipeUtil.write(dupes2 , args, "", getUnmarkedLocation());
 		//PipeUtil.write(jdbc, massageForJdbc(dupes2.cache()) , args, ctx);
 	}
 
@@ -146,15 +152,15 @@ public class TrainingDataFinder extends ZinggBase{
 		return PipeUtil.getTrainingDataUnmarkedPipe(args);
 	}
 
-	public Dataset<Row> getUncertain(Dataset<Row> dupes) {
+	public DataFrame getUncertain(DataFrame dupes) {
 		//take lowest positive score and highest negative score in the ones marked matches
-		Dataset<Row> pos = dupes.filter(dupes.col(ColName.PREDICTION_COL).equalTo(ColValues.IS_MATCH_PREDICTION));
+		DataFrame pos = dupes.filter(dupes.col(ColName.PREDICTION_COL).equals(ColValues.IS_MATCH_PREDICTION));
 		pos = pos.sort(asc(ColName.SCORE_COL)).cache();
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("num pos " + pos.count());	
 		}
 		pos = pos.limit(10);
-		Dataset<Row> neg = dupes.filter(dupes.col(ColName.PREDICTION_COL).equalTo(ColValues.IS_NOT_A_MATCH_PREDICTION));
+		DataFrame neg = dupes.filter(dupes.col(ColName.PREDICTION_COL).equals(ColValues.IS_NOT_A_MATCH_PREDICTION));
 		neg = neg.sort(desc(ColName.SCORE_COL)).cache();
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("num neg " + neg.count());
@@ -163,20 +169,20 @@ public class TrainingDataFinder extends ZinggBase{
 		return pos.union(neg);
 	}
 
-	public Dataset<Row> getPositiveSamples(Dataset<Row> data) throws Exception {
+	public DataFrame getPositiveSamples(DataFrame data) throws Exception {
 		if (LOG.isDebugEnabled()) {
 			long count = data.count();
 			LOG.debug("Total count is " + count);
 			LOG.debug("Label data sample size is " + args.getLabelDataSampleSize());
 		}
-		Dataset<Row> posSample = data.sample(false, args.getLabelDataSampleSize());
+		DataFrame posSample = data.sample(false, args.getLabelDataSampleSize());
 		//select only those columns which are mentioned in the field definitions
 		posSample = DSUtil.getFieldDefColumnsDS(posSample, args, true);
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Sampled " + posSample.count());
 		}
 		posSample = posSample.cache();
-		Dataset<Row> posPairs = DSUtil.joinWithItself(posSample, ColName.ID_COL, false);
+		DataFrame posPairs = DSUtil.joinWithItself(posSample, ColName.ID_COL, false);
 		
 		LOG.info("Created positive sample pairs ");
 		if (LOG.isDebugEnabled()) {
