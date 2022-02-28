@@ -86,6 +86,11 @@ public class Client implements Serializable {
 			String j = options.get(options.COLLECT_METRICS).value;
 			args.setCollectMetrics(Boolean.valueOf(j));
 		}
+		if (options.get(options.SNOWFLAKE)!= null) {
+			LOG.info("Using snowflake connect parameters file from command line");
+			String j = options.get(options.SNOWFLAKE).value;
+			args.setSnowflake(j);
+		}
 		setArguments(args);
 	}
 	

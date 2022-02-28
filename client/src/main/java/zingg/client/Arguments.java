@@ -102,7 +102,8 @@ public class Arguments implements Serializable {
 	String modelId = "1";
 	double threshold = 0.5d;
 	int jobId = 1;
-	boolean collectMetrics = true; 
+	boolean collectMetrics = true;
+	String snowflake = "";
 	
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
@@ -596,6 +597,14 @@ public class Arguments implements Serializable {
 
 	public void setCollectMetrics(boolean collectMetrics) {
 		this.collectMetrics = collectMetrics;
+	}
+
+	public String getSnowflake() {
+		return snowflake;
+	}
+
+	public void setSnowflake(String snowflake) {
+		this.snowflake = snowflake;
 	}
 
 	public String[] getPipeNames() {

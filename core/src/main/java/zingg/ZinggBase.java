@@ -1,5 +1,6 @@
 package zingg;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
+import com.snowflake.snowpark.Session;
 
 import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
@@ -34,6 +36,7 @@ public abstract class ZinggBase implements Serializable, IZingg {
 	
     protected JavaSparkContext ctx;
 	protected SparkSession spark;
+    protected Session snow;
     protected static String name;
     protected ZinggOptions zinggOptions;
     protected ListMap<DataType, HashFunction> hashFunctions;
@@ -48,7 +51,11 @@ public abstract class ZinggBase implements Serializable, IZingg {
         throws ZinggClientException {
         startTime = System.currentTimeMillis();
         this.args = args;
+        String snowflakeConfigFile = args.getSnowflake();
+        LOG.info("Snowflake config file name: " + snowflakeConfigFile);
         try{
+            snow = snowparkSession(args.getSnowflake());
+
             spark = SparkSession
                 .builder()
                 .appName("Zingg"+args.getJobId())
@@ -66,10 +73,20 @@ public abstract class ZinggBase implements Serializable, IZingg {
         }
     }
 
+    Session snowparkSession(String filename) throws ZinggClientException {
+        File file = new File(filename);
+        if(!file.exists() || file.isDirectory()) { 
+            throw new ZinggClientException("snowpark connection parameters file does not exist: " + filename);
+        }
+
+        Session session = Session.builder().configFile(filename).create();
+        return session;
+    }
 
     @Override
     public void cleanup() throws ZinggClientException {
         if (ctx != null) ctx.stop();
+        if (snow !=null) snow.close();
     }
 
     void initHashFns() throws ZinggClientException {
