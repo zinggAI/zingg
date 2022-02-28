@@ -27,6 +27,7 @@ public class ClientOptions {
 	public static final String ZINGG_DIR = "--zinggDir";
 	public static final String MODEL_ID = "--modelId";
 	public static final String COLLECT_METRICS = "--collectMetrics";
+	public static final String SNOWFLAKE = "--snowflake";
 	
 	 // Options that do not take arguments.
 	public static final String HELP = "--help";
@@ -55,6 +56,7 @@ public class ClientOptions {
 		optionMaster.put(ZINGG_DIR, new Option(ZINGG_DIR, true, "location of Zingg models, defaults to /tmp/zingg", false, false));
 		optionMaster.put(MODEL_ID, new Option(MODEL_ID, true, "model identifier, can be a number ", false, false));
 		optionMaster.put(COLLECT_METRICS, new Option(COLLECT_METRICS, true, "collect analytics, true/false  ", false, false));
+		optionMaster.put(SNOWFLAKE, new Option(SNOWFLAKE, true, "snowflake connect parameters in a json file", false, false));
 				
 		//no args
 		optionMaster.put(HELP,new Option(HELP,  false, "print usage information", true, false));

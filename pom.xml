@@ -87,8 +87,8 @@
 		<zingg.version>0.3.2-SNAPSHOT</zingg.version>
 		<skipTests>true</skipTests>
 		<failIfNoTests>false</failIfNoTests>
-		<maven.compiler.source>8</maven.compiler.source>
-		<maven.compiler.target>8</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mcheckstyle.version>2.10</mcheckstyle.version>
 		<mfindbugs.version>2.5.2</mfindbugs.version>
@@ -111,6 +111,12 @@
 	</repositories>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.snowflake</groupId>
+			<artifactId>snowpark</artifactId>
+			<version>1.0.0</version>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.elasticsearch</groupId>
 			<artifactId>elasticsearch-spark-20_2.11</artifactId>
@@ -228,6 +234,12 @@
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.crealytics/spark-excel -->
+		<dependency>
+			<groupId>com.crealytics</groupId>
+			<artifactId>spark-excel_${scala.binary.version}</artifactId>
+			<version>3.1.2_0.16.5-pre1</version>
 		</dependency>
 	</dependencies>
 	<build>
