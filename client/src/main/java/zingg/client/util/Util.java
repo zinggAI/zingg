@@ -22,23 +22,21 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import com.snowflake.snowpark.Column;
+import com.snowflake.snowpark.DataFrame;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.spark.SparkContext;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.functions;
-import org.apache.spark.sql.api.java.UDF1;
-import org.apache.spark.sql.types.DataType;
+import com.snowflake.snowpark.functions;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
+import scala.collection.JavaConverters;
 import zingg.client.util.ListMap;
 
 public class Util implements Serializable {
@@ -462,14 +460,17 @@ public class Util implements Serializable {
 		
 	}
 	
-	public static Dataset<Row> addUniqueCol(Dataset<Row> dupesActual, String colName) {
+	public static DataFrame addUniqueCol(DataFrame dupesActual, String colName) {
 		String append = System.currentTimeMillis() + ":";
 		dupesActual = dupesActual.withColumn(colName + "temp", 
-				functions.lit(append));
+				com.snowflake.snowpark.functions.lit(append));
+				
+		List<Column> cols = new ArrayList<Column>();
+		cols.add(dupesActual.col(colName + "temp"));
+		cols.add(dupesActual.col(colName));		 
 		dupesActual = dupesActual.withColumn(colName,
-				functions.concat(dupesActual.col(colName + "temp"),
-						dupesActual.col(colName)));
-		dupesActual = dupesActual.drop(dupesActual.col(colName + "temp"));
+				functions.concat(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq()));
+		dupesActual = dupesActual.drop(dupesActual.col(colName + "temp"), null);
 		return dupesActual;
 	}
 	
