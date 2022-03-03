@@ -1,18 +1,10 @@
 package zingg.util;
 
-import static com.snowflake.snowpark.functions.col;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.snowflake.snowpark.Column;
-import com.snowflake.snowpark.DataFrame;
-import com.snowflake.snowpark.Session;
-import com.snowflake.snowpark.functions;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.spark.sql.Column;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.functions;
 
 import scala.collection.JavaConverters;
 import zingg.client.Arguments;
@@ -21,6 +13,13 @@ import zingg.client.MatchType;
 import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class DSUtil {
 
@@ -33,12 +32,12 @@ public class DSUtil {
 		return cols;
 	}
 
-	public static DataFrame getPrefixedColumnsDS(DataFrame lines) {
-		return lines.toDF(getPrefixedColumns(JavaConverters.asJavaCollectionConverter(lines.schema().names()).asJavaCollection().toArray(String[]::new)));
+	public static Dataset<Row> getPrefixedColumnsDS(Dataset<Row> lines) {
+		return lines.toDF(getPrefixedColumns(lines.columns()));
 	}
 
-	public static DataFrame join(DataFrame lines, DataFrame lines1, String joinColumn, boolean filter) {
-		DataFrame pairs = lines.join(lines1, lines.col(joinColumn).$eq$eq$eq(lines1.col(ColName.COL_PREFIX + joinColumn)));
+	public static Dataset<Row> join(Dataset<Row> lines, Dataset<Row> lines1, String joinColumn, boolean filter) {
+		Dataset<Row> pairs = lines.join(lines1, lines.col(joinColumn).equalTo(lines1.col(ColName.COL_PREFIX + joinColumn)));
 		//in training, we only need that record matches only with lines bigger than itself
 		//in the case of normal as well as in the case of linking
 		if (LOG.isDebugEnabled()) {
@@ -50,8 +49,8 @@ public class DSUtil {
 		return pairs;
 	}
 
-	public static DataFrame joinZColFirst(DataFrame lines, DataFrame lines1, String joinColumn, boolean filter) {
-		DataFrame pairs = lines.join(lines1, lines.col(ColName.COL_PREFIX + joinColumn).$eq$eq$eq(lines1.col(joinColumn)), "right");
+	public static Dataset<Row> joinZColFirst(Dataset<Row> lines, Dataset<Row> lines1, String joinColumn, boolean filter) {
+		Dataset<Row> pairs = lines.join(lines1, lines.col(ColName.COL_PREFIX + joinColumn).equalTo(lines1.col(joinColumn)), "right");
 		//in training, we only need that record matches only with lines bigger than itself
 		//in the case of normal as well as in the case of linking
 		if (LOG.isDebugEnabled()) {
@@ -63,8 +62,8 @@ public class DSUtil {
 
 	/*
 
-	public static DataFrame joinOnNamedColAndDropIt(DataFrame lines, DataFrame lines1, String joinColumn) {
-		DataFrame pairs = lines.join(lines1, lines.col(joinColumn).equalTo(lines1.col(joinColumn).as(
+	public static Dataset<Row> joinOnNamedColAndDropIt(Dataset<Row> lines, Dataset<Row> lines1, String joinColumn) {
+		Dataset<Row> pairs = lines.join(lines1, lines.col(joinColumn).equalTo(lines1.col(joinColumn).as(
 			ColName.COL_PREFIX + joinColumn)));
 		pairs.show(false);
 		pairs = pairs.drop(ColName.COL_PREFIX + joinColumn);
@@ -78,22 +77,22 @@ public class DSUtil {
 	}
 	*/
 	
-    public static DataFrame joinWithItself(DataFrame lines, String joinColumn, boolean filter) throws Exception {
-		DataFrame lines1 = getPrefixedColumnsDS(lines); 
+    public static Dataset<Row> joinWithItself(Dataset<Row> lines, String joinColumn, boolean filter) throws Exception {
+		Dataset<Row> lines1 = getPrefixedColumnsDS(lines); 
 		return join(lines, lines1, joinColumn, filter);
 	}
 	
-	public static DataFrame joinWithItselfSourceSensitive(DataFrame lines, String joinColumn, Arguments args) throws Exception {
-		DataFrame lines1 = getPrefixedColumnsDS(lines).cacheResult();
+	public static Dataset<Row> joinWithItselfSourceSensitive(Dataset<Row> lines, String joinColumn, Arguments args) throws Exception {
+		Dataset<Row> lines1 = getPrefixedColumnsDS(lines).cache();
 		String[] sourceNames = args.getPipeNames();
-		lines = lines.filter(lines.col(ColName.SOURCE_COL).$eq$eq$eq(sourceNames[0]));
-		lines1 = lines1.filter(lines1.col(ColName.COL_PREFIX + ColName.SOURCE_COL).$eq$bang$eq(sourceNames[0]));
+		lines = lines.filter(lines.col(ColName.SOURCE_COL).equalTo(sourceNames[0]));
+		lines1 = lines1.filter(lines1.col(ColName.COL_PREFIX + ColName.SOURCE_COL).notEqual(sourceNames[0]));
 		return join(lines, lines1, joinColumn, false);
 	}
 
-	public static DataFrame alignLinked(DataFrame dupesActual, Arguments args) {
-		dupesActual = dupesActual.cacheResult();
-		dupesActual = dupesActual.rename(ColName.CLUSTER_COLUMN, col(ColName.ID_COL));
+	public static Dataset<Row> alignLinked(Dataset<Row> dupesActual, Arguments args) {
+		dupesActual = dupesActual.cache();
+		dupesActual = dupesActual.withColumnRenamed(ColName.ID_COL, ColName.CLUSTER_COLUMN);
 		List<Column> cols = new ArrayList<Column>();
 		cols.add(dupesActual.col(ColName.CLUSTER_COLUMN));
 		cols.add(dupesActual.col(ColName.SCORE_COL));
@@ -103,11 +102,8 @@ public class DSUtil {
 		}	
 		cols.add(dupesActual.col(ColName.SOURCE_COL));	
 
-		DataFrame dupes1 = dupesActual.select(cols.toArray(Column[]::new));
-		List<String> colsDupes = new ArrayList<String>();
-		colsDupes.add(ColName.CLUSTER_COLUMN);
-		colsDupes.add(ColName.SOURCE_COL);
-		dupes1 = dupes1.dropDuplicates(JavaConverters.asScalaIteratorConverter(colsDupes.iterator()).asScala().toSeq());
+		Dataset<Row> dupes1 = dupesActual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
+		dupes1 = dupes1.dropDuplicates(ColName.CLUSTER_COLUMN, ColName.SOURCE_COL);
 	 	List<Column> cols1 = new ArrayList<Column>();
 		cols1.add(dupesActual.col(ColName.CLUSTER_COLUMN));
 		cols1.add(dupesActual.col(ColName.SCORE_COL));
@@ -121,14 +117,14 @@ public class DSUtil {
 		}*/
 		
 		
-		DataFrame dupes2 = dupesActual.select(cols1.toArray(Column[]::new));
-	 	dupes2 = dupes2.toDF(dupes1.schema().names()).cacheResult();
+		Dataset<Row> dupes2 = dupesActual.select(JavaConverters.asScalaIteratorConverter(cols1.iterator()).asScala().toSeq());
+	 	dupes2 = dupes2.toDF(dupes1.columns()).cache();
 		dupes1 = dupes1.union(dupes2);
 		return dupes1;
 	}
 
-	public static DataFrame alignDupes(DataFrame dupesActual, Arguments args) {
-		dupesActual = dupesActual.cacheResult();
+	public static Dataset<Row> alignDupes(Dataset<Row> dupesActual, Arguments args) {
+		dupesActual = dupesActual.cache();
 		List<Column> cols = new ArrayList<Column>();
 		
 		cols.add(dupesActual.col(ColName.CLUSTER_COLUMN));
@@ -141,7 +137,7 @@ public class DSUtil {
 		}
 		cols.add(dupesActual.col(ColName.SOURCE_COL));
 		
-		DataFrame dupes1 = dupesActual.select(cols.toArray(Column[]::new));
+		Dataset<Row> dupes1 = dupesActual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
 	 	List<Column> cols1 = new ArrayList<Column>();
 		cols1.add(dupesActual.col(ColName.CLUSTER_COLUMN));
 		cols1.add(dupesActual.col(ColName.COL_PREFIX + ColName.ID_COL)); 
@@ -158,19 +154,19 @@ public class DSUtil {
 		}*/
 		
 		
-		DataFrame dupes2 = dupesActual.select(cols1.toArray(Column[]::new));
-	 	dupes2 = dupes2.toDF(dupes1.schema().names()).cacheResult();
+		Dataset<Row> dupes2 = dupesActual.select(JavaConverters.asScalaIteratorConverter(cols1.iterator()).asScala().toSeq());
+	 	dupes2 = dupes2.toDF(dupes1.columns()).cache();
 		dupes1 = dupes1.union(dupes2);
 		dupes1 = dupes1.withColumn(ColName.MATCH_FLAG_COL, functions.lit(ColValues.MATCH_TYPE_UNKNOWN));
 		return dupes1;
 	}
 
-	public static DataFrame allFieldsEqual(DataFrame a, Arguments args) {
+	public static Dataset<Row> allFieldsEqual(Dataset<Row> a, Arguments args) {
 		for (FieldDefinition def : args.getFieldDefinition()) {
 			if (! (def.getMatchType() == null || def.getMatchType().equals(MatchType.DONT_USE))) {
 				//columns.add(def.getFieldName());
 				String field = def.getFieldName();
-				 a= a.filter(a.col(field).$eq$eq$eq(
+				 a= a.filter(a.col(field).equalTo(
 					 a.col(ColName.COL_PREFIX + field)));		
 			}
 		}
@@ -179,7 +175,7 @@ public class DSUtil {
 		
 	}
 
-	public static List<Column> getFieldDefColumns (DataFrame ds, Arguments args, boolean includeZid) {
+	public static List<Column> getFieldDefColumns (Dataset<Row> ds, Arguments args, boolean includeZid) {
 		List<Column> cols = new ArrayList<Column>();
 		if (includeZid) {
 			cols.add(ds.col(ColName.ID_COL));						
@@ -192,15 +188,15 @@ public class DSUtil {
 
 	}
 
-	public static DataFrame getFieldDefColumnsDS(DataFrame ds, Arguments args, boolean includeZid) {
+	public static Dataset<Row> getFieldDefColumnsDS(Dataset<Row> ds, Arguments args, boolean includeZid) {
 		return select(ds, getFieldDefColumns(ds, args, includeZid));
 	}
 
-	public static DataFrame select(DataFrame ds, List<Column> cols) {
-		return ds.select(cols.stream().toArray(Column[]::new));
+	public static Dataset<Row> select(Dataset<Row> ds, List<Column> cols) {
+		return ds.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
 	}
 
-	public static DataFrame dropDuplicates(DataFrame a, Arguments args) {
+	public static Dataset<Row> dropDuplicates(Dataset<Row> a, Arguments args) {
 		LOG.info("duplicates before " + a.count());
 		List<String> cols = new ArrayList<String>();
 		for (FieldDefinition def : args.getFieldDefinition()) {
@@ -210,38 +206,36 @@ public class DSUtil {
 				cols.add(field);	
 			}
 		}
-		a = a.dropDuplicates(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
+		a = a.dropDuplicates(cols.stream().toArray(String[]::new));
 		LOG.info("duplicates after " + a.count());
 		return a;			
 	}	
 
-	public static DataFrame getTraining(Session snow, Arguments args) {
-		return getTraining(snow, args, PipeUtil.getTrainingDataMarkedPipe(args)); 			
+	public static Dataset<Row> getTraining(SparkSession spark, Arguments args) {
+		return getTraining(spark, args, PipeUtil.getTrainingDataMarkedPipe(args)); 			
 	}
 
-	public static DataFrame getTrainingJdbc(Session snow, Arguments args) {
-		return getTraining(snow, args, args.getOutput()[0]);
+	public static Dataset<Row> getTrainingJdbc(SparkSession spark, Arguments args) {
+		return getTraining(spark, args, args.getOutput()[0]);
 	}
 
-	private static DataFrame getTraining(Session snow, Arguments args, Pipe p) {
-		DataFrame trFile = null;
+	private static Dataset<Row> getTraining(SparkSession spark, Arguments args, Pipe p) {
+		Dataset<Row> trFile = null;
 		try{
-			trFile = PipeUtil.read(snow, 
+			trFile = PipeUtil.read(spark, 
 					false, false, p); 
 			LOG.warn("Read marked training samples ");
-			List<Column> cols = new ArrayList<Column>();
-			cols.add(col(ColName.PREDICTION_COL));
-			cols.add(col(ColName.SCORE_COL));
-			trFile = trFile.drop(cols.toArray(Column[]::new));
+			trFile = trFile.drop(ColName.PREDICTION_COL);
+			trFile = trFile.drop(ColName.SCORE_COL);				
 		}
 		catch (Exception e) {
 			LOG.warn("No preexisting marked training samples");
 		}
 		if (args.getTrainingSamples() != null) {
-			DataFrame trSamples = PipeUtil.read(snow, 
+			Dataset<Row> trSamples = PipeUtil.read(spark, 
 				true, false, args.getTrainingSamples()); 
 			LOG.warn("Read all training samples ");
-			trFile = (trFile == null) ? trSamples : trFile.unionByName(trSamples);
+			trFile = (trFile == null) ? trSamples : trFile.unionByName(trSamples, true);
 		} 
 		else {
 			LOG.warn("No configured training samples");
