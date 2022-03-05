@@ -10,7 +10,7 @@ The easiest way to get started is pulling the Docker image with the last release
 docker pull zingg/zingg:0.3.2
 docker run -it zingg/zingg:0.3.2 bash
 ```
-Detailed help instructions for working with the Zingg docker image canbe found [here](workingWithDocker.md).
+Detailed help instructions for working with the Zingg docker image can be found [here](workingWithDocker.md).
 ## Installation
 
 Zingg runs on [Spark](https://spark.apache.org) and can be used on all major Spark distributions. Zingg can run on all major Linux flavours.
