@@ -1,6 +1,6 @@
 
 # Working with Zingg docker image
-Running Zingg in Docker container is straightforward. Run following commands to get into the container. Follow the [Step By Step guide](stepByStep.md) to run zingg commands inside the container.
+Running Zingg in Docker container is straightforward. Run following commands to get into the container. 
 ```
 docker pull zingg/zingg:0.3.2
 docker run -it zingg/zingg:0.3.2 bash
@@ -42,4 +42,7 @@ The container id of the running instance can be found using below command.
 ```
 $ docker ps
 ```
-To know more about Docker, refer to official [docker documentation](https://docs.docker.com/)
+To know more about Docker, please refer to official [docker documentation](https://docs.docker.com/)
+
+## Running Zingg within the docker image
+Please follow the [Step By Step guide](stepByStep.md) to run Zingg commands inside the container.
