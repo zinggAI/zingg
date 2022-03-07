@@ -4,6 +4,7 @@
 
 * [Step By Step Guide](stepByStep.md)
   * [Installation](setup/installation.md)
+    * [Working with Docker Image](setup/workingWithDocker.md)
   * [Hardware Sizing](setup/hardwareSizing.md)
   * [Configuration](setup/configuration.md)
   * [**Creating training data**](setup/training/createTrainingData.md)
