@@ -7,11 +7,8 @@ import java.util.Scanner;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Encoders;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.functions;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
 
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
@@ -39,17 +36,17 @@ public class Documenter extends ZinggBase {
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Document generation in progress");
-			Dataset<Row> markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
-			markedRecords = markedRecords.cache();
+			DataFrame markedRecords = PipeUtil.read(snow, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
+			markedRecords = markedRecords.cacheResult();
 			//List<Column> displayCols = DSUtil.getFieldDefColumns(markedRecords, args, false);
-			List<Row> clusterIDs = markedRecords.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();
+			List<Row> clusterIDs = Arrays.asList(markedRecords.select(ColName.CLUSTER_COLUMN).distinct().collect());
 			int totalPairs = clusterIDs.size();
 			/* Create a data-model */
 			Map<String, Object> root = new HashMap<String, Object>();
 			root.put("modelId", args.getModelId());
-			root.put("clusters", markedRecords.collectAsList());
-			root.put("numColumns", markedRecords.columns().length);
-			root.put("columns", markedRecords.columns());
+			root.put("clusters", markedRecords.collect());
+			root.put("numColumns", markedRecords.schema().names().length);
+			root.put("columns", markedRecords.schema().names());
 			root.put("fieldDefinitionCount", args.getFieldDefinition().size());
 			buildAndWriteHTML(root);
 		} catch (Exception e) {
@@ -94,7 +91,7 @@ public class Documenter extends ZinggBase {
 
 		//List<String> textList = Collections.singletonList(writer.toString());
 		
-		//Dataset<Row> data = spark.createDataset(textList, Encoders.STRING()).toDF();
+		//DataFrame data = snow.createDataset(textList, Encoders.STRING()).toDF();
 
 		//PipeUtil.write(data, args, ctx, PipeUtil.getModelDocumentationPipe(args));
         file.close();

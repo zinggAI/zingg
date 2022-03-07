@@ -5,10 +5,10 @@ import java.util.Scanner;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SaveMode;
+import com.snowflake.snowpark_java.Column;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
+import com.snowflake.snowpark_java.SaveMode;
 
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
@@ -30,7 +30,7 @@ public class LabelUpdater extends Labeller {
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Reading inputs for updateLabelling phase ...");
-			Dataset<Row> markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
+			DataFrame markedRecords = PipeUtil.read(snow, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
 			processRecordsCli(markedRecords);
 			LOG.info("Finished updataLabelling phase");
 		} catch (Exception e) {
@@ -39,7 +39,7 @@ public class LabelUpdater extends Labeller {
 		}
 	}
 
-	public void processRecordsCli(Dataset<Row> lines) throws ZinggClientException {
+	public void processRecordsCli(DataFrame lines) throws ZinggClientException {
 		LOG.info("Processing Records for CLI updateLabelling");
 		getMarkedRecordsStat(lines);
 		printMarkedRecordsStat();
@@ -51,8 +51,8 @@ public class LabelUpdater extends Labeller {
 		List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false);
 		try {
 			int matchFlag;
-			Dataset<Row> updatedRecords = null;
-			Dataset<Row> recordsToUpdate = lines;
+			DataFrame updatedRecords = null;
+			DataFrame recordsToUpdate = lines;
 			int selectedOption = -1;
 			String postMsg;
 
@@ -64,13 +64,13 @@ public class LabelUpdater extends Labeller {
 					LOG.info("User has exit in the middle. Updating the records.");
 					break;
 				}
-				Dataset<Row> currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).equalTo(cluster_id));
-				if (currentPair.isEmpty()) {
+				DataFrame currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).in(cluster_id));
+				if (currentPair.count() == 0) {
 					System.out.println("\tInvalid cluster id. Enter '9' to exit");
 					continue;
 				}
 
-				matchFlag = currentPair.head().getAs(ColName.MATCH_FLAG_COL);
+				matchFlag = currentPair.first().getAs(ColName.MATCH_FLAG_COL);
 				String preMsg = String.format("\n\tThe record pairs belonging to the input cluster id %s are:", cluster_id);
 				String matchType = LabelMatchType.get(matchFlag).msg;
 				postMsg = String.format("\tThe above pair is labeled as %s\n", matchType);
