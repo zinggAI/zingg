@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Functions;
 import com.snowflake.snowpark_java.Row;
 import zingg.block.Canopy;
 import zingg.block.Tree;
@@ -40,8 +41,8 @@ public class Trainer extends ZinggBase{
 			DataFrame tra = DSUtil.getTraining(snow, args);
 			tra = DSUtil.joinWithItself(tra, ColName.CLUSTER_COLUMN, true);
 			tra = tra.cacheResult();
-			positives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).in(ColValues.MATCH_TYPE_MATCH));
-			negatives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).in(ColValues.MATCH_TYPE_NOT_A_MATCH));
+			positives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equal_to(Functions.lit(ColValues.MATCH_TYPE_MATCH)));
+			negatives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equal_to(Functions.lit(ColValues.MATCH_TYPE_NOT_A_MATCH)));
 			LOG.warn("Training on positive pairs - " + positives.count());
 			LOG.warn("Training on negative pairs - " + negatives.count());
 				
@@ -57,8 +58,8 @@ public class Trainer extends ZinggBase{
 			Model model = ModelUtil.createModel(positives, negatives, new Model(this.featurers), snow);
 			model.save(args.getModel());
 			LOG.info("Learnt similarity rules and saved output at " + args.getZinggDir());
-			Analytics.track(Metric.TRAINING_MATCHES, Metric.approxCount(positives), args.getCollectMetrics());
-			Analytics.track(Metric.TRAINING_NONMATCHES, Metric.approxCount(negatives), args.getCollectMetrics());
+			//Analytics.track(Metric.TRAINING_MATCHES, Metric.approxCount(positives), args.getCollectMetrics());
+			//Analytics.track(Metric.TRAINING_NONMATCHES, Metric.approxCount(negatives), args.getCollectMetrics());
 			LOG.info("Finished Learning phase");			
 		} catch (Exception e) {
 			e.printStackTrace();

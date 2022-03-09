@@ -38,7 +38,7 @@ public class HashUtil {
 				});
 		for (HashFnFromConf scriptArg : scriptArgs) {
 			HashFunction fn = HashFunctionRegistry.getFunction(scriptArg.getName());
-			snow.udf().registerPermanent(fn.getName(), (JavaUDF1<Vector, Double>) fn, fn.getDataType(), fn.getReturnType(), "stageLocation");
+			snow.udf().registerPermanent(fn.getName(), (JavaUDF1) fn, fn.getDataType(), fn.getReturnType(), "stageLocation");
 			functions.add(fn.getDataType(), fn);
 		}
 		return functions;

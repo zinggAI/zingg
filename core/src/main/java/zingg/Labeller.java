@@ -85,8 +85,9 @@ public class Labeller extends ZinggBase {
 
 		lines = lines.cacheResult();
 		List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false);
-
-		List<Row> clusterIDs = Arrays.asList(lines.select(ColName.CLUSTER_COLUMN).distinct().collect());
+		DataFrame clusters = lines.select(ColName.CLUSTER_COLUMN);
+		int clusterColumnIndex = DSUtil.getIndex(clusters, ColName.CLUSTER_COLUMN);
+		List<Row> clusterIDs = Arrays.asList(clusters.distinct().collect());
 		try {
 			double score;
 			double prediction;
@@ -97,7 +98,7 @@ public class Labeller extends ZinggBase {
 			
 			for (int index = 0; index < totalPairs; index++){	
 				DataFrame currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).equal_to(
-					Functions.lit(clusterIDs.get(index).get(0)))).cacheResult();
+					Functions.lit(clusterIDs.get(index).get(clusterColumnIndex)))).cacheResult();
 				
 				score = (Double)currentPair.first().get().get(DSUtil.getIndex(currentPair, ColName.SCORE_COL));
 				prediction = (Double)currentPair.first().get().get(DSUtil.getIndex(currentPair, ColName.PREDICTION_COL));

@@ -16,7 +16,7 @@ public class Metric {
     public static final long timeout = 1200L;
     public static final double confidence = 0.95; // default value
 
-    public static double approxCount(DataFrame data) {
-        return data.async().count().getResult((int)timeout/1000);
-    }
+    // public static double approxCount(DataFrame data) {
+    //     return data.async().count().getResult((int)timeout/1000);
+    // }
 }
