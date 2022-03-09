@@ -40,7 +40,7 @@ public class DSUtil {
 	}
 
 	public static DataFrame join(DataFrame lines, DataFrame lines1, String joinColumn, boolean filter) {
-		DataFrame pairs = lines.join(lines1, lines.col(joinColumn).in(lines1.col(ColName.COL_PREFIX + joinColumn)));
+		DataFrame pairs = lines.join(lines1, lines.col(joinColumn).equal_to(lines1.col(ColName.COL_PREFIX + joinColumn)));
 		//in training, we only need that record matches only with lines bigger than itself
 		//in the case of normal as well as in the case of linking
 		if (LOG.isDebugEnabled()) {
@@ -53,7 +53,7 @@ public class DSUtil {
 	}
 
 	public static DataFrame joinZColFirst(DataFrame lines, DataFrame lines1, String joinColumn, boolean filter) {
-		DataFrame pairs = lines.join(lines1, lines.col(ColName.COL_PREFIX + joinColumn).in(lines1.col(joinColumn)), "right");
+		DataFrame pairs = lines.join(lines1, lines.col(ColName.COL_PREFIX + joinColumn).equal_to(lines1.col(joinColumn)), "right");
 		//in training, we only need that record matches only with lines bigger than itself
 		//in the case of normal as well as in the case of linking
 		if (LOG.isDebugEnabled()) {
@@ -88,8 +88,8 @@ public class DSUtil {
 	public static DataFrame joinWithItselfSourceSensitive(DataFrame lines, String joinColumn, Arguments args) throws Exception {
 		DataFrame lines1 = getPrefixedColumnsDS(lines).cacheResult();
 		String[] sourceNames = args.getPipeNames();
-		lines = lines.filter(lines.col(ColName.SOURCE_COL).in(sourceNames[0]));
-		lines1 = lines1.filter(lines1.col(ColName.COL_PREFIX + ColName.SOURCE_COL).in(sourceNames[0]));
+		lines = lines.filter(lines.col(ColName.SOURCE_COL).equal_to(Functions.lit(sourceNames[0])));
+		lines1 = lines1.filter(lines1.col(ColName.COL_PREFIX + ColName.SOURCE_COL).equal_to(Functions.lit(sourceNames[0])));
 		return join(lines, lines1, joinColumn, false);
 	}
 
@@ -169,7 +169,7 @@ public class DSUtil {
 			if (! (def.getMatchType() == null || def.getMatchType().equals(MatchType.DONT_USE))) {
 				//columns.add(def.getFieldName());
 				String field = def.getFieldName();
-				 a= a.filter(a.col(field).in(
+				 a= a.filter(a.col(field).equal_to(
 					 a.col(ColName.COL_PREFIX + field)));		
 			}
 		}
