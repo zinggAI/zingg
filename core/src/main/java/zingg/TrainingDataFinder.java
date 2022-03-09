@@ -54,8 +54,8 @@ public class TrainingDataFinder extends ZinggBase{
 				if (trFile != null) {
 					DataFrame trPairs = DSUtil.joinWithItself(trFile, ColName.CLUSTER_COLUMN, true);
 						
-						posPairs = trPairs.filter(trPairs.col(ColName.MATCH_FLAG_COL).in(ColValues.MATCH_TYPE_MATCH));
-						negPairs = trPairs.filter(trPairs.col(ColName.MATCH_FLAG_COL).in(ColValues.MATCH_TYPE_NOT_A_MATCH));
+						posPairs = trPairs.filter(trPairs.col(ColName.MATCH_FLAG_COL).equal_to(Functions.lit(ColValues.MATCH_TYPE_MATCH)));
+						negPairs = trPairs.filter(trPairs.col(ColName.MATCH_FLAG_COL).equal_to(Functions.lit(ColValues.MATCH_TYPE_NOT_A_MATCH)));
 						posPairs = posPairs.drop(ColName.MATCH_FLAG_COL, 
 								ColName.COL_PREFIX + ColName.MATCH_FLAG_COL,
 								ColName.CLUSTER_COLUMN,
@@ -142,13 +142,13 @@ public class TrainingDataFinder extends ZinggBase{
 
 	public DataFrame getUncertain(DataFrame dupes) {
 		//take lowest positive score and highest negative score in the ones marked matches
-		DataFrame pos = dupes.filter(dupes.col(ColName.PREDICTION_COL).in(ColValues.IS_MATCH_PREDICTION));
+		DataFrame pos = dupes.filter(dupes.col(ColName.PREDICTION_COL).equal_to(Functions.lit(ColValues.IS_MATCH_PREDICTION)));
 		pos = pos.sort(col(ColName.SCORE_COL).asc()).cacheResult();
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("num pos " + pos.count());	
 		}
 		pos = pos.limit(10);
-		DataFrame neg = dupes.filter(dupes.col(ColName.PREDICTION_COL).in(ColValues.IS_NOT_A_MATCH_PREDICTION));
+		DataFrame neg = dupes.filter(dupes.col(ColName.PREDICTION_COL).equal_to(Functions.lit(ColValues.IS_NOT_A_MATCH_PREDICTION)));
 		neg = neg.sort(col(ColName.SCORE_COL).desc()).cacheResult();
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("num neg " + neg.count());
