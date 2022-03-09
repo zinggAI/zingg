@@ -114,7 +114,7 @@
 		<dependency>
 			<groupId>com.snowflake</groupId>
 			<artifactId>snowpark</artifactId>
-			<version>1.0.0</version>
+			<version>1.2.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -131,43 +131,8 @@
 		</dependency>
 		<dependency>
 				<groupId>net.snowflake</groupId>
-				<artifactId>spark-snowflake_${scala.binary.version}</artifactId>
-				<version>2.9.0-spark_${spark.binary.version}</version>
-		</dependency>
-		<dependency>
-				<groupId>net.snowflake</groupId>
 				<artifactId>snowflake-jdbc</artifactId>
 				<version>3.13.5</version>
-		</dependency>
-		<dependency>
-			<!-- https://mvnrepository.com/artifact/com.datastax.spark/spark-cassandra-connector -->
-			<groupId>com.datastax.spark</groupId>
-			<artifactId>spark-cassandra-connector_${scala.binary.version}</artifactId>
-			<version>${cassandra.conn.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.scala-lang</groupId>
-					<artifactId>scala-library</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-mllib_${scala.binary.version}</artifactId>
-			<version>${spark.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-core_${scala.binary.version}</artifactId>
-			<version>${spark.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-graphx_${scala.binary.version}</artifactId>
-			<version>${spark.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>			<!-- Spark dependency -->
 			<groupId>org.scala-lang</groupId>
@@ -219,11 +184,6 @@
 		</dependency>	
 		-->
 		<dependency>
-			<groupId>graphframes</groupId>
-			<artifactId>graphframes</artifactId>
-			<version>${graphframes.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
@@ -236,11 +196,6 @@
 			<version>1.1.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.crealytics/spark-excel -->
-		<dependency>
-			<groupId>com.crealytics</groupId>
-			<artifactId>spark-excel_${scala.binary.version}</artifactId>
-			<version>3.1.2_0.16.5-pre1</version>
-		</dependency>
 	</dependencies>
 	<build>
 		<pluginManagement>
@@ -316,6 +271,9 @@
 				<configuration>
 					<source>${maven.compiler.source}</source>
 					<target>${maven.compiler.source}</target>
+					<excludes>
+						<exclude>**/sink/Sinker.java</exclude>
+					</excludes>
 					<showWarnings>true</showWarnings>
 				</configuration>
 			</plugin>

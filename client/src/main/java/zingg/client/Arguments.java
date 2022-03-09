@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.module.scala.DefaultScalaModule;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -245,7 +244,7 @@ public class Arguments implements Serializable {
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS,
 					true);
-			mapper.registerModule(new DefaultScalaModule());
+			//mapper.registerModule(new DefaultScalaModule());
 			mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), args);
 		}
 		catch(Exception e) {

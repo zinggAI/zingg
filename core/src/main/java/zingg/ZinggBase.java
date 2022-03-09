@@ -8,10 +8,8 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.DataType;
-import com.snowflake.snowpark.Session;
+import com.snowflake.snowpark_java.Session;
+import com.snowflake.snowpark_java.types.DataType;
 
 import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
@@ -34,8 +32,7 @@ public abstract class ZinggBase implements Serializable, IZingg {
 
     protected Arguments args;
 	
-    protected JavaSparkContext ctx;
-	protected SparkSession spark;
+    //protected JavaSparkContext ctx;
     protected Session snow;
     protected static String name;
     protected ZinggOptions zinggOptions;
@@ -56,16 +53,16 @@ public abstract class ZinggBase implements Serializable, IZingg {
         try{
             snow = snowparkSession(args.getSnowflake());
 
-            spark = SparkSession
-                .builder()
-                .appName("Zingg"+args.getJobId())
-                .getOrCreate();
-            ctx = new JavaSparkContext(spark.sparkContext());
-            JavaSparkContext.jarOfClass(IZingg.class);
-            LOG.debug("Context " + ctx.toString());
+            // spark = Session
+            //     .builder()
+            //     .appName("Zingg"+args.getJobId())
+            //     .getOrCreate();
+            //ctx = new JavaSparkContext(snow.sparkContext());
+            // JavaSparkContext.jarOfClass(IZingg.class);
+            //LOG.debug("Context " + ctx.toString());
             initHashFns();
             loadFeatures();
-            ctx.setCheckpointDir("/tmp/checkpoint");	
+            //ctx.setCheckpointDir("/tmp/checkpoint");	
         }
         catch(Throwable e) {
             if (LOG.isDebugEnabled()) e.printStackTrace();
@@ -85,14 +82,14 @@ public abstract class ZinggBase implements Serializable, IZingg {
 
     @Override
     public void cleanup() throws ZinggClientException {
-        if (ctx != null) ctx.stop();
+        //if (ctx != null) ctx.stop();
         if (snow !=null) snow.close();
     }
 
     void initHashFns() throws ZinggClientException {
 		try {
 			//functions = Util.getFunctionList(this.functionFile);
-			hashFunctions = HashUtil.getHashFunctionList(this.hashFunctionFile, spark);
+			hashFunctions = HashUtil.getHashFunctionList(this.hashFunctionFile, snow);
 		} catch (Exception e) {
 			if (LOG.isDebugEnabled()) e.printStackTrace();
 			throw new ZinggClientException("Unable to initialize base functions");
@@ -123,8 +120,8 @@ public abstract class ZinggBase implements Serializable, IZingg {
 
     public void copyContext(ZinggBase b) {
             this.args = b.args;
-            this.ctx = b.ctx;
-            this.spark = b.spark;
+           // this.ctx = b.ctx;
+            this.snow = b.snow;
             this.featurers = b.featurers;
             this.hashFunctions = b.hashFunctions;
     }
@@ -165,20 +162,20 @@ public abstract class ZinggBase implements Serializable, IZingg {
         this.featurers = featurers;
     }
 
-    public JavaSparkContext getCtx() {
-        return this.ctx;
+    // public JavaSparkContext getCtx() {
+    //     return this.ctx;
+    // }
+
+    // public void setCtx(JavaSparkContext ctx) {
+    //     this.ctx = ctx;
+    // }
+
+    public Session getSnow() {
+        return this.snow;
     }
 
-    public void setCtx(JavaSparkContext ctx) {
-        this.ctx = ctx;
-    }
-
-    public SparkSession getSpark() {
-        return this.spark;
-    }
-
-    public void setSpark(SparkSession spark) {
-        this.spark = spark;
+    public void setSnow(Session snow) {
+        this.snow = snow;
     }
     public void setName(String name) {
         this.name = name;

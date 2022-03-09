@@ -1,5 +1,7 @@
 package zingg.util;
 
+import static com.snowflake.snowpark_java.Functions.col;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,19 +13,20 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.DataFrameReader;
-import org.apache.spark.sql.DataFrameWriter;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SaveMode;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.functions;
-import org.apache.spark.storage.StorageLevel;
+
+import com.snowflake.snowpark_java.DataFrameReader;
+import com.snowflake.snowpark_java.DataFrameWriter;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
+import com.snowflake.snowpark_java.SaveMode;
+import com.snowflake.snowpark_java.Session;
+import com.snowflake.snowpark_java.Functions;
+// import org.apache.spark.storage.StorageLevel;
 
 //import zingg.scala.DFUtil;
 import zingg.client.Arguments;
 import zingg.client.util.ColName;
+import zingg.client.util.Util;
 import zingg.client.pipe.CassandraPipe;
 import zingg.client.pipe.ElasticPipe;
 import zingg.client.pipe.FilePipe;
@@ -37,12 +40,7 @@ import scala.collection.Seq;
 //import com.datastax.driver.core.ResultSet;
 //import com.datastax.driver.core.Session;
 //import com.datastax.spark.connector.DataFrameFunctions;
-import com.datastax.spark.connector.cql.CassandraConnector;
-import com.datastax.spark.connector.cql.ClusteringColumn;
-import com.datastax.spark.connector.cql.ColumnDef;
-import com.datastax.spark.connector.cql.TableDef;
 
-import com.datastax.spark.connector.cql.*;
 import zingg.scala.DFUtil;
 
 //import com.datastax.spark.connector.cql.*;
@@ -53,8 +51,8 @@ public class PipeUtil {
 
 	public static final Log LOG = LogFactory.getLog(PipeUtil.class);
 
-	private static DataFrameReader getReader(SparkSession spark, Pipe p) {
-		DataFrameReader reader = spark.read();
+	private static DataFrameReader getReader(Session snow, Pipe p) {
+		DataFrameReader reader = snow.read();
 
 		LOG.warn("Reading input " + p.getFormat().type());
 		reader = reader.format(p.getFormat().type());
@@ -68,8 +66,8 @@ public class PipeUtil {
 		return reader;
 	}
 
-	private static Dataset<Row> read(DataFrameReader reader, Pipe p, boolean addSource) {
-		Dataset<Row> input = null;
+	private static DataFrame read(DataFrameReader reader, Pipe p, boolean addSource) {
+		DataFrame input = null;
 		LOG.warn("Reading " + p);
 		if (p.getProps().containsKey(FilePipe.LOCATION)) {
 			input = reader.load(p.get(FilePipe.LOCATION));
@@ -83,33 +81,33 @@ public class PipeUtil {
 		return input;
 	}
 
-	private static Dataset<Row> readInternal(SparkSession spark, Pipe p, boolean addSource) {
-		DataFrameReader reader = getReader(spark, p);
+	private static DataFrame readInternal(Session snow, Pipe p, boolean addSource) {
+		DataFrameReader reader = getReader(snow, p);
 		return read(reader, p, addSource);		
 	}
 
-	public static Dataset<Row> joinTrainingSetstoGetLabels(Dataset<Row> jdbc, 
-		Dataset<Row> file)  {
+	public static DataFrame joinTrainingSetstoGetLabels(DataFrame jdbc, 
+		DataFrame file)  {
 		file = file.drop(ColName.MATCH_FLAG_COL);
 		file.printSchema();
 		file.show();
 		jdbc = jdbc.select(jdbc.col(ColName.ID_COL), jdbc.col(ColName.SOURCE_COL),jdbc.col(ColName.MATCH_FLAG_COL),
 			jdbc.col(ColName.CLUSTER_COLUMN));
-		String[] cols = jdbc.columns();
+		String[] cols = jdbc.schema().names();
 		for (int i=0; i < cols.length; ++i) {
 			cols[i] = ColName.COL_PREFIX + cols[i];
 		}
-		jdbc = jdbc.toDF(cols).cache();
+		jdbc = jdbc.toDF(cols).cacheResult();
 
-		jdbc = jdbc.withColumnRenamed(ColName.COL_PREFIX + ColName.MATCH_FLAG_COL, ColName.MATCH_FLAG_COL);
+		jdbc = jdbc.rename(ColName.MATCH_FLAG_COL, col(ColName.COL_PREFIX + ColName.MATCH_FLAG_COL));
 		jdbc.printSchema();
 		jdbc.show();
 		LOG.warn("Building labels ");
-		Dataset<Row> pairs = file.join(jdbc, file.col(ColName.ID_COL).equalTo(
+		DataFrame pairs = file.join(jdbc, file.col(ColName.ID_COL).equal_to(
 			jdbc.col(ColName.COL_PREFIX + ColName.ID_COL))
-				.and(file.col(ColName.SOURCE_COL).equalTo(
+				.and(file.col(ColName.SOURCE_COL).equal_to(
 					jdbc.col(ColName.COL_PREFIX + ColName.SOURCE_COL)))
-				.and(file.col(ColName.CLUSTER_COLUMN).equalTo(
+				.and(file.col(ColName.CLUSTER_COLUMN).equal_to(
 					jdbc.col(ColName.COL_PREFIX + ColName.CLUSTER_COLUMN))));
 		LOG.warn("Pairs are " + pairs.count());			
 		//in training, we only need that record matches only with lines bigger than itself
@@ -122,66 +120,66 @@ public class PipeUtil {
 	}
 
 
-	private static Dataset<Row> readInternal(SparkSession spark, boolean addLineNo,
+	private static DataFrame readInternal(Session snow, boolean addLineNo,
 			boolean addSource, Pipe... pipes) {
-		Dataset<Row> input = null;
+		DataFrame input = null;
 
 		for (Pipe p : pipes) {
 			if (input == null) {
-				input = readInternal(spark, p, addSource);
+				input = readInternal(snow, p, addSource);
 				LOG.debug("input size is " + input.count());				
 			} else {
 					if (p.get("type") != null && p.get("type").equals("join")) {
 						LOG.warn("joining inputs");
-						Dataset<Row> input1 = readInternal(spark, p, addSource);
+						DataFrame input1 = readInternal(snow, p, addSource);
 						LOG.warn("input now size is " + input1.count());	
 						input = joinTrainingSetstoGetLabels(input, input1 );
 					}
 					else {
-						input = input.union(readInternal(spark, p, addSource));
+						input = input.union(readInternal(snow, p, addSource));
 					}				
 			}
 		}
 		// we will probably need to create row number as string with pipename/id as
 		// suffix
 		if (addLineNo)
-			input = DFUtil.addRowNumber(input, spark);
+			input = DFUtil.addRowNumber(input, snow);
 		// we need to transform the input here by using stop words
 		return input;
 	}
 
-	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, boolean addSource, Pipe... pipes) {
-		Dataset<Row> rows = readInternal(spark, addLineNo, addSource, pipes);
-		rows = rows.persist(StorageLevel.MEMORY_ONLY());
+	public static DataFrame read(Session snow, boolean addLineNo, boolean addSource, Pipe... pipes) {
+		DataFrame rows = readInternal(snow, addLineNo, addSource, pipes);
+		//rows = rows.persist(StorageLevel.MEMORY_ONLY());
 		return rows;
 	}
 
-	public static Dataset<Row> sample(SparkSession spark, Pipe p) {
-		DataFrameReader reader = getReader(spark, p);
+	public static DataFrame sample(Session snow, Pipe p) {
+		DataFrameReader reader = getReader(snow, p);
 		reader.option("inferSchema", true);
 		reader.option("mode", "DROPMALFORMED");
 		LOG.info("reader is ready to sample with inferring " + p.get(FilePipe.LOCATION));
 		LOG.warn("Reading input of type " + p.getFormat().type());
-		Dataset<Row> input = read(reader, p, false);
+		DataFrame input = read(reader, p, false);
 		// LOG.warn("inferred schema " + input.schema());
-		List<Row> values = input.takeAsList(10);
-		values.forEach(r -> LOG.warn(r));
-		Dataset<Row> ret = spark.createDataFrame(values, input.schema());
+		Row[] values = input.sample(10).collect();
+		//values.forEach(r -> LOG.warn(r));
+		DataFrame ret = snow.createDataFrame(values, input.schema());
 		return ret;
 
 	}
 
-	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, int numPartitions,
+	public static DataFrame read(Session snow, boolean addLineNo, int numPartitions,
 			boolean addSource, Pipe... pipes) {
-		Dataset<Row> rows = readInternal(spark, addLineNo, addSource, pipes);
-		rows = rows.repartition(numPartitions);
-		rows = rows.persist(StorageLevel.MEMORY_ONLY());
+		DataFrame rows = readInternal(snow, addLineNo, addSource, pipes);
+		//rows = rows.repartition(numPartitions);
+		//rows = rows.persist(StorageLevel.MEMORY_ONLY());
 		return rows;
 	}
 
-	public static void write(Dataset<Row> toWriteOrig, Arguments args, JavaSparkContext ctx, Pipe... pipes) {
+	public static void write(DataFrame toWriteOrig, Arguments args, JavaSparkContext ctx, Pipe... pipes) {
 			for (Pipe p: pipes) {
-			Dataset<Row> toWrite = toWriteOrig;
+			DataFrame toWrite = toWriteOrig;
 			DataFrameWriter writer = toWrite.write();
 		
 			LOG.warn("Writing output " + p);
@@ -279,10 +277,10 @@ public class PipeUtil {
 
 	}
 
-	public static void writePerSource(Dataset<Row> toWrite, Arguments args, JavaSparkContext ctx, Pipe[] pipes ) {
-		List<Row> sources = toWrite.select(ColName.SOURCE_COL).distinct().collectAsList();
+	public static void writePerSource(DataFrame toWrite, Arguments args, JavaSparkContext ctx, Pipe[] pipes ) {
+		List<Row> sources = Arrays.asList(toWrite.select(ColName.SOURCE_COL).distinct().collect());
 		for (Row r : sources) {
-			Dataset<Row> toWriteNow = toWrite.filter(toWrite.col(ColName.SOURCE_COL).equalTo(r.get(0)));
+			DataFrame toWriteNow = toWrite.filter(toWrite.col(ColName.SOURCE_COL).equal_to(Functions.lit(r.get(0))));
 			toWriteNow = toWriteNow.drop(ColName.SOURCE_COL);
 			PipeUtil.write(toWriteNow, args, ctx, pipes);
 
@@ -328,7 +326,7 @@ public class PipeUtil {
 	}
 
 	/*
-	 * public static String getTableCreateCQL(Pipe p, Dataset<Row> df) {
+	 * public static String getTableCreateCQL(Pipe p, DataFrame df) {
 	 * 
 	 * Set<String> partitionKeys = new TreeSet<String>() { {
 	 * add(p.get(CassandraPipe.PRIMARY_KEY)); } }; int c = 0; Map<String, Integer>

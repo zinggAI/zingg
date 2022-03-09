@@ -5,12 +5,13 @@ import java.io.Serializable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.types.DataType;
+import com.snowflake.snowpark_java.types.DataType;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.jsontype.*;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -65,7 +66,7 @@ public class FieldDefinition implements
 
 	@JsonProperty("dataType")
 	public void setDataType(String d) {
-		if (d!= null) this.dataType =  DataType.fromJson(d);
+		//if (d!= null) this.dataType =  d;
 	}
 	
 	
@@ -122,7 +123,7 @@ public class FieldDefinition implements
 	    public void serialize(DataType dType, JsonGenerator jsonGenerator, 
 	        SerializerProvider serializerProvider) 
 	        		throws IOException, JsonProcessingException {
-				jsonGenerator.writeString(dType.json());
+				jsonGenerator.writeString(dType.typeName());
 	        
 		}
 	}

@@ -228,8 +228,8 @@ public class DSUtil {
 			trFile = PipeUtil.read(snow, 
 					false, false, p); 
 			LOG.warn("Read marked training samples ");
-			trFile = trFile.drop(Util.toColsArray(ColName.PREDICTION_COL));
-			trFile = trFile.drop(Util.toColsArray(ColName.SCORE_COL));
+			trFile = trFile.drop(ColName.PREDICTION_COL);
+			trFile = trFile.drop(ColName.SCORE_COL);
 		}
 		catch (Exception e) {
 			LOG.warn("No preexisting marked training samples");
@@ -252,5 +252,9 @@ public class DSUtil {
 				.stream()
 				.filter(f -> !(f.getMatchType() == null || f.getMatchType().equals(MatchType.DONT_USE)))
 				.collect(Collectors.toList());
+	}
+
+	public static int getIndex(DataFrame df, String colName) {
+		return Arrays.asList(df.schema().names()).indexOf(colName);
 	}
 }

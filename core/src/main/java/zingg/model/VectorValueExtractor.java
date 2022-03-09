@@ -2,18 +2,18 @@ package zingg.model;
 
 import org.apache.spark.ml.linalg.Vector;
 import org.apache.spark.ml.util.Identifiable$;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.functions;
-import org.apache.spark.sql.api.java.UDF1;
-import org.apache.spark.sql.api.java.UDF2;
-import org.apache.spark.sql.types.DataTypes;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
+import com.snowflake.snowpark_java.Session;
+import com.snowflake.snowpark_java.Functions;
+import com.snowflake.snowpark_java.udf.JavaUDF1;
+import com.snowflake.snowpark_java.udf.JavaUDF2;
+import com.snowflake.snowpark_java.types.DataTypes;
 
 import zingg.similarity.function.BaseTransformer;
 import zingg.client.util.ColName;
 
-public class VectorValueExtractor extends BaseTransformer implements UDF1<Vector, Double>{
+public class VectorValueExtractor extends BaseTransformer implements JavaUDF1<Vector, Double>{
 	
 	@Override
 	public Double call(Vector v) {
@@ -21,8 +21,8 @@ public class VectorValueExtractor extends BaseTransformer implements UDF1<Vector
 	}
 	
 	@Override
-	public void register(SparkSession spark) {
-    	spark.udf().register(uid, (UDF1) this, DataTypes.DoubleType);
+	public void register(Session spark) {
+    	spark.udf().register(uid, (JavaUDF1<Vector, Double>) this, DataTypes.DoubleType);
     }
 	
 	@Override
@@ -34,11 +34,11 @@ public class VectorValueExtractor extends BaseTransformer implements UDF1<Vector
    }
 	
 	@Override	
-	public Dataset<Row> transform(Dataset<?> ds){
+	public DataFrame transform(DataFrame ds){
 		LOG.debug("transforming dataset for " + uid);
 		transformSchema(ds.schema());
 		return ds.withColumn(getOutputCol(), 
-				functions.callUDF(this.uid, ds.col(getInputCol())));
+				Functions.callUDF(this.uid, ds.col(getInputCol())));
 	}
 
 }

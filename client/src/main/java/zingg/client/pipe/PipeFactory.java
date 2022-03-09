@@ -27,13 +27,6 @@ public class PipeFactory {
 			switch (p.format) {
 			case CSV:
 			case JSON:
-			case XLS:
-			case XLSX:
-				return new FilePipe(p);
-			case CASSANDRA:
-				return p;
-			case ELASTIC:
-				return p;
 			case JDBC:
 				return new JdbcPipe(p);
 			default:

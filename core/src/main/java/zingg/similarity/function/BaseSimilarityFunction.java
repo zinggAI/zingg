@@ -8,13 +8,13 @@ import org.apache.spark.ml.param.ParamMap;
 import org.apache.spark.ml.param.shared.HasInputCol;
 import org.apache.spark.ml.param.shared.HasOutputCol;
 import org.apache.spark.ml.util.Identifiable$;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.functions;
-import org.apache.spark.sql.api.java.UDF2;
-import org.apache.spark.sql.types.DataTypes;
-import org.apache.spark.sql.types.StructType;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
+import com.snowflake.snowpark_java.Session;
+import com.snowflake.snowpark_java.Functions;
+import com.snowflake.snowpark_java.udf.JavaUDF2;
+import com.snowflake.snowpark_java.types.DataTypes;
+import com.snowflake.snowpark_java.types.StructType;
 
 import zingg.client.util.ColName;
 

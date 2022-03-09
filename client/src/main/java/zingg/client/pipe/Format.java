@@ -13,13 +13,8 @@ public enum Format implements Serializable{
 	CSV ("csv"),
 	JSON("json"),
 	JDBC("jdbc"),
-	ELASTIC("org.elasticsearch.spark.sql"),
-	CASSANDRA("org.apache.spark.sql.cassandra"),
-	XLS("com.crealytics.spark.excel"),
-	XLSX("com.crealytics.spark.excel"),
 	PARQUET("PARQUET"),
 	AVRO("avro"),
-	SNOWFLAKE("net.snowflake.spark.snowflake"),
 	TEXT("text");
 	
 	String type;

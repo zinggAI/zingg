@@ -1,10 +1,10 @@
 package zingg.hash;
 
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.api.java.UDF1;
-import org.apache.spark.sql.types.DataTypes;
+import com.snowflake.snowpark_java.Row;
+import com.snowflake.snowpark_java.udf.JavaUDF1;
+import com.snowflake.snowpark_java.types.DataTypes;
 
-public class First2CharsBox extends HashFunction implements UDF1<String, Integer>{
+public class First2CharsBox extends HashFunction implements JavaUDF1<String, Integer>{
 
 	public First2CharsBox() {
 		super("first2CharsBox", DataTypes.StringType, DataTypes.IntegerType, true);

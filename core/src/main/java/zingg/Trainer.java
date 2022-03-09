@@ -3,8 +3,8 @@ package zingg;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
 import zingg.block.Canopy;
 import zingg.block.Tree;
 import zingg.model.Model;
@@ -35,26 +35,26 @@ public class Trainer extends ZinggBase{
 			LOG.info("Reading inputs for training phase ...");
 			LOG.info("Initializing learning similarity rules");
 			
-			Dataset<Row> positives = null;
-			Dataset<Row> negatives = null;
-			Dataset<Row> tra = DSUtil.getTraining(spark, args);
+			DataFrame positives = null;
+			DataFrame negatives = null;
+			DataFrame tra = DSUtil.getTraining(snow, args);
 			tra = DSUtil.joinWithItself(tra, ColName.CLUSTER_COLUMN, true);
-			tra = tra.cache();
-			positives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH));
-			negatives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_A_MATCH));
+			tra = tra.cacheResult();
+			positives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).in(ColValues.MATCH_TYPE_MATCH));
+			negatives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).in(ColValues.MATCH_TYPE_NOT_A_MATCH));
 			LOG.warn("Training on positive pairs - " + positives.count());
 			LOG.warn("Training on negative pairs - " + negatives.count());
 				
-			Dataset<Row> testData = PipeUtil.read(spark, true, args.getNumPartitions(), false, args.getData());
+			DataFrame testData = PipeUtil.read(snow, true, args.getNumPartitions(), false, args.getData());
 			Tree<Canopy> blockingTree = BlockingTreeUtil.createBlockingTreeFromSample(testData,  positives, 0.5,
 					-1, args, hashFunctions);
 			if (blockingTree == null || blockingTree.getSubTrees() == null) {
 				LOG.warn("Seems like no indexing rules have been learnt");
 			}
-			BlockingTreeUtil.writeBlockingTree(spark, ctx, blockingTree, args);
+			BlockingTreeUtil.writeBlockingTree(snow, ctx, blockingTree, args);
 			LOG.info("Learnt indexing rules and saved output at " + args.getZinggDir());
 			// model
-			Model model = ModelUtil.createModel(positives, negatives, new Model(this.featurers), spark);
+			Model model = ModelUtil.createModel(positives, negatives, new Model(this.featurers), snow);
 			model.save(args.getModel());
 			LOG.info("Learnt similarity rules and saved output at " + args.getZinggDir());
 			Analytics.track(Metric.TRAINING_MATCHES, Metric.approxCount(positives), args.getCollectMetrics());

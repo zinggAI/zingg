@@ -2,10 +2,10 @@ package zingg.hash;
 
 import java.io.Serializable;
 
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.functions;
-import org.apache.spark.sql.types.DataType;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
+import com.snowflake.snowpark_java.Functions;
+import com.snowflake.snowpark_java.types.DataType;
 
 public abstract class HashFunction implements Serializable{
 		/**
@@ -63,8 +63,8 @@ public abstract class HashFunction implements Serializable{
 		}
 
 		
-		public Dataset<Row> apply(Dataset<Row> ds, String column, String newColumn) {
-			return ds.withColumn(newColumn, functions.callUDF(this.name, ds.col(column)));
+		public DataFrame apply(DataFrame ds, String column, String newColumn) {
+			return ds.withColumn(newColumn, Functions.callUDF(this.name, ds.col(column)));
 		}
 		
 		public abstract Object apply(Row ds, String column);

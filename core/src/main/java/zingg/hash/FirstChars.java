@@ -2,14 +2,14 @@ package zingg.hash;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.api.java.UDF1;
-import org.apache.spark.sql.types.DataTypes;
+import com.snowflake.snowpark_java.Row;
+import com.snowflake.snowpark_java.udf.JavaUDF1;
+import com.snowflake.snowpark_java.types.DataTypes;
 
 import zingg.block.Canopy;
 
 
-public class FirstChars extends HashFunction implements UDF1<String, String>{
+public class FirstChars extends HashFunction implements JavaUDF1<String, String>{
 	
 	public static final Log LOG = LogFactory.getLog(FirstChars.class);
 

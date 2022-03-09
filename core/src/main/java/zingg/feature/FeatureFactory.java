@@ -6,8 +6,8 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.types.DataType;
-import org.apache.spark.sql.types.DataTypes;
+import com.snowflake.snowpark_java.types.DataType;
+import com.snowflake.snowpark_java.types.DataTypes;
 public class FeatureFactory implements Serializable {
 
 	public static final Log LOG = LogFactory.getLog(FeatureFactory.class);

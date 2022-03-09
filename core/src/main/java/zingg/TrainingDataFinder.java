@@ -7,8 +7,8 @@ import com.snowflake.snowpark_java.Functions;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.catalyst.encoders.RowEncoder;
-import org.apache.spark.storage.StorageLevel;
+// import org.apache.spark.sql.catalyst.encoders.RowEncoder;
+// import org.apache.spark.storage.StorageLevel;
 
 import zingg.block.Block;
 import zingg.block.Canopy;
@@ -86,11 +86,11 @@ public class TrainingDataFinder extends ZinggBase{
 				DataFrame sample = data.sample(args.getLabelDataSampleSize()); //.repartition(args.getNumPartitions()).persist(StorageLevel.MEMORY_ONLY());
 				Tree<Canopy> tree = BlockingTreeUtil.createBlockingTree(sample, posPairs, 1, -1, args, hashFunctions);			
 				DataFrame blocked = sample.map(new Block.BlockFunction(tree), RowEncoder.apply(Block.appendHashCol(sample.schema())));
-				blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cacheResults();
+				//blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cacheResults();
 				DataFrame blocks = DSUtil.joinWithItself(blocked, ColName.HASH_COL, true);
 				blocks = blocks.cacheResult();	
 				//TODO HASH Partition
-				if (negPairs!= null) negPairs = negPairs.persist(StorageLevel.MEMORY_ONLY());
+				if (negPairs!= null) //negPairs = negPairs.persist(StorageLevel.MEMORY_ONLY());
 					//train classifier and predict the blocked values from classifier
 					//only if we have some user data
 					if (posPairs != null && negPairs !=null 
@@ -106,7 +106,7 @@ public class TrainingDataFinder extends ZinggBase{
 						}
 						LOG.info("Writing uncertain pairs");
 						
-						dupes = dupes.persist(StorageLevel.MEMORY_ONLY());
+						//dupes = dupes.persist(StorageLevel.MEMORY_ONLY());
 						DataFrame uncertain = getUncertain(dupes);
 										
 						writeUncertain(uncertain);													

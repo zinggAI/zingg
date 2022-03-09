@@ -9,14 +9,13 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.function.MapFunction;
-import org.apache.spark.ml.util.SchemaUtils;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.RowFactory;
-import org.apache.spark.sql.types.DataType;
-import org.apache.spark.sql.types.DataTypes;
-import org.apache.spark.sql.types.StructType;
+// import org.apache.spark.api.java.function.MapFunction;
+// import org.apache.spark.ml.util.SchemaUtils;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
+import com.snowflake.snowpark_java.types.DataType;
+import com.snowflake.snowpark_java.types.DataTypes;
+import com.snowflake.snowpark_java.types.StructType;
 
 import zingg.client.FieldDefinition;
 import zingg.client.util.ListMap;
@@ -29,14 +28,14 @@ public class Block implements Serializable {
 
 	public static final Log LOG = LogFactory.getLog(Block.class);
 
-	protected Dataset<Row> dupes;
+	protected DataFrame dupes;
 	// Class[] types;
 	ListMap<DataType, HashFunction> functionsMap;
 	long maxSize;
-	Dataset<Row> training;
+	DataFrame training;
 	protected ListMap<HashFunction, String> childless;
 
-	protected Block(Dataset<Row> training, Dataset<Row> dupes) {
+	protected Block(DataFrame training, DataFrame dupes) {
 		this.training = training;
 		this.dupes = dupes;
 		childless = new ListMap<HashFunction, String>();
@@ -46,7 +45,7 @@ public class Block implements Serializable {
 		 */
 	}
 
-	public Block(Dataset<Row> training, Dataset<Row> dupes,
+	public Block(DataFrame training, DataFrame dupes,
 			ListMap<DataType, HashFunction> functionsMap, long maxSize) {
 		this(training, dupes);
 		this.functionsMap = functionsMap;
@@ -57,7 +56,7 @@ public class Block implements Serializable {
 	/**
 	 * @return the dupes
 	 */
-	public Dataset<Row> getDupes() {
+	public DataFrame getDupes() {
 		return dupes;
 	}
 
@@ -65,7 +64,7 @@ public class Block implements Serializable {
 	 * @param dupes
 	 *            the dupes to set
 	 */
-	public void setDupes(Dataset<Row> dupes) {
+	public void setDupes(DataFrame dupes) {
 		this.dupes = dupes;
 	}
 

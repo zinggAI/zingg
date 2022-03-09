@@ -1,9 +1,8 @@
 package zingg.similarity.function;
 
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.api.java.UDF2;
+import com.snowflake.snowpark_java.udf.JavaUDF2;
 
-public interface SimFunction<T> extends UDF2<T,T, Double>{
+public interface SimFunction<T> extends JavaUDF2<T,T, Double>{
 	
 	
 	

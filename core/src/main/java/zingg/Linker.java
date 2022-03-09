@@ -5,14 +5,10 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.RelationalGroupedDataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.functions;
-import org.apache.spark.sql.catalyst.encoders.RowEncoder;
-import org.apache.spark.sql.expressions.Window;
-import org.apache.spark.sql.expressions.WindowSpec;
+import com.snowflake.snowpark_java.Column;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
+import com.snowflake.snowpark_java.Functions;
 
 import scala.collection.JavaConverters;
 import zingg.block.Block;
@@ -43,19 +39,19 @@ public class Linker extends Matcher {
 		setZinggOptions(ZinggOptions.LINK);
 	}
 
-	protected Dataset<Row> getBlocks(Dataset<Row> blocked, Dataset<Row> bAll) throws Exception{
-		return DSUtil.joinWithItselfSourceSensitive(blocked, ColName.HASH_COL, args).cache();
+	protected DataFrame getBlocks(DataFrame blocked, DataFrame bAll) throws Exception{
+		return DSUtil.joinWithItselfSourceSensitive(blocked, ColName.HASH_COL, args).cacheResult();
 	}
 
-	protected Dataset<Row> selectColsFromBlocked(Dataset<Row> blocked) {
+	protected DataFrame selectColsFromBlocked(DataFrame blocked) {
 		return blocked;
 	}
 
-	public void writeOutput(Dataset<Row> blocked, Dataset<Row> dupes) {
+	public void writeOutput(DataFrame blocked, DataFrame dupes) {
 		try {
 			// input dupes are pairs
 			/// pick ones according to the threshold by user
-			Dataset<Row> dupesActual = getDupesActualForGraph(dupes);
+			DataFrame dupesActual = getDupesActualForGraph(dupes);
 
 			// all clusters consolidated in one place
 			if (args.getOutput() != null) {
@@ -63,7 +59,7 @@ public class Linker extends Matcher {
 				// input dupes are pairs
 				//dupesActual = DFUtil.addClusterRowNumber(dupesActual, spark);
 				dupesActual = Util.addUniqueCol(dupesActual, ColName.ID_COL);
-				Dataset<Row> dupes2 = DSUtil.alignLinked(dupesActual, args);
+				DataFrame dupes2 = DSUtil.alignLinked(dupesActual, args);
 				LOG.debug("uncertain output schema is " + dupes2.schema());
 				PipeUtil.write(dupes2, args, ctx, args.getOutput());
 			}
@@ -72,9 +68,9 @@ public class Linker extends Matcher {
 		}
 	}
 
-	protected Dataset<Row> getDupesActualForGraph(Dataset<Row> dupes) {
-		Dataset<Row> dupesActual = dupes
-				.filter(dupes.col(ColName.PREDICTION_COL).equalTo(ColValues.IS_MATCH_PREDICTION));
+	protected DataFrame getDupesActualForGraph(DataFrame dupes) {
+		DataFrame dupesActual = dupes
+				.filter(dupes.col(ColName.PREDICTION_COL).in(ColValues.IS_MATCH_PREDICTION));
 		return dupesActual;
 	}
 

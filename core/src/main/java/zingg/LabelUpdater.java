@@ -7,14 +7,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.snowflake.snowpark_java.Column;
 import com.snowflake.snowpark_java.DataFrame;
-import com.snowflake.snowpark_java.Row;
 import com.snowflake.snowpark_java.SaveMode;
+import com.snowflake.snowpark_java.Functions;
 
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
-import zingg.client.util.ColValues;
 import zingg.util.DSUtil;
 import zingg.util.LabelMatchType;
 import zingg.util.PipeUtil;
@@ -70,7 +69,7 @@ public class LabelUpdater extends Labeller {
 					continue;
 				}
 
-				matchFlag = currentPair.first().getAs(ColName.MATCH_FLAG_COL);
+				matchFlag = currentPair.first().get().getInt(DSUtil.getIndex(currentPair, ColName.MATCH_FLAG_COL));
 				String preMsg = String.format("\n\tThe record pairs belonging to the input cluster id %s are:", cluster_id);
 				String matchType = LabelMatchType.get(matchFlag).msg;
 				postMsg = String.format("\tThe above pair is labeled as %s\n", matchType);
@@ -83,10 +82,10 @@ public class LabelUpdater extends Labeller {
 					break;
 				}
 				recordsToUpdate = recordsToUpdate
-						.filter(recordsToUpdate.col(ColName.CLUSTER_COLUMN).notEqual(cluster_id));
+						.filter(recordsToUpdate.col(ColName.CLUSTER_COLUMN).not_equal(Functions.lit(cluster_id)));
 				if (updatedRecords != null) {
 					updatedRecords = updatedRecords
-							.filter(updatedRecords.col(ColName.CLUSTER_COLUMN).notEqual(cluster_id));
+							.filter(updatedRecords.col(ColName.CLUSTER_COLUMN).not_equal(Functions.lit(cluster_id)));
 				}
 				updatedRecords = updateRecords(selectedOption, currentPair, updatedRecords);
 			} while (selectedOption != 9);

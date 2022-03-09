@@ -1,20 +1,21 @@
 package zingg.util;
 
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
-
-import org.apache.spark.sql.types.DataType;
-import org.apache.spark.sql.SparkSession;
+import com.snowflake.snowpark_java.types.DataType;
+import com.snowflake.snowpark_java.Session;
 import zingg.client.util.ListMap;
 import zingg.hash.HashFnFromConf;
 import zingg.hash.HashFunction;
 import zingg.hash.HashFunctionRegistry;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
+import java.util.Vector;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.api.java.UDF1;
+import com.snowflake.snowpark_java.udf.JavaUDF1;
 
 
 public class HashUtil {
@@ -26,7 +27,7 @@ public class HashUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static ListMap<DataType, HashFunction> getHashFunctionList(String fileName, SparkSession spark)
+	public static ListMap<DataType, HashFunction> getHashFunctionList(String fileName, Session snow)
 			throws Exception {
 		ListMap<DataType, HashFunction> functions = new ListMap<DataType, HashFunction>();
 		ObjectMapper mapper = new ObjectMapper();
@@ -37,7 +38,7 @@ public class HashUtil {
 				});
 		for (HashFnFromConf scriptArg : scriptArgs) {
 			HashFunction fn = HashFunctionRegistry.getFunction(scriptArg.getName());
-			spark.udf().register(fn.getName(), (UDF1) fn, fn.getReturnType());
+			snow.udf().registerPermanent(fn.getName(), (JavaUDF1<Vector, Double>) fn, fn.getDataType(), fn.getReturnType(), "stageLocation");
 			functions.add(fn.getDataType(), fn);
 		}
 		return functions;

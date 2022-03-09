@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.JavaSparkContext;
 
 import zingg.client.util.Email;
 import zingg.client.util.EmailBody;
@@ -48,7 +47,7 @@ public class Client implements Serializable {
 	}
 
 	public void setZingg(Arguments args, ClientOptions options) throws Exception{
-		JavaSparkContext.jarOfClass(IZinggFactory.class);
+		//JavaSparkContext.jarOfClass(IZinggFactory.class);
 		IZinggFactory zf = (IZinggFactory) Class.forName("zingg.ZFactory").newInstance();
 		setZingg(zf.get(ZinggOptions.getByValue(options.get(ClientOptions.PHASE).value.trim())));
 	}

@@ -6,8 +6,8 @@ import java.util.Map;
 import org.apache.spark.ml.Pipeline;
 import org.apache.spark.ml.PipelineModel;
 import org.apache.spark.ml.PipelineStage;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
 
 import zingg.client.FieldDefinition;
 import zingg.feature.Feature;
@@ -21,11 +21,11 @@ public class LabelModel extends Model{
 	}
 
 	@Override	
-	public void fit(Dataset<Row> pos, Dataset<Row> neg) {
+	public void fit(DataFrame pos, DataFrame neg) {
 		//create features
 		Pipeline pipeline = new Pipeline();
 		pipeline.setStages(pipelineStage.toArray(new PipelineStage[pipelineStage.size()]));
-		PipelineModel pm = pipeline.fit(transform(pos.union(neg)).coalesce(1).cache());
+		PipelineModel pm = pipeline.fit(transform(pos.union(neg)).coalesce(1).cacheResult());
 		transformer = pm;	
 	}
 	

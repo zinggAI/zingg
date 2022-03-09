@@ -5,11 +5,10 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.functions;
-import org.apache.spark.sql.catalyst.encoders.RowEncoder;
+import com.snowflake.snowpark_java.Column;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
+import com.snowflake.snowpark_java.Functions;
 
 import scala.collection.JavaConverters;
 import zingg.block.Block;

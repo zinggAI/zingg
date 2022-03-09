@@ -1,6 +1,6 @@
 package zingg.util;
 
-import org.apache.spark.sql.Row;
+import com.snowflake.snowpark_java.Row;
 
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateModel;

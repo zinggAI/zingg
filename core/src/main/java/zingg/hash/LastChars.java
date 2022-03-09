@@ -1,10 +1,12 @@
 package zingg.hash;
 
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.api.java.UDF1;
-import org.apache.spark.sql.types.DataTypes;
+import java.util.Arrays;
 
-public class LastChars extends HashFunction implements UDF1<String, String>{
+import com.snowflake.snowpark_java.Row;
+import com.snowflake.snowpark_java.udf.JavaUDF1;
+import com.snowflake.snowpark_java.types.DataTypes;
+
+public class LastChars extends HashFunction implements JavaUDF1<String, String>{
 	int numChars;
 	public LastChars(int endIndex) {
 		super("last" + endIndex + "Chars", DataTypes.StringType, DataTypes.StringType, true);
@@ -27,8 +29,8 @@ public class LastChars extends HashFunction implements UDF1<String, String>{
 				return r;
 			 }
 
-		 public Object apply(Row ds, String column) {
-			 return call((String) ds.getAs(column));
+		 public Object apply(Row ds, int column) {
+			 return call((String) ds.get(column));
 		 }
 
 }

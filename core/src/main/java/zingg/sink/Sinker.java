@@ -7,8 +7,8 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
 
 import zingg.client.Arguments;
 import zingg.client.pipe.Pipe;
@@ -69,7 +69,7 @@ public class Sinker {
 						return new TableOutput(0, System.currentTimeMillis(), t._2()._1, t._2()._2());
 					}
 				});
-				//Dataset<Row> rows = ((SparkContext) pretty.context()).createDataFrame(pretty, TableOutput.class);
+				//DataFrame rows = ((SparkContext) pretty.context()).createDataFrame(pretty, TableOutput.class);
 			*/	
 				
 		

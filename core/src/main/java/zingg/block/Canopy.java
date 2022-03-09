@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Row;
+import com.snowflake.snowpark_java.Row;
 
 import zingg.client.FieldDefinition;
 import zingg.client.util.ListMap;
@@ -39,7 +39,7 @@ public class Canopy implements Serializable {
 	}
 
 	public Canopy(List<Row> training, List<Row> dupeN) {
-		this.training = training; //.cache();
+		this.training = training; //.cacheResult();
 		this.dupeN = dupeN;
 	}
 
@@ -146,7 +146,7 @@ public class Canopy implements Serializable {
 	public List<Canopy> getCanopies() {
 		//long ts = System.currentTimeMillis();
 		/*
-		List<Row> newTraining = function.apply(training, context.fieldName, ColName.HASH_COL).cache();
+		List<Row> newTraining = function.apply(training, context.fieldName, ColName.HASH_COL).cacheResult();
 		LOG.debug("getCanopies0" + (System.currentTimeMillis() - ts));
 		List<Canopy> returnCanopies = new ArrayList<Canopy>();
 		//first find unique hashes
@@ -156,7 +156,7 @@ public class Canopy implements Serializable {
 		for (Row row : uniqueHashes) {
 			Object key = row.get(0);
 			List<Row> tupleList = newTraining.filter(newTraining.col(ColName.HASH_COL).equalTo(key))
-					.cache();
+					.cacheResult();
 			tupleList = tupleList.drop(ColName.HASH_COL);
 			Canopy can = new Canopy(tupleList, dupeRemaining);
 			//LOG.debug(" canopy size is " + tupleList.count() + " for  hash "

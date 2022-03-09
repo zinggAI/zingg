@@ -2,7 +2,7 @@ package zingg.util;
 
 import freemarker.template.Version;
 
-import org.apache.spark.sql.Row;
+import com.snowflake.snowpark_java.Row;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateDateModel;
 import freemarker.template.TemplateModel;

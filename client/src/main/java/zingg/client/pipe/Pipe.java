@@ -5,9 +5,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.spark.sql.SaveMode;
-import org.apache.spark.sql.types.DataType;
-import org.apache.spark.sql.types.StructType;
+import com.snowflake.snowpark_java.SaveMode;
+import com.snowflake.snowpark_java.types.StructType;
+
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonValue;
 
@@ -91,7 +91,7 @@ public class Pipe implements Serializable{
 	
 	@JsonProperty("schema")
 	public void setSchema(String s) {
-		if (s!= null) this.schema = (StructType) DataType.fromJson(s);
+		//TODO-SNOW //if (s!= null) this.schema = s ;
 		//schema = DataTypes.createStructType(s);
 	}
 	
@@ -169,7 +169,7 @@ public class Pipe implements Serializable{
 	    public void serialize(
 	    		StructType value, JsonGenerator gen, SerializerProvider arg2) 
 	      throws IOException, JsonProcessingException {
-	        gen.writeObject(value.json());
+	        //TODO-SNOW gen.writeObject(value.json());
 	    }
 	}
 

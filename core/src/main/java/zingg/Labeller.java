@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import com.snowflake.snowpark_java.Column;
 import com.snowflake.snowpark_java.DataFrame;
 import com.snowflake.snowpark_java.Row;
@@ -57,7 +58,7 @@ public class Labeller extends ZinggBase {
 			}
 			if (markedRecords != null ) {
 				unmarkedRecords = unmarkedRecords.join(markedRecords,
-						unmarkedRecords.col(ColName.CLUSTER_COLUMN).in(markedRecords.col(ColName.CLUSTER_COLUMN)),
+						unmarkedRecords.col(ColName.CLUSTER_COLUMN).equal_to(markedRecords.col(ColName.CLUSTER_COLUMN)),
 						"left_anti");
 						getMarkedRecordsStat(markedRecords);
 			} 
@@ -68,9 +69,9 @@ public class Labeller extends ZinggBase {
 	}
 
 	protected void getMarkedRecordsStat(DataFrame markedRecords) {
-		positivePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).in(ColValues.MATCH_TYPE_MATCH)).count() / 2;
-		negativePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).in(ColValues.MATCH_TYPE_NOT_A_MATCH)).count() / 2;
-		notSurePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).in(ColValues.MATCH_TYPE_NOT_SURE)).count() / 2;
+		positivePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equal_to(Functions.lit(ColValues.MATCH_TYPE_MATCH))).count() / 2;
+		negativePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equal_to(Functions.lit(ColValues.MATCH_TYPE_NOT_A_MATCH))).count() / 2;
+		notSurePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equal_to(Functions.lit(ColValues.MATCH_TYPE_NOT_SURE))).count() / 2;
 		totalCount = markedRecords.count() / 2;
 	}
 
@@ -95,11 +96,11 @@ public class Labeller extends ZinggBase {
 			int totalPairs = clusterIDs.size();
 			
 			for (int index = 0; index < totalPairs; index++){	
-				DataFrame currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).in(
-						clusterIDs.get(index).getAs(ColName.CLUSTER_COLUMN))).cacheResult();
+				DataFrame currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).equal_to(
+					Functions.lit(clusterIDs.get(index).get(0)))).cacheResult();
 				
-				score = currentPair.sample(1).getAs(ColName.SCORE_COL);
-				prediction = currentPair.first().getAs(ColName.PREDICTION_COL);
+				score = (Double)currentPair.first().get().get(DSUtil.getIndex(currentPair, ColName.SCORE_COL));
+				prediction = (Double)currentPair.first().get().get(DSUtil.getIndex(currentPair, ColName.PREDICTION_COL));
 	
 				msg1 = String.format("\tCurrent labelling round  : %d/%d pairs labelled\n", index, totalPairs);
 				String matchType = LabelMatchType.get(prediction).msg;				
