@@ -89,7 +89,7 @@ Name says it :-) Appears in the output but no computation is done on these. Help
   ]
 ````
 
-In the above example, field id from input is present in the output but not used for comparisons. Also, these fileds may not be shown to the user while labelling, if [showConcise](#showconcise) is set true.
+In the above example, field id from input is present in the output but not used for comparisons. Also, these fields may not be shown to the user while labelling, if [showConcise](#showconcise) is set true.
 
 ### numPartitions
 Number of Spark partitions over which the input data is distributed. Keep it equal to the 20-30 times the number of cores. This is an important configuration for performance.
