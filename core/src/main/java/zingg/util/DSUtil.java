@@ -175,12 +175,15 @@ public class DSUtil {
 		
 	}
 
-	public static List<Column> getFieldDefColumns (Dataset<Row> ds, Arguments args, boolean includeZid) {
+	public static List<Column> getFieldDefColumns (Dataset<Row> ds, Arguments args, boolean includeZid, boolean showConcise) {
 		List<Column> cols = new ArrayList<Column>();
 		if (includeZid) {
 			cols.add(ds.col(ColName.ID_COL));						
 		}
 		for (FieldDefinition def: args.getFieldDefinition()) {
+			if (showConcise && def.matchType == MatchType.DONT_USE) {
+				continue;
+			}
 			cols.add(ds.col(def.fieldName));						
 		}
 		cols.add(ds.col(ColName.SOURCE_COL));
@@ -189,7 +192,7 @@ public class DSUtil {
 	}
 
 	public static Dataset<Row> getFieldDefColumnsDS(Dataset<Row> ds, Arguments args, boolean includeZid) {
-		return select(ds, getFieldDefColumns(ds, args, includeZid));
+		return select(ds, getFieldDefColumns(ds, args, includeZid, false));
 	}
 
 	public static Dataset<Row> select(Dataset<Row> ds, List<Column> cols) {

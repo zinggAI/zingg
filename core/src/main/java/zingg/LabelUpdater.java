@@ -48,7 +48,7 @@ public class LabelUpdater extends Labeller {
 			return;
 		}
 
-		List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false);
+		List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false, args.getShowConcise());
 		try {
 			int matchFlag;
 			Dataset<Row> updatedRecords = null;

@@ -82,7 +82,7 @@ public class Labeller extends ZinggBase {
 		}
 
 		lines = lines.cache();
-		List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false);
+		List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false, args.getShowConcise());
 
 		List<Row> clusterIDs = lines.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();
 		try {
