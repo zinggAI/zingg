@@ -211,7 +211,7 @@ public class Labeller extends ZinggBase {
 			LOG.warn("No records to be labelled.");
 			return;
 		}		
-		PipeUtil.write(records, args, ctx, getOutputPipe());
+		PipeUtil.write(records, args, getOutputPipe());
 	}
 
 	protected Pipe getOutputPipe() {

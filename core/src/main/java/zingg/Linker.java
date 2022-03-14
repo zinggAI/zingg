@@ -61,7 +61,7 @@ public class Linker extends Matcher {
 				dupesActual = Util.addUniqueCol(dupesActual, ColName.ID_COL);
 				DataFrame dupes2 = DSUtil.alignLinked(dupesActual, args);
 				LOG.debug("uncertain output schema is " + dupes2.schema());
-				PipeUtil.write(dupes2, args, ctx, args.getOutput());
+				PipeUtil.write(dupes2, args, args.getOutput());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

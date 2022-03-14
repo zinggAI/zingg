@@ -15,7 +15,6 @@ import zingg.client.ZinggOptions;
 import zingg.util.Analytics;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
-import zingg.util.Metric;
 
 import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
@@ -52,7 +51,7 @@ public class Trainer extends ZinggBase{
 			if (blockingTree == null || blockingTree.getSubTrees() == null) {
 				LOG.warn("Seems like no indexing rules have been learnt");
 			}
-			BlockingTreeUtil.writeBlockingTree(snow, ctx, blockingTree, args);
+			BlockingTreeUtil.writeBlockingTree(snow, blockingTree, args);
 			LOG.info("Learnt indexing rules and saved output at " + args.getZinggDir());
 			// model
 			Model model = ModelUtil.createModel(positives, negatives, new Model(this.featurers), snow);
