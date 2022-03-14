@@ -132,8 +132,7 @@ public class TrainingDataFinder extends ZinggBase{
 		DataFrame dupes1 = DSUtil.alignDupes(dupesActual, args);
 		DataFrame dupes2 = dupes1.sort(col(ColName.CLUSTER_COLUMN));
 		LOG.debug("uncertain output schema is " + dupes2.schema());
-		PipeUtil.write(dupes2 , args, ctx, getUnmarkedLocation());
-		//PipeUtil.write(jdbc, massageForJdbc(dupes2.cache()) , args, ctx);
+		PipeUtil.write(dupes2 , args, getUnmarkedLocation());
 	}
 
 	public Pipe getUnmarkedLocation() {

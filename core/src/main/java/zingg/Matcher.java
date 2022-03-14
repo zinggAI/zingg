@@ -22,7 +22,6 @@ import zingg.client.ZinggOptions;
 import zingg.util.Analytics;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
-import zingg.util.Metric;
 import zingg.client.util.Util;
 import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
@@ -103,7 +102,7 @@ public class Matcher extends ZinggBase{
 			//testData = dropDuplicates(testData);
 			long count = testData.count();
 			LOG.info("Read " + count);
-			Analytics.track(Metric.DATA_COUNT, count, args.getCollectMetrics());
+			//Analytics.track(Metric.DATA_COUNT, count, args.getCollectMetrics());
 
 			DataFrame blocked = getBlocked(testData);
 			LOG.info("Blocked ");
@@ -194,7 +193,7 @@ public class Matcher extends ZinggBase{
 			}
 			graphWithScores = DSUtil.select(graphWithScores, columns);
 			*/
-			PipeUtil.write(graphWithScores, args, ctx, args.getOutput());
+			PipeUtil.write(graphWithScores, args, args.getOutput());
 		}
 		}
 		catch(Exception e) {

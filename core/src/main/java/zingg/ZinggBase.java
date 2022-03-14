@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,22 +16,17 @@ import zingg.client.IZingg;
 import zingg.client.MatchType;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
-import zingg.util.Analytics;
-import zingg.util.DSUtil;
 import zingg.client.util.ListMap;
-import zingg.util.Metric;
 import zingg.feature.Feature;
 import zingg.feature.FeatureFactory;
 import zingg.hash.HashFunction;
 
 import zingg.util.HashUtil;
-import zingg.util.PipeUtil;
 
 public abstract class ZinggBase implements Serializable, IZingg {
 
     protected Arguments args;
 	
-    //protected JavaSparkContext ctx;
     protected Session snow;
     protected static String name;
     protected ZinggOptions zinggOptions;
@@ -52,17 +46,8 @@ public abstract class ZinggBase implements Serializable, IZingg {
         LOG.info("Snowflake config file name: " + snowflakeConfigFile);
         try{
             snow = snowparkSession(args.getSnowflake());
-
-            // spark = Session
-            //     .builder()
-            //     .appName("Zingg"+args.getJobId())
-            //     .getOrCreate();
-            //ctx = new JavaSparkContext(snow.sparkContext());
-            // JavaSparkContext.jarOfClass(IZingg.class);
-            //LOG.debug("Context " + ctx.toString());
             initHashFns();
             loadFeatures();
-            //ctx.setCheckpointDir("/tmp/checkpoint");	
         }
         catch(Throwable e) {
             if (LOG.isDebugEnabled()) e.printStackTrace();
@@ -82,7 +67,6 @@ public abstract class ZinggBase implements Serializable, IZingg {
 
     @Override
     public void cleanup() throws ZinggClientException {
-        //if (ctx != null) ctx.stop();
         if (snow !=null) snow.close();
     }
 
@@ -120,22 +104,13 @@ public abstract class ZinggBase implements Serializable, IZingg {
 
     public void copyContext(ZinggBase b) {
             this.args = b.args;
-           // this.ctx = b.ctx;
             this.snow = b.snow;
             this.featurers = b.featurers;
             this.hashFunctions = b.hashFunctions;
     }
 
 	public void postMetrics() {
-        boolean collectMetrics = args.getCollectMetrics();
-        Analytics.track(Metric.EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000, collectMetrics);
-		Analytics.track(Metric.TOTAL_FIELDS_COUNT, args.getFieldDefinition().size(), collectMetrics);
-        Analytics.track(Metric.MATCH_FIELDS_COUNT, DSUtil.getFieldDefinitionFiltered(args, MatchType.DONT_USE).size(),
-                collectMetrics);
-		Analytics.track(Metric.DATA_FORMAT, PipeUtil.getPipesAsString(args.getData()), collectMetrics);
-		Analytics.track(Metric.OUTPUT_FORMAT, PipeUtil.getPipesAsString(args.getOutput()), collectMetrics);
-
-		Analytics.postEvent(zinggOptions.getValue(), collectMetrics);
+        return; //do nothing
 	}
 
     public Arguments getArgs() {
@@ -161,14 +136,6 @@ public abstract class ZinggBase implements Serializable, IZingg {
     public void setFeaturers(Map<FieldDefinition,Feature> featurers) {
         this.featurers = featurers;
     }
-
-    // public JavaSparkContext getCtx() {
-    //     return this.ctx;
-    // }
-
-    // public void setCtx(JavaSparkContext ctx) {
-    //     this.ctx = ctx;
-    // }
 
     public Session getSnow() {
         return this.snow;

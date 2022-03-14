@@ -2,9 +2,6 @@ package zingg;
 
 import java.io.File;
 
-import org.apache.spark.api.java.JavaPairRDD;
-import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,17 +14,13 @@ import scala.Tuple2;
 
 public class TestFebrlDataset {
 	
-	private transient JavaSparkContext sc;
 	
 	@Before
     public void setUp() throws Exception, ZinggClientException{
-      sc = new JavaSparkContext("local", "JavaAPISuite");
     }
 
     @After
     public void tearDown() {
-      sc.stop();
-      sc = null;
       // To avoid Akka rebinding to the same port, since it doesn't unbind immediately on shutdown
       System.clearProperty("spark.driver.port");
     }
