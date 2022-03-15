@@ -32,6 +32,7 @@ import zingg.client.pipe.ElasticPipe;
 import zingg.client.pipe.FilePipe;
 import zingg.client.pipe.Format;
 import zingg.client.pipe.Pipe;
+import zingg.client.pipe.SnowPipe;
 import scala.Option;
 import scala.collection.JavaConverters;
 import scala.collection.Seq;
@@ -199,7 +200,7 @@ public class PipeUtil {
 			else {
 				writer.mode("Append");
 			}
- 			writer.saveAsTable(p.get(FilePipe.TABLENAME));			
+ 			writer.saveAsTable(p.get(SnowPipe.TABLENAME));			
 		}
 	}
 
