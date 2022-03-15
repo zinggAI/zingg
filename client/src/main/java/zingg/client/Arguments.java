@@ -102,7 +102,8 @@ public class Arguments implements Serializable {
 	String modelId = "1";
 	double threshold = 0.5d;
 	int jobId = 1;
-	boolean collectMetrics = true; 
+	boolean collectMetrics = true;
+	boolean showConcise = false;
 	
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
@@ -598,6 +599,14 @@ public class Arguments implements Serializable {
 		this.collectMetrics = collectMetrics;
 	}
 
+	public boolean getShowConcise() {
+		return showConcise;
+	}
+
+	public void setShowConcise(boolean showConcise) {
+		this.showConcise = showConcise;
+	}
+	
 	public String[] getPipeNames() {
 		Pipe[] input = this.getData();
 		String[] sourceNames = new String[input.length];

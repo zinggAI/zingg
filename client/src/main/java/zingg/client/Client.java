@@ -86,6 +86,10 @@ public class Client implements Serializable {
 			String j = options.get(options.COLLECT_METRICS).value;
 			args.setCollectMetrics(Boolean.valueOf(j));
 		}
+		if (options.get(ClientOptions.SHOW_CONCISE)!= null) {
+			String j = options.get(ClientOptions.SHOW_CONCISE).value;
+			args.setShowConcise(Boolean.valueOf(j));
+		}
 		setArguments(args);
 	}
 	

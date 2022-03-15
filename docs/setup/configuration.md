@@ -89,13 +89,16 @@ Name says it :-) Appears in the output but no computation is done on these. Help
   ]
 ````
 
-In the above example, field id from input is present in the output but not used for comparisons.   
+In the above example, field id from input is present in the output but not used for comparisons. Also, these fields may not be shown to the user while labelling, if [showConcise](#showconcise) is set true.
 
 ### numPartitions
 Number of Spark partitions over which the input data is distributed. Keep it equal to the 20-30 times the number of cores. This is an important configuration for performance.
 
 ### labelDataSampleSize
 Fraction of the data to be used for training the models. Adjust it between 0.0001 and 0.1 to keep the sample size small enough so that it finds enough edge cases fast. If the size is bigger, the findTrainingData job will spend more time combing through samples. If the size is too small, Zingg may not find the right edge cases. 
+
+### showConcise
+When this flag is set to true, during [Label](./training/label.md) and [updateLabel](../updatingLabels.md), only those fields are displayed on console which help build the model. In other words, fields that have matchType as "DONT_USE", are not displayed to the user. Default is false. 
 
 ### collectMetrics
 Application captures a few measurements for runtime metrics such as *no. of data records, no. of features, running phase* and a few more. 
