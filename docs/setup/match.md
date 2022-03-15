@@ -14,9 +14,4 @@ As can be seen in the image below, matching records are given the same z_cluster
 
 ![Match results](/assets/match.gif)
 
-### link
-
-In many cases like reference data mastering, enrichment etc, 2 individual datasets are duplicate free but they need to be matched against each other. The link phase is used for such scenarios.
-
-`./zingg.sh --phase link --conf config.json`
-
+If records across multiple sources have to be matched, the [link phase](./link.md) should be used.
