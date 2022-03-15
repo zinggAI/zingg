@@ -15,6 +15,7 @@
     * [Exporting labeled data as csv](setup/training/exportLabeledData.md)
   * [Building and saving the model](setup/train.md)
   * [Finding the matches](setup/match.md)
+  * [Linking across datasets](setup/link.md)
 
 * [Data Sources and Sinks](dataSourcesAndSinks/connectors.md)
   * [Zingg Pipes](dataSourcesAndSinks/pipes.md)
