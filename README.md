@@ -75,6 +75,9 @@ Zingg is licensed under [AGPL v3.0](https://www.gnu.org/licenses/agpl-3.0.en.htm
 
 Need a different license? Write to us.
 
+## People behind Zingg
+
+Zingg is being developed by [Zingg.Ai](https://www.zingg.ai) team. 
 
 ## Acknowledgements
 
@@ -82,5 +85,4 @@ Zingg would have not have been possible without the excellent work below:
 - [Apache Spark](https://spark.apache.org)
 - [SecondString](http://secondstring.sourceforge.net/)
 - [Febrl](http://users.cecs.anu.edu.au/~Peter.Christen/Febrl/febrl-0.3/febrldoc-0.3/)
-
 
