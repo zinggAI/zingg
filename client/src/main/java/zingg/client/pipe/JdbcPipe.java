@@ -11,7 +11,7 @@ public class JdbcPipe extends Pipe{
 	
 	
 	public JdbcPipe(Pipe p) {
-		clone(p);
+		//clone(p);
 	}
 	
 	@Override

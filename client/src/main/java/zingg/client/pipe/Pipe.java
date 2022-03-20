@@ -2,9 +2,14 @@ package zingg.client.pipe;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.apache.commons.lang3.Validate;
 import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.StructType;
@@ -27,80 +32,57 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
  */
 
 @JsonInclude(Include.NON_NULL)
+@JsonDeserialize(builder = Pipe.Builder.class)
 public class Pipe implements Serializable{
 	
-	String name;
-	Format format;
-	String preprocessors;
-	Map<String, String> props;
+	public final String name;
+	public final Format format;
+	public final String preprocessors;
+	public final Map<String, String> props;
 	@JsonSerialize(using = CustomSchemaSerializer.class)
-	StructType schema = null;
-	Map<String, String> sparkProps;
-	Map<String, String> addProps;
-	SaveMode mode;
-	int id;
-	
+	public final StructType schema;
+	public final Map<String, String> sparkProps;
+	public final Map<String, String> addProps;
+	public final SaveMode mode;
+	public final int id;
+
+
+	protected Pipe(
+				String name,
+				Format format,
+				String preprocessors,
+				StructType schema,
+				Map<String, String> props,
+				Map<String, String> sparkProps,
+				Map<String, String> addProps,
+				SaveMode mode,
+				int id) {
+		this.name = name;
+		this.format = format;
+		this.preprocessors = preprocessors;
+		this.schema = schema;
+		this.props = props;
+		this.sparkProps = sparkProps;
+		this.addProps = addProps;
+		this.mode = mode;
+		this.id = id;
+	}
+
 	public SaveMode getMode() {
 		return mode;
 	}
-
-
-	public void setMode(SaveMode mode) {
-		this.mode = mode;
-	}
-
 
 	public String getName() {
 		return name;
 	}
 	
-	
-	@JsonValue
-	public void setName(String name) {
-		this.name = name;		
-	}
-	
 	public Format getFormat() {
 		return format;
 	}
-	
-	@JsonValue
-	public void setFormat(Format sinkType) {
-		this.format = sinkType;
-		PipeFactory.register(name, this);
-	}
+
 	public Map<String, String> getProps() {
 		return props;
 	}
-	@JsonValue
-	public void setProps(Map<String, String> props) {
-		this.props = props;
-	}
-	
-	public void setProp(String k, String v) {
-		if (props == null) props = new HashMap<String, String>();
-		this.props.put(k, v);
-	}
-	
-	public void clone(Pipe p) {
-		this.name = p.name;
-		this.format = p.format;
-		this.props = p.props;
-		this.sparkProps = p.sparkProps;
-	}
-	
-	@JsonProperty("schema")
-	public void setSchema(String s) {
-		if (s!= null) this.schema = (StructType) DataType.fromJson(s);
-		//schema = DataTypes.createStructType(s);
-	}
-	
-	/*
-	public void setSchema(JsonNode s) {
-		System.out.println("reached json node");
-		if (s!= null) this.schema = (StructType) DataType.fromJson(s.toString());
-	}*/
-	
 	
 	public StructType getSchema() {
 		return schema;
@@ -109,50 +91,23 @@ public class Pipe implements Serializable{
 	public String get(String key) {
 		return props.get(key);
 	}
-	
-	public void setSchemaStruct(StructType s) {
-		this.schema = s;
-	}
-	
+
 	public String getPreprocessors() {
 		return preprocessors;
 	}
-
-
-	public void setPreprocessors(String preprocessors) {
-		this.preprocessors = preprocessors;
-	}
-
 
 	public Map<String, String> getSparkProps() {
 		return sparkProps;
 	}
 
-
-	public void setSparkProps(Map<String, String> sparkProps) {
-		this.sparkProps = sparkProps;
-	}
-
-	
-
 	public int getId() {
 		return id;
 	}
-
-
-	public void setId(int recId) {
-		this.id = recId;
-	}
-
 
 	@Override
 	public String toString() {
 		return "Pipe [name=" + name + ", format=" + format + ", preprocessors="
 				+ preprocessors + ", props=" + props + ", schema=" + schema + "]";
-	}
-	
-	public void nullifySchema() {
-		this.schema = null;
 	}
 	
 	static class CustomSchemaSerializer extends StdSerializer<StructType> {
@@ -178,24 +133,41 @@ public class Pipe implements Serializable{
 	}
 
 
-	public void setAddProps(Map<String, String> addProps) {
-		this.addProps = addProps;
+	@JsonPOJOBuilder
+	static class Builder implements PipeBuilder{
+		String name;
+		Format format;
+		String preprocessors;
+		Map<String, String> props = new HashMap<>();
+		StructType schema = null;
+		Map<String, String> sparkProps = new HashMap<>();
+		Map<String, String> addProps = new HashMap<>();
+		SaveMode mode;
+		Integer id;
+
+		public Pipe build(){
+			Validate.notNull(format, "The format must be specified to create a pipe");
+			Validate.notNull(id, "The id must be specified to create a pipe");
+			Validate.notNull(mode, "The savemode must be specified to create a pipe");
+			Validate.notNull(id, "The id must be specified to create a pipe");
+			return new Pipe(
+					name,
+					format,
+					preprocessors,
+					schema,
+					Collections.unmodifiableMap(props),
+					Collections.unmodifiableMap(sparkProps),
+					Collections.unmodifiableMap(addProps),
+					mode,
+					id
+			);
+		}
+
 	}
 
+
 	
-	public Pipe clone() {
-		Pipe p = new Pipe();
-		p.name = name;
-		p.format = format;
-		p.preprocessors = preprocessors;
-		p.props = props;
-		p.schema = schema;
-		p.sparkProps = sparkProps;
-		p.addProps = addProps;
-		p.mode = mode;
-		p.id = id;
-		return p;
-	}
+
 	
 	
 }
