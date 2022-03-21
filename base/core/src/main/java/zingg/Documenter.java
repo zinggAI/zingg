@@ -13,6 +13,8 @@ import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.functions;
 
+import zingg.client.ZFrame;
+import zingg.client.ZSparkDataset;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.client.pipe.Pipe;
@@ -39,7 +41,7 @@ public class Documenter extends ZinggBase {
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Document generation in progress");
-			Dataset<Row> markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
+			ZFrame <Dataset <Row> > markedRecords = new ZSparkDataset(PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args)));
 			markedRecords = markedRecords.cache();
 			//List<Column> displayCols = DSUtil.getFieldDefColumns(markedRecords, args, false);
 			List<Row> clusterIDs = markedRecords.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();
@@ -94,7 +96,7 @@ public class Documenter extends ZinggBase {
 
 		//List<String> textList = Collections.singletonList(writer.toString());
 		
-		//Dataset<Row> data = spark.createDataset(textList, Encoders.STRING()).toDF();
+		//ZFrame <Dataset<Row>> data = spark.createDataset(textList, Encoders.STRING()).toDF();
 
 		//PipeUtil.write(data, args, ctx, PipeUtil.getModelDocumentationPipe(args));
         file.close();

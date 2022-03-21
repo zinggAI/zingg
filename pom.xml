@@ -25,8 +25,8 @@
 		</developer>
 	</developers>
 		<modules>
-			<module>core</module>
-			<module>client</module>
+			<module>base/core</module>
+			<module>base/client</module>
 			<module>assembly</module>
 		</modules>
 	<profiles>
@@ -132,6 +132,12 @@
 				<groupId>net.snowflake</groupId>
 				<artifactId>snowflake-jdbc</artifactId>
 				<version>3.13.5</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.snowflake/snowpark -->
+		<dependency>
+			<groupId>com.snowflake</groupId>
+			<artifactId>snowpark</artifactId>
+			<version>1.2.0</version>
 		</dependency>
 		<dependency>
 			<!-- https://mvnrepository.com/artifact/com.datastax.spark/spark-cassandra-connector -->
