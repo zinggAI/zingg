@@ -250,7 +250,7 @@ public class DSUtil {
 	public static List<FieldDefinition> getFieldDefinitionFiltered(Arguments args, MatchType type) {
 		return args.getFieldDefinition()
 				.stream()
-				.filter(f -> !(f.getMatchType() == null || f.getMatchType().equals(MatchType.DONT_USE)))
+				.filter(f -> !(f.getMatchType() == null || f.getMatchType().equals(type)))
 				.collect(Collectors.toList());
 	}
 }
