@@ -34,6 +34,9 @@ public class Documenter extends ZinggBase {
 	public static final Log LOG = LogFactory.getLog(Documenter.class);
 	public static Configuration config;
 
+	private final String CSV_TEMPLATE = "stopWordsCSV.ftlh";
+	private final String HTML_TEMPLATE = "stopWordsHTML.ftlh";
+
 	public Documenter() {
 		setZinggOptions(ZinggOptions.GENERATE_DOCS);
 		config = createConfigurationObject();
@@ -55,7 +58,7 @@ public class Documenter extends ZinggBase {
 			root.put("columns", markedRecords.columns());
 			root.put("fieldDefinitionCount", args.getFieldDefinition().size());
 			buildAndWriteHTML(root);
-			generateStopWords();
+			extractStopWords();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ZinggClientException(e.getMessage());
@@ -115,37 +118,54 @@ public class Documenter extends ZinggBase {
 		return cfg;
 	}
 
-	private void generateStopWords() throws ZinggClientException {
+	private void extractStopWords() throws ZinggClientException {
 		LOG.info("Stop words generation starts");
 		Dataset<Row> data = PipeUtil.read(spark, false, false, args.getData());
 		LOG.warn("Read input data : " + data.count());
 
 		List<FieldDefinition> fields = DSUtil.getFieldDefinitionFiltered(args, MatchType.DONT_USE);
 		for (FieldDefinition field : fields) {
-			generateStopWordsAndWriteCSV(data, field);
+			findAndWriteStopWords(data, field);
 		}
 		LOG.info("Stop words generation finishes");
 	}
 
-	private void generateStopWordsAndWriteCSV(Dataset<Row> data, FieldDefinition field) throws ZinggClientException {
+	private void findAndWriteStopWords(Dataset<Row> data, FieldDefinition field) throws ZinggClientException {
+		String stopWordsDir = args.getZinggDocDir() + "/stopWords/";
+		String columnsDir = args.getZinggDocDir() + "/columns/";
+
+		checkAndCreateDir(stopWordsDir);
+		checkAndCreateDir(columnsDir);
+
 		LOG.debug("Field: " + field.fieldName);
 		data = data.select(split(data.col(field.fieldName), "\\s+").as("split"));
 		data = data.select(explode(data.col("split")).as("word"));
 		data = data.filter(data.col("word").notEqual(""));
 		data = data.groupBy("word").count().orderBy(desc("count"));
-		String filename = "/home/navin/workDir/zingg-1/" + field.fieldName + ".csv";
-		csvWriter(data, filename);
+		data = data.limit(Math.round(data.count()*args.getStopWordsCutoff()));
+		String filenameCSV = stopWordsDir + field.fieldName + ".csv";
+		String filenameHTML = columnsDir + field.fieldName + ".html";
+		Map<String, Object> root = new HashMap<String, Object>();
+		root.put("modelId", args.getModelId());
+		root.put("stopWords", data.collectAsList());
+
+		writeStopWords(CSV_TEMPLATE, root, filenameCSV);
+		writeStopWords(HTML_TEMPLATE, root, filenameHTML);
 	}
 
-	public void csvWriter(Dataset<Row> records, String fileName) throws ZinggClientException {
+	private void checkAndCreateDir(String dirName) {
+		File directory = new File(dirName);
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
+	}
+
+	public void writeStopWords(String template, Map<String, Object> root, String fileName)
+			throws ZinggClientException {
 		try {
 			Configuration cfg = getTemplateConfig();
-			cfg.setObjectWrapper(new RowWrapper(cfg.getIncompatibleImprovements()));
-
-			Template temp = cfg.getTemplate("stopWords.ftlh");
+			Template temp = cfg.getTemplate(template);
 			Writer file = new FileWriter(new File(fileName));
-			Map<String, Object> root = new HashMap<String, Object>();
-			root.put("stopWords", records.collectAsList());
 			temp.process(root, file);
 			file.close();
 		} catch (Exception e) {

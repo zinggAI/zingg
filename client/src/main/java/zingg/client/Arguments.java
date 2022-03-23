@@ -104,6 +104,7 @@ public class Arguments implements Serializable {
 	int jobId = 1;
 	boolean collectMetrics = true;
 	boolean showConcise = false;
+	float stopWordsCutoff = 0.1f;
 	
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
@@ -507,7 +508,7 @@ public class Arguments implements Serializable {
 
 	@JsonIgnore
 	public String getZinggDocDir() {
-		return getZinggBaseModelDir();
+		return zinggDir + "/" + modelId;
 	}
 
 	@JsonIgnore
@@ -597,6 +598,16 @@ public class Arguments implements Serializable {
 
 	public void setCollectMetrics(boolean collectMetrics) {
 		this.collectMetrics = collectMetrics;
+	}
+	 
+	public float getStopWordsCutoff() {
+		return stopWordsCutoff;
+	}
+
+	public void setStopWordsCutoff(float stopWordsCutoff) throws ZinggClientException {
+		if (stopWordsCutoff > 1 || stopWordsCutoff < 0)
+			throw new ZinggClientException("Stop words cutoff should be between 0 and 1");
+		this.stopWordsCutoff = stopWordsCutoff;
 	}
 
 	public boolean getShowConcise() {
