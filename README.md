@@ -30,8 +30,6 @@ Zingg is useful for
 - Data enrichment from external sources
 - Establishing customer [households](docs/households.md)
 
-![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
-
 ## Demo
 
 See Zingg in action [here](https://www.youtube.com/watch?v=zOabyZxN9b0)
