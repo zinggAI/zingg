@@ -4,6 +4,12 @@ Real world data contains multiple records belonging to the same customer. These 
 
 ![# Zingg - Data Silos](/assets/dataSilos.png)
 
+With a modern data stack and DataOps, we have established patterns for E and L in ELT for building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like DBT are actively and successfully addressing this. What is also needed is a quick and scalable way to build the single source of truth of core business entities post Extraction and pre or post Loading.
+
+With Zingg, the analytics engineer and the data scientist can quickly integrate data silos and build unified views at scale!
+
+![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
+
 ## Why Zingg
 
 Zingg is an ML based tool for entity resolution. The following features set Zingg apart from other tools and libraries 
@@ -24,7 +30,6 @@ Zingg is useful for
 - Data enrichment from external sources
 - Establishing customer [households](docs/households.md)
 
-
 ![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
 
 ## Demo
@@ -41,6 +46,44 @@ docker run -it zingg/zingg:0.3.3 bash
 ``` 
 
 Check the [step by step guide](https://docs.zingg.ai/zingg/stepbystep) for more details.
+
+## Connectors
+
+Zingg connects, reads and writes to most on-premise and cloud data sources. Zingg runs on any private or cloud based Spark service. 
+
+![zinggConnectors](assets/zinggOSS.png)
+
+Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBMS and any Spark supported data sources. Zingg also works with all major file formats like Parquet, Avro, JSON, XLSX, CSV, TSV etc. This is done through the Zingg [pipe](docs/pipes.md) abstraction.  
+
+## Key Zingg Concepts
+
+Zingg learns 2 models on the data. 
+
+1. Blocking Model
+
+One fundamental problem with scaling data mastering is that the number of comparisons increase quadratically as the number of input record increases. 
+
+![Data Mastering At Scale](/assets/fuzzymatchingcomparisons.jpg)
+
+
+Zingg learns a clustering/blocking model which indexes near similar records. This means that Zingg does not compare every record with every other record. Typical Zingg comparisons are 0.05-1% of the possible problem space.
+
+2. Similarity Model 
+
+The similarity model helps Zingg to predict which record pairs match. Similarity is run only on records within the same block/cluster to scale the problem to larger datasets. The similarity model is a classifier which predicts similarity of records which are not exactly same, but could belong together.
+
+![Fuzzy matching comparisons](/assets/dataMatching.jpg) 
+
+To build these models, training data is needed. Zingg comes with an interactive learner to rapidly build training sets. 
+
+![Shows records and asks user to mark yes, no, cant say on the cli.](assets/label2.gif) 
+
+## Pretrained models
+
+Zingg comes with pretrained models for the Febrl dataset under the [models](models) folder.
+
+
+
 
 ## The Story
 
