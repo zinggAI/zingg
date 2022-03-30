@@ -30,6 +30,8 @@ public class FieldDefinition implements
 	public DataType dataType;
 	public String fieldName;
 	public String fields;
+	public String stopWords;
+	public String abbreviations;
 
 	public FieldDefinition() {
 	}
@@ -69,6 +71,22 @@ public class FieldDefinition implements
 	}
 	
 	
+
+	public String getStopWords() {
+		return stopWords;
+	}
+
+	public void setStopWords(String stopWords) {
+		this.stopWords = stopWords;
+	}
+
+	public String getAbbreviations() {
+		return abbreviations;
+	}
+
+	public void setAbbreviations(String abbreviations) {
+		this.abbreviations = abbreviations;
+	}
 
 	public String getFieldName() {
 		return fieldName;

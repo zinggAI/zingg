@@ -310,6 +310,13 @@ public class PipeUtil {
 		return p;
 	}
 	
+	public static Pipe getStopWordsPipe(Arguments args, String fileName) {
+		Pipe p = new Pipe();
+		p.setFormat(Format.CSV);
+		p.setProp(FilePipe.LOCATION, fileName);
+		return p;
+	}
+
 	public static Pipe getBlockingTreePipe(Arguments args) {
 		Pipe p = new Pipe();
 		p.setFormat(Format.PARQUET);
