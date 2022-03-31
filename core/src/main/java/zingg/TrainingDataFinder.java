@@ -25,6 +25,7 @@ import zingg.client.util.ColValues;
 import zingg.client.util.Util;
 import zingg.model.LabelModel;
 import zingg.model.Model;
+import zingg.preprocess.StopWords;
 import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
 import zingg.util.ModelUtil;
@@ -58,7 +59,7 @@ public class TrainingDataFinder extends ZinggBase{
 				Dataset<Row> trFile = getTraining();					
 
 				if (trFile != null) {
-					trFile = DSUtil.preprocessForStopWords(spark, args, trFile);
+					trFile = StopWords.preprocessForStopWords(spark, args, trFile);
 					Dataset<Row> trPairs = DSUtil.joinWithItself(trFile, ColName.CLUSTER_COLUMN, true);
 						
 						posPairs = trPairs.filter(trPairs.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH));
@@ -78,7 +79,7 @@ public class TrainingDataFinder extends ZinggBase{
 					
 				if (posPairs == null || posPairs.count() <= 5) {
 					Dataset<Row> posSamplesOriginal = getPositiveSamples(data);
-					Dataset<Row> posSamples = DSUtil.preprocessForStopWords(spark, args, posSamplesOriginal);
+					Dataset<Row> posSamples = StopWords.preprocessForStopWords(spark, args, posSamplesOriginal);
 					//posSamples.printSchema();
 					if (posPairs != null) {
 						//posPairs.printSchema();
@@ -94,11 +95,7 @@ public class TrainingDataFinder extends ZinggBase{
 				Dataset<Row> sampleOrginal = data.sample(false, args.getLabelDataSampleSize()).repartition(args.getNumPartitions()).persist(StorageLevel.MEMORY_ONLY());
 				LOG.info("Preprocessing DS for stopWords");
 
-				// Dataset<Row> posPairsOriginal = posPairs;
-				// Dataset<Row> negPairsOriginal = negPairs;
-				// posPairs = DSUtil.preprocessForStopWords(spark, args, posPairsOriginal);
-				// negPairs = DSUtil.preprocessForStopWords(spark, args, negPairsOriginal);
-				Dataset<Row> sample = DSUtil.preprocessForStopWords(spark, args, sampleOrginal);
+				Dataset<Row> sample = StopWords.preprocessForStopWords(spark, args, sampleOrginal);
 
 				Tree<Canopy> tree = BlockingTreeUtil.createBlockingTree(sample, posPairs, 1, -1, args, hashFunctions);			
 				Dataset<Row> blocked = sample.map(new Block.BlockFunction(tree), RowEncoder.apply(Block.appendHashCol(sample.schema())));
@@ -145,12 +142,11 @@ public class TrainingDataFinder extends ZinggBase{
 		//dupesActual.show(4);
 		//input dupes are pairs
 		dupesActual = DFUtil.addClusterRowNumber(dupesActual, spark);
-		dupesActual = Util.addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN );		
+		dupesActual = Util.addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN );	
 		Dataset<Row> dupes1 = DSUtil.alignDupes(dupesActual, args);
-		dupes1 = DSUtil.postprocessForStopWords(dupes1, sampleOrginal, args);
+		dupes1 = StopWords.postprocess(spark, dupes1, sampleOrginal, args);	
 		Dataset<Row> dupes2 = dupes1.orderBy(ColName.CLUSTER_COLUMN);
 		LOG.debug("uncertain output schema is " + dupes2.schema());
-		dupes2.show(8);
 		PipeUtil.write(dupes2 , args, ctx, getUnmarkedLocation());
 		//PipeUtil.write(jdbc, massageForJdbc(dupes2.cache()) , args, ctx);
 	}

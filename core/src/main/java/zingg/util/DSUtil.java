@@ -1,16 +1,12 @@
 package zingg.util;
 
-import org.apache.spark.api.java.function.Function;
-import org.apache.spark.sql.expressions.UserDefinedFunction;
+
 import org.apache.spark.sql.functions;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
-import static org.apache.spark.sql.functions.udf;
-import static org.apache.spark.sql.functions.col;
-import org.apache.spark.sql.types.DataTypes;
 
 import scala.collection.JavaConverters;
 import zingg.client.Arguments;
@@ -23,7 +19,6 @@ import zingg.client.util.ColValues;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,8 +27,6 @@ public class DSUtil {
 
     public static final Log LOG = LogFactory.getLog(DSUtil.class);	
 				
-	public static final String PREFIX_ORIG = "o_";
-
 	public static final String[] getPrefixedColumns(String[] cols) {
 		for (int i=0; i < cols.length; ++i) {
 			cols[i] = ColName.COL_PREFIX + cols[i];
@@ -261,68 +254,5 @@ public class DSUtil {
 				.stream()
 				.filter(f -> !(f.getMatchType() == null || f.getMatchType().equals(type)))
 				.collect(Collectors.toList());
-	}
-
-	public static Dataset<Row> preprocessForStopWords(SparkSession spark, Arguments args, Dataset<Row> ds) {
-
-		List<String> wordList = new ArrayList<String>();
-		Dataset<Row> modDS = ds;
-		for (FieldDefinition def : args.getFieldDefinition()) {
-			if (!(def.getStopWords() == null || def.getStopWords() == "")) {
-				Dataset<Row> stopWords = PipeUtil.read(spark, false, false, PipeUtil.getStopWordsPipe(args, def.getStopWords()));
-				wordList = stopWords.toJavaRDD().map(new Function<Row, String>() {
-					public String call(Row row) {
-						return row.getAs("_c0").toString();
-					}
-				}).collect();
-
-				modDS = modDS.withColumn(def.getFieldName(), removeStopWords(wordList).apply(modDS.col(def.getFieldName())));
-			}
-		}
-
-		return modDS;
-	}
-
-	public static UserDefinedFunction removeStopWords(List<String> stopWords) {
-		return udf((String s) -> {
-			 		ArrayList<String> allWords = Stream.of(s.split(" "))
-						.collect(Collectors.toCollection(ArrayList<String>::new));
-						allWords.removeAll(stopWords);
-			return allWords.stream().collect(Collectors.joining(" "));
-			}, DataTypes.StringType);
-	}
-
-	public static Dataset<Row> postprocessForStopWords(Dataset<Row> actual, Dataset<Row> orig, Arguments args) {
-
-		String[] colNames =  actual.columns();
-
-		// DONT_USE ?????
-		//modify the relevant orig column names with suffix/prefix
-		String newName = "";
-		for (FieldDefinition def: args.getFieldDefinition()) {
- 			newName = PREFIX_ORIG + def.fieldName;
-			orig = orig.withColumnRenamed(def.fieldName, newName);
-		}
-		newName = PREFIX_ORIG + ColName.SOURCE_COL;
-		orig = orig.withColumnRenamed(ColName.SOURCE_COL, newName);
-
-		Dataset<Row> joined = actual.as("first").join(orig.as("second"), ColName.ID_COL);
-		//Update relevant columns with original column names 
-		for (FieldDefinition def : args.getFieldDefinition()) {
-			for (int i = 0; i < colNames.length; i++) {
-				if (colNames[i].equals(def.fieldName)) {
-					colNames[i] = PREFIX_ORIG + def.fieldName;
-				}
-			}
-		}
-		//Convert String array to Column list
-		List<Column> cols = new ArrayList<Column>();
-		for (String colName : colNames) {
-			cols.add(col(colName));
-		}
-		//select the relevant columns and reset the column names of the dataset
-		joined = joined.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
-		joined = joined.toDF(actual.columns());
-		return joined;
 	}
 }
