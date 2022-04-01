@@ -81,8 +81,6 @@ To build these models, training data is needed. Zingg comes with an interactive 
 Zingg comes with pretrained models for the Febrl dataset under the [models](models) folder.
 
 
-
-
 ## The Story
 
 What is the [backstory behind Zingg](https://sonalgoyal.substack.com/p/time-to-zingg)? 
@@ -98,9 +96,9 @@ Be part of the conversation in the [Zingg Community Slack](https://join.slack.co
 
 ## Reporting bugs and contributing 
 
-Want to report a bug or request a feature? Let us know on  [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA), or open an [issue](https://github.com/zinggAI/zingg/issues/new/choose)
+Want to report a bug or request a feature? Let us know on [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA), or open an [issue](https://github.com/zinggAI/zingg/issues/new/choose)
 
-Want to commit code? Lets talk on  [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA)
+Want to commit code? Please check the [contributing documentation.](https://docs.zingg.ai/zingg/contributing0
 
 ## Book Office Hours
 
