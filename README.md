@@ -98,7 +98,7 @@ Be part of the conversation in the [Zingg Community Slack](https://join.slack.co
 
 Want to report a bug or request a feature? Let us know on [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA), or open an [issue](https://github.com/zinggAI/zingg/issues/new/choose)
 
-Want to commit code? Please check the [contributing documentation.](https://docs.zingg.ai/zingg/contributing0
+Want to commit code? Please check the [contributing documentation.](https://docs.zingg.ai/zingg/contributing)
 
 ## Book Office Hours
 
