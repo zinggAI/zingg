@@ -144,7 +144,7 @@ public class TrainingDataFinder extends ZinggBase{
 		dupesActual = DFUtil.addClusterRowNumber(dupesActual, spark);
 		dupesActual = Util.addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN );	
 		Dataset<Row> dupes1 = DSUtil.alignDupes(dupesActual, args);
-		dupes1 = StopWords.postprocess(spark, dupes1, sampleOrginal, args);	
+		dupes1 = StopWords.postprocess(dupes1, sampleOrginal);	
 		Dataset<Row> dupes2 = dupes1.orderBy(ColName.CLUSTER_COLUMN);
 		LOG.debug("uncertain output schema is " + dupes2.schema());
 		PipeUtil.write(dupes2 , args, ctx, getUnmarkedLocation());

@@ -42,7 +42,7 @@ public class StopWords {
 		return ds;
 	}
 
-	private static UserDefinedFunction removeStopWords(List<String> stopWords) {
+	public static UserDefinedFunction removeStopWords(List<String> stopWords) {
 		return udf((String s) -> {
 			 		ArrayList<String> allWords = Stream.of(s.split(" "))
 						.collect(Collectors.toCollection(ArrayList<String>::new));
@@ -51,7 +51,7 @@ public class StopWords {
 			}, DataTypes.StringType);
 	}
 
-    public static Dataset<Row> postprocess(SparkSession spark, Dataset<Row> actual, Dataset<Row> orig, Arguments args) {
+    public static Dataset<Row> postprocess(Dataset<Row> actual, Dataset<Row> orig) {
 		List<Column> cols = new ArrayList<Column>();	
 		cols.add(actual.col(ColName.CLUSTER_COLUMN));
 		cols.add(actual.col(ColName.ID_COL));
@@ -62,7 +62,24 @@ public class StopWords {
 		Dataset<Row> zFieldsFromActual = actual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
 		
 		Dataset<Row> joined = zFieldsFromActual.join(orig, ColName.ID_COL);
-		joined.show(10);
+
+		return joined;
+	}
+
+    public static Dataset<Row> postprocessLinked(Dataset<Row> actual, Dataset<Row> orig) {
+		List<Column> cols = new ArrayList<Column>();
+        cols.add(actual.col(ColName.CLUSTER_COLUMN));	
+		cols.add(actual.col(ColName.ID_COL));
+ 		cols.add(actual.col(ColName.SCORE_COL));
+ 		cols.add(actual.col(ColName.SOURCE_COL));	
+
+		Dataset<Row> zFieldsFromActual = actual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
+		Dataset<Row> joined = zFieldsFromActual.join(orig,
+				zFieldsFromActual.col(ColName.ID_COL).equalTo(orig.col(ColName.ID_COL))
+						.and(zFieldsFromActual.col(ColName.SOURCE_COL).equalTo(orig.col(ColName.SOURCE_COL))))
+						.drop(zFieldsFromActual.col(ColName.SOURCE_COL))
+						.drop(zFieldsFromActual.col(ColName.ID_COL))
+						.drop(orig.col(ColName.ID_COL));
 
 		return joined;
 	}
