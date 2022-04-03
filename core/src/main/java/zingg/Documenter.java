@@ -44,8 +44,8 @@ public class Documenter extends ZinggBase {
 
 	public void execute() throws ZinggClientException {
 		try {
-			LOG.info("Document generation in progress");
-			Dataset<Row> markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
+			LOG.info("Document generation starts");
+			Dataset<Row> markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));		
 			markedRecords = markedRecords.cache();
 			//List<Column> displayCols = DSUtil.getFieldDefColumns(markedRecords, args, false);
 			List<Row> clusterIDs = markedRecords.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();
@@ -59,6 +59,7 @@ public class Documenter extends ZinggBase {
 			root.put("fieldDefinitionCount", args.getFieldDefinition().size());
 			buildAndWriteHTML(root);
 			extractStopWords();
+			LOG.info("Document generation completes");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ZinggClientException(e.getMessage());
