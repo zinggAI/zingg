@@ -2,7 +2,7 @@ package zingg.similarity.function;
 
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.wcohen.ss.MongeElkan;
 

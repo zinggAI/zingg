@@ -1,11 +1,11 @@
 package zingg;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.apache.spark.api.java.JavaSparkContext;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
@@ -14,7 +14,7 @@ public class TestDocumenter {
     Arguments args;
     JavaSparkContext sc;
     
-    @Before
+    @BeforeEach
     public void setUp(){
 
         try {
