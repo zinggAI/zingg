@@ -1,8 +1,8 @@
 package zingg.preprocess;
 
 import static org.apache.spark.sql.functions.col;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,9 +18,9 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
@@ -34,7 +34,7 @@ public class TestStopWords {
 
 	public static final Log LOG = LogFactory.getLog(TestStopWords.class);
 
-	@BeforeClass
+	@BeforeAll
 	public static void setup() {
 		try {
 			spark = SparkSession
@@ -52,7 +52,7 @@ public class TestStopWords {
 		}
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void teardown() {
 		if (ctx != null)
 			ctx.stop();
@@ -60,8 +60,9 @@ public class TestStopWords {
 			spark.stop();
 	}
 
+
 	@Test
-	public void testRemoveStopWords() {
+	public void testStopWordsSingleColumn() {
 		try {
 			StructType schema = new StructType(new StructField[] {
 					new StructField("statement", DataTypes.StringType, false, Metadata.empty())

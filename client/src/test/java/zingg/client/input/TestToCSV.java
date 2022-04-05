@@ -2,7 +2,7 @@ package zingg.client.input;
 
 import java.io.File;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 
 
