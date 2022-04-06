@@ -16,6 +16,8 @@ import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 
+import static org.apache.spark.sql.functions.col;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -256,4 +258,37 @@ public class DSUtil {
 				.filter(f -> !(f.getMatchType() == null || f.getMatchType().equals(type)))
 				.collect(Collectors.toList());
 	}
+
+    public static Dataset<Row> postprocess(Dataset<Row> actual, Dataset<Row> orig) {
+    	List<Column> cols = new ArrayList<Column>();	
+    	cols.add(actual.col(ColName.CLUSTER_COLUMN));
+    	cols.add(actual.col(ColName.ID_COL));
+    	cols.add(actual.col(ColName.PREDICTION_COL));
+    	cols.add(actual.col(ColName.SCORE_COL));
+    	cols.add(col(ColName.MATCH_FLAG_COL));
+    
+    	Dataset<Row> zFieldsFromActual = actual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
+    	
+    	Dataset<Row> joined = zFieldsFromActual.join(orig, ColName.ID_COL);
+    
+    	return joined;
+    }
+
+    public static Dataset<Row> postprocessLinked(Dataset<Row> actual, Dataset<Row> orig) {
+    	List<Column> cols = new ArrayList<Column>();
+        cols.add(actual.col(ColName.CLUSTER_COLUMN));	
+    	cols.add(actual.col(ColName.ID_COL));
+    	cols.add(actual.col(ColName.SCORE_COL));
+    	cols.add(actual.col(ColName.SOURCE_COL));	
+    
+    	Dataset<Row> zFieldsFromActual = actual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
+    	Dataset<Row> joined = zFieldsFromActual.join(orig,
+    			zFieldsFromActual.col(ColName.ID_COL).equalTo(orig.col(ColName.ID_COL))
+    					.and(zFieldsFromActual.col(ColName.SOURCE_COL).equalTo(orig.col(ColName.SOURCE_COL))))
+    					.drop(zFieldsFromActual.col(ColName.SOURCE_COL))
+    					.drop(zFieldsFromActual.col(ColName.ID_COL))
+    					.drop(orig.col(ColName.ID_COL));
+    
+    	return joined;
+    }
 }

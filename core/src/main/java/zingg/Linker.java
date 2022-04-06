@@ -19,7 +19,6 @@ import zingg.block.Block;
 import zingg.block.Canopy;
 import zingg.block.Tree;
 import zingg.model.Model;
-import zingg.preprocess.StopWords;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.client.util.ColName;
@@ -65,7 +64,7 @@ public class Linker extends Matcher {
 				dupesActual = dupesActual.withColumn(ColName.CLUSTER_COLUMN, dupesActual.col(ColName.ID_COL));
 				dupesActual = Util.addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN);
 				Dataset<Row> dupes2 = DSUtil.alignLinked(dupesActual, args);
-				dupes2 = StopWords.postprocessLinked(dupes2, sampleOrginal);
+				dupes2 = DSUtil.postprocessLinked(dupes2, sampleOrginal);
 				LOG.debug("uncertain output schema is " + dupes2.schema());
 				PipeUtil.write(dupes2, args, ctx, args.getOutput());
 			}

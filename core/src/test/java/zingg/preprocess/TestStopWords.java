@@ -9,58 +9,26 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
-import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import zingg.client.Arguments;
+import zingg.BaseSparkTest;
 import zingg.client.FieldDefinition;
 import zingg.client.util.ColName;
+import zingg.util.DSUtil;
 
-public class TestStopWords {
-
-	protected static Arguments args;
-	protected static JavaSparkContext ctx;
-	protected static SparkSession spark;
+public class TestStopWords extends BaseSparkTest{
 
 	public static final Log LOG = LogFactory.getLog(TestStopWords.class);
 
-	@BeforeAll
-	public static void setup() {
-		try {
-			spark = SparkSession
-					.builder()
-					.master("local")
-					.appName("Zingg" + "Junit")
-					.getOrCreate();
-			ctx = new JavaSparkContext(spark.sparkContext());
-			JavaSparkContext.jarOfClass(TestStopWords.class);
-			args = new Arguments();
-		} catch (Throwable e) {
-			if (LOG.isDebugEnabled())
-				e.printStackTrace();
-			LOG.info("Problem in spark env setup");
-		}
-	}
-
-	@AfterAll
-	public static void teardown() {
-		if (ctx != null)
-			ctx.stop();
-		if (spark != null)
-			spark.stop();
-	}
-
-
+	@DisplayName ("Test Stop Words removal from Single column dataset")
 	@Test
 	public void testStopWordsSingleColumn() {
 		try {
@@ -70,25 +38,25 @@ public class TestStopWords {
 
 			Dataset<Row> dataset = spark.createDataFrame(
 					Arrays.asList(
-							RowFactory.create("The zingg is a spark application"),
-							RowFactory.create("It is very popular in data science"),
-							RowFactory.create("It is written in java and scala"),
+							RowFactory.create("The zingg is a Spark application"),
+							RowFactory.create("It is very popular in data Science"),
+							RowFactory.create("It is written in Java and Scala"),
 							RowFactory.create("Best of luck to zingg")),
 					schema);
 
-			List<String> stopWords = Arrays.asList("a", "an", "the", "is", "It", "of");
+			String stopWords = "\\b(a|an|the|is|It|of|yes|no|I|has|have|you)\\b\\s?";
 
 			Dataset<Row> datasetExpected = spark.createDataFrame(
 				Arrays.asList(
-						RowFactory.create("The zingg spark application"),
+						RowFactory.create("zingg spark application"),
 						RowFactory.create("very popular in data science"),
 						RowFactory.create("written in java and scala"),
-						RowFactory.create("Best luck to zingg")),
+						RowFactory.create("best luck to zingg")),
 				schema);
-			
 			Dataset<Row> datasetWithoutStopWords = dataset.withColumn("statement",
-					StopWords.removeStopWords(stopWords).apply(col("statement")));
- 			assertTrue(datasetExpected.except(datasetWithoutStopWords).isEmpty());	
+					StopWords.removeStopWords(stopWords.toLowerCase()).apply(col("statement")));
+ 			assertTrue(datasetExpected.except(datasetWithoutStopWords).isEmpty());
+			assertTrue(datasetWithoutStopWords.except(datasetExpected).isEmpty());
 		} catch (Throwable e) {
 			fail("Unexpected exception " + e.getMessage());
 		}
@@ -109,7 +77,7 @@ public class TestStopWords {
 					Arrays.asList(
 							RowFactory.create("10", "The zingg is a spark application", "two",
 									"Yes. a good application", "test"),
-							RowFactory.create("20", "It is very popular in data science", "Three", "true indeed",
+							RowFactory.create("20", "It is very popular in Data Science", "Three", "true indeed",
 									"test"),
 							RowFactory.create("30", "It is written in java and scala", "four", "", "test"),
 							RowFactory.create("40", "Best of luck to zingg", "Five", "thank you", "test")),
@@ -117,12 +85,11 @@ public class TestStopWords {
 
 			Dataset<Row> datasetExpected = spark.createDataFrame(
 				Arrays.asList(
-						RowFactory.create("10", "The zingg spark application", "two", "Yes. a good application", "test"),
+						RowFactory.create("10", "zingg spark application", "two", "Yes. a good application", "test"),
 						RowFactory.create("20", "very popular data science", "Three", "true indeed", "test"),
 						RowFactory.create("30", "written java scala", "four", "", "test"),
-						RowFactory.create("40", "Best luck to zingg", "Five", "thank you", "test")),
+						RowFactory.create("40", "best luck to zingg", "Five", "thank you", "test")),
 				schemaOriginal);
-
   			String stopWordsFileName = getClass().getResource("../../stopWords.csv").getFile();
  			FieldDefinition fd = new FieldDefinition();
 			fd.setStopWords(stopWordsFileName);
@@ -133,6 +100,7 @@ public class TestStopWords {
 
  			Dataset<Row> newDataSet = StopWords.preprocessForStopWords(spark, args, original);
  			assertTrue(datasetExpected.except(newDataSet).isEmpty());
+			assertTrue(newDataSet.except(datasetExpected).isEmpty());
 		} catch (Throwable e) {
 			fail("Unexpected exception " + e.getMessage());
 		}
@@ -184,8 +152,9 @@ public class TestStopWords {
 									"thank", "test")),
 					schemaActual);
 
-			Dataset<Row> newDataset = StopWords.postprocess(actual, original);
+			Dataset<Row> newDataset = DSUtil.postprocess(actual, original);
 			assertTrue(newDataset.select(ColName.ID_COL, "field1", "field2", "field3", ColName.SOURCE_COL).except(original).isEmpty());
+			assertTrue(original.except(newDataset.select(ColName.ID_COL, "field1", "field2", "field3", ColName.SOURCE_COL)).isEmpty());
 		} catch (Throwable e) {
 			fail("Unexpected exception " + e.getMessage());
 		}
@@ -237,8 +206,9 @@ public class TestStopWords {
 									"thank", "test")),
 					schemaActual);
 
-			Dataset<Row> newDataset = StopWords.postprocessLinked(actual, original);
+			Dataset<Row> newDataset = DSUtil.postprocessLinked(actual, original);
   			assertTrue(newDataset.select("field1", "field2", "field3", ColName.SOURCE_COL).except(original.drop(ColName.ID_COL)).isEmpty());
+			assertTrue(original.drop(ColName.ID_COL).except(newDataset.select("field1", "field2", "field3", ColName.SOURCE_COL)).isEmpty());
 		} catch (Throwable e) {
 			fail("Unexpected exception " + e.getMessage());
 		}
