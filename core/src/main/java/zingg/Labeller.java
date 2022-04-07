@@ -1,27 +1,19 @@
 package zingg;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.functions;
-
+import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
-import zingg.util.DSUtil;
-import zingg.util.PipeUtil;
 import zingg.util.LabelMatchType;
 
-public class Labeller extends ZinggBase {
+public abstract class Labeller<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2> {
 
 	protected static String name = "zingg.Labeller";
 	public static final Log LOG = LogFactory.getLog(Labeller.class);
@@ -35,7 +27,7 @@ public class Labeller extends ZinggBase {
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Reading inputs for labelling phase ...");
-			Dataset<Row> unmarkedRecords = getUnmarkedRecords();
+			ZFrame<D,R,C> unmarkedRecords = getUnmarkedRecords();
 			processRecordsCli(unmarkedRecords);
 			LOG.info("Finished labelling phase");
 		} catch (Exception e) {
@@ -44,21 +36,20 @@ public class Labeller extends ZinggBase {
 		}
 	}
 
-	public Dataset<Row> getUnmarkedRecords() throws ZinggClientException {
-		Dataset<Row> unmarkedRecords = null;
-		Dataset<Row> markedRecords = null;
+	public ZFrame<D,R,C> getUnmarkedRecords() throws ZinggClientException {
+		ZFrame<D,R,C> unmarkedRecords = null;
+		ZFrame<D,R,C> markedRecords = null;
 		try {
-			unmarkedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataUnmarkedPipe(args));
+			unmarkedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataUnmarkedPipe(args));
 			try {
-				markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
+				markedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
 			} catch (Exception e) {
 				LOG.warn("No record has been marked yet");
 			}
 			if (markedRecords != null ) {
-				unmarkedRecords = unmarkedRecords.join(markedRecords,
-						unmarkedRecords.col(ColName.CLUSTER_COLUMN).equalTo(markedRecords.col(ColName.CLUSTER_COLUMN)),
+				unmarkedRecords = unmarkedRecords.join(markedRecords,ColName.CLUSTER_COLUMN, false,
 						"left_anti");
-						getMarkedRecordsStat(markedRecords);
+				getMarkedRecordsStat(markedRecords);
 			} 
 		} catch (Exception e) {
 			LOG.warn("No unmarked record for labelling");
@@ -66,14 +57,14 @@ public class Labeller extends ZinggBase {
 		return unmarkedRecords;
 	}
 
-	protected void getMarkedRecordsStat(Dataset<Row> markedRecords) {
-		positivePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH)).count() / 2;
-		negativePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_A_MATCH)).count() / 2;
-		notSurePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_SURE)).count() / 2;
+	protected void getMarkedRecordsStat(ZFrame<D,R,C> markedRecords) {
+		positivePairsCount = markedRecords.filter(markedRecords.equalTo(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_MATCH)).count() / 2;
+		negativePairsCount = markedRecords.filter(markedRecords.equalTo(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_NOT_A_MATCH)).count() / 2;
+		notSurePairsCount = markedRecords.filter(markedRecords.equalTo(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_NOT_SURE)).count() / 2;
 		totalCount = markedRecords.count() / 2;
 	}
 
-	public void processRecordsCli(Dataset<Row> lines) throws ZinggClientException {
+	public void processRecordsCli(ZFrame<D,R,C> lines) throws ZinggClientException {
 		LOG.info("Processing Records for CLI Labelling");
 		printMarkedRecordsStat();
 		if (lines == null || lines.count() == 0) {
@@ -82,23 +73,23 @@ public class Labeller extends ZinggBase {
 		}
 
 		lines = lines.cache();
-		List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false, args.getShowConcise());
+		List<C> displayCols = getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
 
-		List<Row> clusterIDs = lines.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();
+		List<R> clusterIDs = lines.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();
 		try {
 			double score;
 			double prediction;
-			Dataset<Row> updatedRecords = null;
+			ZFrame<D,R,C> updatedRecords = null;
 			int selected_option = -1;
 			String msg1, msg2;
 			int totalPairs = clusterIDs.size();
 			
 			for (int index = 0; index < totalPairs; index++){	
-				Dataset<Row> currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).equalTo(
-						clusterIDs.get(index).getAs(ColName.CLUSTER_COLUMN))).cache();
+				ZFrame<D,R,C> currentPair = lines.filter(lines.equalTo(ColName.CLUSTER_COLUMN,
+						lines.getAsString(clusterIDs.get(index), ColName.CLUSTER_COLUMN))).cache();
 				
-				score = currentPair.head().getAs(ColName.SCORE_COL);
-				prediction = currentPair.head().getAs(ColName.PREDICTION_COL);
+				score = currentPair.getAsDouble(currentPair.head(), ColName.SCORE_COL);
+				prediction = currentPair.getAsDouble(currentPair.head(), ColName.PREDICTION_COL);
 	
 				msg1 = String.format("\tCurrent labelling round  : %d/%d pairs labelled\n", index, totalPairs);
 				String matchType = LabelMatchType.get(prediction).msg;				
@@ -111,7 +102,7 @@ public class Labeller extends ZinggBase {
 				}
 				//String msgHeader = msg1 + msg2;
 
-				selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msg1, msg2);
+				selected_option = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), msg1, msg2);
 				updateLabellerStat(selected_option, 1);
 				printMarkedRecordsStat();
 				if (selected_option == 9) {
@@ -133,7 +124,7 @@ public class Labeller extends ZinggBase {
 	}
 
 	
-	protected int displayRecordsAndGetUserInput(Dataset<Row> records, String preMessage, String postMessage) {
+	protected int displayRecordsAndGetUserInput(ZFrame<D,R,C> records, String preMessage, String postMessage) {
 		//System.out.println();
 		System.out.println(preMessage);
 		records.show(false);
@@ -143,8 +134,8 @@ public class Labeller extends ZinggBase {
 		return selection;
 	}
 
-	protected Dataset<Row> updateRecords(int matchValue, Dataset<Row> newRecords, Dataset<Row> updatedRecords) {
-		newRecords = newRecords.withColumn(ColName.MATCH_FLAG_COL, functions.lit(matchValue));
+	protected ZFrame<D,R,C> updateRecords(int matchValue, ZFrame<D,R,C> newRecords, ZFrame<D,R,C> updatedRecords) {
+		newRecords = newRecords.withColumn(ColName.MATCH_FLAG_COL, matchValue);
 		if (updatedRecords == null) {
 			updatedRecords = newRecords;
 		} else {
@@ -203,16 +194,16 @@ public class Labeller extends ZinggBase {
 		System.out.println(msg);
 	}
 
-	protected void writeLabelledOutput(Dataset<Row> records) {
+	protected void writeLabelledOutput(ZFrame<D,R,C> records) {
 		if (records == null) {
 			LOG.warn("No records to be labelled.");
 			return;
 		}		
-		PipeUtil.write(records, args, ctx, getOutputPipe());
+		getPipeUtil().write(records, args,getOutputPipe());
 	}
 
 	protected Pipe getOutputPipe() {
-		return PipeUtil.getTrainingDataMarkedPipe(args);
+		return getPipeUtil().getTrainingDataMarkedPipe(args);
 	}
 }
 

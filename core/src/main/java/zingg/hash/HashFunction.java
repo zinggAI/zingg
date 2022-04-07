@@ -2,33 +2,34 @@ package zingg.hash;
 
 import java.io.Serializable;
 
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.functions;
-import org.apache.spark.sql.types.DataType;
+import zingg.client.ZFrame;
 
-public abstract class HashFunction implements Serializable{
+public abstract class HashFunction<D,R,C,T,T1> implements Serializable{
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		protected DataType dataType;
+		protected T dataType;
 		protected String name;
 		protected boolean isUdf = true;
-		protected DataType returnType;
+		protected T1 returnType;
+
+		public HashFunction(String name) {
+			this.name = name;
+		}
 		
-		public HashFunction(String name, DataType cl, DataType returnType) {
+		public HashFunction(String name, T cl, T1 returnType) {
 			this.name = name;
 			this.dataType = cl;
 			this.returnType = returnType;
 		}
 	
-		public HashFunction(String name, DataType cl, DataType returnType, boolean isUdf) {
+		public HashFunction(String name, T cl, T1 returnType, boolean isUdf) {
 			this(name, cl, returnType);
 			this.isUdf = isUdf;
 		}
 		
-		public DataType getDataType() {
+		public T getDataType() {
 			return dataType;
 		}
 		
@@ -50,23 +51,23 @@ public abstract class HashFunction implements Serializable{
 			this.isUdf = isUdf;
 		}
 
-		public DataType getReturnType() {
+		public T1 getReturnType() {
 			return returnType;
 		}
 
-		public void setReturnType(DataType returnType) {
+		public void setReturnType(T1 returnType) {
 			this.returnType = returnType;
 		}
 
-		public void setDataType(DataType dataType) {
+		public void setDataType(T dataType) {
 			this.dataType = dataType;
 		}
 
 		
-		public Dataset<Row> apply(Dataset<Row> ds, String column, String newColumn) {
-			return ds.withColumn(newColumn, functions.callUDF(this.name, ds.col(column)));
-		}
+		public abstract ZFrame<D,R,C> apply(ZFrame<D,R,C> ds, String column, String newColumn) ;
+
+		public abstract Object getAs(R r, String column);
 		
-		public abstract Object apply(Row ds, String column);
+		public abstract Object apply(R ds, String column);
 }
 

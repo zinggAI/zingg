@@ -16,6 +16,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 
+import zingg.client.ZFrame;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
@@ -25,10 +26,11 @@ import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.client.util.ColName;
 import zingg.util.DSUtil;
-import zingg.util.PipeUtil;
+import zingg.util.PipeUtilBase;
+import zingg.util.RowAdapter;
 import zingg.util.RowWrapper;
 
-public class Documenter extends ZinggBase {
+public abstract class Documenter<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2> {
 
 	protected static String name = "zingg.Documenter";
 	public static final Log LOG = LogFactory.getLog(Documenter.class);
@@ -45,10 +47,10 @@ public class Documenter extends ZinggBase {
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Document generation in progress");
-			Dataset<Row> markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
+			ZFrame<D,R,C> markedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
 			markedRecords = markedRecords.cache();
 			//List<Column> displayCols = DSUtil.getFieldDefColumns(markedRecords, args, false);
-			List<Row> clusterIDs = markedRecords.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();
+			List<R> clusterIDs = markedRecords.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();
 			int totalPairs = clusterIDs.size();
 			/* Create a data-model */
 			Map<String, Object> root = new HashMap<String, Object>();
@@ -83,7 +85,7 @@ public class Documenter extends ZinggBase {
 
 		// List<String> textList = Collections.singletonList(writer.toString());
 
-		// Dataset<Row> data = spark.createDataset(textList, Encoders.STRING()).toDF();
+		// ZFrame<D,R,C>> data = spark.createDataset(textList, Encoders.STRING()).toDF();
 
 		// PipeUtil.write(data, args, ctx, PipeUtil.getModelDocumentationPipe(args));
 		file.close();
@@ -113,24 +115,22 @@ public class Documenter extends ZinggBase {
 		cfg.setFallbackOnNullLoopVariable(false);
 		cfg.setObjectWrapper(new RowWrapper(cfg.getIncompatibleImprovements()));
 
-		/* ------------------------------------------------------------------------ */
-		/* You usually do these for MULTIPLE TIMES in the application life-cycle: */
 		return cfg;
 	}
 
 	private void extractStopWords() throws ZinggClientException {
 		LOG.info("Stop words generation starts");
-		Dataset<Row> data = PipeUtil.read(spark, false, false, args.getData());
+		ZFrame<D,R,C> data = getPipeUtil().read(false, false, args.getData());
 		LOG.warn("Read input data : " + data.count());
 
-		List<FieldDefinition> fields = DSUtil.getFieldDefinitionFiltered(args, MatchType.DONT_USE);
+		List<FieldDefinition> fields = getDSUtil().getFieldDefinitionFiltered(args, MatchType.DONT_USE);
 		for (FieldDefinition field : fields) {
 			findAndWriteStopWords(data, field);
 		}
 		LOG.info("Stop words generation finishes");
 	}
 
-	private void findAndWriteStopWords(Dataset<Row> data, FieldDefinition field) throws ZinggClientException {
+	private void findAndWriteStopWords(ZFrame<D,R,C> data, FieldDefinition field) throws ZinggClientException {
 		String stopWordsDir = args.getZinggDocDir() + "/stopWords/";
 		String columnsDir = args.getZinggDocDir() + "/columns/";
 
@@ -138,17 +138,19 @@ public class Documenter extends ZinggBase {
 		checkAndCreateDir(columnsDir);
 
 		LOG.debug("Field: " + field.fieldName);
+		/*
 		data = data.select(split(data.col(field.fieldName), "\\s+").as("split"));
 		data = data.select(explode(data.col("split")).as("word"));
 		data = data.filter(data.col("word").notEqual(""));
 		data = data.groupBy("word").count().orderBy(desc("count"));
+		*/
 		data = data.limit(Math.round(data.count()*args.getStopWordsCutoff()));
 		String filenameCSV = stopWordsDir + field.fieldName + ".csv";
 		String filenameHTML = columnsDir + field.fieldName + ".html";
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put("modelId", args.getModelId());
 		root.put("stopWords", data.collectAsList());
-
+		
 		writeStopWords(CSV_TEMPLATE, root, filenameCSV);
 		writeStopWords(HTML_TEMPLATE, root, filenameHTML);
 	}

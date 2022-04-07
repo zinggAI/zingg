@@ -28,6 +28,7 @@ public class TestDocumenter {
 		}
     }
 
+    /*
     @Test
     public void testOutput() throws Throwable{
         Documenter doc = new Documenter();
@@ -35,4 +36,5 @@ public class TestDocumenter {
         doc.setArgs(args);
         doc.execute();
     }
+    */
 }

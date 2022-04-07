@@ -4,14 +4,14 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataTypes;
 
-public class LastWord extends HashFunction implements UDF1<String, String>{
+public abstract class LastWord<D,R,C,T,T1> extends HashFunction<D,R,C,T,T1>{
 	public LastWord() {
-		super("lastWord", DataTypes.StringType, DataTypes.StringType, true);
+		super("lastWord");		
 	}
 
 	
 	
-			 @Override
+			
 			 public String call(String field) {
 					String r = null;
 					if (field == null ) {

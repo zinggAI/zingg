@@ -1,15 +1,9 @@
 package zingg.util;
 
-import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.functions;
-
-import scala.collection.JavaConverters;
 import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
 import zingg.client.MatchType;
+import zingg.client.ZFrame;
 import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
@@ -21,49 +15,79 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class DSUtil {
+public abstract class DSUtil<S, D, R, C> {
 
-    public static final Log LOG = LogFactory.getLog(DSUtil.class);	
+	S session;
 
-	public static final String[] getPrefixedColumns(String[] cols) {
+	
+	
+    public Log LOG = LogFactory.getLog(DSUtil.class);	
+
+	public DSUtil(S s) {
+		this.session = s;
+	}
+
+	public S getSession() {
+		return this.session;
+	}
+
+	public void setSession(S session) {
+		this.session = session;
+	}
+
+
+	public String[] getPrefixedColumns(String[] cols) {
 		for (int i=0; i < cols.length; ++i) {
 			cols[i] = ColName.COL_PREFIX + cols[i];
 		}
 		return cols;
 	}
 
-	public static Dataset<Row> getPrefixedColumnsDS(Dataset<Row> lines) {
+	public ZFrame<D, R, C> getPrefixedColumnsDS(ZFrame<D, R, C> lines) {
 		return lines.toDF(getPrefixedColumns(lines.columns()));
 	}
 
-	public static Dataset<Row> join(Dataset<Row> lines, Dataset<Row> lines1, String joinColumn, boolean filter) {
-		Dataset<Row> pairs = lines.join(lines1, lines.col(joinColumn).equalTo(lines1.col(ColName.COL_PREFIX + joinColumn)));
+	
+
+	public ZFrame<D, R, C> join(ZFrame<D, R, C> lines, ZFrame<D, R, C> lines1, String joinColumn, boolean filter) {
+		ZFrame<D, R, C> pairs = lines.join(lines1, joinColumn);
 		//in training, we only need that record matches only with lines bigger than itself
 		//in the case of normal as well as in the case of linking
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("pairs length " + pairs.count());
 		}
 		if (filter) {
-			pairs = pairs.filter(pairs.col(ColName.ID_COL).gt(pairs.col(ColName.COL_PREFIX + ColName.ID_COL)));	
+			pairs = pairs.filter(pairs.gt(joinColumn));	
 		}	
 		return pairs;
 	}
 
-	public static Dataset<Row> joinZColFirst(Dataset<Row> lines, Dataset<Row> lines1, String joinColumn, boolean filter) {
-		Dataset<Row> pairs = lines.join(lines1, lines.col(ColName.COL_PREFIX + joinColumn).equalTo(lines1.col(joinColumn)), "right");
+	public ZFrame<D, R, C> joinZColFirst(ZFrame<D, R, C> lines, ZFrame<D, R, C> lines1, String joinColumn, boolean filter) {
+		ZFrame<D, R, C> pairs = lines.joinRight(lines1, joinColumn);
 		//in training, we only need that record matches only with lines bigger than itself
 		//in the case of normal as well as in the case of linking
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("pairs length " + pairs.count());
 		}
-		if (filter) pairs = pairs.filter(pairs.col(ColName.ID_COL).gt(pairs.col(ColName.COL_PREFIX + ColName.ID_COL)));		
+		if (filter) pairs = pairs.filter(pairs.gt(ColName.ID_COL));		
 		return pairs;
+	}
+
+	public ZFrame<D, R, C> addUniqueCol(ZFrame<D, R, C> dupesActual, String colName) {
+		String append = System.currentTimeMillis() + ":";
+		dupesActual = dupesActual.withColumn(colName + "temp", 
+				append);
+		dupesActual = dupesActual.withColumn(colName,
+				dupesActual.concat(dupesActual.col(colName + "temp"),
+						dupesActual.col(colName)));
+		dupesActual = dupesActual.drop(colName + "temp");
+		return dupesActual;
 	}
 
 	/*
 
-	public static Dataset<Row> joinOnNamedColAndDropIt(Dataset<Row> lines, Dataset<Row> lines1, String joinColumn) {
-		Dataset<Row> pairs = lines.join(lines1, lines.col(joinColumn).equalTo(lines1.col(joinColumn).as(
+	public  ZFrame<D, R, C> joinOnNamedColAndDropIt(ZFrame<D, R, C> lines, ZFrame<D, R, C> lines1, String joinColumn) {
+		ZFrame<D, R, C> pairs = lines.join(lines1, lines.col(joinColumn).equalTo(lines1.col(joinColumn).as(
 			ColName.COL_PREFIX + joinColumn)));
 		pairs.show(false);
 		pairs = pairs.drop(ColName.COL_PREFIX + joinColumn);
@@ -77,23 +101,23 @@ public class DSUtil {
 	}
 	*/
 	
-    public static Dataset<Row> joinWithItself(Dataset<Row> lines, String joinColumn, boolean filter) throws Exception {
-		Dataset<Row> lines1 = getPrefixedColumnsDS(lines); 
+    public ZFrame<D, R, C> joinWithItself(ZFrame<D, R, C> lines, String joinColumn, boolean filter) throws Exception {
+		ZFrame<D, R, C> lines1 = getPrefixedColumnsDS(lines); 
 		return join(lines, lines1, joinColumn, filter);
 	}
 	
-	public static Dataset<Row> joinWithItselfSourceSensitive(Dataset<Row> lines, String joinColumn, Arguments args) throws Exception {
-		Dataset<Row> lines1 = getPrefixedColumnsDS(lines).cache();
+	public  ZFrame<D, R, C> joinWithItselfSourceSensitive(ZFrame<D, R, C> lines, String joinColumn, Arguments args) throws Exception {
+		ZFrame<D, R, C> lines1 = getPrefixedColumnsDS(lines).cache();
 		String[] sourceNames = args.getPipeNames();
-		lines = lines.filter(lines.col(ColName.SOURCE_COL).equalTo(sourceNames[0]));
-		lines1 = lines1.filter(lines1.col(ColName.COL_PREFIX + ColName.SOURCE_COL).notEqual(sourceNames[0]));
+		lines = lines.filter(lines.equalTo(joinColumn, sourceNames[0]));
+		lines1 = lines1.filter(lines1.notEqual(ColName.COL_PREFIX + ColName.SOURCE_COL, sourceNames[0]));
 		return join(lines, lines1, joinColumn, false);
 	}
 
-	public static Dataset<Row> alignLinked(Dataset<Row> dupesActual, Arguments args) {
+	public  ZFrame<D, R, C> alignLinked(ZFrame<D, R, C> dupesActual, Arguments args) {
 		dupesActual = dupesActual.cache();
 		dupesActual = dupesActual.withColumnRenamed(ColName.ID_COL, ColName.CLUSTER_COLUMN);
-		List<Column> cols = new ArrayList<Column>();
+		List<C> cols = new ArrayList<C>();
 		cols.add(dupesActual.col(ColName.CLUSTER_COLUMN));
 		cols.add(dupesActual.col(ColName.SCORE_COL));
 		
@@ -102,9 +126,9 @@ public class DSUtil {
 		}	
 		cols.add(dupesActual.col(ColName.SOURCE_COL));	
 
-		Dataset<Row> dupes1 = dupesActual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
+		ZFrame<D, R, C> dupes1 = dupesActual.select(cols);
 		dupes1 = dupes1.dropDuplicates(ColName.CLUSTER_COLUMN, ColName.SOURCE_COL);
-	 	List<Column> cols1 = new ArrayList<Column>();
+	 	List<C> cols1 = new ArrayList<C>();
 		cols1.add(dupesActual.col(ColName.CLUSTER_COLUMN));
 		cols1.add(dupesActual.col(ColName.SCORE_COL));
 		
@@ -117,15 +141,15 @@ public class DSUtil {
 		}*/
 		
 		
-		Dataset<Row> dupes2 = dupesActual.select(JavaConverters.asScalaIteratorConverter(cols1.iterator()).asScala().toSeq());
+		ZFrame<D, R, C> dupes2 = dupesActual.select(cols1);
 	 	dupes2 = dupes2.toDF(dupes1.columns()).cache();
 		dupes1 = dupes1.union(dupes2);
 		return dupes1;
 	}
 
-	public static Dataset<Row> alignDupes(Dataset<Row> dupesActual, Arguments args) {
+	public  ZFrame<D, R, C> alignDupes(ZFrame<D, R, C> dupesActual, Arguments args) {
 		dupesActual = dupesActual.cache();
-		List<Column> cols = new ArrayList<Column>();
+		List<C> cols = new ArrayList<C>();
 		
 		cols.add(dupesActual.col(ColName.CLUSTER_COLUMN));
 		cols.add(dupesActual.col(ColName.ID_COL));
@@ -137,8 +161,8 @@ public class DSUtil {
 		}
 		cols.add(dupesActual.col(ColName.SOURCE_COL));
 		
-		Dataset<Row> dupes1 = dupesActual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
-	 	List<Column> cols1 = new ArrayList<Column>();
+		ZFrame<D, R, C> dupes1 = dupesActual.select(cols);
+	 	List<C> cols1 = new ArrayList<C>();
 		cols1.add(dupesActual.col(ColName.CLUSTER_COLUMN));
 		cols1.add(dupesActual.col(ColName.COL_PREFIX + ColName.ID_COL)); 
 		cols1.add(dupesActual.col(ColName.PREDICTION_COL));
@@ -154,20 +178,19 @@ public class DSUtil {
 		}*/
 		
 		
-		Dataset<Row> dupes2 = dupesActual.select(JavaConverters.asScalaIteratorConverter(cols1.iterator()).asScala().toSeq());
+		ZFrame<D, R, C> dupes2 = dupesActual.select(cols1);
 	 	dupes2 = dupes2.toDF(dupes1.columns()).cache();
 		dupes1 = dupes1.union(dupes2);
-		dupes1 = dupes1.withColumn(ColName.MATCH_FLAG_COL, functions.lit(ColValues.MATCH_TYPE_UNKNOWN));
+		dupes1 = dupes1.withColumn(ColName.MATCH_FLAG_COL,ColValues.MATCH_TYPE_UNKNOWN);
 		return dupes1;
 	}
 
-	public static Dataset<Row> allFieldsEqual(Dataset<Row> a, Arguments args) {
+	public  ZFrame<D, R, C> allFieldsEqual(ZFrame<D, R, C> a, Arguments args) {
 		for (FieldDefinition def : args.getFieldDefinition()) {
 			if (! (def.getMatchType() == null || def.getMatchType().equals(MatchType.DONT_USE))) {
 				//columns.add(def.getFieldName());
 				String field = def.getFieldName();
-				 a= a.filter(a.col(field).equalTo(
-					 a.col(ColName.COL_PREFIX + field)));		
+				 a= a.filter(a.equalTo(field,ColName.COL_PREFIX + field));		
 			}
 		}
 		LOG.info("All equals done");
@@ -175,8 +198,8 @@ public class DSUtil {
 		
 	}
 
-	public static List<Column> getFieldDefColumns (Dataset<Row> ds, Arguments args, boolean includeZid, boolean showConcise) {
-		List<Column> cols = new ArrayList<Column>();
+	public  List<C> getFieldDefColumns (ZFrame<D, R, C> ds, Arguments args, boolean includeZid, boolean showConcise) {
+		List<C> cols = new ArrayList<C>();
 		if (includeZid) {
 			cols.add(ds.col(ColName.ID_COL));						
 		}
@@ -191,15 +214,15 @@ public class DSUtil {
 
 	}
 
-	public static Dataset<Row> getFieldDefColumnsDS(Dataset<Row> ds, Arguments args, boolean includeZid) {
+	public  ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> ds, Arguments args, boolean includeZid) {
 		return select(ds, getFieldDefColumns(ds, args, includeZid, false));
 	}
 
-	public static Dataset<Row> select(Dataset<Row> ds, List<Column> cols) {
-		return ds.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
+	public  ZFrame<D, R, C> select(ZFrame<D, R, C> ds, List<C> cols) {
+		return ds.select(cols);
 	}
 
-	public static Dataset<Row> dropDuplicates(Dataset<Row> a, Arguments args) {
+	public  ZFrame<D, R, C> dropDuplicates(ZFrame<D, R, C> a, Arguments args) {
 		LOG.info("duplicates before " + a.count());
 		List<String> cols = new ArrayList<String>();
 		for (FieldDefinition def : args.getFieldDefinition()) {
@@ -214,19 +237,14 @@ public class DSUtil {
 		return a;			
 	}	
 
-	public static Dataset<Row> getTraining(SparkSession spark, Arguments args) {
-		return getTraining(spark, args, PipeUtil.getTrainingDataMarkedPipe(args)); 			
+	public  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, Arguments args) {
+		return getTraining(pipeUtil, args, pipeUtil.getTrainingDataMarkedPipe(args)); 			
 	}
-
-	public static Dataset<Row> getTrainingJdbc(SparkSession spark, Arguments args) {
-		return getTraining(spark, args, args.getOutput()[0]);
-	}
-
-	private static Dataset<Row> getTraining(SparkSession spark, Arguments args, Pipe p) {
-		Dataset<Row> trFile = null;
+	
+	private  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, Arguments args, Pipe p) {
+		ZFrame<D, R, C> trFile = null;
 		try{
-			trFile = PipeUtil.read(spark, 
-					false, false, p); 
+			trFile = pipeUtil.read(false, false, p); 
 			LOG.warn("Read marked training samples ");
 			trFile = trFile.drop(ColName.PREDICTION_COL);
 			trFile = trFile.drop(ColName.SCORE_COL);				
@@ -235,8 +253,7 @@ public class DSUtil {
 			LOG.warn("No preexisting marked training samples");
 		}
 		if (args.getTrainingSamples() != null) {
-			Dataset<Row> trSamples = PipeUtil.read(spark, 
-				true, false, args.getTrainingSamples()); 
+			ZFrame<D, R, C> trSamples = pipeUtil.read(true, false, args.getTrainingSamples()); 
 			LOG.warn("Read all training samples ");
 			trFile = (trFile == null) ? trSamples : trFile.unionByName(trSamples, true);
 		} 
@@ -247,10 +264,12 @@ public class DSUtil {
 		return trFile;		
 	}
 
-	public static List<FieldDefinition> getFieldDefinitionFiltered(Arguments args, MatchType type) {
+	public  List<FieldDefinition> getFieldDefinitionFiltered(Arguments args, MatchType type) {
 		return args.getFieldDefinition()
 				.stream()
 				.filter(f -> !(f.getMatchType() == null || f.getMatchType().equals(type)))
 				.collect(Collectors.toList());
 	}
+
+	public abstract ZFrame<D, R, C> addClusterRowNumber(ZFrame<D, R, C> ds);
 }

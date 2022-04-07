@@ -462,16 +462,7 @@ public class Util implements Serializable {
 		
 	}
 	
-	public static Dataset<Row> addUniqueCol(Dataset<Row> dupesActual, String colName) {
-		String append = System.currentTimeMillis() + ":";
-		dupesActual = dupesActual.withColumn(colName + "temp", 
-				functions.lit(append));
-		dupesActual = dupesActual.withColumn(colName,
-				functions.concat(dupesActual.col(colName + "temp"),
-						dupesActual.col(colName)));
-		dupesActual = dupesActual.drop(dupesActual.col(colName + "temp"));
-		return dupesActual;
-	}
+	
 	
 	public static byte[] convertObjectIntoByteArray(Object obj) throws IOException {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();

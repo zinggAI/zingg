@@ -1,4 +1,4 @@
-package zingg.model;
+package zingg.spark.model;
 
 import org.apache.spark.ml.linalg.Vector;
 import org.apache.spark.ml.util.Identifiable$;
