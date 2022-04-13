@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import scala.collection.JavaConverters;
 
-public class TestSparkFrame extends BaseSparkTest {
+public class TestSparkFrame extends TestSparkFrameBase {
 	public static final Log LOG = LogFactory.getLog(TestSparkFrame.class);
 
 	@Test
@@ -35,10 +35,9 @@ public class TestSparkFrame extends BaseSparkTest {
 	@Test
 	public void testAliasOfSparkFrame() {
 		SparkFrame sf = new SparkFrame(createSampleDataset());
-		Dataset<Row> df = sf.df();
 		String aliasName = "AnotherName";
 		sf.as(aliasName);
-		assertTrue(sf.as(aliasName).except(sf).isEmpty(), "Dataframe and its alias are not same");
+		assertTrueCheckingExceptOutput(sf.as(aliasName), sf, "Dataframe and its alias are not same");
 	}
 
 	@Test
@@ -48,7 +47,7 @@ public class TestSparkFrame extends BaseSparkTest {
 		String colName = "recid";
 		ZFrame<Dataset<Row>, Row, Column> sf2 = sf.select(colName);
 		SparkFrame sf3 = new SparkFrame(df.select(colName));
-		assertTrue(sf2.except(sf3).isEmpty(), "SparkFrame.select(colName) does not have expected value");
+		assertTrueCheckingExceptOutput(sf2, sf3, "SparkFrame.select(colName) does not have expected value");
 	}
 
 	@Test
@@ -59,6 +58,125 @@ public class TestSparkFrame extends BaseSparkTest {
 		ZFrame<Dataset<Row>, Row, Column> sf2 = sf.select(columnList);
 		SparkFrame sf3 = new SparkFrame(
 				df.select(JavaConverters.asScalaIteratorConverter(columnList.iterator()).asScala().toSeq()));
-		assertTrue(sf2.except(sf3).isEmpty(), "SparkFrame.select(columnList) does not have expected value");
+		assertTrueCheckingExceptOutput(sf2, sf3, "SparkFrame.select(columnList) does not have expected value");
+	}
+
+	@Test
+	public void testSelectWithColumnArray() {
+		Dataset<Row> df = createSampleDataset();
+		SparkFrame sf = new SparkFrame(df);
+		Column[] columnArray = new Column[] {col("recid"), col("surname"), col("postcode")};
+		ZFrame<Dataset<Row>, Row, Column> sf2 = sf.select(columnArray);
+		SparkFrame sf3 = new SparkFrame(df.select(columnArray));
+		assertTrueCheckingExceptOutput(sf2, sf3, "SparkFrame.select(columnArray) value does not match with standard select output");
+	}
+
+	@Test
+	public void testSelectWithMultipleColumnNamesAsString() {
+		Dataset<Row> df = createSampleDataset();
+		SparkFrame sf = new SparkFrame(df);
+		ZFrame<Dataset<Row>, Row, Column> sf2 = sf.select("recid",  "surname",  "postcode");
+		SparkFrame sf3 = new SparkFrame(df.select("recid",  "surname",  "postcode"));
+		assertTrueCheckingExceptOutput(sf2, sf3, "SparkFrame.select(str1, str2, ...) value does not match with standard select output");
+	}
+
+	@Test
+	public void testSelectExprByPassingColumnStringsAsInSQLStatement() {
+		Dataset<Row> df = createSampleDataset();
+		SparkFrame sf = new SparkFrame(df);
+		ZFrame<Dataset<Row>, Row, Column> sf2 = sf.selectExpr("recid as RecordId",  "surname as FamilyName",  "postcode as Pin");
+ 		SparkFrame sf3 = new SparkFrame(df.selectExpr("recid",  "surname",  "postcode"));
+ 		assertTrueCheckingExceptOutput(sf2, sf3, "SparkFrame.selectExpr(str1, str2, ...) value does not match with standard selectExpr output");
+	}
+
+	@Test
+	public void testDistinct() {
+		Dataset<Row> df = createSampleDataset();
+		SparkFrame sf = new SparkFrame(df);
+ 		SparkFrame sf2 = new SparkFrame(df.distinct());
+		 assertTrueCheckingExceptOutput(sf.distinct(), sf2, "SparkFrame.distict() does not match with standard distict() output");
+	}
+
+	@Test
+	public void testDropSingleColumn() {
+		Dataset<Row> df = createSampleDataset();
+		SparkFrame sf = new SparkFrame(df);
+		ZFrame<Dataset<Row>, Row, Column> sf2 = new SparkFrame(df.drop("recid"));
+		assertTrueCheckingExceptOutput(sf2, sf.drop("recid"), "SparkFrame.drop(str) does not match with standard drop() output");
+	}
+
+	@Test
+	public void testDropColumnsAsStringArray() {
+		Dataset<Row> df = createSampleDataset();
+		SparkFrame sf = new SparkFrame(df);
+		ZFrame<Dataset<Row>, Row, Column> sf2 = new SparkFrame(df.drop("recid",  "surname",  "postcode"));
+		assertTrueCheckingExceptOutput(sf2, sf.drop("recid", "surname", "postcode"), "SparkFrame.drop(str...) does not match with standard drop(str...) output");
+	}
+
+	@Test
+	public void testLimit() {
+		Dataset<Row> df = createSampleDataset();
+		SparkFrame sf = new SparkFrame(df);
+		int len = 5;
+		ZFrame<Dataset<Row>, Row, Column> sf2 = sf.limit(len);
+		assertTrue(sf2.count() == len);
+		assertTrueCheckingExceptOutput(sf2, sf.limit(len), "SparkFrame.limit(len) does not match with standard limit(len) output");
+	}
+
+	@Test
+	public void testDropDuplicatesConsideringGivenColumnsAsStringArray() {
+		Dataset<Row> df = createSampleDataset();
+		SparkFrame sf = new SparkFrame(df);
+		String[] columnArray = new String[] {"surname", "postcode"};
+		ZFrame<Dataset<Row>, Row, Column> sf2 = new SparkFrame(df.dropDuplicates(columnArray));
+		assertTrueCheckingExceptOutput(sf2, sf.dropDuplicates(columnArray), "SparkFrame.dropDuplicates(str[]) does not match with standard dropDuplicates(str[]) output");
+	}
+
+	@Test
+	public void testDropDuplicatesConsideringGivenIndividualColumnsAsString() {
+		Dataset<Row> df = createSampleDataset();
+		SparkFrame sf = new SparkFrame(df);
+		ZFrame<Dataset<Row>, Row, Column> sf2 = new SparkFrame(df.dropDuplicates("surname", "postcode"));
+		assertTrueCheckingExceptOutput(sf2, sf.dropDuplicates("surname"), "SparkFrame.dropDuplicates(col1, col2) does not match with standard dropDuplicates(col1, col2) output");
+	}
+
+	@Test
+	public void testHead() {
+		Dataset<Row> df = createSampleDataset();
+		SparkFrame sf = new SparkFrame(df);
+		Row row = sf.head();
+		assertTrue(row.equals(df.head()), "Top Row is not the expected one");
+	 }
+
+	@Test
+	public void testIsEmpty() {
+		Dataset<Row> df = spark.emptyDataFrame();
+		SparkFrame sf = new SparkFrame(df);
+		assertTrue(sf.isEmpty(), "DataFrame is not empty");
+	 }
+
+	@Test
+	public void getAsInt() {
+		Dataset<Row> df = createSampleDatasetHavingMixedDataTypes();
+		SparkFrame sf = new SparkFrame(df);
+		Row row = df.head();
+		LOG.debug("Value: " + row.getAs("recid"));
+		assertTrue(sf.getAsInt(row, "recid") == (int) row.getAs("recid"), "row.getAsInt(col) hasn't returned correct int value");
+	}
+	@Test
+	public void getAsString() {
+		Dataset<Row> df = createSampleDatasetHavingMixedDataTypes();
+		SparkFrame sf = new SparkFrame(df);
+		Row row = df.head();
+		LOG.debug("Value: " + row.getAs("surname"));
+		assertTrue(sf.getAsString(row, "surname").equals(row.getAs("surname")), "row.getAsString(col) hasn't returned correct string value");
+	}
+	@Test
+	public void getAsDouble() {
+		Dataset<Row> df = createSampleDatasetHavingMixedDataTypes();
+		SparkFrame sf = new SparkFrame(df);
+		Row row = df.head();
+		LOG.debug("Value: " + row.getAs("cost"));
+		assertTrue(sf.getAsDouble(row, "cost") == (double) row.getAs("cost"), "row.getAsDouble(col) hasn't returned correct double value");
 	}
 }

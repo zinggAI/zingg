@@ -1,10 +1,13 @@
 package zingg.client;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
@@ -16,13 +19,13 @@ import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-public class BaseSparkTest {
+public class TestSparkFrameBase {
 
 	public static Arguments args;
 	public static JavaSparkContext ctx;
 	public static SparkSession spark;
 
-	public static final Log LOG = LogFactory.getLog(BaseSparkTest.class);
+	public static final Log LOG = LogFactory.getLog(TestSparkFrameBase.class);
 
 	@BeforeAll
 	public static void setup() {
@@ -33,7 +36,7 @@ public class BaseSparkTest {
 					.appName("Zingg" + "Junit")
 					.getOrCreate();
 			ctx = new JavaSparkContext(spark.sparkContext());
-			JavaSparkContext.jarOfClass(BaseSparkTest.class);
+			JavaSparkContext.jarOfClass(TestSparkFrameBase.class);
 			args = new Arguments();
 		} catch (Throwable e) {
 			if (LOG.isDebugEnabled())
@@ -78,4 +81,26 @@ public class BaseSparkTest {
 		return sample;
 	}
 
+	public Dataset<Row> createSampleDatasetHavingMixedDataTypes() {
+		StructType schemaOfSample = new StructType(new StructField[] {
+				new StructField("recid", DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField("givenname", DataTypes.StringType, false, Metadata.empty()),
+				new StructField("surname", DataTypes.StringType, false, Metadata.empty()),
+				new StructField("cost", DataTypes.DoubleType, false, Metadata.empty()),
+				new StructField("postcode", DataTypes.IntegerType, false, Metadata.empty())
+		});
+
+		Dataset<Row> sample = spark.createDataFrame(Arrays.asList(
+				RowFactory.create(7317, "erjc", "henson", 0.54, 2873),
+				RowFactory.create(3102, "jhon", "kozak", 99.009, 28792),
+				RowFactory.create(2890, "david", "pisczek", 58.456, 27717),
+				RowFactory.create(4437, "e5in", "bbrown", 128.45, 27858)
+				), schemaOfSample);
+
+		return sample;
+	}
+
+	protected void assertTrueCheckingExceptOutput(ZFrame<Dataset<Row>, Row, Column> sf1, ZFrame<Dataset<Row>, Row, Column> sf2, String message) {
+		assertTrue(sf1.except(sf2).isEmpty(), message);
+	}
 }
