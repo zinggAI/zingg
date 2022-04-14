@@ -1,6 +1,7 @@
 package zingg.client;
 
 import static org.apache.spark.sql.functions.col;
+import org.apache.spark.sql.functions;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -17,6 +18,8 @@ import scala.collection.JavaConverters;
 
 public class TestSparkFrame extends TestSparkFrameBase {
 	public static final Log LOG = LogFactory.getLog(TestSparkFrame.class);
+
+	public static final String NEW_COLUMN = "newColumn";
 
 	@Test
 	public void testCreateSparkDataFrameAndGetDF() {
@@ -156,27 +159,84 @@ public class TestSparkFrame extends TestSparkFrameBase {
 	 }
 
 	@Test
-	public void getAsInt() {
+	public void testGetAsInt() {
 		Dataset<Row> df = createSampleDatasetHavingMixedDataTypes();
 		SparkFrame sf = new SparkFrame(df);
-		Row row = df.head();
+		Row row = sf.head();
 		LOG.debug("Value: " + row.getAs("recid"));
 		assertTrue(sf.getAsInt(row, "recid") == (int) row.getAs("recid"), "row.getAsInt(col) hasn't returned correct int value");
 	}
 	@Test
-	public void getAsString() {
+	public void testGetAsString() {
 		Dataset<Row> df = createSampleDatasetHavingMixedDataTypes();
 		SparkFrame sf = new SparkFrame(df);
-		Row row = df.head();
+		Row row = sf.head();
 		LOG.debug("Value: " + row.getAs("surname"));
 		assertTrue(sf.getAsString(row, "surname").equals(row.getAs("surname")), "row.getAsString(col) hasn't returned correct string value");
 	}
 	@Test
-	public void getAsDouble() {
+	public void testGetAsDouble() {
 		Dataset<Row> df = createSampleDatasetHavingMixedDataTypes();
 		SparkFrame sf = new SparkFrame(df);
-		Row row = df.head();
+		Row row = sf.head();
 		LOG.debug("Value: " + row.getAs("cost"));
 		assertTrue(sf.getAsDouble(row, "cost") == (double) row.getAs("cost"), "row.getAsDouble(col) hasn't returned correct double value");
+	}
+	@Test
+	public void testSortDescending() {
+		Dataset<Row> df = createSampleDatasetHavingMixedDataTypes();
+		SparkFrame sf = new SparkFrame(df);
+		String col = STR_RECID;
+		ZFrame<Dataset<Row>,Row,Column> sf2 = sf.sortDescending(col);
+		assertTrueCheckingExceptOutput(sf2, df.sort(functions.desc(col)), "SparkFrame.sortDescending() output is not as expected");
+	}
+	
+	@Test
+	public void testSortAscending() {
+		Dataset<Row> df = createSampleDatasetHavingMixedDataTypes();
+		SparkFrame sf = new SparkFrame(df);
+		String col = STR_RECID;
+		ZFrame<Dataset<Row>,Row,Column> sf2 = sf.sortAscending(col);
+		assertTrueCheckingExceptOutput(sf2, df.sort(functions.asc(col)), "SparkFrame.sortAscending() output is not as expected");
+	}
+
+	@Test
+	public void testWithColumnforIntegerValue() {
+		Dataset<Row> df = createSampleDatasetHavingMixedDataTypes();
+		SparkFrame sf = new SparkFrame(df);
+		String newCol = NEW_COLUMN;
+		int newColVal = 36;
+		ZFrame<Dataset<Row>,Row,Column> sf2 = sf.withColumn(newCol, newColVal);
+ 		assertTrueCheckingExceptOutput(sf2, df.withColumn(newCol, functions.lit(newColVal)), "SparkFrame.withColumn(c, int) output is not as expected");
+	}
+
+	@Test
+	public void testWithColumnforDoubleValue() {
+		Dataset<Row> df = createSampleDatasetHavingMixedDataTypes();
+		SparkFrame sf = new SparkFrame(df);
+		String newCol = NEW_COLUMN;
+		double newColVal = 3.14;
+		ZFrame<Dataset<Row>,Row,Column> sf2 = sf.withColumn(newCol, newColVal);
+ 		assertTrueCheckingExceptOutput(sf2, df.withColumn(newCol, functions.lit(newColVal)), "SparkFrame.withColumn(c, double) output is not as expected");
+	}
+
+	@Test
+	public void testWithColumnforStringValue() {
+		Dataset<Row> df = createSampleDatasetHavingMixedDataTypes();
+		SparkFrame sf = new SparkFrame(df);
+		String newCol = NEW_COLUMN;
+		String newColVal = "zingg";
+		ZFrame<Dataset<Row>,Row,Column> sf2 = sf.withColumn(newCol, newColVal);
+ 		assertTrueCheckingExceptOutput(sf2, df.withColumn(newCol, functions.lit(newColVal)), "SparkFrame.withColumn(c, String) output is not as expected");
+	}
+
+	@Test
+	public void testWithColumnforAnotherColumn() {
+		Dataset<Row> df = createSampleDatasetHavingMixedDataTypes();
+		SparkFrame sf = new SparkFrame(df);
+		String oldCol = STR_RECID;
+		String newCol = NEW_COLUMN;
+		ZFrame<Dataset<Row>,Row,Column> sf2 = sf.withColumn(newCol, col(oldCol));
+  		assertTrueCheckingExceptOutput(sf2, df.withColumn(newCol, col(oldCol)), "SparkFrame.withColumn(c, Column) output is not as expected");
 	}
 }

@@ -27,6 +27,13 @@ public class TestSparkFrameBase {
 
 	public static final Log LOG = LogFactory.getLog(TestSparkFrameBase.class);
 
+	public static final String STR_RECID = "recid";
+	public static final String STR_GIVENNAME = "givenname";
+	public static final String STR_SURNAME = "surname";
+	public static final String STR_COST = "cost";
+	public static final String STR_POSTCODE = "postcode";
+	public static final String STR_SUBURB = "suburb";
+
 	@BeforeAll
 	public static void setup() {
 		try {
@@ -83,11 +90,11 @@ public class TestSparkFrameBase {
 
 	public Dataset<Row> createSampleDatasetHavingMixedDataTypes() {
 		StructType schemaOfSample = new StructType(new StructField[] {
-				new StructField("recid", DataTypes.IntegerType, false, Metadata.empty()),
-				new StructField("givenname", DataTypes.StringType, false, Metadata.empty()),
-				new StructField("surname", DataTypes.StringType, false, Metadata.empty()),
-				new StructField("cost", DataTypes.DoubleType, false, Metadata.empty()),
-				new StructField("postcode", DataTypes.IntegerType, false, Metadata.empty())
+				new StructField(STR_RECID, DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField(STR_GIVENNAME, DataTypes.StringType, false, Metadata.empty()),
+				new StructField(STR_SURNAME, DataTypes.StringType, false, Metadata.empty()),
+				new StructField(STR_COST, DataTypes.DoubleType, false, Metadata.empty()),
+				new StructField(STR_POSTCODE, DataTypes.IntegerType, false, Metadata.empty())
 		});
 
 		Dataset<Row> sample = spark.createDataFrame(Arrays.asList(
@@ -101,6 +108,11 @@ public class TestSparkFrameBase {
 	}
 
 	protected void assertTrueCheckingExceptOutput(ZFrame<Dataset<Row>, Row, Column> sf1, ZFrame<Dataset<Row>, Row, Column> sf2, String message) {
+		assertTrue(sf1.except(sf2).isEmpty(), message);
+	}
+
+	protected void assertTrueCheckingExceptOutput(ZFrame<Dataset<Row>, Row, Column> sf1, Dataset<Row> df2, String message) {
+		SparkFrame sf2 = new SparkFrame(df2);
 		assertTrue(sf1.except(sf2).isEmpty(), message);
 	}
 }
