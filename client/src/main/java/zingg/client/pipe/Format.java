@@ -20,7 +20,8 @@ public enum Format implements Serializable{
 	PARQUET("PARQUET"),
 	AVRO("avro"),
 	SNOWFLAKE("net.snowflake.spark.snowflake"),
-	TEXT("text");
+	TEXT("text"),
+	INMEMORY("inMemory");
 	
 	String type;
 	static Map<String, Format> map;
