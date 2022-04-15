@@ -17,6 +17,7 @@ import org.apache.spark.sql.expressions.WindowSpec;
 import org.apache.spark.sql.types.DataType;
 
 import scala.collection.JavaConverters;
+import zingg.Documenter;
 import zingg.Linker;
 import zingg.block.Block;
 import zingg.block.Canopy;
@@ -36,13 +37,13 @@ import zingg.util.ModelUtil;
 import zingg.util.PipeUtilBase;
 
 
-public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,DataType,DataType> {
+public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row, Column,DataType,DataType> {
 
-	public static String name = "zingg.SparkLinker";
-	public static final Log LOG = LogFactory.getLog(SparkLinker.class);
+	public static String name = "zingg.SparkDocumenter";
+	public static final Log LOG = LogFactory.getLog(SparkDocumenter.class);
 
-	public SparkLinker() {
-		setZinggOptions(ZinggOptions.LINK);
+	public SparkDocumenter() {
+		setZinggOptions(ZinggOptions.GENERATE_DOCS);
 	}
 
 	
@@ -54,14 +55,5 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
 
 	
 
-	@Override
-	protected Model getModel() {
-		Model model = new SparkModel(this.featurers);
-		model.register(getContext());
-		model.load(args.getModel());
-		return model;
-	}
-
-	
 	
 }

@@ -17,7 +17,8 @@ import org.apache.spark.sql.expressions.WindowSpec;
 import org.apache.spark.sql.types.DataType;
 
 import scala.collection.JavaConverters;
-import zingg.Linker;
+import zingg.TrainMatcher;
+import zingg.Trainer;
 import zingg.block.Block;
 import zingg.block.Canopy;
 import zingg.block.Tree;
@@ -36,23 +37,15 @@ import zingg.util.ModelUtil;
 import zingg.util.PipeUtilBase;
 
 
-public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,DataType,DataType> {
+public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, Row, Column,DataType,DataType> {
 
-	public static String name = "zingg.SparkLinker";
-	public static final Log LOG = LogFactory.getLog(SparkLinker.class);
+	public static String name = "zingg.SparkTrainMatcher";
+	public static final Log LOG = LogFactory.getLog(SparkTrainMatcher.class);
 
-	public SparkLinker() {
-		setZinggOptions(ZinggOptions.LINK);
+	public SparkTrainMatcher() {
+		setZinggOptions(ZinggOptions.TRAIN_MATCH);
 	}
 
-	
-	@Override
-	public void cleanup() throws ZinggClientException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 
 	@Override
 	protected Model getModel() {
@@ -62,6 +55,15 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
 		return model;
 	}
 
+
+	@Override
+	public void cleanup() throws ZinggClientException {
+		// TODO Auto-generated method stub
+		
+	}
 	
+	
+
+		
 	
 }

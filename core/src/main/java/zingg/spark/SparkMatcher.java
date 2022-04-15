@@ -41,7 +41,7 @@ import zingg.util.PipeUtilBase;
 public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,DataType,DataType>{
 
 
-	protected static String name = "zingg.Matcher";
+	public static String name = "zingg.Matcher";
 	public static final Log LOG = LogFactory.getLog(SparkMatcher.class);    
 
 	
