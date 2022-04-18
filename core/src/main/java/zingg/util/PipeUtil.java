@@ -28,6 +28,7 @@ import zingg.client.pipe.CassandraPipe;
 import zingg.client.pipe.ElasticPipe;
 import zingg.client.pipe.FilePipe;
 import zingg.client.pipe.Format;
+import zingg.client.pipe.InMemoryPipe;
 import zingg.client.pipe.Pipe;
 import scala.Option;
 import scala.collection.JavaConverters;
@@ -71,6 +72,10 @@ public class PipeUtil {
 	private static Dataset<Row> read(DataFrameReader reader, Pipe p, boolean addSource) {
 		Dataset<Row> input = null;
 		LOG.warn("Reading " + p);
+
+		if (p.getFormat() == Format.INMEMORY) {
+			return ((InMemoryPipe) p).getRecords();
+		}
 		if (p.getProps().containsKey(FilePipe.LOCATION)) {
 			input = reader.load(p.get(FilePipe.LOCATION));
 		}
@@ -186,6 +191,11 @@ public class PipeUtil {
 		
 			LOG.warn("Writing output " + p);
 			
+			if (p.getFormat() == Format.INMEMORY) {
+ 				((InMemoryPipe) p).setRecords(toWriteOrig);
+				return;
+			}
+
 			if (p.getMode() != null) {
 				writer.mode(p.getMode());
 			}
