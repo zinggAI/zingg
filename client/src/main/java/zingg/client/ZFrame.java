@@ -9,7 +9,7 @@ public interface ZFrame<T, R, C> {
     public String[] columns();
     public ZFrame<T, R, C> select(C... cols);
     public ZFrame<T, R, C> select(List<C> cols);
-    public ZFrame<T, R, C> select(String col, String s);
+    public ZFrame<T, R, C> select(String col, String... cols);
     public ZFrame<T, R, C> select(String col);
     public ZFrame<T, R, C> selectExpr(String... col);
     public ZFrame <T, R, C> distinct();
@@ -34,7 +34,7 @@ public interface ZFrame<T, R, C> {
 
     public ZFrame<T,R,C> withColumnRenamed(String s, String t);
 
-    public ZFrame<T,R,C> dropDuplicates(String c, String d);
+    public ZFrame<T,R,C> dropDuplicates(String c, String... d);
 
     public ZFrame<T,R,C> dropDuplicates(String[] c);
 

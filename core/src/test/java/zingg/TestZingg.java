@@ -11,7 +11,7 @@ public class TestZingg {
 	private Arguments args;
 	private FieldDefinitions fieldDefs;
 	
-	@Before
+	@BeforeEach
     public void setUp() throws Exception, ZinggClientException{
       sc = new JavaSparkContext("local", "JavaAPISuite");
       
@@ -38,7 +38,7 @@ public class TestZingg {
 	  zingg = new Zingg(args,sc, System.getProperty("license"));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
       sc.stop();
       sc = null;

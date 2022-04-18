@@ -55,7 +55,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.selectExpr(col));
     }
 
-    public ZFrame<Dataset<Row>, Row, Column> select(String col, String col1) {
+    public ZFrame<Dataset<Row>, Row, Column> select(String col, String... col1) {
         return new SparkFrame(df.select(col, col1));
     }
 
@@ -106,7 +106,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 
     }
 
-    public ZFrame<Dataset<Row>, Row, Column> dropDuplicates(String c, String d) {
+    public ZFrame<Dataset<Row>, Row, Column> dropDuplicates(String c, String... d) {
         return new SparkFrame(df.dropDuplicates(c, d));
     }
 
