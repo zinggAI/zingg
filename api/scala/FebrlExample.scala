@@ -3,8 +3,10 @@ import java.util.ArrayList;
 
 //setting silent mode for Argument creation only 
 :silent
-val args = new Arguments();
 
+//build the arguments for zingg
+val args = new Arguments();
+//set field definitions
 val fname = new FieldDefinition();
 fname.setFieldName("fname");
 fname.setDataType("\"string\"");
@@ -79,13 +81,15 @@ fieldDef.add(dob);
 fieldDef.add(ssn);
 
 args.setFieldDefinition(fieldDef);
+//set the modelid and the zingg dir
 args.setModelId("100");
 args.setZinggDir("models");
 args.setNumPartitions(4);
 args.setLabelDataSampleSize(0.5f);
 
 //reading dataset into inputPipe and settint it up in 'args'
-//below line should not be required
+//below line should not be required if you are reading from in memory dataset
+//in that case, replace df with input df
 val df = spark.read.option("header", "true").csv("examples/febrl/test.csv")
 import zingg.client.pipe.InMemoryPipe;
 import java.util.HashMap
@@ -107,4 +111,5 @@ val options = new ClientOptions("--phase", "match",  "--conf", "dummy", "--licen
 val client = new Client(args, options);
 client.init();
 client.execute();
+//the output is in outputPipe.getRecords
 outputPipe.getRecords().show()
