@@ -43,8 +43,9 @@ public class StopWords {
 	}
 
 	public static UserDefinedFunction removeStopWords(List<String> stopWords) {
-		return udf((String s) -> {
-			 		ArrayList<String> allWords = Stream.of(s.split(" "))
+		return udf((String s) -> { 
+			if (s == null) return null;
+			ArrayList<String> allWords = Stream.of(s.split(" "))
 						.collect(Collectors.toCollection(ArrayList<String>::new));
 						allWords.removeAll(stopWords);
 			return allWords.stream().collect(Collectors.joining(" "));

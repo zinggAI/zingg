@@ -13,7 +13,7 @@
   </a>
 </nav>
    <p>
-  <table class="table table-borderless">
+  <table class="table table-borderless" style="width:auto" >
   <thead class="thead thead-dark">
   </thead>
   <tbody>
