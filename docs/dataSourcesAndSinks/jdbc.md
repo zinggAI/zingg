@@ -3,7 +3,7 @@
 Zingg can connect to various databases such as Mysql, DB2, MariaDB, MS Sql, Oracle, PostgreSQL etc. using JDBC. 
 One just needs to download appropriate driver and made it accessible to the application.
 
-To include the JDBC driver for your particular database on the spark classpath, set the following environemnt variable
+To include the JDBC driver for your particular database on the spark classpath, set the following environment variable before running Zingg.
 ```
 export ZINGG_EXTRA=<path of the driver jar>
 ```
@@ -26,7 +26,7 @@ Connection details are given below for a few jdbc sources. Please replace <db_na
     }],
 ``` 
 ```
-$ export ZINGG_EXTRA=postgresql-42.3.4.jar
+$ export ZINGG_EXTRA=path to postgresql-xx.jar
 ```
 
 ### Properties for mysql database:
@@ -45,5 +45,5 @@ $ export ZINGG_EXTRA=postgresql-42.3.4.jar
     }],
 ```
 ```
-$ export ZINGG_EXTRA=mysql-connector-java-8.0.28
+$ export ZINGG_EXTRA=path to mysql-connector-java-xx.jar
 ```
