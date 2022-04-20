@@ -18,6 +18,7 @@
 * [Data Sources and Sinks](dataSourcesAndSinks/connectors.md)
   * [Zingg Pipes](dataSourcesAndSinks/pipes.md)
   * [Snowflake](dataSourcesAndSinks/snowflake.md)
+  * [Jdbc](dataSourcesAndSinks/jdbc.md)
   * [Cassandra](dataSourcesAndSinks/cassandra.md)
   * [MongoDB](dataSourcesAndSinks/mongodb.md)
   * [Neo4j](dataSourcesAndSinks/neo4j.md)
