@@ -18,7 +18,7 @@
   </thead>
   <tbody>
   <tr>
-    <th>Word</th>
+    <th>StopWord</th>
     <th>Count</th>
   </tr>
 

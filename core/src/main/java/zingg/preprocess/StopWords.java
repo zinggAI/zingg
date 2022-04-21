@@ -22,7 +22,8 @@ import zingg.util.PipeUtil;
 public class StopWords {
 
 	protected static String name = "zingg.preprocess.StopWords";
-	public static final Log LOG = LogFactory.getLog(StopWords.class); 
+	public static final Log LOG = LogFactory.getLog(StopWords.class);
+	protected static String stopWordColumn = "StopWord";
 
     public static Dataset<Row> preprocessForStopWords(SparkSession spark, Arguments args, Dataset<Row> ds) {
 
@@ -30,7 +31,7 @@ public class StopWords {
 		for (FieldDefinition def : args.getFieldDefinition()) {
 			if (!(def.getStopWords() == null || def.getStopWords() == "")) {
 				Dataset<Row> stopWords = PipeUtil.read(spark, false, false, PipeUtil.getStopWordsPipe(args, def.getStopWords()));
-				wordList = stopWords.select("_c0").as(Encoders.STRING()).collectAsList();
+				wordList = stopWords.select(stopWordColumn).as(Encoders.STRING()).collectAsList();
 				String pattern = wordList.stream().collect(Collectors.joining("|", "\\b(", ")\\b\\s?"));
 				ds = ds.withColumn(def.getFieldName(), removeStopWords(pattern.toLowerCase()).apply(ds.col(def.getFieldName())));
 			}

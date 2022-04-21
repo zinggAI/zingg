@@ -80,7 +80,7 @@ public class TestStopWords extends BaseSparkTest{
 							RowFactory.create("20", "It is very popular in Data Science", "Three", "true indeed",
 									"test"),
 							RowFactory.create("30", "It is written in java and scala", "four", "", "test"),
-							RowFactory.create("40", "Best of luck to zingg", "Five", "thank you", "test")),
+							RowFactory.create("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test")),
 					schemaOriginal);
 
 			Dataset<Row> datasetExpected = spark.createDataFrame(
@@ -88,7 +88,7 @@ public class TestStopWords extends BaseSparkTest{
 						RowFactory.create("10", "zingg spark application", "two", "Yes. a good application", "test"),
 						RowFactory.create("20", "very popular data science", "Three", "true indeed", "test"),
 						RowFactory.create("30", "written java scala", "four", "", "test"),
-						RowFactory.create("40", "best luck to zingg", "Five", "thank you", "test")),
+						RowFactory.create("40", "best luck to zingg ", "Five", "thank you", "test")),
 				schemaOriginal);
   			String stopWordsFileName = getClass().getResource("../../stopWords.csv").getFile();
  			FieldDefinition fd = new FieldDefinition();
