@@ -56,7 +56,7 @@ Download the tar zingg-version.tar.gz to a folder of your choice and run the fol
 
 >gzip -d zingg-0.3.3-SNAPSHOT-bin.tar.gz ; tar xvf zingg-0.3.3-SNAPSHOT-bin.tar 
 
-This will create a folder zingg-0.3.1-SNAPSHOT under the chosen folder. 
+This will create a folder zingg-0.3.3-SNAPSHOT under the chosen folder. 
  
 Move the above folder to zingg. 
 

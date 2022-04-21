@@ -1,13 +1,12 @@
 # Table of contents
 
-* [Welcome to Zingg](../index.md)
-
+* [Welcome to Zingg](README.md)
 * [Step By Step Guide](stepByStep.md)
   * [Installation](setup/installation.md)
     * [Working with Docker Image](setup/workingWithDocker.md)
   * [Hardware Sizing](setup/hardwareSizing.md)
   * [Configuration](setup/configuration.md)
-  * [**Creating training data**](setup/training/createTrainingData.md)
+  * [Creating training data](setup/training/createTrainingData.md)
     * [findTrainingData](setup/training/findTrainingData.md)
     * [label](setup/training/label.md)
     * [findAndLabel](setup/training/findAndLabel.md)
@@ -16,34 +15,31 @@
   * [Building and saving the model](setup/train.md)
   * [Finding the matches](setup/match.md)
   * [Linking across datasets](setup/link.md)
-
 * [Data Sources and Sinks](dataSourcesAndSinks/connectors.md)
   * [Zingg Pipes](dataSourcesAndSinks/pipes.md)
   * [Snowflake](dataSourcesAndSinks/snowflake.md)
+  * [Jdbc](dataSourcesAndSinks/jdbc.md)
   * [Cassandra](dataSourcesAndSinks/cassandra.md)
   * [MongoDB](dataSourcesAndSinks/mongodb.md)
   * [Neo4j](dataSourcesAndSinks/neo4j.md)
   * [Parquet](dataSourcesAndSinks/parquet.md)
-  
 * [Running Zingg on Cloud](running/running.md)
   * [Running on AWS](running/aws.md)
   * [Running on Azure](running/azure.md)
   * [Running on Databricks](running/databricks.md)
-  
 * [Zingg Models](zModels.md)
   * [Pretrained models](pretrainedModels.md)
-
- * Improving Accuracy
+* Improving Accuracy
   * [Preparing data with Stop Words Removal](accuracy/stopWordsRemoval.md)
   * [Defining Own Functions](accuracy/definingOwn.md)
 
- * [Generating Documentation & Recommendations](generatingDocumentation.md)
+* [Generating Documentation & Recommendations](generatingDocumentation.md)
   * [Stop Words](stopWordsReco.md)
 
- * [Output Scores](scoring.md)
- * [Security And Privacy](security.md)
- * [Updating Labeled Pairs](updatingLabels.md)
- * [Reporting bugs and contributing ](contributing.md)
- * [Community](community.md)
- * [Frequently Asked Questions](faq.md)
- * [Reading Material](reading.md)
+* [Output Scores](scoring.md)
+* [Security And Privacy](security.md)
+* [Updating Labeled Pairs](updatingLabels.md)
+* [Reporting bugs and contributing ](contributing.md)
+* [Community](community.md)
+* [Frequently Asked Questions](faq.md)
+* [Reading Material](reading.md)
