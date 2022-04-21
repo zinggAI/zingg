@@ -13,12 +13,12 @@
   </a>
 </nav>
    <p>
-  <table class="table table-borderless">
+  <table class="table table-borderless" style="width:auto" >
   <thead class="thead thead-dark">
   </thead>
   <tbody>
   <tr>
-    <th>Word</th>
+    <th>StopWord</th>
     <th>Count</th>
   </tr>
 

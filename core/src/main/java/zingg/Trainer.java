@@ -8,7 +8,7 @@ import org.apache.spark.sql.Row;
 import zingg.block.Canopy;
 import zingg.block.Tree;
 import zingg.model.Model;
-
+import zingg.preprocess.StopWords;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.util.Analytics;
@@ -37,7 +37,8 @@ public class Trainer extends ZinggBase{
 			
 			Dataset<Row> positives = null;
 			Dataset<Row> negatives = null;
-			Dataset<Row> tra = DSUtil.getTraining(spark, args);
+			Dataset<Row> traOriginal = DSUtil.getTraining(spark, args);
+			Dataset<Row> tra = StopWords.preprocessForStopWords(spark, args, traOriginal);
 			tra = DSUtil.joinWithItself(tra, ColName.CLUSTER_COLUMN, true);
 			tra = tra.cache();
 			positives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH));
@@ -45,7 +46,9 @@ public class Trainer extends ZinggBase{
 			LOG.warn("Training on positive pairs - " + positives.count());
 			LOG.warn("Training on negative pairs - " + negatives.count());
 				
-			Dataset<Row> testData = PipeUtil.read(spark, true, args.getNumPartitions(), false, args.getData());
+			Dataset<Row> testDataOriginal = PipeUtil.read(spark, true, args.getNumPartitions(), false, args.getData());
+			Dataset<Row> testData = StopWords.preprocessForStopWords(spark, args, testDataOriginal);
+
 			Tree<Canopy> blockingTree = BlockingTreeUtil.createBlockingTreeFromSample(testData,  positives, 0.5,
 					-1, args, hashFunctions);
 			if (blockingTree == null || blockingTree.getSubTrees() == null) {

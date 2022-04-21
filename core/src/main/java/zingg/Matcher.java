@@ -18,7 +18,7 @@ import zingg.block.Block;
 import zingg.block.Canopy;
 import zingg.block.Tree;
 import zingg.model.Model;
-
+import zingg.preprocess.StopWords;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.util.Analytics;
@@ -99,7 +99,8 @@ public class Matcher extends ZinggBase{
     public void execute() throws ZinggClientException {
         try {
 			// read input, filter, remove self joins
-			Dataset<Row> testData = getTestData();
+			Dataset<Row> testDataOriginal = getTestData();
+			Dataset<Row> testData = StopWords.preprocessForStopWords(spark, args, testDataOriginal);
 			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
 			long count = testData.count();
@@ -149,7 +150,7 @@ public class Matcher extends ZinggBase{
 			//dupesActual.explain();
 			//dupesActual.toJavaRDD().saveAsTextFile("/tmp/zdupes");
 			
-			writeOutput(testData, dupesActual);		
+			writeOutput(testDataOriginal, dupesActual);		
 			
 		} catch (Exception e) {
 			if (LOG.isDebugEnabled()) e.printStackTrace();

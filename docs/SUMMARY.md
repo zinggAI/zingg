@@ -29,12 +29,17 @@
   * [Running on Databricks](running/databricks.md)
 * [Zingg Models](zModels.md)
   * [Pretrained models](pretrainedModels.md)
-* [Improving Accuracy By Defining Own Functions](definingOwn.md)
-* [Generating Documentation](generatingDocumentation.md)
+* Improving Accuracy
+  * [Preparing data with Stop Words Removal](accuracy/stopWordsRemoval.md)
+  * [Defining Own Functions](accuracy/definingOwn.md)
+
+* [Generating Documentation & Recommendations](generatingDocumentation.md)
+  * [Stop Words](stopWordsReco.md)
+
 * [Output Scores](scoring.md)
 * [Security And Privacy](security.md)
 * [Updating Labeled Pairs](updatingLabels.md)
-* [Reporting bugs and contributing code](contributing.md)
+* [Reporting bugs and contributing ](contributing.md)
 * [Community](community.md)
 * [Frequently Asked Questions](faq.md)
 * [Reading Material](reading.md)

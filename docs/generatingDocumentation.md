@@ -10,3 +10,5 @@ Zingg generates readable documentation about the training data, including those 
 The generated documentation file can be viewed in a browser and looks like as below.
 
 ![Training Data](/assets/documentation1.png)
+
+To view Zingg recommendations for stop words, click on the column header of that field in above documentation. Stop word recommendation files are written in folder zinggDir/modelId/stopWords

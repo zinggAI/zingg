@@ -44,8 +44,8 @@ public class Documenter extends ZinggBase {
 
 	public void execute() throws ZinggClientException {
 		try {
-			LOG.info("Document generation in progress");
-			Dataset<Row> markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
+			LOG.info("Document generation starts");
+			Dataset<Row> markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));		
 			markedRecords = markedRecords.cache();
 			//List<Column> displayCols = DSUtil.getFieldDefColumns(markedRecords, args, false);
 			List<Row> clusterIDs = markedRecords.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();
@@ -59,6 +59,7 @@ public class Documenter extends ZinggBase {
 			root.put("fieldDefinitionCount", args.getFieldDefinition().size());
 			buildAndWriteHTML(root);
 			extractStopWords();
+			LOG.info("Document generation completes");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ZinggClientException(e.getMessage());
@@ -123,32 +124,36 @@ public class Documenter extends ZinggBase {
 		Dataset<Row> data = PipeUtil.read(spark, false, false, args.getData());
 		LOG.warn("Read input data : " + data.count());
 
+		String stopWordsDir = args.getZinggDocDir() + "/stopWords/";
+		String columnsDir = args.getZinggDocDir() + "/columns/";
+		checkAndCreateDir(stopWordsDir);
+		checkAndCreateDir(columnsDir);
+		
 		List<FieldDefinition> fields = DSUtil.getFieldDefinitionFiltered(args, MatchType.DONT_USE);
 		for (FieldDefinition field : fields) {
-			findAndWriteStopWords(data, field);
+			findAndWriteStopWords(data, field.fieldName, stopWordsDir, columnsDir);
 		}
+		findAndWriteStopWords(spark.emptyDataFrame(), ColName.SCORE_COL, stopWordsDir, columnsDir);
+		findAndWriteStopWords(spark.emptyDataFrame(), ColName.SOURCE_COL, stopWordsDir, columnsDir);
+
 		LOG.info("Stop words generation finishes");
 	}
 
-	private void findAndWriteStopWords(Dataset<Row> data, FieldDefinition field) throws ZinggClientException {
-		String stopWordsDir = args.getZinggDocDir() + "/stopWords/";
-		String columnsDir = args.getZinggDocDir() + "/columns/";
+	private void findAndWriteStopWords(Dataset<Row> data, String fieldName, String stopWordsDir, String columnsDir) throws ZinggClientException {
+		LOG.debug("Field: " + fieldName);
+		if(!data.isEmpty()) {
+			data = data.select(split(data.col(fieldName), "\\s+").as("split"));
+			data = data.select(explode(data.col("split")).as("word"));
+			data = data.filter(data.col("word").notEqual(""));
+			data = data.groupBy("word").count().orderBy(desc("count"));
+			data = data.limit(Math.round(data.count()*args.getStopWordsCutoff()));
+		}
 
-		checkAndCreateDir(stopWordsDir);
-		checkAndCreateDir(columnsDir);
-
-		LOG.debug("Field: " + field.fieldName);
-		data = data.select(split(data.col(field.fieldName), "\\s+").as("split"));
-		data = data.select(explode(data.col("split")).as("word"));
-		data = data.filter(data.col("word").notEqual(""));
-		data = data.groupBy("word").count().orderBy(desc("count"));
-		data = data.limit(Math.round(data.count()*args.getStopWordsCutoff()));
-		String filenameCSV = stopWordsDir + field.fieldName + ".csv";
-		String filenameHTML = columnsDir + field.fieldName + ".html";
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put("modelId", args.getModelId());
 		root.put("stopWords", data.collectAsList());
-
+		String filenameCSV = stopWordsDir + fieldName + ".csv";
+		String filenameHTML = columnsDir + fieldName + ".html";
 		writeStopWords(CSV_TEMPLATE, root, filenameCSV);
 		writeStopWords(HTML_TEMPLATE, root, filenameHTML);
 	}

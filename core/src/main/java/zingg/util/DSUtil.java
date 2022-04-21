@@ -1,10 +1,12 @@
 package zingg.util;
 
+
+import org.apache.spark.sql.functions;
+
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.functions;
 
 import scala.collection.JavaConverters;
 import zingg.client.Arguments;
@@ -13,6 +15,8 @@ import zingg.client.MatchType;
 import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
+
+import static org.apache.spark.sql.functions.col;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +28,7 @@ import org.apache.commons.logging.LogFactory;
 public class DSUtil {
 
     public static final Log LOG = LogFactory.getLog(DSUtil.class);	
-
+				
 	public static final String[] getPrefixedColumns(String[] cols) {
 		for (int i=0; i < cols.length; ++i) {
 			cols[i] = ColName.COL_PREFIX + cols[i];
@@ -91,10 +95,10 @@ public class DSUtil {
 	}
 
 	public static Dataset<Row> alignLinked(Dataset<Row> dupesActual, Arguments args) {
-		dupesActual = dupesActual.cache();
-		dupesActual = dupesActual.withColumnRenamed(ColName.ID_COL, ColName.CLUSTER_COLUMN);
+		dupesActual = dupesActual.cache();		
 		List<Column> cols = new ArrayList<Column>();
 		cols.add(dupesActual.col(ColName.CLUSTER_COLUMN));
+		cols.add(dupesActual.col(ColName.ID_COL));
 		cols.add(dupesActual.col(ColName.SCORE_COL));
 		
 		for (FieldDefinition def: args.getFieldDefinition()) {
@@ -106,6 +110,7 @@ public class DSUtil {
 		dupes1 = dupes1.dropDuplicates(ColName.CLUSTER_COLUMN, ColName.SOURCE_COL);
 	 	List<Column> cols1 = new ArrayList<Column>();
 		cols1.add(dupesActual.col(ColName.CLUSTER_COLUMN));
+		cols1.add(dupesActual.col(ColName.COL_PREFIX + ColName.ID_COL));
 		cols1.add(dupesActual.col(ColName.SCORE_COL));
 		
 		for (FieldDefinition def: args.getFieldDefinition()) {
@@ -253,4 +258,37 @@ public class DSUtil {
 				.filter(f -> !(f.getMatchType() == null || f.getMatchType().equals(type)))
 				.collect(Collectors.toList());
 	}
+
+    public static Dataset<Row> postprocess(Dataset<Row> actual, Dataset<Row> orig) {
+    	List<Column> cols = new ArrayList<Column>();	
+    	cols.add(actual.col(ColName.CLUSTER_COLUMN));
+    	cols.add(actual.col(ColName.ID_COL));
+    	cols.add(actual.col(ColName.PREDICTION_COL));
+    	cols.add(actual.col(ColName.SCORE_COL));
+    	cols.add(col(ColName.MATCH_FLAG_COL));
+    
+    	Dataset<Row> zFieldsFromActual = actual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
+    	
+    	Dataset<Row> joined = zFieldsFromActual.join(orig, ColName.ID_COL);
+    
+    	return joined;
+    }
+
+    public static Dataset<Row> postprocessLinked(Dataset<Row> actual, Dataset<Row> orig) {
+    	List<Column> cols = new ArrayList<Column>();
+        cols.add(actual.col(ColName.CLUSTER_COLUMN));	
+    	cols.add(actual.col(ColName.ID_COL));
+    	cols.add(actual.col(ColName.SCORE_COL));
+    	cols.add(actual.col(ColName.SOURCE_COL));	
+    
+    	Dataset<Row> zFieldsFromActual = actual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
+    	Dataset<Row> joined = zFieldsFromActual.join(orig,
+    			zFieldsFromActual.col(ColName.ID_COL).equalTo(orig.col(ColName.ID_COL))
+    					.and(zFieldsFromActual.col(ColName.SOURCE_COL).equalTo(orig.col(ColName.SOURCE_COL))))
+    					.drop(zFieldsFromActual.col(ColName.SOURCE_COL))
+    					.drop(zFieldsFromActual.col(ColName.ID_COL))
+    					.drop(orig.col(ColName.ID_COL));
+    
+    	return joined;
+    }
 }

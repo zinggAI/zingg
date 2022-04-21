@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>zingg</groupId>
 	<artifactId>parent</artifactId>
@@ -24,11 +23,11 @@
 			<organizationUrl>http://www.zingg.ai</organizationUrl>
 		</developer>
 	</developers>
-		<modules>
-			<module>core</module>
-			<module>client</module>
-			<module>assembly</module>
-		</modules>
+	<modules>
+		<module>core</module>
+		<module>client</module>
+		<module>assembly</module>
+	</modules>
 	<profiles>
 		<profile>
 			<id>spark-3.1</id>
@@ -124,14 +123,14 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-				<groupId>net.snowflake</groupId>
-				<artifactId>spark-snowflake_${scala.binary.version}</artifactId>
-				<version>2.9.0-spark_${spark.binary.version}</version>
+			<groupId>net.snowflake</groupId>
+			<artifactId>spark-snowflake_${scala.binary.version}</artifactId>
+			<version>2.9.0-spark_${spark.binary.version}</version>
 		</dependency>
 		<dependency>
-				<groupId>net.snowflake</groupId>
-				<artifactId>snowflake-jdbc</artifactId>
-				<version>3.13.5</version>
+			<groupId>net.snowflake</groupId>
+			<artifactId>snowflake-jdbc</artifactId>
+			<version>3.13.5</version>
 		</dependency>
 		<dependency>
 			<!-- https://mvnrepository.com/artifact/com.datastax.spark/spark-cassandra-connector -->
@@ -163,7 +162,8 @@
 			<version>${spark.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>			<!-- Spark dependency -->
+		<dependency>
+			<!-- Spark dependency -->
 			<groupId>org.scala-lang</groupId>
 			<artifactId>scala-library</artifactId>
 			<version>${scala.version}</version>
@@ -188,10 +188,17 @@
 			<version>1.4</version>
 		</dependency>
 
+
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.13.1</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.8.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -295,8 +302,8 @@
 					</execution>
 				</executions>
 				<configuration>
-          				<scalaVersion>${scala.version}</scalaVersion>
-        			</configuration>
+					<scalaVersion>${scala.version}</scalaVersion>
+				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -310,7 +317,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.4.2</version>
+				<version>2.22.2</version>
 				<configuration>
 					<systemProperties>
 						<property>
@@ -322,9 +329,9 @@
 							<value>${project.parent.basedir}/license/zinggLicense</value>
 						</property>
 					</systemProperties>
-        				<additionalClasspathElements>
-          					<additionalClasspathElement>${project.parent.basedir}/client/target/classes</additionalClasspathElement>
-        				</additionalClasspathElements>
+					<additionalClasspathElements>
+						<additionalClasspathElement>${project.parent.basedir}/client/target/classes</additionalClasspathElement>
+					</additionalClasspathElements>
 				</configuration>
 			</plugin>
 		</plugins>

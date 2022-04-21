@@ -5,9 +5,9 @@ import java.io.File;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
@@ -19,12 +19,12 @@ public class TestFebrlDataset {
 	
 	private transient JavaSparkContext sc;
 	
-	@Before
+	@BeforeEach
     public void setUp() throws Exception, ZinggClientException{
       sc = new JavaSparkContext("local", "JavaAPISuite");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
       sc.stop();
       sc = null;
