@@ -100,6 +100,7 @@ public class Matcher extends ZinggBase{
         try {
 			// read input, filter, remove self joins
 			Dataset<Row> testDataOriginal = getTestData();
+			testDataOriginal = DSUtil.getFieldDefColumnsDS(testDataOriginal, args, true);
 			Dataset<Row> testData = StopWords.preprocessForStopWords(spark, args, testDataOriginal);
 			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
