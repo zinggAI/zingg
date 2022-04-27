@@ -17,7 +17,7 @@
   <thead class="thead thead-dark">
   <tr>
     <th>Cluster</th>
-    <#list 3 ..< numColumns -1 as entityIndex>
+    <#list 3 ..< numColumns as entityIndex>
     <th> <a href="columns/${columns[entityIndex]}.html"> ${columns[entityIndex]!} </a></th>
     </#list>
   </tr>
@@ -27,22 +27,22 @@
   <tr>
     <#if c?is_odd_item>
       <td rowspan="2"
-      <#if c[numColumns-1] == 0>  class="table-danger"
+      <#if c[isMatchColumnIndex] == 0>  class="table-danger"
       </#if>
-      <#if c[numColumns -1] == 1> class="table-success"
+      <#if c[isMatchColumnIndex] == 1> class="table-success"
       </#if>
       >
-      ${c[0]!}
+      ${c[clusterColumnIndex]!}
       </td>
     </#if>
   
   
-    <#list 3 ..< numColumns -1 as entityIndex>
+    <#list 3 ..< numColumns as entityIndex>
     <td 
      <#if c?is_even_item>
-      <#if c[numColumns-1] == 0>  class="border-bottom bottom-danger"
+      <#if c[isMatchColumnIndex] == 0>  class="border-bottom bottom-danger"
       </#if>
-      <#if c[numColumns -1] == 1> class="border-bottom border-success"
+      <#if c[isMatchColumnIndex] == 1> class="border-bottom border-success"
       </#if>
      </#if>
      >
