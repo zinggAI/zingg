@@ -51,6 +51,10 @@ public class TrainingDataFinder extends ZinggBase{
     public void execute() throws ZinggClientException {
 			try{
 				Dataset<Row> data = PipeUtil.read(spark, true, true, args.getData());
+				if (data == null || data.isEmpty()) {
+					throw new ZinggClientException(
+							"Test Data is missing or empty. 'findTrainingData' job cannot be executed.");
+				}
 				LOG.warn("Read input data " + data.count());
 				//create 20 pos pairs
 
