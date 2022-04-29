@@ -88,6 +88,10 @@ public class BlockingTreeUtil {
 
 	public static Tree<Canopy> readBlockingTree(SparkSession spark, Arguments args) throws Exception {
 		Dataset<Row> tree = PipeUtil.read(spark, false, args.getNumPartitions(), false, PipeUtil.getBlockingTreePipe(args));
+		if (tree == null || tree.isEmpty()) {
+			throw new Exception(
+					"Blocking Tree is missing. Matching cannot be done. Please train the model first.");
+		}
 		byte [] byteArrayBack = (byte[]) tree.head().get(0);
 		Tree<Canopy> blockingTree = null;
 		blockingTree =  (Tree<Canopy>) Util.revertObjectFromByteArray(byteArrayBack);
