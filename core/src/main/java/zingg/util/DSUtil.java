@@ -12,6 +12,7 @@ import scala.collection.JavaConverters;
 import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
 import zingg.client.MatchType;
+import zingg.client.ZinggClientException;
 import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
@@ -219,15 +220,15 @@ public class DSUtil {
 		return a;			
 	}	
 
-	public static Dataset<Row> getTraining(SparkSession spark, Arguments args) {
+	public static Dataset<Row> getTraining(SparkSession spark, Arguments args) throws ZinggClientException {
 		return getTraining(spark, args, PipeUtil.getTrainingDataMarkedPipe(args)); 			
 	}
 
-	public static Dataset<Row> getTrainingJdbc(SparkSession spark, Arguments args) {
+	public static Dataset<Row> getTrainingJdbc(SparkSession spark, Arguments args) throws ZinggClientException {
 		return getTraining(spark, args, args.getOutput()[0]);
 	}
 
-	private static Dataset<Row> getTraining(SparkSession spark, Arguments args, Pipe p) {
+	private static Dataset<Row> getTraining(SparkSession spark, Arguments args, Pipe p) throws ZinggClientException {
 		Dataset<Row> trFile = null;
 		try{
 			trFile = PipeUtil.read(spark, 
@@ -236,7 +237,7 @@ public class DSUtil {
 			trFile = trFile.drop(ColName.PREDICTION_COL);
 			trFile = trFile.drop(ColName.SCORE_COL);				
 		}
-		catch (Exception e) {
+		catch (ZinggClientException e) {
 			LOG.warn("No preexisting marked training samples");
 		}
 		if (args.getTrainingSamples() != null) {

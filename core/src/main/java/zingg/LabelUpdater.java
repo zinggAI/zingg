@@ -41,12 +41,12 @@ public class LabelUpdater extends Labeller {
 
 	public void processRecordsCli(Dataset<Row> lines) throws ZinggClientException {
 		LOG.info("Processing Records for CLI updateLabelling");
-		getMarkedRecordsStat(lines);
-		printMarkedRecordsStat();
 		if (lines == null || lines.count() == 0) {
 			LOG.info("There is no marked record for updating. Please run findTrainingData/label jobs to generate training data.");
 			return;
 		}
+		getMarkedRecordsStat(lines);
+		printMarkedRecordsStat();
 
 		List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false, args.getShowConcise());
 		try {
@@ -104,7 +104,6 @@ public class LabelUpdater extends Labeller {
 			LOG.warn("An error has occured while Updating Label. " + e.getMessage());
 			throw new ZinggClientException(e.getMessage());
 		}
-		return;
 	}
 
 	

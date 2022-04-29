@@ -23,6 +23,7 @@ import org.apache.spark.storage.StorageLevel;
 
 //import zingg.scala.DFUtil;
 import zingg.client.Arguments;
+import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 import zingg.client.pipe.CassandraPipe;
 import zingg.client.pipe.ElasticPipe;
@@ -68,22 +69,26 @@ public class PipeUtil {
 		return reader;
 	}
 
-	private static Dataset<Row> read(DataFrameReader reader, Pipe p, boolean addSource) {
+	private static Dataset<Row> read(DataFrameReader reader, Pipe p, boolean addSource) throws ZinggClientException{
 		Dataset<Row> input = null;
 		LOG.warn("Reading " + p);
-		if (p.getProps().containsKey(FilePipe.LOCATION)) {
-			input = reader.load(p.get(FilePipe.LOCATION));
-		}
-		else {
-			input = reader.load();
-		}
-		if (addSource) {
-			input = input.withColumn(ColName.SOURCE_COL, functions.lit(p.getName()));			
+		try {
+			if (p.getProps().containsKey(FilePipe.LOCATION)) {
+				input = reader.load(p.get(FilePipe.LOCATION));
+			}
+			else {
+				input = reader.load();
+			}
+			if (addSource) {
+				input = input.withColumn(ColName.SOURCE_COL, functions.lit(p.getName()));
+			}
+		} catch (Exception ex) {
+			throw new ZinggClientException(ex.getMessage());
 		}
 		return input;
 	}
 
-	private static Dataset<Row> readInternal(SparkSession spark, Pipe p, boolean addSource) {
+	private static Dataset<Row> readInternal(SparkSession spark, Pipe p, boolean addSource) throws ZinggClientException {
 		DataFrameReader reader = getReader(spark, p);
 		return read(reader, p, addSource);		
 	}
@@ -123,7 +128,7 @@ public class PipeUtil {
 
 
 	private static Dataset<Row> readInternal(SparkSession spark, boolean addLineNo,
-			boolean addSource, Pipe... pipes) {
+			boolean addSource, Pipe... pipes) throws ZinggClientException {
 		Dataset<Row> input = null;
 
 		for (Pipe p : pipes) {
@@ -150,13 +155,13 @@ public class PipeUtil {
 		return input;
 	}
 
-	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, boolean addSource, Pipe... pipes) {
+	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, boolean addSource, Pipe... pipes) throws ZinggClientException {
 		Dataset<Row> rows = readInternal(spark, addLineNo, addSource, pipes);
 		rows = rows.persist(StorageLevel.MEMORY_ONLY());
 		return rows;
 	}
 
-	public static Dataset<Row> sample(SparkSession spark, Pipe p) {
+	public static Dataset<Row> sample(SparkSession spark, Pipe p) throws ZinggClientException {
 		DataFrameReader reader = getReader(spark, p);
 		reader.option("inferSchema", true);
 		reader.option("mode", "DROPMALFORMED");
@@ -172,7 +177,7 @@ public class PipeUtil {
 	}
 
 	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, int numPartitions,
-			boolean addSource, Pipe... pipes) {
+			boolean addSource, Pipe... pipes) throws ZinggClientException {
 		Dataset<Row> rows = readInternal(spark, addLineNo, addSource, pipes);
 		rows = rows.repartition(numPartitions);
 		rows = rows.persist(StorageLevel.MEMORY_ONLY());

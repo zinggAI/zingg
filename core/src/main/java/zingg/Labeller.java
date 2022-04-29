@@ -51,7 +51,7 @@ public class Labeller extends ZinggBase {
 			unmarkedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataUnmarkedPipe(args));
 			try {
 				markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
-			} catch (Exception e) {
+			} catch (ZinggClientException e) {
 				LOG.warn("No record has been marked yet");
 			}
 			if (markedRecords != null ) {
@@ -60,7 +60,7 @@ public class Labeller extends ZinggBase {
 						"left_anti");
 						getMarkedRecordsStat(markedRecords);
 			} 
-		} catch (Exception e) {
+		} catch (ZinggClientException e) {
 			LOG.warn("No unmarked record for labelling");
 		}
 		return unmarkedRecords;
@@ -75,11 +75,11 @@ public class Labeller extends ZinggBase {
 
 	public void processRecordsCli(Dataset<Row> lines) throws ZinggClientException {
 		LOG.info("Processing Records for CLI Labelling");
-		printMarkedRecordsStat();
 		if (lines == null || lines.count() == 0) {
 			LOG.info("It seems there are no unmarked records at this moment. Please run findTrainingData job to build some pairs to be labelled and then run this labeler.");
 			return;
 		}
+		printMarkedRecordsStat();
 
 		lines = lines.cache();
 		List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false, args.getShowConcise());
@@ -129,7 +129,6 @@ public class Labeller extends ZinggBase {
 			LOG.warn("Labelling error has occured " + e.getMessage());
 			throw new ZinggClientException(e.getMessage());
 		}
-		return;
 	}
 
 	

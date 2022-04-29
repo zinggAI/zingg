@@ -23,6 +23,7 @@ import zingg.block.Tree;
 import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
 import zingg.client.MatchType;
+import zingg.client.ZinggClientException;
 import zingg.client.util.ListMap;
 import zingg.client.util.Util;
 import zingg.hash.HashFunction;
@@ -86,7 +87,7 @@ public class BlockingTreeUtil {
 		PipeUtil.write(df, args, ctx, PipeUtil.getBlockingTreePipe(args));
 	}
 
-	public static Tree<Canopy> readBlockingTree(SparkSession spark, Arguments args) throws Exception {
+	public static Tree<Canopy> readBlockingTree(SparkSession spark, Arguments args) throws Exception, ZinggClientException{
 		Dataset<Row> tree = PipeUtil.read(spark, false, args.getNumPartitions(), false, PipeUtil.getBlockingTreePipe(args));
 		byte [] byteArrayBack = (byte[]) tree.head().get(0);
 		Tree<Canopy> blockingTree = null;

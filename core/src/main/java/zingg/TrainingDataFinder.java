@@ -44,7 +44,7 @@ public class TrainingDataFinder extends ZinggBase{
         setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
     }
 
-	public Dataset<Row> getTraining() {
+	public Dataset<Row> getTraining() throws ZinggClientException {
 		return DSUtil.getTraining(spark, args);
 	}
 
