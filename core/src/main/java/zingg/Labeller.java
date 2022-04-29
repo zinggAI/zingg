@@ -75,11 +75,11 @@ public class Labeller extends ZinggBase {
 
 	public void processRecordsCli(Dataset<Row> lines) throws ZinggClientException {
 		LOG.info("Processing Records for CLI Labelling");
-		printMarkedRecordsStat();
 		if (lines == null || lines.count() == 0) {
 			LOG.info("It seems there are no unmarked records at this moment. Please run findTrainingData job to build some pairs to be labelled and then run this labeler.");
 			return;
 		}
+		printMarkedRecordsStat();
 
 		lines = lines.cache();
 		List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false, args.getShowConcise());

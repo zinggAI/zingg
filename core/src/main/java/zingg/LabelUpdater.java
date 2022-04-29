@@ -41,6 +41,10 @@ public class LabelUpdater extends Labeller {
 
 	public void processRecordsCli(Dataset<Row> lines) throws ZinggClientException {
 		LOG.info("Processing Records for CLI updateLabelling");
+		if (lines == null || lines.count() == 0) {
+			LOG.info("It seems there is no previously labeled record. Please run 'label' job to label pairs of records.");
+			return;
+		}
 		getMarkedRecordsStat(lines);
 		printMarkedRecordsStat();
 		if (lines == null || lines.count() == 0) {
