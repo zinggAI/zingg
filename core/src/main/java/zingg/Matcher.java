@@ -41,8 +41,13 @@ public class Matcher extends ZinggBase{
         setZinggOptions(ZinggOptions.MATCH);
     }
 
-	protected Dataset<Row> getTestData() {
-		return PipeUtil.read(spark, true, args.getNumPartitions(), true, args.getData());
+	protected Dataset<Row> getTestData() throws ZinggClientException{
+		Dataset<Row> data = PipeUtil.read(spark, true, args.getNumPartitions(), true, args.getData());
+		if (data == null || data.isEmpty()) {
+			throw new ZinggClientException(
+					"Test Data is missing or empty. Matching cannot be done.");
+		}
+		return data;
 	}
 
 	protected Dataset<Row> getBlocked(Dataset<Row> testData) throws Exception{
