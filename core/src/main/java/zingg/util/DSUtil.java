@@ -233,6 +233,9 @@ public class DSUtil {
 			trFile = PipeUtil.read(spark, 
 					false, false, p); 
 			LOG.warn("Read marked training samples ");
+			if (trFile == null || trFile.isEmpty()) {
+				throw new Exception("No preexisting marked training samples");
+			}
 			trFile = trFile.drop(ColName.PREDICTION_COL);
 			trFile = trFile.drop(ColName.SCORE_COL);				
 		}

@@ -39,6 +39,10 @@ public class Trainer extends ZinggBase{
 			Dataset<Row> negatives = null;
 			Dataset<Row> traOriginal = DSUtil.getTraining(spark, args);
 			Dataset<Row> tra = StopWords.preprocessForStopWords(spark, args, traOriginal);
+			if (tra == null || tra.isEmpty()) {
+				throw new ZinggClientException(
+						"Training Data is missing. Please run findTrainingData/Label phases or provide training samples through config parameter 'trainingSamples'");
+			}
 			tra = DSUtil.joinWithItself(tra, ColName.CLUSTER_COLUMN, true);
 			tra = tra.cache();
 			positives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH));
@@ -47,6 +51,10 @@ public class Trainer extends ZinggBase{
 			LOG.warn("Training on negative pairs - " + negatives.count());
 				
 			Dataset<Row> testDataOriginal = PipeUtil.read(spark, true, args.getNumPartitions(), false, args.getData());
+			if (testDataOriginal == null || testDataOriginal.isEmpty()) {
+				throw new ZinggClientException(
+						"Test Data is missing or empty. Model training cannot be done.");
+			}
 			Dataset<Row> testData = StopWords.preprocessForStopWords(spark, args, testDataOriginal);
 
 			Tree<Canopy> blockingTree = BlockingTreeUtil.createBlockingTreeFromSample(testData,  positives, 0.5,

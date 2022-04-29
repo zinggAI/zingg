@@ -23,6 +23,7 @@ import org.apache.spark.storage.StorageLevel;
 
 //import zingg.scala.DFUtil;
 import zingg.client.Arguments;
+import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 import zingg.client.pipe.CassandraPipe;
 import zingg.client.pipe.ElasticPipe;
@@ -71,14 +72,19 @@ public class PipeUtil {
 	private static Dataset<Row> read(DataFrameReader reader, Pipe p, boolean addSource) {
 		Dataset<Row> input = null;
 		LOG.warn("Reading " + p);
-		if (p.getProps().containsKey(FilePipe.LOCATION)) {
-			input = reader.load(p.get(FilePipe.LOCATION));
-		}
-		else {
-			input = reader.load();
-		}
-		if (addSource) {
-			input = input.withColumn(ColName.SOURCE_COL, functions.lit(p.getName()));			
+		try {
+			if (p.getProps().containsKey(FilePipe.LOCATION)) {
+				input = reader.load(p.get(FilePipe.LOCATION));
+			}
+			else {
+				input = reader.load();
+			}
+			if (addSource) {
+				input = input.withColumn(ColName.SOURCE_COL, functions.lit(p.getName()));
+			}
+		} catch (Exception ex) {
+			LOG.info("Error in reading: " + ex.getMessage());
+			input = null;
 		}
 		return input;
 	}
@@ -129,6 +135,9 @@ public class PipeUtil {
 		for (Pipe p : pipes) {
 			if (input == null) {
 				input = readInternal(spark, p, addSource);
+				if(input == null) {
+					continue;
+				}
 				LOG.debug("input size is " + input.count());				
 			} else {
 					if (p.get("type") != null && p.get("type").equals("join")) {
@@ -142,6 +151,10 @@ public class PipeUtil {
 					}				
 			}
 		}
+		
+		if (input == null) {
+			return null;
+		}
 		// we will probably need to create row number as string with pipename/id as
 		// suffix
 		if (addLineNo)
@@ -152,6 +165,9 @@ public class PipeUtil {
 
 	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, boolean addSource, Pipe... pipes) {
 		Dataset<Row> rows = readInternal(spark, addLineNo, addSource, pipes);
+		if (rows == null) {
+			return null;
+		}
 		rows = rows.persist(StorageLevel.MEMORY_ONLY());
 		return rows;
 	}
@@ -174,6 +190,9 @@ public class PipeUtil {
 	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, int numPartitions,
 			boolean addSource, Pipe... pipes) {
 		Dataset<Row> rows = readInternal(spark, addLineNo, addSource, pipes);
+		if (rows == null) {
+			return null;
+		}
 		rows = rows.repartition(numPartitions);
 		rows = rows.persist(StorageLevel.MEMORY_ONLY());
 		return rows;
