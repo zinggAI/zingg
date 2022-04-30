@@ -39,6 +39,7 @@ last name: ann
 firstname: marry
 
 last name: 
+
 ---
 
 let us assume we have hash functions first1char, last1char
