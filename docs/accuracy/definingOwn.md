@@ -84,7 +84,7 @@ last1char(lastname, pair2, record b) =
 
 pair2 is getting eliminated above, not good.
 
-So first1char(firstname) or first1char(lastname) will be chosen at the root of the blocking tree. Child nodes get added in a similar function to build the heriarchical blocking function tree. This brings near similar records together - in a way clusters them to  break the cartesian join. The hash functions
+So first1char(firstname) or first1char(lastname) will be chosen at the root of the blocking tree. Child nodes get added in a similar function to build the heriarchical blocking function tree. This brings near similar records together - in a way clusters them to  break the cartesian join. 
 
 These business specific blocking functions go into [Hash Functions](https://github.com/zinggAI/zingg/tree/main/core/src/main/java/zingg/hash) and need to be added to [HashFunctionRegistry](https://github.com/zinggAI/zingg/blob/main/core/src/main/java/zingg/hash/HashFunctionRegistry.java) and [hash functions config](https://github.com/zinggAI/zingg/blob/main/core/src/main/resources/hashFunctions.json)
 
