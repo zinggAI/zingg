@@ -11,48 +11,75 @@ The blocking tree works on the matched records provided by the user as part of t
 
 ---
 **pair 1**
+
 **record a:**
+
 firstname: john
+
 last name: doe
+
+
 **record b:**
+
 firstname: johnh
+
 last name: d oe
+
 ---
 
 ---
 **pair 2**
+
 **record a:**
+
 firstname: mary
+
 last name: ann
+
 **record b:**
+
 firstname: marry
+
 last name: 
 ---
+
 let us assume we have hash functions first1char, last1char
 first1char(firstname, pair1, record a) = j
+
 first1char(firstname, pair1, record b) = j
+
 first1char(firstname, pair2, record a) = m
+
 first1char(firstname, pair2, record b) = m
 
 No elimination, good function. 
 
 last1char(firstname, pair1, record a) = n
+
 last1char(firstname, pair1, record b) = h
+
 last1char(firstname, pair2, record a) = y
+
 last1char(firstname, pair2, record b) = y
 
 pair2 is getting eliminated above, not good.
 
 first1char(lastname, pair1, record a) = d
+
 first1char(lastname, pair1, record b) = d
+
 first1char(lastname, pair2, record a) = a
+
 first1char(lastname, pair2, record b) = 
 
 pair2 is getting eliminated above, not good.
 
 last1char(lastname, pair1, record a) = e
+
 last1char(lastname, pair1, record b) = e
+
 last1char(lastname, pair2, record a) = n
+
 last1char(lastname, pair2, record b) = 
 
 pair2 is getting eliminated above, not good.
