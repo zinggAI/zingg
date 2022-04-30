@@ -9,32 +9,31 @@ You can add your own [blocking functions](https://github.com/zinggAI/zingg/tree/
 The blocking tree works on the matched records provided by the user as part of the training. At every node, it selects the hash function and the field on which it should be applied so that there is least elimination of the matching pairs. Say we have data like this
 
 | Labeled Pair Number | record number | firstname | last name |
+| ----------- | ----------- |
 | 1 | a | john | doe |
 | 1 | b | johnh | d oe |
 | 2 | a | mary | ann |
 | 2 | b | marry |  |
 
-
+---
 **pair 1**
------------
 **record a:**
 firstname: john
 last name: doe
--------------
 **record b:**
 firstname: johnh
 last name: d oe
--------------
+---
+
+---
 **pair 2**
--------------
 **record a:**
 firstname: mary
 last name: ann
--------------
 **record b:**
 firstname: marry
 last name: 
-
+---
 let us assume we have hash functions first1char, last1char
 first1char(firstname, pair1, record a) = j
 first1char(firstname, pair1, record b) = j
