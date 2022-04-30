@@ -26,8 +26,6 @@ firstname: johnh
 last name: d oe
 
 ---
-
----
 **pair 2**
 
 **record a:**
@@ -44,6 +42,7 @@ last name:
 ---
 
 let us assume we have hash functions first1char, last1char
+
 first1char(firstname, pair1, record a) = j
 
 first1char(firstname, pair1, record b) = j
