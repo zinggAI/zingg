@@ -159,7 +159,7 @@ public class Matcher extends ZinggBase{
 		}
     }
 
-	public void writeOutput(Dataset<Row> blocked, Dataset<Row> dupesActual) {
+	public void writeOutput(Dataset<Row> blocked, Dataset<Row> dupesActual) throws ZinggClientException {
 		try{
 		//input dupes are pairs
 		///pick ones according to the threshold by user

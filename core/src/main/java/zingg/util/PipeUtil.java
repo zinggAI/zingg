@@ -184,7 +184,8 @@ public class PipeUtil {
 		return rows;
 	}
 
-	public static void write(Dataset<Row> toWriteOrig, Arguments args, JavaSparkContext ctx, Pipe... pipes) {
+	public static void write(Dataset<Row> toWriteOrig, Arguments args, JavaSparkContext ctx, Pipe... pipes) throws ZinggClientException {
+		try {
 			for (Pipe p: pipes) {
 			Dataset<Row> toWrite = toWriteOrig;
 			DataFrameWriter writer = toWrite.write();
@@ -280,11 +281,13 @@ public class PipeUtil {
 			}
 			
 			
+			}
+		} catch (Exception ex) {
+			throw new ZinggClientException(ex.getMessage());
 		}
-
 	}
 
-	public static void writePerSource(Dataset<Row> toWrite, Arguments args, JavaSparkContext ctx, Pipe[] pipes ) {
+	public static void writePerSource(Dataset<Row> toWrite, Arguments args, JavaSparkContext ctx, Pipe[] pipes ) throws ZinggClientException {
 		List<Row> sources = toWrite.select(ColName.SOURCE_COL).distinct().collectAsList();
 		for (Row r : sources) {
 			Dataset<Row> toWriteNow = toWrite.filter(toWrite.col(ColName.SOURCE_COL).equalTo(r.get(0)));
