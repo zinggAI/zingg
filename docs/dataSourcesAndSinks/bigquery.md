@@ -4,13 +4,14 @@ Zingg can seemlessly work with Google BigQuery. Please find below details about 
 
 The two driver jars namely **spark-bigquery-with-dependencies_2.12-0.24.2.jar** and  **gcs-connector-hadoop2-latest.jar** are required to work with BigQuery. To include these BigQuery drivers to the spark classpath, set the following environment variable before running Zingg.
 
-```
-$ export ZINGG_EXTRA=./spark-bigquery-with-dependencies_2.12-0.24.2.jar,./gcs-connector-hadoop2-latest.jar
+```bash
+export ZINGG_EXTRA=./spark-bigquery-with-dependencies_2.12-0.24.2.jar,./gcs-connector-hadoop2-latest.jar
+export ZINGG_ARGS_EXTRA="--conf spark.hadoop.fs.gs.impl=com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem"
 ```
 
 If Zingg is run from outside Google cloud, it requires authentication, please set the following env variable to the location of the file containing service account key. A service account key can be created and downloaded in json format from [Google Cloud console](https://cloud.google.com/docs/authentication/getting-started)
 
-```
+```bash
 export GOOGLE_APPLICATION_CREDENTIALS=path to google service account key file
 ```
 
@@ -58,12 +59,12 @@ To write to BigQuery, a bucket needs to be created and assigned to the **"tempor
  {
   "type": "service_account",
   "project_id": "mynotification-46566",
-  "private_key_id": "905cbfd2723ff9205d1caabfe06fa6a908e54534",
-  "private_key": "-----BEGIN PRIVATE KEY-----\CERT.....",
-  "client_id": "111436465413283115487",
+  "private_key_id": "905cbfd273ff9205d1cabfe06fa6908e54534",
+  "private_key": "-----BEGIN PRIVATE KEY-----CERT.....",
+  "client_id": "11143646541283115487",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
   "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/zinggtest%40mynotification-46566.iam.gserviceaccount.com"
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/zingtest%44mynotification-46566.iam.gserviceaccount.com"
 }
 ```
