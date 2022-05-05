@@ -83,7 +83,8 @@ public class PipeUtil {
 				input = input.withColumn(ColName.SOURCE_COL, functions.lit(p.getName()));
 			}
 		} catch (Exception ex) {
-			throw new ZinggClientException(ex.getMessage());
+			LOG.warn(ex.getMessage());
+			throw new ZinggClientException("Could not read data.", ex);
 		}
 		return input;
 	}
