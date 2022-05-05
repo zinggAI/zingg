@@ -21,7 +21,8 @@ public enum Format implements Serializable{
 	AVRO("avro"),
 	SNOWFLAKE("net.snowflake.spark.snowflake"),
 	TEXT("text"),
-	BIGQUERY("bigquery");
+	BIGQUERY("bigquery"),
+	INMEMORY("inMemory");
 	
 	String type;
 	static Map<String, Format> map;

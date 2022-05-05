@@ -36,6 +36,8 @@ public class PipeFactory {
 				return p;
 			case JDBC:
 				return new JdbcPipe(p);
+			case INMEMORY:
+				return new InMemoryPipe(p);
 			default:
 				break;
 			}
