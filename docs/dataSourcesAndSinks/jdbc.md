@@ -5,7 +5,7 @@ One just needs to download appropriate driver and made it accessible to the appl
 
 To include the JDBC driver for your particular database on the spark classpath, set the following environment variable before running Zingg.
 ```
-export ZINGG_EXTRA=<path of the driver jar>
+export ZINGG_EXTRA_JARS=<path of the driver jar>
 ```
 
 Connection details are given below for a few jdbc sources. Please replace <db_name> with name of the database in addition to other props. For more detail, refer to the [spark documentation](https://spark.apache.org/docs/latest/sql-data-sources-jdbc.html)
@@ -26,7 +26,7 @@ Connection details are given below for a few jdbc sources. Please replace <db_na
     }],
 ``` 
 ```
-$ export ZINGG_EXTRA=path to postgresql-xx.jar
+$ export ZINGG_EXTRA_JARS=path to postgresql-xx.jar
 ```
 
 ### Properties for mysql database:
@@ -45,5 +45,5 @@ $ export ZINGG_EXTRA=path to postgresql-xx.jar
     }],
 ```
 ```
-$ export ZINGG_EXTRA=path to mysql-connector-java-xx.jar
+$ export ZINGG_EXTRA_JARS=path to mysql-connector-java-xx.jar
 ```
