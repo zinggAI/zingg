@@ -9,9 +9,8 @@
 	<artifactId>client</artifactId>
 	<packaging>jar</packaging>
 	<properties>
-		<codehaus.jackson.version>1.9.13</codehaus.jackson.version>
-		<fasterxml.jackson.version>2.10.0</fasterxml.jackson.version>
-		<fasterxml.jackson.databind.version>2.10.0</fasterxml.jackson.databind.version>
+		<fasterxml.jackson.version>2.12.6</fasterxml.jackson.version>
+		<fasterxml.jackson.databind.version>2.12.6.1</fasterxml.jackson.databind.version>
 	</properties>
 	<dependencies>
 
@@ -29,18 +28,6 @@
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-scratchpad</artifactId>
 			<version>3.16</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-core-asl</artifactId>
-			<version>1.8.8</version>	
-			<scope>provided</scope> 
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.8.8</version>
-			<scope>provided</scope> 
 		</dependency>
 			 <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
