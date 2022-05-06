@@ -42,7 +42,7 @@ public class ColumnDocumenter extends DocumenterBase {
 		LOG.info("Read input data : " + data.count());
 
 		String stopWordsDir = args.getZinggDocDir() + "/stopWords/";
-		String columnsDir = args.getZinggDocDir() + "/columns/";
+		String columnsDir = args.getZinggDocDir();
 		checkAndCreateDir(stopWordsDir);
 		checkAndCreateDir(columnsDir);
 

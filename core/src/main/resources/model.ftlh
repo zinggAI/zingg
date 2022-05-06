@@ -18,7 +18,7 @@
   <tr>
     <th>Cluster</th>
     <#list 3 ..< numColumns as entityIndex>
-    <th> <a href="columns/${columns[entityIndex]}.html"> ${columns[entityIndex]!} </a></th>
+    <th> <a href="docs/${columns[entityIndex]}.html"> ${columns[entityIndex]!} </a></th>
     </#list>
   </tr>
   </thead>
