@@ -508,7 +508,7 @@ public class Arguments implements Serializable {
 
 	@JsonIgnore
 	public String getZinggDocDir() {
-		return zinggDir + "/" + modelId;
+		return zinggDir + "/" + modelId + "/docs/";
 	}
 
 	@JsonIgnore

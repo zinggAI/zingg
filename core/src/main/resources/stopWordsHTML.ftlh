@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Zingg model documentation</title>
+  <title>${title!}</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
@@ -8,6 +8,7 @@
   <a class="navbar-brand" href="https://www.zingg.ai">
     <img src="https://github.com/zinggai/zingg/raw/main/assets/zinggWhiteTransparent.png" class="d-inline-block align-top" alt="">
   </a>
+  <h1> Field - ${title!} </h1>
   <a href="../model.html">
   <div class="justify-content-end">Model ${modelId}</div>
   </a>
@@ -28,7 +29,7 @@
       ${words[0]!}
       </td>
       <td>
-      ${words[1]!}
+      ${words[1]?string["0"]!}
       </td>
       </tr>
   </#list>
