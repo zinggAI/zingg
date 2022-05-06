@@ -93,6 +93,7 @@ public class TrainingDataFinder extends ZinggBase{
 				if (negPairs!= null) negPairs = negPairs.cache();
 				//create random samples for blocking
 				Dataset<Row> sampleOrginal = data.sample(false, args.getLabelDataSampleSize()).repartition(args.getNumPartitions()).persist(StorageLevel.MEMORY_ONLY());
+				sampleOrginal = DSUtil.getFieldDefColumnsDS(sampleOrginal, args, true);
 				LOG.info("Preprocessing DS for stopWords");
 
 				Dataset<Row> sample = StopWords.preprocessForStopWords(spark, args, sampleOrginal);
