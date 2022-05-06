@@ -1,16 +1,28 @@
 package zingg.documenter;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.Writer;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.spark.sql.SparkSession;
 
 import freemarker.template.Configuration;
+import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import zingg.client.Arguments;
+import zingg.client.ZinggClientException;
+import zingg.client.util.ColName;
 import zingg.util.RowWrapper;
 
 class DocumenterBase {
 	protected static Configuration config;
 	protected SparkSession spark;
 	protected Arguments args;
+
+	private List<String> zColList = Arrays.asList(ColName.CLUSTER_COLUMN, ColName.ID_COL, ColName.PREDICTION_COL, ColName.SCORE_COL, ColName.MATCH_FLAG_COL, ColName.SOURCE_COL);
 
 	public DocumenterBase(SparkSession spark, Arguments args) {
 		this.spark = spark;
@@ -44,5 +56,30 @@ class DocumenterBase {
 		/* ------------------------------------------------------------------------ */
 		/* You usually do these for MULTIPLE TIMES in the application life-cycle: */
 		return cfg;
+	}
+
+	protected void writeDocument(String template, Map<String, Object> root, String fileName)
+			throws ZinggClientException {
+		try {
+			Configuration cfg = getTemplateConfig();
+			Template temp = cfg.getTemplate(template);
+			Writer file = new FileWriter(new File(fileName));
+			temp.process(root, file);
+			file.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ZinggClientException(e.getMessage());
+		}
+	}
+
+	protected void checkAndCreateDir(String dirName) {
+		File directory = new File(dirName);
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
+	}
+
+	protected List<String> getZColumnList() {
+		return zColList;
 	}
 }

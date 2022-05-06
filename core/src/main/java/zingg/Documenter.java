@@ -21,11 +21,11 @@ public class Documenter extends ZinggBase {
 		try {
 			LOG.info("Documenter starts");
 			// Marked records details
-			ModelDocumenter colDoc = new ModelDocumenter(spark, args);
-			colDoc.process();
+			ModelDocumenter modelDoc = new ModelDocumenter(spark, args);
+			modelDoc.process();
 			// Stop Words generation
-			ColumnDocumenter stopWordDoc = new ColumnDocumenter(spark, args);
-			stopWordDoc.process();
+			ColumnDocumenter columnsDoc = new ColumnDocumenter(spark, args);
+			columnsDoc.process();
 			LOG.info("Documenter finishes");
 		} catch (Exception e) {
 			e.printStackTrace();
