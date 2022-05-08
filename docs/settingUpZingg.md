@@ -1,9 +1,9 @@
-# Setting-Up Zingg Development Environment
-Follow these Steps to Setup Zingg Development Environment in your Ubuntu OS 
+# Setting Up Zingg Development Environment
+The following steps will help you setup the Zingg Development Environment. While the steps remain the same across different OS, we have provided detailed instructions for Ubuntu OS.  
 
 **Step 1: Clone the Zingg Repository**
 * Install and SetUp Git: **sudo apt install git**
-* SetUp Git [Tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-20-04)
+* SetUp Git by following the [tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-20-04)
 * Clone the Zingg Repository: **git clone https://github.com/zinggAI/zingg.git**
 
 **Step 2: Install JDK 1.8 (Java Development Kit)**
