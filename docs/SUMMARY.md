@@ -41,7 +41,7 @@
 * [Security And Privacy](security.md)
 * [Updating Labeled Pairs](updatingLabels.md)
 * [Reporting bugs and contributing ](contributing.md)
-  * [Setting Deveopment Environment](settingUpZingg.md)
+  * [Setting Zingg Development Environment](settingUpZingg.md)
 * [Community](community.md)
 * [Frequently Asked Questions](faq.md)
 * [Reading Material](reading.md)
