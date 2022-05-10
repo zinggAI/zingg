@@ -17,7 +17,6 @@ import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
 import zingg.client.MatchType;
 import zingg.client.ZinggClientException;
-import zingg.client.util.ColName;
 import zingg.util.PipeUtil;
 
 public class ColumnDocumenter extends DocumenterBase {
@@ -35,7 +34,7 @@ public class ColumnDocumenter extends DocumenterBase {
 		createColumnDocuments();
 	}
 
-	private void createColumnDocuments() throws ZinggClientException {
+	protected void createColumnDocuments() throws ZinggClientException {
 		LOG.info("Column Documents generation starts");
 
 		Dataset<Row> data = PipeUtil.read(spark, false, false, args.getData());
