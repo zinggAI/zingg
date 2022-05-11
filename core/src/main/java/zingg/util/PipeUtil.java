@@ -38,12 +38,12 @@ import scala.collection.Seq;
 //import com.datastax.driver.core.ResultSet;
 //import com.datastax.driver.core.Session;
 //import com.datastax.spark.connector.DataFrameFunctions;
-import com.datastax.spark.connector.cql.CassandraConnector;
-import com.datastax.spark.connector.cql.ClusteringColumn;
-import com.datastax.spark.connector.cql.ColumnDef;
-import com.datastax.spark.connector.cql.TableDef;
+// import com.datastax.spark.connector.cql.CassandraConnector;
+// import com.datastax.spark.connector.cql.ClusteringColumn;
+// import com.datastax.spark.connector.cql.ColumnDef;
+// import com.datastax.spark.connector.cql.TableDef;
 
-import com.datastax.spark.connector.cql.*;
+// import com.datastax.spark.connector.cql.*;
 import zingg.scala.DFUtil;
 
 //import com.datastax.spark.connector.cql.*;

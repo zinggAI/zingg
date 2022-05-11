@@ -44,7 +44,6 @@
 				<spark.binary.version>3.1</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
 				<graphframes.version>0.8.1-spark3.0-s_2.12</graphframes.version>
-				<cassandra.conn.version>3.0.0</cassandra.conn.version>
 			</properties>
 		</profile>
 		<profile>
@@ -61,7 +60,6 @@
 				<spark.binary.version>3.0</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
 				<graphframes.version>0.8.1-spark3.0-s_2.12</graphframes.version>
-				<cassandra.conn.version>3.0.0</cassandra.conn.version>
 			</properties>
 		</profile>
 		<profile>
@@ -78,7 +76,6 @@
 				<spark.binary.version>2.4</spark.binary.version>
 				<scala.binary.version>2.11</scala.binary.version>
 				<graphframes.version>0.8.1-spark2.4-s_2.11</graphframes.version>
-				<cassandra.conn.version>3.0.0-alpha2</cassandra.conn.version>
 			</properties>
 		</profile>
 	</profiles>
@@ -96,7 +93,6 @@
 		<maven-jar-plugin.version>2.3.2</maven-jar-plugin.version>
 		<commons.lang.version>2.3</commons.lang.version>
 		<shade.plugin.version>2.4.3</shade.plugin.version>
-		<log4j.version>1.2.17</log4j.version>
 		<mainClass>zingg.client.Client</mainClass>
 		<spark.master>spark://pc-sonal2:7077</spark.master>
 	</properties>
@@ -110,40 +106,6 @@
 	</repositories>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.elasticsearch</groupId>
-			<artifactId>elasticsearch-spark-20_2.11</artifactId>
-			<version>7.2.0</version>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.scala-lang</groupId>
-					<artifactId>scala-library</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>net.snowflake</groupId>
-			<artifactId>spark-snowflake_${scala.binary.version}</artifactId>
-			<version>2.9.0-spark_${spark.binary.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.snowflake</groupId>
-			<artifactId>snowflake-jdbc</artifactId>
-			<version>3.13.5</version>
-		</dependency>
-		<dependency>
-			<!-- https://mvnrepository.com/artifact/com.datastax.spark/spark-cassandra-connector -->
-			<groupId>com.datastax.spark</groupId>
-			<artifactId>spark-cassandra-connector_${scala.binary.version}</artifactId>
-			<version>${cassandra.conn.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.scala-lang</groupId>
-					<artifactId>scala-library</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-mllib_${scala.binary.version}</artifactId>
@@ -177,11 +139,6 @@
   			<scope>provided</scope>
 		</dependency>
 		-->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.20</version>
-		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
@@ -223,12 +180,6 @@
 			<groupId>graphframes</groupId>
 			<artifactId>graphframes</artifactId>
 			<version>${graphframes.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
 		<dependency>
