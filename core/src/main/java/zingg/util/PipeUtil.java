@@ -74,13 +74,15 @@ public class PipeUtil {
 		LOG.warn("Reading " + p);
 
 		if (p.getFormat() == Format.INMEMORY) {
-			return ((InMemoryPipe) p).getRecords();
+			input = ((InMemoryPipe) p).getRecords();
 		}
-		if (p.getProps().containsKey(FilePipe.LOCATION)) {
-			input = reader.load(p.get(FilePipe.LOCATION));
-		}
-		else {
-			input = reader.load();
+		else {		
+			if (p.getProps().containsKey(FilePipe.LOCATION)) {
+				input = reader.load(p.get(FilePipe.LOCATION));
+			}
+			else {
+				input = reader.load();
+			}
 		}
 		if (addSource) {
 			input = input.withColumn(ColName.SOURCE_COL, functions.lit(p.getName()));			
