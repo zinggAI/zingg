@@ -160,7 +160,7 @@ public class Client implements Serializable {
 			LOG.warn("Zingg processing has completed");				
 		} 
 		catch(ZinggClientException e) {
-			if (options != null) {
+			if (options != null && options.get(ClientOptions.EMAIL) != null) {
 				Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
 					"Zingg Error ",
 					e.getMessage()));
@@ -186,7 +186,7 @@ public class Client implements Serializable {
 				}
 			}
 			catch(ZinggClientException e) {
-				if (options != null) {
+				if (options != null && options.get(ClientOptions.EMAIL) != null) {
 					Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
 						"Zingg Error ",
 						e.getMessage()));
