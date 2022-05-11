@@ -123,6 +123,8 @@ public class Labeller extends ZinggBase {
 				LOG.warn("Labelling error has occured " + e.getMessage());
 				throw new ZinggClientException("An error has occured while Labelling.", e);
 			}
+		} else {
+			LOG.info("It seems there are no unmarked records at this moment. Please run findTrainingData job to build some pairs to be labelled and then run this labeler.");
 		}
 	}
 

@@ -102,6 +102,8 @@ public class LabelUpdater extends Labeller {
 				LOG.warn("An error has occured while Updating Label. " + e.getMessage());
 				throw new ZinggClientException("An error while updating label", e);
 			}
+		} else {
+			LOG.info("There is no marked record for updating. Please run findTrainingData/label jobs to generate training data.");
 		}
 	}
 
