@@ -29,6 +29,7 @@ public class TestDSUtil extends BaseSparkTest{
 
 	@Test
 	public void testGetFieldDefColumnsWhenShowConciseIsTrue() {
+		
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field_fuzzy");
 		def1.setDataType("\"string\"");

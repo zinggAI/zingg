@@ -13,11 +13,9 @@ public class DoubleFeature extends BaseFeature<Double> {
 
 	public void init(FieldDefinition newParam) {
 		setFieldDefinition(newParam);
-		if (newParam.getMatchType() == MatchType.NUMERIC) {
+		if (newParam.getMatchType().contains(MatchType.NUMERIC)) {
 			addSimFunction(new DoubleSimilarityFunction());
-		} /*else {
-			addSimFunction(new ObjectSimilarityFunction());
-		}*/
+		}
 	}
 
 }

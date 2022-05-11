@@ -20,14 +20,6 @@ public enum MatchType implements Serializable {
 	FUZZY("FUZZY"),
 
 	/**
-	 * Short words like last name or full names with focus on last characters
-	 * matching
-	 */
-	FUZZY_LAST("FUZZY_LAST"),
-
-	FUZZY_GARBLED("FUZZY_GARBLED"),
-
-	/**
 	 * Fields needing exact matches
 	 */
 	EXACT("EXACT"),
@@ -41,21 +33,14 @@ public enum MatchType implements Serializable {
 	/**
 	 * Strings containing numbers which need to be same. Example in addresses,
 	 * we dont want 4th street to match 5th street
-	 */
-	ALPHANUMERIC("ALPHANUMERIC"),
-
-	/**
-	 * All numbers which are numerically near each other but may not be exact
-	 * matches to go here
+	 * Matching numbers with deviations
 	 */
 	NUMERIC("NUMERIC"),
-
-	/**
-	 * Composite field is a field made by aggregating or compsing multiple
-	 * fields into one Used in places where fields may be swapped
-	 */
-	COMPOSITE("COMPOSITE"),
-	ALPHANUMERIC_WITH_UNITS("ALPHANUMERIC_WITH_UNITS"),
+	/*eg P301d, P00231*/
+	NUMERIC_WITH_UNITS("NUMERIC_WITH_UNITS"),
+	NULL_OR_BLANK("NULL_OR_BLANK"),
+	ONLY_ALPHABETS("ONLY_ALPHABETS"),
+	ONLY_ALPHABETS_FUZZY("ONLY_ALPHABETS_FUZZY"),
 	DONT_USE("DONT USE");
 
 	private String value;

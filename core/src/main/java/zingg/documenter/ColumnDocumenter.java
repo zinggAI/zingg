@@ -47,7 +47,7 @@ public class ColumnDocumenter extends DocumenterBase {
 		checkAndCreateDir(columnsDir);
 
 		for (FieldDefinition field: args.getFieldDefinition()) {
-			if ((field.getMatchType() == null || field.getMatchType().equals(MatchType.DONT_USE))) {
+			if ((field.getMatchType() == null || field.getMatchType().contains(MatchType.DONT_USE))) {
 				prepareAndWriteColumnDocument(spark.emptyDataFrame(), field.fieldName, stopWordsDir, columnsDir);
 				continue;
 			}

@@ -34,7 +34,7 @@ public abstract class BaseFeature<T> implements Feature<T> {
 	/**
 	 * @return the fieldType
 	 */
-	public MatchType getMatchType() {
+	public List<MatchType> getMatchType() {
 		return fieldDefinition.getMatchType();
 	}
 

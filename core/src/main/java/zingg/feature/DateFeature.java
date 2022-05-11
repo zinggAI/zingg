@@ -5,8 +5,6 @@ import java.util.Date;
 import zingg.client.FieldDefinition;
 import zingg.client.MatchType;
 import zingg.similarity.function.DateSimilarityFunction;
-import zingg.similarity.function.StringSimilarityFunction;
-
 
 public class DateFeature extends BaseFeature<Date> {
 
@@ -26,7 +24,7 @@ public class DateFeature extends BaseFeature<Date> {
 			addSimFunction(new AffineGapSimilarityFunction());
 			addSimFunction(new JaroWinklerFunction());			
 		}
-		else*/ if (f.getMatchType() == MatchType.NUMERIC) {
+		else*/ if (f.getMatchType().contains(MatchType.NUMERIC)) {
 			addSimFunction(new DateSimilarityFunction());
 		} 
 		/*else if (f == MatchType.EXACT) {

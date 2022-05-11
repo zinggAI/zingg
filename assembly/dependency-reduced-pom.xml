@@ -91,10 +91,6 @@
           <groupId>org.scalanlp</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>commons-math3</artifactId>
-          <groupId>org.apache.commons</groupId>
-        </exclusion>
-        <exclusion>
           <artifactId>jaxb-runtime</artifactId>
           <groupId>org.glassfish.jaxb</groupId>
         </exclusion>
@@ -292,10 +288,6 @@
         </exclusion>
         <exclusion>
           <artifactId>commons-crypto</artifactId>
-          <groupId>org.apache.commons</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>commons-math3</artifactId>
           <groupId>org.apache.commons</groupId>
         </exclusion>
         <exclusion>
