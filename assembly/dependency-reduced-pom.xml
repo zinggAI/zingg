@@ -91,6 +91,10 @@
           <groupId>org.scalanlp</groupId>
         </exclusion>
         <exclusion>
+          <artifactId>commons-math3</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>jaxb-runtime</artifactId>
           <groupId>org.glassfish.jaxb</groupId>
         </exclusion>
@@ -110,6 +114,10 @@
       <version>3.1.2</version>
       <scope>provided</scope>
       <exclusions>
+        <exclusion>
+          <artifactId>paranamer</artifactId>
+          <groupId>com.thoughtworks.paranamer</groupId>
+        </exclusion>
         <exclusion>
           <artifactId>avro</artifactId>
           <groupId>org.apache.avro</groupId>
@@ -167,8 +175,16 @@
           <groupId>jakarta.servlet</groupId>
         </exclusion>
         <exclusion>
+          <artifactId>commons-lang3</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>commons-text</artifactId>
           <groupId>org.apache.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jsr305</artifactId>
+          <groupId>com.google.code.findbugs</groupId>
         </exclusion>
         <exclusion>
           <artifactId>jul-to-slf4j</artifactId>
@@ -177,6 +193,10 @@
         <exclusion>
           <artifactId>jcl-over-slf4j</artifactId>
           <groupId>org.slf4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
         </exclusion>
         <exclusion>
           <artifactId>slf4j-log4j12</artifactId>
@@ -209,6 +229,10 @@
         <exclusion>
           <artifactId>scala-xml_2.12</artifactId>
           <groupId>org.scala-lang.modules</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>scala-reflect</artifactId>
+          <groupId>org.scala-lang</groupId>
         </exclusion>
         <exclusion>
           <artifactId>json4s-jackson_2.12</artifactId>
@@ -245,6 +269,10 @@
         <exclusion>
           <artifactId>stream</artifactId>
           <groupId>com.clearspring.analytics</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>metrics-core</artifactId>
+          <groupId>io.dropwizard.metrics</groupId>
         </exclusion>
         <exclusion>
           <artifactId>metrics-jvm</artifactId>
@@ -288,6 +316,10 @@
         </exclusion>
         <exclusion>
           <artifactId>commons-crypto</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-math3</artifactId>
           <groupId>org.apache.commons</groupId>
         </exclusion>
         <exclusion>
@@ -385,12 +417,6 @@
       <artifactId>hamcrest-all</artifactId>
       <version>1.3</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.17</version>
-      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>

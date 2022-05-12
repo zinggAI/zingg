@@ -22,7 +22,7 @@ public class StringSimilarityFunction extends BaseSimilarityFunction<String> {
 	public Double call(String first, String second) {
 		if (first == null || first.trim().length() ==0) return 0d;
 		if (second == null || second.trim().length() ==0) return 0d;
-		double score = first.equalsIgnoreCase(second) ? 1d : -1.0d;
+		double score = first.equalsIgnoreCase(second) ? 1d : 0d;
 		return score;		
 	}
 

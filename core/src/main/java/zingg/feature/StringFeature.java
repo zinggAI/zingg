@@ -9,6 +9,7 @@ import zingg.similarity.function.JaccSimFunction;
 import zingg.similarity.function.JaroWinklerFunction;
 import zingg.similarity.function.NumbersJaccardFunction;
 import zingg.similarity.function.OnlyAlphabetsAffineGapSimilarity;
+import zingg.similarity.function.OnlyAlphabetsExactSimilarity;
 import zingg.similarity.function.ProductCodeFunction;
 import zingg.similarity.function.SameFirstWordFunction;
 import zingg.similarity.function.StringSimilarityFunction;
@@ -48,6 +49,9 @@ public class StringFeature extends BaseFeature<String> {
 		}
 		if (f.getMatchType().contains(MatchType.ONLY_ALPHABETS_FUZZY)) {
 			addSimFunction(new OnlyAlphabetsAffineGapSimilarity());
+		}
+		if (f.getMatchType().contains(MatchType.ONLY_ALPHABETS_EXACT)) {
+			addSimFunction(new OnlyAlphabetsExactSimilarity());
 		}
 	}
 
