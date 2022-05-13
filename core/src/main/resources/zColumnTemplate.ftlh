@@ -21,8 +21,21 @@
   <tbody>
   </tbody>
   </table>
-    <#if baseMessage??>
-      <p>${baseMessage}</p>
+  <p>
+    <#if title == "z_cluster">
+      <p>"z_cluster - identifies a group of records which match or don't match with each other. For each group, z_cluster is unique. Member records of a group share the same z_cluster."</p>
+    <#elseif title == "z_zid">
+      <p>"z_zid - an internal id given by Zingg to uniquely identify the record."</p>
+    <#elseif title == "z_prediction">
+      <p>"z_prediction - what Zingg thinks about this group/pair of records - 0 for not a match, 1 for a match."</p>
+    <#elseif title == "z_score">
+      <p>"z_score - the probability of a pair of records matching. The higher the score, the more likely they are a match."</p>
+    <#elseif title == "z_isMatch">
+      <p>z_isMatch - this is the label provided by the user.</p>
+    <#elseif title == "z_source">
+      <p>z_source - the source of data as set in the name property of the data in the Zingg configuration file.</p>
+    <#else>
+      <p>${title} - this field is internally used by Zingg.</p>
     </#if>
   </p>
 </body>
