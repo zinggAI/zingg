@@ -96,7 +96,6 @@ public class ColumnDocumenter extends DocumenterBase {
 	public String getColumnBaseContent (String col) {
 		String message = "The field '" + col + "' is internally used by Zingg.";
 
-		LOG.info("colName: " + col);
 		if (col.equals(ColName.CLUSTER_COLUMN)) {
 			message = "z_cluster - identifies a group of records which match or don't match with each other. For each group, z_cluster is unique. Member records of a group share the same z_cluster.";
 		} else if (col.equals(ColName.PREDICTION_COL)) {
