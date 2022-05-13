@@ -26,6 +26,7 @@ public class ColumnDocumenter extends DocumenterBase {
 
 	private final String CSV_TEMPLATE = "stopWordsCSV.ftlh";
 	private final String HTML_TEMPLATE = "stopWordsHTML.ftlh";
+	private final String Z_COLUMN_TEMPLATE = "zColumnTemplate.ftlh";
 
 	public ColumnDocumenter(SparkSession spark, Arguments args) {
 		super(spark, args);
@@ -64,12 +65,17 @@ public class ColumnDocumenter extends DocumenterBase {
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put(TemplateFields.TITLE, fieldName);
 		root.put(TemplateFields.MODEL_ID, args.getModelId());		
-		root = addStopWords(data, fieldName, root);
 
 		String filenameCSV = stopWordsDir + fieldName + ".csv";
 		String filenameHTML = columnsDir + fieldName + ".html";
-		writeDocument(CSV_TEMPLATE, root, filenameCSV);
-		writeDocument(HTML_TEMPLATE, root, filenameHTML);
+		if (isZColumn(fieldName)) {
+			root.put(TemplateFields.BASE_MESSAGE, getColumnBaseContent(fieldName));
+			writeDocument(Z_COLUMN_TEMPLATE, root, filenameHTML);
+		} else {
+			root = addStopWords(data, fieldName, root);
+			writeDocument(CSV_TEMPLATE, root, filenameCSV);
+			writeDocument(HTML_TEMPLATE, root, filenameHTML);
+		}
 	}
 
 
@@ -85,5 +91,26 @@ public class ColumnDocumenter extends DocumenterBase {
 		params.put("stopWords", data.collectAsList());
 		
 		return params;
+	}
+
+	public String getColumnBaseContent (String col) {
+		String message = "The field '" + col + "' is internally used by Zingg.";
+
+		LOG.info("colName: " + col);
+		if (col.equals(ColName.CLUSTER_COLUMN)) {
+			message = "z_cluster - identifies a group of records which match or don't match with each other. For each group, z_cluster is unique. Member records of a group share the same z_cluster.";
+		} else if (col.equals(ColName.PREDICTION_COL)) {
+			message = "z_prediction - what Zingg thinks about this group/pair of records - 0 for not a match, 1 for a match.";
+		} else if (col.equals(ColName.SCORE_COL)) {
+			message = "z_score - the probability of a pair of records matching. The higher the score, the more likely they are a match.";
+		} else if (col.equals(ColName.MATCH_FLAG_COL)) {
+			message = "z_isMatch - this is the label provided by the user.";
+		} else if (col.equals(ColName.ID_COL)) {
+			message = "z_id - an internal id given by Zingg to uniquely identify the record.";
+		} else if (col.equals(ColName.SOURCE_COL)) {
+			message = "z_source - the source of data as set in the name property of the data in the Zingg configuration file.";
+		}
+
+		return message;
 	}
 }

@@ -82,4 +82,8 @@ class DocumenterBase {
 	protected List<String> getZColumnList() {
 		return zColList;
 	}
+
+	public boolean isZColumn(String colName) {
+		return zColList.contains(colName);
+	}
 }
