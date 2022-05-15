@@ -7,8 +7,8 @@ nav_order: 3
 ## Running from Docker image from Docker hub
 The easiest way to get started is pulling the Docker image with the last release of Zingg.
 ```
-docker pull zingg/zingg:0.3.3
-docker run -it zingg/zingg:0.3.3 bash
+docker pull zingg/zingg:0.3.4
+docker run -it zingg/zingg:0.3.4 bash
 ```
 Detailed help instructions for working with the Zingg docker image can be found [here](workingWithDocker.md).
 ## Installation
@@ -54,13 +54,13 @@ If you have a ready Spark cluster, you can run Zingg by configuring the followin
 
 Download the tar zingg-version.tar.gz to a folder of your choice and run the following 
 
->gzip -d zingg-0.3.3-SNAPSHOT-bin.tar.gz ; tar xvf zingg-0.3.3-SNAPSHOT-bin.tar 
+>gzip -d zingg-0.3.4-SNAPSHOT-bin.tar.gz ; tar xvf zingg-0.3.4-SNAPSHOT-bin.tar 
 
-This will create a folder zingg-0.3.3-SNAPSHOT under the chosen folder. 
+This will create a folder zingg-0.3.4-SNAPSHOT under the chosen folder. 
  
 Move the above folder to zingg. 
 
->mv zingg-0.3.3-SNAPSHOT-bin ~/zingg 
+>mv zingg-0.3.4-SNAPSHOT-bin ~/zingg 
 
 >export ZINGG_HOME=path to zingg
 

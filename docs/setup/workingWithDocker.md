@@ -2,14 +2,14 @@
 # Working with Zingg docker image
 Running Zingg in Docker container is straightforward. Run following commands to get into the container. 
 ```
-docker pull zingg/zingg:0.3.3
-docker run -it zingg/zingg:0.3.3 bash
+docker pull zingg/zingg:0.3.4
+docker run -it zingg/zingg:0.3.4 bash
 ```
 ## Sharing custom data and config files 
 However, note that once docker container is stopped, all the work done in that session is lost. If we want to use custom data or persist the generated model or data files, we have to use **Volumes** or **Bind mount** to share files between the two.
 
 ```
-docker run -v <local-location>:<container-location> -it zingg/zingg:0.3.3 bash
+docker run -v <local-location>:<container-location> -it zingg/zingg:0.3.4 bash
 ```
 The **\<local-location\>** directory from host will get mounted inside container at **\<container-location\>**. Any file written inside this directory will persist on host machine and can be reused in new container instance later.
 
@@ -26,7 +26,7 @@ A docker image is preferred to run with non-root user. By default, the zingg con
 ```
 $ id 
 uid=1000(abc) gid=1000(abc) groups=1000(abc)
-$ docker run -u <uid> -it zingg/zingg:0.3.3 bash
+$ docker run -u <uid> -it zingg/zingg:0.3.4 bash
 ```
 
 ## Copying files To and From the Container
