@@ -33,19 +33,19 @@ public class TestDSUtil extends BaseSparkTest{
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field_fuzzy");
 		def1.setDataType("\"string\"");
-		def1.setMatchType(MatchType.FUZZY);
+		def1.setMatchTypeInternal(MatchType.FUZZY);
 		def1.setFields("field_fuzzy");
 
 		FieldDefinition def2 = new FieldDefinition();
 		def2.setFieldName("field_match_type_DONT_USE");
 		def2.setDataType("\"string\"");
-		def2.setMatchType(MatchType.DONT_USE);
+		def2.setMatchTypeInternal(MatchType.DONT_USE);
 		def2.setFields("field_match_type_DONT_USE");
 
 		FieldDefinition def3 = new FieldDefinition();
 		def3.setFieldName("field_str_DONTspaceUSE");
 		def3.setDataType("\"string\"");
-		def3.setMatchType(MatchType.getMatchType("DONT USE"));
+		def3.setMatchTypeInternal(MatchType.getMatchType("DONT USE"));
 		def3.setFields("field_str_DONTspaceUSE");
 
 		List<FieldDefinition> fieldDef = new ArrayList<FieldDefinition>();
@@ -84,19 +84,19 @@ public class TestDSUtil extends BaseSparkTest{
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field_fuzzy");
 		def1.setDataType("\"string\"");
-		def1.setMatchType(MatchType.FUZZY);
+		def1.setMatchTypeInternal(MatchType.FUZZY);
 		def1.setFields("field_fuzzy");
 
 		FieldDefinition def2 = new FieldDefinition();
 		def2.setFieldName("field_match_type_DONT_USE");
 		def2.setDataType("\"string\"");
-		def2.setMatchType(MatchType.DONT_USE);
+		def2.setMatchTypeInternal(MatchType.DONT_USE);
 		def2.setFields("field_match_type_DONT_USE");
 
 		FieldDefinition def3 = new FieldDefinition();
 		def3.setFieldName("field_str_DONTspaceUSE");
 		def3.setDataType("\"string\"");
-		def3.setMatchType(MatchType.getMatchType("DONT USE"));
+		def3.setMatchTypeInternal(MatchType.getMatchType("DONT USE"));
 		def3.setFields("field_str_DONTspaceUSE");
 
 		List<FieldDefinition> fieldDef = new ArrayList<FieldDefinition>();

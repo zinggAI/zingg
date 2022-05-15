@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -203,5 +204,41 @@ public class TestArguments {
 		} catch (ZinggClientException e) {
 			LOG.warn("Expected exception received: NoSuchFileException");
 		}
+	}
+
+	@Test
+	public void testMatchTypeMultiple() {
+			Arguments args;
+            try {
+                args = Arguments.createArgumentsFromJSON(getClass().getResource("../../configWithMultipleMatchTypes.json").getFile(), "test");
+				List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
+				assertEquals(2, fNameMatchType.size());
+				assertEquals(MatchType.FUZZY, fNameMatchType.get(0));
+				assertEquals(MatchType.NULL_OR_BLANK, fNameMatchType.get(1));
+
+				
+            } catch (Exception | ZinggClientException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+				fail("Could not read config");
+            }
+		
+	}
+
+	@Test
+	public void testMatchTypeWrong() {
+			Arguments args;
+            try {
+                args = Arguments.createArgumentsFromJSON(getClass().getResource("../../configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
+				//List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
+				fail("config had error, should have flagged");
+				
+            } catch (Exception | ZinggClientException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();				
+            }
+			
+			
+		
 	}
 }

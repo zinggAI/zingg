@@ -62,7 +62,7 @@ public enum MatchType implements Serializable {
 		if (types == null) {
 			init();
 		}
-		return types.get(t.toUpperCase());
+		return types.get(t.trim().toUpperCase());
 	}
 
 	@JsonValue
