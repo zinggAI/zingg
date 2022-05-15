@@ -96,7 +96,7 @@ public class Client implements Serializable {
 	}
 	
 	public static void printBanner() {
-		String versionStr = "0.3.3";
+		String versionStr = "0.3.4";
 		LOG.info("");
 		LOG.info("********************************************************");
 		LOG.info("*                    Zingg AI                          *");
