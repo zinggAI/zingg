@@ -32,7 +32,7 @@ public class Pipe implements Serializable{
 	String name;
 	Format format;
 	String preprocessors;
-	Map<String, String> props;
+	Map<String, String> props = new HashMap<String, String>();
 	@JsonSerialize(using = CustomSchemaSerializer.class)
 	StructType schema = null;
 	Map<String, String> sparkProps;

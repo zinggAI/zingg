@@ -50,7 +50,7 @@ public class Linker extends Matcher {
 		return blocked;
 	}
 
-	public void writeOutput(Dataset<Row> sampleOrginal, Dataset<Row> dupes) {
+	public void writeOutput(Dataset<Row> sampleOrginal, Dataset<Row> dupes) throws ZinggClientException {
 		try {
 			// input dupes are pairs
 			/// pick ones according to the threshold by user

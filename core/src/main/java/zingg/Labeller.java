@@ -199,7 +199,7 @@ public class Labeller extends ZinggBase {
 		System.out.println(msg);
 	}
 
-	protected void writeLabelledOutput(Dataset<Row> records) {
+	protected void writeLabelledOutput(Dataset<Row> records) throws ZinggClientException {
 		if (records == null) {
 			LOG.warn("No records to be labelled.");
 			return;
