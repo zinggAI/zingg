@@ -18,4 +18,14 @@ public class ZinggClientException extends Throwable implements Serializable {
 		this.message = m;
 	}
 
+	public ZinggClientException(String m, Throwable cause) {
+		super(m, cause);
+		this.message = m;
+	}
+
+	public ZinggClientException(Throwable cause) {
+		super(cause);
+		this.message = cause.getMessage();
+	}
+
 }
