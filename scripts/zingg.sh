@@ -1,8 +1,7 @@
 #!/bin/bash
 #ZINGG_HOME=./assembly/target
 ZINGG_JARS=$ZINGG_HOME/zingg-0.3.3-SNAPSHOT.jar
-EMAIL=xxx@yyy.com
-LICENSE="test"
+
 
 # Set the ZINGG environment variables
 ZINGG_ENV="$(dirname "$0")"/load-zingg-env.sh
@@ -22,16 +21,27 @@ else
   OPTION_SPARK_CONF="${ZINGG_EXTRA_SPARK_CONF}"
 fi
 
-if [[ -z "${SPARK_EXECUTOR_MEMORY}" ]]; then
-  SPARK_EXECUTOR_MEMORY=8g
-fi  
-OPTION_EXECUTOR_MEMORY="--conf spark.executor.memory=${SPARK_EXECUTOR_MEMORY}"
+function read_zingg_conf() {
+    local CONF_PROPS=""
 
-if [[ -z "${SPARK_DRIVER_MEMORY}" ]]; then
-  SPARK_DRIVER_MEMORY=8g
-fi
-OPTION_DRIVER_MEMORY="--conf spark.driver.memory=${SPARK_DRIVER_MEMORY}"
+    ZINGG_CONF_DIR="$(cd "`dirname "$0"`"/../config; pwd)"
 
+    file="${ZINGG_CONF_DIR}/zingg-defaults.conf"
+    # Leading blanks removed; comment Lines, blank lines removed
+    PROPERTIES=$(sed 's/^[[:blank:]]*//;s/#.*//;/^[[:space:]]*$/d' $file)
+ 
+    while IFS='=' read -r key value; do
+      # Trim leading and trailing spaces
+      key=$(echo $key | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//;')
+      value=$(echo $value | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//;')
+      # Append to conf variable
+      CONF_PROPS+=" --conf ${key}=${value}"
+    done <<< "$(echo -e "$PROPERTIES")"
+ 
+    echo $CONF_PROPS
+}
+
+OPTION_SPARK_CONF+=$(read_zingg_conf)
 # All the additional options must be added here
-ALL_OPTIONS=" ${OPTION_DRIVER_MEMORY} ${OPTION_EXECUTOR_MEMORY} ${OPTION_JARS} ${OPTION_SPARK_CONF} "
-$SPARK_HOME/bin/spark-submit --master $SPARK_MASTER ${ALL_OPTIONS} --conf spark.serializer=org.apache.spark.serializer.KryoSerializer --conf spark.default.parallelism="8" --conf spark.executor.extraJavaOptions="-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+HeapDumpOnOutOfMemoryError -Xloggc:/tmp/memLog.txt -XX:+UseCompressedOops" --conf spark.debug.maxToStringFields=200 --driver-class-path $ZINGG_JARS --class zingg.client.Client $ZINGG_JARS $@ --email $EMAIL --license $LICENSE 
+ALL_OPTIONS=" ${OPTION_JARS} ${OPTION_SPARK_CONF} "
+$SPARK_HOME/bin/spark-submit --master $SPARK_MASTER ${ALL_OPTIONS}  --conf spark.executor.extraJavaOptions="-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+HeapDumpOnOutOfMemoryError -Xloggc:/tmp/memLog.txt -XX:+UseCompressedOops" --driver-class-path $ZINGG_JARS --class zingg.client.Client $ZINGG_JARS $@ --email $EMAIL --license $LICENSE 
