@@ -10,3 +10,8 @@
 # the variable must be in below format. Multiple 'conf' entries can be combined and passed in this variable.
 # e.g. ZINGG_EXTRA_SPARK_CONF="--conf spark.hadoop.fs.gs.impl=com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem"
 #ZINGG_EXTRA_SPARK_CONF=
+
+#General
+EMAIL=xxx@yyy.com
+LICENSE="test"
+SPARK_MEM=10g
