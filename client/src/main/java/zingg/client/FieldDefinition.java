@@ -10,12 +10,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.types.DataType;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -35,8 +36,8 @@ public class FieldDefinition implements
 		Serializable {
 
 	public static final Log LOG = LogFactory.getLog(FieldDefinition.class);
-	@JsonDeserialize(using = MatchTypeDeserializer.class)
-	public List<MatchType> matchType;
+	
+	@JsonDeserialize(using = MatchTypeDeserializer.class) public List<MatchType> matchType;
 	@JsonSerialize(using = DataTypeSerializer.class)
 	public DataType dataType;
 	public String fieldName;
@@ -66,10 +67,17 @@ public class FieldDefinition implements
 	 * @see MatchType
 	 * @param type
 	 *            the type to set
-	 */
-	public void setMatchType(MatchType... type) {
+	*/
+	@JsonDeserialize(using = MatchTypeDeserializer.class)	
+	public void setMatchType(List<MatchType> type) {
+		this.matchType = type; //MatchTypeDeserializer.getMatchTypeFromString(type);
+	}
+
+	
+	public void setMatchTypeInternal(MatchType... type) {
 		this.matchType = Arrays.asList(type);
 	}
+	
 
 	
 	public DataType getDataType() {
@@ -168,14 +176,23 @@ public class FieldDefinition implements
 		@Override 
 		public List<MatchType> deserialize(JsonParser parser, DeserializationContext context) 
 		   throws IOException, JsonProcessingException { 
-		    List<MatchType> matchTypes = new ArrayList<MatchType>();
-		    String m = parser.getText(); 
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+			LOG.debug("Deserializing custom type");
+		    return getMatchTypeFromString(mapper.readValue(parser, String.class)); 
+		}   
+
+		public static List<MatchType> getMatchTypeFromString(String m) throws IOException{
+			List<MatchType> matchTypes = new ArrayList<MatchType>();
 		    String[] matchTypeFromConfig = m.split(","); 
 			for (String s: matchTypeFromConfig) { 
-				matchTypes.add(MatchType.getMatchType(s));
+				MatchType mt = MatchType.getMatchType(s);
+				LOG.debug(mt);
+				if (m == null) throw new IOException("Wrong value of matchType set");
+				matchTypes.add(mt);
 			}     
 		   return matchTypes; 
-		}   
+		}
 	}
 	
 	

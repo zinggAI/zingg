@@ -4,27 +4,25 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.ml.util.Identifiable$;
 
-import com.wcohen.ss.api.*;
 
-public class OnlyAlphabetsAffineGapSimilarity extends StringSimilarityDistanceFunction {
+public class OnlyAlphabetsExactSimilarity extends StringSimilarityDistanceFunction {
 
 	public static final Log LOG = LogFactory
-			.getLog(OnlyAlphabetsAffineGapSimilarity.class);
+			.getLog(OnlyAlphabetsExactSimilarity.class);
 	
 	
-	public OnlyAlphabetsAffineGapSimilarity() {
-		this("OnlyAlphabetsAffineGapSimilarity");		
+	public OnlyAlphabetsExactSimilarity() {
+		this("OnlyAlphabetsExactSimilarity");		
 	}
 	
-	public OnlyAlphabetsAffineGapSimilarity(String s) {
+	public OnlyAlphabetsExactSimilarity(String s) {
 		super(s);
-		gap = new SAffineGap();
 	}
 	
 	@Override
 	 public String getUid() {
     	if (uid == null) {
-    		uid = Identifiable$.MODULE$.randomUID("OnlyAlphabetsAffineGapSimilarity");
+    		uid = Identifiable$.MODULE$.randomUID("OnlyAlphabetsExactSimilarity");
     	}
     	return uid;
     }
@@ -45,7 +43,7 @@ public class OnlyAlphabetsAffineGapSimilarity extends StringSimilarityDistanceFu
 			if (score1 != 1.0d && score2 != 1.0d) {
 				first = first.replaceAll("[0-9.]", "");
 				second = second.replaceAll("[0-9.]", "");
-				score = super.call(first, second);
+				score = first.equalsIgnoreCase(second)? 1.0d : 0.0d;
 			}
 			else {
 				score = 1.0d;

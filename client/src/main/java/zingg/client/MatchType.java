@@ -37,9 +37,9 @@ public enum MatchType implements Serializable {
 	 */
 	NUMERIC("NUMERIC"),
 	/*eg P301d, P00231*/
-	NUMERIC_WITH_UNITS("NUMERIC_WITH_UNITS"),
+	NUMERIC_WITH_UNITS("NUMBER_WITH_UNITS"),
 	NULL_OR_BLANK("NULL_OR_BLANK"),
-	ONLY_ALPHABETS("ONLY_ALPHABETS"),
+	ONLY_ALPHABETS_EXACT("ONLY_ALPHABETS_EXACT"),
 	ONLY_ALPHABETS_FUZZY("ONLY_ALPHABETS_FUZZY"),
 	DONT_USE("DONT USE");
 
@@ -62,7 +62,7 @@ public enum MatchType implements Serializable {
 		if (types == null) {
 			init();
 		}
-		return types.get(t.toUpperCase());
+		return types.get(t.trim().toUpperCase());
 	}
 
 	@JsonValue

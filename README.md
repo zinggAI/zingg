@@ -10,6 +10,10 @@ With Zingg, the analytics engineer and the data scientist can quickly integrate 
 
 ![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
 
+Besides the probabilistic matching, also known as fuzzy matching, Zingg also does deterministic matching, which is useful in identity resolution and householding applications
+
+![#Zingg Detereministic Matching](/assets/deterministicMatching.png)
+
 ## Why Zingg
 
 Zingg is an ML based tool for entity resolution. The following features set Zingg apart from other tools and libraries 

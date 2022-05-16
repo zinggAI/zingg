@@ -24,12 +24,10 @@ public class DateFeature extends BaseFeature<Date> {
 			addSimFunction(new AffineGapSimilarityFunction());
 			addSimFunction(new JaroWinklerFunction());			
 		}
-		else*/ if (f.getMatchType().contains(MatchType.NUMERIC)) {
+		else*/ 
+		if (f.getMatchType().contains(MatchType.FUZZY)) {
 			addSimFunction(new DateSimilarityFunction());
 		} 
-		/*else if (f == MatchType.EXACT) {
-			addSimFunction(new StringSimilarityFunction());
-		}*/
 	}
 
 }

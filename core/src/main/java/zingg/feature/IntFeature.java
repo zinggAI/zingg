@@ -11,7 +11,7 @@ public class IntFeature extends BaseFeature<Integer> {
 
 	public void init(FieldDefinition newParam) {
 		setFieldDefinition(newParam);
-		if (newParam.getMatchType().contains(MatchType.NUMERIC)) {
+		if (newParam.getMatchType().contains(MatchType.FUZZY)) {
 			addSimFunction(new IntegerSimilarityFunction());
 		} 
 	}
