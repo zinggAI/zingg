@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.module.scala.DefaultScalaModule;
 
 import org.apache.commons.logging.Log;
@@ -159,6 +160,10 @@ public class Arguments implements Serializable {
 			mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS,
 					true);
 			LOG.warn("Config Argument is " + filePath);
+			/*SimpleModule module = new SimpleModule();
+			module.addDeserializer(List<MatchType>.class, new FieldDefinition.MatchTypeDeserializer());
+			mapper.registerModule(module);
+			*/
 			Arguments args = mapper.readValue(new File(filePath), Arguments.class);
 			LOG.warn("phase is " + phase);
 			checkValid(args, phase);
@@ -508,7 +513,7 @@ public class Arguments implements Serializable {
 
 	@JsonIgnore
 	public String getZinggDocDir() {
-		return zinggDir + "/" + modelId;
+		return zinggDir + "/" + modelId + "/docs/";
 	}
 
 	@JsonIgnore

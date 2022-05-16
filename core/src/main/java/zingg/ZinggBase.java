@@ -88,7 +88,7 @@ public abstract class ZinggBase implements Serializable, IZingg {
 		if (args.getFieldDefinition() != null) {
 			featurers = new HashMap<FieldDefinition, Feature>();
 			for (FieldDefinition def : args.getFieldDefinition()) {
-				if (! (def.getMatchType() == null || def.getMatchType().equals(MatchType.DONT_USE))) {
+				if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
 					Feature fea = (Feature) FeatureFactory.get(def.getDataType());
 					fea.init(def);
 					featurers.put(def, fea);			

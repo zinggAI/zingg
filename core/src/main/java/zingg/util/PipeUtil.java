@@ -29,6 +29,7 @@ import zingg.client.pipe.CassandraPipe;
 import zingg.client.pipe.ElasticPipe;
 import zingg.client.pipe.FilePipe;
 import zingg.client.pipe.Format;
+import zingg.client.pipe.InMemoryPipe;
 import zingg.client.pipe.Pipe;
 import scala.Option;
 import scala.collection.JavaConverters;
@@ -38,12 +39,12 @@ import scala.collection.Seq;
 //import com.datastax.driver.core.ResultSet;
 //import com.datastax.driver.core.Session;
 //import com.datastax.spark.connector.DataFrameFunctions;
-import com.datastax.spark.connector.cql.CassandraConnector;
-import com.datastax.spark.connector.cql.ClusteringColumn;
-import com.datastax.spark.connector.cql.ColumnDef;
-import com.datastax.spark.connector.cql.TableDef;
+// import com.datastax.spark.connector.cql.CassandraConnector;
+// import com.datastax.spark.connector.cql.ClusteringColumn;
+// import com.datastax.spark.connector.cql.ColumnDef;
+// import com.datastax.spark.connector.cql.TableDef;
 
-import com.datastax.spark.connector.cql.*;
+// import com.datastax.spark.connector.cql.*;
 import zingg.scala.DFUtil;
 
 //import com.datastax.spark.connector.cql.*;
@@ -73,12 +74,18 @@ public class PipeUtil {
 		Dataset<Row> input = null;
 		LOG.warn("Reading " + p);
 		try {
+
+		if (p.getFormat() == Format.INMEMORY) {
+			input = ((InMemoryPipe) p).getRecords();
+		}
+		else {		
 			if (p.getProps().containsKey(FilePipe.LOCATION)) {
 				input = reader.load(p.get(FilePipe.LOCATION));
 			}
 			else {
 				input = reader.load();
 			}
+    }
 			if (addSource) {
 				input = input.withColumn(ColName.SOURCE_COL, functions.lit(p.getName()));
 			}
@@ -192,6 +199,11 @@ public class PipeUtil {
 		
 			LOG.warn("Writing output " + p);
 			
+			if (p.getFormat() == Format.INMEMORY) {
+ 				((InMemoryPipe) p).setRecords(toWriteOrig);
+				return;
+			}
+
 			if (p.getMode() != null) {
 				writer.mode(p.getMode());
 			}

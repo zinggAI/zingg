@@ -2,17 +2,28 @@ package zingg.client;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.types.DataType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ObjectMapper; 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize; 
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer; 
+
 
 /**
  * This class defines each field that we use in matching We can use this to
@@ -25,7 +36,8 @@ public class FieldDefinition implements
 		Serializable {
 
 	public static final Log LOG = LogFactory.getLog(FieldDefinition.class);
-	public MatchType matchType;
+	
+	@JsonDeserialize(using = MatchTypeDeserializer.class) public List<MatchType> matchType;
 	@JsonSerialize(using = DataTypeSerializer.class)
 	public DataType dataType;
 	public String fieldName;
@@ -45,7 +57,7 @@ public class FieldDefinition implements
 	 * 
 	 * @return the type
 	 */
-	public MatchType getMatchType() {
+	public List<MatchType> getMatchType() {
 		return matchType;
 	}
 
@@ -55,10 +67,17 @@ public class FieldDefinition implements
 	 * @see MatchType
 	 * @param type
 	 *            the type to set
-	 */
-	public void setMatchType(MatchType type) {
-		this.matchType = type;
+	*/
+	@JsonDeserialize(using = MatchTypeDeserializer.class)	
+	public void setMatchType(List<MatchType> type) {
+		this.matchType = type; //MatchTypeDeserializer.getMatchTypeFromString(type);
 	}
+
+	
+	public void setMatchTypeInternal(MatchType... type) {
+		this.matchType = Arrays.asList(type);
+	}
+	
 
 	
 	public DataType getDataType() {
@@ -142,6 +161,37 @@ public class FieldDefinition implements
 	        		throws IOException, JsonProcessingException {
 				jsonGenerator.writeString(dType.json());
 	        
+		}
+	}
+
+	public static class MatchTypeDeserializer extends StdDeserializer<List<MatchType>> {
+		private static final long serialVersionUID = 1L;
+		
+		public MatchTypeDeserializer() { 
+		   this(null); 
+		} 
+		public MatchTypeDeserializer(Class<String> t) { 
+		   super(t); 
+		} 
+		@Override 
+		public List<MatchType> deserialize(JsonParser parser, DeserializationContext context) 
+		   throws IOException, JsonProcessingException { 
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+			LOG.debug("Deserializing custom type");
+		    return getMatchTypeFromString(mapper.readValue(parser, String.class)); 
+		}   
+
+		public static List<MatchType> getMatchTypeFromString(String m) throws IOException{
+			List<MatchType> matchTypes = new ArrayList<MatchType>();
+		    String[] matchTypeFromConfig = m.split(","); 
+			for (String s: matchTypeFromConfig) { 
+				MatchType mt = MatchType.getMatchType(s);
+				LOG.debug(mt);
+				if (m == null) throw new IOException("Wrong value of matchType set");
+				matchTypes.add(mt);
+			}     
+		   return matchTypes; 
 		}
 	}
 	

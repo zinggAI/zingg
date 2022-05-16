@@ -4,9 +4,12 @@ import zingg.client.FieldDefinition;
 import zingg.client.MatchType;
 import zingg.similarity.function.AJaroWinklerFunction;
 import zingg.similarity.function.AffineGapSimilarityFunction;
+import zingg.similarity.function.CheckBlankOrNullFunction;
 import zingg.similarity.function.JaccSimFunction;
 import zingg.similarity.function.JaroWinklerFunction;
 import zingg.similarity.function.NumbersJaccardFunction;
+import zingg.similarity.function.OnlyAlphabetsAffineGapSimilarity;
+import zingg.similarity.function.OnlyAlphabetsExactSimilarity;
 import zingg.similarity.function.ProductCodeFunction;
 import zingg.similarity.function.SameFirstWordFunction;
 import zingg.similarity.function.StringSimilarityFunction;
@@ -25,49 +28,30 @@ public class StringFeature extends BaseFeature<String> {
 		// if short string but inverted, like fname lname where ordering is not
 		// important
 		// then do cosine or something
-		if (f.getMatchType() == MatchType.FUZZY) {
+		if (f.getMatchType().contains(MatchType.FUZZY)) {
 			addSimFunction(new AffineGapSimilarityFunction());
 			addSimFunction(new JaroWinklerFunction());
-			//addSimFunction(new JaccSimFunction());
-			// addSimFunction(new First3CharactersFunction(3));
-			// addSimFunction(new First3CharactersFunction(4));
-			//addSimFunction(new BigramJaccSimFn());
-		} /*else if (f.getMatchType() == MatchType.FUZZY_LAST) {
-			addSimFunction(new AffineGapSimilarityFunction());
-			addSimFunction(new JaroWinklerFunction());
-			//addSimFunction(new SameFirstWordFunction());
-			//addSimFunction(new Last3CharactersFunction(3));
-			// addSimFunction(new Last3CharactersFunction(4));
-		} */else if (f.getMatchType() == MatchType.FUZZY_GARBLED) {
-			addSimFunction(new AffineGapSimilarityFunction());
-			addSimFunction(new JaroWinklerFunction());
-			addSimFunction(new JaccSimFunction());
-		} else if (f.getMatchType() == MatchType.TEXT) {
-			addSimFunction(new JaccSimFunction());
-			//change for azalead
-			//addSimFunction(new AffineGapSimilarityFunction());
-			//addSimFunction(new JaroWinklerFunction());
-			//addSimFunction(new JaccSimFunction());
-			//addSimFunction(new SetMembershipFunction());
-			// addSimFunction(new First3CharactersFunction(3));
-			// addSimFunction(new First3CharactersFunction(4));
-			// simFunctions.add(new JaroWinklerFunction());
-		} else if (f.getMatchType() == MatchType.ALPHANUMERIC) {
-			//addSimFunction(new AffineGapSimilarityFunction());
-			addSimFunction(new JaroWinklerFunction());
+		} 		
+		if (f.getMatchType().contains(MatchType.TEXT)) {
+			addSimFunction(new JaccSimFunction());			
+		} 
+		if (f.getMatchType().contains(MatchType.NUMERIC)) {
 			addSimFunction(new NumbersJaccardFunction());
-			//addSimFunction(new ProductCodeFunction());
-			// simFunctions.add(new JaroWinklerFunction());
-		} else if (f.getMatchType() == MatchType.EXACT) {
+		}
+		if (f.getMatchType().contains(MatchType.EXACT)) {
 			addSimFunction(new StringSimilarityFunction());
-		} else if (f.getMatchType() == MatchType.ALPHANUMERIC_WITH_UNITS) {
-			addSimFunction(new AffineGapSimilarityFunction());
-			addSimFunction(new JaroWinklerFunction());
+		} 
+		if (f.getMatchType().contains(MatchType.NUMERIC_WITH_UNITS)) {
 			addSimFunction(new ProductCodeFunction());
-			//addSimFunction(new NumbersJaccardFunction());
-			// addSimFunction(new First3CharactersFunction(3));
-			// addSimFunction(new First3CharactersFunction(4));
-			//addSimFunction(new BigramJaccSimFn());
+		}
+		if (f.getMatchType().contains(MatchType.NULL_OR_BLANK)) {
+			addSimFunction(new CheckBlankOrNullFunction());
+		}
+		if (f.getMatchType().contains(MatchType.ONLY_ALPHABETS_FUZZY)) {
+			addSimFunction(new OnlyAlphabetsAffineGapSimilarity());
+		}
+		if (f.getMatchType().contains(MatchType.ONLY_ALPHABETS_EXACT)) {
+			addSimFunction(new OnlyAlphabetsExactSimilarity());
 		}
 	}
 

@@ -13,7 +13,7 @@ public interface Feature<T> extends Serializable {
 	
 	FieldDefinition getFieldDefinition();
 
-	MatchType getMatchType();
+	List<MatchType> getMatchType();
 
 	BaseSimilarityFunction<T> getSimFunction(int i);
 	

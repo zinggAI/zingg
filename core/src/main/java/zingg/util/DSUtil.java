@@ -169,7 +169,7 @@ public class DSUtil {
 
 	public static Dataset<Row> allFieldsEqual(Dataset<Row> a, Arguments args) {
 		for (FieldDefinition def : args.getFieldDefinition()) {
-			if (! (def.getMatchType() == null || def.getMatchType().equals(MatchType.DONT_USE))) {
+			if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
 				//columns.add(def.getFieldName());
 				String field = def.getFieldName();
 				 a= a.filter(a.col(field).equalTo(
@@ -187,7 +187,7 @@ public class DSUtil {
 			cols.add(ds.col(ColName.ID_COL));						
 		}
 		for (FieldDefinition def: args.getFieldDefinition()) {
-			if (showConcise && def.matchType == MatchType.DONT_USE) {
+			if (showConcise && def.matchType.contains(MatchType.DONT_USE)) {
 				continue;
 			}
 			cols.add(ds.col(def.fieldName));						
@@ -209,7 +209,7 @@ public class DSUtil {
 		LOG.info("duplicates before " + a.count());
 		List<String> cols = new ArrayList<String>();
 		for (FieldDefinition def : args.getFieldDefinition()) {
-			if (! (def.getMatchType() == null || def.getMatchType().equals(MatchType.DONT_USE))) {
+			if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
 				//columns.add(def.getFieldName());
 				String field = def.getFieldName();
 				cols.add(field);	
@@ -256,7 +256,7 @@ public class DSUtil {
 	public static List<FieldDefinition> getFieldDefinitionFiltered(Arguments args, MatchType type) {
 		return args.getFieldDefinition()
 				.stream()
-				.filter(f -> !(f.getMatchType() == null || f.getMatchType().equals(type)))
+				.filter(f -> !(f.getMatchType() == null || f.getMatchType().contains(type)))
 				.collect(Collectors.toList());
 	}
 

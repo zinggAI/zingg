@@ -54,7 +54,7 @@ public class BlockingTreeUtil {
 		List<FieldDefinition> fd = new ArrayList<FieldDefinition> ();
 
 		for (FieldDefinition def : args.getFieldDefinition()) {
-			if (! (def.getMatchType() == null || def.getMatchType().equals(MatchType.DONT_USE))) {
+			if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
 				fd.add(def);	
 			}
 		}
