@@ -1,9 +1,5 @@
 package zingg.documenter;
 
-import static org.apache.spark.sql.functions.desc;
-import static org.apache.spark.sql.functions.explode;
-import static org.apache.spark.sql.functions.split;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,12 +19,13 @@ public class ColumnDocumenter extends DocumenterBase {
 	protected static String name = "zingg.ColumnDocumenter";
 	public static final Log LOG = LogFactory.getLog(ColumnDocumenter.class);
 
-	private final String STOP_WORDS_CSV_TEMPLATE = "stopWordsCSVTemplate.ftl";
 	private final String COLUMN_DOC_TEMPLATE = "columnDocTemplate.ftlh";
 	private final String Z_COLUMN_TEMPLATE = "zColumnTemplate.ftlh";
+	protected StopWordsDocumenter stopWordsDoc;
 
 	public ColumnDocumenter(SparkSession spark, Arguments args) {
 		super(spark, args);
+		stopWordsDoc = new StopWordsDocumenter(spark, args);
 	}
 
 	public void process() throws ZinggClientException {
@@ -41,53 +38,35 @@ public class ColumnDocumenter extends DocumenterBase {
 		Dataset<Row> data = PipeUtil.read(spark, false, false, args.getData());
 		LOG.info("Read input data : " + data.count());
 
-		String stopWordsDir = args.getZinggDocDir() + "/stopWords/";
 		String columnsDir = args.getZinggDocDir();
-		checkAndCreateDir(stopWordsDir);
 		checkAndCreateDir(columnsDir);
 
 		for (FieldDefinition field: args.getFieldDefinition()) {
-			if ((field.getMatchType() == null || field.getMatchType().contains(MatchType.DONT_USE))) {
-				prepareAndWriteColumnDocument(spark.emptyDataFrame(), field.fieldName, stopWordsDir, columnsDir);
+			if ((field.getMatchType() == null || field.getMatchType().equals(MatchType.DONT_USE))) {
+				prepareAndWriteColumnDocument(spark.emptyDataFrame(), field.fieldName, columnsDir);
 				continue;
 			}
-			prepareAndWriteColumnDocument(data, field.fieldName, stopWordsDir, columnsDir);
+			prepareAndWriteColumnDocument(data, field.fieldName, columnsDir);
  		}
 
 		for (String col: getZColumnList()) {
-			prepareAndWriteColumnDocument(spark.emptyDataFrame(), col, stopWordsDir, columnsDir);
+			prepareAndWriteColumnDocument(spark.emptyDataFrame(), col, columnsDir);
 		}
 
 		LOG.info("Column Documents generation finishes");
 	}
-	private void prepareAndWriteColumnDocument(Dataset<Row> data, String fieldName, String stopWordsDir, String columnsDir) throws ZinggClientException {
+
+	private void prepareAndWriteColumnDocument(Dataset<Row> data, String fieldName, String columnsDir) throws ZinggClientException {
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put(TemplateFields.TITLE, fieldName);
 		root.put(TemplateFields.MODEL_ID, args.getModelId());		
 
-		String filenameCSV = stopWordsDir + fieldName + ".csv";
 		String filenameHTML = columnsDir + fieldName + ".html";
 		if (isZColumn(fieldName)) {
 			writeDocument(Z_COLUMN_TEMPLATE, root, filenameHTML);
 		} else {
-			root = addStopWords(data, fieldName, root);
-			writeDocument(STOP_WORDS_CSV_TEMPLATE, root, filenameCSV);
+			root = stopWordsDoc.addStopWords(data, fieldName, root);
 			writeDocument(COLUMN_DOC_TEMPLATE, root, filenameHTML);
 		}
-	}
-
-
-	public Map<String, Object> addStopWords(Dataset<Row> data, String fieldName, Map<String, Object> params) {
-		LOG.debug("Field: " + fieldName);
-		if(!data.isEmpty()) {
-			data = data.select(split(data.col(fieldName), "\\s+").as("split"));
-			data = data.select(explode(data.col("split")).as("word"));
-			data = data.filter(data.col("word").notEqual(""));
-			data = data.groupBy("word").count().orderBy(desc("count"));
-			data = data.limit(Math.round(data.count()*args.getStopWordsCutoff()));
-		}
-		params.put("stopWords", data.collectAsList());
-		
-		return params;
 	}
 }
