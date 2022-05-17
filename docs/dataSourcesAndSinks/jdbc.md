@@ -47,3 +47,5 @@ $ export ZINGG_EXTRA_JARS=path to postgresql-xx.jar
 ```
 $ export ZINGG_EXTRA_JARS=path to mysql-connector-java-xx.jar
 ```
+
+Please note, instead of setting env variable **ZINGG_EXTRA_JARS** as above, equivalent property **spark.jars** can be set in Zingg's configuration file (config/zingg.conf).

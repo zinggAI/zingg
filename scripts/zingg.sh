@@ -1,13 +1,8 @@
 #!/bin/bash
 #ZINGG_HOME=./assembly/target
 ZINGG_JARS=$ZINGG_HOME/zingg-0.3.3-SNAPSHOT.jar
-
-
-# Set the ZINGG environment variables
-ZINGG_ENV="$(dirname "$0")"/load-zingg-env.sh
-if [[ -f "${ZINGG_ENV}" ]]; then
-  source ${ZINGG_ENV}
-fi
+EMAIL=xxx@yyy.com
+LICENSE="test"
 
 if [[ -z "${ZINGG_EXTRA_JARS}" ]]; then
   OPTION_JARS=""
@@ -15,18 +10,12 @@ else
   OPTION_JARS="--jars ${ZINGG_EXTRA_JARS}"
 fi
 
-if [[ -z "${ZINGG_EXTRA_SPARK_CONF}" ]]; then
-  OPTION_SPARK_CONF=""
-else
-  OPTION_SPARK_CONF="${ZINGG_EXTRA_SPARK_CONF}"
-fi
-
 function read_zingg_conf() {
     local CONF_PROPS=""
 
     ZINGG_CONF_DIR="$(cd "`dirname "$0"`"/../config; pwd)"
 
-    file="${ZINGG_CONF_DIR}/zingg-defaults.conf"
+    file="${ZINGG_CONF_DIR}/zingg.conf"
     # Leading blanks removed; comment Lines, blank lines removed
     PROPERTIES=$(sed 's/^[[:blank:]]*//;s/#.*//;/^[[:space:]]*$/d' $file)
  
