@@ -82,4 +82,8 @@ class DocumenterBase {
 	protected List<String> getZColumnList() {
 		return zColList;
 	}
+
+	public boolean isZColumn(String colName) {
+		return colName.startsWith(ColName.COL_PREFIX);
+	}
 }
