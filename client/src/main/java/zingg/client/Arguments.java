@@ -459,7 +459,7 @@ public class Arguments implements Serializable {
 	}
 	
 	public static void checkNullBlankEmpty(Pipe[] field, String fieldName) throws ZinggClientException {
-		if (field == null || field.length == 0) {
+		if (field == null || field.length == 0) {		
 			throw new ZinggClientException("Missing value for " + fieldName + ". Trying to set " + field);
 		}
 	}
@@ -517,10 +517,14 @@ public class Arguments implements Serializable {
 	}
 
 	@JsonIgnore
-	public String getZinggDocFile() {
+	public String getZinggModelDocFile() {
 		return zinggDir + "/" + modelId + "/model.html";
 	}
 
+	@JsonIgnore
+	public String getZinggDataDocFile() {
+		return zinggDir + "/" + modelId + "/data.html";
+	}
 
 	/**
 	 * Location for internal Zingg use.
