@@ -106,6 +106,7 @@ public class Arguments implements Serializable {
 	boolean collectMetrics = true;
 	boolean showConcise = false;
 	float stopWordsCutoff = 0.1f;
+	long blockingTreeSize = 100L;
 	
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
@@ -622,7 +623,15 @@ public class Arguments implements Serializable {
 	public void setShowConcise(boolean showConcise) {
 		this.showConcise = showConcise;
 	}
-	
+
+	public long getBlockingTreeSize() {
+		return blockingTreeSize;
+	}
+
+	public void setBlockingTreeSize(long blockingTreeSize){
+		this.blockingTreeSize = blockingTreeSize;
+	}
+
 	public String[] getPipeNames() {
 		Pipe[] input = this.getData();
 		String[] sourceNames = new String[input.length];
