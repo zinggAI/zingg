@@ -327,7 +327,7 @@ public class PipeUtil {
 	public static Pipe getModelDocumentationPipe(Arguments args) {
 		Pipe p = new Pipe();
 		p.setFormat(Format.TEXT);
-		p.setProp(FilePipe.LOCATION, args.getZinggDocFile());
+		p.setProp(FilePipe.LOCATION, args.getZinggModelDocFile());
 		return p;
 	}
 	

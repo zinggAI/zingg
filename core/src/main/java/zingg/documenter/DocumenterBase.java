@@ -3,8 +3,6 @@ package zingg.documenter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.spark.sql.SparkSession;
@@ -21,8 +19,6 @@ class DocumenterBase {
 	protected static Configuration config;
 	protected SparkSession spark;
 	protected Arguments args;
-
-	private List<String> zColList = Arrays.asList(ColName.CLUSTER_COLUMN, ColName.ID_COL, ColName.PREDICTION_COL, ColName.SCORE_COL, ColName.MATCH_FLAG_COL, ColName.SOURCE_COL);
 
 	public DocumenterBase(SparkSession spark, Arguments args) {
 		this.spark = spark;
@@ -77,10 +73,6 @@ class DocumenterBase {
 		if (!directory.exists()) {
 			directory.mkdirs();
 		}
-	}
-
-	protected List<String> getZColumnList() {
-		return zColList;
 	}
 
 	public boolean isZColumn(String colName) {

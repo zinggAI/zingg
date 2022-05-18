@@ -9,11 +9,11 @@
       <img src="https://github.com/zinggai/zingg/raw/main/assets/zinggWhiteTransparent.png" class="d-inline-block align-top" alt="">
     </a>
     <h1> Field - ${title!} </h1>
-    <a href="../model.html">
+    <a href="../data.html">
     <div class="justify-content-end">Model ${modelId}</div>
     </a>
   </nav>
-  <p> There is no detail</p>
+   <#include "stopWordsDocTemplate.ftlh">
 </body>
 </html>
 <style>
