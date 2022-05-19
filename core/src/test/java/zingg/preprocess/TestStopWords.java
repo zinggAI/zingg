@@ -19,12 +19,12 @@ import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import zingg.BaseSparkTest;
+import zingg.ZinggSparkTester;
 import zingg.client.FieldDefinition;
 import zingg.client.util.ColName;
 import zingg.util.DSUtil;
 
-public class TestStopWords extends BaseSparkTest{
+public class TestStopWords extends ZinggSparkTester{
 
 	public static final Log LOG = LogFactory.getLog(TestStopWords.class);
 

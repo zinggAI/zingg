@@ -10,13 +10,13 @@ import org.junit.jupiter.api.BeforeAll;
 import zingg.client.Arguments;
 import zingg.preprocess.TestStopWords;
 
-public class BaseSparkTest {
+public class ZinggSparkTester {
 
     public static Arguments args;
     public static JavaSparkContext ctx;
     public static SparkSession spark;
 
-    public static final Log LOG = LogFactory.getLog(BaseSparkTest.class);
+    public static final Log LOG = LogFactory.getLog(ZinggSparkTester.class);
 
     @BeforeAll
     public static void setup() {
