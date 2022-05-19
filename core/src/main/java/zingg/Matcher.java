@@ -41,11 +41,12 @@ public class Matcher extends ZinggBase{
         setZinggOptions(ZinggOptions.MATCH);
     }
 
-	protected Dataset<Row> getTestData() {
-		return PipeUtil.read(spark, true, args.getNumPartitions(), true, args.getData());
+	protected Dataset<Row> getTestData() throws ZinggClientException{
+		Dataset<Row> data = PipeUtil.read(spark, true, args.getNumPartitions(), true, args.getData());
+		return data;
 	}
 
-	protected Dataset<Row> getBlocked(Dataset<Row> testData) throws Exception{
+	protected Dataset<Row> getBlocked(Dataset<Row> testData) throws Exception, ZinggClientException{
 		LOG.debug("Blocking model file location is " + args.getBlockFile());
 		Tree<Canopy> tree = BlockingTreeUtil.readBlockingTree(spark, args);
 		Dataset<Row> blocked = testData.map(new Block.BlockFunction(tree), RowEncoder.apply(Block.appendHashCol(testData.schema())));
@@ -159,7 +160,7 @@ public class Matcher extends ZinggBase{
 		}
     }
 
-	public void writeOutput(Dataset<Row> blocked, Dataset<Row> dupesActual) {
+	public void writeOutput(Dataset<Row> blocked, Dataset<Row> dupesActual) throws ZinggClientException {
 		try{
 		//input dupes are pairs
 		///pick ones according to the threshold by user

@@ -1,7 +1,5 @@
 package zingg;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -51,7 +49,7 @@ public class Labeller extends ZinggBase {
 			unmarkedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataUnmarkedPipe(args));
 			try {
 				markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
-			} catch (Exception e) {
+			} catch (ZinggClientException e) {
 				LOG.warn("No record has been marked yet");
 			}
 			if (markedRecords != null ) {
@@ -60,7 +58,7 @@ public class Labeller extends ZinggBase {
 						"left_anti");
 						getMarkedRecordsStat(markedRecords);
 			} 
-		} catch (Exception e) {
+		} catch (ZinggClientException e) {
 			LOG.warn("No unmarked record for labelling");
 		}
 		return unmarkedRecords;
@@ -75,61 +73,59 @@ public class Labeller extends ZinggBase {
 
 	public void processRecordsCli(Dataset<Row> lines) throws ZinggClientException {
 		LOG.info("Processing Records for CLI Labelling");
-		printMarkedRecordsStat();
-		if (lines == null || lines.count() == 0) {
+		if (lines != null && lines.count() > 0) {
+			printMarkedRecordsStat();
+
+			lines = lines.cache();
+			List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false, args.getShowConcise());
+			List<Row> clusterIDs = lines.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();
+			try {
+				double score;
+				double prediction;
+				Dataset<Row> updatedRecords = null;
+				int selected_option = -1;
+				String msg1, msg2;
+				int totalPairs = clusterIDs.size();
+
+				for (int index = 0; index < totalPairs; index++) {
+					Dataset<Row> currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).equalTo(
+							clusterIDs.get(index).getAs(ColName.CLUSTER_COLUMN))).cache();
+
+					score = currentPair.head().getAs(ColName.SCORE_COL);
+					prediction = currentPair.head().getAs(ColName.PREDICTION_COL);
+
+					msg1 = String.format("\tCurrent labelling round  : %d/%d pairs labelled\n", index, totalPairs);
+					String matchType = LabelMatchType.get(prediction).msg;
+					if (prediction == ColValues.IS_NOT_KNOWN_PREDICTION) {
+						msg2 = String.format(
+								"\tZingg does not do any prediction for the above pairs as Zingg is still collecting training data to build the preliminary models.");
+					} else {
+						msg2 = String.format("\tZingg predicts the above records %s with a similarity score of %.2f",
+								matchType, Math.floor(score * 100) * 0.01);
+					}
+					//String msgHeader = msg1 + msg2;
+
+					selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msg1, msg2);
+					updateLabellerStat(selected_option, 1);
+					printMarkedRecordsStat();
+					if (selected_option == 9) {
+						LOG.info("User has quit in the middle. Updating the records.");
+						break;
+					}
+					updatedRecords = updateRecords(selected_option, currentPair, updatedRecords);
+				}
+				writeLabelledOutput(updatedRecords);
+				LOG.warn("Processing finished.");
+			} catch (Exception e) {
+				if (LOG.isDebugEnabled()) {
+					e.printStackTrace();
+				}
+				LOG.warn("Labelling error has occured " + e.getMessage());
+				throw new ZinggClientException("An error has occured while Labelling.", e);
+			}
+		} else {
 			LOG.info("It seems there are no unmarked records at this moment. Please run findTrainingData job to build some pairs to be labelled and then run this labeler.");
-			return;
 		}
-
-		lines = lines.cache();
-		List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false, args.getShowConcise());
-
-		List<Row> clusterIDs = lines.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();
-		try {
-			double score;
-			double prediction;
-			Dataset<Row> updatedRecords = null;
-			int selected_option = -1;
-			String msg1, msg2;
-			int totalPairs = clusterIDs.size();
-			
-			for (int index = 0; index < totalPairs; index++){	
-				Dataset<Row> currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).equalTo(
-						clusterIDs.get(index).getAs(ColName.CLUSTER_COLUMN))).cache();
-				
-				score = currentPair.head().getAs(ColName.SCORE_COL);
-				prediction = currentPair.head().getAs(ColName.PREDICTION_COL);
-	
-				msg1 = String.format("\tCurrent labelling round  : %d/%d pairs labelled\n", index, totalPairs);
-				String matchType = LabelMatchType.get(prediction).msg;				
-				if (prediction == ColValues.IS_NOT_KNOWN_PREDICTION) {
-					msg2 = String.format(
-							"\tZingg does not do any prediction for the above pairs as Zingg is still collecting training data to build the preliminary models.");
-				} else {
-					msg2 = String.format("\tZingg predicts the above records %s with a similarity score of %.2f",
-							matchType, Math.floor(score * 100) * 0.01);
-				}
-				//String msgHeader = msg1 + msg2;
-
-				selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msg1, msg2);
-				updateLabellerStat(selected_option, 1);
-				printMarkedRecordsStat();
-				if (selected_option == 9) {
-					LOG.info("User has quit in the middle. Updating the records.");
-					break;
-				}
-				updatedRecords = updateRecords(selected_option, currentPair, updatedRecords);				
-			}
-			writeLabelledOutput(updatedRecords);
-			LOG.warn("Processing finished.");
-		} catch (Exception e) {
-			if (LOG.isDebugEnabled()) {
-				e.printStackTrace();
-			}
-			LOG.warn("Labelling error has occured " + e.getMessage());
-			throw new ZinggClientException(e.getMessage());
-		}
-		return;
 	}
 
 	
@@ -203,7 +199,7 @@ public class Labeller extends ZinggBase {
 		System.out.println(msg);
 	}
 
-	protected void writeLabelledOutput(Dataset<Row> records) {
+	protected void writeLabelledOutput(Dataset<Row> records) throws ZinggClientException {
 		if (records == null) {
 			LOG.warn("No records to be labelled.");
 			return;

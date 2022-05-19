@@ -6,7 +6,8 @@ import org.apache.commons.logging.LogFactory;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.documenter.ModelDocumenter;
-import zingg.documenter.ColumnDocumenter;
+import zingg.documenter.DataDocumenter;
+import zingg.documenter.ModelColDocumenter;
 
 public class Documenter extends ZinggBase {
 
@@ -20,12 +21,14 @@ public class Documenter extends ZinggBase {
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Documenter starts");
-			// Marked records details
+			//Documentation out of model
 			ModelDocumenter modelDoc = new ModelDocumenter(spark, args);
 			modelDoc.process();
-			// Stop Words generation
-			ColumnDocumenter columnsDoc = new ColumnDocumenter(spark, args);
-			columnsDoc.process();
+
+			//Documnetation/profiling of data
+			DataDocumenter dataDoc = new DataDocumenter(spark, args);
+			dataDoc.process();
+
 			LOG.info("Documenter finishes");
 		} catch (Exception e) {
 			e.printStackTrace();

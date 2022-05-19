@@ -23,6 +23,7 @@ import org.apache.spark.storage.StorageLevel;
 
 //import zingg.scala.DFUtil;
 import zingg.client.Arguments;
+import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 import zingg.client.pipe.CassandraPipe;
 import zingg.client.pipe.ElasticPipe;
@@ -69,9 +70,10 @@ public class PipeUtil {
 		return reader;
 	}
 
-	private static Dataset<Row> read(DataFrameReader reader, Pipe p, boolean addSource) {
+	private static Dataset<Row> read(DataFrameReader reader, Pipe p, boolean addSource) throws ZinggClientException{
 		Dataset<Row> input = null;
 		LOG.warn("Reading " + p);
+		try {
 
 		if (p.getFormat() == Format.INMEMORY) {
 			input = ((InMemoryPipe) p).getRecords();
@@ -83,14 +85,18 @@ public class PipeUtil {
 			else {
 				input = reader.load();
 			}
-		}
-		if (addSource) {
-			input = input.withColumn(ColName.SOURCE_COL, functions.lit(p.getName()));			
+    }
+			if (addSource) {
+				input = input.withColumn(ColName.SOURCE_COL, functions.lit(p.getName()));
+			}
+		} catch (Exception ex) {
+			LOG.warn(ex.getMessage());
+			throw new ZinggClientException("Could not read data.", ex);
 		}
 		return input;
 	}
 
-	private static Dataset<Row> readInternal(SparkSession spark, Pipe p, boolean addSource) {
+	private static Dataset<Row> readInternal(SparkSession spark, Pipe p, boolean addSource) throws ZinggClientException {
 		DataFrameReader reader = getReader(spark, p);
 		return read(reader, p, addSource);		
 	}
@@ -130,7 +136,7 @@ public class PipeUtil {
 
 
 	private static Dataset<Row> readInternal(SparkSession spark, boolean addLineNo,
-			boolean addSource, Pipe... pipes) {
+			boolean addSource, Pipe... pipes) throws ZinggClientException {
 		Dataset<Row> input = null;
 
 		for (Pipe p : pipes) {
@@ -157,13 +163,13 @@ public class PipeUtil {
 		return input;
 	}
 
-	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, boolean addSource, Pipe... pipes) {
+	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, boolean addSource, Pipe... pipes) throws ZinggClientException {
 		Dataset<Row> rows = readInternal(spark, addLineNo, addSource, pipes);
 		rows = rows.persist(StorageLevel.MEMORY_ONLY());
 		return rows;
 	}
 
-	public static Dataset<Row> sample(SparkSession spark, Pipe p) {
+	public static Dataset<Row> sample(SparkSession spark, Pipe p) throws ZinggClientException {
 		DataFrameReader reader = getReader(spark, p);
 		reader.option("inferSchema", true);
 		reader.option("mode", "DROPMALFORMED");
@@ -179,14 +185,15 @@ public class PipeUtil {
 	}
 
 	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, int numPartitions,
-			boolean addSource, Pipe... pipes) {
+			boolean addSource, Pipe... pipes) throws ZinggClientException {
 		Dataset<Row> rows = readInternal(spark, addLineNo, addSource, pipes);
 		rows = rows.repartition(numPartitions);
 		rows = rows.persist(StorageLevel.MEMORY_ONLY());
 		return rows;
 	}
 
-	public static void write(Dataset<Row> toWriteOrig, Arguments args, JavaSparkContext ctx, Pipe... pipes) {
+	public static void write(Dataset<Row> toWriteOrig, Arguments args, JavaSparkContext ctx, Pipe... pipes) throws ZinggClientException {
+		try {
 			for (Pipe p: pipes) {
 			Dataset<Row> toWrite = toWriteOrig;
 			DataFrameWriter writer = toWrite.write();
@@ -287,11 +294,13 @@ public class PipeUtil {
 			}
 			
 			
+			}
+		} catch (Exception ex) {
+			throw new ZinggClientException(ex.getMessage());
 		}
-
 	}
 
-	public static void writePerSource(Dataset<Row> toWrite, Arguments args, JavaSparkContext ctx, Pipe[] pipes ) {
+	public static void writePerSource(Dataset<Row> toWrite, Arguments args, JavaSparkContext ctx, Pipe[] pipes ) throws ZinggClientException {
 		List<Row> sources = toWrite.select(ColName.SOURCE_COL).distinct().collectAsList();
 		for (Row r : sources) {
 			Dataset<Row> toWriteNow = toWrite.filter(toWrite.col(ColName.SOURCE_COL).equalTo(r.get(0)));
@@ -318,7 +327,7 @@ public class PipeUtil {
 	public static Pipe getModelDocumentationPipe(Arguments args) {
 		Pipe p = new Pipe();
 		p.setFormat(Format.TEXT);
-		p.setProp(FilePipe.LOCATION, args.getZinggDocFile());
+		p.setProp(FilePipe.LOCATION, args.getZinggModelDocFile());
 		return p;
 	}
 	

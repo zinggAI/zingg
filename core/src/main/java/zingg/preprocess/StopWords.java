@@ -17,6 +17,7 @@ import org.apache.spark.sql.types.DataTypes;
 
 import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
+import zingg.client.ZinggClientException;
 import zingg.util.PipeUtil;
 
 public class StopWords {
@@ -25,7 +26,7 @@ public class StopWords {
 	public static final Log LOG = LogFactory.getLog(StopWords.class);
 	protected static String stopWordColumn = "StopWord";
 
-    public static Dataset<Row> preprocessForStopWords(SparkSession spark, Arguments args, Dataset<Row> ds) {
+    public static Dataset<Row> preprocessForStopWords(SparkSession spark, Arguments args, Dataset<Row> ds) throws ZinggClientException {
 
 		List<String> wordList = new ArrayList<String>();
 		for (FieldDefinition def : args.getFieldDefinition()) {

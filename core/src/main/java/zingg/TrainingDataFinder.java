@@ -44,7 +44,7 @@ public class TrainingDataFinder extends ZinggBase{
         setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
     }
 
-	public Dataset<Row> getTraining() {
+	public Dataset<Row> getTraining() throws ZinggClientException {
 		return DSUtil.getTraining(spark, args);
 	}
 
@@ -139,7 +139,7 @@ public class TrainingDataFinder extends ZinggBase{
 			}	
     }
 
-	public void writeUncertain(Dataset<Row> dupesActual, Dataset<Row> sampleOrginal) {
+	public void writeUncertain(Dataset<Row> dupesActual, Dataset<Row> sampleOrginal) throws ZinggClientException {
 		//dupesActual.show(4);
 		//input dupes are pairs
 		dupesActual = DFUtil.addClusterRowNumber(dupesActual, spark);
