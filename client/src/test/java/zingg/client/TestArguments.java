@@ -235,7 +235,7 @@ public class TestArguments {
 				
             } catch (Exception | ZinggClientException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();				
+               // e.printStackTrace();				
             }
 			
 			

@@ -169,7 +169,7 @@ public class Arguments implements Serializable {
 			checkValid(args, phase);
 			return args;			
 		} catch (Exception e) { 
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new ZinggClientException("Unable to parse the configuration at " + filePath + 
 					". The error is " + e.getMessage());
 		}
@@ -198,7 +198,7 @@ public class Arguments implements Serializable {
 			checkValid(args, phase);
 			return args;			
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new ZinggClientException("Unable to parse the configuration at " + data + 
 					". The error is " + e.getMessage());
 		}
@@ -215,7 +215,7 @@ public class Arguments implements Serializable {
 			Arguments args = createArgumentsFromJSONString(updatedJson, phase);
 			return args;
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new ZinggClientException("Unable to parse the configuration at " + filePath +
 					". The error is " + e.getMessage());
 		}
