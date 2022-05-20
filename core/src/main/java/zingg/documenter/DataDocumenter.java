@@ -54,7 +54,7 @@ public class DataDocumenter extends DocumenterBase {
 		}
 	}
 
-	private void createDataDocument() throws ZinggClientException {
+	protected void createDataDocument() throws ZinggClientException {
 		if (!data.isEmpty()) {
 			Map<String, Object> root = new HashMap<String, Object>();
 			root.put(TemplateFields.TITLE, TEMPLATE_TITLE);

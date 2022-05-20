@@ -1,6 +1,5 @@
 package zingg.documenter;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +37,7 @@ public class ModelDocumenter extends DocumenterBase {
 		modelColDoc.process(markedRecords);
 	}
 
-	private void createModelDocument() throws ZinggClientException {
+	protected void createModelDocument() throws ZinggClientException {
 		try {
 			LOG.info("Model document generation starts");
 
