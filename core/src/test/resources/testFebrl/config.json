@@ -50,19 +50,19 @@
 		},
 		{
 			"fieldName" : "state",
-			"matchType": "fuzzy",
+			"matchType": "exact",
 			"fields" : "state",
 			"dataType": "\"string\"" 
 		},
 		{
 			"fieldName" : "dob",
-			"matchType": "fuzzy",
+			"matchType": "exact",
 			"fields" : "dob",
 			"dataType": "\"string\"" 
 		},
 		{
 			"fieldName" : "ssn",
-			"matchType": "fuzzy",
+			"matchType": "exact",
 			"fields" : "ssn",
 			"dataType": "\"string\"" 
 		}
