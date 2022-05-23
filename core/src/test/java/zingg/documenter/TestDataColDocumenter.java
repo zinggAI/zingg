@@ -29,7 +29,7 @@ public class TestDataColDocumenter extends ZinggSparkTester {
 			args = Arguments.createArgumentsFromJSON(getClass().getResource("/testConfig.json").getFile());
 		} catch (Throwable e) {
 			e.printStackTrace();
-			System.out.println("Unexpected exception received " + e.getMessage());
+			LOG.info("Unexpected exception received " + e.getMessage());
 			fail(e.getMessage());
 		}
 	}

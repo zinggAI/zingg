@@ -38,14 +38,10 @@ public class TestDocumenterBase extends ZinggSparkTester {
 	@DisplayName ("Test if a directory already exists else it is created")
 	@Test
 	public void testIfDirectoryAlreadyExistsElseCreate() throws Throwable {
-		
 		DocumenterBase base = new DocumenterBase(spark, args);
-		Method f = DocumenterBase.class.getDeclaredMethod("checkAndCreateDir", String.class);
-		f.setAccessible(true);
-
-		f.invoke(base, args.getZinggDir());
+		base.checkAndCreateDir(args.getZinggDir());
 		assertTrue(Files.exists(Paths.get(args.getZinggDir())), "The directory doesn't exist");
-		f.invoke(base, "/an/invalid/dir");
+		base.checkAndCreateDir("/an/invalid/dir");
 		assertFalse(Files.exists(Paths.get("/a/invalid/dir")), "The directory does exist");
 	}
 
@@ -54,8 +50,6 @@ public class TestDocumenterBase extends ZinggSparkTester {
 	public void testProcessTemplateToMakeDocument() throws Throwable {
 		
 		DocumenterBase base = new DocumenterBase(spark, args);
-		Method f = DocumenterBase.class.getDeclaredMethod("writeDocument", String.class, Map.class, String.class);
-		f.setAccessible(true);
 
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put(TemplateFields.TITLE, "template test");
@@ -67,7 +61,7 @@ public class TestDocumenterBase extends ZinggSparkTester {
 		root.put(TemplateFields.ISMATCH_COLUMN_INDEX, 0);
 		root.put(TemplateFields.CLUSTER_COLUMN_INDEX, 1);; 
 		String fileName = args.getZinggDir() + "/testDoc.html";
-		f.invoke(base, TEST_DOC_TEMPLATE, root, fileName);
+		base.writeDocument(TEST_DOC_TEMPLATE, root, fileName);
 		
 		String content = Files.readString(Paths.get(fileName));
 		assertTrue(content.contains("100"));
