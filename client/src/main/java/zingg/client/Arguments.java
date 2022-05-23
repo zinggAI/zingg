@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.module.scala.DefaultScalaModule;
 
 import org.apache.commons.logging.Log;
@@ -628,11 +627,11 @@ public class Arguments implements Serializable {
 		this.showConcise = showConcise;
 	}
 
-	public long getblockSize() {
+	public long getBlockSize() {
 		return blockSize;
 	}
 
-	public void setblockSize(long blockSize){
+	public void setBlockSize(long blockSize){
 		this.blockSize = blockSize;
 	}
 
