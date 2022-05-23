@@ -13,7 +13,7 @@
     <div class="justify-content-end">Model ${modelId}</div>
     </a>
   </nav>
-  <#include "stopWordsDocTemplate.ftlh">
+  <p> There is no detail</p>
 </body>
 </html>
 <style>

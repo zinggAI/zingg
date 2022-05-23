@@ -18,17 +18,18 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 
-import zingg.BaseSparkTest;
+import zingg.ZinggSparkTester;
 import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
 import zingg.client.MatchType;
+import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 
-public class TestDSUtil extends BaseSparkTest{
+public class TestDSUtil extends ZinggSparkTester{
 	public static final Log LOG = LogFactory.getLog(TestDSUtil.class);
 
 	@Test
-	public void testGetFieldDefColumnsWhenShowConciseIsTrue() {
+	public void testGetFieldDefColumnsWhenShowConciseIsTrue() throws ZinggClientException {
 		
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field_fuzzy");
@@ -80,7 +81,7 @@ public class TestDSUtil extends BaseSparkTest{
 	}
 
 	@Test
-	public void testGetFieldDefColumnsWhenShowConciseIsFalse() {
+	public void testGetFieldDefColumnsWhenShowConciseIsFalse() throws ZinggClientException {
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field_fuzzy");
 		def1.setDataType("\"string\"");

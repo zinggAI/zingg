@@ -24,28 +24,36 @@ public class ModelDocumenter extends DocumenterBase {
 	public static final Log LOG = LogFactory.getLog(ModelDocumenter.class);
 
 	private final String MODEL_TEMPLATE = "model.ftlh";
+	ModelColDocumenter modelColDoc;
+	private Dataset<Row> markedRecords;
 
 	public ModelDocumenter(SparkSession spark, Arguments args) {
 		super(spark, args);
+		markedRecords = spark.emptyDataFrame();
+		modelColDoc = new ModelColDocumenter(spark, args);
 	}
 
 	public void process() throws ZinggClientException {
+		createModelDocument();
+		modelColDoc.process(markedRecords);
+	}
+
+	private void createModelDocument() throws ZinggClientException {
 		try {
 			LOG.info("Model document generation starts");
 
-			Dataset<Row> markedRecords = spark.emptyDataFrame();
 			try {
 				markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
-			} catch (Exception e) {
+			} catch (ZinggClientException e) {
 				LOG.warn("No marked record has been found");
 			}
 
-			markedRecords = markedRecords.cache();
 			/* Create a data-model */
 			Map<String, Object> root = new HashMap<String, Object>();
 			root.put(TemplateFields.MODEL_ID, args.getModelId());
+			if(!markedRecords.isEmpty()) {
+				markedRecords = markedRecords.cache();
 
-			if (!markedRecords.isEmpty()) {
 				root.put(TemplateFields.CLUSTERS, markedRecords.collectAsList());
 				root.put(TemplateFields.NUM_COLUMNS, markedRecords.columns().length);
 				root.put(TemplateFields.COLUMNS, markedRecords.columns());
@@ -55,10 +63,8 @@ public class ModelDocumenter extends DocumenterBase {
 						markedRecords.schema().fieldIndex(ColName.CLUSTER_COLUMN));
 			} else {
 				// fields required to generate basic document
-				List<String> list = args.getFieldDefinition().stream().map(fd -> fd.getFieldName())
+				List<String> columnList = args.getFieldDefinition().stream().map(fd -> fd.getFieldName())
 						.collect(Collectors.toList());
-				List<String> columnList = new ArrayList<String>(getZColumnList());
-				columnList.addAll(list);
 				root.put(TemplateFields.NUM_COLUMNS, columnList.size());
 				root.put(TemplateFields.COLUMNS, columnList.toArray());
 				root.put(TemplateFields.CLUSTERS, Collections.emptyList());
@@ -66,7 +72,8 @@ public class ModelDocumenter extends DocumenterBase {
 				root.put(TemplateFields.CLUSTER_COLUMN_INDEX, 1);
 			}
 			checkAndCreateDir(args.getZinggDocDir());
-			writeDocument(MODEL_TEMPLATE, root, args.getZinggDocFile());
+			writeDocument(MODEL_TEMPLATE, root, args.getZinggModelDocFile());
+
 			LOG.info("Model document generation finishes");
 		} catch (Exception e) {
 			e.printStackTrace();

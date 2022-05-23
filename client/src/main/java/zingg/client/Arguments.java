@@ -170,7 +170,7 @@ public class Arguments implements Serializable {
 			checkValid(args, phase);
 			return args;			
 		} catch (Exception e) { 
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new ZinggClientException("Unable to parse the configuration at " + filePath + 
 					". The error is " + e.getMessage());
 		}
@@ -199,7 +199,7 @@ public class Arguments implements Serializable {
 			checkValid(args, phase);
 			return args;			
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new ZinggClientException("Unable to parse the configuration at " + data + 
 					". The error is " + e.getMessage());
 		}
@@ -216,7 +216,7 @@ public class Arguments implements Serializable {
 			Arguments args = createArgumentsFromJSONString(updatedJson, phase);
 			return args;
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new ZinggClientException("Unable to parse the configuration at " + filePath +
 					". The error is " + e.getMessage());
 		}
@@ -460,7 +460,7 @@ public class Arguments implements Serializable {
 	}
 	
 	public static void checkNullBlankEmpty(Pipe[] field, String fieldName) throws ZinggClientException {
-		if (field == null || field.length == 0) {
+		if (field == null || field.length == 0) {		
 			throw new ZinggClientException("Missing value for " + fieldName + ". Trying to set " + field);
 		}
 	}
@@ -518,10 +518,14 @@ public class Arguments implements Serializable {
 	}
 
 	@JsonIgnore
-	public String getZinggDocFile() {
+	public String getZinggModelDocFile() {
 		return zinggDir + "/" + modelId + "/model.html";
 	}
 
+	@JsonIgnore
+	public String getZinggDataDocFile() {
+		return zinggDir + "/" + modelId + "/data.html";
+	}
 
 	/**
 	 * Location for internal Zingg use.
