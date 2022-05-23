@@ -44,7 +44,7 @@ public class BlockingTreeUtil {
 			LOG.debug("Learning blocking rules for sample count " + totalCount  
 				+ " and pos " + positives.count() + " and testData count " + testData.count());
 		}
-		if (blockSize == -1) blockSize = Heuristics.getMaxBlockSize(totalCount);
+		if (blockSize == -1) blockSize = Heuristics.getMaxBlockSize(totalCount, args.getBlockSize());
 		LOG.info("Learning indexing rules for block size " + blockSize);
        
 		positives = positives.coalesce(1); 
