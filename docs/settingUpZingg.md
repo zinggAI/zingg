@@ -12,9 +12,11 @@ The following steps will help you setup the Zingg Development Environment. While
 * Download Apache Spark - version spark-3.1.2-bin-hadoop3.2 from the [Apache Spark Official Website](https://spark.apache.org/downloads.html)
 * Install Downloaded Apache Spark - version spark-3.1.2-bin-hadoop3.2 on your Ubuntu by following [this tutorial](https://computingforgeeks.com/how-to-install-apache-spark-on-ubuntu-debian/)
 
-**Step 4: Install Apache Maven 3.3.9**
-* Download Apache Maven 3.3.9 ‘.tar.gz’ file from the [Apache Maven Official Website](https://maven.apache.org/download.cgi)
-* Install the downloaded Apache Maven file using [this tutorial](https://www.linuxhelp.com/how-to-install-apache-maven-3-3-9-on-linux-mint-18-3)
+**Step 4: Install Apache Maven**
+* Install latest maven package using following linux command
+```
+sudo apt install maven
+```
 
 **Step 5: Set JAVA_HOME to JDK base directory**
 * Go to **cd /etc** directory in your Ubuntu system, and open the **‘profile’ file** using gedit. Just run **sudo gedit profile**
