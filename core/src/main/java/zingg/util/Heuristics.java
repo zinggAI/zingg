@@ -14,7 +14,7 @@ public class Heuristics {
 		}
 		else {*/	
 			maxSize = (long) (0.001 * totalCount);
-			LOG.debug("**Block size found **");
+			LOG.debug("**Block size found **" + maxSize);
 			if (maxSize > blockSizeFromConfig) maxSize = blockSizeFromConfig;
 			if (maxSize <= MIN_SIZE) maxSize = MIN_SIZE;
 		//}
