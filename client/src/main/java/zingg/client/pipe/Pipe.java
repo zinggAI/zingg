@@ -35,8 +35,6 @@ public class Pipe implements Serializable{
 	Map<String, String> props = new HashMap<String, String>();
 	@JsonSerialize(using = CustomSchemaSerializer.class)
 	StructType schema = null;
-	Map<String, String> sparkProps;
-	Map<String, String> addProps;
 	SaveMode mode;
 	int id;
 	
@@ -85,8 +83,7 @@ public class Pipe implements Serializable{
 	public void clone(Pipe p) {
 		this.name = p.name;
 		this.format = p.format;
-		this.props = p.props;
-		this.sparkProps = p.sparkProps;
+		this.props = p.props;		
 	}
 	
 	@JsonProperty("schema")
@@ -124,16 +121,6 @@ public class Pipe implements Serializable{
 	}
 
 
-	public Map<String, String> getSparkProps() {
-		return sparkProps;
-	}
-
-
-	public void setSparkProps(Map<String, String> sparkProps) {
-		this.sparkProps = sparkProps;
-	}
-
-	
 
 	public int getId() {
 		return id;
@@ -173,14 +160,7 @@ public class Pipe implements Serializable{
 	    }
 	}
 
-	public Map<String, String> getAddProps() {
-		return addProps;
-	}
-
-
-	public void setAddProps(Map<String, String> addProps) {
-		this.addProps = addProps;
-	}
+	
 
 	
 	public Pipe clone() {
@@ -190,8 +170,6 @@ public class Pipe implements Serializable{
 		p.preprocessors = preprocessors;
 		p.props = props;
 		p.schema = schema;
-		p.sparkProps = sparkProps;
-		p.addProps = addProps;
 		p.mode = mode;
 		p.id = id;
 		return p;
