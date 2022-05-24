@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.module.scala.DefaultScalaModule;
 
 import org.apache.commons.logging.Log;
@@ -106,6 +105,7 @@ public class Arguments implements Serializable {
 	boolean collectMetrics = true;
 	boolean showConcise = false;
 	float stopWordsCutoff = 0.1f;
+	long blockSize = 100L;
 	
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
@@ -626,7 +626,15 @@ public class Arguments implements Serializable {
 	public void setShowConcise(boolean showConcise) {
 		this.showConcise = showConcise;
 	}
-	
+
+	public long getBlockSize() {
+		return blockSize;
+	}
+
+	public void setBlockSize(long blockSize){
+		this.blockSize = blockSize;
+	}
+
 	public String[] getPipeNames() {
 		Pipe[] input = this.getData();
 		String[] sourceNames = new String[input.length];
