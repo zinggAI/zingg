@@ -29,6 +29,8 @@ public class HashFunctionRegistry {
 		init(new First2CharsBox());
 		init(new First3CharsBox());
 		init(new IsNullOrEmpty());
+		init(new LessThanZeroDbl());
+		init(new LessThanZeroInt());
 	}
 	
 	public static void init(HashFunction fn) {

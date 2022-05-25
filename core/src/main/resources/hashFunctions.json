@@ -50,6 +50,12 @@
 	"name":"truncateDoubleTo3Places"
 },
 {
+	"name":"lessThanZeroDbl"
+},
+{
+	"name":"lessThanZeroInt"
+},
+{
 	"name":"round"
 }
 ]
