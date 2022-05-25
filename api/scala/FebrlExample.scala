@@ -96,12 +96,14 @@ import java.util.HashMap
 
 val inputPipe = new InMemoryPipe(df);
 inputPipe.setProps(new HashMap[String, String]());
-args.setData(Array[zingg.client.pipe.Pipe](inputPipe));
+val pipes = Array[zingg.client.pipe.Pipe](inputPipe);
+args.setData(pipes);
 
 //setting outputpipe in 'args'
 val outputPipe = new InMemoryPipe();
 //outputPipe.setProps(new HashMap[String, String]());
-args.setOutput(Array[zingg.client.pipe.Pipe](outputPipe));
+val pipes = Array[zingg.client.pipe.Pipe](outputPipe);
+args.setOutput(pipes);
 
 val options = new ClientOptions("--phase", "match",  "--conf", "dummy", "--license", "dummy", "--email", "xxx@yyy.com");
 
@@ -110,4 +112,4 @@ val client = new Client(args, options);
 client.init();
 client.execute();
 //the output is in outputPipe.getRecords
-outputPipe.getRecords().show()
+outputPipe.getDataset().show()

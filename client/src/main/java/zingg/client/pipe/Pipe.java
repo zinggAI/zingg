@@ -147,11 +147,11 @@ public class Pipe implements Serializable{
 		this.id = recId;
 	}
 
-	public Dataset <Row> getRecords(){
+	public Dataset <Row> getDataset(){
 		return this.dataset;
 	}
 
-	public void setRecords(Dataset <Row> ds){
+	public void setDataset(Dataset <Row> ds){
 		this.dataset = ds;
 	}
 
