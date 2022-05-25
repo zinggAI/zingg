@@ -41,6 +41,9 @@ public class StringFeature extends BaseFeature<String> {
 		if (f.getMatchType().contains(MatchType.EXACT)) {
 			addSimFunction(new StringSimilarityFunction());
 		} 
+		if(f.getMatchType().contains(MatchType.PINCODE)){
+			addSimFunction(new PinCodeMatchTypeFunction());
+		}
 		if (f.getMatchType().contains(MatchType.NUMERIC_WITH_UNITS)) {
 			addSimFunction(new ProductCodeFunction());
 		}
