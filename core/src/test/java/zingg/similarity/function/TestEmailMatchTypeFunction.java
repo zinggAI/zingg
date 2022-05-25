@@ -12,61 +12,101 @@ public class TestEmailMatchTypeFunction {
 	
 	@Test
 	public void testFirstEntryNull() {
-		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
-		assertEquals(1d, emailMatchFn.call(null, "xyz321@pqr.co"));
+		AffineGapSimilarityFunction emailMatchFn = new AffineGapSimilarityFunction();
+		String first = null;
+		String second = "xyz321@pqr.co";
+		//first = first.split("@",0)[0];
+		second = second.split("@",0)[0];
+		assertEquals(1d, emailMatchFn.call(first, second));
 	}
 
 	@Test
 	public void testFirstEntryEmpty() {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
-		assertEquals(1d, emailMatchFn.call("", "xyz321@pqr.co"));
+		String first = "";
+		String second = "xyz321@pqr.co";
+		first = first.split("@",0)[0];
+		second = second.split("@",0)[0];
+		assertEquals(1d, emailMatchFn.call(first, second));
 	}
 
 	@Test
 	public void testSecondEntryNull() {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
-		assertEquals(1d, emailMatchFn.call("xyz321@pqr.co", null));
+		String first = "xyz321@pqr.co";
+		String second = null;
+		first = first.split("@",0)[0];
+		//second = second.split("@",0)[0];
+		assertEquals(1d, emailMatchFn.call(first,second));
 	}
 
 	@Test
 	public void testSecondEntryEmpty() {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
-		assertEquals(1d, emailMatchFn.call("xyz321@pqr.co", ""));
+		String first = "xyz321@pqr.co";
+		String second = "";
+		first = first.split("@",0)[0];
+		second = second.split("@",0)[0];
+		assertEquals(1d, emailMatchFn.call(first,second));
 	}
 	@Test
 	public void testBothEmpty() {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
-		assertEquals(1d, emailMatchFn.call("", ""));
+		String first = "";
+		String second = "";
+		first = first.split("@",0)[0];
+		second = second.split("@",0)[0];
+		assertEquals(1d, emailMatchFn.call(first,second));
 	}
 
 	@Test
 	public void testBothNull() {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
-		assertEquals(1d, emailMatchFn.call(null, null));
+		String first = null;
+		String second = null;
+		//first = first.split("@",0)[0];
+		//second = second.split("@",0)[0];
+		assertEquals(1d, emailMatchFn.call(first,second));
 	}
 
 	@Test
 	public void testBothExact() {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
-		assertEquals(1d, emailMatchFn.call("xyz321@pqr.co", "xyz321@pqr.co"));
+		String first = "xyz321@pqr.co";
+		String second = "xyz321@pqr.co";
+		first = first.split("@",0)[0];
+		second = second.split("@",0)[0];
+		assertEquals(1d, emailMatchFn.call(first,second));
 	}
 
 	@Test
 	public void testbothDifferent() {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
-		assertEquals(0d, emailMatchFn.call("xyz321@pqr.co", "pqr981@abc.in"));
+		String first = "xyz321@pqr.co";
+		String second = "pqr981@abc.in";
+		first = first.split("@",0)[0];
+		second = second.split("@",0)[0];
+		assertEquals(1d, emailMatchFn.call(first,second));
 	}
 
 	@Test
 	public void testFirstPartMatch() {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
-		assertEquals(1d, emailMatchFn.call("pqr981@abc.in", "pqr981@xyz.com"));
+		String first = "pqr981@abc.in";
+		String second = "pqr981@xyz.com";
+		first = first.split("@",0)[0];
+		second = second.split("@",0)[0];
+		assertEquals(1d, emailMatchFn.call(first,second));
 	}
 
 	@Test
 	public void testFirstPartDifferentSecondPartMatch() {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
-		assertEquals(0d, emailMatchFn.call("pqr981@xyz.com", "aqr981@xyz.com"));
+		String first = "pqr981@xyz.com";
+		String second = "aqr981@xyz.com";
+		first = first.split("@",0)[0];
+		second = second.split("@",0)[0];
+		assertEquals(1d, emailMatchFn.call(first,second));
 	}
 
 }
