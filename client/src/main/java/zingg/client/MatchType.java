@@ -24,6 +24,7 @@ public enum MatchType implements Serializable {
 	 */
 	EXACT("EXACT"),
 
+	
 	/**
 	 * Many times pin code is xxxxx-xxxx and has to be matched with xxxxx.
 	 */

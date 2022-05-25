@@ -56,5 +56,3 @@ public class PinCodeMatchTypeFunction extends StringSimilarityFunction {
 	
 
 }
-
-//String first_part=string.split("-",0)[0];

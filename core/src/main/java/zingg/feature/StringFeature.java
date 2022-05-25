@@ -14,6 +14,7 @@ import zingg.similarity.function.ProductCodeFunction;
 import zingg.similarity.function.SameFirstWordFunction;
 import zingg.similarity.function.StringSimilarityFunction;
 
+
 public class StringFeature extends BaseFeature<String> {
 
 	public StringFeature() {
