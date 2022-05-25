@@ -43,8 +43,9 @@ public class Trainer extends ZinggBase{
 			tra = tra.cache();
 			positives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH));
 			negatives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_A_MATCH));
-			LOG.warn("Training on positive pairs - " + positives.count());
-			LOG.warn("Training on negative pairs - " + negatives.count());
+			
+			verifyTraining(positives, negatives);
+
 				
 			Dataset<Row> testDataOriginal = PipeUtil.read(spark, true, args.getNumPartitions(), false, args.getData());
 			Dataset<Row> testData = StopWords.preprocessForStopWords(spark, args, testDataOriginal);
@@ -68,6 +69,25 @@ public class Trainer extends ZinggBase{
 			throw new ZinggClientException(e.getMessage());
 		}
     }
+
+	public void verifyTraining(Dataset<Row> positives, Dataset<Row> negatives) throws ZinggClientException {
+		if (positives == null) {
+			throw new ZinggClientException("Unable to train as insufficient positive training data found. ");
+		}
+		if (negatives == null) {
+			throw new ZinggClientException("Unable to train as insufficient negative training data found. ");
+	
+		}
+		long posCount = positives.count();
+		LOG.warn("Training on positive pairs - " + posCount);
+		long negCount = negatives.count();
+		LOG.warn("Training on negative pairs - " + negCount);
+
+		if (posCount < 5 || negCount < 5)  
+			throw new ZinggClientException("Unable to train as insufficient training data found. Training data has " + posCount + " matches and " 
+				+ negCount + " non matches. Please run findTrainingData and label till you have sufficient labelled data to build the models");
+
+	}
 
 		    
 }
