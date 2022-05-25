@@ -22,7 +22,7 @@ lname.setFields("lname");
 val stNo = new FieldDefinition();
 stNo.setFieldName("stNo");
 stNo.setDataType("\"string\"");
-stNo.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.FUZZY)));
+stNo.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.EXACT)));
 stNo.setFields("stNo");
 
 val add1 = new FieldDefinition();
@@ -46,13 +46,13 @@ city.setFields("city");
 val areacode = new FieldDefinition();
 areacode.setFieldName("areacode");
 areacode.setDataType("\"string\"");
-areacode.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.FUZZY)));
+areacode.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.EXACT)));
 areacode.setFields("areacode");
 
 val state = new FieldDefinition();
 state.setFieldName("state");
 state.setDataType("\"string\"");
-state.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.EXACT)));
+state.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.FUZZY)));
 state.setFields("state");
 
 val dob = new FieldDefinition();
@@ -79,7 +79,6 @@ fieldDef.add(areacode);
 fieldDef.add(state);
 fieldDef.add(dob);
 fieldDef.add(ssn);
-
 args.setFieldDefinition(fieldDef);
 //set the modelid and the zingg dir
 args.setModelId("100");
@@ -111,5 +110,6 @@ val options = new ClientOptions("--phase", "match",  "--conf", "dummy", "--licen
 val client = new Client(args, options);
 client.init();
 client.execute();
+
 //the output is in outputPipe.getRecords
 outputPipe.getDataset().show()
