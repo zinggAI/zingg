@@ -12,85 +12,78 @@ public class TestPinCodeMatchTypeFunction {
 	
 	@Test
 	public void testFirstPinNull() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(1d, PinMatch.call(null, "34567"));
+		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
+		assertEquals(1d, pincodeMatchFn.call(null, "34567"));
 	}
 
 	@Test
 	public void testFirstPinEmpty() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(1d, PinMatch.call("", "28390-6890"));
+		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
+		assertEquals(1d, pincodeMatchFn.call("", "28390-6890"));
 	}
 
 	@Test
 	public void testSecondPinNull() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(1d, PinMatch.call("93949-1894", null));
+		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
+		assertEquals(1d, pincodeMatchFn.call("93949-1894", null));
 	}
 
 	@Test
 	public void testSecondPinEmpty() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(1d, PinMatch.call("31249", ""));
+		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
+		assertEquals(1d, pincodeMatchFn.call("31249", ""));
 	}
 	@Test
 	public void testBothEmpty() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(1d, PinMatch.call("", ""));
+		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
+		assertEquals(1d, pincodeMatchFn.call("", ""));
 	}
 
 	@Test
 	public void testBothNull() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(1d, PinMatch.call(null, null));
+		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
+		assertEquals(1d, pincodeMatchFn.call(null, null));
 	}
 
 	@Test
-	public void testBothNotEmptysame1() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(1d, PinMatch.call("45678", "45678"));
+	public void testBothNotEmptyExact() {
+		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
+		assertEquals(1d, pincodeMatchFn.call("45678", "45678"));
 	}
 
 	@Test
-	public void testBothNotEmptydiff1() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(0d, PinMatch.call("34234", "34334"));
+	public void testbothNotEmptyDifferent() {
+		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
+		assertEquals(0d, pincodeMatchFn.call("34234", "34334"));
 	}
 
 	@Test
-	public void testBothNotEmptysame2() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(1d, PinMatch.call("23412-9838", "23412-6934"));
+	public void testFirstPartMatch() {
+		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
+		assertEquals(1d, pincodeMatchFn.call("23412-9838", "23412-6934"));
 	}
 
 	@Test
-	public void testBothNotEmptydiff2() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(0d, PinMatch.call("34625-2153", "34325-2153"));
+	public void testFirstPartDifferentSecondPartMatch() {
+		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
+		assertEquals(0d, pincodeMatchFn.call("34625-2153", "34325-2153"));
 	}
 
 	@Test
-	public void testBothNotEmptysame12() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(1d, PinMatch.call("79492", "79492-3943"));
+	public void testOnlyFirstPartMatch() {
+		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
+		assertEquals(1d, pincodeMatchFn.call("79492", "79492-3943"));
 	}
 
 	@Test
-	public void testBothNotEmptydiff12() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(0d, PinMatch.call("87248", "87238-9024"));
+	public void testFirstPartDifferent() {
+		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
+		assertEquals(0d, pincodeMatchFn.call("87248", "87238-9024"));
 	}
 
 	@Test
-	public void testBothNotEmptysame21() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(1d, PinMatch.call("89827-9703", "89827"));
+	public void testFirstPartmatch() {
+		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
+		assertEquals(1d, pincodeMatchFn.call("89827-9703", "89827"));
 	}
-
-	@Test
-	public void testBothNotEmptydiff21() {
-		PinCodeMatchTypeFunction PinMatch = new PinCodeMatchTypeFunction();
-		assertEquals(0d, PinMatch.call("88082-9828", "81034"));
-	}
-
 }

@@ -2,7 +2,7 @@ package zingg.similarity.function;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.ml.util.Identifiable$;
+
 
 
 public class PinCodeMatchTypeFunction extends StringSimilarityFunction {
@@ -19,8 +19,12 @@ public class PinCodeMatchTypeFunction extends StringSimilarityFunction {
 		super(s);
 	}
 	
-	@Override
-	public Double call(String first, String second) {
+	//@Override
+	public  PinCodeMatchTypeFunction(String first, String second) {
+		first = first.split("-",0)[0];
+		second = second.split("-",0)[0];
+		super.call(first,second);
+		/*
 		double score1 = 0.0;
 		double score2 = 0.0;
 		double score = 0.0;
@@ -50,9 +54,6 @@ public class PinCodeMatchTypeFunction extends StringSimilarityFunction {
 				score = 0.0;
 			}
 			return score;
+			*/
 		}		
-	}
-
-	
-
 }
