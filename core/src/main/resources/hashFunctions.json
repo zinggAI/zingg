@@ -41,6 +41,15 @@
 	"name":"identityInteger"
 },
 {
+	"name":"truncateDoubleTo1Places"
+},
+{
+	"name":"truncateDoubleTo2Places"
+},
+{
+	"name":"truncateDoubleTo3Places"
+},
+{
 	"name":"round"
 }
 ]

@@ -22,6 +22,9 @@ public class HashFunctionRegistry {
 		init(new Last2Chars());
 		init(new Last3Chars());
 		init(new Round());
+		init(new TruncateDoubleTo1Place());
+		init(new TruncateDoubleTo2Places());
+		init(new TruncateDoubleTo3Places());
 		init(new LastWord());
 		init(new First2CharsBox());
 		init(new First3CharsBox());
