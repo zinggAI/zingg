@@ -109,9 +109,7 @@ val options = new ClientOptions("--phase", "match",  "--conf", "dummy", "--licen
 //Zingg execution for the given phase
 val client = new Client(args, options);
 client.init();
-System.out.println("line 113");
 client.execute();
-System.out.println("line 115");
 
 //the output is in outputPipe.getRecords
 outputPipe.getDataset().show()
