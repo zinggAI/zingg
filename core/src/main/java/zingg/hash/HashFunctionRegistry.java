@@ -37,6 +37,14 @@ public class HashFunctionRegistry {
 		init(new TrimLast1DigitInt());
 		init(new TrimLast2DigitsInt());
 		init(new TrimLast3DigitsInt());
+		init(new RangeBetween0And10Int());
+		init(new RangeBetween10And100Int());
+		init(new RangeBetween100And1000Int());
+		init(new RangeBetween1000And10000Int());
+		init(new RangeBetween0And10Dbl());
+		init(new RangeBetween10And100Dbl());
+		init(new RangeBetween100And1000Dbl());
+		init(new RangeBetween1000And10000Dbl());
 	}
 	
 	public static void init(HashFunction fn) {
