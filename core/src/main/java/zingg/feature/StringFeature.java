@@ -5,6 +5,7 @@ import zingg.client.MatchType;
 import zingg.similarity.function.AJaroWinklerFunction;
 import zingg.similarity.function.AffineGapSimilarityFunction;
 import zingg.similarity.function.CheckBlankOrNullFunction;
+import zingg.similarity.function.EmailMatchTypeFunction;
 import zingg.similarity.function.JaccSimFunction;
 import zingg.similarity.function.JaroWinklerFunction;
 import zingg.similarity.function.NumbersJaccardFunction;
@@ -45,6 +46,9 @@ public class StringFeature extends BaseFeature<String> {
 		} 
 		if(f.getMatchType().contains(MatchType.PINCODE)){
 			addSimFunction(new PinCodeMatchTypeFunction());
+		}
+		if(f.getMatchType().contains(MatchType.EMAIL)){
+			addSimFunction(new EmailMatchTypeFunction());
 		}
 		if (f.getMatchType().contains(MatchType.NUMERIC_WITH_UNITS)) {
 			addSimFunction(new ProductCodeFunction());
