@@ -10,6 +10,7 @@ import zingg.similarity.function.JaroWinklerFunction;
 import zingg.similarity.function.NumbersJaccardFunction;
 import zingg.similarity.function.OnlyAlphabetsAffineGapSimilarity;
 import zingg.similarity.function.OnlyAlphabetsExactSimilarity;
+import zingg.similarity.function.PinCodeMatchTypeFunction;
 import zingg.similarity.function.ProductCodeFunction;
 import zingg.similarity.function.SameFirstWordFunction;
 import zingg.similarity.function.StringSimilarityFunction;
