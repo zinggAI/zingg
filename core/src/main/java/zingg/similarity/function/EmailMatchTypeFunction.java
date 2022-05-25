@@ -2,13 +2,14 @@ package zingg.similarity.function;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.spark.ml.util.Identifiable$;
 
 
-
-public class EmailMatchTypeFunction extends StringSimilarityFunction {
+public class EmailMatchTypeFunction extends StringSimilarityDistanceFunction {
 
 	public static final Log LOG = LogFactory
 			.getLog(EmailMatchTypeFunction.class);
+	private static final String String = null;
 	
 	
 	public EmailMatchTypeFunction() {
@@ -17,10 +18,12 @@ public class EmailMatchTypeFunction extends StringSimilarityFunction {
 	
 	public EmailMatchTypeFunction(String s) {
 		super(s);
+		//gap = new SAffineGap();
 	}
 	
 	//@Override
-	public  EmailMatchTypeFunction(String first, String second) {
+	public EmailMatchTypeFunction(String first, String second) {
+		super(String,String);
 		first = first.split("@",0)[0];
 		second = second.split("@",0)[0];
 		super.call(first,second);
