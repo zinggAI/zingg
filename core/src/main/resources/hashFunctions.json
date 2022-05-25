@@ -56,6 +56,24 @@
 	"name":"lessThanZeroInt"
 },
 {
+	"name":"trimLast1DigitsDbl"
+},
+{
+	"name":"trimLast2DigitsDbl"
+},
+{
+	"name":"trimLast3DigitsDbl"
+},
+{
+	"name":"trimLast1DigitsInt"
+},
+{
+	"name":"trimLast2DigitsInt"
+},
+{
+	"name":"trimLast3DigitsInt"
+},
+{
 	"name":"round"
 }
 ]

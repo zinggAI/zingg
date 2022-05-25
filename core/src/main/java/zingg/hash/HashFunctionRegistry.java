@@ -31,6 +31,12 @@ public class HashFunctionRegistry {
 		init(new IsNullOrEmpty());
 		init(new LessThanZeroDbl());
 		init(new LessThanZeroInt());
+		init(new TrimLast1DigitDbl());
+		init(new TrimLast2DigitsDbl());
+		init(new TrimLast3DigitsDbl());
+		init(new TrimLast1DigitInt());
+		init(new TrimLast2DigitsInt());
+		init(new TrimLast3DigitsInt());
 	}
 	
 	public static void init(HashFunction fn) {
