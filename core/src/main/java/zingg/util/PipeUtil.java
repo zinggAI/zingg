@@ -201,7 +201,7 @@ public class PipeUtil {
 			LOG.warn("Writing output " + p);
 			
 			if (p.getFormat() == Format.INMEMORY) {
- 				((InMemoryPipe) p).setDataset(toWriteOrig);
+ 				((InMemoryPipe) p).setRecords(toWriteOrig);
 				return;
 			}
 
