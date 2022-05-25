@@ -5,11 +5,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.StructType;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonValue;
+import org.apache.spark.sql.Row;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -37,7 +39,8 @@ public class Pipe implements Serializable{
 	StructType schema = null;
 	SaveMode mode;
 	int id;
-	
+	Dataset <Row> dataset;
+
 	public SaveMode getMode() {
 		return mode;
 	}
@@ -131,6 +134,13 @@ public class Pipe implements Serializable{
 		this.id = recId;
 	}
 
+	public Dataset <Row> getDataset(){
+		return this.dataset;
+	}
+
+	public void setDataset(Dataset <Row> ds){
+		this.dataset = ds;
+	}
 
 	@Override
 	public String toString() {
@@ -172,8 +182,8 @@ public class Pipe implements Serializable{
 		p.schema = schema;
 		p.mode = mode;
 		p.id = id;
+		p.dataset = dataset;
 		return p;
 	}
-	
 	
 }
