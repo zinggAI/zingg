@@ -5,6 +5,8 @@ import java.io.Serializable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
 
 import zingg.client.util.Email;
 import zingg.client.util.EmailBody;
@@ -230,4 +232,26 @@ public class Client implements Serializable {
 	public void setOptions(ClientOptions options) {
 		this.options = options;
 	}
+
+	public Long getMarkedRecordsStat(Dataset<Row> markedRecords, long value) {
+		return zingg.getMarkedRecordsStat(markedRecords, value);
+	}
+
+    public Long getMatchedMarkedRecordsStat(Dataset<Row> markedRecords) {
+		return zingg.getMatchedMarkedRecordsStat(markedRecords);
+	}
+
+    public Long getUnmatchedMarkedRecordsStat(Dataset<Row> markedRecords) {
+		return zingg.getUnmatchedMarkedRecordsStat(markedRecords);
+	}
+
+    public Long getUnsureMarkedRecordsStat(Dataset<Row> markedRecords) {
+		return zingg.getUnsureMarkedRecordsStat(markedRecords);
+	}
+
+	public Dataset<Row> getMarkedRecords() {
+		return zingg.getMarkedRecords();
+	}
+
+	
 }
