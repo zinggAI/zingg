@@ -47,11 +47,7 @@ public class Labeller extends ZinggBase {
 		Dataset<Row> markedRecords = null;
 		try {
 			unmarkedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataUnmarkedPipe(args));
-			try {
-				markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
-			} catch (ZinggClientException e) {
-				LOG.warn("No record has been marked yet");
-			}
+			markedRecords = getMarkedRecords();
 			if (markedRecords != null ) {
 				unmarkedRecords = unmarkedRecords.join(markedRecords,
 						unmarkedRecords.col(ColName.CLUSTER_COLUMN).equalTo(markedRecords.col(ColName.CLUSTER_COLUMN)),
@@ -62,6 +58,15 @@ public class Labeller extends ZinggBase {
 			LOG.warn("No unmarked record for labelling");
 		}
 		return unmarkedRecords;
+	}
+
+	protected Dataset<Row> getMarkedRecords() {
+		try {
+			return PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
+		} catch (ZinggClientException e) {
+			LOG.warn("No record has been marked yet");
+		}
+		return null;
 	}
 
 	protected void getMarkedRecordsStat(Dataset<Row> markedRecords) {
