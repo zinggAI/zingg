@@ -50,6 +50,7 @@ public class ZinggSparkTester {
     public static void teardown() {
     	if (ctx != null)
     		ctx.stop();
+
     	if (spark != null)
     		spark.stop();
     }
