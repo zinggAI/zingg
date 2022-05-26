@@ -23,7 +23,7 @@ public class DataDocumenter extends DocumenterBase {
 
 	public static final Log LOG = LogFactory.getLog(DataDocumenter.class);
 	private DataColDocumenter dataColDoc;
-	private Dataset<Row> data;
+	protected Dataset<Row> data;
 
 	public DataDocumenter(SparkSession spark, Arguments args) {
 		super(spark, args);
@@ -54,23 +54,31 @@ public class DataDocumenter extends DocumenterBase {
 		}
 	}
 
-	private void createDataDocument() throws ZinggClientException {
+	protected void createDataDocument() throws ZinggClientException {
 		if (!data.isEmpty()) {
-			Map<String, Object> root = new HashMap<String, Object>();
-			root.put(TemplateFields.TITLE, TEMPLATE_TITLE);
-			root.put(TemplateFields.MODEL_ID, args.getModelId());
-
-			List<String[]> list = new ArrayList<String[]> ();
-			for (StructField field: data.schema().fields()) {
-				String[] row = new String [3];
-				row[0] = field.name();
-				row[1] = field.dataType().toString();
-				row[2] = field.nullable()? "true": "false";
-				list.add(row);
-			}
-			root.put(TemplateFields.DATA_FIELDS_LIST, list);
-
-			writeDocument(DATA_DOC_TEMPLATE, root, args.getZinggDataDocFile());
+			Map<String, Object> root = populateTemplateData();
+			writeMoelDocument(root);
 		}
+	}
+
+	protected void writeMoelDocument(Map<String, Object> root) throws ZinggClientException {
+		writeDocument(DATA_DOC_TEMPLATE, root, args.getZinggDataDocFile());
+	}
+
+	protected Map<String, Object> populateTemplateData() {
+		Map<String, Object> root = new HashMap<String, Object>();
+		root.put(TemplateFields.TITLE, TEMPLATE_TITLE);
+		root.put(TemplateFields.MODEL_ID, args.getModelId());
+
+		List<String[]> list = new ArrayList<String[]> ();
+		for (StructField field: data.schema().fields()) {
+			String[] row = new String [3];
+			row[0] = field.name();
+			row[1] = field.dataType().toString();
+			row[2] = field.nullable()? "true": "false";
+			list.add(row);
+		}
+		root.put(TemplateFields.DATA_FIELDS_LIST, list);
+		return root;
 	}
 }
