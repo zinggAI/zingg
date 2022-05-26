@@ -21,7 +21,7 @@ import zingg.ZinggSparkTester;
 
 public class TestDocumenterBase extends ZinggSparkTester {
 	public static final Log LOG = LogFactory.getLog(TestDocumenterBase.class);
-	private final String TEST_DOC_TEMPLATE = "testDocumenterTemplate.ftlh";
+	private final String TEST_DOC_TEMPLATE = "documenter/testDocumenterTemplate.ftlh";
 
 	@DisplayName ("Test Column is a Z column or not")
 	@Test
