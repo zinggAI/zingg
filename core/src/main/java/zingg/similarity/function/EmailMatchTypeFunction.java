@@ -9,7 +9,7 @@ public class EmailMatchTypeFunction extends StringSimilarityDistanceFunction {
 
 	public static final Log LOG = LogFactory
 			.getLog(EmailMatchTypeFunction.class);
-	private static final String String = null;
+	//private static final String String = null;
 	
 	
 	public EmailMatchTypeFunction() {
@@ -21,12 +21,11 @@ public class EmailMatchTypeFunction extends StringSimilarityDistanceFunction {
 		//gap = new SAffineGap();
 	}
 	
-	//@Override
-	public EmailMatchTypeFunction(String first, String second) {
-		super(String,String);
+	@Override
+	public Double call(String first, String second) {
 		first = first.split("@",0)[0];
 		second = second.split("@",0)[0];
-		super.call(first,second);
+		return super.call(first,second);
 		/*
 		double score1 = 0.0;
 		double score2 = 0.0;
