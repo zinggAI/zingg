@@ -12,12 +12,10 @@ public class TestEmailMatchTypeFunction {
 	
 	@Test
 	public void testFirstEntryNull() {
-		AffineGapSimilarityFunction emailMatchFn = new AffineGapSimilarityFunction();
+		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
 		String first = null;
 		String second = "xyz321@pqr.co";
-		//first = first.split("@",0)[0];
-		second = second.split("@",0)[0];
-		assertEquals(1d, emailMatchFn.call(first, second));
+		assertEquals(AffineGapSimilarityFunction(first,second.split("@",0)[0]), emailMatchFn.call(first, second));
 	}
 
 	@Test
@@ -25,9 +23,7 @@ public class TestEmailMatchTypeFunction {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
 		String first = "";
 		String second = "xyz321@pqr.co";
-		first = first.split("@",0)[0];
-		second = second.split("@",0)[0];
-		assertEquals(1d, emailMatchFn.call(first, second));
+		assertEquals(AffineGapSimilarityFunction(first.split("@",0)[0],second.split("@",0)[0]), emailMatchFn.call(first, second));
 	}
 
 	@Test
@@ -35,9 +31,7 @@ public class TestEmailMatchTypeFunction {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
 		String first = "xyz321@pqr.co";
 		String second = null;
-		first = first.split("@",0)[0];
-		//second = second.split("@",0)[0];
-		assertEquals(1d, emailMatchFn.call(first,second));
+		assertEquals(AffineGapSimilarityFunction(first.split("@",0)[0],second), emailMatchFn.call(first,second));
 	}
 
 	@Test
@@ -45,18 +39,14 @@ public class TestEmailMatchTypeFunction {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
 		String first = "xyz321@pqr.co";
 		String second = "";
-		first = first.split("@",0)[0];
-		second = second.split("@",0)[0];
-		assertEquals(1d, emailMatchFn.call(first,second));
+		assertEquals(AffineGapSimilarityFunction(first.split("@",0)[0],second.split("@",0)[0]), emailMatchFn.call(first,second));
 	}
 	@Test
 	public void testBothEmpty() {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
 		String first = "";
 		String second = "";
-		first = first.split("@",0)[0];
-		second = second.split("@",0)[0];
-		assertEquals(1d, emailMatchFn.call(first,second));
+		assertEquals(AffineGapSimilarityFunction(first.split("@",0)[0],second.split("@",0)[0]), emailMatchFn.call(first,second));
 	}
 
 	@Test
@@ -64,8 +54,6 @@ public class TestEmailMatchTypeFunction {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
 		String first = null;
 		String second = null;
-		//first = first.split("@",0)[0];
-		//second = second.split("@",0)[0];
 		assertEquals(1d, emailMatchFn.call(first,second));
 	}
 
@@ -74,8 +62,6 @@ public class TestEmailMatchTypeFunction {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
 		String first = "xyz321@pqr.co";
 		String second = "xyz321@pqr.co";
-		first = first.split("@",0)[0];
-		second = second.split("@",0)[0];
 		assertEquals(1d, emailMatchFn.call(first,second));
 	}
 
@@ -84,9 +70,7 @@ public class TestEmailMatchTypeFunction {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
 		String first = "xyz321@pqr.co";
 		String second = "pqr981@abc.in";
-		first = first.split("@",0)[0];
-		second = second.split("@",0)[0];
-		assertEquals(1d, emailMatchFn.call(first,second));
+		assertEquals(AffineGapSimilarityFunction(first.split("@",0)[0],second.split("@",0)[0]), emailMatchFn.call(first,second));
 	}
 
 	@Test
@@ -94,8 +78,6 @@ public class TestEmailMatchTypeFunction {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
 		String first = "pqr981@abc.in";
 		String second = "pqr981@xyz.com";
-		first = first.split("@",0)[0];
-		second = second.split("@",0)[0];
 		assertEquals(1d, emailMatchFn.call(first,second));
 	}
 
@@ -104,9 +86,10 @@ public class TestEmailMatchTypeFunction {
 		EmailMatchTypeFunction emailMatchFn = new EmailMatchTypeFunction();
 		String first = "pqr981@xyz.com";
 		String second = "aqr981@xyz.com";
-		first = first.split("@",0)[0];
-		second = second.split("@",0)[0];
-		assertEquals(1d, emailMatchFn.call(first,second));
+		assertEquals(AffineGapSimilarityFunction(first.split("@",0)[0],second.split("@",0)[0]), emailMatchFn.call(first,second));
 	}
 
 }
+
+first = first.split("@",0)[0];
+second = second.split("@",0)[0];
