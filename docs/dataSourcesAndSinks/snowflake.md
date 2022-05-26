@@ -30,3 +30,4 @@ One must include Snowflake JDBC driver and Spark dependency on the spark classpa
 ```
 export ZINGG_EXTRA_JARS=snowflake-jdbc-3.13.18.jar,spark-snowflake_2.12-2.10.0-spark_3.1.jar
 ```
+Optionally, instead of setting env variable **ZINGG_EXTRA_JARS** as above, equivalent property **spark.jars** can be set in Zingg's configuration file (config/zingg.conf).
