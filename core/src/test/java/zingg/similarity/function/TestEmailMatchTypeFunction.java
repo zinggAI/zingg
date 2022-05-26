@@ -90,6 +90,3 @@ public class TestEmailMatchTypeFunction {
 	}
 
 }
-
-first = first.split("@",0)[0];
-second = second.split("@",0)[0];
