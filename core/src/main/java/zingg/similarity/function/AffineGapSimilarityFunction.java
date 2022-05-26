@@ -20,6 +20,11 @@ public class AffineGapSimilarityFunction extends StringSimilarityDistanceFunctio
 		super(s);
 		gap = new SAffineGap();
 	}
+
+	@Override
+	public Double call(String first, String second) {
+		return super.call(first,second);
+	}
 	
 	@Override
 	 public String getUid() {
