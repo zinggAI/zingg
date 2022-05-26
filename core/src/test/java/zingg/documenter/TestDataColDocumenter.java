@@ -26,7 +26,7 @@ public class TestDataColDocumenter extends ZinggSparkTester {
 	@BeforeEach
 	public void setUp(){
 		try {
-			args = Arguments.createArgumentsFromJSON(getClass().getResource("/testConfig.json").getFile());
+			args = Arguments.createArgumentsFromJSON(getClass().getResource("/documenter/config.json").getFile());
 		} catch (Throwable e) {
 			e.printStackTrace();
 			LOG.info("Unexpected exception received " + e.getMessage());

@@ -26,10 +26,10 @@ public class TestDataDocumenter extends ZinggSparkTester {
 	@BeforeEach
 	public void setUp(){
 		try {
-			args = Arguments.createArgumentsFromJSON(getClass().getResource("/testConfig.json").getFile());
+			args = Arguments.createArgumentsFromJSON(getClass().getResource("/documenter/config.json").getFile());
 		} catch (Throwable e) {
 			e.printStackTrace();
-			System.out.println("Unexpected exception received " + e.getMessage());
+			LOG.info("Unexpected exception received " + e.getMessage());
 			fail(e.getMessage());
 		}
 	}

@@ -13,11 +13,11 @@ public class TestDocumenter extends ZinggSparkTester{
     public void setUp(){
 
         try {
-			args = Arguments.createArgumentsFromJSON(getClass().getResource("/testConfig.json").getFile());
+			args = Arguments.createArgumentsFromJSON(getClass().getResource("/documenter/config.json").getFile());
            	//fail("Exception was expected for missing config file");
 		} catch (Throwable e) {
             e.printStackTrace();
-			System.out.println("Unexpected exception received " + e.getMessage());
+			LOG.info("Unexpected exception received " + e.getMessage());
             fail(e.getMessage());
 		}
     }
