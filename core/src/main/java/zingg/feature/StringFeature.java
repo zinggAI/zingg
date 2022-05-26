@@ -10,9 +10,11 @@ import zingg.similarity.function.JaroWinklerFunction;
 import zingg.similarity.function.NumbersJaccardFunction;
 import zingg.similarity.function.OnlyAlphabetsAffineGapSimilarity;
 import zingg.similarity.function.OnlyAlphabetsExactSimilarity;
+import zingg.similarity.function.PinCodeMatchTypeFunction;
 import zingg.similarity.function.ProductCodeFunction;
 import zingg.similarity.function.SameFirstWordFunction;
 import zingg.similarity.function.StringSimilarityFunction;
+
 
 public class StringFeature extends BaseFeature<String> {
 
@@ -41,6 +43,9 @@ public class StringFeature extends BaseFeature<String> {
 		if (f.getMatchType().contains(MatchType.EXACT)) {
 			addSimFunction(new StringSimilarityFunction());
 		} 
+		if(f.getMatchType().contains(MatchType.PINCODE)){
+			addSimFunction(new PinCodeMatchTypeFunction());
+		}
 		if (f.getMatchType().contains(MatchType.NUMERIC_WITH_UNITS)) {
 			addSimFunction(new ProductCodeFunction());
 		}
