@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
@@ -19,6 +21,8 @@ import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.util.Analytics;
 import zingg.util.DSUtil;
+import zingg.client.util.ColName;
+import zingg.client.util.ColValues;
 import zingg.client.util.ListMap;
 import zingg.util.Metric;
 import zingg.feature.Feature;
@@ -177,6 +181,32 @@ public abstract class ZinggBase implements Serializable, IZingg {
     public ZinggOptions getZinggOptions() {
         return zinggOptions;
     }
+
+    public Dataset<Row> getMarkedRecords() {
+		try {
+			return PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
+		} catch (ZinggClientException e) {
+			LOG.warn("No record has been marked yet");
+		}
+		return null;
+	}
+
+    public Long getMarkedRecordsStat(Dataset<Row> markedRecords, long value) {
+        return markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(value)).count() / 2;
+    }
+
+    public Long getMatchedMarkedRecordsStat(Dataset<Row> markedRecords){
+        return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_MATCH);
+    }
+
+    public Long getUnmatchedMarkedRecordsStat(Dataset<Row> markedRecords){
+        return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_NOT_A_MATCH);
+    }
+
+    public Long getUnsureMarkedRecordsStat(Dataset<Row> markedRecords){
+        return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_NOT_SURE);
+    }
+
 
 
 

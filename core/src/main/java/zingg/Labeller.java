@@ -47,11 +47,7 @@ public class Labeller extends ZinggBase {
 		Dataset<Row> markedRecords = null;
 		try {
 			unmarkedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataUnmarkedPipe(args));
-			try {
-				markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
-			} catch (ZinggClientException e) {
-				LOG.warn("No record has been marked yet");
-			}
+			markedRecords = getMarkedRecords();
 			if (markedRecords != null ) {
 				unmarkedRecords = unmarkedRecords.join(markedRecords,
 						unmarkedRecords.col(ColName.CLUSTER_COLUMN).equalTo(markedRecords.col(ColName.CLUSTER_COLUMN)),
@@ -64,10 +60,14 @@ public class Labeller extends ZinggBase {
 		return unmarkedRecords;
 	}
 
+	
+
+
+	
 	protected void getMarkedRecordsStat(Dataset<Row> markedRecords) {
-		positivePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH)).count() / 2;
-		negativePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_A_MATCH)).count() / 2;
-		notSurePairsCount = markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_SURE)).count() / 2;
+		positivePairsCount = getMatchedMarkedRecordsStat(markedRecords);
+		negativePairsCount =  getUnmatchedMarkedRecordsStat(markedRecords);
+		notSurePairsCount = getUnsureMarkedRecordsStat(markedRecords);
 		totalCount = markedRecords.count() / 2;
 	}
 

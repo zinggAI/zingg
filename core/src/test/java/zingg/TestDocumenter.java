@@ -17,7 +17,7 @@ public class TestDocumenter extends ZinggSparkTester{
            	//fail("Exception was expected for missing config file");
 		} catch (Throwable e) {
             e.printStackTrace();
-			System.out.println("Unexpected exception received " + e.getMessage());
+			LOG.info("Unexpected exception received " + e.getMessage());
             fail(e.getMessage());
 		}
     }

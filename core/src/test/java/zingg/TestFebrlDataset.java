@@ -41,7 +41,8 @@ public class TestFebrlDataset extends ZinggSparkTester{
 		TrainMatcher tm = new TrainMatcher();
 		try {
 			tm.init(args, "");
-		
+			tm.setSpark(spark);
+			tm.setCtx(ctx);
 			tm.setArgs(args);
 			tm.execute();
 			
@@ -75,10 +76,10 @@ public class TestFebrlDataset extends ZinggSparkTester{
 			LOG.info("False negative " + fnCount);
 			LOG.info("True positive " + tpCount);
 			LOG.info("False positive " + fpCount);
-			LOG.info("precision " + (tpCount/(tpCount+fpCount)));
+			LOG.info("precision " + (tpCount*1.0d/(tpCount+fpCount)));
 			LOG.info("recall " + tpCount + " denom " + (tpCount+fnCount) + " overall " + (tpCount*1.0d/(tpCount+fnCount)));
 
-			assertTrue(0.8 < (tpCount/(tpCount+fpCount)));
+			assertTrue(0.8 < (tpCount*1.0d/(tpCount+fpCount)));
 			assertTrue(0.8 < (tpCount*1.0d/(tpCount+fnCount)));
 			
 

@@ -24,6 +24,17 @@ public enum MatchType implements Serializable {
 	 */
 	EXACT("EXACT"),
 
+	
+	/**
+	 * Many times pin code is xxxxx-xxxx and has to be matched with xxxxx.
+	 */
+	PINCODE("PINCODE"),
+
+	/**
+	 * an email type which is supposed to look at only the first part of the email and ignore the domain.
+	 */
+	EMAIL("EMAIL"),
+
 	/**
 	 * Long descriptive text, usually more than a couple of words for example
 	 * product descriptions
