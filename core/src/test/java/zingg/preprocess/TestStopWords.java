@@ -90,7 +90,7 @@ public class TestStopWords extends ZinggSparkTester{
 						RowFactory.create("30", "written java scala", "four", "", "test"),
 						RowFactory.create("40", "best luck to zingg ", "Five", "thank you", "test")),
 				schemaOriginal);
-  			String stopWordsFileName = getClass().getResource("../../stopWords.csv").getFile();
+  			String stopWordsFileName = getClass().getResource("../../preProcess/stopWords.csv").getFile();
  			FieldDefinition fd = new FieldDefinition();
 			fd.setStopWords(stopWordsFileName);
 			fd.setFieldName("field1");
@@ -134,7 +134,7 @@ public class TestStopWords extends ZinggSparkTester{
 						RowFactory.create("30", "written java scala", "four", "", "test"),
 						RowFactory.create("40", "best luck to zingg ", "Five", "thank you", "test")),
 				schemaOriginal);
-  			String stopWordsFileName = getClass().getResource("../../stopWordsWithoutHeader.csv").getFile();
+  			String stopWordsFileName = getClass().getResource("../../preProcess/stopWordsWithoutHeader.csv").getFile();
  			FieldDefinition fd = new FieldDefinition();
 			fd.setStopWords(stopWordsFileName);
 			fd.setFieldName("field1");

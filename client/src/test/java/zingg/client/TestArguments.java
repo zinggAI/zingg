@@ -32,7 +32,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "400");
 	
 			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../testConfigTemplate.json.env").getFile()));
+					.readAllBytes(Paths.get(getClass().getResource("../../testArguments/testConfigTemplate.json.env").getFile()));
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
 			Arguments args = Arguments.createArgumentsFromJSONString(json, "");
@@ -53,7 +53,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "400");
 
 			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../testConfigTemplate.json.env").getFile()));
+					.readAllBytes(Paths.get(getClass().getResource("../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -73,7 +73,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "400");
 
 			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../testConfigTemplate.json.env").getFile()));
+					.readAllBytes(Paths.get(getClass().getResource("../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -95,7 +95,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "400");
 
 			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../testConfigTemplate.json.env").getFile()));
+					.readAllBytes(Paths.get(getClass().getResource("../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -116,7 +116,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "400");
 
 			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../testConfigTemplate.json.env").getFile()));
+					.readAllBytes(Paths.get(getClass().getResource("../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -138,7 +138,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "ONEHUNDRED");
 
 			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../testConfigTemplate.json.env").getFile()));
+					.readAllBytes(Paths.get(getClass().getResource("../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -160,7 +160,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "500");
 
 			byte[] encoded = Files.readAllBytes(
-					Paths.get(getClass().getResource("../../testNumericWithinQuotesTemplate.json.env").getFile()));
+					Paths.get(getClass().getResource("../../testArguments/testNumericWithinQuotesTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -183,7 +183,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "500");
 
 			byte[] encoded = Files.readAllBytes(
-					Paths.get(getClass().getResource("../../testMalformedConfigTemplate.json.env").getFile()));
+					Paths.get(getClass().getResource("../../testArguments/testMalformedConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -210,7 +210,7 @@ public class TestArguments {
 	public void testMatchTypeMultiple() {
 			Arguments args;
             try {
-                args = Arguments.createArgumentsFromJSON(getClass().getResource("../../configWithMultipleMatchTypes.json").getFile(), "test");
+                args = Arguments.createArgumentsFromJSON(getClass().getResource("../../testArguments/configWithMultipleMatchTypes.json").getFile(), "test");
 				List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
 				assertEquals(2, fNameMatchType.size());
 				assertEquals(MatchType.FUZZY, fNameMatchType.get(0));
@@ -229,7 +229,7 @@ public class TestArguments {
 	public void testMatchTypeWrong() {
 			Arguments args;
             try {
-                args = Arguments.createArgumentsFromJSON(getClass().getResource("../../configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
+                args = Arguments.createArgumentsFromJSON(getClass().getResource("../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
 				//List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
 				fail("config had error, should have flagged");
 				
