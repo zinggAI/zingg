@@ -3,13 +3,14 @@ package zingg.documenter;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -64,7 +65,8 @@ public class TestDocumenterBase extends ZinggSparkTester {
 		String fileName = args.getZinggDir() + "/testDoc.html";
 		base.writeDocument(TEST_DOC_TEMPLATE, root, fileName);
 		
-		String content = Files.readString(Paths.get(fileName));
+		String content = Files.lines(Paths.get(fileName), StandardCharsets.UTF_8)
+							.collect(Collectors.joining(System.lineSeparator()));
 		assertTrue(content.contains("100"));
 		assertTrue(content.contains("welcome"));
 		assertTrue(content.contains("zingg"));
