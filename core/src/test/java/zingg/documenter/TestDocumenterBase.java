@@ -50,6 +50,7 @@ public class TestDocumenterBase extends ZinggSparkTester {
 	public void testProcessTemplateToMakeDocument() throws Throwable {
 		
 		DocumenterBase base = new DocumenterBase(spark, args);
+		base.checkAndCreateDir(args.getZinggDir());
 
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put(TemplateFields.TITLE, "template test");
