@@ -78,7 +78,6 @@ public class FieldDefinition implements
 		this.matchType = Arrays.asList(type);
 	}
 	
-
 	
 	public DataType getDataType() {
 		return dataType;

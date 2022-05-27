@@ -4,21 +4,16 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 
 public class InMemoryPipe extends Pipe{
-    Dataset <Row> dataset;
-	
-    public InMemoryPipe(Dataset<Row> ds) {
-		dataset = ds;
+    
+	public InMemoryPipe() {
 	}
 
-	public InMemoryPipe() {
+	public InMemoryPipe(Dataset <Row> ds){
+		dataset = ds;
 	}
 
     public Dataset <Row> getRecords() {
 		return dataset;
-	}
-
-	public void setRecords(Dataset <Row> ds) {
-		dataset = ds;
 	}
 
 	public InMemoryPipe(Pipe p) {

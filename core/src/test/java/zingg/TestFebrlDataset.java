@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +19,8 @@ import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 /**end to end integration test*/
 public class TestFebrlDataset extends ZinggSparkTester{
+	public static final Log LOG = LogFactory.getLog(TestFebrlDataset.class);
+
 	
 	InMemoryPipe outputPipe;
 	
@@ -37,7 +41,8 @@ public class TestFebrlDataset extends ZinggSparkTester{
 		TrainMatcher tm = new TrainMatcher();
 		try {
 			tm.init(args, "");
-		
+			tm.setSpark(spark);
+			tm.setCtx(ctx);
 			tm.setArgs(args);
 			tm.execute();
 			
@@ -57,13 +62,25 @@ public class TestFebrlDataset extends ZinggSparkTester{
 			Dataset<Row> gold = joinAndFilter("dupeId", df, df1).cache();
 			Dataset<Row> result = joinAndFilter(ColName.CLUSTER_COLUMN, df, df1).cache();
 
-			gold.show(100);result.show(100);
+			//gold.repartition(1).rdd().saveAsTextFile("/tmp/gold");
+			//result.repartition(1).rdd().saveAsTextFile("/tmp/result");
+			//gold.show(100);result.show(100);
 			Dataset<Row> fn = gold.except(result);
 			Dataset<Row> tp = gold.intersect(result);
 			Dataset<Row> fp = result.except(gold);
 
-			//assertTrue(0.9 < (tp.count()/(tp.count()+fp.count())));
-			//assertTrue(0.9 < (tp.count()/(tp.count()+fn.count())));
+			long fnCount = fn.count();
+			long tpCount = tp.count();
+			long fpCount = fp.count();
+
+			LOG.info("False negative " + fnCount);
+			LOG.info("True positive " + tpCount);
+			LOG.info("False positive " + fpCount);
+			LOG.info("precision " + (tpCount*1.0d/(tpCount+fpCount)));
+			LOG.info("recall " + tpCount + " denom " + (tpCount+fnCount) + " overall " + (tpCount*1.0d/(tpCount+fnCount)));
+
+			assertTrue(0.8 < (tpCount*1.0d/(tpCount+fpCount)));
+			assertTrue(0.8 < (tpCount*1.0d/(tpCount+fnCount)));
 			
 
 		} catch (ZinggClientException e) {

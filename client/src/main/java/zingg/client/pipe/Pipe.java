@@ -5,11 +5,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.StructType;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonValue;
+import org.apache.spark.sql.Row;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -35,11 +37,10 @@ public class Pipe implements Serializable{
 	Map<String, String> props = new HashMap<String, String>();
 	@JsonSerialize(using = CustomSchemaSerializer.class)
 	StructType schema = null;
-	Map<String, String> sparkProps;
-	Map<String, String> addProps;
 	SaveMode mode;
 	int id;
-	
+	Dataset <Row> dataset;
+
 	public SaveMode getMode() {
 		return mode;
 	}
@@ -85,8 +86,7 @@ public class Pipe implements Serializable{
 	public void clone(Pipe p) {
 		this.name = p.name;
 		this.format = p.format;
-		this.props = p.props;
-		this.sparkProps = p.sparkProps;
+		this.props = p.props;		
 	}
 	
 	@JsonProperty("schema")
@@ -124,16 +124,6 @@ public class Pipe implements Serializable{
 	}
 
 
-	public Map<String, String> getSparkProps() {
-		return sparkProps;
-	}
-
-
-	public void setSparkProps(Map<String, String> sparkProps) {
-		this.sparkProps = sparkProps;
-	}
-
-	
 
 	public int getId() {
 		return id;
@@ -144,6 +134,13 @@ public class Pipe implements Serializable{
 		this.id = recId;
 	}
 
+	public Dataset <Row> getDataset(){
+		return this.dataset;
+	}
+
+	public void setDataset(Dataset <Row> ds){
+		this.dataset = ds;
+	}
 
 	@Override
 	public String toString() {
@@ -173,14 +170,7 @@ public class Pipe implements Serializable{
 	    }
 	}
 
-	public Map<String, String> getAddProps() {
-		return addProps;
-	}
-
-
-	public void setAddProps(Map<String, String> addProps) {
-		this.addProps = addProps;
-	}
+	
 
 	
 	public Pipe clone() {
@@ -190,12 +180,10 @@ public class Pipe implements Serializable{
 		p.preprocessors = preprocessors;
 		p.props = props;
 		p.schema = schema;
-		p.sparkProps = sparkProps;
-		p.addProps = addProps;
 		p.mode = mode;
 		p.id = id;
+		p.dataset = dataset;
 		return p;
 	}
-	
 	
 }

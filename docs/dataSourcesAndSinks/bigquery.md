@@ -6,8 +6,12 @@ The two driver jars namely **spark-bigquery-with-dependencies_2.12-0.24.2.jar** 
 
 ```bash
 export ZINGG_EXTRA_JARS=./spark-bigquery-with-dependencies_2.12-0.24.2.jar,./gcs-connector-hadoop2-latest.jar
-export ZINGG_EXTRA_SPARK_CONF="--conf spark.hadoop.fs.gs.impl=com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem"
 ```
+Set the following property in Zingg's configuration file i.e. in **config/zingg.conf**.
+```bash
+spark.hadoop.fs.gs.impl=com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem                                                      
+```
+Similarly, in place of setting env variable **ZINGG_EXTRA_JARS** as above, equivalent property **spark.jars** can also be set in the zingg.conf file.
 
 If Zingg is run from outside Google cloud, it requires authentication, please set the following env variable to the location of the file containing service account key. A service account key can be created and downloaded in json format from [Google Cloud console](https://cloud.google.com/docs/authentication/getting-started)
 

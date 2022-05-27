@@ -1,5 +1,8 @@
 package zingg.client;
 
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+
 public interface IZingg {
 
 	public void init(Arguments args, String license)
@@ -14,5 +17,17 @@ public interface IZingg {
 	public String getName();
 
 	public void postMetrics();
+
+	//** placing these methods for the assessModel phase */
+
+	public Dataset<Row> getMarkedRecords();
+
+	public Long getMarkedRecordsStat(Dataset<Row> markedRecords, long value);
+
+    public Long getMatchedMarkedRecordsStat(Dataset<Row> markedRecords);
+
+    public Long getUnmatchedMarkedRecordsStat(Dataset<Row> markedRecords);
+
+    public Long getUnsureMarkedRecordsStat(Dataset<Row> markedRecords);
 
 }
