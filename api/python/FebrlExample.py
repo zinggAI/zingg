@@ -60,7 +60,6 @@ ssn.setFieldName("ssn")
 ssn.setDataType("\"string\"")
 ssn.setMatchType([sc._jvm.zingg.client.MatchType.FUZZY])
 ssn.setFields("ssn")
-:silent
 
 #fieldDef = sc._jvm.java.util.ArrayList(sc._jvm.zingg.client.FieldDefinition)
 fieldDef = sc._jvm.java.util.ArrayList()
