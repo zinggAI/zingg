@@ -1,3 +1,9 @@
+from pyspark import SparkConf, SparkContext, SQLContext
+from pyspark.sql.session import SparkSession
+sc = SparkContext.getOrCreate()
+sqlContext = SQLContext(sc)
+spark = SparkSession(sc)
+
 #build the arguments for zingg
 args = sc._jvm.zingg.client.Arguments()
 #set field definitions
