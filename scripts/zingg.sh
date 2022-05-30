@@ -1,8 +1,6 @@
 #!/bin/bash
 #ZINGG_HOME=./assembly/target
 ZINGG_JARS=$ZINGG_HOME/zingg-0.3.3-SNAPSHOT.jar
-EMAIL=xxx@yyy.com
-LICENSE="test"
 # Dictionary of phases written in python
 declare -A  PYTHON_PHASES=(["assessModel"]="api/python/FebrlExample.py" \
 						)
@@ -14,7 +12,7 @@ else
 fi
 
 function read_zingg_conf() {
-	local CONF_PROPS=""
+	CONF_PROPS=""
 
 	ZINGG_CONF_DIR="$(cd "`dirname "$0"`"/../config; pwd)"
 
@@ -26,11 +24,14 @@ function read_zingg_conf() {
 		# Trim leading and trailing spaces
 		key=$(echo $key | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//;')
 		value=$(echo $value | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//;')
-		# Append to conf variable
-		CONF_PROPS+=" --conf ${key}=${value}"
+		if [[ $key == spark* ]]; then
+			# Append to conf variable
+			CONF_PROPS+=" --conf ${key}=${value}"
+		else
+			# Add to env var list
+			ENVIRONMENT_VARS[${key}]=${value}
+		fi;
 	done <<< "$(echo -e "$PROPERTIES")"
-
-	echo $CONF_PROPS
 }
 
 function is_python_phase() {
@@ -67,7 +68,19 @@ while [[ $# -gt 0 ]]; do
 done
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
-OPTION_SPARK_CONF+=$(read_zingg_conf)
+declare -A ENVIRONMENT_VARS
+read_zingg_conf
+
+# echo "${!ENVIRONMENT_VARS[@]}"
+# echo "${ENVIRONMENT_VARS[@]}"
+# echo ${CONF_PROPS}
+
+for x in ${!ENVIRONMENT_VARS[@]}; do
+	eval ${x}=${ENVIRONMENT_VARS[${x}]}
+done
+
+OPTION_SPARK_CONF=${CONF_PROPS}
+
 
 # if it is a python phase
 if [[ $RUN_PYTHON_PHASE -eq 0 ]]; then
