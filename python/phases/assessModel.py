@@ -1,7 +1,10 @@
 from zingg import *
+from pyspark.sql import DataFrame
 import pandas as pd
 import seaborn as sn
 import matplotlib.pyplot as plt
+from IPython.display import display
+
 args = Arguments()
 fname = FieldDefinition("fname","\"string\"",[sc._jvm.zingg.client.MatchType.FUZZY])
 lname = FieldDefinition("lname","\"string\"",[sc._jvm.zingg.client.MatchType.FUZZY])
@@ -20,10 +23,15 @@ print(args.getArgs)
 client = Client(args, options)
 client.init()
 client.execute()
-mark_spark = client.getMarkedRecords()
-mark = mark_spark.select("*").toPandas()
-marked = client.getMarkedRecordsStat(mark, value)
-matched_marked = client.getMatchedMarkedRecordsStat(mark)
-unmatched_marked = client.getUnmatchedMarkedRecordsStat(mark)
-unsure_marked = client.getUnsureMarkedRecordsStat(mark)
+jMarkedDF = client.getMarkedRecords()
+print(jMarkedDF)
+markedDF = DataFrame(jMarkedDF, sqlContext)
+print(markedDF)
+pMarkedDF = markedDF.toPandas()
+display(pMarkedDF)
+
+#marked = client.getMarkedRecordsStat(mark, value)
+#matched_marked = client.getMatchedMarkedRecordsStat(mark)
+#unmatched_marked = client.getUnmatchedMarkedRecordsStat(mark)
+#unsure_marked = client.getUnsureMarkedRecordsStat(mark)
 
