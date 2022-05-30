@@ -51,7 +51,9 @@ while [[ $# -gt 0 ]]; do
 			PHASE="$2"
 			is_python_phase $PHASE # check if it is a python phase
 			RUN_PYTHON_PHASE=$? # store the return status
-			PYTHON_PHASE_EXE=${PYTHON_PHASES[$PHASE]}
+			if [[ $RUN_PYTHON_PHASE -eq 0 ]]; then
+				PYTHON_PHASE_EXE=${PYTHON_PHASES[$PHASE]}
+			fi
 			POSITIONAL_ARGS+=("$1") # save positional arg
 			POSITIONAL_ARGS+=("$2") # save positional arg
 			shift # past argument --phase
@@ -70,7 +72,7 @@ OPTION_SPARK_CONF+=$(read_zingg_conf)
 # if it is a python phase
 if [[ $RUN_PYTHON_PHASE -eq 0 ]]; then
 	echo "Executing python phase: ${PHASE} (${PYTHON_PHASE_EXE})"
-	$SPARK_HOME/bin/spark-submit --master $SPARK_MASTER --jars=$ZINGG_JARS --conf spark.driver.extraClassPath=$ZINGG_JARS --conf spark.executor.extraClassPath=$ZINGG_JARS $PYTHON_PHASE_EXE --email $EMAIL --license $LICENSE
+	$SPARK_HOME/bin/spark-submit --master $SPARK_MASTER ${OPTION_SPARK_CONF} --jars=$ZINGG_JARS --conf spark.driver.extraClassPath=$ZINGG_JARS --conf spark.executor.extraClassPath=$ZINGG_JARS $PYTHON_PHASE_EXE $@ --email $EMAIL --license $LICENSE
 	exit 0
 fi
 
