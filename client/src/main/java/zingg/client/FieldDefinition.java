@@ -78,7 +78,6 @@ public class FieldDefinition implements
 		this.matchType = Arrays.asList(type);
 	}
 	
-
 	
 	public DataType getDataType() {
 		return dataType;
@@ -177,18 +176,21 @@ public class FieldDefinition implements
 		public List<MatchType> deserialize(JsonParser parser, DeserializationContext context) 
 		   throws IOException, JsonProcessingException { 
 			ObjectMapper mapper = new ObjectMapper();
-			mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-			LOG.debug("Deserializing custom type");
-		    return getMatchTypeFromString(mapper.readValue(parser, String.class)); 
+			try{
+				mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+				LOG.debug("Deserializing custom type");
+				return getMatchTypeFromString(mapper.readValue(parser, String.class)); 
+			}
+			catch(ZinggClientException e) {
+				throw new IOException(e);
+			}
 		}   
 
-		public static List<MatchType> getMatchTypeFromString(String m) throws IOException{
+		public static List<MatchType> getMatchTypeFromString(String m) throws ZinggClientException{
 			List<MatchType> matchTypes = new ArrayList<MatchType>();
 		    String[] matchTypeFromConfig = m.split(","); 
 			for (String s: matchTypeFromConfig) { 
 				MatchType mt = MatchType.getMatchType(s);
-				LOG.debug(mt);
-				if (m == null) throw new IOException("Wrong value of matchType set");
 				matchTypes.add(mt);
 			}     
 		   return matchTypes; 

@@ -69,11 +69,13 @@ public enum MatchType implements Serializable {
 	}
 
 	@JsonCreator
-	public static MatchType getMatchType(String t) {
+	public static MatchType getMatchType(String t) throws ZinggClientException{
 		if (types == null) {
 			init();
 		}
-		return types.get(t.trim().toUpperCase());
+		MatchType type = types.get(t.trim().toUpperCase());
+		if (type == null) throw new ZinggClientException("Unsupported Match Type: " + t);
+		return type;
 	}
 
 	@JsonValue

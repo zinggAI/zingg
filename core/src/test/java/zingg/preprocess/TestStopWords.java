@@ -19,12 +19,12 @@ import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import zingg.BaseSparkTest;
+import zingg.ZinggSparkTester;
 import zingg.client.FieldDefinition;
 import zingg.client.util.ColName;
 import zingg.util.DSUtil;
 
-public class TestStopWords extends BaseSparkTest{
+public class TestStopWords extends ZinggSparkTester{
 
 	public static final Log LOG = LogFactory.getLog(TestStopWords.class);
 
@@ -90,7 +90,51 @@ public class TestStopWords extends BaseSparkTest{
 						RowFactory.create("30", "written java scala", "four", "", "test"),
 						RowFactory.create("40", "best luck to zingg ", "Five", "thank you", "test")),
 				schemaOriginal);
-  			String stopWordsFileName = getClass().getResource("../../stopWords.csv").getFile();
+  			String stopWordsFileName = getClass().getResource("../../preProcess/stopWords.csv").getFile();
+ 			FieldDefinition fd = new FieldDefinition();
+			fd.setStopWords(stopWordsFileName);
+			fd.setFieldName("field1");
+
+			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
+			args.setFieldDefinition(fieldDefinitionList);
+
+ 			Dataset<Row> newDataSet = StopWords.preprocessForStopWords(spark, args, original);
+ 			assertTrue(datasetExpected.except(newDataSet).isEmpty());
+			assertTrue(newDataSet.except(datasetExpected).isEmpty());
+		} catch (Throwable e) {
+			fail("Unexpected exception " + e.getMessage());
+		}
+	}
+
+	@Test
+	public void testStopWordColumnMissingFromStopWordFile() {
+		try {
+			StructType schemaOriginal = new StructType(new StructField[] {
+					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
+					new StructField("field1", DataTypes.StringType, false, Metadata.empty()),
+					new StructField("field2", DataTypes.StringType, false, Metadata.empty()),
+					new StructField("field3", DataTypes.StringType, false, Metadata.empty()),
+					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
+			});
+
+			Dataset<Row> original = spark.createDataFrame(
+					Arrays.asList(
+							RowFactory.create("10", "The zingg is a spark application", "two",
+									"Yes. a good application", "test"),
+							RowFactory.create("20", "It is very popular in Data Science", "Three", "true indeed",
+									"test"),
+							RowFactory.create("30", "It is written in java and scala", "four", "", "test"),
+							RowFactory.create("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test")),
+					schemaOriginal);
+
+			Dataset<Row> datasetExpected = spark.createDataFrame(
+				Arrays.asList(
+						RowFactory.create("10", "zingg spark application", "two", "Yes. a good application", "test"),
+						RowFactory.create("20", "very popular data science", "Three", "true indeed", "test"),
+						RowFactory.create("30", "written java scala", "four", "", "test"),
+						RowFactory.create("40", "best luck to zingg ", "Five", "thank you", "test")),
+				schemaOriginal);
+  			String stopWordsFileName = getClass().getResource("../../preProcess/stopWordsWithoutHeader.csv").getFile();
  			FieldDefinition fd = new FieldDefinition();
 			fd.setStopWords(stopWordsFileName);
 			fd.setFieldName("field1");

@@ -52,7 +52,7 @@ public class TestPinCodeMatchTypeFunction {
 	}
 
 	@Test
-	public void testbothNotEmptyDifferent() {
+	public void testBothNotEmptyDifferent() {
 		PinCodeMatchTypeFunction pincodeMatchFn = new PinCodeMatchTypeFunction();
 		assertEquals(0d, pincodeMatchFn.call("34234", "34334"));
 	}

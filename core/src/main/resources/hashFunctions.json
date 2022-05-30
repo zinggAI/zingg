@@ -41,6 +41,63 @@
 	"name":"identityInteger"
 },
 {
+	"name":"truncateDoubleTo1Places"
+},
+{
+	"name":"truncateDoubleTo2Places"
+},
+{
+	"name":"truncateDoubleTo3Places"
+},
+{
+	"name":"lessThanZeroDbl"
+},
+{
+	"name":"lessThanZeroInt"
+},
+{
+	"name":"trimLast1DigitsDbl"
+},
+{
+	"name":"trimLast2DigitsDbl"
+},
+{
+	"name":"trimLast3DigitsDbl"
+},
+{
+	"name":"trimLast1DigitsInt"
+},
+{
+	"name":"trimLast2DigitsInt"
+},
+{
+	"name":"trimLast3DigitsInt"
+},
+{
+	"name":"rangeBetween0And10Int"
+},
+{
+	"name":"rangeBetween0And10Dbl"
+},
+{
+	"name":"rangeBetween10And100Int"
+},
+{
+	"name":"rangeBetween10And100Dbl"
+},
+{
+	"name":"rangeBetween100And1000Int"
+},
+{
+	"name":"rangeBetween100And1000Dbl"
+},
+{
+	"name":"rangeBetween1000And10000Int"
+},
+{
+	"name":"rangeBetween1000And10000Dbl"
+},
+{
 	"name":"round"
 }
 ]

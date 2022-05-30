@@ -2,7 +2,6 @@ package zingg.similarity.function;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.ml.util.Identifiable$;
 
 
 public class EmailMatchTypeFunction extends StringSimilarityDistanceFunction {
@@ -18,15 +17,12 @@ public class EmailMatchTypeFunction extends StringSimilarityDistanceFunction {
 	
 	public EmailMatchTypeFunction(String s) {
 		super(s);
-		//gap = new SAffineGap();
+		gap = new SAffineGap();
 	}
 	
 	@Override
 	public Double call(String first, String second) {
-		first = first.split("@",0)[0];
-		second = second.split("@",0)[0];
-		return super.call(first,second);
-		/*
+		
 		double score1 = 0.0;
 		double score2 = 0.0;
 		double score = 0.0;
@@ -41,7 +37,7 @@ public class EmailMatchTypeFunction extends StringSimilarityDistanceFunction {
 			if (score1 != 1.0d && score2 != 1.0d) {
 				first = first.split("@",0)[0];
 				second = second.split("@",0)[0];
-				score = first.equalsIgnoreCase(second)? 1.0d : 0.0d;
+				score = gap.score(first, second);
 			}
 			else {
 				score = 1.0d;
@@ -55,7 +51,7 @@ public class EmailMatchTypeFunction extends StringSimilarityDistanceFunction {
 			if (Double.isNaN(score)) {
 				score = 0.0;
 			}
-			return score;
-			*/
+			return score;			
 		}		
+	}
 }

@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.module.scala.DefaultScalaModule;
 
 import org.apache.commons.logging.Log;
@@ -106,6 +105,7 @@ public class Arguments implements Serializable {
 	boolean collectMetrics = true;
 	boolean showConcise = false;
 	float stopWordsCutoff = 0.1f;
+	long blockSize = 100L;
 	
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
@@ -169,7 +169,7 @@ public class Arguments implements Serializable {
 			checkValid(args, phase);
 			return args;			
 		} catch (Exception e) { 
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new ZinggClientException("Unable to parse the configuration at " + filePath + 
 					". The error is " + e.getMessage());
 		}
@@ -198,7 +198,7 @@ public class Arguments implements Serializable {
 			checkValid(args, phase);
 			return args;			
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new ZinggClientException("Unable to parse the configuration at " + data + 
 					". The error is " + e.getMessage());
 		}
@@ -215,7 +215,7 @@ public class Arguments implements Serializable {
 			Arguments args = createArgumentsFromJSONString(updatedJson, phase);
 			return args;
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new ZinggClientException("Unable to parse the configuration at " + filePath +
 					". The error is " + e.getMessage());
 		}
@@ -459,7 +459,7 @@ public class Arguments implements Serializable {
 	}
 	
 	public static void checkNullBlankEmpty(Pipe[] field, String fieldName) throws ZinggClientException {
-		if (field == null || field.length == 0) {
+		if (field == null || field.length == 0) {		
 			throw new ZinggClientException("Missing value for " + fieldName + ". Trying to set " + field);
 		}
 	}
@@ -517,10 +517,14 @@ public class Arguments implements Serializable {
 	}
 
 	@JsonIgnore
-	public String getZinggDocFile() {
+	public String getZinggModelDocFile() {
 		return zinggDir + "/" + modelId + "/model.html";
 	}
 
+	@JsonIgnore
+	public String getZinggDataDocFile() {
+		return zinggDir + "/" + modelId + "/data.html";
+	}
 
 	/**
 	 * Location for internal Zingg use.
@@ -622,7 +626,15 @@ public class Arguments implements Serializable {
 	public void setShowConcise(boolean showConcise) {
 		this.showConcise = showConcise;
 	}
-	
+
+	public long getBlockSize() {
+		return blockSize;
+	}
+
+	public void setBlockSize(long blockSize){
+		this.blockSize = blockSize;
+	}
+
 	public String[] getPipeNames() {
 		Pipe[] input = this.getData();
 		String[] sourceNames = new String[input.length];
