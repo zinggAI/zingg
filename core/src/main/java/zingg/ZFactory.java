@@ -22,6 +22,7 @@ public class ZFactory implements IZinggFactory{
         zinggers.put(ZinggOptions.GENERATE_DOCS, Documenter.name);
         zinggers.put(ZinggOptions.UPDATE_LABEL, LabelUpdater.name);
         zinggers.put(ZinggOptions.FIND_AND_LABEL, FindAndLabeller.name);
+        zinggers.put(ZinggOptions.ASSESS_MODEL, AssessModel.name);
     }
 
     public IZingg get(ZinggOptions z) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
