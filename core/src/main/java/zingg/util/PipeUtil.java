@@ -55,11 +55,15 @@ public class PipeUtil {
 
 	public static final Log LOG = LogFactory.getLog(PipeUtil.class);
 
-	private static DataFrameReader getReader(SparkSession spark, Pipe p) {
+	private static DataFrameReader getReader(SparkSession spark, Pipe p) throws ZinggClientException {
 		DataFrameReader reader = spark.read();
-
-		LOG.warn("Reading input " + p.getFormat().type());
-		reader = reader.format(p.getFormat().type());
+		if (p.getFormat() != null) {
+			LOG.warn("Reading input " + p.getFormat().type());
+			reader = reader.format(p.getFormat().type());
+		} else { // throw error, if a valid/supported format is a not configured
+			LOG.warn(p.toString());
+			throw new ZinggClientException("Format is null");
+		}
 		if (p.getSchema() != null) {
 			reader = reader.schema(p.getSchema());
 		}
