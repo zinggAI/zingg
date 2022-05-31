@@ -2,6 +2,7 @@ package zingg;
 
 import java.util.List;
 import java.util.Scanner;
+import java.lang.String;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,7 +15,6 @@ import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
-import zingg.client.util.ColValues;
 import zingg.util.DSUtil;
 import zingg.util.LabelMatchType;
 import zingg.util.PipeUtil;
@@ -56,15 +56,15 @@ public class LabelUpdater extends Labeller {
 
 				Scanner sc = new Scanner(System.in);
 				do {
-					System.out.print("\n\tPlease enter the cluster id (or 9 to exit): ");
+					System.out.print("\n\tPlease enter the cluster id (or " + NINE + " to exit): ");
 					String cluster_id = sc.next();
-					if (cluster_id.equals("9")) {
+					if (cluster_id.equals(NINE)) {
 						LOG.info("User has exit in the middle. Updating the records.");
 						break;
 					}
 					Dataset<Row> currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).equalTo(cluster_id));
 					if (currentPair.isEmpty()) {
-						System.out.println("\tInvalid cluster id. Enter '9' to exit");
+						System.out.println("\tInvalid cluster id. Enter '" + NINE + "' to exit");
 						continue;
 					}
 
@@ -76,7 +76,7 @@ public class LabelUpdater extends Labeller {
 					updateLabellerStat(selectedOption, +1);
 					updateLabellerStat(matchFlag, -1);
 					printMarkedRecordsStat();
-					if (selectedOption == 9) {
+					if (selectedOption == INT_NINE) {
 						LOG.info("User has quit in the middle. Updating the records.");
 						break;
 					}
@@ -87,7 +87,7 @@ public class LabelUpdater extends Labeller {
 								.filter(updatedRecords.col(ColName.CLUSTER_COLUMN).notEqual(cluster_id));
 					}
 					updatedRecords = updateRecords(selectedOption, currentPair, updatedRecords);
-				} while (selectedOption != 9);
+				} while (selectedOption != INT_NINE);
 
 				if (updatedRecords != null) {
 					updatedRecords = updatedRecords.union(recordsToUpdate);

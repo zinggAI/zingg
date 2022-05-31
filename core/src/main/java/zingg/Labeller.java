@@ -22,6 +22,8 @@ import zingg.util.LabelMatchType;
 public class Labeller extends ZinggBase {
 
 	protected static String name = "zingg.Labeller";
+	protected static final int INT_NINE = 9;
+	protected static final String NINE = String.valueOf(INT_NINE);
 	public static final Log LOG = LogFactory.getLog(Labeller.class);
 	long positivePairsCount, negativePairsCount, notSurePairsCount;
 	long totalCount;
@@ -108,7 +110,7 @@ public class Labeller extends ZinggBase {
 					selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msg1, msg2);
 					updateLabellerStat(selected_option, 1);
 					printMarkedRecordsStat();
-					if (selected_option == 9) {
+					if (selected_option == INT_NINE) {
 						LOG.info("User has quit in the middle. Updating the records.");
 						break;
 					}
@@ -160,9 +162,9 @@ public class Labeller extends ZinggBase {
 		System.out.println("\tYes, they match       : 1");
 		System.out.println("\tNot sure              : 2");
 		System.out.println();
-		System.out.println("\tTo exit               : 9");
+		System.out.println("\tTo exit               : " + NINE);
 		System.out.println();
-		System.out.print("\tPlease enter your choice [0,1,2 or 9]: ");
+		System.out.print("\tPlease enter your choice [0,1,2 or " + NINE + "]: ");
 
 		while (!sc.hasNext("[0129]")) {
 			sc.next();
