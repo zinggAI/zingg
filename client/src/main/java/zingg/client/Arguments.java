@@ -18,7 +18,9 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.module.scala.DefaultScalaModule;
+import com.fasterxml.jackson.core.json.JsonWriteFeature;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -171,10 +173,33 @@ public class Arguments implements Serializable {
 		} catch (Exception e) { 
 			//e.printStackTrace();
 			throw new ZinggClientException("Unable to parse the configuration at " + filePath + 
-					". The error is " + e.getMessage());
+					". The error is " + e.getMessage(), e);
 		}
 	}
 	
+	/**
+	 * Write arguments to a json file
+	 * 
+	 * @param filePath
+	 *            json file where arguments shall be written to
+	 * @return Arguments object
+	 * @throws ZinggClientException
+	 *             in case there is an error in writing to file
+	 */
+	public static final void writeArgumentsToJSON(String filePath, Arguments args)
+			throws ZinggClientException {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.enable(SerializationFeature.INDENT_OUTPUT);
+			mapper.getFactory().configure(JsonWriteFeature.QUOTE_FIELD_NAMES.mappedFeature(),true);
+			LOG.warn("Arguments are written to file: " + filePath);		
+			mapper.writeValue(new File(filePath), args);
+		} catch (Exception e) { 
+			throw new ZinggClientException("Unable to write the configuration to " + filePath + 
+					". The error is " + e.getMessage(), e);
+		}
+	}
+
 	public static void checkValid(Arguments args, String phase) throws ZinggClientException {
 		if (phase.equals("train") || phase.equals("match") || phase.equals("trainMatch") || phase.equals("link")) {
 			checkIsValid(args);
@@ -635,6 +660,7 @@ public class Arguments implements Serializable {
 		this.blockSize = blockSize;
 	}
 
+	@JsonIgnore
 	public String[] getPipeNames() {
 		Pipe[] input = this.getData();
 		String[] sourceNames = new String[input.length];

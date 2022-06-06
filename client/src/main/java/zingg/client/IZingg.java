@@ -22,6 +22,8 @@ public interface IZingg {
 
 	public Dataset<Row> getMarkedRecords();
 
+	public Dataset<Row> getUnMarkedRecords();
+
 	public Long getMarkedRecordsStat(Dataset<Row> markedRecords, long value);
 
     public Long getMatchedMarkedRecordsStat(Dataset<Row> markedRecords);
