@@ -27,6 +27,7 @@
 		<module>core</module>
 		<module>client</module>
 		<module>assembly</module>
+    	<module>python</module>
 	</modules>
 	<profiles>
 		<profile>
@@ -215,18 +216,25 @@
 						</execution>
 					</executions>
 				</plugin>
+				<!--
+				<plugin>
+    	       		<groupId>org.codehaus.mojo</groupId>
+	           		<artifactId>exec-maven-plugin</artifactId>
+        	 		<version>1.2</version>
+         		</plugin>
+				 -->
 			</plugins>
 		</pluginManagement>
 		<plugins>
 			<!--<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-compiler-plugin</artifactId>
-    <version>3.8.0</version>
-    <configuration>
-        <release>11</release>  
-    </configuration>
-</plugin>
--->
+    				<groupId>org.apache.maven.plugins</groupId>
+    				<artifactId>maven-compiler-plugin</artifactId>
+    				<version>3.8.0</version>
+    				<configuration>
+        				<release>11</release>  
+    				</configuration>
+				</plugin>
+			-->
 
 			<!-- This plugin compiles Scala files -->
 
