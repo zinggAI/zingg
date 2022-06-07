@@ -1,5 +1,5 @@
 #!/bin/bash
-ZINGG_HOME=./assembly/target
+#ZINGG_HOME=./assembly/target
 ZINGG_JARS=$ZINGG_HOME/zingg-0.3.4-SNAPSHOT.jar
 EMAIL=xxx@yyy.com
 LICENSE="test"
