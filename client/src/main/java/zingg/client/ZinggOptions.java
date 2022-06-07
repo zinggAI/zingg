@@ -15,7 +15,8 @@ public enum ZinggOptions {
     GENERATE_DOCS("generateDocs"),
     UPDATE_LABEL("updateLabel"),
     FIND_AND_LABEL("findAndLabel"),
-    ASSESS_MODEL("AssessModel");
+    ASSESS_MODEL("assesssModel"),
+    PEEK_MODEL("PeekModel");
 
 
 
