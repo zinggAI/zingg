@@ -249,7 +249,7 @@ public class TestArguments {
 	@Test
 	public void testWriteArgumentObjectToJSONFile() {
 			Arguments args = new Arguments();
-            try {
+			try {
 				FieldDefinition fname = new FieldDefinition();
 				fname.setFieldName("fname");
 				fname.setDataType("\"string\"");
@@ -279,15 +279,16 @@ public class TestArguments {
 				args.setCollectMetrics(true);
 				args.setModelId("500");
                 Arguments.writeArgumentsToJSON("configFromArgObject.json", args);
-				//List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
 
-				// Arguments newArgs = Arguments.createArgumentsFromJSON("configFromArgObject.json", "test");
-				// assertEquals(newArgs.getModelId(), "500", "Model id is different");
-				// assertEquals(newArgs.getBlockSize(), 400L, "Block size is different");
-				// assertEquals(newArgs.getFieldDefinition().get(0).getFieldName(), "fname", "Field Definition[0]'s name is different");
-				//TODO add check for MatchType
-            } catch (Exception | ZinggClientException e) {
-               e.printStackTrace();				
-            }
+				//reload the same config file to check if deserialization is successful
+				Arguments newArgs = Arguments.createArgumentsFromJSON("configFromArgObject.json", "test");
+				assertEquals(newArgs.getModelId(), "500", "Model id is different");
+				assertEquals(newArgs.getBlockSize(), 400L, "Block size is different");
+				assertEquals(newArgs.getFieldDefinition().get(0).getFieldName(), "fname", "Field Definition[0]'s name is different");
+				String expectedMatchType =  "[EXACT, FUZZY, PINCODE]";
+				assertEquals(newArgs.getFieldDefinition().get(0).getMatchType().toString(), expectedMatchType);
+			} catch (Exception | ZinggClientException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-}

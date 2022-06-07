@@ -5,12 +5,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.types.DataType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -18,11 +18,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ObjectMapper; 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize; 
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer; 
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 
 /**
@@ -37,7 +38,10 @@ public class FieldDefinition implements
 
 	public static final Log LOG = LogFactory.getLog(FieldDefinition.class);
 	
-	@JsonDeserialize(using = MatchTypeDeserializer.class) public List<MatchType> matchType;
+	@JsonDeserialize(using = MatchTypeDeserializer.class)
+	@JsonSerialize(using = MatchTypeSerializer.class)
+	public List<MatchType> matchType;
+	
 	@JsonSerialize(using = DataTypeSerializer.class)
 	public DataType dataType;
 	public String fieldName;
@@ -160,6 +164,33 @@ public class FieldDefinition implements
 	        		throws IOException, JsonProcessingException {
 				jsonGenerator.writeString(dType.json());
 	        
+		}
+	}
+
+	public static class MatchTypeSerializer extends StdSerializer<List<MatchType>> {
+		public MatchTypeSerializer() {
+			this(null);
+		}
+
+		public MatchTypeSerializer(Class<List<MatchType>> t) {
+			super(t);
+		}
+
+		@Override
+		public void serialize(List<MatchType> matchType, JsonGenerator jsonGen, SerializerProvider provider)
+				throws IOException, JsonProcessingException {
+			try {
+				jsonGen.writeObject(getStringFromMatchType(matchType));
+				LOG.debug("Serializing custom type");
+			} catch (ZinggClientException e) {
+				throw new IOException(e);
+			}
+		}
+
+		public static String getStringFromMatchType(List<MatchType> matchType) throws ZinggClientException {
+			return String.join(",", matchType.stream()
+					.map(p -> p.value())
+					.collect(Collectors.toList()));
 		}
 	}
 
