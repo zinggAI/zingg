@@ -34,49 +34,49 @@ import zingg.util.PipeUtil;
 
 public abstract class ZinggBase implements Serializable, IZingg {
 
-	protected Arguments args;
+    protected Arguments args;
 	
-	protected JavaSparkContext ctx;
+    protected JavaSparkContext ctx;
 	protected SparkSession spark;
-	protected static String name;
-	protected ZinggOptions zinggOptions;
-	protected ListMap<DataType, HashFunction> hashFunctions;
+    protected static String name;
+    protected ZinggOptions zinggOptions;
+    protected ListMap<DataType, HashFunction> hashFunctions;
 	protected Map<FieldDefinition, Feature> featurers;
-	protected long startTime;
+    protected long startTime;
 	public static final String hashFunctionFile = "hashFunctions.json";
 
-	public static final Log LOG = LogFactory.getLog(ZinggBase.class);
+    public static final Log LOG = LogFactory.getLog(ZinggBase.class);
 
-	@Override
-	public void init(Arguments args, String license)
-		throws ZinggClientException {
-		startTime = System.currentTimeMillis();
-		this.args = args;
-		try{
-			spark = SparkSession
-				.builder()
-				.appName("Zingg"+args.getJobId())
-				.getOrCreate();
-			ctx = new JavaSparkContext(spark.sparkContext());
-			JavaSparkContext.jarOfClass(IZingg.class);
-			LOG.debug("Context " + ctx.toString());
-			initHashFns();
-			loadFeatures();
-			ctx.setCheckpointDir("/tmp/checkpoint");	
-		}
-		catch(Throwable e) {
-			if (LOG.isDebugEnabled()) e.printStackTrace();
-			throw new ZinggClientException(e.getMessage());
-		}
-	}
+    @Override
+    public void init(Arguments args, String license)
+        throws ZinggClientException {
+        startTime = System.currentTimeMillis();
+        this.args = args;
+        try{
+            spark = SparkSession
+                .builder()
+                .appName("Zingg"+args.getJobId())
+                .getOrCreate();
+            ctx = new JavaSparkContext(spark.sparkContext());
+            JavaSparkContext.jarOfClass(IZingg.class);
+            LOG.debug("Context " + ctx.toString());
+            initHashFns();
+            loadFeatures();
+            ctx.setCheckpointDir("/tmp/checkpoint");	
+        }
+        catch(Throwable e) {
+            if (LOG.isDebugEnabled()) e.printStackTrace();
+            throw new ZinggClientException(e.getMessage());
+        }
+    }
 
 
-	@Override
-	public void cleanup() throws ZinggClientException {
-		if (ctx != null) ctx.stop();
-	}
+    @Override
+    public void cleanup() throws ZinggClientException {
+        if (ctx != null) ctx.stop();
+    }
 
-	void initHashFns() throws ZinggClientException {
+    void initHashFns() throws ZinggClientException {
 		try {
 			//functions = Util.getFunctionList(this.functionFile);
 			hashFunctions = HashUtil.getHashFunctionList(this.hashFunctionFile, spark);
@@ -86,7 +86,7 @@ public abstract class ZinggBase implements Serializable, IZingg {
 		}		
 	}
 
-	public void loadFeatures() throws ZinggClientException {
+    public void loadFeatures() throws ZinggClientException {
 		try{
 		LOG.info("Start reading internal configurations and functions");
 		if (args.getFieldDefinition() != null) {
@@ -108,81 +108,81 @@ public abstract class ZinggBase implements Serializable, IZingg {
 		}
 	}
 
-	public void copyContext(ZinggBase b) {
-			this.args = b.args;
-			this.ctx = b.ctx;
-			this.spark = b.spark;
-			this.featurers = b.featurers;
-			this.hashFunctions = b.hashFunctions;
-	}
+    public void copyContext(ZinggBase b) {
+            this.args = b.args;
+            this.ctx = b.ctx;
+            this.spark = b.spark;
+            this.featurers = b.featurers;
+            this.hashFunctions = b.hashFunctions;
+    }
 
 	public void postMetrics() {
-		boolean collectMetrics = args.getCollectMetrics();
-		Analytics.track(Metric.EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000, collectMetrics);
+        boolean collectMetrics = args.getCollectMetrics();
+        Analytics.track(Metric.EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000, collectMetrics);
 		Analytics.track(Metric.TOTAL_FIELDS_COUNT, args.getFieldDefinition().size(), collectMetrics);
-		Analytics.track(Metric.MATCH_FIELDS_COUNT, DSUtil.getFieldDefinitionFiltered(args, MatchType.DONT_USE).size(),
-				collectMetrics);
+        Analytics.track(Metric.MATCH_FIELDS_COUNT, DSUtil.getFieldDefinitionFiltered(args, MatchType.DONT_USE).size(),
+                collectMetrics);
 		Analytics.track(Metric.DATA_FORMAT, PipeUtil.getPipesAsString(args.getData()), collectMetrics);
 		Analytics.track(Metric.OUTPUT_FORMAT, PipeUtil.getPipesAsString(args.getOutput()), collectMetrics);
 
 		Analytics.postEvent(zinggOptions.getValue(), collectMetrics);
 	}
 
-	public Arguments getArgs() {
-		return this.args;
-	}
+    public Arguments getArgs() {
+        return this.args;
+    }
 
-	public void setArgs(Arguments args) {
-		this.args = args;
-	}
+    public void setArgs(Arguments args) {
+        this.args = args;
+    }
 
-	public ListMap<DataType,HashFunction> getHashFunctions() {
-		return this.hashFunctions;
-	}
+    public ListMap<DataType,HashFunction> getHashFunctions() {
+        return this.hashFunctions;
+    }
 
-	public void setHashFunctions(ListMap<DataType,HashFunction> hashFunctions) {
-		this.hashFunctions = hashFunctions;
-	}
+    public void setHashFunctions(ListMap<DataType,HashFunction> hashFunctions) {
+        this.hashFunctions = hashFunctions;
+    }
 
-	public Map<FieldDefinition,Feature> getFeaturers() {
-		return this.featurers;
-	}
+    public Map<FieldDefinition,Feature> getFeaturers() {
+        return this.featurers;
+    }
 
-	public void setFeaturers(Map<FieldDefinition,Feature> featurers) {
-		this.featurers = featurers;
-	}
+    public void setFeaturers(Map<FieldDefinition,Feature> featurers) {
+        this.featurers = featurers;
+    }
 
-	public JavaSparkContext getCtx() {
-		return this.ctx;
-	}
+    public JavaSparkContext getCtx() {
+        return this.ctx;
+    }
 
-	public void setCtx(JavaSparkContext ctx) {
-		this.ctx = ctx;
-	}
+    public void setCtx(JavaSparkContext ctx) {
+        this.ctx = ctx;
+    }
 
-	public SparkSession getSpark() {
-		return this.spark;
-	}
+    public SparkSession getSpark() {
+        return this.spark;
+    }
 
-	public void setSpark(SparkSession spark) {
-		this.spark = spark;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public void setZinggOptions(ZinggOptions zinggOptions) {
-		this.zinggOptions = zinggOptions;
-	}
+    public void setSpark(SparkSession spark) {
+        this.spark = spark;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setZinggOptions(ZinggOptions zinggOptions) {
+        this.zinggOptions = zinggOptions;
+    }
 
 	public String getName() {
-		return name;
-	}
+        return name;
+    }
 
-	public ZinggOptions getZinggOptions() {
-		return zinggOptions;
-	}
+    public ZinggOptions getZinggOptions() {
+        return zinggOptions;
+    }
 
-	public Dataset<Row> getMarkedRecords() {
+    public Dataset<Row> getMarkedRecords() {
 		try {
 			return PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
 		} catch (ZinggClientException e) {
@@ -200,21 +200,21 @@ public abstract class ZinggBase implements Serializable, IZingg {
 		return null;
 	}
 
-	public Long getMarkedRecordsStat(Dataset<Row> markedRecords, long value) {
-		return markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(value)).count() / 2;
-	}
+    public Long getMarkedRecordsStat(Dataset<Row> markedRecords, long value) {
+        return markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(value)).count() / 2;
+    }
 
-	public Long getMatchedMarkedRecordsStat(Dataset<Row> markedRecords){
-		return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_MATCH);
-	}
+    public Long getMatchedMarkedRecordsStat(Dataset<Row> markedRecords){
+        return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_MATCH);
+    }
 
-	public Long getUnmatchedMarkedRecordsStat(Dataset<Row> markedRecords){
-		return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_NOT_A_MATCH);
-	}
+    public Long getUnmatchedMarkedRecordsStat(Dataset<Row> markedRecords){
+        return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_NOT_A_MATCH);
+    }
 
-	public Long getUnsureMarkedRecordsStat(Dataset<Row> markedRecords){
-		return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_NOT_SURE);
-	}
+    public Long getUnsureMarkedRecordsStat(Dataset<Row> markedRecords){
+        return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_NOT_SURE);
+    }
 
 
 
