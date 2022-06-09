@@ -4,7 +4,7 @@ ZINGG_JARS=$ZINGG_HOME/zingg-0.3.4-SNAPSHOT.jar
 EMAIL=xxx@yyy.com
 LICENSE="test"
 # Dictionary of phases written in python
-declare -A  PYTHON_PHASES=(["assessModel"]="api/python/FebrlExample.py" \
+declare -A  PYTHON_PHASES=(["assessModel"]="python/phases/assessModel.py" \
 						)
 
 if [[ -z "${ZINGG_EXTRA_JARS}" ]]; then

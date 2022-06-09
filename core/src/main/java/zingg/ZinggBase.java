@@ -191,6 +191,15 @@ public abstract class ZinggBase implements Serializable, IZingg {
 		return null;
 	}
 
+	public Dataset<Row> getUnMarkedRecords() {
+		try {
+			return PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataUnmarkedPipe(args));
+		} catch (ZinggClientException e) {
+			LOG.warn("No unmarked record");
+		}
+		return null;
+	}
+
     public Long getMarkedRecordsStat(Dataset<Row> markedRecords, long value) {
         return markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(value)).count() / 2;
     }
