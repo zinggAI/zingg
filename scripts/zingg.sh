@@ -59,6 +59,13 @@ while [[ $# -gt 0 ]]; do
 			shift # past argument --phase
 			shift # past argument <value>
 			;;
+		run)
+			# this option is to run a user script (python)
+			RUN_PYTHON_PHASE=0
+			PHASE="User Script"
+			PYTHON_PHASE_EXE=
+			shift # past argument "run"
+			;;
 		*)
 			POSITIONAL_ARGS+=("$1") # save positional arg
 			shift # past argument
