@@ -25,6 +25,27 @@
       </includes>
     </fileSet>
     <fileSet>
+      <directory>${project.parent.basedir}/api</directory>
+      <outputDirectory>api</outputDirectory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.parent.basedir}/config</directory>
+      <outputDirectory>config</outputDirectory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.parent.basedir}/python</directory>
+      <outputDirectory>python</outputDirectory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
       <directory>${project.parent.basedir}/assets</directory>
       <outputDirectory>assets</outputDirectory>
       <includes>
