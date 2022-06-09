@@ -1,4 +1,5 @@
 import logging
+import argparse
 import pandas as pd
 from pyspark.sql import DataFrame
 
@@ -6,11 +7,16 @@ from pyspark import SparkConf, SparkContext, SQLContext
 from pyspark.sql.session import SparkSession
 from py4j.java_collections import SetConverter, MapConverter, ListConverter
 
+LOG = logging.getLogger("zingg")
+
 sc = SparkContext.getOrCreate()
 sqlContext = SQLContext(sc)
 spark = SparkSession(sc)
 jvm = sc._jvm
 gateway = sc._gateway
+
+ColName = jvm.zingg.client.util.ColName
+MatchType = jvm.zingg.client.MatchType
 
 class Zingg:
 
@@ -35,12 +41,12 @@ class Zingg:
         return self.client.setOptions(options)
     def getMarkedRecordsStat(self, markedRecords, value):
         return self.client.getMarkedRecordsStat(markedRecords, value)
-    def getMatchedMarkedRecordsStat(self, markedRecords):
-        return self.client.getMatchedMarkedRecordsStat(markedRecords)
-    def getUnmatchedMarkedRecordsStat(self, markedRecords):
-        return self.client.getUnmatchedMarkedRecordsStat(markedRecords)
-    def getUnsureMarkedRecordsStat(self, markedRecords):
-        return self.client.getUnsureMarkedRecordsStat(markedRecords)
+    def getMatchedMarkedRecordsStat(self):
+        return self.client.getMatchedMarkedRecordsStat(self.getMarkedRecords())
+    def getUnmatchedMarkedRecordsStat(self):
+        return self.client.getUnmatchedMarkedRecordsStat(self.getMarkedRecords())
+    def getUnsureMarkedRecordsStat(self):
+        return self.client.getUnsureMarkedRecordsStat(self.getMarkedRecords())
     def getDfFromDs(self, data):
         return DataFrame(data, sqlContext)
     def getPandasDfFromDs(self, data):
@@ -59,6 +65,8 @@ class Arguments:
 
     def getArgs(self):
         return self.args
+    def setArgs(self, argumentsObj):
+        self.args = argumentsObj
 
     def setData(self, pipe):
         dataPipe = gateway.new_array(jvm.zingg.client.pipe.Pipe, 1)
@@ -81,23 +89,38 @@ class Arguments:
     def setLabelDataSampleSize(self, labelDataSampleSize):
         self.args.setLabelDataSampleSize(labelDataSampleSize)
 
+    def writeArgumentsToJSON(self, fileName):
+        jvm.zingg.client.Arguments.writeArgumentsToJSON(fileName, self.args)
+
     @staticmethod
-    def writeArgumentsToJSON(fileName, args):
-        jvm.zingg.client.Arguments.writeArgumentsToJSON(fileName, args)
+    def createArgumentsFromJSON(fileName, phase):
+        obj = Arguments()
+        obj.args = jvm.zingg.client.Arguments.createArgumentsFromJSON(fileName, phase)
+        return obj
 
 class ClientOptions:
 
-    def __init__(self, phase="label", conf="dummy"):
-        self.co = sc._jvm.zingg.client.ClientOptions(["--phase", phase, "--conf", conf, "--license", "dummy", "--email", "xxx@yyy.com"])
+    PHASE = sc._jvm.zingg.client.ClientOptions.PHASE
+    CONF = sc._jvm.zingg.client.ClientOptions.CONF
+    LICENSE = sc._jvm.zingg.client.ClientOptions.LICENSE
+    EMAIL = sc._jvm.zingg.client.ClientOptions.EMAIL
+
+    def __init__(self, arguments):
+        self.co = sc._jvm.zingg.client.ClientOptions(arguments)
 
     def getClientOptions(self):
         return self.co
-
+    def getOptionValue(self, option):
+        return self.co.getOptionValue(option)
+    def setOptionValue(self, option, value):
+        self.co.get(option).setValue(value)
     def getPhase(self):
-        return self.co.get("--phase").getValue()
+        return self.co.get(ClientOptions.PHASE).getValue()
+    def setPhase(self, newValue):
+        return self.co.get(ClientOptions.PHASE).setValue(newValue)
 
     def getConf(self):
-        return self.co.get("--conf").getValue()
+        return self.co.get(ClientOptions.CONF).getValue()
 
 class FieldDefinition:
     def __init__(self, name, dataType, *matchType):
@@ -114,11 +137,6 @@ class FieldDefinition:
     def stringify(self, str):
         return '"' + str + '"'
 
-class MatchType:
-    @staticmethod
-    def type(type):
-        return jvm.zingg.client.MatchType.getMatchType(type)
-
 class Pipe:
     def __init__(self, name, format):
         self.pipe = sc._jvm.zingg.client.pipe.Pipe()
@@ -129,3 +147,15 @@ class Pipe:
 
     def addProperty(self, name, value):
         self.pipe.setProp(name, value)
+
+def parseArguments(argv):
+    parser = argparse.ArgumentParser(description='Zingg\'s python APIs')
+    mandatoryOptions = parser.add_argument_group('mandatory arguments')
+    mandatoryOptions.add_argument('--phase', required=True,
+                        help='python phase e.g. assessModel')
+    mandatoryOptions.add_argument('--conf', required=True,
+                        help='JSON configuration with data input output locations and field definitions')
+
+    args, remaining_args = parser.parse_known_args()
+    LOG.debug("args: ", args)
+    return args
