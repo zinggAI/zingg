@@ -147,6 +147,9 @@ class Pipe:
 
     def addProperty(self, name, value):
         self.pipe.setProp(name, value)
+    
+    def setSchema(self, s):
+        self.pipe.setSchema(s)
 
 def parseArguments(argv):
     parser = argparse.ArgumentParser(description='Zingg\'s python APIs')
