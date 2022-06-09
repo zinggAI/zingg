@@ -10,10 +10,10 @@ public class PeekModel extends ZinggBase{
 
 	protected static String name = "zingg.PeekModel";
 	public static final Log LOG = LogFactory.getLog(PeekModel.class); 
-
-    public PeekModel() {
-        setZinggOptions(ZinggOptions.PEEK_MODEL);
-    }
+	
+	public PeekModel() {
+		setZinggOptions(ZinggOptions.PEEK_MODEL);
+	}
 
 	@Override
 	public void execute() throws ZinggClientException {
