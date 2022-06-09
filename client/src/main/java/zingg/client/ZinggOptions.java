@@ -14,6 +14,8 @@ public enum ZinggOptions {
     LINK("link"),
     GENERATE_DOCS("generateDocs"),
     UPDATE_LABEL("updateLabel"),
+    ASSESS_MODEL("assessModel"),
+    PEEK_MODEL("peekModel"),
     FIND_AND_LABEL("findAndLabel");
 
     private String value;
