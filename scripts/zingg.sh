@@ -5,6 +5,7 @@ EMAIL=xxx@yyy.com
 LICENSE="test"
 # Dictionary of phases written in python
 declare -A  PYTHON_PHASES=(["assessModel"]="python/phases/assessModel.py" \
+						   ["exportModel"]="python/phases/exportModel.py" \
 						)
 
 if [[ -z "${ZINGG_EXTRA_JARS}" ]]; then
