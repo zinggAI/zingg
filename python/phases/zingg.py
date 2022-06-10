@@ -104,6 +104,7 @@ class ClientOptions:
     CONF = sc._jvm.zingg.client.ClientOptions.CONF
     LICENSE = sc._jvm.zingg.client.ClientOptions.LICENSE
     EMAIL = sc._jvm.zingg.client.ClientOptions.EMAIL
+    LOCATION = sc._jvm.zingg.client.ClientOptions.LOCATION
 
     def __init__(self, arguments):
         self.co = sc._jvm.zingg.client.ClientOptions(arguments)
@@ -118,9 +119,15 @@ class ClientOptions:
         return self.co.get(ClientOptions.PHASE).getValue()
     def setPhase(self, newValue):
         return self.co.get(ClientOptions.PHASE).setValue(newValue)
-
     def getConf(self):
         return self.co.get(ClientOptions.CONF).getValue()
+    def hasLocation(self):
+        if(self.co.get(ClientOptions.LOCATION)==None):
+            return False
+        else:
+            return True
+    def getLocation(self):
+        return self.co.get(ClientOptions.LOCATION).getValue()
 
 class FieldDefinition:
     def __init__(self, name, dataType, *matchType):
