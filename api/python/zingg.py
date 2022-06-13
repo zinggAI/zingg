@@ -23,9 +23,8 @@ class Zingg:
     def __init__(self, args, options):
         self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions())
 
-    def init(self):
+    def initAndExecute(self):
         self.client.init()
-    def execute(self):
         self.client.execute()
     def getMarkedRecords(self):
         return self.client.getMarkedRecords()
@@ -106,9 +105,11 @@ class ClientOptions:
     EMAIL = sc._jvm.zingg.client.ClientOptions.EMAIL
     LOCATION = sc._jvm.zingg.client.ClientOptions.LOCATION
 
-    def __init__(self, arguments):
-        self.co = sc._jvm.zingg.client.ClientOptions(arguments)
-
+    def __init__(self, args = None):
+        if(args!=None):
+            self.co = sc._jvm.zingg.client.ClientOptions(args)
+        else:
+            self.co = sc._jvm.zingg.client.ClientOptions(["--phase", "trainMatch",  "--conf", "dummy", "--license", "dummy", "--email", "xxx@yyy.com"])
     def getClientOptions(self):
         return self.co
     def getOptionValue(self, option):

@@ -1,6 +1,7 @@
-from zingg import *
-import argparse
+
+from api.python.zingg import *
 import sys
+import argparse
 import os
 
 logging.basicConfig(level=logging.INFO)
@@ -20,7 +21,7 @@ def main():
     options.setPhase("peekModel")
     arguments = Arguments.createArgumentsFromJSON(options.getConf(), options.getPhase())
     client = Zingg(arguments, options)
-    client.init()
+    client.initAndExecute()
 
     pMarkedDF = client.getPandasDfFromDs(client.getMarkedRecords())
     labelledData = spark.createDataFrame(pMarkedDF)
