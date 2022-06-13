@@ -46,5 +46,12 @@ options = ClientOptions(["--phase", "trainMatch",  "--conf", "dummy", "--license
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
-zingg.init()
-zingg.execute()
+zingg.initAndExecute()
+
+
+def __init__(self, args = None):
+        if(args!=None):
+            self.co = sc._jvm.zingg.client.ClientOptions(args)
+        else:
+            self.co = sc._jvm.zingg.client.ClientOptions(["--phase", "trainMatch",  "--conf", "dummy", "--license", "dummy", "--email", "xxx@yyy.com"])
+    def getClientOptions(self):
