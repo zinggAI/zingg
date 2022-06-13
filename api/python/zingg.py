@@ -71,14 +71,16 @@ class Arguments:
     def setArgs(self, argumentsObj):
         self.args = argumentsObj
 
-    def setData(self, pipe):
-        dataPipe = gateway.new_array(jvm.zingg.client.pipe.Pipe, 1)
-        dataPipe[0] = pipe.getPipe()
+    def setData(self, *pipes):
+        dataPipe = gateway.new_array(jvm.zingg.client.pipe.Pipe, len(pipes))
+        for idx, pipe in enumerate(pipes):
+            dataPipe[idx] = pipe.getPipe()
         self.args.setData(dataPipe)
 
-    def setOutput(self, pipe):
-        outputPipe = gateway.new_array(jvm.zingg.client.pipe.Pipe, 1)
-        outputPipe[0] = pipe.getPipe()
+    def setOutput(self, *pipes):
+        outputPipe = gateway.new_array(jvm.zingg.client.pipe.Pipe, len(pipes))
+        for idx, pipe in enumerate(pipes):
+            outputPipe[idx] = pipe.getPipe()
         self.args.setOutput(outputPipe)
 
     def setModelId(self, id):
