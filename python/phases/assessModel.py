@@ -1,4 +1,4 @@
-from api.python.zingg import *
+from python.api.zingg import *
 import pandas as pd
 import seaborn as sn
 import matplotlib.pyplot as plt
