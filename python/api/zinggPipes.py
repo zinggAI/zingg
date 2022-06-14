@@ -5,15 +5,16 @@ import pandas as pd
 LOG = logging.getLogger("zingg.pipes")
 
 Format = jvm.zingg.client.pipe.Format
+FilePipe = jvm.zingg.client.pipe.FilePipe
 
 class CsvPipe(Pipe):
     def __init__(self, name):
         Pipe.__init__(self, name, Format.CSV.type())
-        Pipe.addProperty("header","true")
+        Pipe.addProperty(self, FilePipe.HEADER,"true")
     def setDelimiter(self, delimiter):
         Pipe.addProperty(self, "delimiter", delimiter)
     def setLocation(self, location):
-        Pipe.addProperty(self, "location", location)
+        Pipe.addProperty(self, FilePipe.LOCATION, location)
 
 class BigQueryPipe(Pipe):
     def __init__(self,name):
@@ -43,7 +44,7 @@ class SnowflakePipe(Pipe):
         Pipe.addProperty(self, "sfSchema", schema)
     def setWarehouse(self, warehouse):
         Pipe.addProperty(self, "sfWarehouse", warehouse)
-    def setDbtable(self, dbtable):
+    def setDbTable(self, dbtable):
         Pipe.addProperty(self, "dbtable", dbtable)
 
 class InMemoryPipe(Pipe):
@@ -51,3 +52,5 @@ class InMemoryPipe(Pipe):
         Pipe.__init__(self, name, Format.INMEMORY.type())
     def setDataset(self, ds):
         Pipe.getPipe(self).setDataset(ds)
+    def getDataset(self):
+        return Pipe.getPipe(self).getDataset()

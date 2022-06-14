@@ -165,9 +165,6 @@ class Pipe:
     def setSchema(self, s):
         self.pipe.setSchema(s)
 
-    def getDataset(self):
-        return self.pipe.getDataset()
-
     def toString(self):
         return self.pipe.toString()
 
