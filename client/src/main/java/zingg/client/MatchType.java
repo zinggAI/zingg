@@ -52,7 +52,7 @@ public enum MatchType implements Serializable {
 	NULL_OR_BLANK("NULL_OR_BLANK"),
 	ONLY_ALPHABETS_EXACT("ONLY_ALPHABETS_EXACT"),
 	ONLY_ALPHABETS_FUZZY("ONLY_ALPHABETS_FUZZY"),
-	DONT_USE("DONT USE");
+	DONT_USE("DONT_USE");
 
 	private String value;
 	private static Map<String, MatchType> types;

@@ -71,13 +71,13 @@ Broad matches with typos, abbreviations and other variations.
 #### EXACT 
 Less tolerant with variations, but would still match inexact strings to some degree. Preferable for country codes, pin codes and other categorical variables where you expect less variations
 
-#### "DONT USE"
+#### "DONT_USE"
 Name says it :-) Appears in the output but no computation is done on these. Helpful for fields like ids which are required in the output.
 
 
 ````json
 "fieldDefinition" : [ {
-    "matchType" : "DONT USE",
+    "matchType" : "DONT_USE",
     "fieldName" : "id",
     "fields" : "id"
   },
@@ -98,7 +98,7 @@ Number of Spark partitions over which the input data is distributed. Keep it equ
 Fraction of the data to be used for training the models. Adjust it between 0.0001 and 0.1 to keep the sample size small enough so that it finds enough edge cases fast. If the size is bigger, the findTrainingData job will spend more time combing through samples. If the size is too small, Zingg may not find the right edge cases. 
 
 ### showConcise
-When this flag is set to true, during [Label](./training/label.md) and [updateLabel](../updatingLabels.md), only those fields are displayed on console which help build the model. In other words, fields that have matchType as "DONT USE", are not displayed to the user. Default is false. 
+When this flag is set to true, during [Label](./training/label.md) and [updateLabel](../updatingLabels.md), only those fields are displayed on console which help build the model. In other words, fields that have matchType as "DONT_USE", are not displayed to the user. Default is false. 
 
 ### collectMetrics
 Application captures a few measurements for runtime metrics such as *no. of data records, no. of features, running phase* and a few more. 
