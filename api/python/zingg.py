@@ -23,6 +23,10 @@ class Zingg:
     def __init__(self, args, options):
         self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions())
 
+    def init(self):
+        self.client.init()
+    def execute(self):
+        self.client.execute()
     def initAndExecute(self):
         self.client.init()
         self.client.execute()
