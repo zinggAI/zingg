@@ -165,6 +165,12 @@ class Pipe:
     def setSchema(self, s):
         self.pipe.setSchema(s)
 
+    def getDataset(self):
+        return self.pipe.getDataset()
+
+    def toString(self):
+        return self.pipe.toString()
+
 def parseArguments(argv):
     parser = argparse.ArgumentParser(description='Zingg\'s python APIs')
     mandatoryOptions = parser.add_argument_group('mandatory arguments')
