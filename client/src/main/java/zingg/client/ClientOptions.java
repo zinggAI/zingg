@@ -238,19 +238,19 @@ public class ClientOptions {
 		s.append("options\n");
 
 		int maxlo = 0;
-    	for (Option o: optionMaster.values()){
-        	maxlo=Math.max(maxlo,o.optionName.length());
-    	}
+		for (Option o: optionMaster.values()){
+			maxlo=Math.max(maxlo,o.optionName.length());
+		}
 
 		int maxld = 0;
-    	for (Option o: optionMaster.values()){
-        	maxld=Math.max(maxld,o.desc.length());
-    	}
-
-    	StringBuilder formatBuilder = new StringBuilder();
-        formatBuilder.append("\t").append("%-").append(maxlo + 5).append("s").append(": ").append("%-").append(maxld + 5).append("s").append("\n");
-    	String format = formatBuilder.toString();
-
+		for (Option o: optionMaster.values()){
+			maxld=Math.max(maxld,o.desc.length());
+		}
+		
+		StringBuilder formatBuilder = new StringBuilder();
+		formatBuilder.append("\t").append("%-").append(maxlo + 5).append("s").append(": ").append("%-").append(maxld + 5).append("s").append("\n");
+		String format = formatBuilder.toString();
+		
 		for (Option o: optionMaster.values()) {
 			s.append(String.format(format,o.optionName, o.desc));
 		}
