@@ -2,7 +2,7 @@
 	"fieldDefinition":[
 		{
 			"fieldName" : "id",
-			"matchType" : "dont use",
+			"matchType" : "dont_use",
 			"fields" : "fname",
 			"dataType": "\"string\"" 
 		},
