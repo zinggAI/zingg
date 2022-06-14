@@ -1,4 +1,4 @@
-from zingg import *
+from api.python.zingg import *
 import pandas as pd
 import seaborn as sn
 import matplotlib.pyplot as plt
@@ -16,7 +16,7 @@ def main():
     options.setPhase("peekModel")
     arguments = Arguments.createArgumentsFromJSON(options.getConf(), options.getPhase())
     client = Zingg(arguments, options)
-    client.init()
+    client.initAndExecute()
 
     pMarkedDF = client.getPandasDfFromDs(client.getMarkedRecords())
     pUnMarkedDF = client.getPandasDfFromDs(client.getUnMarkedRecords())

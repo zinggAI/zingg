@@ -46,5 +46,4 @@ options = ClientOptions(["--phase", "trainMatch",  "--conf", "dummy", "--license
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
-zingg.init()
-zingg.execute()
+zingg.initAndExecute()
