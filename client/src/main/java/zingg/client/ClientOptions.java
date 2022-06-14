@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.hadoop.yarn.util.constraint.PlacementConstraintParser.SourceTags;
 
 import zingg.client.util.Util;
 
@@ -48,22 +49,22 @@ public class ClientOptions {
 		  boolean isMandatory;
 	 */
 	static {	//This is the canonical list of Zingg options.
-		optionMaster.put(CONF, new Option(CONF, true, "	JSON configuration with data input output locations and field definitions", false, true));
-		optionMaster.put(PHASE, new Option(PHASE, true, "	"+Util.join(ZinggOptions.getAllZinggOptions(), "|"), false, true, ZinggOptions.getAllZinggOptions()));
-		optionMaster.put(LICENSE, new Option(LICENSE, true, "	location of license file", false, true));
-		optionMaster.put(JOBID, new Option(JOBID, true, "	database job id for logging", false, false));
-		optionMaster.put(EMAIL, new Option(EMAIL, true, "	notification email id. Can be an alias", false, false));
-		optionMaster.put(FORMAT, new Option(FORMAT, true, "	format of the data", false, false));
-		optionMaster.put(ZINGG_DIR, new Option(ZINGG_DIR, true, "	location of Zingg models, defaults to /tmp/zingg", false, false));
-		optionMaster.put(MODEL_ID, new Option(MODEL_ID, true, "	model identifier, can be a number ", false, false));
+		optionMaster.put(CONF, new Option(CONF, true, "JSON configuration with data input output locations and field definitions", false, true));
+		optionMaster.put(PHASE, new Option(PHASE, true, Util.join(ZinggOptions.getAllZinggOptions(), "|"), false, true, ZinggOptions.getAllZinggOptions()));
+		optionMaster.put(LICENSE, new Option(LICENSE, true, "location of license file", false, true));
+		optionMaster.put(JOBID, new Option(JOBID, true, "database job id for logging", false, false));
+		optionMaster.put(EMAIL, new Option(EMAIL, true, "notification email id. Can be an alias", false, false));
+		optionMaster.put(FORMAT, new Option(FORMAT, true, "format of the data", false, false));
+		optionMaster.put(ZINGG_DIR, new Option(ZINGG_DIR, true, "location of Zingg models, defaults to /tmp/zingg", false, false));
+		optionMaster.put(MODEL_ID, new Option(MODEL_ID, true, "model identifier, can be a number ", false, false));
 		optionMaster.put(COLLECT_METRICS, new Option(COLLECT_METRICS, true, "collect analytics, true/false  ", false, false));
-		optionMaster.put(SHOW_CONCISE, new Option(SHOW_CONCISE, true, "	Display only fields that are used to make model, true/false  ", false, false));
-		optionMaster.put(LOCATION, new Option(LOCATION, true, "	location of CSV file for exported data ", false, false));
+		optionMaster.put(SHOW_CONCISE, new Option(SHOW_CONCISE, true, "Display only fields that are used to make model, true/false  ", false, false));
+		optionMaster.put(LOCATION, new Option(LOCATION, true, "location of CSV file for exported data ", false, false));
 		
 		//no args
-		optionMaster.put(HELP,new Option(HELP,  false, "	print usage information", true, false));
-		optionMaster.put(HELP1,new Option(HELP1,  false, "		print usage information", true, false));
-		optionMaster.put(PREPROCESS, new Option(PREPROCESS, false, "	convert files to unix format", false, false));
+		optionMaster.put(HELP,new Option(HELP,  false, "print usage information", true, false));
+		optionMaster.put(HELP1,new Option(HELP1,  false, "print usage information", true, false));
+		optionMaster.put(PREPROCESS, new Option(PREPROCESS, false, "convert files to unix format", false, false));
 		///optionMaster.add(new Option(VERBOSE, false, "verbose logging", true, false));
 		//optionMaster.add(new Option(VERSION,  false, "version information", true, false));
 	
@@ -227,18 +228,33 @@ public class ClientOptions {
 	  }
 	  
 	  public final static String getHelp() {
-		  StringBuffer s = new StringBuffer();
-		  s.append("zingg.sh [options]\n");
-		  s.append("zingg.sh --phase train --conf config.json\n");
-		  s.append("zingg.sh --phase findTrainingData --conf config.json --zinggDir /location \n");
-		  s.append("zingg.sh --phase label --conf config.json --zinggDir /location \n");
-		  s.append("zingg.sh --phase trainMatch --conf config.json --email sendMe@email.com\n");
-		  s.append("zingg.sh --phase findAndLabel --conf config.json --zinggDir /location\n");
-		  s.append("options\n");
-		  for (Option o: optionMaster.values()) {
-			  s.append("\t " + o.optionName + ":\t\t" + o.desc + "\n");
-		  }
-		  return s.toString();
+		StringBuffer s = new StringBuffer();
+		s.append("zingg.sh [options]\n");
+		s.append("zingg.sh --phase train --conf config.json\n");
+		s.append("zingg.sh --phase findTrainingData --conf config.json --zinggDir /location \n");
+		s.append("zingg.sh --phase label --conf config.json --zinggDir /location \n");
+		s.append("zingg.sh --phase trainMatch --conf config.json --email sendMe@email.com\n");
+		s.append("zingg.sh --phase findAndLabel --conf config.json --zinggDir /location\n");
+		s.append("options\n");
+
+		int maxlo = 0;
+    	for (Option o: optionMaster.values()){
+        	maxlo=Math.max(maxlo,o.optionName.length());
+    	}
+
+		int maxld = 0;
+    	for (Option o: optionMaster.values()){
+        	maxld=Math.max(maxld,o.desc.length());
+    	}
+
+    	StringBuilder formatBuilder = new StringBuilder();
+        formatBuilder.append("\t").append("%-").append(maxlo + 5).append("s").append(": ").append("%-").append(maxld + 5).append("s").append("\n");
+    	String format = formatBuilder.toString();
+
+		for (Option o: optionMaster.values()) {
+			s.append(String.format(format,o.optionName, o.desc));
+		}
+		return s.toString();
 	  }
 	  
 	  public OptionWithVal get(String a) {
