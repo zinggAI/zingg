@@ -44,6 +44,7 @@ outputPipe.setLocation("/tmp")
 args.setOutput(outputPipe)
 
 options = ClientOptions()
+options.setPhase("trainMatch")
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
