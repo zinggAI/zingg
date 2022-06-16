@@ -1,5 +1,5 @@
 import logging
-from zingg import *
+from python.api.zingg import *
 import pandas as pd
 
 LOG = logging.getLogger("zingg.pipes")

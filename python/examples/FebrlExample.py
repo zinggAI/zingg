@@ -1,4 +1,5 @@
 from python.api.zingg import *
+from python.api.zinggPipes import *
 
 #build the arguments for zingg
 args = Arguments()
@@ -28,8 +29,8 @@ args.setLabelDataSampleSize(0.5)
 #in that case, replace df with input df
 df = spark.read.format("csv").schema("id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string").load("examples/febrl/test.csv")
 
-inputPipe = Pipe("test", "csv")
-inputPipe.addProperty("location","examples/febrl/test.csv")
+inputPipe = CsvPipe("test")
+inputPipe.setLocation("examples/febrl/test.csv")
 
 dfSchema = str(df.schema.json())
 inputPipe.setSchema(dfSchema)
@@ -37,12 +38,12 @@ inputPipe.setSchema(dfSchema)
 args.setData(inputPipe)
 
 #setting outputpipe in 'args'
-outputPipe = Pipe("result", "csv")
-outputPipe.addProperty("location","/tmp")
+outputPipe = CsvPipe("result")
+outputPipe.setLocation("/tmp")
 
 args.setOutput(outputPipe)
 
-options = ClientOptions(["--phase", "trainMatch",  "--conf", "dummy", "--license", "dummy", "--email", "xxx@yyy.com"])
+options = ClientOptions()
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
