@@ -1,0 +1,30 @@
+Metadata-Version: 2.1
+Name: zingg
+Version: 0.3.4
+Summary: Zingg Entity Resolution, Data Mastering and Deduplication
+Home-page: https://github.com/zinggAI/zingg
+Author: Zingg.AI
+Author-email: sonalgoyal4@gmail.com
+License: http://www.apache.org/licenses/LICENSE-2.0
+Description: ## About zingg package
+        
+        Zingg Python APIs for entity resolution, record linkage, data mastering and deduplication
+        [Zingg.AI](https://www.zingg.ai) 
+        
+        # requirement
+        python 3.6+; spark 3.1.2
+        
+        # Installation
+        
+        ```
+        pip install zingg
+        ``` 
+        
+        
+Keywords: Entity Resolution,deduplication,record linkage,data mastering,identity resolution
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU Affero General Public License v3
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+Provides-Extra: zingg

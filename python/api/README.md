@@ -1,6 +1,6 @@
 ## About zingg package
 
-zingg package is required for working with Zingg.ai environment
+Zingg Python APIs for entity resolution, record linkage, data mastering and deduplication
 [Zingg.AI](https://www.zingg.ai) 
 
 # requirement

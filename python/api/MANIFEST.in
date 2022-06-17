@@ -1,0 +1,8 @@
+global-exclude *.py[cod] __pycache__ .DS_Store
+recursive-include deps/jars *.jar
+graft deps/bin
+recursive-include deps/scripts zingg.sh
+recursive-include deps/licenses *
+recursive-include deps/examples *
+recursive-include lib *.zip
+include README.md

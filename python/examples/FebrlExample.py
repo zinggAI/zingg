@@ -1,4 +1,4 @@
-from python.api.zingg import *
+from python.api.zingg.zingg import *
 
 #build the arguments for zingg
 args = Arguments()

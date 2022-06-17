@@ -1,5 +1,5 @@
 
-from python.api.zingg import *
+from python.api.zingg.zingg import *
 import sys
 import argparse
 import os
