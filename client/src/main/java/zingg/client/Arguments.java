@@ -531,24 +531,29 @@ public class Arguments implements Serializable {
 	 * 
 	 * @return the path for internal Zingg usage
 	 */
+
 	@JsonIgnore
-	public String getZinggBaseModelDir() {
-		return zinggDir + "/" + modelId + "/model";
+	public String getZinggBaseModelDir(){
+		return zinggDir + "/" + modelId;
+	}
+	@JsonIgnore
+	public String getZinggModelDir() {
+		return getZinggBaseModelDir() + "/model";
 	}
 
 	@JsonIgnore
 	public String getZinggDocDir() {
-		return zinggDir + "/" + modelId + "/docs/";
+		return getZinggBaseModelDir() + "/docs/";
 	}
 
 	@JsonIgnore
 	public String getZinggModelDocFile() {
-		return zinggDir + "/" + modelId + "/model.html";
+		return getZinggDocDir() + "/model.html";
 	}
 
 	@JsonIgnore
 	public String getZinggDataDocFile() {
-		return zinggDir + "/" + modelId + "/data.html";
+		return getZinggDocDir() + "/data.html";
 	}
 
 	/**
@@ -558,7 +563,7 @@ public class Arguments implements Serializable {
 	 */
 	@JsonIgnore
 	public String getZinggBaseTrainingDataDir() {
-		return zinggDir + "/" + modelId + "/trainingData/";
+		return getZinggBaseModelDir() + "/trainingData/";
 	}
 
 
@@ -601,7 +606,7 @@ public class Arguments implements Serializable {
 	 */
 	@JsonIgnore
 	public String getBlockFile() {
-		return getZinggBaseModelDir() + "/block/zingg.block";
+		return getZinggModelDir() + "/block/zingg.block";
 	}
 	
 	/**
@@ -611,7 +616,7 @@ public class Arguments implements Serializable {
 	 */
 	@JsonIgnore
 	public String getModel() {
-		return getZinggBaseModelDir() + "/classifier/best.model";
+		return getZinggModelDir() + "/classifier/best.model";
 	}
 
 
