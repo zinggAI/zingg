@@ -105,17 +105,17 @@ class Arguments:
 
 class ClientOptions:
 
-    PHASE = sc._jvm.zingg.client.ClientOptions.PHASE
-    CONF = sc._jvm.zingg.client.ClientOptions.CONF
-    LICENSE = sc._jvm.zingg.client.ClientOptions.LICENSE
-    EMAIL = sc._jvm.zingg.client.ClientOptions.EMAIL
-    LOCATION = sc._jvm.zingg.client.ClientOptions.LOCATION
+    PHASE = jvm.zingg.client.ClientOptions.PHASE
+    CONF = jvm.zingg.client.ClientOptions.CONF
+    LICENSE = jvm.zingg.client.ClientOptions.LICENSE
+    EMAIL = jvm.zingg.client.ClientOptions.EMAIL
+    LOCATION = jvm.zingg.client.ClientOptions.LOCATION
 
     def __init__(self, args = None):
         if(args!=None):
-            self.co = sc._jvm.zingg.client.ClientOptions(args)
+            self.co = jvm.zingg.client.ClientOptions(args)
         else:
-            self.co = sc._jvm.zingg.client.ClientOptions(["--phase", "trainMatch",  "--conf", "dummy", "--license", "dummy", "--email", "xxx@yyy.com"])
+            self.co = jvm.zingg.client.ClientOptions(["--phase", "trainMatch",  "--conf", "dummy", "--license", "dummy", "--email", "xxx@yyy.com"])
     def getClientOptions(self):
         return self.co
     def getOptionValue(self, option):
@@ -153,9 +153,9 @@ class FieldDefinition:
 
 class Pipe:
     def __init__(self, name, format):
-        self.pipe = sc._jvm.zingg.client.pipe.Pipe()
+        self.pipe = jvm.zingg.client.pipe.Pipe()
         self.pipe.setName(name)
-        self.pipe.setFormat(sc._jvm.zingg.client.pipe.Format.getPipeType(format))
+        self.pipe.setFormat(jvm.zingg.client.pipe.Format.getPipeType(format))
     def getPipe(self):
         return self.pipe
 
