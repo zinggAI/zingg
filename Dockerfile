@@ -8,7 +8,9 @@ USER root
 WORKDIR /zingg-0.3.3-SNAPSHOT
 RUN curl --location https://github.com/zinggAI/zingg/releases/download/v0.3.3/zingg-0.3.3-SNAPSHOT-spark-3.1.2.tar.gz | \
 tar --extract --gzip --strip=1 
-RUN chmod -R a+rwx /zingg-0.3.3-SNAPSHOT/models
-RUN chown -R 1001 /zingg-0.3.3-SNAPSHOT/models
+RUN pip install -r python/requirements.txt
+ENV PYTHONPATH /zingg-0.3.4-SNAPSHOT
+RUN chmod -R a+rwx /zingg-0.3.4-SNAPSHOT/models
+RUN chown -R 1001 /zingg-0.3.4-SNAPSHOT/models
 USER 1001
 
