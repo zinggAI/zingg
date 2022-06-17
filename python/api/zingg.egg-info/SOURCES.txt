@@ -1,0 +1,16 @@
+MANIFEST.in
+README.md
+setup.cfg
+setup.py
+deps/examples/FebrlExample.py
+deps/scripts/load-zingg-env.sh
+deps/scripts/zingg.sh
+zingg/zingg.py
+zingg.egg-info/PKG-INFO
+zingg.egg-info/SOURCES.txt
+zingg.egg-info/dependency_links.txt
+zingg.egg-info/not-zip-safe
+zingg.egg-info/requires.txt
+zingg.egg-info/top_level.txt
+zingg/pipes/__init__.py
+zingg/pipes/pipes.py

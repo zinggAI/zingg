@@ -1,14 +1,14 @@
 Metadata-Version: 2.1
 Name: zingg
-Version: 0.3.4.1
-Summary: Zingg.ai environment package
-Home-page: UNKNOWN
+Version: 0.3.4
+Summary: Zingg.ai Entity Resolution
+Home-page: www.zingg.ai
 Author: Zingg.AI
 Author-email: sonalgoyal4@gmail.com
 License: UNKNOWN
-Description: ## About zingg package
+Description: ## About Zingg
         
-        zingg package is required for working with Zingg.ai environment
+        Zingg is an ML based entity resolution framework. The Python Package is used for building training data, training Zingg models and running the matching and linking processes.
         [Zingg.AI](https://www.zingg.ai) 
         
         # requirement
