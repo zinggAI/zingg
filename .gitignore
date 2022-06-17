@@ -14,3 +14,5 @@ client/src/test/resources/large.xlsx
 /target/
 /zingg/*
 **/snow.json
+python/api/deps/**
+python/api/dist/**
