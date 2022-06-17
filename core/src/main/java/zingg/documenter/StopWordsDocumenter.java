@@ -69,6 +69,6 @@ public class StopWordsDocumenter extends DocumenterBase {
 	}
 
 	public String getStopWordsDir() {
-		return args.getZinggDocDir() + "/stopWords/";
+		return args.getZinggBaseModelDir() + "/stopWords/";
 	}
 }
