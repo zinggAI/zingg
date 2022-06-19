@@ -17,7 +17,7 @@ public class RangeDbl extends HashFunction implements UDF1<Double, Integer> {
 	@Override
 	public Integer call(Double field) {
 		int withinRange = 0;
-		if (field >= lowerLimit && field < upperLimit) {
+		if (field != null && field >= lowerLimit && field < upperLimit) {
 			withinRange = 1;
 		}
 		return withinRange;
