@@ -22,13 +22,11 @@ public class DataDocumenter extends DocumenterBase {
 	private final String DATA_DOC_TEMPLATE = "dataDocTemplate.ftlh";
 
 	public static final Log LOG = LogFactory.getLog(DataDocumenter.class);
-	private DataColDocumenter dataColDoc;
 	protected Dataset<Row> data;
 
 	public DataDocumenter(SparkSession spark, Arguments args) {
 		super(spark, args);
 		data = spark.emptyDataFrame();
-		dataColDoc = new DataColDocumenter(spark, args);
 	}
 	
 	public void process() throws ZinggClientException {
@@ -43,7 +41,6 @@ public class DataDocumenter extends DocumenterBase {
 			}
 			if (!data.isEmpty()) {
 				createDataDocument();
-				dataColDoc.process(data);
 			} else {
 				LOG.info("No data document generated");
 			}

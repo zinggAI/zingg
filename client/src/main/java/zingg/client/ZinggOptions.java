@@ -13,6 +13,7 @@ public enum ZinggOptions {
     LABEL("label"),
     LINK("link"),
     GENERATE_DOCS("generateDocs"),
+    RECOMMEND("recommend"),
     UPDATE_LABEL("updateLabel"),
     FIND_AND_LABEL("findAndLabel"),
     ASSESS_MODEL("assessModel"),
