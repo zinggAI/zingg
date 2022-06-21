@@ -48,5 +48,10 @@ public class TestRangeBetween1000And10000Dbl {
 		RangeDbl value = new RangeBetween1000And10000Dbl();
 		assertEquals(1, value.call(8637d));
 	}
+	@Test
+	public void testRangeForNull() {
+		RangeDbl value = new RangeBetween1000And10000Dbl();
+		assertEquals(0, value.call(null));
+	}
 
 }

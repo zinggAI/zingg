@@ -17,7 +17,7 @@ public class RangeInt extends HashFunction implements UDF1<Integer, Integer> {
 	@Override
 	public Integer call(Integer field) {
 		int withinRange = 0;
-		if (field >= lowerLimit && field < upperLimit) {
+		if (field != null && field >= lowerLimit && field < upperLimit) {
 			withinRange = 1;
 		}
 		return withinRange;
