@@ -46,5 +46,10 @@ public class TestRangeBetween0And10Int {
 		RangeInt value = new RangeBetween0And10Int();
 		assertEquals(0, value.call(8637));
 	}
+	@Test
+	public void testRangeForNull() {
+		RangeInt value = new RangeBetween0And10Int();
+		assertEquals(0, value.call(null));
+	}
 
 }
