@@ -6,9 +6,9 @@ import org.apache.spark.sql.SparkSession;
 
 import zingg.client.Arguments;
 
-class ProfilerBase {
+public class ProfilerBase {
 	protected SparkSession spark;
-	protected Arguments args;
+	public Arguments args;
 
 	public ProfilerBase(SparkSession spark, Arguments args) {
 		this.spark = spark;

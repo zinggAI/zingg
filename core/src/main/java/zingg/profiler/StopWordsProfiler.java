@@ -21,15 +21,10 @@ public class StopWordsProfiler extends ProfilerBase {
  
 	public StopWordsProfiler(SparkSession spark, Arguments args) {
 		super(spark, args);
-		checkAndCreateDir(getStopWordsDir());
-	}
-
-	public void process(Dataset<Row> data) throws ZinggClientException {
-		//createStopWordsDocuments(data);
 	}
 
 	public void createStopWordsDocument(Dataset<Row> data, String fieldName, JavaSparkContext ctx) throws ZinggClientException {
-		String filenameCSV = getStopWordsDir() + fieldName;
+		String filenameCSV = args.getStopWordsDir() + fieldName;
 		data = findStopWords(data, fieldName);
 		PipeUtil.write(data, args, ctx, PipeUtil.getStopWordsPipe(args, filenameCSV));
 	}
@@ -44,9 +39,5 @@ public class StopWordsProfiler extends ProfilerBase {
 			data = data.limit(Math.round(data.count()*args.getStopWordsCutoff()));
 		}
 		return data;
-	}
-
-	public String getStopWordsDir() {
-		return args.getZinggBaseModelDir() + "/stopWords/";
 	}
 }

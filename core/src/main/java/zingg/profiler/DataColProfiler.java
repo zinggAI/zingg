@@ -1,12 +1,13 @@
 package zingg.profiler;
 
+import java.util.Arrays;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.StructField;
 
 import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
@@ -27,13 +28,16 @@ public class DataColProfiler extends ProfilerBase {
 		createStopWordsDocuments(data);
 	}
 
-	private void createStopWordsDocuments(Dataset<Row> data) throws ZinggClientException {
+	public void createStopWordsDocuments(Dataset<Row> data) throws ZinggClientException {
 		if (!data.isEmpty()) {
-			String columnsDir = args.getZinggDocDir();
-			checkAndCreateDir(columnsDir);
-
-			for (StructField field: data.schema().fields()) {
-				stopWordsProfile.createStopWordsDocument(data, field.name(), ctx);
+			if (!args.getColumn().equals("")) {
+				if(Arrays.asList(data.schema().fieldNames()).contains(args.getColumn())) {
+					stopWordsProfile.createStopWordsDocument(data, args.getColumn(), ctx);
+				} else {
+					LOG.info("An invalid column name - " + args.getColumn() + " entered. Please provide valid column name.");
+				}
+			} else {
+				LOG.info("Please provide '--column <columnName>' option at command line to generate stop words for that column.");
 			}
 		} else {
 			LOG.info("No Stop Words document generated");

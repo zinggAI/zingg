@@ -92,6 +92,10 @@ public class Client implements Serializable {
 			String j = options.get(ClientOptions.SHOW_CONCISE).value;
 			args.setShowConcise(Boolean.valueOf(j));
 		}
+		if (options.get(ClientOptions.COLUMN)!= null) {
+			String j = options.get(ClientOptions.COLUMN).value;
+			args.setColumn(j);
+		}
 		setArguments(args);
 	}
 	

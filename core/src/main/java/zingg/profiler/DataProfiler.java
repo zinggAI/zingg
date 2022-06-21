@@ -20,29 +20,22 @@ public class DataProfiler extends ProfilerBase {
 
 	public DataProfiler(SparkSession spark, JavaSparkContext ctx, Arguments args) {
 		super(spark, args);
-		data = spark.emptyDataFrame();
 		dataColProfiler = new DataColProfiler(spark, ctx, args);
 	}
 	
 	public void process() throws ZinggClientException {
-		try {
-			LOG.info("Data profiling starts");
+		LOG.info("Data profiling starts");
 
-			try {
-				data = PipeUtil.read(spark, false, false, args.getData());
-				LOG.info("Read input data : " + data.count());
-			} catch (ZinggClientException e) {
-				LOG.warn("No data has been found");
-			}
-			if (!data.isEmpty()) {
-				dataColProfiler.process(data);
-			} else {
-				LOG.info("No data profile generated");
-			}
-			LOG.info("Data profiling finishes");
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ZinggClientException(e.getMessage());
+		try {
+			data = PipeUtil.read(spark, false, false, args.getData());
+		} catch (ZinggClientException e) {
+			LOG.warn("No data has been found");
 		}
+		if (!data.isEmpty()) {
+			dataColProfiler.process(data);
+		} else {
+			LOG.info("No data profile generated");
+		}
+		LOG.info("Data profiling finishes");
 	}
 }

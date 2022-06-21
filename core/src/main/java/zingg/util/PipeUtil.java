@@ -336,6 +336,7 @@ public class PipeUtil {
 		p.setFormat(Format.CSV);
 		p.setProp(FilePipe.HEADER, "true");
 		p.setProp(FilePipe.LOCATION, fileName);
+		p.setMode(SaveMode.Overwrite);
 		return p;
 	}
 
