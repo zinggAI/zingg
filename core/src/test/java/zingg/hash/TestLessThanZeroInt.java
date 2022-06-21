@@ -15,7 +15,7 @@ public class TestLessThanZeroInt {
 
 	@Test
 	public void testLessThanZeroDblForValueNull() {
-		LessThanZeroDbl value = new LessThanZeroDbl();
+		LessThanZeroInt value = new LessThanZeroInt();
 		assertFalse(value.call(null));
 	}
 

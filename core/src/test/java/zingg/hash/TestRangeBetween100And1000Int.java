@@ -46,5 +46,10 @@ public class TestRangeBetween100And1000Int {
 		RangeInt value = new RangeBetween100And1000Int();
 		assertEquals(0, value.call(8637));
 	}
+	@Test
+	public void testRangeForNull() {
+		RangeInt value = new RangeBetween100And1000Int();
+		assertEquals(0, value.call(null));
+	}
 
 }
