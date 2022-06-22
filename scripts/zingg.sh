@@ -17,9 +17,12 @@ fi
 function read_zingg_conf() {
 	CONF_PROPS=""
 
-	ZINGG_CONF_DIR="$(cd "`dirname "$0"`"/../config; pwd)"
-
-	file="${ZINGG_CONF_DIR}/zingg.conf"
+	ZINGG_BASE_DIR="$(cd "`dirname "$0"`"/..; pwd)"
+	file="${ZINGG_BASE_DIR}/config/zingg.conf"
+	if [ ! -f $file ]; then
+		echo "$0: Zingg config file $file does not exist."
+		return 1
+    fi
 	# Leading blanks removed; comment Lines, blank lines removed
 	PROPERTIES=$(sed 's/^[[:blank:]]*//;s/#.*//;/^[[:space:]]*$/d' $file)
 
