@@ -685,6 +685,7 @@ public class Arguments implements Serializable {
 		return sourceNames;
 	}
 
+	@JsonIgnore
     public String getStopWordsDir() {
     	return getZinggBaseModelDir() + "/stopWords/";
     }
