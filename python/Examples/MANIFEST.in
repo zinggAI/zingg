@@ -1,0 +1,7 @@
+global-exclude *.py[cod] __pycache__ .DS_Store *.pyc  
+recursive-include deps/examples *
+recursive-include deps/models *
+include *.py
+include LICENSE
+include README.md
+include requirements.txt

@@ -52,16 +52,17 @@ if len(JARS_PATH) == 1:
 
 print("jar path is " , JARS_PATH)
 
-EXAMPLES_PATH = os.path.join(ZINGG_HOME, "examples")
+
 SCRIPTS_PATH = os.path.join(ZINGG_HOME, "scripts")
-DATA_PATH = os.path.join(ZINGG_HOME, "models")
+# EXAMPLES_PATH = os.path.join(ZINGG_HOME, "examples")
+# DATA_PATH = os.path.join(ZINGG_HOME, "models")
 CONF_PATH = os.path.join(ZINGG_HOME, "config")
 PHASES_PATH = os.path.join(ZINGG_HOME, "python/phases")
 
 SCRIPTS_TARGET = os.path.join(TEMP_PATH, "scripts")
 JARS_TARGET = os.path.join(TEMP_PATH, "jars")
-EXAMPLES_TARGET = os.path.join(TEMP_PATH, "examples")
-DATA_TARGET = os.path.join(TEMP_PATH, "models")
+# EXAMPLES_TARGET = os.path.join(TEMP_PATH, "examples")
+# DATA_TARGET = os.path.join(TEMP_PATH, "models")
 CONF_TARGET = os.path.join(TEMP_PATH, "config")
 PHASES_TARGET = os.path.join(TEMP_PATH, "phases")
 
@@ -118,16 +119,16 @@ try:
         if _supports_symlinks():
             os.symlink(JARS_PATH, JARS_TARGET)
             os.symlink(SCRIPTS_PATH, SCRIPTS_TARGET)
-            os.symlink(EXAMPLES_PATH, EXAMPLES_TARGET)
-            os.symlink(DATA_PATH, DATA_TARGET)
+            # os.symlink(EXAMPLES_PATH, EXAMPLES_TARGET)
+            # os.symlink(DATA_PATH, DATA_TARGET)
             os.symlink(CONF_PATH, CONF_TARGET)
             os.symlink(PHASES_PATH, PHASES_TARGET)
         else:
             # For windows fall back to the slower copytree
             copytree(JARS_PATH, JARS_TARGET)
             copytree(SCRIPTS_PATH, SCRIPTS_TARGET)
-            copytree(EXAMPLES_PATH, EXAMPLES_TARGET)
-            copytree(DATA_PATH, DATA_TARGET)
+            # copytree(EXAMPLES_PATH, EXAMPLES_TARGET)
+            # copytree(DATA_PATH, DATA_TARGET)
             copytree(CONF_PATH, CONF_TARGET)
             copytree(PHASES_PATH, PHASES_TARGET)
     else:
@@ -166,20 +167,22 @@ try:
     package_dir={
             'zingg.jars': 'deps/jars',
             'zingg.scripts': 'deps/scripts',
-            'zingg.data': 'deps/models',
-            'zingg.examples': 'deps/examples',
+            # 'zingg.data': 'deps/models',
+            # 'zingg.examples': 'deps/examples',
             'zingg.conf': 'deps/config',
             'zingg.phases': 'deps/phases'
         },
         package_data={
-            'zingg.jars': ['*.jar'],
+            'zingg.jars': ['zingg*.jar'],
             'zingg.scripts': ['*'],
-            'zingg.data': ['*'],
-            'zingg.examples': ['*.py', '*/examples/*.py'],
+            # 'zingg.data': ['*'],
+            # 'zingg.examples': ['*'],
             'zingg.conf': ['*'],
             'zingg.phases': ['*'],
             '':['*.py'],
-            '':['LICENCE']
+            '':['LICENCE'],
+            '':['README.md'],
+            '':['requirements.txt']
             },
         include_package_data=True,
         scripts=scripts,
@@ -205,18 +208,17 @@ finally:
         if _supports_symlinks():
             os.remove(os.path.join(TEMP_PATH, "jars"))
             os.remove(os.path.join(TEMP_PATH, "scripts"))
-            os.remove(os.path.join(TEMP_PATH, "models"))
-            os.remove(os.path.join(TEMP_PATH, "examples"))
+            # os.remove(os.path.join(TEMP_PATH, "models"))
+            # os.remove(os.path.join(TEMP_PATH, "examples"))
             os.remove(os.path.join(TEMP_PATH, "phases"))
             os.remove(os.path.join(TEMP_PATH, "config"))
         else:
             rmtree(os.path.join(TEMP_PATH, "jars"))
             rmtree(os.path.join(TEMP_PATH, "scripts"))
-            rmtree(os.path.join(TEMP_PATH, "models"))
-            rmtree(os.path.join(TEMP_PATH, "examples"))
+            # rmtree(os.path.join(TEMP_PATH, "models"))
+            # rmtree(os.path.join(TEMP_PATH, "examples"))
             rmtree(os.path.join(TEMP_PATH, "phases"))
             rmtree(os.path.join(TEMP_PATH, "config"))
-        os.rmdir(TEMP_PATH)
-    # rmtree(TEMP_PATH)
-    # print ("do nothing")
+        rmtree(TEMP_PATH)
+    
 
