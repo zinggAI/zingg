@@ -4,9 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -32,22 +29,6 @@ public class TestDataDocumenter extends ZinggSparkTester {
 			LOG.info("Unexpected exception received " + e.getMessage());
 			fail(e.getMessage());
 		}
-	}
-
-	@DisplayName ("Test DataDocumenter successfully generates doc")
-	@Test
-	public void testIfDataDocumenterGeneratedDocFile() throws Throwable {
-		try {
-			Files.deleteIfExists(Paths.get(args.getZinggDataDocFile()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		DataDocumenter dataDoc = new DataDocumenter(spark, args);
-		dataDoc.data = PipeUtil.read(spark, false, false, args.getData());
-		dataDoc.createDataDocument();
-
-		assertTrue(Files.exists(Paths.get(args.getZinggDataDocFile())), "Data documentation file is not generated");
 	}
 
 	@DisplayName ("Test template data")
