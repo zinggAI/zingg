@@ -6,8 +6,6 @@ import org.apache.commons.logging.LogFactory;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.documenter.ModelDocumenter;
-import zingg.documenter.DataDocumenter;
-import zingg.documenter.ModelColDocumenter;
 
 public class Documenter extends ZinggBase {
 
@@ -24,11 +22,6 @@ public class Documenter extends ZinggBase {
 			//Documentation out of model
 			ModelDocumenter modelDoc = new ModelDocumenter(spark, args);
 			modelDoc.process();
-
-			//Documnetation/profiling of data
-			DataDocumenter dataDoc = new DataDocumenter(spark, args);
-			dataDoc.process();
-
 			LOG.info("Documenter finishes");
 		} catch (Exception e) {
 			e.printStackTrace();
