@@ -1,90 +1,90 @@
 package zingg.profiler;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
+import org.apache.spark.sql.RowFactory;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
 import zingg.ZinggSparkTester;
-import zingg.client.Arguments;
-import zingg.client.ZinggClientException;
-import zingg.util.PipeUtil;
 
 public class TestStopWordsProfiler extends ZinggSparkTester {
+	private static final int NO_OF_RECORDS = 5;
+	private static final String COL_STOPWORDS = "stopwords";
 	public static final Log LOG = LogFactory.getLog(TestStopWordsProfiler.class);
-
-	@BeforeEach
-	public void setUp(){
-		try {
-			args = Arguments.createArgumentsFromJSON(getClass().getResource("/documenter/config.json").getFile());
-		} catch (Throwable e) {
-			e.printStackTrace();
-			LOG.info("Unexpected exception received " + e.getMessage());
-			fail(e.getMessage());
-		}
-	}
-
-	@DisplayName ("Test DataColProfiler successfully generated doc")
-	@Test
-	public void testIfStopWordsFilesAreGeneratedAndAreNonEmpty() throws Throwable {
-		String field1 = args.getStopWordsDir() + "add1";
-		String field2 = args.getStopWordsDir() + "fname";
-
-		try {
-			Files.deleteIfExists(Paths.get(field1));
-			Files.deleteIfExists(Paths.get(field2));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		DataColProfiler dataColDoc = new DataColProfiler(spark, ctx, args);
-		Dataset<Row> data = PipeUtil.read(spark, false, false, args.getData());
-		args.setColumn("add1");
-		dataColDoc.createStopWordsDocuments(data);
-		args.setColumn("fname");
-		dataColDoc.createStopWordsDocuments(data);
-
-		//read the generated files and check if they are not empty
-		Dataset<Row> add1 = PipeUtil.read(spark,false,false, PipeUtil.getStopWordsPipe(args, field1));
-		Dataset<Row> fname = PipeUtil.read(spark,false,false, PipeUtil.getStopWordsPipe(args, field2));
-		assertFalse(add1.isEmpty(), "StopWord file add1 is not generated or is empty");
-		assertFalse(fname.isEmpty(), "StopWord file fname is not generated or is empty");
-	}
+	Dataset<Row> dataset;
 
 	@Test
-	public void testCreateStopWordsForInvalidColumn() throws Throwable {
-		String field1 = args.getStopWordsDir() + "dummmyColumn";
+	public void testGeneratedStopWordsAndTheirCount() throws Throwable {
+		StopWordsProfiler profile = new StopWordsProfiler(spark, args);
 
-		try {
-			Files.deleteIfExists(Paths.get(field1));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		DataColProfiler dataColDoc = new DataColProfiler(spark, ctx, args);
-		Dataset<Row> data = PipeUtil.read(spark, false, false, args.getData());
-		args.setColumn("dummmyColumn");
-		dataColDoc.createStopWordsDocuments(data);
+		Dataset<Row> dataset = createDFWithGivenStopWords();
 
-		//read the generated file and verify that it is empty
-		try {
-			Dataset<Row> add1 = PipeUtil.read(spark,false,false, PipeUtil.getStopWordsPipe(args, field1));
-			fail("StopWord file add1 is generated");
-		} catch (ZinggClientException e) {
-			LOG.warn("StopWord file add1 is not generated");
+		args.setStopWordsCutoff(0.1f);
+		Dataset<Row> stopWords = profile.findStopWords(dataset, COL_STOPWORDS);
+		stopWords.show();
+	}
+	/* creates a dataframe for given words and their frequency*/
+	public Dataset<Row> createDFWithGivenStopWords() {
+		Map<String, Integer> map = Stream.of(new Object[][] {
+				{ "the", 44 },
+				{ "of", 27 },
+				{ "was", 11 },
+				{ "in", 11 },
+				{ "to", 9 },
+				{ "passengers", 2 },
+				{ "carried", 2 },
+				{ "people", 1 },
+				{ "iceberg", 1 }
+		}).collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
+
+		//create a list of list. Each record shall contain a list of stopwords
+		ArrayList<List<String>> strList = new ArrayList<>();
+		for (int index = 0; index < NO_OF_RECORDS; index++) {
+			strList.add(new ArrayList<String>());
 		}
+		//add stopwords as per calulcated random distribution to each record
+		for (String key : map.keySet()) {
+			int arr[] = randomDistributionList(NO_OF_RECORDS, map.get(key));
+			for (int index = 0; index < NO_OF_RECORDS; index++) {
+				List<String> str = new ArrayList<String>();
+				str.addAll(Collections.nCopies(arr[index], key));
+				strList.get(index).addAll(str);
+			}
+		}
+		List<Row> records = new ArrayList<Row>();
+		for (int index = 0; index < NO_OF_RECORDS; index++) {
+			records.add(RowFactory.create(getStringFromList(strList.get(index))));
+		}
+		//schema definition
+		StructType structType = new StructType();
+		structType = structType.add(DataTypes.createStructField(COL_STOPWORDS, DataTypes.StringType, false));
+		//create dataframe with given records and schema
+		Dataset<Row> doublesDF = spark.createDataFrame(records, structType);
+		return doublesDF;
+	}
+	/* join list elements */
+	public static String getStringFromList(List<String> strs) {
+		return strs.stream().reduce((p1, p2) -> p1 + " " + p2)
+				.map(Object::toString)
+				.orElse("");
+	}
+	/* Breaks 'n' into 'm' random numbers such that sum(arr[m]) = n */
+	int[] randomDistributionList(int m, int n) {
+		int arr[] = new int[m];
+		for (int i = 0; i < n; i++) {
+			arr[(int) (Math.random() * m)]++;
+		}
+		return arr;
 	}
 }

@@ -35,7 +35,8 @@ public class Client implements Serializable {
 	 *             if issue connecting to master
 	 */
 	
-	
+	public Client() {}
+
 	public Client(Arguments args, ClientOptions options) throws ZinggClientException {
 		this.options = options;
 		try {

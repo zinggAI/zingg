@@ -108,7 +108,7 @@ public class Arguments implements Serializable {
 	boolean showConcise = false;
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
-	String column = "";
+	String column;
 	
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
