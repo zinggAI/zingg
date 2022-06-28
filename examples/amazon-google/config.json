@@ -8,7 +8,7 @@
 		},
 		{
 			"fieldName" : "title",
-			"matchType" : "alphanumeric_with_units",
+			"matchType" : "number_with_units",
 			"fields" : "title",
 			"dataType": "\"string\"" 
 		},
