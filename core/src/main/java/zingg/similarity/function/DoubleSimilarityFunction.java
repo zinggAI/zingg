@@ -14,6 +14,8 @@ public class DoubleSimilarityFunction extends BaseSimilarityFunction<Double> {
 
 	@Override
 	public Double call(Double first, Double second) {
+		if (first == null || first.isNaN()) return 1d;
+		if (second == null || second.isNaN()) return 1d;
 		double score = (Math.abs(first-second))/(1.0+first + second);
 		LOG.debug(" DoubleSim bw " + first + " and second " + second + " is "
 		 + score);
