@@ -21,43 +21,21 @@ args.setLabelDataSampleSize(0.4)
 #reading dataset into inputPipe and settint it up in 'args'
 #below line should not be required if you are reading from in memory dataset
 #in that case, replace df with input df
-dfA = spark.read.format("csv").schema("id string, title string, description string, manufacturer string, price double ").load("examples/amazon-google/Amazon.csv")
-dfG = spark.read.format("csv").schema("id string, title string, description string, manufacturer string, price double ").load("examples/amazon-google/GoogleProducts.csv")
+df = spark.read.format("csv").schema("id string, title string, description string, manufacturer string, price double ").load("examples/amazon-google/data/")
+dfSchema = str(df.schema.json())
 
-inputPipe = []
-
-PipeA = CsvPipe("test")
-PipeA.setLocation("examples/amazon-google/Amazon.csv")
-PipeG = CsvPipe("test")
-PipeG.setLocation("examples/amazon-google/GoogleProducts.csv")
-
-dfSchemaA = str(dfA.schema.json())
-dfSchemaG = str(dfG.schema.json())
-
-PipeA.setSchema(dfSchemaA)
-PipeG.setSchema(dfSchemaG)
-
-inputPipe.append(PipeA)
-inputPipe.append(PipeG)
-
-
-args.setData(PipeA)
-args.setData(PipeG)
-
+inputPipe = CsvPipe("test")
+inputPipe.setLocation("examples/amazon-google/data/")
+inputPipe.setSchema(dfSchema)
+args.setData(inputPipe)
 
 #setting outputpipe in 'args'
-outputPipeG = CsvPipe("resultGoogle")
-outputPipeG.setLocation("/tmp")
-outputPipeA = CsvPipe("resultAmazon")
-outputPipeA.setLocation("/tmp")
-
-
-args.setOutput(outputPipeA)
-
-args.setOutput(outputPipeG)
+outputPipe = CsvPipe("resultAmazon")
+outputPipe.setLocation("/tmp")
+args.setOutput(outputPipe)
 
 options = ClientOptions()
-options.setPhase("trainMatch")
+options.setPhase("link")
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
