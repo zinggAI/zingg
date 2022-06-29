@@ -1,4 +1,4 @@
-package zingg.profiler;
+package zingg.recommender;
 
 import java.util.Arrays;
 
@@ -13,24 +13,24 @@ import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.util.PipeUtil;
 
-public class DataProfiler {
+public class DataRecommender {
 
-	public static final Log LOG = LogFactory.getLog(DataProfiler.class);
-	StopWordsProfiler stopWordsProfile;
+	public static final Log LOG = LogFactory.getLog(DataRecommender.class);
+	StopWordsRecommender stopWordsRecommender;
 	protected Dataset<Row> data;
 	protected SparkSession spark;
 	JavaSparkContext ctx;
 	public Arguments args;
 
-	public DataProfiler(SparkSession spark, JavaSparkContext ctx, Arguments args) {
+	public DataRecommender(SparkSession spark, JavaSparkContext ctx, Arguments args) {
 		this.spark = spark;
 		this.ctx = ctx;
 		this.args = args;
-		stopWordsProfile = new StopWordsProfiler(spark, args);
+		stopWordsRecommender = new StopWordsRecommender(spark, args);
 	}
 
 	public void process() throws ZinggClientException {
-		LOG.info("Data profiling starts");
+		LOG.info("Data recommender starts");
 
 		try {
 			data = PipeUtil.read(spark, false, false, args.getData());
@@ -40,16 +40,16 @@ public class DataProfiler {
 		if (!data.isEmpty()) {
 			createStopWordsDocuments(data);
 		} else {
-			LOG.info("No data profile generated");
+			LOG.info("No data recommendation generated");
 		}
-		LOG.info("Data profiling finishes");
+		LOG.info("Data recommender finishes");
 	}
 
 	public void createStopWordsDocuments(Dataset<Row> data) throws ZinggClientException {
 		if (!data.isEmpty()) {
 			if (args.getColumn() != null) {
 				if(Arrays.asList(data.schema().fieldNames()).contains(args.getColumn())) {
-					stopWordsProfile.createStopWordsDocument(data, args.getColumn(), ctx);
+					stopWordsRecommender.createStopWordsDocument(data, args.getColumn(), ctx);
 				} else {
 					LOG.info("An invalid column name - " + args.getColumn() + " entered. Please provide valid column name.");
 				}

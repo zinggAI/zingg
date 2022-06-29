@@ -1,4 +1,4 @@
-package zingg.profiler;
+package zingg.recommender;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,20 +18,20 @@ import org.junit.jupiter.api.Test;
 
 import zingg.ZinggSparkTester;
 
-public class TestStopWordsProfiler extends ZinggSparkTester {
+public class TestStopWordsRecommender extends ZinggSparkTester {
 	private static final int NO_OF_RECORDS = 5;
 	private static final String COL_STOPWORDS = "stopwords";
-	public static final Log LOG = LogFactory.getLog(TestStopWordsProfiler.class);
+	public static final Log LOG = LogFactory.getLog(TestStopWordsRecommender.class);
 	Dataset<Row> dataset;
 
 	@Test
 	public void testGeneratedStopWordsAndTheirCount() throws Throwable {
-		StopWordsProfiler profile = new StopWordsProfiler(spark, args);
+		StopWordsRecommender recommender = new StopWordsRecommender(spark, args);
 
 		Dataset<Row> dataset = createDFWithGivenStopWords();
 
 		args.setStopWordsCutoff(0.1f);
-		Dataset<Row> stopWords = profile.findStopWords(dataset, COL_STOPWORDS);
+		Dataset<Row> stopWords = recommender.findStopWords(dataset, COL_STOPWORDS);
 		stopWords.show();
 	}
 	/* creates a dataframe for given words and their frequency*/

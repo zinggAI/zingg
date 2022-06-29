@@ -5,7 +5,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
-import zingg.profiler.DataProfiler;
+import zingg.recommender.DataRecommender;
 
 public class Recommender extends ZinggBase {
 
@@ -20,9 +20,9 @@ public class Recommender extends ZinggBase {
 		try {
 			LOG.info("Recommender starts");
 
-			//profiling of data
-			DataProfiler dataProfile = new DataProfiler(spark, ctx, args);
-			dataProfile.process();
+			//Recommendations out of data
+			DataRecommender dataRecommender = new DataRecommender(spark, ctx, args);
+			dataRecommender.process();
 
 			LOG.info("Recommender finishes");
 		} catch (Exception e) {
