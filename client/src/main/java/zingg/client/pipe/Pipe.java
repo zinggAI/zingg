@@ -60,12 +60,17 @@ public class Pipe implements Serializable{
 	public void setName(String name) {
 		this.name = name;		
 	}
-	
+
 	public Format getFormat() {
 		return format;
 	}
 	
 	@JsonValue
+	public void setFormat(String sinkType) {
+		this.format = Format.getFormat(sinkType); //Format.getPipeType(sinkType);
+		PipeFactory.register(name, this);
+	}
+
 	public void setFormat(Format sinkType) {
 		this.format = sinkType;
 		PipeFactory.register(name, this);
@@ -144,7 +149,7 @@ public class Pipe implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Pipe [name=" + name + ", format=" + format + ", preprocessors="
+		return "Pipe [name=" + name + ", format=" + format.type() + ", preprocessors="
 				+ preprocessors + ", props=" + props + ", schema=" + schema + "]";
 	}
 	

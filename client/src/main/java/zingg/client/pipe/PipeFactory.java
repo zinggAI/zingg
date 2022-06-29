@@ -24,22 +24,22 @@ public class PipeFactory {
 	
 	private static final Pipe getPipe(Pipe p) {
 		try {
-			switch (p.format) {
-			case CSV:
-			case JSON:
-			case XLS:
-			case XLSX:
+			switch (p.format.type()) {
+			case "CSV":
+			case "JSON":
+			case "XLS":
+			case "XLSX":
 				return new FilePipe(p);
-			case CASSANDRA:
+			case "CASSANDRA":
 				return p;
-			case ELASTIC:
+			case "ELASTIC":
 				return p;
-			case JDBC:
+			case "JDBC":
 				return new JdbcPipe(p);
-			case INMEMORY:
+			case "INMEMORY":
 				return new InMemoryPipe(p);
 			default:
-				break;
+				return p;
 			}
 		}
 		catch (Exception e) {LOG.warn("given format not found, defaulting");}

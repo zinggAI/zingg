@@ -7,22 +7,21 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Format implements Serializable{	
-	
-	
-	CSV ("csv"),
-	JSON("json"),
-	JDBC("jdbc"),
-	ELASTIC("org.elasticsearch.spark.sql"),
-	CASSANDRA("org.apache.spark.sql.cassandra"),
-	XLS("com.crealytics.spark.excel"),
-	XLSX("com.crealytics.spark.excel"),
-	PARQUET("PARQUET"),
-	AVRO("avro"),
-	SNOWFLAKE("net.snowflake.spark.snowflake"),
-	TEXT("text"),
-	BIGQUERY("bigquery"),
-	INMEMORY("inMemory");
+public class Format implements Serializable{
+
+	public static final Format CSV = new Format("csv");
+	public static final Format JSON = new Format("json");
+	public static final Format JDBC = new Format("jdbc");
+	public static final Format ELASTIC = new Format("org.elasticsearch.spark.sql");
+	public static final Format CASSANDRA = new Format("org.apache.spark.sql.cassandra");
+	public static final Format XLS = new Format("com.crealytics.spark.excel");
+	public static final Format XLSX = new Format("com.crealytics.spark.excel");
+	public static final Format PARQUET = new Format("PARQUET");
+	public static final Format AVRO = new Format("avro");
+	public static final Format SNOWFLAKE = new Format("net.snowflake.spark.snowflake");
+	public static final Format TEXT = new Format("text");
+	public static final Format BIGQUERY = new Format("bigquery");
+	public static final Format INMEMORY = new Format("inMemory");
 	
 	String type;
 	static Map<String, Format> map;
@@ -31,16 +30,43 @@ public enum Format implements Serializable{
 		this.type = type;
 	}
 	
-	static{
+	static {
 		map = new HashMap<String, Format>();
-		for (Format p: Format.values()) {
-			map.put(p.type.toLowerCase(), p);
-		}
+		addFormat(CSV);
+		addFormat(JSON);
+		addFormat(JDBC);
+		addFormat(ELASTIC);
+		addFormat(CASSANDRA);
+		addFormat(XLS);
+		addFormat(XLSX);
+		addFormat(PARQUET);
+		addFormat(AVRO);
+		addFormat(SNOWFLAKE);
+		addFormat(TEXT);
+		addFormat(BIGQUERY);
+		addFormat(INMEMORY);
 	}
-	
+
 	@JsonCreator
 	public static Format getPipeType(String t) {
 		return map.get(t.toLowerCase());
+	}
+
+	public static void setPipeType(String t) {
+		map.put(t.toLowerCase(), new Format(t.toLowerCase()));
+	}
+
+	public static Format getFormat(String t) {
+		Format format = map.get(t.toLowerCase());
+		if (format == null) {
+			format = new Format(t);
+			addFormat(format);
+ 		}
+		return format;
+	}
+
+	public static void addFormat(Format f) {
+		map.put(f.type().toLowerCase(), f);
 	}
 
 	@JsonValue
@@ -48,6 +74,10 @@ public enum Format implements Serializable{
 		return type;
 	}
 
+	@Override
+	public String toString() {
+		return type;
+	}
 	
 	
 	
