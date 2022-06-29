@@ -40,7 +40,7 @@ run sdist.
      $ZINGG_HOME/mvn -DskipTests clean package
     Building the source dist is done in the Python directory:
       cd python
-      python setupExamples.py sdist
+      python setup.py sdist
       pip install dist/*.tar.gz"""
 
 
@@ -94,7 +94,7 @@ try:
             # For windows fall back to the slower copytree
             copytree(EXAMPLES_PATH, EXAMPLES_TARGET)
             copytree(DATA_PATH, DATA_TARGET)
-    
+
     
     packages = []
     packages.append('deps')
@@ -118,7 +118,11 @@ try:
         },
         package_data={
             'zingg.examples': ['*'],
-            'zingg.models': ['*']
+            'zingg.models': ['*'],
+            '':['*.py'],
+            '':['LICENCE'],
+            '':['README.md'],
+            '':['requirements.txt']
             },
         include_package_data=True,
         license='http://www.apache.org/licenses/LICENSE-2.0',

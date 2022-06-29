@@ -5,44 +5,44 @@ import traceback
 import urllib.request
 from shutil import rmtree
 
-def checked_package_name(zingg_version):
+def checked_package_name(zinggExamples_version):
     """
     Check the generated package name.
     """
-    return "%s" % (zingg_version)
+    return "%s" % (zinggExamples_version)
 
-def checked_versions(zingg_version):
+def checked_versions(zinggExamples_version):
     """
-    Check the valid combinations of supported versions in zingg distributions.
+    Check the valid combinations of supported versions in zinggExamples distributions.
 
     Parameters
     ----------
-    zingg_version : str
-        zingg version. It should be X.X.X such as '3.0.0' or zingg-3.0.0.
+    zinggExamples_version : str
+        zinggExamples version. It should be X.X.X such as '3.0.0' or zinggExamples-3.0.0.
     """
-    if re.match("^[0-9]+\\.[0-9]+\\.[0-9]+$", zingg_version):
-        zingg_version = "zingg-%s" % zingg_version
-    if not zingg_version.startswith("zingg-"):
+    if re.match("^[0-9]+\\.[0-9]+\\.[0-9]+$", zinggExamples_version):
+        zinggExamples_version = "zinggExamples-%s" % zinggExamples_version
+    if not zinggExamples_version.startswith("zinggExamples-"):
         raise RuntimeError(
-            "zingg version should start with 'zingg-' prefix; however, " "got %s" % zingg_version
+            "zinggExamples version should start with 'zinggExamples-' prefix; however, " "got %s" % zinggExamples_version
         )
 
-    return zingg_version
+    return zinggExamples_version
 
-def install_zingg(dest, zingg_version):
+def install_zinggExamples(dest, zinggExamples_version):
     """
-    Installs zingg that corresponds to the given Hadoop version in the current
+    Installs zinggExamples that corresponds to the given Hadoop version in the current
     library directory.
 
     Parameters
     ----------
     dest : str
-        The location to download and install the zingg.
-    zingg_version : str
-        zingg version. It should be zingg-X.X.X form.
+        The location to download and install the zinggExamples.
+    zinggExamples_version : str
+        zinggExamples version. It should be zinggExamples-X.X.X form.
     """
 
-    package_name = checked_package_name(zingg_version)
+    package_name = checked_package_name(zinggExamples_version)
     package_local_path = os.path.join(dest, "%s.tgz" % package_name)
     
     os.makedirs(dest, exist_ok=True)

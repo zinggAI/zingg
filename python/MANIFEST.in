@@ -6,7 +6,7 @@ recursive-include deps/examples *
 recursive-include deps/models *
 recursive-include deps/phases *
 recursive-include deps/config *
+recursive-include deps/DOCs LICENSE requirements.txt
 include *.py
-include LICENSE
 include README.md
-include requirements.txt
+include setup.cfg

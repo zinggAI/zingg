@@ -1,3 +1,7 @@
+## About zinggExamples package
+
+Sub-package used for zingg packsge.
+
 ## About zingg package
 
 Zingg Python APIs for entity resolution, record linkage, data mastering and deduplication
@@ -9,6 +13,6 @@ python 3.6+; spark 3.1.2
 # Installation
 
 ```
-pip install zingg
+pip install zinggExamples
 ``` 
 
