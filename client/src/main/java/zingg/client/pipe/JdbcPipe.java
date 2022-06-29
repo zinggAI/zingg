@@ -9,7 +9,10 @@ public class JdbcPipe extends Pipe{
 	public static final String TABLE="dbtable";
 	public static final String QUERY="query";
 	
-	
+	public JdbcPipe() {
+		setFormat(Format.JDBC);
+	}
+
 	public JdbcPipe(Pipe p) {
 		clone(p);
 	}

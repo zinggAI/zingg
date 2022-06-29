@@ -10,4 +10,7 @@ public class CassandraPipe extends Pipe{
 	public static final String CLUSTER_BY="clusterBy";
 	public static final String INDEX_BY="indexBy";
 
+	public CassandraPipe() {
+		setFormat(Format.CASSANDRA);
+	}
 }
