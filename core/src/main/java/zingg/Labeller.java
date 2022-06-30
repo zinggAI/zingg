@@ -34,6 +34,7 @@ public class Labeller extends ZinggBase {
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Reading inputs for labelling phase ...");
+			initLabellerStat();
 			Dataset<Row> unmarkedRecords = getUnmarkedRecords();
 			processRecordsCli(unmarkedRecords);
 			LOG.info("Finished labelling phase");
@@ -43,28 +44,13 @@ public class Labeller extends ZinggBase {
 		}
 	}
 
-	public Dataset<Row> getUnmarkedRecords() throws ZinggClientException {
-		Dataset<Row> unmarkedRecords = null;
-		Dataset<Row> markedRecords = null;
-		try {
-			unmarkedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataUnmarkedPipe(args));
-			markedRecords = getMarkedRecords();
-			if (markedRecords != null ) {
-				unmarkedRecords = unmarkedRecords.join(markedRecords,
-						unmarkedRecords.col(ColName.CLUSTER_COLUMN).equalTo(markedRecords.col(ColName.CLUSTER_COLUMN)),
-						"left_anti");
-						getMarkedRecordsStat(markedRecords);
-			} 
-		} catch (ZinggClientException e) {
-			LOG.warn("No unmarked record for labelling");
+	public void initLabellerStat() {
+		Dataset<Row> markedRecords = getMarkedRecords();
+		if (markedRecords != null ) {
+			getMarkedRecordsStat(markedRecords);
 		}
-		return unmarkedRecords;
 	}
 
-	
-
-
-	
 	protected void getMarkedRecordsStat(Dataset<Row> markedRecords) {
 		positivePairsCount = getMatchedMarkedRecordsStat(markedRecords);
 		negativePairsCount =  getUnmatchedMarkedRecordsStat(markedRecords);
