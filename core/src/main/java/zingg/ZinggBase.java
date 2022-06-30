@@ -191,13 +191,21 @@ public abstract class ZinggBase implements Serializable, IZingg {
 		return null;
 	}
 
-	public Dataset<Row> getUnMarkedRecords() {
+	public Dataset<Row> getUnmarkedRecords() {
+		Dataset<Row> unmarkedRecords = null;
+		Dataset<Row> markedRecords = null;
 		try {
-			return PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataUnmarkedPipe(args));
+			unmarkedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataUnmarkedPipe(args));
+			markedRecords = getMarkedRecords();
+			if (markedRecords != null ) {
+				unmarkedRecords = unmarkedRecords.join(markedRecords,
+						unmarkedRecords.col(ColName.CLUSTER_COLUMN).equalTo(markedRecords.col(ColName.CLUSTER_COLUMN)),
+						"left_anti");
+			} 
 		} catch (ZinggClientException e) {
 			LOG.warn("No unmarked record");
 		}
-		return null;
+		return unmarkedRecords;
 	}
 
     public Long getMarkedRecordsStat(Dataset<Row> markedRecords, long value) {

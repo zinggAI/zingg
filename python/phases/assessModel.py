@@ -19,7 +19,7 @@ def main():
     client.initAndExecute()
 
     pMarkedDF = client.getPandasDfFromDs(client.getMarkedRecords())
-    pUnMarkedDF = client.getPandasDfFromDs(client.getUnMarkedRecords())
+    pUnMarkedDF = client.getPandasDfFromDs(client.getUnmarkedRecords())
 
     total_marked = pMarkedDF.shape[0]
     total_unmarked = pUnMarkedDF.shape[0]

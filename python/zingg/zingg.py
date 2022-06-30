@@ -32,8 +32,8 @@ class Zingg:
         self.client.execute()
     def getMarkedRecords(self):
         return self.client.getMarkedRecords()
-    def getUnMarkedRecords(self):
-        return self.client.getUnMarkedRecords()
+    def getUnmarkedRecords(self):
+        return self.client.getUnmarkedRecords()
     def setArguments(self, args):
         self.client.setArguments()
     def getArguments(self):
