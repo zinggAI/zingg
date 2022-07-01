@@ -51,9 +51,10 @@ class Zingg:
     def getUnsureMarkedRecordsStat(self):
         return self.client.getUnsureMarkedRecordsStat(self.getMarkedRecords())
     def getDfFromDs(self, data):
-        return DataFrame(data, sqlContext)
+        return DataFrame(data, spark)
     def getPandasDfFromDs(self, data):
-        return self.getDfFromDs(data).toPandas()
+        df = self.getDfFromDs(data)
+        return pd.DataFrame(df.collect(), columns=df.columns)
 
 class Arguments:
 
