@@ -16,7 +16,7 @@ args.setFieldDefinition(fieldDefs)
 args.setModelId("104")
 args.setZinggDir("models")
 args.setNumPartitions(4000)
-args.setLabelDataSampleSize(0.)
+args.setLabelDataSampleSize(0.1)
 
 #reading dataset into inputPipe and settint it up in 'args'
 #below line should not be required if you are reading from in memory dataset
