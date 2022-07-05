@@ -48,9 +48,18 @@ class SnowflakePipe(Pipe):
         Pipe.addProperty(self, "dbtable", dbtable)
 
 class InMemoryPipe(Pipe):
-    def __init__(self, name):
+    def __init__(self, name, df = None):
         Pipe.__init__(self, name, Format.INMEMORY.type())
-    def setDataset(self, ds):
-        Pipe.getPipe(self).setDataset(ds)
+        if (df is not None):
+            self.setDataset(df)
+    def setDataset(self, df):
+        if (isinstance(df, pd.DataFrame)):
+            ds = spark.createDataFrame(df)
+            Pipe.getPipe(self).setDataset(ds._jdf)
+        elif (isinstance(df, DataFrame)):
+            Pipe.getPipe(self).setDataset(df._jdf)
+        else:
+            LOG.error(" setDataset(): NUll or Unsuported type: %s", type(df))
+
     def getDataset(self):
         return Pipe.getPipe(self).getDataset()
