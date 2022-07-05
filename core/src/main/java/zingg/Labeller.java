@@ -33,7 +33,7 @@ public class Labeller extends ZinggBase {
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Reading inputs for labelling phase ...");
-			initLabellerStat();
+			getMarkedRecordsStat(getMarkedRecords());
 			Dataset<Row> unmarkedRecords = getUnmarkedRecords();
 			processRecordsCli(unmarkedRecords);
 			LOG.info("Finished labelling phase");
@@ -43,18 +43,13 @@ public class Labeller extends ZinggBase {
 		}
 	}
 
-	public void initLabellerStat() {
-		Dataset<Row> markedRecords = getMarkedRecords();
-		if (markedRecords != null ) {
-			getMarkedRecordsStat(markedRecords);
-		}
-	}
-
 	protected void getMarkedRecordsStat(Dataset<Row> markedRecords) {
-		positivePairsCount = getMatchedMarkedRecordsStat(markedRecords);
-		negativePairsCount =  getUnmatchedMarkedRecordsStat(markedRecords);
-		notSurePairsCount = getUnsureMarkedRecordsStat(markedRecords);
-		totalCount = markedRecords.count() / 2;
+		if (markedRecords != null ) {
+			positivePairsCount = getMatchedMarkedRecordsStat(markedRecords);
+			negativePairsCount =  getUnmatchedMarkedRecordsStat(markedRecords);
+			notSurePairsCount = getUnsureMarkedRecordsStat(markedRecords);
+			totalCount = markedRecords.count() / 2;
+		}
 	}
 
 	public void processRecordsCli(Dataset<Row> lines) throws ZinggClientException {
