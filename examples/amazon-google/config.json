@@ -8,7 +8,7 @@
 		},
 		{
 			"fieldName" : "title",
-			"matchType" : "number_with_units",
+			"matchType" : "numeric",
 			"fields" : "title",
 			"dataType": "\"string\"" 
 		},
@@ -40,10 +40,10 @@
 			}
 		}],
 		"data" : [{
-			"name":"aws-google", 
+			"name":"aws", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/amazon-google/data/",
+				"location": "examples/amazon-google/Amazon.csv",
 				"delimiter": ",",
 				"header":true					
 			},
@@ -57,7 +57,27 @@
 					{\"name\":\"price\", \"type\":\"double\", \"nullable\":true}
 				]
 			}"
-		}],
+		},
+		{
+			"name":"google", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/amazon-google/GoogleProducts.csv",
+				"delimiter": ",",
+				"header":true					
+			},
+			"schema": 
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
+					{\"name\":\"title\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"description\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"manufacturer\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"price\", \"type\":\"double\", \"nullable\":true}
+				]
+			}"
+		}
+		],
 		"labelDataSampleSize" : 0.4,
 		"numPartitions":4,
 		"modelId": 103,

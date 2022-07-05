@@ -31,11 +31,11 @@ args.setData(inputPipe)
 
 #setting outputpipe in 'args'
 outputPipe = CsvPipe("ncVotersResult")
-outputPipe.setLocation("/tmp")
+outputPipe.setLocation("/tmp/ncVotersOutput")
 args.setOutput(outputPipe)
 
 options = ClientOptions()
-options.setPhase("link")
+options.setPhase("trainMatch")
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)

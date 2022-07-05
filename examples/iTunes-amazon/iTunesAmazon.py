@@ -27,19 +27,23 @@ args.setLabelDataSampleSize(0.4)
 #reading dataset into inputPipe and settint it up in 'args'
 #below line should not be required if you are reading from in memory dataset
 #in that case, replace df with input df
-df = spark.read.format("csv").schema("id string, Song_Name string, Artist_Name string, Album_Name string, Genre string, Price double, CopyRight string, Time string, Released string").load("examples/iTunes-amazon/data/")
+dfiTunes = spark.read.format("csv").schema("id string, Song_Name string, Artist_Name string, Album_Name string, Genre string, Price double, CopyRight string, Time string, Released string").load("examples/iTunes-amazon/iTunesMusic.csv")
+dfSchema = str(dfiTunes.schema.json())
+inputPipeiTunes = CsvPipe("testiTunes")
+inputPipeiTunes.setLocation("examples/iTunes-amazon/iTunesMusic.csv")
+inputPipeiTunes.setSchema(dfSchema)
 
-inputPipe = CsvPipe("test")
-inputPipe.setLocation("examples/iTunes-amazon/data/")
+dfAmazon = spark.read.format("csv").schema("id string, Song_Name string, Artist_Name string, Album_Name string, Genre string, Price double, CopyRight string, Time string, Released string").load("examples/iTunes-amazon/AmazonMusic.csv")
+dfSchemaAmazon = str(dfAmazon.schema.json())
+inputPipeAmazon = CsvPipe("testAmazon")
+inputPipeAmazon.setLocation("examples/iTunes-amazon/AmazonMusic.csv")
+inputPipeAmazon.setSchema(dfSchemaAmazon)
 
-dfSchema = str(df.schema.json())
-inputPipe.setSchema(dfSchema)
-
-args.setData(inputPipe)
+args.setData(inputPipeiTunes,inputPipeAmazon)
 
 #setting outputpipe in 'args'
 outputPipe = CsvPipe("iTunesAmazonresult")
-outputPipe.setLocation("/tmp")
+outputPipe.setLocation("/tmp/iTunesAmazonOutput")
 
 args.setOutput(outputPipe)
 

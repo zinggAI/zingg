@@ -64,10 +64,10 @@
 			}
 		}],
 		"data" : [{
-			"name":"itunes-amazon", 
+			"name":"itunes", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/iTunes-amazon/data/",
+				"location": "examples/iTunes-amazon/iTunesMusic.csv",
 				"delimiter": ",",
 				"header":true					
 			},
@@ -85,7 +85,31 @@
 					{\"name\":\"Released\", \"type\":\"string\", \"nullable\":true}
 				]
 			}"
-		}],
+		},
+		{
+			"name":"amazon", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/iTunes-amazon/AmazonMusic.csv",
+				"delimiter": ",",
+				"header":true					
+			},
+			"schema": 
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
+					{\"name\":\"Song_Name\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"Artist_Name\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"Album_Name\",\"type\":\"string\",\"nullable\":true},
+					{\"name\":\"Genre\", \"type\":\"string\", \"nullable\":true}, 
+					{\"name\":\"Price\", \"type\":\"double\", \"nullable\":true},
+					{\"name\":\"CopyRight\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"Time\",\"type\":\"string\",\"nullable\":true},
+					{\"name\":\"Released\", \"type\":\"string\", \"nullable\":true}
+				]
+			}"
+		}
+		],
 		"labelDataSampleSize" : 0.4,
 		"numPartitions":4,
 		"modelId": 105,
