@@ -6,11 +6,11 @@ args = Arguments()
 #set field definitions
 fname = FieldDefinition("fname", "string", MatchType.FUZZY)
 lname = FieldDefinition("lname", "string", MatchType.FUZZY)
-stNo = FieldDefinition("stNo", "string", MatchType.EXACT)
+stNo = FieldDefinition("stNo", "string", MatchType.FUZZY)
 add1 = FieldDefinition("add1","string", MatchType.FUZZY)
 add2 = FieldDefinition("add2", "string", MatchType.FUZZY)
 city = FieldDefinition("city", "string", MatchType.FUZZY)
-areacode = FieldDefinition("areacode", "string", MatchType.EXACT)
+areacode = FieldDefinition("areacode", "string", MatchType.FUZZY)
 state = FieldDefinition("state", "string", MatchType.FUZZY)
 dob = FieldDefinition("dob", "string", MatchType.FUZZY)
 ssn = FieldDefinition("ssn", "string", MatchType.FUZZY)
@@ -39,7 +39,7 @@ args.setData(inputPipe)
 
 #setting outputpipe in 'args'
 outputPipe = CsvPipe("csv")
-outputPipe.setLocation("/tmp/FebrlOutput")
+outputPipe.setLocation("/tmp")
 
 args.setOutput(outputPipe)
 
