@@ -253,8 +253,8 @@ public class Client implements Serializable {
 		return zingg.getMarkedRecords();
 	}
 
-	public Dataset<Row> getUnMarkedRecords() {
-		return zingg.getUnMarkedRecords();
+	public Dataset<Row> getUnmarkedRecords() {
+		return zingg.getUnmarkedRecords();
 	}
 
 }
