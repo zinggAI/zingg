@@ -19,17 +19,17 @@ def main():
     client.initAndExecute()
 
     pMarkedDF = client.getPandasDfFromDs(client.getMarkedRecords())
-    pUnMarkedDF = client.getPandasDfFromDs(client.getUnmarkedRecords())
+    pUnmarkedDF = client.getPandasDfFromDs(client.getUnmarkedRecords())
 
     total_marked = pMarkedDF.shape[0]
-    total_unmarked = pUnMarkedDF.shape[0]
+    total_unmarked = pUnmarkedDF.shape[0]
     matched_marked = client.getMatchedMarkedRecordsStat()
     unmatched_marked = client.getUnmatchedMarkedRecordsStat()
     unsure_marked = client.getUnsureMarkedRecordsStat()
 
     LOG.info("")
     LOG.info("No. of Records Marked   : %d", total_marked)
-    LOG.info("No. of Records UnMarked : %d", total_unmarked)
+    LOG.info("No. of Records Unmarked : %d", total_unmarked)
     LOG.info("No. of Matches          : %d", matched_marked)
     LOG.info("No. of Non-Matches      : %d", unmatched_marked)
     LOG.info("No. of Not Sure         : %d", unsure_marked)
