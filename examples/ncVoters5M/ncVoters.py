@@ -21,7 +21,7 @@ args.setLabelDataSampleSize(0.1)
 #reading dataset into inputPipe and settint it up in 'args'
 #below line should not be required if you are reading from in memory dataset
 #in that case, replace df with input df
-df = spark.read.format("csv").schema("recid string, givenname string, surname string, suburb string, postcode double ").load("examples/ncVoters5M/test.csv")
+df = spark.read.format("csv").schema("recid string, givenname string, surname string, suburb string, postcode double ").load("examples/ncVoters5M/5Party-ocp20/")
 dfSchemaA = str(df.schema.json())
 
 inputPipe = CsvPipe("test")
