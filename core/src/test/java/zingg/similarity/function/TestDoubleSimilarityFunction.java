@@ -8,44 +8,68 @@ public class TestDoubleSimilarityFunction {
 	
 	
 	@Test
-	public void testFirstNumIsNull() {
-		DoubleSimilarityFunction isNull = new DoubleSimilarityFunction();
-		assertEquals(1d, isNull.call(null, 1d));
+	public void testFirstNumsimFn() {
+		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
+		assertEquals(1d, simFn.call(null, 1d));
 	}
 
 	@Test
 	public void testFirstNumIsNAN() {
-		DoubleSimilarityFunction isNull = new DoubleSimilarityFunction();
-		assertEquals(1d, isNull.call(Double.NaN, 1d));
+		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
+		assertEquals(1d, simFn.call(Double.NaN, 1d));
 	}
 
 	@Test
-	public void testSecondNumIsNull() {
-		DoubleSimilarityFunction isNull = new DoubleSimilarityFunction();
-		assertEquals(1d, isNull.call(1d, null));
+	public void testSecondNumsimFn() {
+		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
+		assertEquals(1d, simFn.call(1d, null));
 	}
 
 	@Test
 	public void testSecondNumIsNAN() {
-		DoubleSimilarityFunction isNull = new DoubleSimilarityFunction();
-		assertEquals(1d, isNull.call(1d, Double.NaN));
+		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
+		assertEquals(1d, simFn.call(1d, Double.NaN));
 	}
 	@Test
 	public void testBothNAN() {
-		DoubleSimilarityFunction isNull = new DoubleSimilarityFunction();
-		assertEquals(1d, isNull.call(Double.NaN, Double.NaN));
+		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
+		assertEquals(1d, simFn.call(Double.NaN, Double.NaN));
 	}
 
 	@Test
 	public void testBothNull() {
-		DoubleSimilarityFunction isNull = new DoubleSimilarityFunction();
-		assertEquals(1d, isNull.call(null, null));
+		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
+		assertEquals(1d, simFn.call(null, null));
 	}
 
 	@Test
 	public void testBothNotNullNorNAN() {
-		DoubleSimilarityFunction isNull = new DoubleSimilarityFunction();
-		assertEquals(0d, isNull.call(1d, 1d));
+		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
+		assertEquals(0d, simFn.call(1d, 1d));
 	}
 
+	@Test
+	public void testValues0And0() {
+		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
+		assertEquals(0d, simFn.call(0d, 0d));
+	}
+
+	@Test
+	public void testValues100And1() {
+		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
+		assertEquals(0.9705882352941176d, simFn.call(100d, 1d));
+	}
+
+	@Test
+	public void testValues10And1() {
+		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
+		assertEquals(0d, simFn.call(10.0, 10d));
+	}
+
+	@Test
+	public void testValues34And54() {
+		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
+		Double score = simFn.call(34d, 54.0);
+		assertEquals(0.2247191011235955d, score);
+	}
 }
