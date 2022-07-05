@@ -1,7 +1,6 @@
 package zingg.similarity.function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
@@ -59,23 +58,23 @@ public class TestJaccSimFunction {
 	public void testBothNotEmptyDifferent() {
 		StringSimilarityDistanceFunction strDistanceFn = new JaccSimFunction("test");
 		Double score = strDistanceFn.call("sample text first", "sample text second");
-		assertFalse(score == 0d || score == 1d);
+		assertEquals(0.5d, score);
 	}
 
 	@Test
 	public void testSpecificInputsDifferent() {
 		StringSimilarityDistanceFunction strDistanceFn = new JaccSimFunction("test");
-		String first = "sonicwall 01-ssc-6997 : usually ships in 24 hours : : sonicwall client/server anti-virus suite leverages the award-winning mcafee netshield and groupshield applications for networks with windows -based file print and exchange servers.,";
-		String second = "sonicwall 01-ssc-5670 : usually ships in 24 hours : : more and more businesses schools government agencies and libraries are connecting to the internet to meet their organizational and educational goals.";
+		String first = "sonicwall client/server ";
+		String second = "sonicwall businesses ";
 		Double score = strDistanceFn.call(first, second);
-		assertFalse(score == 0d || score == 1d);
+		assertEquals(0.25d, score);
 	}
 
 	@Test
 	public void testInputsSameWithSlashes() {
 		StringSimilarityDistanceFunction strDistanceFn = new JaccSimFunction("test");
-		String first = "sample/string/with/slashes";
-		String second = "sample/string/with/slashes";
+		String first = "sample/string";
+		String second = "sample/string";
 		Double score = strDistanceFn.call(first, second);
 		assertEquals(1d, score);
 	}
@@ -83,9 +82,9 @@ public class TestJaccSimFunction {
 	@Test
 	public void testInputsDifferentWithSlashesAndColons() {
 		StringSimilarityDistanceFunction strDistanceFn = new JaccSimFunction("test");
-		String first = "sample/string/with/slashes:and:colons.,";
-		String second = "sample string/with slash:and,.";
+		String first = "slashes/and:colons.,";
+		String second = "slashes and colons";
 		Double score = strDistanceFn.call(first, second);
-		assertFalse(score == 0d || score == 1d);
+		assertEquals(1d, score);
 	}
 }
