@@ -7,9 +7,9 @@
 			"dataType": "\"string\"" 
 		},
 		{
-			"fieldName" : "title",
+			"fieldName" : "givenname",
 			"matchType" : "fuzzy",
-			"fields" : "title",
+			"fields" : "givenname",
 			"dataType": "\"string\"" 
 		},
 		{
@@ -52,7 +52,7 @@
 				"{\"type\" : \"struct\",
 				\"fields\" : [ 
 					{\"name\":\"recid\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"title\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"givenname\",\"type\":\"string\",\"nullable\":true} ,
 					{\"name\":\"surname\", \"type\":\"string\", \"nullable\":true}, 
 					{\"name\":\"suburb\", \"type\":\"string\", \"nullable\":true},
 					{\"name\":\"postcode\",\"type\":\"string\",\"nullable\":true} 

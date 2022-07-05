@@ -5,23 +5,23 @@ from zingg.pipes import *
 args = Arguments()
 #set field definitions
 recid = FieldDefinition("recid", "string", MatchType.DONT_USE)
-title = FieldDefinition("title", "string", MatchType.FUZZY)
+givenname = FieldDefinition("givenname", "string", MatchType.FUZZY)
 surname = FieldDefinition("surname", "string", MatchType.EXACT)
 suburb = FieldDefinition("suburb","string", MatchType.FUZZY)
 postcode = FieldDefinition("postcode", "double", MatchType.EXACT)
 
-fieldDefs = [recid, title, surname, suburb, postcode]
+fieldDefs = [recid, givenname, surname, suburb, postcode]
 args.setFieldDefinition(fieldDefs)
 #set the modelid and the zingg dir
-args.setModelId("103")
+args.setModelId("104")
 args.setZinggDir("models")
-args.setNumPartitions(4)
-args.setLabelDataSampleSize(0.4)
+args.setNumPartitions(4000)
+args.setLabelDataSampleSize(0.)
 
 #reading dataset into inputPipe and settint it up in 'args'
 #below line should not be required if you are reading from in memory dataset
 #in that case, replace df with input df
-df = spark.read.format("csv").schema("recid string, title string, surname string, suburb string, postcode double ").load("examples/ncVoters5M/5Party-ocp20/")
+df = spark.read.format("csv").schema("recid string, givenname string, surname string, suburb string, postcode double ").load("examples/ncVoters5M/test.csv")
 dfSchemaA = str(df.schema.json())
 
 inputPipe = CsvPipe("test")
