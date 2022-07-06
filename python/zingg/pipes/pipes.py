@@ -10,55 +10,69 @@ FilePipe = jvm.zingg.client.pipe.FilePipe
 class CsvPipe(Pipe):
     def __init__(self, name):
         Pipe.__init__(self, name, Format.CSV.type())
-        Pipe.addProperty(self, FilePipe.HEADER,"true")
 
     def setDelimiter(self, delimiter):
-        Pipe.addProperty(self, "delimiter", delimiter)
+        Pipe.addProperty(self, FilePipe.DELIMITER, delimiter)
 
     def setLocation(self, location):
         Pipe.addProperty(self, FilePipe.LOCATION, location)
 
+    def setHeader(self, header):
+        Pipe.addProperty(self, FilePipe.HEADER, header)
+
 class BigQueryPipe(Pipe):
+    VIEWS_ENABLED = "viewsEnabled"
+    CREDENTIAL_FILE = "credentialsFile"
+    TABLE = "table"
+    TEMP_GCS_BUCKET="temporaryGcsBucket"
+
     def __init__(self,name):
-        Pipe.__init__(self, name, "bigquery")
-        Pipe.addProperty(self, "viewsEnabled", "true")
+        Pipe.__init__(self, name, Format.BIGQUERY.type())
 
     def setCredentialFile(self, file):
-        Pipe.addProperty(self, "credentialsFile", file)
+        Pipe.addProperty(self, BigQueryPipe.CREDENTIAL_FILE, file)
 
     def setTable(self, table):
-        Pipe.addProperty(self, "table", table)
+        Pipe.addProperty(self, BigQueryPipe.TABLE, table)
 
     def setTemporaryGcsBucket(self, bucket):
-        Pipe.addProperty(self, "temporaryGcsBucket", bucket)
+        Pipe.addProperty(self, BigQueryPipe.TEMP_GCS_BUCKET, bucket)
 
     def setViewsEnabled(self, isEnabled):
-        Pipe.addProperty(self, "viewsEnabled", isEnabled)
+        Pipe.addProperty(self, BigQueryPipe.VIEWS_ENABLED, isEnabled)
 
 class SnowflakePipe(Pipe):
+    URL = "sfUrl"
+    USER = "sfUser"
+    PASSWORD = "sfPassword"
+    DATABASE ="sfDatabase"
+    SCHEMA = "sfSchema"
+    WAREHOUSE = "sfWarehouse"
+    DBTABLE = "dbtable"
+
     def __init__(self,name):
         Pipe.__init__(self, name, Format.SNOWFLAKE.type())
 
     def setURL(self, url):
-        Pipe.addProperty(self, "sfUrl", url)
+        Pipe.addProperty(self, SnowflakePipe.URL, url)
 
     def setUser(self, user):
-        Pipe.addProperty(self, "sfUser", user)
+        Pipe.addProperty(self, SnowflakePipe.USER, user)
 
     def setPassword(self, passwd):
-        Pipe.addProperty(self, "sfPassword", passwd)
+        Pipe.addProperty(self, SnowflakePipe.PASSWORD, passwd)
 
     def setDatabase(self, db):
-        Pipe.addProperty(self, "sfDatabase", db)
+        Pipe.addProperty(self, SnowflakePipe.DATABASE, db)
 
     def setSFSchema(self, schema):
-        Pipe.addProperty(self, "sfSchema", schema)
+        Pipe.addProperty(self, SnowflakePipe.SCHEMA, schema)
 
     def setWarehouse(self, warehouse):
-        Pipe.addProperty(self, "sfWarehouse", warehouse)
+        Pipe.addProperty(self, SnowflakePipe.WAREHOUSE, warehouse)
 
     def setDbTable(self, dbtable):
-        Pipe.addProperty(self, "dbtable", dbtable)
+        Pipe.addProperty(self, SnowflakePipe.DBTABLE, dbtable)
 
 class InMemoryPipe(Pipe):
     def __init__(self, name, df = None):
