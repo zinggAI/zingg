@@ -22,7 +22,7 @@ public interface IZingg {
 
 	public Dataset<Row> getMarkedRecords();
 
-	public Dataset<Row> getUnMarkedRecords();
+	public Dataset<Row> getUnmarkedRecords();
 
 	public Long getMarkedRecordsStat(Dataset<Row> markedRecords, long value);
 
