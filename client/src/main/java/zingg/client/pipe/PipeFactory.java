@@ -25,18 +25,17 @@ public class PipeFactory {
 	private static final Pipe getPipe(Pipe p) {
 		try {
 			switch (p.format) {
-			case CSV:
-			case JSON:
-			case XLS:
-			case XLSX:
+			case Pipe.FORMAT_CSV:
+			case Pipe.FORMAT_JSON:
+			case Pipe.FORMAT_XLS:
 				return new FilePipe(p);
-			case CASSANDRA:
+			case Pipe.FORMAT_CASSANDRA:
 				return p;
-			case ELASTIC:
+			case Pipe.FORMAT_ELASTIC:
 				return p;
-			case JDBC:
+			case Pipe.FORMAT_JDBC:
 				return new JdbcPipe(p);
-			case INMEMORY:
+			case Pipe.FORMAT_INMEMORY:
 				return new InMemoryPipe(p);
 			default:
 				break;

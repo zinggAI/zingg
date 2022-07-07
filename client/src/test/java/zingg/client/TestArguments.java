@@ -16,7 +16,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
-import zingg.client.pipe.Format;
 import zingg.client.pipe.Pipe;
 
 public class TestArguments {
@@ -42,7 +41,7 @@ public class TestArguments {
 			Arguments args = Arguments.createArgumentsFromJSONString(json, "");
 
 			assertEquals(args.getData()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
-			assertEquals(args.getData()[0].getFormat().type(), env.get(KEY_FORMAT));
+			assertEquals(args.getData()[0].getFormat(), env.get(KEY_FORMAT));
 			assertEquals(args.getModelId(), env.get(KEY_MODEL_ID));
 		} catch (IOException | ZinggClientException e) {
 			fail("Unexpected exception " + e.getMessage());
@@ -265,13 +264,13 @@ public class TestArguments {
 
 				Pipe inputPipe = new Pipe();
 				inputPipe.setName("test");
-				inputPipe.setFormat(Format.CSV);
+				inputPipe.setFormat(Pipe.FORMAT_CSV);
 				inputPipe.setProp("location", "examples/febrl/test.csv");
 				args.setData(new Pipe[] {inputPipe});
 
 				Pipe outputPipe = new Pipe();
 				outputPipe.setName("output");
-				outputPipe.setFormat(Format.CSV);
+				outputPipe.setFormat(Pipe.FORMAT_CSV);
 				outputPipe.setProp("location", "examples/febrl/output.csv");
 				args.setOutput(new Pipe[] {outputPipe});
 

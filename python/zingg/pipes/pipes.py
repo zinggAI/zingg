@@ -1,15 +1,15 @@
 import logging
-from zingg import *
+from python.zingg import *
 import pandas as pd
 
 LOG = logging.getLogger("zingg.pipes")
 
-Format = jvm.zingg.client.pipe.Format
+JPipe = jvm.zingg.client.pipe.Pipe
 FilePipe = jvm.zingg.client.pipe.FilePipe
 
 class CsvPipe(Pipe):
     def __init__(self, name):
-        Pipe.__init__(self, name, Format.CSV.type())
+        Pipe.__init__(self, name, JPipe.FORMAT_CSV)
         Pipe.addProperty(self, FilePipe.HEADER,"true")
 
     def setDelimiter(self, delimiter):
@@ -20,7 +20,7 @@ class CsvPipe(Pipe):
 
 class BigQueryPipe(Pipe):
     def __init__(self,name):
-        Pipe.__init__(self, name, "bigquery")
+        Pipe.__init__(self, name, JPipe.FORMAT_BIGQUERY)
         Pipe.addProperty(self, "viewsEnabled", "true")
 
     def setCredentialFile(self, file):
@@ -37,8 +37,7 @@ class BigQueryPipe(Pipe):
 
 class SnowflakePipe(Pipe):
     def __init__(self,name):
-        Pipe.__init__(self, name, Format.SNOWFLAKE.type())
-
+        Pipe.__init__(self, name, JPipe.FORMAT_SNOWFLAKE)
     def setURL(self, url):
         Pipe.addProperty(self, "sfUrl", url)
 
@@ -62,7 +61,7 @@ class SnowflakePipe(Pipe):
 
 class InMemoryPipe(Pipe):
     def __init__(self, name, df = None):
-        Pipe.__init__(self, name, Format.INMEMORY.type())
+        Pipe.__init__(self, name, JPipe.FORMAT_INMEMORY)
         if (df is not None):
             self.setDataset(df)
 

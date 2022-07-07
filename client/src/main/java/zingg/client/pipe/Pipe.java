@@ -31,8 +31,21 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 @JsonInclude(Include.NON_NULL)
 public class Pipe implements Serializable{
 	
+	public static final String FORMAT_CSV = "csv";
+	public static final String FORMAT_PARQUET = "parquet";
+	public static final String FORMAT_JSON = "json";
+	public static final String FORMAT_TEXT = "text";
+	public static final String FORMAT_XLS = "com.crealytics.spark.excel";
+	public static final String FORMAT_AVRO = "avro";
+	public static final String FORMAT_JDBC = "jdbc";
+	public static final String FORMAT_CASSANDRA = "org.apache.spark.sql.cassandra";
+	public static final String FORMAT_SNOWFLAKE = "net.snowflake.spark.snowflake";
+	public static final String FORMAT_ELASTIC = "org.elasticsearch.spark.sql";
+	public static final String FORMAT_BIGQUERY = "bigquery";
+	public static final String FORMAT_INMEMORY = "inMemory";
+
 	String name;
-	Format format;
+	String format;
 	String preprocessors;
 	Map<String, String> props = new HashMap<String, String>();
 	@JsonSerialize(using = CustomSchemaSerializer.class)
@@ -61,12 +74,12 @@ public class Pipe implements Serializable{
 		this.name = name;		
 	}
 	
-	public Format getFormat() {
+	public String getFormat() {
 		return format;
 	}
 	
 	@JsonValue
-	public void setFormat(Format sinkType) {
+	public void setFormat(String sinkType) {
 		this.format = sinkType;
 		PipeFactory.register(name, this);
 	}

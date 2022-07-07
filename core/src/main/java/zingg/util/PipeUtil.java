@@ -28,7 +28,6 @@ import zingg.client.util.ColName;
 import zingg.client.pipe.CassandraPipe;
 import zingg.client.pipe.ElasticPipe;
 import zingg.client.pipe.FilePipe;
-import zingg.client.pipe.Format;
 import zingg.client.pipe.InMemoryPipe;
 import zingg.client.pipe.Pipe;
 import scala.Option;
@@ -58,8 +57,8 @@ public class PipeUtil {
 	private static DataFrameReader getReader(SparkSession spark, Pipe p) {
 		DataFrameReader reader = spark.read();
 
-		LOG.warn("Reading input " + p.getFormat().type());
-		reader = reader.format(p.getFormat().type());
+		LOG.warn("Reading input " + p.getFormat());
+		reader = reader.format(p.getFormat());
 		if (p.getSchema() != null) {
 			reader = reader.schema(p.getSchema());
 		}
@@ -75,7 +74,7 @@ public class PipeUtil {
 		LOG.warn("Reading " + p);
 		try {
 
-		if (p.getFormat() == Format.INMEMORY) {
+		if (p.getFormat() == Pipe.FORMAT_INMEMORY) {
 			input = ((InMemoryPipe) p).getRecords();
 		}
 		else {		
@@ -174,7 +173,7 @@ public class PipeUtil {
 		reader.option("inferSchema", true);
 		reader.option("mode", "DROPMALFORMED");
 		LOG.info("reader is ready to sample with inferring " + p.get(FilePipe.LOCATION));
-		LOG.warn("Reading input of type " + p.getFormat().type());
+		LOG.warn("Reading input of type " + p.getFormat());
 		Dataset<Row> input = read(reader, p, false);
 		// LOG.warn("inferred schema " + input.schema());
 		List<Row> values = input.takeAsList(10);
@@ -200,7 +199,7 @@ public class PipeUtil {
 		
 			LOG.warn("Writing output " + p);
 			
-			if (p.getFormat() == Format.INMEMORY) {
+			if (p.getFormat() == Pipe.FORMAT_INMEMORY) {
  				p.setDataset(toWriteOrig);
 				return;
 			}
@@ -211,18 +210,18 @@ public class PipeUtil {
 			else {
 				writer.mode("Append");
 			}
-			if (p.getFormat().equals(Format.ELASTIC)) {
+			if (p.getFormat().equals(Pipe.FORMAT_ELASTIC)) {
 				ctx.getConf().set(ElasticPipe.NODE, p.getProps().get(ElasticPipe.NODE));
 				ctx.getConf().set(ElasticPipe.PORT, p.getProps().get(ElasticPipe.PORT));
 				ctx.getConf().set(ElasticPipe.ID, ColName.ID_COL);
 				ctx.getConf().set(ElasticPipe.RESOURCE, p.getName());
 			}
-			writer = writer.format(p.getFormat().type());
+			writer = writer.format(p.getFormat());
 			
 			for (String key: p.getProps().keySet()) {
 				writer = writer.option(key, p.get(key));
 			}
-			if (p.getFormat() == Format.CASSANDRA) {
+			if (p.getFormat() == Pipe.FORMAT_CASSANDRA) {
 				/*
 				ctx.getConf().set(CassandraPipe.HOST, p.getProps().get(CassandraPipe.HOST));
 				toWrite.sparkSession().conf().set(CassandraPipe.HOST, p.getProps().get(CassandraPipe.HOST));
@@ -273,9 +272,9 @@ public class PipeUtil {
 				LOG.warn("Writing file");
 				writer.save(p.get(FilePipe.LOCATION));
 			}	
-			else if (p.getFormat().equals(Format.JDBC)){
+			else if (p.getFormat().equals(Pipe.FORMAT_JDBC)){
 				writer = toWrite.write();
-				writer = writer.format(p.getFormat().type());				
+				writer = writer.format(p.getFormat());				
 
 				if (p.getMode() != null) {
 					writer.mode(p.getMode());
@@ -312,28 +311,28 @@ public class PipeUtil {
 
 	public static Pipe getTrainingDataUnmarkedPipe(Arguments args) {
 		Pipe p = new Pipe();
-		p.setFormat(Format.PARQUET);
+		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getZinggTrainingDataUnmarkedDir());
 		return p;
 	}
 
 	public static Pipe getTrainingDataMarkedPipe(Arguments args) {
 		Pipe p = new Pipe();
-		p.setFormat(Format.PARQUET);
+		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getZinggTrainingDataMarkedDir());
 		return p;
 	}
 	
 	public static Pipe getModelDocumentationPipe(Arguments args) {
 		Pipe p = new Pipe();
-		p.setFormat(Format.TEXT);
+		p.setFormat(Pipe.FORMAT_TEXT);
 		p.setProp(FilePipe.LOCATION, args.getZinggModelDocFile());
 		return p;
 	}
 	
 	public static Pipe getStopWordsPipe(Arguments args, String fileName) {
 		Pipe p = new Pipe();
-		p.setFormat(Format.CSV);
+		p.setFormat(Pipe.FORMAT_CSV);
 		p.setProp(FilePipe.HEADER, "true");
 		p.setProp(FilePipe.LOCATION, fileName);
 		return p;
@@ -341,7 +340,7 @@ public class PipeUtil {
 
 	public static Pipe getBlockingTreePipe(Arguments args) {
 		Pipe p = new Pipe();
-		p.setFormat(Format.PARQUET);
+		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getBlockFile());
 		p.setMode(SaveMode.Overwrite);
 		return p;
@@ -349,7 +348,7 @@ public class PipeUtil {
 
 	public static String getPipesAsString(Pipe[] pipes) {
 		return Arrays.stream(pipes)
-			.map(p -> p.getFormat().type())
+			.map(p -> p.getFormat())
 			.collect(Collectors.toList())
 			.stream().reduce((p1, p2) -> p1 + "," + p2)
 			.map(Object::toString)

@@ -156,7 +156,7 @@ class Pipe:
     def __init__(self, name, format):
         self.pipe = jvm.zingg.client.pipe.Pipe()
         self.pipe.setName(name)
-        self.pipe.setFormat(jvm.zingg.client.pipe.Format.getPipeType(format))
+        self.pipe.setFormat(format)
     def getPipe(self):
         return self.pipe
 
