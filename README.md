@@ -51,11 +51,10 @@ Check the [step by step guide](https://docs.zingg.ai/zingg/stepbystep) for more 
 
 ## Connectors
 
-Zingg connects, reads and writes to most on-premise and cloud data sources. Zingg runs on any private or cloud based Spark service. 
-
+Zingg connects, reads and writes to most on-premise and cloud data sources. Zingg runs on any private or cloud based Spark service.
 ![zinggConnectors](assets/zinggOSS.png)
 
-Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBMS and any Spark supported data sources. Zingg also works with all major file formats like Parquet, Avro, JSON, XLSX, CSV, TSV etc. This is done through the Zingg [pipe](zingg/docs/dataSourcesAndSinks/pipes.md) abstraction.  
+Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBMS and any Spark supported data sources. Zingg also works with all major file formats like Parquet, Avro, JSON, XLSX, CSV, TSV etc. This is done through the Zingg [pipe](docs/dataSourcesAndSinks/pipes.md) abstraction.  
 
 ## Key Zingg Concepts
 
