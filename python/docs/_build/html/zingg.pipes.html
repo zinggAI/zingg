@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>zingg.pipes package &mdash; zingg 0.3.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="zingg package" href="zingg.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> zingg
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">python documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="zingg.html">zingg package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">zingg.pipes package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-contents">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#zingg-pipes">zingg.pipes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">zingg</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">python documentation</a> &raquo;</li>
+      <li>zingg.pipes package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/zingg.pipes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="zingg-pipes-package">
+<h1>zingg.pipes package<a class="headerlink" href="#zingg-pipes-package" title="Permalink to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
+<p>Import module using <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">zingg.pipes</span></code></p>
+<span class="target" id="module-zingg.pipes.pipes"></span><section id="zingg-pipes">
+<h3>zingg.pipes<a class="headerlink" href="#zingg-pipes" title="Permalink to this heading"></a></h3>
+<p>This module is submodule of zingg to work with different types of Pipes. Classes of this module inherit the Pipe class of zingg module, and use that class to create many different types of pipes.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.BigQueryPipe">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zingg.pipes.pipes.</span></span><span class="sig-name descname"><span class="pre">BigQueryPipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#BigQueryPipe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.BigQueryPipe" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="zingg.html#zingg.zingg.Pipe" title="zingg.zingg.Pipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pipe</span></code></a></p>
+<p>Pipe Class for working with BigQuery pipeline</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>String</em>) – name of the pipe.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.BigQueryPipe.setCredentialFile">
+<span class="sig-name descname"><span class="pre">setCredentialFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#BigQueryPipe.setCredentialFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.BigQueryPipe.setCredentialFile" title="Permalink to this definition"></a></dt>
+<dd><p>Method to set Credential file to the pipe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>String</em>) – credential file name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.BigQueryPipe.setTable">
+<span class="sig-name descname"><span class="pre">setTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#BigQueryPipe.setTable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.BigQueryPipe.setTable" title="Permalink to this definition"></a></dt>
+<dd><p>Method to set Table to the pipe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>table</strong> (<em>String</em>) – provide table parameter</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.BigQueryPipe.setTemporaryGcsBucket">
+<span class="sig-name descname"><span class="pre">setTemporaryGcsBucket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucket</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#BigQueryPipe.setTemporaryGcsBucket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.BigQueryPipe.setTemporaryGcsBucket" title="Permalink to this definition"></a></dt>
+<dd><p>Method to set TemporaryGcsBucket to the pipe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bucket</strong> (<em>String</em>) – provide bucket parameter</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.BigQueryPipe.setViewsEnabled">
+<span class="sig-name descname"><span class="pre">setViewsEnabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">isEnabled</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#BigQueryPipe.setViewsEnabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.BigQueryPipe.setViewsEnabled" title="Permalink to this definition"></a></dt>
+<dd><p>Method to set if viewsEnabled parameter is Enabled or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>isEnabled</strong> (<em>Bool</em>) – provide boolean parameter which defines if viewsEnabled option is enable or not</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.CsvPipe">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zingg.pipes.pipes.</span></span><span class="sig-name descname"><span class="pre">CsvPipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#CsvPipe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.CsvPipe" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="zingg.html#zingg.zingg.Pipe" title="zingg.zingg.Pipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pipe</span></code></a></p>
+<p>Class CsvPipe: used for working with text files which uses a pipe symbol to separate units of text that belong in different columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>String</em>) – name of the pipe.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.CsvPipe.setDelimiter">
+<span class="sig-name descname"><span class="pre">setDelimiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delimiter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#CsvPipe.setDelimiter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.CsvPipe.setDelimiter" title="Permalink to this definition"></a></dt>
+<dd><p>This method is used to define delimiter of CsvPipe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>delimiter</strong> (<em>String</em>) – a sequence of one or more characters for specifying the boundary between separate, independent regions in data streams</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.CsvPipe.setLocation">
+<span class="sig-name descname"><span class="pre">setLocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#CsvPipe.setLocation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.CsvPipe.setLocation" title="Permalink to this definition"></a></dt>
+<dd><p>Method to set location of pipe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>location</strong> (<em>String</em>) – location from where we read data</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.InMemoryPipe">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zingg.pipes.pipes.</span></span><span class="sig-name descname"><span class="pre">InMemoryPipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#InMemoryPipe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.InMemoryPipe" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="zingg.html#zingg.zingg.Pipe" title="zingg.zingg.Pipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pipe</span></code></a></p>
+<p>Pipe Class for working with InMemory pipeline</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>String</em>) – name of the pipe</p></li>
+<li><p><strong>df</strong> (<em>Dataset</em><em> or </em><em>None</em>) – provide dataset for this pipe (optional)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.InMemoryPipe.getDataset">
+<span class="sig-name descname"><span class="pre">getDataset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#InMemoryPipe.getDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.InMemoryPipe.getDataset" title="Permalink to this definition"></a></dt>
+<dd><p>Method to get Dataset from pipe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>dataset of the pipe in the format of spark dataset</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dataset&lt;Row&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.InMemoryPipe.setDataset">
+<span class="sig-name descname"><span class="pre">setDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#InMemoryPipe.setDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.InMemoryPipe.setDataset" title="Permalink to this definition"></a></dt>
+<dd><p>Method to set DataFrame of the pipe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>DataFrame</em>) – pandas or spark dataframe for the pipe</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.SnowflakePipe">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zingg.pipes.pipes.</span></span><span class="sig-name descname"><span class="pre">SnowflakePipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#SnowflakePipe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.SnowflakePipe" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="zingg.html#zingg.zingg.Pipe" title="zingg.zingg.Pipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pipe</span></code></a></p>
+<p>Pipe Class for working with Snowflake pipeline</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>String</em>) – name of the pipe</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.SnowflakePipe.setDatabase">
+<span class="sig-name descname"><span class="pre">setDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#SnowflakePipe.setDatabase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.SnowflakePipe.setDatabase" title="Permalink to this definition"></a></dt>
+<dd><p>Method to set Database to the pipe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>db</strong> (<em>Database</em>) – provide Database parameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.SnowflakePipe.setDbTable">
+<span class="sig-name descname"><span class="pre">setDbTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dbtable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#SnowflakePipe.setDbTable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.SnowflakePipe.setDbTable" title="Permalink to this definition"></a></dt>
+<dd><p>description</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dbtable</strong> (<em>String</em>) – provide bucket parameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.SnowflakePipe.setPassword">
+<span class="sig-name descname"><span class="pre">setPassword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">passwd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#SnowflakePipe.setPassword"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.SnowflakePipe.setPassword" title="Permalink to this definition"></a></dt>
+<dd><p>Method to set Password to the pipe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>passwd</strong> (<em>String</em>) – provide Password parameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.SnowflakePipe.setSFSchema">
+<span class="sig-name descname"><span class="pre">setSFSchema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schema</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#SnowflakePipe.setSFSchema"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.SnowflakePipe.setSFSchema" title="Permalink to this definition"></a></dt>
+<dd><p>Method to set Schema to the pipe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>schema</strong> (<em>Schema</em>) – provide schema parameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.SnowflakePipe.setURL">
+<span class="sig-name descname"><span class="pre">setURL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#SnowflakePipe.setURL"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.SnowflakePipe.setURL" title="Permalink to this definition"></a></dt>
+<dd><p>Method to set url to the pipe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>String</em>) – provide url for this pipe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.SnowflakePipe.setUser">
+<span class="sig-name descname"><span class="pre">setUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#SnowflakePipe.setUser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.SnowflakePipe.setUser" title="Permalink to this definition"></a></dt>
+<dd><p>Method to set User to the pipe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user</strong> (<em>String</em>) – provide User parameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zingg.pipes.pipes.SnowflakePipe.setWarehouse">
+<span class="sig-name descname"><span class="pre">setWarehouse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warehouse</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zingg/pipes/pipes.html#SnowflakePipe.setWarehouse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zingg.pipes.pipes.SnowflakePipe.setWarehouse" title="Permalink to this definition"></a></dt>
+<dd><p>Method to set warehouse parameter to the pipe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>warehouse</strong> (<em>String</em>) – provide warehouse parameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="zingg.html" class="btn btn-neutral float-left" title="zingg package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, zingg.AI.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
