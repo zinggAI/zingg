@@ -159,7 +159,11 @@ class InMemoryPipe(Pipe):
     :param df: provide dataset for this pipe (optional)
     :type df: Dataset or None
     """
-
+    def __init__(self, name, df = None):
+        Pipe.__init__(self, name, Format.INMEMORY.type())
+        if (df is not None):
+            self.setDataset(df)
+            
     def setDataset(self, df):
         """ Method to set Dataset of the pipe
         
