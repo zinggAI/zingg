@@ -16,7 +16,7 @@ FilePipe = jvm.zingg.client.pipe.FilePipe
 
 class CsvPipe(Pipe):
     """ Class CsvPipe: used for working with text files which uses a pipe symbol to separate units of text that belong in different columns.
-    
+
     :param name: name of the pipe.
     :type name: String
     """
@@ -156,18 +156,23 @@ class InMemoryPipe(Pipe):
 
     :param name: name of the pipe
     :type name: String
+    :param df: provide dataset for this pipe (optional)
+    :type df: Dataset or None
     """
 
-    def __init__(self, name):
-        Pipe.__init__(self, name, Format.INMEMORY.type())
-
-    def setDataset(self, ds):
+    def setDataset(self, df):
         """ Method to set Dataset of the pipe
         
-        :param ds: spark dataset for the pipe
-        :type ds: Dataset<Row>
+        :param df: pandas or spark dataset for the pipe
+        :type df: DataFrame
         """
-        Pipe.getPipe(self).setDataset(ds)
+        if (isinstance(df, pd.DataFrame)):
+            ds = spark.createDataFrame(df)
+            Pipe.getPipe(self).setDataset(ds._jdf)
+        elif (isinstance(df, DataFrame)):
+            Pipe.getPipe(self).setDataset(df._jdf)
+        else:
+            LOG.error(" setDataset(): NUll or Unsuported type: %s", type(df))
 
     def getDataset(self):
         """ Method to get Dataset from pipe
