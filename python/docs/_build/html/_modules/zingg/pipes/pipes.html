@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>zingg.pipes.pipes &mdash; zingg 0.3.4 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> zingg
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">zingg</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>zingg.pipes.pipes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for zingg.pipes.pipes</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">zingg.pipes</span>
+<span class="sd">--------------------------</span>
+<span class="sd">This module is submodule of zingg to work with different types of Pipes. Classes of this module inherit the Pipe class of zingg module, and use that class to create many different types of pipes.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">zingg</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">LOG</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;zingg.pipes&quot;</span><span class="p">)</span>
+
+<span class="n">Format</span> <span class="o">=</span> <span class="n">jvm</span><span class="o">.</span><span class="n">zingg</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">pipe</span><span class="o">.</span><span class="n">Format</span>
+<span class="n">FilePipe</span> <span class="o">=</span> <span class="n">jvm</span><span class="o">.</span><span class="n">zingg</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">pipe</span><span class="o">.</span><span class="n">FilePipe</span>
+
+<div class="viewcode-block" id="CsvPipe"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.CsvPipe">[docs]</a><span class="k">class</span> <span class="nc">CsvPipe</span><span class="p">(</span><span class="n">Pipe</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Class CsvPipe: use for working with text file which uses a pipe symbol to separate units of text that belong in different columns.</span>
+
+<span class="sd">    :param name: name of the pipe.</span>
+<span class="sd">    :type name: String</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">Format</span><span class="o">.</span><span class="n">CSV</span><span class="o">.</span><span class="n">type</span><span class="p">())</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">FilePipe</span><span class="o">.</span><span class="n">HEADER</span><span class="p">,</span><span class="s2">&quot;true&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CsvPipe.setDelimiter"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.CsvPipe.setDelimiter">[docs]</a>    <span class="k">def</span> <span class="nf">setDelimiter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; This method is used to define delimiter of CsvPipe</span>
+
+<span class="sd">        :param delimiter: a sequence of one or more characters for specifying the boundary between separate, independent regions in data streams</span>
+<span class="sd">        :type delimiter: String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;delimiter&quot;</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CsvPipe.setLocation"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.CsvPipe.setLocation">[docs]</a>    <span class="k">def</span> <span class="nf">setLocation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to set location of pipe</span>
+
+<span class="sd">        :param location: location from where we read data</span>
+<span class="sd">        :type location: String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">FilePipe</span><span class="o">.</span><span class="n">LOCATION</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="BigQueryPipe"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.BigQueryPipe">[docs]</a><span class="k">class</span> <span class="nc">BigQueryPipe</span><span class="p">(</span><span class="n">Pipe</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Pipe Class for working with BigQuery pipeline</span>
+
+<span class="sd">    :param name: name of the pipe.</span>
+<span class="sd">    :type name: String</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;bigquery&quot;</span><span class="p">)</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;viewsEnabled&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BigQueryPipe.setCredentialFile"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.BigQueryPipe.setCredentialFile">[docs]</a>    <span class="k">def</span> <span class="nf">setCredentialFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to set Credential file to the pipe</span>
+
+<span class="sd">        :param file: credential file name</span>
+<span class="sd">        :type file: String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;credentialsFile&quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BigQueryPipe.setTable"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.BigQueryPipe.setTable">[docs]</a>    <span class="k">def</span> <span class="nf">setTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to set Table to the pipe</span>
+
+<span class="sd">        :param table: provide table parameter</span>
+<span class="sd">        :type table: String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BigQueryPipe.setTemporaryGcsBucket"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.BigQueryPipe.setTemporaryGcsBucket">[docs]</a>    <span class="k">def</span> <span class="nf">setTemporaryGcsBucket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bucket</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to set TemporaryGcsBucket to the pipe</span>
+
+<span class="sd">        :param bucket: provide bucket parameter</span>
+<span class="sd">        :type bucket: String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;temporaryGcsBucket&quot;</span><span class="p">,</span> <span class="n">bucket</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BigQueryPipe.setViewsEnabled"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.BigQueryPipe.setViewsEnabled">[docs]</a>    <span class="k">def</span> <span class="nf">setViewsEnabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">isEnabled</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to set if viewsEnabled parameter is Enabled or not</span>
+
+<span class="sd">        :param isEnabled: provide boolean parameter which defines if viewsEnabled option is enable or not</span>
+<span class="sd">        :type isEnabled: Bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;viewsEnabled&quot;</span><span class="p">,</span> <span class="n">isEnabled</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SnowflakePipe"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.SnowflakePipe">[docs]</a><span class="k">class</span> <span class="nc">SnowflakePipe</span><span class="p">(</span><span class="n">Pipe</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Pipe Class for working with Snowflake pipeline</span>
+
+<span class="sd">    :param name: name of the pipe</span>
+<span class="sd">    :type name: String</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">Format</span><span class="o">.</span><span class="n">SNOWFLAKE</span><span class="o">.</span><span class="n">type</span><span class="p">())</span>
+
+<div class="viewcode-block" id="SnowflakePipe.setURL"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.SnowflakePipe.setURL">[docs]</a>    <span class="k">def</span> <span class="nf">setURL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to set url to the pipe</span>
+
+<span class="sd">        :param url: provide url for this pipe</span>
+<span class="sd">        :type url: String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;sfUrl&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SnowflakePipe.setUser"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.SnowflakePipe.setUser">[docs]</a>    <span class="k">def</span> <span class="nf">setUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to set User to the pipe</span>
+<span class="sd">        </span>
+<span class="sd">        :param user: provide User parameter.</span>
+<span class="sd">        :type user: String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;sfUser&quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SnowflakePipe.setPassword"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.SnowflakePipe.setPassword">[docs]</a>    <span class="k">def</span> <span class="nf">setPassword</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passwd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to set Password to the pipe</span>
+<span class="sd">        </span>
+<span class="sd">        :param passwd: provide Password parameter.</span>
+<span class="sd">        :type passwd: String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;sfPassword&quot;</span><span class="p">,</span> <span class="n">passwd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SnowflakePipe.setDatabase"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.SnowflakePipe.setDatabase">[docs]</a>    <span class="k">def</span> <span class="nf">setDatabase</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to set Database to the pipe</span>
+<span class="sd">        </span>
+<span class="sd">        :param db: provide Database parameter.</span>
+<span class="sd">        :type db: Database</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;sfDatabase&quot;</span><span class="p">,</span> <span class="n">db</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SnowflakePipe.setSFSchema"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.SnowflakePipe.setSFSchema">[docs]</a>    <span class="k">def</span> <span class="nf">setSFSchema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to set Schema to the pipe</span>
+<span class="sd">        </span>
+<span class="sd">        :param schema: provide schema parameter.</span>
+<span class="sd">        :type schema: Schema</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;sfSchema&quot;</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SnowflakePipe.setWarehouse"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.SnowflakePipe.setWarehouse">[docs]</a>    <span class="k">def</span> <span class="nf">setWarehouse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">warehouse</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to set warehouse parameter to the pipe</span>
+<span class="sd">        </span>
+<span class="sd">        :param warehouse: provide warehouse parameter.</span>
+<span class="sd">        :type warehouse: String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;sfWarehouse&quot;</span><span class="p">,</span> <span class="n">warehouse</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SnowflakePipe.setDbTable"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.SnowflakePipe.setDbTable">[docs]</a>    <span class="k">def</span> <span class="nf">setDbTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbtable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; description</span>
+<span class="sd">        </span>
+<span class="sd">        :param dbtable: provide bucket parameter.</span>
+<span class="sd">        :type dbtable: String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">addProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;dbtable&quot;</span><span class="p">,</span> <span class="n">dbtable</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="InMemoryPipe"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.InMemoryPipe">[docs]</a><span class="k">class</span> <span class="nc">InMemoryPipe</span><span class="p">(</span><span class="n">Pipe</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Pipe Class for working with InMemory pipeline</span>
+
+<span class="sd">    :param name: name of the pipe</span>
+<span class="sd">    :type name: String</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">Format</span><span class="o">.</span><span class="n">INMEMORY</span><span class="o">.</span><span class="n">type</span><span class="p">())</span>
+
+<div class="viewcode-block" id="InMemoryPipe.setDataset"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.InMemoryPipe.setDataset">[docs]</a>    <span class="k">def</span> <span class="nf">setDataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to set Dataset of the pipe</span>
+<span class="sd">        </span>
+<span class="sd">        :param ds: spark dataset for the pipe</span>
+<span class="sd">        :type ds: Dataset&lt;Row&gt;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Pipe</span><span class="o">.</span><span class="n">getPipe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setDataset</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InMemoryPipe.getDataset"><a class="viewcode-back" href="../../../zingg.pipes.html#zingg.pipes.pipes.InMemoryPipe.getDataset">[docs]</a>    <span class="k">def</span> <span class="nf">getDataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to get Dataset from pipe</span>
+<span class="sd">        </span>
+<span class="sd">        :return: dataset of the pipe in the format of spark dataset </span>
+<span class="sd">        :rtype: Dataset&lt;Row&gt;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Pipe</span><span class="o">.</span><span class="n">getPipe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">getDataset</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, zingg.AI.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
