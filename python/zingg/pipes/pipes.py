@@ -148,8 +148,8 @@ class SnowflakePipe(Pipe):
         :param dbtable: provide bucket parameter.
         :type dbtable: String
         """
-        Pipe.addProperty(self, "dbtable", dbtable)
-
+        Pipe.addProperty(self, "dbtable", dbtable)     
+        
 
 class InMemoryPipe(Pipe):
     """ Pipe Class for working with InMemory pipeline
@@ -158,16 +158,17 @@ class InMemoryPipe(Pipe):
     :type name: String
     :param df: provide dataset for this pipe (optional)
     :type df: Dataset or None
-    """
+    """    
+
     def __init__(self, name, df = None):
         Pipe.__init__(self, name, Format.INMEMORY.type())
         if (df is not None):
             self.setDataset(df)
-            
+
     def setDataset(self, df):
-        """ Method to set Dataset of the pipe
+        """ Method to set DataFrame of the pipe
         
-        :param df: pandas or spark dataset for the pipe
+        :param df: pandas or spark dataframe for the pipe
         :type df: DataFrame
         """
         if (isinstance(df, pd.DataFrame)):
