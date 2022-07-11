@@ -22,7 +22,6 @@ class CsvPipe(Pipe):
     """
     def __init__(self, name):
         Pipe.__init__(self, name, Format.CSV.type())
-        Pipe.addProperty(self, FilePipe.HEADER,"true")
 
     def setDelimiter(self, delimiter):
         """ This method is used to define delimiter of CsvPipe
@@ -40,6 +39,12 @@ class CsvPipe(Pipe):
         """
         Pipe.addProperty(self, FilePipe.LOCATION, location)
 
+    def setHeader(self, header):
+        Pipe.addProperty(self, FilePipe.HEADER, header)
+
+class BigQueryPipe(Pipe):
+
+=======
 
 class BigQueryPipe(Pipe):
     """ Pipe Class for working with BigQuery pipeline
@@ -47,9 +52,14 @@ class BigQueryPipe(Pipe):
     :param name: name of the pipe.
     :type name: String
     """
+
+    VIEWS_ENABLED = "viewsEnabled"
+    CREDENTIAL_FILE = "credentialsFile"
+    TABLE = "table"
+    TEMP_GCS_BUCKET="temporaryGcsBucket"
+
     def __init__(self,name):
-        Pipe.__init__(self, name, "bigquery")
-        Pipe.addProperty(self, "viewsEnabled", "true")
+        Pipe.__init__(self, name, Format.BIGQUERY.type())
 
     def setCredentialFile(self, file):
         """ Method to set Credential file to the pipe
@@ -90,6 +100,13 @@ class SnowflakePipe(Pipe):
     :param name: name of the pipe
     :type name: String
     """
+    URL = "sfUrl"
+    USER = "sfUser"
+    PASSWORD = "sfPassword"
+    DATABASE ="sfDatabase"
+    SCHEMA = "sfSchema"
+    WAREHOUSE = "sfWarehouse"
+    DBTABLE = "dbtable"
 
     def __init__(self,name):
         Pipe.__init__(self, name, Format.SNOWFLAKE.type())
