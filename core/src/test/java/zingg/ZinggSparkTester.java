@@ -7,15 +7,14 @@ import java.util.stream.IntStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.RowFactory;
-
 
 import zingg.client.Arguments;
 import zingg.preprocess.TestStopWords;
@@ -27,6 +26,9 @@ public class ZinggSparkTester {
     public static SparkSession spark;
 
     public static final Log LOG = LogFactory.getLog(ZinggSparkTester.class);
+
+	protected static final String FIELD_INTEGER = "fieldInteger";
+	protected static final String FIELD_DOUBLE = "fieldDouble";
 
     @BeforeAll
     public static void setup() {
@@ -80,6 +82,4 @@ public class ZinggSparkTester {
 
 
 	}
-
-    
 }
