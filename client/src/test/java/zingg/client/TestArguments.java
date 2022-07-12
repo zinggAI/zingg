@@ -272,7 +272,7 @@ public class TestArguments {
 				Pipe outputPipe = new Pipe();
 				outputPipe.setName("output");
 				outputPipe.setFormat(Format.CSV);
-				outputPipe.setProp("location", "examples/febrl/output.csv");
+				outputPipe.setProp("location", "tmp/testArguments/output.csv");
 				args.setOutput(new Pipe[] {outputPipe});
 
 				args.setBlockSize(400L);
