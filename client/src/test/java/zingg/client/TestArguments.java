@@ -272,13 +272,13 @@ public class TestArguments {
 				Pipe outputPipe = new Pipe();
 				outputPipe.setName("output");
 				outputPipe.setFormat(Format.CSV);
-				outputPipe.setProp("location", "tmp/testArguments/output.csv");
+				outputPipe.setProp("location", "examples/febrl/output.csv");
 				args.setOutput(new Pipe[] {outputPipe});
 
 				args.setBlockSize(400L);
 				args.setCollectMetrics(true);
 				args.setModelId("500");
-                Arguments.writeArgumentsToJSON("configFromArgObject.json", args);
+                Arguments.writeArgumentsToJSON("tmp/testArguments/configFromArgObject.json", args);
 
 				//reload the same config file to check if deserialization is successful
 				Arguments newArgs = Arguments.createArgumentsFromJSON("configFromArgObject.json", "test");
