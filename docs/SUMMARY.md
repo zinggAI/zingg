@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Welcome to Zingg](README.md)
-* [Step By Step Guide](stepByStep.md)
+* [Step-By-Step Guide](stepByStep.md)
   * [Installation](setup/installation.md)
     * [Working with Docker Image](setup/workingWithDocker.md)
   * [Hardware Sizing](setup/hardwareSizing.md)
@@ -11,7 +11,7 @@
     * [label](setup/training/label.md)
     * [findAndLabel](setup/training/findAndLabel.md)
     * [Using preexisting training data](setup/training/addOwnTrainingData.md)
-    * [Exporting labeled data as csv](setup/training/exportLabeledData.md)
+    * [Exporting labeled data as CSV](setup/training/exportLabeledData.md)
   * [Building and saving the model](setup/train.md)
   * [Finding the matches](setup/match.md)
   * [Linking across datasets](setup/link.md)
@@ -30,17 +30,15 @@
   * [Running on Databricks](running/databricks.md)
 * [Zingg Models](zModels.md)
   * [Pretrained models](pretrainedModels.md)
-* Improving Accuracy
+* [Improving Accuracy](improving-accuracy/README.md)
   * [Preparing data with Stop Words Removal](accuracy/stopWordsRemoval.md)
   * [Defining Own Functions](accuracy/definingOwn.md)
-
 * [Generating Documentation & Recommendations](generatingDocumentation.md)
   * [Stop Words](stopWordsReco.md)
-
 * [Output Scores](scoring.md)
 * [Security And Privacy](security.md)
 * [Updating Labeled Pairs](updatingLabels.md)
-* [Reporting bugs and contributing ](contributing.md)
+* [Reporting bugs and contributing](contributing.md)
   * [Setting Zingg Development Environment](settingUpZingg.md)
 * [Community](community.md)
 * [Frequently Asked Questions](faq.md)
