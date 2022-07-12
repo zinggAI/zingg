@@ -261,6 +261,15 @@ class Arguments:
         """
         jvm.zingg.client.Arguments.writeArgumentsToJSON(fileName, self.args)
 
+    def setStopWordsCutoff(self, stopWordsCutoff):
+        """ Method to set stopWordsCutoff parameter vlaue
+        By default, Zingg extracts 10% of the high frequency unique words from a dataset. If user wants different selection, they should set up StopWordsCutoff property
+
+        :param stopWordsCutoff: The stop words cutoff parameter value of ClientOption object or file address of json file
+        :type stopWordsCutoff: float
+        """
+        jvm.zingg.client.Arguments.setStopWordsCutoff(stopWordsCutoff, self.args)
+
     @staticmethod
     def createArgumentsFromJSON(fileName, phase):
         """ Method to create an object of this class from the JSON file and phase parameter value.
@@ -383,13 +392,16 @@ class FieldDefinition:
     :type dataType: String
     :param matchType: match type of this field e.g. FUSSY, EXACT, etc.
     :type matchType: MatchType
+    :param stopWords: The stop Words containing csv file's location
+    :type stopWords: String
     """
 
-    def __init__(self, name, dataType, *matchType):
+    def __init__(self, name, dataType, *matchType, stopWords):
         self.fd.setFieldName(name)
         self.fd.setDataType(self.stringify(dataType))
         self.fd.setMatchType(matchType)
         self.fd.setFields(name)
+        self.fd.setStopWords(stopWords)
 
     def getFieldDefinition(self):
         """ Method to get  pointer address of this class
