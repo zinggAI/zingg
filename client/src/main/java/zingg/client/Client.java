@@ -52,7 +52,13 @@ public class Client implements Serializable {
 	public void setZingg(Arguments args, ClientOptions options) throws Exception{
 		JavaSparkContext.jarOfClass(IZinggFactory.class);
 		IZinggFactory zf = (IZinggFactory) Class.forName("zingg.ZFactory").newInstance();
-		setZingg(zf.get(ZinggOptions.getByValue(options.get(ClientOptions.PHASE).value.trim())));
+		try{
+			setZingg(zf.get(ZinggOptions.getByValue(options.get(ClientOptions.PHASE).value.trim())));
+		}
+		catch(Exception e) {
+			//set default
+			setZingg(zf.get(ZinggOptions.getByValue(ZinggOptions.PEEK_MODEL.getValue())));
+		}
 	}
 
 	public void setZingg(IZingg zingg) {
