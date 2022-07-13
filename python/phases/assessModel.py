@@ -16,7 +16,7 @@ def main():
     options.setPhase("peekModel")
     arguments = Arguments.createArgumentsFromJSON(options.getConf(), options.getPhase())
     client = Zingg(arguments, options)
-    client.initAndExecute()
+    client.init()
 
     pMarkedDF = client.getPandasDfFromDs(client.getMarkedRecords())
     pUnmarkedDF = client.getPandasDfFromDs(client.getUnmarkedRecords())

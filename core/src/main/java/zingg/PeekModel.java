@@ -3,8 +3,10 @@ package zingg;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
+import org.apache.spark.deploy.PythonRunner;
 
 public class PeekModel extends ZinggBase{
 
@@ -16,13 +18,20 @@ public class PeekModel extends ZinggBase{
 	}
 
 	@Override
+    public void init(Arguments args, String license)
+        throws ZinggClientException {
+        startTime = System.currentTimeMillis();
+        this.args = args;        
+    }
+
+	@Override
 	public void execute() throws ZinggClientException {
 		try {
-			LOG.info("PeekModel starts");
+			LOG.info("Generic Python phase starts");
 			
-			//do something
+			PythonRunner.main(new String[]{"python/phases/assessModel.py", "--conf", "test.json"});
 
-			LOG.info("PeekModel finishes");
+			LOG.info("Generic Python phase ends");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ZinggClientException(e.getMessage());
