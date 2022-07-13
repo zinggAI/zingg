@@ -14,7 +14,7 @@ client/src/test/resources/large.xlsx
 /target/
 /zingg/*
 **/snow.json
-python/api/deps/**
-python/api/dist/**
-python/api/zingg.egg-info/ 
-python/api/PKG-INFO
+__pycache__
+deps/**
+zingg.egg-info
+dist

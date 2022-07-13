@@ -1,16 +1,16 @@
-## Using JDBC Driver to Connect to Databases As Data Source or Data Sink
+# Jdbc
 
-Zingg can connect to various databases such as Mysql, DB2, MariaDB, MS Sql, Oracle, PostgreSQL etc. using JDBC. 
-One just needs to download appropriate driver and made it accessible to the application.
+Zingg can connect to various databases such as Mysql, DB2, MariaDB, MS SQL, Oracle, PostgreSQL, etc. using JDBC. One just needs to download the appropriate driver and made it accessible to the application.
 
 To include the JDBC driver for your particular database on the spark classpath, set the following environment variable before running Zingg.
+
 ```
 export ZINGG_EXTRA_JARS=<path of the driver jar>
 ```
 
-Connection details are given below for a few jdbc sources. Please replace <db_name> with name of the database in addition to other props. For more detail, refer to the [spark documentation](https://spark.apache.org/docs/latest/sql-data-sources-jdbc.html)
+Connection details are given below for a few jdbc sources. Please replace \<db\_name> with the name of the database in addition to other props. For more details, refer to the [spark documentation](https://spark.apache.org/docs/latest/sql-data-sources-jdbc.html).
 
-### Properties for postgreSQL database:
+## Properties for postgreSQL database:
 
 ```json
     "data" : [{
@@ -24,12 +24,13 @@ Connection details are given below for a few jdbc sources. Please replace <db_na
             "password": "postgres"				
         }
     }],
-``` 
+```
+
 ```
 $ export ZINGG_EXTRA_JARS=path to postgresql-xx.jar
 ```
 
-### Properties for mysql database:
+## Properties for mysql database:
 
 ```json
     "data" : [{
@@ -44,8 +45,9 @@ $ export ZINGG_EXTRA_JARS=path to postgresql-xx.jar
         }
     }],
 ```
+
 ```
 $ export ZINGG_EXTRA_JARS=path to mysql-connector-java-xx.jar
 ```
 
-Please note, instead of setting env variable **ZINGG_EXTRA_JARS** as above, equivalent property **spark.jars** can be set in Zingg's configuration file (config/zingg.conf).
+Please note, instead of setting the env variable **ZINGG\_EXTRA\_JARS** as above, equivalent property **spark.jars** can be set in Zingg's configuration file (config/zingg.conf).

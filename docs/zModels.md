@@ -1,5 +1,4 @@
 ---
-layout: default
 title: Zingg Models
 nav_order: 5
 has_children: true
@@ -7,23 +6,22 @@ has_children: true
 
 # Zingg Models
 
-Zingg learns 2 models on the data. 
+Zingg learns two models from the data.
 
 ## 1. Blocking Model
 
-One fundamental problem with scaling data mastering is that the number of comparisons increase quadratically as the number of input record increases. 
+One fundamental problem with scaling data mastering is that the number of comparisons increases quadratically as the number of input records increases.
 
-![Data Mastering At Scale](/assets/fuzzymatchingcomparisons.jpg)
-
+![Data Mastering At Scale](../assets/fuzzymatchingcomparisons.jpg)
 
 Zingg learns a clustering/blocking model which indexes near similar records. This means that Zingg does not compare every record with every other record. Typical Zingg comparisons are 0.05-1% of the possible problem space.
 
 ## 2. Similarity Model
 
-The similarity model helps Zingg to predict which record pairs match. Similarity is run only on records within the same block/cluster to scale the problem to larger datasets. The similarity model is a classifier which predicts similarity of records which are not exactly same, but could belong together.
+The similarity model helps Zingg to predict which record pairs match. The similarity is run only on records within the same block/cluster to scale the problem to larger datasets. The similarity model is a classifier that predicts the similarity of records which are not exactly the same but could belong together.
 
-![Fuzzy matching comparisons](/assets/dataMatching.jpg) 
+![Fuzzy matching comparisons](../assets/dataMatching.jpg)
 
-To build these models, training data is needed. Zingg comes with an interactive learner to rapidly build training sets. 
+To build these models, training data is needed. Zingg comes with an interactive learner to rapidly build training sets.
 
-![Shows records and asks user to mark yes, no, cant say on the cli.](/assets/label2.gif) 
+![Shows records and asks user to mark yes, no, cant say on the cli.](../assets/label2.gif)

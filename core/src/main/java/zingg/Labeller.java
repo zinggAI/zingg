@@ -10,6 +10,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.functions;
 
+import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.client.pipe.Pipe;
@@ -33,6 +34,7 @@ public class Labeller extends ZinggBase {
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Reading inputs for labelling phase ...");
+			getMarkedRecordsStat(getMarkedRecords());
 			Dataset<Row> unmarkedRecords = getUnmarkedRecords();
 			processRecordsCli(unmarkedRecords);
 			LOG.info("Finished labelling phase");
@@ -42,33 +44,51 @@ public class Labeller extends ZinggBase {
 		}
 	}
 
-	public Dataset<Row> getUnmarkedRecords() throws ZinggClientException {
-		Dataset<Row> unmarkedRecords = null;
-		Dataset<Row> markedRecords = null;
-		try {
-			unmarkedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataUnmarkedPipe(args));
-			markedRecords = getMarkedRecords();
-			if (markedRecords != null ) {
-				unmarkedRecords = unmarkedRecords.join(markedRecords,
-						unmarkedRecords.col(ColName.CLUSTER_COLUMN).equalTo(markedRecords.col(ColName.CLUSTER_COLUMN)),
-						"left_anti");
-						getMarkedRecordsStat(markedRecords);
-			} 
-		} catch (ZinggClientException e) {
-			LOG.warn("No unmarked record for labelling");
+	protected void getMarkedRecordsStat(Dataset<Row> markedRecords) {
+		if (markedRecords != null ) {
+			positivePairsCount = getMatchedMarkedRecordsStat(markedRecords);
+			negativePairsCount =  getUnmatchedMarkedRecordsStat(markedRecords);
+			notSurePairsCount = getUnsureMarkedRecordsStat(markedRecords);
+			totalCount = markedRecords.count() / 2;
 		}
-		return unmarkedRecords;
 	}
 
-	
+	public List<Row> getClusterIds(Dataset<Row> lines) {
+		return 	lines.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();		
+	}
 
+	public List<Column> getDisplayColumns(Dataset<Row> lines, Arguments args) {
+		return DSUtil.getFieldDefColumns(lines, args, false, args.getShowConcise());
+	}
 
-	
-	protected void getMarkedRecordsStat(Dataset<Row> markedRecords) {
-		positivePairsCount = getMatchedMarkedRecordsStat(markedRecords);
-		negativePairsCount =  getUnmatchedMarkedRecordsStat(markedRecords);
-		notSurePairsCount = getUnsureMarkedRecordsStat(markedRecords);
-		totalCount = markedRecords.count() / 2;
+	public Dataset<Row> getCurrentPair(Dataset<Row> lines, int index, List<Row> clusterIds) {
+		return lines.filter(lines.col(ColName.CLUSTER_COLUMN).equalTo(
+			clusterIds.get(index).getAs(ColName.CLUSTER_COLUMN))).cache();
+	}
+
+	public double getScore(Dataset<Row> currentPair) {
+		return currentPair.head().getAs(ColName.SCORE_COL);
+	}
+
+	public double getPrediction(Dataset<Row> currentPair) {
+		return currentPair.head().getAs(ColName.PREDICTION_COL);
+	}
+
+	public String getMsg1(int index, int totalPairs) {
+		return String.format("\tCurrent labelling round  : %d/%d pairs labelled\n", index, totalPairs);
+	}
+
+	public String getMsg2(double prediction, double score) {
+		String msg2 = "";
+		String matchType = LabelMatchType.get(prediction).msg;
+		if (prediction == ColValues.IS_NOT_KNOWN_PREDICTION) {
+			msg2 = String.format(
+					"\tZingg does not do any prediction for the above pairs as Zingg is still collecting training data to build the preliminary models.");
+		} else {
+			msg2 = String.format("\tZingg predicts the above records %s with a similarity score of %.2f",
+					matchType, Math.floor(score * 100) * 0.01);
+		}
+		return msg2;
 	}
 
 	public void processRecordsCli(Dataset<Row> lines) throws ZinggClientException {
@@ -77,8 +97,8 @@ public class Labeller extends ZinggBase {
 			printMarkedRecordsStat();
 
 			lines = lines.cache();
-			List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false, args.getShowConcise());
-			List<Row> clusterIDs = lines.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();
+			List<Column> displayCols = getDisplayColumns(lines, args);
+			List<Row> clusterIDs = getClusterIds(lines);
 			try {
 				double score;
 				double prediction;
@@ -88,21 +108,13 @@ public class Labeller extends ZinggBase {
 				int totalPairs = clusterIDs.size();
 
 				for (int index = 0; index < totalPairs; index++) {
-					Dataset<Row> currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).equalTo(
-							clusterIDs.get(index).getAs(ColName.CLUSTER_COLUMN))).cache();
+					Dataset<Row> currentPair = getCurrentPair(lines, index, clusterIDs);
 
-					score = currentPair.head().getAs(ColName.SCORE_COL);
-					prediction = currentPair.head().getAs(ColName.PREDICTION_COL);
+					score = getScore(currentPair);
+					prediction = getPrediction(currentPair);
 
-					msg1 = String.format("\tCurrent labelling round  : %d/%d pairs labelled\n", index, totalPairs);
-					String matchType = LabelMatchType.get(prediction).msg;
-					if (prediction == ColValues.IS_NOT_KNOWN_PREDICTION) {
-						msg2 = String.format(
-								"\tZingg does not do any prediction for the above pairs as Zingg is still collecting training data to build the preliminary models.");
-					} else {
-						msg2 = String.format("\tZingg predicts the above records %s with a similarity score of %.2f",
-								matchType, Math.floor(score * 100) * 0.01);
-					}
+					msg1 = getMsg1(index, totalPairs);
+					msg2 = getMsg2(prediction, score);
 					//String msgHeader = msg1 + msg2;
 
 					selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msg1, msg2);

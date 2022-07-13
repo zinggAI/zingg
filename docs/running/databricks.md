@@ -1,18 +1,18 @@
 ---
-layout: default
 title: Running on Databricks
 parent: Running Zingg on Cloud
 nav_order: 6
 ---
-## Running on Databricks
 
-The cloud environment does not have the system console for the labeller to work. Zingg is run as a Spark Submit Job along with a python ntoebook based labeler specially created to run within the Databricks cloud. 
+# Running on Databricks
 
-Please refer to [Databricks Zingg tutorial](https://medium.com/@sonalgoyal/identity-resolution-on-databricks-for-customer-360-591661bcafce) for a detailed tutorial.
+The cloud environment does not have the system console for the labeler to work. Zingg is run as a Spark Submit Job along with a python notebook-based labeler specially created to run within the Databricks cloud.
 
-Zingg is run as a Spark Submit task with the following parameters
+Please refer to the [Databricks Zingg tutorial](https://medium.com/@sonalgoyal/identity-resolution-on-databricks-for-customer-360-591661bcafce) for a detailed tutorial.
 
-````json
+Zingg is run as a Spark Submit task with the following parameters:
+
+```json
 {
 "settings": {
 "new_cluster": {
@@ -47,10 +47,11 @@ Zingg is run as a Spark Submit task with the following parameters
 "max_concurrent_runs": 1
 }
 }
-````
+```
 
-The config file for Databricks needs modifications to accept dbfs locations. Here is a sample config that worked
-````json
+The config file for Databricks needs modifications to accept dbfs locations. Here is a sample config that worked.
+
+```json
 {	
 	"fieldDefinition":[
 		{
@@ -147,6 +148,4 @@ The config file for Databricks needs modifications to accept dbfs locations. Her
 		"zinggDir": "/models"
 
 }
-````
-
-
+```

@@ -1,24 +1,26 @@
 ---
-layout: default
 title: Configuration
 parent: Step By Step Guide
 nav_order: 5
 ---
-## Configuration
 
- Zingg comes with a command line script that invokes spark-submit. This script needs a json configuration file to define the input data and match types, location of training data, models and output. 
+# Configuration
+
+### Configuration
+
+Zingg comes with a command-line script that invokes spark-submit. This script needs a JSON configuration file to define the input data and match types, location of training data, models, and output.
 
 Sample configuration files are defined at [examples/febrl](https://github.com/zinggAI/zingg/tree/main/examples/febrl) and [/examples/febrl120k](https://github.com/zinggAI/zingg/tree/main/examples/febrl120k)
 
-Here are the json variables which you will need to define to work with your data.
+Here are the JSON variables which you will need to define to work with your data.
 
-### data
+#### data
 
-Array of input data. Each array entry here refers to a [Zingg Pipe](../dataSourcesAndSinks/pipes.md). If the data is self describing, for eg avro or parquet, there is no need to define the schema. Else field definitions with name and types need to be provided.
+An array of input data. Each array entry here refers to a [Zingg Pipe](../dataSourcesAndSinks/pipes.md). If the data is self-describing, for e.g. Avro or parquet, there is no need to define the schema. Else field definitions with names and types need to be provided.
 
-For example for the csv under [examples/febrl/test.csv](/examples/febrl/test.csv)
+For example for the CSV under [examples/febrl/test.csv](../../examples/febrl/test.csv)
 
-![febrl](/assets/febrl.gif)
+![febrl](../../assets/febrl.gif)
 
 ```json
  "data" : [ {
@@ -48,34 +50,37 @@ For example for the csv under [examples/febrl/test.csv](/examples/febrl/test.csv
   }
 ```
 
-Read more about Zingg Pipes for datastore connections [here](../dataSourcesAndSinks/pipes.md). 
+Read more about Zingg Pipes for datastore connections [here](../dataSourcesAndSinks/pipes.md).
 
-### output
-Definitions are same as [data](#data) but reflect where you want the Zingg output to get saved
+#### output
 
-### zinggDir
+Definitions are the same as [data](configuration.md#data) but reflect where you want the Zingg output to get saved
 
-Location where trained models will be saved. Defaults to /tmp/zingg
+#### zinggDir
 
-### modelId 
+The location where trained models will be saved. Defaults to /tmp/zingg
 
-Identifier for the model. You can train multiple models - say one for customers matching names, age and other personal details and one for households matching addresses. Each model gets saved under zinggDir/modelId
+#### modelId
 
-### fieldDefinition
+An identifier for the model. You can train multiple models - say one for customers matching names, age, and other personal details and one for households matching addresses. Each model gets saved under zinggDir/modelId
 
-Which fields from the source data to be used for matching, and what kind of matching they need. 
+#### fieldDefinition
 
-#### FUZZY 
-Broad matches with typos, abbreviations and other variations. 
+Which fields from the source data are to be used for matching, and what kind of matching do they need.
 
-#### EXACT 
-Less tolerant with variations, but would still match inexact strings to some degree. Preferable for country codes, pin codes and other categorical variables where you expect less variations
+**FUZZY**
 
-#### "DONT_USE"
-Name says it :-) Appears in the output but no computation is done on these. Helpful for fields like ids which are required in the output.
+Broad matches with typos, abbreviations, and other variations.
 
+**EXACT**
 
-````json
+Less tolerant with variations, but would still match inexact strings to some degree. Preferable for country codes, pin codes, and other categorical variables where you expect fewer variations.
+
+**"DONT\_USE"**
+
+The name says it :-) Appears in the output but no computation is done on these. Helpful for fields like ids that are required in the output.
+
+```json
 "fieldDefinition" : [ {
     "matchType" : "DONT_USE",
     "fieldName" : "id",
@@ -87,31 +92,37 @@ Name says it :-) Appears in the output but no computation is done on these. Help
     "fields" : "firstName"
   }
   ]
-````
+```
 
-In the above example, field id from input is present in the output but not used for comparisons. Also, these fields may not be shown to the user while labelling, if [showConcise](#showconcise) is set true.
+In the above example, the field id from the input is present in the output but not used for comparisons. Also, these fields may not be shown to the user while labeling, if [showConcise](configuration.md#showconcise) is set to true.
 
-### numPartitions
-Number of Spark partitions over which the input data is distributed. Keep it equal to the 20-30 times the number of cores. This is an important configuration for performance.
+#### numPartitions
 
-### labelDataSampleSize
-Fraction of the data to be used for training the models. Adjust it between 0.0001 and 0.1 to keep the sample size small enough so that it finds enough edge cases fast. If the size is bigger, the findTrainingData job will spend more time combing through samples. If the size is too small, Zingg may not find the right edge cases. 
+The number of Spark partitions over which the input data is distributed. Keep it equal to 20-30 times the number of cores. This is an important configuration for performance.
 
-### showConcise
-When this flag is set to true, during [Label](./training/label.md) and [updateLabel](../updatingLabels.md), only those fields are displayed on console which help build the model. In other words, fields that have matchType as "DONT_USE", are not displayed to the user. Default is false. 
+#### labelDataSampleSize
 
-### collectMetrics
-Application captures a few measurements for runtime metrics such as *no. of data records, no. of features, running phase* and a few more. 
+Fraction of the data to be used for training the models. Adjust it between 0.0001 and 0.1 to keep the sample size small enough so that it finds enough edge cases fast. If the size is bigger, the findTrainingData job will spend more time combing through samples. If the size is too small, Zingg may not find the right edge cases.
 
-<span style="color:maroon">**Zingg does not capture any user data or input data and will never do so.**</span>
+#### showConcise
 
-This feature may be disabled by setting this flag to false. Default value is true. For details, refer to [Security And Privacy](../security.md)
+When this flag is set to true, during [Label](training/label.md) and [updateLabel](../updatingLabels.md), only those fields are displayed on the console which helps build the model. In other words, fields that have matchType as "DONT\_USE", are not displayed to the user. Default is false.
 
-## Passing Configuration value through system environment variable
-If a user does not want to pass value of any JSON parameter through config file for security reasons or otherwise, they can configure that value through system environment variable. The system variable name needs to be put in the config file in place of its json value. At runtime, the config file gets updated with the value of the environment variable.
+#### collectMetrics
 
-Below is config file snippet that references few environment variables. 
-````json
+Application captures a few measurements for runtime metrics such as _no. of data records, no. of features, running phase,_ and a few more.
+
+**Zingg does not capture any user data or input data and will never do so.**
+
+This feature may be disabled by setting this flag to false. The default value is true. For details, refer to [Security And Privacy](../security.md).
+
+### Passing Configuration value through the system environment variable
+
+If a user does not want to pass the value of any JSON parameter through the config file for security reasons or otherwise, they can configure that value through the system environment variable. The system variable name needs to be put in the config file in place of its JSON value. At runtime, the config file gets updated with the value of the environment variable.
+
+Below is the config file snippet that references a few environment variables.
+
+```json
 "output" : [{
   "name":"unifiedCustomers", 
   "format":"net.snowflake.spark.snowflake",
@@ -128,6 +139,6 @@ Below is config file snippet that references few environment variables.
 "modelId": $modelId$,
 "zinggDir": "models",
 "collectMetrics": $collectMetrics$
-````
-Environment variable must be enclosed within dollar signs **\$var$** to take effect. Also, the config file name must be suffixed with ***.env**. As usual, String variables need to put within quotes **"\$var\$"**, Boolean and Numeric values should be put without quotes **\$var$**.
+```
 
+Environment variables must be enclosed within dollar signs **$var$** to take effect. Also, the config file name must be suffixed with \***.env**. As usual, String variables need to be put within quotes **"$var$"**, Boolean and Numeric values should be put without quotes **$var$**.
