@@ -69,7 +69,7 @@ This will create a folder zingg-0.3.4-SNAPSHOT under the chosen folder.
  
 Move the above folder to zingg. 
 
-> mv zingg-0.3.4-SNAPSHOT-bin ~/zingg 
+>mv zingg-0.3.4-SNAPSHOT-bin ~/zingg 
 
 > export ZINGG\_HOME=path to zingg
 
