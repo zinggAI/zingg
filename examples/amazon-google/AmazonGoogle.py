@@ -6,7 +6,7 @@ args = Arguments()
 #set field definitions
 id = FieldDefinition("id", "string", MatchType.DONT_USE)
 title = FieldDefinition("title", "string", MatchType.NUMERIC)
-description = FieldDefinition("description", "string", MatchType.TEXT)
+description = FieldDefinition("description", "string", MatchType.TEXT, stopWords="examples/stopWords.csv")
 manufacturer = FieldDefinition("manufacturer","string", MatchType.FUZZY)
 price = FieldDefinition("price", "double", MatchType.FUZZY)
 
@@ -17,6 +17,7 @@ args.setModelId("103")
 args.setZinggDir("models")
 args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.4)
+args.setStopWordsCutoff(0.1)
 
 #reading dataset into inputPipe and settint it up in 'args'
 #below line should not be required if you are reading from in memory dataset
