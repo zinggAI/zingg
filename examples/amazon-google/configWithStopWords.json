@@ -17,7 +17,7 @@
 			"matchType" : "text",
 			"fields" : "description",
 			"dataType": "\"string\"" ,
-			"stopWords" : "examples/stopWords.csv"
+			"stopWords" : "examples/amazon-google/stopWords.csv"
 		},
 		{
 			"fieldName" : "manufacturer",

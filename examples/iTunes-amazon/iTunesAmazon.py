@@ -5,7 +5,7 @@ from zingg.pipes import *
 args = Arguments()
 #set field definitions
 id = FieldDefinition("id", "string", MatchType.DONT_USE)
-Song_Name = FieldDefinition("Song_Name", "string", MatchType.FUZZY,stopWords="examples/stopWords.csv")
+Song_Name = FieldDefinition("Song_Name", "string", MatchType.FUZZY)
 Artist_Name = FieldDefinition("Artist_Name", "string", MatchType.FUZZY)
 Album_Name = FieldDefinition("Album_Name","string", MatchType.FUZZY)
 Genre = FieldDefinition("Genre", "string", MatchType.FUZZY)
@@ -23,7 +23,6 @@ args.setModelId("105")
 args.setZinggDir("models")
 args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.4)
-args.setStopWordsCutoff(0.1)
 
 #reading dataset into inputPipe and settint it up in 'args'
 #below line should not be required if you are reading from in memory dataset
