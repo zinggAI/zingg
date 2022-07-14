@@ -9,13 +9,14 @@ logging.basicConfig(level=logging.INFO)
 LOG = logging.getLogger("zingg.assessModel")
 
 def main():
-    LOG.info("Phase AssessModel starts")   
+    LOG.info("Phase AssessModel starts")    
+    print("arguments are ", sys.argv[0:]) 
 
     #excluding argv[0] that is nothing but the current executable file
     options = ClientOptions(sys.argv[1:])
     options.setPhase("peekModel")
     arguments = Arguments.createArgumentsFromJSON(options.getConf(), options.getPhase())
-    client = Zingg(arguments, options)
+    client = ZinggWithSpark(arguments, options)
     client.init()
 
     pMarkedDF = client.getPandasDfFromDs(client.getMarkedRecords())

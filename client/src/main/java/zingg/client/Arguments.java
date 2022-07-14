@@ -108,12 +108,16 @@ public class Arguments implements Serializable {
 	boolean showConcise = false;
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
-	
+	private String confFile;
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
 	private static final String ESC = "\\";
 	private static final String PATTERN_ENV_VAR = ESC + ENV_VAR_MARKER_START + "(.+?)" + ESC + ENV_VAR_MARKER_END;
 
+	public String getConfFile() {
+		return confFile;
+	}
+	
 	public double getThreshold() {
 		return threshold;
 	}
@@ -169,6 +173,7 @@ public class Arguments implements Serializable {
 			Arguments args = mapper.readValue(new File(filePath), Arguments.class);
 			LOG.warn("phase is " + phase);
 			checkValid(args, phase);
+			args.confFile = filePath;
 			return args;			
 		} catch (Exception e) { 
 			//e.printStackTrace();

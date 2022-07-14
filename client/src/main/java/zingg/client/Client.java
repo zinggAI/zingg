@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 
 import zingg.client.util.Email;
 import zingg.client.util.EmailBody;
@@ -21,6 +22,7 @@ public class Client implements Serializable {
 	private Arguments arguments;
 	private IZingg zingg;
 	private ClientOptions options;
+	private SparkSession session;
 
 	public static final Log LOG = LogFactory.getLog(Client.class);
 
@@ -48,6 +50,16 @@ public class Client implements Serializable {
 			throw new ZinggClientException("An error has occured while setting up the client" + e.getMessage());
 		}
 	}
+
+	public Client(Arguments args, ClientOptions options, SparkSession session) throws ZinggClientException {
+		this(args, options);
+		this.session = session;
+		JavaSparkContext ctx = new JavaSparkContext(session.sparkContext());
+        JavaSparkContext.jarOfClass(IZingg.class);
+	}
+
+	
+
 
 	public void setZingg(Arguments args, ClientOptions options) throws Exception{
 		JavaSparkContext.jarOfClass(IZinggFactory.class);
@@ -205,6 +217,7 @@ public class Client implements Serializable {
 
 	public void init() throws ZinggClientException {
 		zingg.init(getArguments(), "");
+		if (session != null) zingg.setSpark(session);
 	}
 	
 	

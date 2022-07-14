@@ -2,6 +2,7 @@ package zingg.client;
 
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 
 public interface IZingg {
 
@@ -31,5 +32,7 @@ public interface IZingg {
     public Long getUnmatchedMarkedRecordsStat(Dataset<Row> markedRecords);
 
     public Long getUnsureMarkedRecordsStat(Dataset<Row> markedRecords);
+
+    public void setSpark(SparkSession session);
 
 }

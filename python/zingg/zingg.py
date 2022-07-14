@@ -37,6 +37,7 @@ class Zingg:
     def __init__(self, args, options):
         self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions())
 
+       
     def init(self):
         """ Method to initialize zingg client by reading internal configurations and functions """
         self.client.init()
@@ -156,6 +157,21 @@ class Zingg:
         """
         df = self.getDfFromDs(data)
         return pd.DataFrame(df.collect(), columns=df.columns)
+
+
+class ZinggWithSpark(Zingg):
+
+    """ This class is the main point of interface with the Zingg matching product. Construct a client to Zingg using provided arguments and spark master. If running locally, set the master to local.
+
+    :param args: arguments for training and matching
+    :type args: Arguments
+    :param options: client option for this class object
+    :type options: ClientOptions
+
+    """
+
+    def __init__(self, args, options):
+        self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions(), spark._jsparkSession)
 
 
 class Arguments:
@@ -304,10 +320,14 @@ class ClientOptions:
     """:LOCATION: location parameter for this class"""
 
     def __init__(self, args = None):
-        if(args!=None):
-            self.co = jvm.zingg.client.ClientOptions(args)
-        else:
-            self.co = jvm.zingg.client.ClientOptions(["--phase", "trainMatch",  "--conf", "dummy", "--license", "dummy", "--email", "xxx@yyy.com"])
+        if(args == None):
+            args = []
+        args.append(self.LICENSE)
+        args.append("zinggLic.txt")
+        args.append(self.EMAIL)
+        args.append("zingg@zingg.ai")
+        print("arguments for client options are ", args) 
+        self.co = jvm.zingg.client.ClientOptions(args)
     
     def getClientOptions(self):
         """ Method to get pointer address of this class
