@@ -6,7 +6,7 @@ args = Arguments()
 #set field definitions
 id = FieldDefinition("id", "string", MatchType.DONT_USE)
 title = FieldDefinition("title", "string", MatchType.NUMERIC)
-description = FieldDefinition("description", "string", MatchType.TEXT, stopWords="examples/stopWords.csv")
+description = FieldDefinition("description", "string", MatchType.TEXT, stopWords="examples/amazon-google/stopWords.csv")
 manufacturer = FieldDefinition("manufacturer","string", MatchType.FUZZY)
 price = FieldDefinition("price", "double", MatchType.FUZZY)
 
