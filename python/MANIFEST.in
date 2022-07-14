@@ -3,7 +3,8 @@ recursive-include deps/jars *.jar
 graft deps/scripts
 recursive-include deps/scripts zingg.sh
 recursive-include deps/licenses LICENSE
-recursive-include deps/examples *
+recursive-include deps/examples/amazon-google *
+recursive-include deps/examples/febrl *
 recursive-include deps/models *
 recursive-include deps/phases *
 recursive-include deps/config *
