@@ -29,7 +29,13 @@ public class PeekModel extends ZinggBase{
 		try {
 			LOG.info("Generic Python phase starts");
 			
-			PythonRunner.main(new String[]{"python/phases/assessModel.py", "--conf", "test.json"});
+			PythonRunner.main(new String[]{"python/phases/assessModel.py",
+				 "pyFiles", 
+				 "--phase", 
+				 "peekModel", 
+				 "--conf", 
+				 args.getConfFile()
+				});
 
 			LOG.info("Generic Python phase ends");
 		} catch (Exception e) {
