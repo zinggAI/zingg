@@ -26,7 +26,6 @@ except IOError:
     sys.exit(-1)
 
 VERSION = __version__  
-TEMP_PATH = "deps"
 ZINGG_HOME = os.path.abspath("../")
 
 print("zingg home is " , ZINGG_HOME)
@@ -58,12 +57,12 @@ DATA_PATH = os.path.join(ZINGG_HOME, "models")
 CONF_PATH = os.path.join(ZINGG_HOME, "config")
 PHASES_PATH = os.path.join(ZINGG_HOME, "python/phases")
 
-SCRIPTS_TARGET = os.path.join(TEMP_PATH, "scripts")
-JARS_TARGET = os.path.join(TEMP_PATH, "jars")
-EXAMPLES_TARGET = os.path.join(TEMP_PATH, "examples")
-DATA_TARGET = os.path.join(TEMP_PATH, "models")
-CONF_TARGET = os.path.join(TEMP_PATH, "config")
-PHASES_TARGET = os.path.join(TEMP_PATH, "phases")
+SCRIPTS_TARGET = os.path.join("zingg", "scripts")
+JARS_TARGET = os.path.join("zingg", "jars")
+EXAMPLES_TARGET = os.path.join("zingg", "examples")
+DATA_TARGET = os.path.join("zingg", "models")
+CONF_TARGET = os.path.join("zingg", "config")
+PHASES_TARGET = os.path.join("zingg", "phases")
 
 # Check and see if we are under the Zingg path in which case we need to build the symlink farm.
 # This is important because we only want to build the symlink farm while under Zingg otherwise we
@@ -75,16 +74,6 @@ in_zingg = (os.path.isfile("../core/src/main/java/zingg/Trainer.java") == 1)
 def _supports_symlinks():
     """Check if the system supports symlinks (e.g. *nix) or not."""
     return getattr(os, "symlink", None) is not None
-
-if (in_zingg):
-    # Construct links for setup
-    try:
-        os.mkdir(TEMP_PATH)
-    except:
-        print("Temp path for symlink to parent already exists {0}".format(TEMP_PATH),
-              file=sys.stderr)
-        os.rmdir(TEMP_PATH)
-        sys.exit(-1)
 
 class InstallCommand(install):
 
@@ -107,7 +96,7 @@ class InstallCommand(install):
 try:
 
     try:
-        os.makedirs("deps")
+        os.makedirs("zingg")
     except OSError:
         # Don't worry if the directory already exists.
         pass
@@ -147,7 +136,6 @@ try:
     packages = []
     packages.append('zingg')
     packages.append('zingg.pipes')
-    packages.append('deps')
 
     with open('README.md') as f:
         long_description = f.read()
@@ -164,12 +152,12 @@ try:
     # packages=find_packages(),
     packages=packages,
     package_dir={
-            'zingg.jars': 'deps/jars',
-            'zingg.scripts': 'deps/scripts',
-            'zingg.data': 'deps/models',
-            'zingg.examples': 'deps/examples',
-            'zingg.conf': 'deps/config',
-            'zingg.phases': 'deps/phases'
+            'zingg.jars': 'zingg/deps/jars',
+            'zingg.scripts': 'zingg/deps/scripts',
+            'zingg.data': 'zingg/deps/models',
+            'zingg.examples': 'zingg/deps/examples',
+            'zingg.conf': 'zingg/deps/config',
+            'zingg.phases': 'zingg/deps/phases'
         },
         package_data={
             'zingg.jars': ['*.jar'],
@@ -203,20 +191,16 @@ finally:
     if (in_zingg):
         # Depending on cleaning up the symlink farm or copied version
         if _supports_symlinks():
-            os.remove(os.path.join(TEMP_PATH, "jars"))
-            os.remove(os.path.join(TEMP_PATH, "scripts"))
-            os.remove(os.path.join(TEMP_PATH, "models"))
-            os.remove(os.path.join(TEMP_PATH, "examples"))
-            os.remove(os.path.join(TEMP_PATH, "phases"))
-            os.remove(os.path.join(TEMP_PATH, "config"))
+            os.remove(os.path.join("zingg", "jars"))
+            os.remove(os.path.join("zingg", "scripts"))
+            os.remove(os.path.join("zingg", "models"))
+            os.remove(os.path.join("zingg", "examples"))
+            os.remove(os.path.join("zingg", "phases"))
+            os.remove(os.path.join("zingg", "config"))
         else:
-            rmtree(os.path.join(TEMP_PATH, "jars"))
-            rmtree(os.path.join(TEMP_PATH, "scripts"))
-            rmtree(os.path.join(TEMP_PATH, "models"))
-            rmtree(os.path.join(TEMP_PATH, "examples"))
-            rmtree(os.path.join(TEMP_PATH, "phases"))
-            rmtree(os.path.join(TEMP_PATH, "config"))
-        os.rmdir(TEMP_PATH)
-    # rmtree(TEMP_PATH)
-    # print ("do nothing")
-
+            rmtree(os.path.join("zingg", "jars"))
+            rmtree(os.path.join("zingg", "scripts"))
+            rmtree(os.path.join("zingg", "models"))
+            rmtree(os.path.join("zingg", "examples"))
+            rmtree(os.path.join("zingg", "phases"))
+            rmtree(os.path.join("zingg", "config"))
