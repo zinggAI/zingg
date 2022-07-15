@@ -108,6 +108,7 @@ public class Arguments implements Serializable {
 	boolean showConcise = false;
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
+	String column;
 	
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
@@ -657,6 +658,14 @@ public class Arguments implements Serializable {
 		this.showConcise = showConcise;
 	}
 
+	public String getColumn() {
+		return column;
+	}
+
+	public void setColumn(String column) {
+		this.column = column;
+	}
+	
 	public long getBlockSize() {
 		return blockSize;
 	}
@@ -675,5 +684,10 @@ public class Arguments implements Serializable {
 		}
 		return sourceNames;
 	}
+
+	@JsonIgnore
+    public String getStopWordsDir() {
+    	return getZinggBaseModelDir() + "/stopWords/";
+    }
 
 }
