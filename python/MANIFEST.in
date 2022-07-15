@@ -1,15 +1,14 @@
 global-exclude *.py[cod] __pycache__ .DS_Store *.pyc
-recursive-include deps/jars *.jar
-graft deps/scripts
-recursive-include deps/scripts zingg.sh
-recursive-include deps/licenses LICENSE
-recursive-include deps/examples/amazon-google *
-recursive-include deps/examples/febrl *
-recursive-include deps/models *
-recursive-include deps/phases *
-recursive-include deps/config *
-recursive-include lib *.zip
+graft zingg/scripts
 include *.py
 include LICENSE
 include README.md
 include requirements.txt
+recursive-include zingg/jars zingg*.jar
+recursive-include zingg/scripts zingg.sh
+recursive-include zingg/licenses LICENSE
+recursive-include zingg/examples/amazon-google *
+recursive-include zingg/examples/febrl *
+recursive-include zingg/models *
+recursive-include zingg/phases *.py
+recursive-include zingg/config *
