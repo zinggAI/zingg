@@ -19,6 +19,8 @@ def main():
     client = ZinggWithSpark(arguments, options)
     client.init()
 
+    #exec(open(sys.argv[2] + ".py"))
+
     pMarkedDF = client.getPandasDfFromDs(client.getMarkedRecords())
     pUnmarkedDF = client.getPandasDfFromDs(client.getUnmarkedRecords())
 
