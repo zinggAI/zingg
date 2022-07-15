@@ -88,7 +88,10 @@ public class TestStopWordsRecommender extends ZinggSparkTester {
 		// for cutoff = 0.4, expected no. of stopword should have frequecy greater than 
 		// or equal to totalwords*cutoff(here, 108*0.4 = 21.6) which should be 2 ("the","44") and ("of","27")
 		assertEquals(2, stopwordList.size());
-		assertTrue(validTestWithPointTwoCuttoff(stopwordList));
+		List<String> arr = new ArrayList<String>();
+		arr.add("the");
+		arr.add("of");
+		assertTrue(validTestWithStopWords(stopwordList, arr));
 	}
 
 	@Test
@@ -98,7 +101,12 @@ public class TestStopWordsRecommender extends ZinggSparkTester {
 		// for cutoff = 0.4, expected no. of stopword should have frequecy greater than or equal to
 		// totalwords*cutoff(here, 108*0.4 = 21.6) which should be 4 ("the","44"), ("of","27"), ("in","11") and ("was","11")
 		assertEquals(4, stopwordList.size());
-		assertTrue(validTestWithOneTenthCuttoff(stopwordList));
+		List<String> arr = new ArrayList<String>();
+		arr.add("the");
+		arr.add("of");
+		arr.add("in");
+		arr.add("was");
+		assertTrue(validTestWithStopWords(stopwordList, arr));
 	}
 
 	@Test
@@ -127,25 +135,8 @@ public class TestStopWordsRecommender extends ZinggSparkTester {
 		return stopwordsList;
 	}
 
-	/* method to check if "the" and "of" are recommended for stopWordsCutoff = 0.2 */
-	public Boolean validTestWithPointTwoCuttoff(List<String> stopwordList){
-		List<String> arr = new ArrayList<String>();
-		arr.add("the");
-		arr.add("of");
-		for(String r: stopwordList){
-			if(!arr.contains(r)){
-				return false;
-			}
-		}
-		return true;
-	}
-	/* method to check if "in","the","was" and "of" are recommended for stopWordsCutoff = 0.1 */
-	public Boolean validTestWithOneTenthCuttoff(List<String> stopwordList){
-		List<String> arr = new ArrayList<String>();
-		arr.add("the");
-		arr.add("of");
-		arr.add("in");
-		arr.add("was");
+	/* method to check if words in List of String arr are recommended or not */
+	public Boolean validTestWithStopWords(List<String> stopwordList, List<String> arr){
 		for(String r: stopwordList){
 			if(!arr.contains(r)){
 				return false;
