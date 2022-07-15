@@ -37,7 +37,8 @@ public class Client implements Serializable {
 	 *             if issue connecting to master
 	 */
 	
-	
+	public Client() {}
+
 	public Client(Arguments args, ClientOptions options) throws ZinggClientException {
 		this.options = options;
 		try {
@@ -109,6 +110,10 @@ public class Client implements Serializable {
 		if (options.get(ClientOptions.SHOW_CONCISE)!= null) {
 			String j = options.get(ClientOptions.SHOW_CONCISE).value;
 			args.setShowConcise(Boolean.valueOf(j));
+		}
+		if (options.get(ClientOptions.COLUMN)!= null) {
+			String j = options.get(ClientOptions.COLUMN).value;
+			args.setColumn(j);
 		}
 		setArguments(args);
 	}

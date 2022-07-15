@@ -7,7 +7,6 @@ import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.documenter.ModelDocumenter;
 import zingg.documenter.DataDocumenter;
-import zingg.documenter.ModelColDocumenter;
 
 public class Documenter extends ZinggBase {
 
@@ -25,7 +24,7 @@ public class Documenter extends ZinggBase {
 			ModelDocumenter modelDoc = new ModelDocumenter(spark, args);
 			modelDoc.process();
 
-			//Documnetation/profiling of data
+			//Documnetation of data
 			DataDocumenter dataDoc = new DataDocumenter(spark, args);
 			dataDoc.process();
 
