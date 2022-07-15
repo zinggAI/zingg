@@ -109,7 +109,6 @@ public class Arguments implements Serializable {
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
 	private String confFile;
-	
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
 	private static final String ESC = "\\";
@@ -118,10 +117,12 @@ public class Arguments implements Serializable {
 	public String getConfFile() {
 		return confFile;
 	}
-
+	
 	public double getThreshold() {
 		return threshold;
 	}
+
+	
 
 	public void setThreshold(double threshold) {
 		this.threshold = threshold;
