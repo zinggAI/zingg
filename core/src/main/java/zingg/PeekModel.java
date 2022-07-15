@@ -28,9 +28,9 @@ public class PeekModel extends ZinggBase{
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Generic Python phase starts");
-			
+			//LOG.info(this.getClass().getClassLoader().getResource("python/phases/assessModel.py").getFile());
 			PythonRunner.main(new String[]{"python/phases/assessModel.py",
-				 "pyFiles", 
+				 "", 
 				 "--phase", 
 				 "peekModel", 
 				 "--conf", 
