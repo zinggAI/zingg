@@ -152,12 +152,12 @@ try:
     # packages=find_packages(),
     packages=packages,
     package_dir={
-            'zingg.jars': 'zingg/deps/jars',
-            'zingg.scripts': 'zingg/deps/scripts',
-            'zingg.data': 'zingg/deps/models',
-            'zingg.examples': 'zingg/deps/examples',
-            'zingg.conf': 'zingg/deps/config',
-            'zingg.phases': 'zingg/deps/phases'
+            'zingg.jars': 'zingg/jars',
+            'zingg.scripts': 'zingg/scripts',
+            'zingg.data': 'zingg/models',
+            'zingg.examples': 'zingg/examples',
+            'zingg.conf': 'zingg/config',
+            'zingg.phases': 'zingg/phases'
         },
         package_data={
             'zingg.jars': ['*.jar'],
