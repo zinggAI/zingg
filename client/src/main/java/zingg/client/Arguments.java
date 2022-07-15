@@ -108,12 +108,7 @@ public class Arguments implements Serializable {
 	boolean showConcise = false;
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
-<<<<<<< HEAD
-=======
 	String column;
-	private String confFile;
-	
->>>>>>> chnages in arguments
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
 	private static final String ESC = "\\";
@@ -175,7 +170,6 @@ public class Arguments implements Serializable {
 			Arguments args = mapper.readValue(new File(filePath), Arguments.class);
 			LOG.warn("phase is " + phase);
 			checkValid(args, phase);
-			args.confFile = filePath;
 			return args;			
 		} catch (Exception e) { 
 			//e.printStackTrace();
@@ -663,6 +657,7 @@ public class Arguments implements Serializable {
 	public void setShowConcise(boolean showConcise) {
 		this.showConcise = showConcise;
 	}
+
 
 	public String getColumn() {
 		return column;
