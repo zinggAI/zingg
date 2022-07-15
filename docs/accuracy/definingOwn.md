@@ -4,9 +4,9 @@ nav_order: 6
 
 # Defining Own Functions
 
-You can add your own [blocking functions](https://github.com/zinggAI/zingg/tree/main/core/src/main/java/zingg/hash) which will be evaluated by Zingg to build the [blocking tree.](zModels.md)
+You can add your own [blocking functions](https://github.com/zinggAI/zingg/tree/main/core/src/main/java/zingg/hash) which will be evaluated by Zingg to build the [blocking tree.](../zModels.md)
 
-The blocking tree works on the matched records provided by the user as part of the training. At every node, it selects the hash function and the field on which it should be applied so that there is the least elimination of the matching pairs. Say we have data like this
+The blocking tree works on the matched records provided by the user as part of the training. At every node, it selects the hash function and the field on which it should be applied so that there is the least elimination of the matching pairs. Say we have data like this:
 
 ***
 
@@ -42,7 +42,7 @@ last name:
 
 ***
 
-let us assume we have hash functions first1char, last1char
+Let us assume we have hash functions first1char, last1char
 
 first1char(firstname, pair1, record a) = j
 
@@ -84,9 +84,9 @@ last1char(lastname, pair2, record b) =
 
 pair2 is getting eliminated above, not good.
 
-So first1char(firstname) or first1char(lastname) will be chosen at the root of the blocking tree. Child nodes get added in a similar function to build the heriarchical blocking function tree. This brings near similar records together - in a way clusters them to break the cartesian join.
+So first1char(firstname) or first1char(lastname) will be chosen at the root of the blocking tree. Child nodes get added in a similar function to build the hierarchial blocking function tree. This brings near similar records together - in a way, clusters them to break the cartesian join.
 
-These business specific blocking functions go into [Hash Functions](https://github.com/zinggAI/zingg/tree/main/core/src/main/java/zingg/hash) and need to be added to [HashFunctionRegistry](../../core/src/main/java/zingg/hash/HashFunctionRegistry.java) and [hash functions config](../../core/src/main/resources/hashFunctions.json)
+These business-specific blocking functions go into [Hash Functions](https://github.com/zinggAI/zingg/tree/main/core/src/main/java/zingg/hash) and must be added to [HashFunctionRegistry](../../core/src/main/java/zingg/hash/HashFunctionRegistry.java) and [hash functions config](../../core/src/main/resources/hashFunctions.json).
 
 Also, for similarity, you can define your own measures. Each dataType has predefined features, for example, [String](../../core/src/main/java/zingg/feature/StringFeature.java) fuzzy type is configured for affine and jaro.
 
