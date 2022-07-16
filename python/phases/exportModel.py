@@ -20,8 +20,8 @@ def main():
     options = ClientOptions(sys.argv[1:])
     options.setPhase("peekModel")
     arguments = Arguments.createArgumentsFromJSON(options.getConf(), options.getPhase())
-    client = Zingg(arguments, options)
-    client.initAndExecute()
+    client = ZinggWithSpark(arguments, options)
+    client.init()
 
     pMarkedDF = client.getPandasDfFromDs(client.getMarkedRecords())
     labelledData = spark.createDataFrame(pMarkedDF)

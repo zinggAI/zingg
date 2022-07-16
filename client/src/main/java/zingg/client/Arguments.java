@@ -115,9 +115,6 @@ public class Arguments implements Serializable {
 	private static final String PATTERN_ENV_VAR = ESC + ENV_VAR_MARKER_START + "(.+?)" + ESC + ENV_VAR_MARKER_END;
 
 	
-	public double getThreshold() {
-		return threshold;
-	}
 
 	
 

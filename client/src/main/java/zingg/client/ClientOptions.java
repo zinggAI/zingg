@@ -39,6 +39,8 @@ public class ClientOptions {
 	public static final String VERSION = "--version";
 	
 	public static final Log LOG = LogFactory.getLog(ClientOptions.class);
+
+	protected String[] commandLineArgs;
 	
 	protected static Map<String, Option> optionMaster = new HashMap<String, Option>();
 	/*
@@ -75,11 +77,17 @@ public class ClientOptions {
 	protected Map<String, OptionWithVal> options = new HashMap<String, OptionWithVal> ();
 	
 	public ClientOptions(String... args) {
+		this.commandLineArgs = args;
 		parse(Arrays.asList(args));
 	}
 	
 	public ClientOptions(List<String> args) {
+		this.commandLineArgs = args.toArray(new String[args.size()]);
 		parse(args);
+	}
+
+	public String[] getCommandLineArgs() {
+		return this.commandLineArgs;
 	}
 	
 	
