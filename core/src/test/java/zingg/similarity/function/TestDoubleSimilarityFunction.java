@@ -45,31 +45,26 @@ public class TestDoubleSimilarityFunction {
 	@Test
 	public void testBothNotNullNorNAN() {
 		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
-		assertEquals(0d, simFn.call(1d, 1d));
+		assertEquals(1d, simFn.call(1d, 1d));
 	}
 
 	@Test
 	public void testValues0And0() {
 		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
-		assertEquals(0d, simFn.call(0d, 0d));
+		assertEquals(1d, simFn.call(0d, 0d));
 	}
 
 	@Test
-	public void testValues100And1() {
+	public void testValues10And9() {
 		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
-		assertEquals(0.9705882352941176d, simFn.call(100d, 1d));
+		assertEquals(0.95d, simFn.call(10d, 9d), 0.01d);
 	}
 
 	@Test
-	public void testValues10And1() {
+	public void testValues1And8() {
 		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
-		assertEquals(0d, simFn.call(10.0, 10d));
+		assertEquals(0.3d, simFn.call(1.0, 8d), 0.01d);
 	}
 
-	@Test
-	public void testValues34And54() {
-		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
-		Double score = simFn.call(34d, 54.0);
-		assertEquals(0.2247191011235955d, score);
-	}
+	
 }

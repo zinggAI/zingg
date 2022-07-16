@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import zingg.client.Arguments;
+import zingg.client.ClientOptions;
 import zingg.client.ZinggClientException;
 import zingg.client.pipe.FilePipe;
 import zingg.client.pipe.InMemoryPipe;
@@ -37,11 +38,13 @@ public class TestPeekModel extends ZinggSparkTester{
 
     
 	@Test
-	public void testOutPut(){
+	public void testOutput(){
 		PeekModel pm = new PeekModel();
 		try {
-			pm.init(args, "");
+			pm.init(args, "abc");
+			pm.setSpark(spark);
 			pm.setArgs(args);
+			pm.setClientOptions(new ClientOptions("--phase", "peekModel", "--conf", "abc"));
 			pm.execute();
 			
 			Dataset<Row> dfm = pm.getMarkedRecords();

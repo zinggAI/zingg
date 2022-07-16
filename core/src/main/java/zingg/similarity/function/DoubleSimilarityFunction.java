@@ -16,7 +16,8 @@ public class DoubleSimilarityFunction extends BaseSimilarityFunction<Double> {
 	public Double call(Double first, Double second) {
 		if (first == null || first.isNaN()) return 1d;
 		if (second == null || second.isNaN()) return 1d;
-		double score = (Math.abs(first-second))/(1.0+first + second);
+		//we want similarity, hence we subtract from 1 so that closer values have higher score
+		double score = 1 - (Math.abs(first-second))/(1.0+first + second);
 		LOG.debug(" DoubleSim bw " + first + " and second " + second + " is "
 		 + score);
 		return score;
