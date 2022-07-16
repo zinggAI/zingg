@@ -44,7 +44,7 @@ public class TestPeekModel extends ZinggSparkTester{
 			pm.init(args, "abc");
 			pm.setSpark(spark);
 			pm.setArgs(args);
-			pm.setClientOptions(new ClientOptions("--phase", "peekModel", "--conf", "abc"));
+			pm.setClientOptions(new ClientOptions("--phase", "peekModel", "--conf", "abc", "--license", "licText.txt"));
 			pm.execute();
 			
 			Dataset<Row> dfm = pm.getMarkedRecords();
