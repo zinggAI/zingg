@@ -43,10 +43,6 @@ class CsvPipe(Pipe):
         Pipe.addProperty(self, FilePipe.HEADER, header)
 
 class BigQueryPipe(Pipe):
-
-=======
-
-class BigQueryPipe(Pipe):
     """ Pipe Class for working with BigQuery pipeline
 
     :param name: name of the pipe.
