@@ -27,9 +27,9 @@ args.setZinggDir("models")
 args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
 
-df = spark.read.format("csv").schema("id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string").load("python_test/testFebrl/test.csv")
+df = spark.read.format("csv").schema("id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string").load("examples/febrl/test.csv")
 inputPipe = CsvPipe("test")
-inputPipe.setLocation("python_test/testFebrl/test.csv")
+inputPipe.setLocation("examples/febrl/test.csv")
 dfSchema = str(df.schema.json())
 inputPipe.setSchema(dfSchema)
 
