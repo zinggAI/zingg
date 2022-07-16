@@ -654,6 +654,16 @@ public class Arguments implements Serializable {
 		this.showConcise = showConcise;
 	}
 
+	String column;
+
+	public String getColumn() {
+		return column;
+	}
+
+	public void setColumn(String column) {
+		this.column = column;
+	}
+	
 	public long getBlockSize() {
 		return blockSize;
 	}
@@ -672,5 +682,10 @@ public class Arguments implements Serializable {
 		}
 		return sourceNames;
 	}
+
+	@JsonIgnore
+    public String getStopWordsDir() {
+    	return getZinggBaseModelDir() + "/stopWords/";
+    }
 
 }

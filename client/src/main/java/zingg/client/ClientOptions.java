@@ -30,6 +30,7 @@ public class ClientOptions {
 	public static final String COLLECT_METRICS = "--collectMetrics";
 	public static final String SHOW_CONCISE = "--showConcise";
 	public static final String LOCATION = "--location";
+	public static final String COLUMN = "--column";
 	
 	 // Options that do not take arguments.
 	public static final String HELP = "--help";
@@ -62,6 +63,7 @@ public class ClientOptions {
 		optionMaster.put(COLLECT_METRICS, new Option(COLLECT_METRICS, true, "collect analytics, true/false  ", false, false));
 		optionMaster.put(SHOW_CONCISE, new Option(SHOW_CONCISE, true, "Display only fields that are used to make model, true/false  ", false, false));
 		optionMaster.put(LOCATION, new Option(LOCATION, true, "location of CSV file for exported data ", false, false));
+		optionMaster.put(COLUMN, new Option(COLUMN, true, "name of the column", false, false));
 		
 		//no args
 		optionMaster.put(HELP,new Option(HELP,  false, "print usage information", true, false));

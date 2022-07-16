@@ -18,7 +18,7 @@
   <tr>
     <th class="border-right border-white" style="width: 160px;" >Cluster</th>
     <#list 3 ..< numColumns as entityIndex>
-    <th class="border-right border-white" > <a href="docs/${columns[entityIndex]}.html"> ${columns[entityIndex]!} </a></th>
+    <th class="border-right border-white" > <a href="${columns[entityIndex]}.html"> ${columns[entityIndex]!} </a></th>
     </#list>
   </tr>
   </thead>
