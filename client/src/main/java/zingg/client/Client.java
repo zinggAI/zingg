@@ -218,6 +218,7 @@ public class Client implements Serializable {
 	public void init() throws ZinggClientException {
 		zingg.init(getArguments(), "");
 		if (session != null) zingg.setSpark(session);
+		zingg.setClientOptions(options);
 	}
 	
 	

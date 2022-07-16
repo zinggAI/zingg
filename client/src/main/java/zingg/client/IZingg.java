@@ -35,4 +35,8 @@ public interface IZingg {
 
     public void setSpark(SparkSession session);
 
+	public void setClientOptions(ClientOptions clientOptions);
+
+	public ClientOptions getClientOptions(); 
+
 }

@@ -1,9 +1,13 @@
 package zingg;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.client.Arguments;
+import zingg.client.ClientOptions;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import org.apache.spark.deploy.PythonRunner;
@@ -29,13 +33,13 @@ public class PeekModel extends ZinggBase{
 		try {
 			LOG.info("Generic Python phase starts");
 			//LOG.info(this.getClass().getClassLoader().getResource("python/phases/assessModel.py").getFile());
-			PythonRunner.main(new String[]{"python/phases/assessModel.py",
-				 "", 
-				 "--phase", 
-				 "peekModel", 
-				 "--conf", 
-				 args.getConfFile()
-				});
+			List<String> pyArgs = new ArrayList<String>();
+			pyArgs.add("python/phases/"+clientOptions.get(ClientOptions.PHASE).getValue() + ".py");
+			pyArgs.add("");
+			for (String c: clientOptions.getCommandLineArgs()) {
+				pyArgs.add(c);
+			}
+			PythonRunner.main(pyArgs.toArray(new String[pyArgs.size()]));
 
 			LOG.info("Generic Python phase ends");
 		} catch (Exception e) {
