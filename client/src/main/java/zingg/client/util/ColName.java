@@ -28,6 +28,9 @@ public interface ColName {
 	public static final String USER = COL_PREFIX + "user";
 	public static final String MODEL_ID_COL = COL_PREFIX + "modelId";
 	public static final String RAW_PREDICTION="rawPrediction";
+	public static final String COL_COUNT = COL_PREFIX + "count";
+	public static final String COL_WORD = COL_PREFIX + "word";
+	public static final String COL_SPLIT = COL_PREFIX + "split";
 	
 	
 }

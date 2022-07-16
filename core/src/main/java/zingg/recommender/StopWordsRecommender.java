@@ -15,12 +15,10 @@ import org.apache.spark.sql.SparkSession;
 
 import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
+import zingg.client.util.ColName;
 import zingg.util.PipeUtil;
 
 public class StopWordsRecommender {
-	private static final String COL_COUNT = "count";
-	private static final String COL_WORD = "word";
-	private static final String COL_SPLIT = "split";
 	public static final Log LOG = LogFactory.getLog(StopWordsRecommender.class);
 	protected SparkSession spark;
 	protected Dataset<Row> data;
@@ -70,13 +68,13 @@ public class StopWordsRecommender {
 	public Dataset<Row> findStopWords(Dataset<Row> data, String fieldName) {
 		LOG.debug("Field: " + fieldName);
 		if(!data.isEmpty()) {
-			data = data.select(split(data.col(fieldName), "\\s+").as(COL_SPLIT));
-			data = data.select(explode(data.col(COL_SPLIT)).as(COL_WORD));
-			data = data.filter(data.col(COL_WORD).notEqual(""));
-			data = data.groupBy(COL_WORD).count();
-			long count = data.agg(sum(COL_COUNT)).collectAsList().get(0).getLong(0);
+			data = data.select(split(data.col(fieldName), "\\s+").as(ColName.COL_SPLIT));
+			data = data.select(explode(data.col(ColName.COL_SPLIT)).as(ColName.COL_WORD));
+			data = data.filter(data.col(ColName.COL_WORD).notEqual(""));
+			data = data.groupBy(ColName.COL_WORD).count();
+			long count = data.agg(sum(ColName.COL_COUNT)).collectAsList().get(0).getLong(0);
 			double threshold = count * args.getStopWordsCutoff();
-			data = data.filter(data.col(COL_COUNT).gt(threshold));
+			data = data.filter(data.col(ColName.COL_COUNT).gt(threshold));
 			data = data.coalesce(1);
 		}
 		return data;
