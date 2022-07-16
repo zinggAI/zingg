@@ -21,7 +21,7 @@ import zingg.preprocess.TestStopWords;
 
 public class ZinggSparkTester {
 
-    public static Arguments args;
+    public Arguments args;
     public static JavaSparkContext ctx;
     public static SparkSession spark;
 
@@ -35,12 +35,11 @@ public class ZinggSparkTester {
     	try {
     		spark = SparkSession
     				.builder()
-    				.master("local")
+    				.master("local[*]")
     				.appName("Zingg" + "Junit")
     				.getOrCreate();
     		ctx = new JavaSparkContext(spark.sparkContext());
-    		JavaSparkContext.jarOfClass(TestStopWords.class);
-    		args = new Arguments();
+    		JavaSparkContext.jarOfClass(zingg.client.Arguments.class);    		
     	} catch (Throwable e) {
     		if (LOG.isDebugEnabled())
     			e.printStackTrace();
