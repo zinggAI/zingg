@@ -28,15 +28,23 @@ args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
 
 df = spark.read.format("csv").schema("id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string").load("examples/febrl/test.csv")
+inputPipe = CsvPipe("test")
+inputPipe.setLocation("examples/febrl/test.csv")
 dfSchema = str(df.schema.json())
-inputPipe = CsvPipe("test", dfSchema, "examples/febrl/test.csv")
-outputPipe = CsvPipe("result", None, "/tmp/febrlTest")
+inputPipe.setSchema(dfSchema)
+
+outputPipe = CsvPipe("result")
+outputPipe.setLocation("/tmp/pythonTest")
+
 args.setData(inputPipe)
 args.setOutput(outputPipe)
+
 options = ClientOptions()
+# options.setPhase("trainMatch")
 options.setPhase("trainMatch")
 
 #testing
+
 class Accuracy_recordCount(TestCase):
 	def test_recordCount(self):
 		client = Zingg(args, options)
@@ -54,3 +62,4 @@ class Accuracy_recordCount(TestCase):
 
 		# accuracy test
 		self.assertGreater(acc, 0.9)
+

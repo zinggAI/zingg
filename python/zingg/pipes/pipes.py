@@ -48,11 +48,6 @@ class CsvPipe(Pipe):
         Pipe.addProperty(self, FilePipe.LOCATION, location)
 
     def setHeader(self, header):
-        """ Method to set header property of pipe
-
-        :param header: true if data contains header otherwise false
-        :type header: Bool
-        """
         Pipe.addProperty(self, FilePipe.HEADER, header)
 
 class BigQueryPipe(Pipe):
