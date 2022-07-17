@@ -1,9 +1,13 @@
+import unittest
+from unittest.case import TestCase
+import unittest
+from io import StringIO
+
+
 from zingg import *
 from zingg.pipes import *
 
-#build the arguments for zingg
 args = Arguments()
-#set field definitions
 fname = FieldDefinition("fname", "string", MatchType.FUZZY)
 lname = FieldDefinition("lname", "string", MatchType.FUZZY)
 stNo = FieldDefinition("stNo", "string", MatchType.FUZZY)
@@ -18,29 +22,35 @@ ssn = FieldDefinition("ssn", "string", MatchType.FUZZY)
 fieldDefs = [fname, lname, stNo, add1, add2, city, areacode, state, dob, ssn]
 
 args.setFieldDefinition(fieldDefs)
-#set the modelid and the zingg dir
 args.setModelId("100")
 args.setZinggDir("models")
 args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
 
-#reading dataset into inputPipe and settint it up in 'args'
-#below line should not be required if you are reading from in memory dataset
-#in that case, replace df with input df
 df = spark.read.format("csv").schema("id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string").load("examples/febrl/test.csv")
 dfSchema = str(df.schema.json())
 inputPipe = CsvPipe("test", dfSchema, "examples/febrl/test.csv")
-
+outputPipe = CsvPipe("result", None, "/tmp/febrlTest")
 args.setData(inputPipe)
-
-#setting outputpipe in 'args'
-outputPipe = CsvPipe("csv", None, "/tmp")
-
 args.setOutput(outputPipe)
-
 options = ClientOptions()
 options.setPhase("trainMatch")
 
-#Zingg execution for the given phase
-zingg = Zingg(args, options)
-zingg.initAndExecute()
+#testing
+class Accuracy_recordCount(TestCase):
+	def test_recordCount(self):
+		client = Zingg(args, options)
+		client.initAndExecute()
+		pMarkedDF = client.getPandasDfFromDs(client.getMarkedRecords())
+		labelledData = spark.createDataFrame(pMarkedDF)
+
+		total_marked = pMarkedDF.shape[0]
+
+		# marked record count test
+		self.assertEqual(total_marked, 76)
+
+		pMarkedDF.drop(pMarkedDF[pMarkedDF[ColName.PREDICTION_COL] == -1].index, inplace=True)
+		acc = (pMarkedDF[ColName.MATCH_FLAG_COL]== pMarkedDF[ColName.PREDICTION_COL]).mean()
+
+		# accuracy test
+		self.assertGreater(acc, 0.9)

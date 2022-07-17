@@ -19,9 +19,17 @@ class CsvPipe(Pipe):
 
     :param name: name of the pipe.
     :type name: String
+    :param schema: (optional) json schema for the pipe
+    :type schema: Schema or None
+    :param location: (optional) location from where we read data
+    :type location: String or None
     """
-    def __init__(self, name):
+    def __init__(self, name, schema = None, location = None):
         Pipe.__init__(self, name, Format.CSV.type())
+        if(schema != None):
+            Pipe.setSchema(schema)
+        if(location != None):
+            Pipe.addProperty(self, FilePipe.LOCATION, location)
 
     def setDelimiter(self, delimiter):
         """ This method is used to define delimiter of CsvPipe
@@ -40,11 +48,12 @@ class CsvPipe(Pipe):
         Pipe.addProperty(self, FilePipe.LOCATION, location)
 
     def setHeader(self, header):
+        """ Method to set header property of pipe
+
+        :param header: true if data contains header otherwise false
+        :type header: Bool
+        """
         Pipe.addProperty(self, FilePipe.HEADER, header)
-
-class BigQueryPipe(Pipe):
-
-=======
 
 class BigQueryPipe(Pipe):
     """ Pipe Class for working with BigQuery pipeline

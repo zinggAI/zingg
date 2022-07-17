@@ -23,21 +23,17 @@ args.setLabelDataSampleSize(0.4)
 #in that case, replace df with input df
 dfAmazon = spark.read.format("csv").schema("id string, title string, description string, manufacturer string, price double ").load("examples/amazon-google/Amazon.csv")
 dfSchemaAmazon = str(dfAmazon.schema.json())
-inputPipeAmazon = CsvPipe("testAmazon")
-inputPipeAmazon.setLocation("examples/amazon-google/Amazon.csv")
-inputPipeAmazon.setSchema(dfSchemaAmazon)
+inputPipeAmazon = CsvPipe("testAmazon", dfSchemaAmazon, "examples/amazon-google/Amazon.csv")
 
 dfGoogle = spark.read.format("csv").schema("id string, title string, description string, manufacturer string, price double ").load("examples/amazon-google/GoogleProducts.csv")
 dfSchemaGoogle = str(dfGoogle.schema.json())
-inputPipeGoogle = CsvPipe("testGoogle")
-inputPipeGoogle.setLocation("examples/amazon-google/GoogleProducts.csv")
-inputPipeGoogle.setSchema(dfSchemaGoogle)
+inputPipeGoogle = CsvPipe("testGoogle", dfSchemaGoogle, "examples/amazon-google/GoogleProducts.csv")
 
 args.setData(inputPipeAmazon,inputPipeGoogle)
 
 #setting outputpipe in 'args'
-outputPipe = CsvPipe("resultAmazonGoogle")
-outputPipe.setLocation("/tmp/AwsGoogleOutput")
+outputPipe = CsvPipe("resultAmazonGoogle", None, "/tmp/AwsGoogleOutput")
+
 args.setOutput(outputPipe)
 
 options = ClientOptions()
