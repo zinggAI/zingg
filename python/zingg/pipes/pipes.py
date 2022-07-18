@@ -1,7 +1,7 @@
 """
 zingg.pipes
 --------------------------
-This module is submodule of zingg to work with different types of Pipes. Classes of this module inherit the Pipe class of zingg module, and use that class to create many different types of pipes.
+This module is submodule of zingg to work with different types of Pipes. Classes of this module inherit the Pipe class, and use that class to create many different types of pipes.
 """
 
 
