@@ -19,10 +19,20 @@ class CsvPipe(Pipe):
 
     :param name: name of the pipe.
     :type name: String
+    :param location: (optional) location from where we read data
+    :type location: String or None
+    :param schema: (optional) json schema for the pipe
+    :type schema: Schema or None
     """
-    def __init__(self, name):
+    def __init__(self, name, location = None, schema = None):
         Pipe.__init__(self, name, Format.CSV.type())
+        if(location != None):
+            Pipe.addProperty(self, FilePipe.LOCATION, location)
+            if(schema != None):
+                df = spark.read.format(Format.CSV.type()).schema(schema).load(location)
+                Pipe.setSchema(str(df.schema.json()))
 
+    
     def setDelimiter(self, delimiter):
         """ This method is used to define delimiter of CsvPipe
 
