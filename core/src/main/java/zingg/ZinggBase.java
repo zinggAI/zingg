@@ -122,8 +122,6 @@ public abstract class ZinggBase implements Serializable, IZingg {
 		Analytics.track(Metric.TOTAL_FIELDS_COUNT, args.getFieldDefinition().size(), collectMetrics);
         Analytics.track(Metric.MATCH_FIELDS_COUNT, DSUtil.getFieldDefinitionFiltered(args, MatchType.DONT_USE).size(),
                 collectMetrics);
-		Analytics.track(Metric.DATA_FORMAT, PipeUtil.getPipesAsString(args.getData()), collectMetrics);
-		Analytics.track(Metric.OUTPUT_FORMAT, PipeUtil.getPipesAsString(args.getOutput()), collectMetrics);
 
 		Analytics.postEvent(zinggOptions.getValue(), collectMetrics);
 	}

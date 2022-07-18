@@ -21,7 +21,7 @@ public class InMemoryPipe extends Pipe{
 	}
 	
 	@Override
-	public Format getFormat() {
-		return Format.INMEMORY;
+	public String getFormat() {
+		return Pipe.FORMAT_INMEMORY;
 	}
 }
