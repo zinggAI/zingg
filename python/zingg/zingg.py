@@ -197,10 +197,10 @@ class Arguments:
         self.args.setFieldDefinition(javaFieldDef)
 
     def getArgs(self):
-        """ Method to get pointer address of this class
+        """ Method to get the underlying Java Arguments object
 
-        :return: The pointer containing the address of this class object
-        :rtype: pointer(Arguments)
+        :return: The JVM Arguments object
+        :rtype: Arguments(zingg.client.Arguments)
         
         """
         return self.args
@@ -208,13 +208,13 @@ class Arguments:
     def setArgs(self, argumentsObj):
         """ Method to set this class object
 
-        :param argumentsObj: Argument object to set this object
-        :type argumentsObj: pointer(Arguments)
+        :param argumentsObj: Java Argument object to set this object
+        :type argumentsObj: java zingg.client.Arguments 
         """
         self.args = argumentsObj
 
     def setData(self, *pipes):
-        """ Method to set the file path of the file to be matched.
+        """ Method to set the input data to be matched.
 
         :param pipes: input data pipes separated by comma e.g. (pipe1,pipe2,..)
         :type pipes: Pipe[]
@@ -225,7 +225,9 @@ class Arguments:
         self.args.setData(dataPipe)
 
     def setOutput(self, *pipes):
-        """ Method to set the output directory where the match result will be saved
+        """ Method to set the output location where the match result will be saved.
+        Usually you want to save the data in one location but sometimes you want to
+        send in an array of pipes are write to each of them
 
         :param pipes: output data pipes separated by comma e.g. (pipe1,pipe2,..)
         :type pipes: Pipe[]
@@ -236,7 +238,9 @@ class Arguments:
         self.args.setOutput(outputPipe)
 
     def setModelId(self, id):
-        """ Method to set the output directory where the match output will be saved
+        """ The model id is the unique identifier for the model
+        The modelId along with the zinggDir are used to set the output directory (zinggDir/modelId)
+        where the training data and trained model will be saved
 
         :param id: model id value 
         :type id: String
@@ -244,16 +248,18 @@ class Arguments:
         self.args.setModelId(id)
 
     def setZinggDir(self, f):
-        """ Method to set the location for Zingg to save its internal computations and models. Please set it to a place where the program has to write access.
+        """ Sets the location for Zingg to save its internal computations and models. 
+        Please set it to a place where the program has write access.
 
-        :param f: Zingg directory name of the models
+        :param f: Zingg directory name which is the parent location of all models built with Zingg
         :type f: String
         """
         self.args.setZinggDir(f)
 
     def setNumPartitions(self, numPartitions):
-        """ Method to set NumPartitions parameter vlaue
-        Sample size to use for seeding labeled data We don't want to run over all the data, as we want a quick way to seed some labeled data that we can manually edit
+        """ Method to set the number of partitions. The numPartitions are a Spark setting used 
+        to control 
+        We don't want to run over all the data, as we want a quick way to seed some labeled data that we can manually edit
 
         :param numPartitions: number of partitions for given data pipes
         :type numPartitions: int
