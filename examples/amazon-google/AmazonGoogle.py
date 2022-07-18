@@ -21,7 +21,7 @@ args.setLabelDataSampleSize(0.4)
 #reading dataset into inputPipe and settint it up in 'args'
 #below line should not be required if you are reading from in memory dataset
 #in that case, replace df with input df
-schema = ("id string, title string, description string, manufacturer string, price double ")
+schema = "id string, title string, description string, manufacturer string, price double "
 inputPipeAmazon = CsvPipe("testAmazon", "examples/amazon-google/Amazon.csv", schema)
 inputPipeGoogle = CsvPipe("testGoogle", "examples/amazon-google/GoogleProducts.csv", schema)
 

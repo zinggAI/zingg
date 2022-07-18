@@ -21,8 +21,8 @@ args.setLabelDataSampleSize(0.1)
 #reading dataset into inputPipe and settint it up in 'args'
 #below line should not be required if you are reading from in memory dataset
 #in that case, replace df with input df
-schema = ("recid string, givenname string, surname string, suburb string, postcode double ")
-inputPipe = CsvPipe("test", "examples/ncVoters5M/5Party-ocp20/", schema)
+schema = "recid string, givenname string, surname string, suburb string, postcode double "
+inputPipe = CsvPipe("ncVotersTest", "examples/ncVoters5M/5Party-ocp20/", schema)
 
 args.setData(inputPipe)
 
