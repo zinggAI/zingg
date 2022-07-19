@@ -412,18 +412,22 @@ class FieldDefinition:
     :type dataType: String
     :param matchType: match type of this field e.g. FUSSY, EXACT, etc.
     :type matchType: MatchType
-    :param stopWords: The stop Words containing csv file's location
-    :type stopWords: String or None
     """
 
-    def __init__(self, name, dataType, *matchType, stopWords = None):
+    def __init__(self, name, dataType, *matchType):
         self.fd = jvm.zingg.client.FieldDefinition()
         self.fd.setFieldName(name)
         self.fd.setDataType(self.stringify(dataType))
         self.fd.setMatchType(matchType)
         self.fd.setFields(name)
-        if(stopWords!= None):
-            self.fd.setStopWords(stopWords)
+    
+    def setStopWords(self, stopWords):
+        """ Method to add stopwords to this class object
+
+        :param stopWords: The stop Words containing csv file's location
+        :type stopWords: String
+        """
+        self.fd.setStopWords(stopWords)
 
     def getFieldDefinition(self):
         """ Method to get  pointer address of this class
