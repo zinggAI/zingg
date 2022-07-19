@@ -15,7 +15,7 @@ public class JdbcPipe extends Pipe{
 	}
 	
 	@Override
-	public Format getFormat() {
-		return Format.JDBC;
+	public String getFormat() {
+		return Pipe.FORMAT_JDBC;
 	}
 }
