@@ -346,6 +346,16 @@ public class PipeUtil {
 		return p;
 	}
 
+	public static String getPipesAsString(Pipe[] pipes) {
+		return Arrays.stream(pipes)
+			.map(p -> p.getFormat())
+			.collect(Collectors.toList())
+			.stream().reduce((p1, p2) -> p1 + "," + p2)
+			.map(Object::toString)
+			.orElse("");
+	}
+
+
 
 	/*
 	 * public static String getTableCreateCQL(Pipe p, Dataset<Row> df) {

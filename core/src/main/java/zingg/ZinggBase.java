@@ -14,6 +14,7 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.client.Arguments;
+import zingg.client.ClientOptions;
 import zingg.client.FieldDefinition;
 import zingg.client.IZingg;
 import zingg.client.MatchType;
@@ -40,10 +41,27 @@ public abstract class ZinggBase implements Serializable, IZingg {
 	protected SparkSession spark;
     protected static String name;
     protected ZinggOptions zinggOptions;
+
+    public long getStartTime() {
+        return this.startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public ClientOptions getClientOptions() {
+        return this.clientOptions;
+    }
+
+    public void setClientOptions(ClientOptions clientOptions) {
+        this.clientOptions = clientOptions;
+    }
     protected ListMap<DataType, HashFunction> hashFunctions;
 	protected Map<FieldDefinition, Feature> featurers;
     protected long startTime;
 	public static final String hashFunctionFile = "hashFunctions.json";
+    protected ClientOptions clientOptions;
 
     public static final Log LOG = LogFactory.getLog(ZinggBase.class);
 
@@ -122,6 +140,8 @@ public abstract class ZinggBase implements Serializable, IZingg {
 		Analytics.track(Metric.TOTAL_FIELDS_COUNT, args.getFieldDefinition().size(), collectMetrics);
         Analytics.track(Metric.MATCH_FIELDS_COUNT, DSUtil.getFieldDefinitionFiltered(args, MatchType.DONT_USE).size(),
                 collectMetrics);
+		Analytics.track(Metric.DATA_FORMAT, PipeUtil.getPipesAsString(args.getData()), collectMetrics);
+		Analytics.track(Metric.OUTPUT_FORMAT, PipeUtil.getPipesAsString(args.getOutput()), collectMetrics);
 
 		Analytics.postEvent(zinggOptions.getValue(), collectMetrics);
 	}

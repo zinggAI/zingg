@@ -19,8 +19,8 @@ class Pipe:
 
     :param name: name of the pipe
     :type name: String
-    :param format: formate of pipe e.g. bigquery,InMemory, etc.
-    :type format: Format
+    :param format: format of pipe e.g. bigquery,InMemory, etc.
+    :type format: String
     """
 
     def __init__(self, name, format):
@@ -98,6 +98,11 @@ class CsvPipe(Pipe):
         Pipe.addProperty(self, FilePipe.LOCATION, location)
 
     def setHeader(self, header):
+        """ Method to set header property of pipe
+
+        :param header: true if pipe have header, false otherwise
+        :type header: Boolean
+        """
         Pipe.addProperty(self, FilePipe.HEADER, header)
 
 class BigQueryPipe(Pipe):
