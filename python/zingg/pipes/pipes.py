@@ -1,7 +1,7 @@
 """
 zingg.pipes
 --------------------------
-This module is submodule of zingg to work with different types of Pipes. Classes of this module inherit the Pipe class of zingg module, and use that class to create many different types of pipes.
+This module is submodule of zingg to work with different types of Pipes. Classes of this module inherit the Pipe class, and use that class to create many different types of pipes.
 """
 
 
@@ -13,6 +13,55 @@ LOG = logging.getLogger("zingg.pipes")
 
 Format = jvm.zingg.client.pipe.Format
 FilePipe = jvm.zingg.client.pipe.FilePipe
+
+class Pipe:
+    """ Pipe class for working with different data-pipelines. Actual pipe def in the args. One pipe can be used at multiple places with different tables, locations, queries, etc
+
+    :param name: name of the pipe
+    :type name: String
+    :param format: formate of pipe e.g. bigquery,InMemory, etc.
+    :type format: Format
+    """
+
+    def __init__(self, name, format):
+        self.pipe = jvm.zingg.client.pipe.Pipe()
+        self.pipe.setName(name)
+        self.pipe.setFormat(jvm.zingg.client.pipe.Format.getPipeType(format))
+
+    def getPipe(self):
+        """ Method to get Pipe 
+
+        :return: pipe parameter values in the format of a list of string 
+        :rtype: Pipe
+        """
+        return self.pipe
+
+    def addProperty(self, name, value):
+        """ Method for adding different properties of pipe
+
+        :param name: name of the property
+        :type name: String
+        :param value: value you want to set for the property
+        :type value: String
+        """
+        self.pipe.setProp(name, value)
+    
+    def setSchema(self, s):
+        """ Method to set pipe schema value
+
+        :param s: json schema for the pipe
+        :type s: Schema
+        """
+        self.pipe.setSchema(s)
+
+    def toString(self):
+        """ Method to get pipe parameter values
+
+        :return: pipe information in list format
+        :rtype: List[String]
+        """
+        return self.pipe.toString()
+
 
 class CsvPipe(Pipe):
     """ Class CsvPipe: used for working with text files which uses a pipe symbol to separate units of text that belong in different columns.
@@ -30,8 +79,8 @@ class CsvPipe(Pipe):
             Pipe.addProperty(self, FilePipe.LOCATION, location)
             if(schema != None):
                 df = spark.read.format(Format.CSV.type()).schema(schema).load(location)
-                Pipe.setSchema(str(df.schema.json()))
 
+                Pipe.setSchema(self, str(df.schema.json()))
     
     def setDelimiter(self, delimiter):
         """ This method is used to define delimiter of CsvPipe
@@ -50,6 +99,11 @@ class CsvPipe(Pipe):
         Pipe.addProperty(self, FilePipe.LOCATION, location)
 
     def setHeader(self, header):
+        """ Method to set header property of pipe
+
+        :param header: true if pipe have header, false otherwise
+        :type header: Boolean
+        """
         Pipe.addProperty(self, FilePipe.HEADER, header)
 
 class BigQueryPipe(Pipe):
