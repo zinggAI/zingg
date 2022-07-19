@@ -37,7 +37,6 @@ class Zingg:
     def __init__(self, args, options):
         self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions())
 
-       
     def init(self):
         """ Method to initialize zingg client by reading internal configurations and functions """
         self.client.init()
@@ -159,21 +158,6 @@ class Zingg:
         return pd.DataFrame(df.collect(), columns=df.columns)
 
 
-class ZinggWithSpark(Zingg):
-
-    """ This class is the main point of interface with the Zingg matching product. Construct a client to Zingg using provided arguments and spark master. If running locally, set the master to local.
-
-    :param args: arguments for training and matching
-    :type args: Arguments
-    :param options: client option for this class object
-    :type options: ClientOptions
-
-    """
-
-    def __init__(self, args, options):
-        self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions(), spark._jsparkSession)
-
-
 class Arguments:
     """ This class helps supply match arguments to Zingg. There are 3 basic steps in any match process.
 
@@ -277,15 +261,6 @@ class Arguments:
         """
         jvm.zingg.client.Arguments.writeArgumentsToJSON(fileName, self.args)
 
-    def setStopWordsCutoff(self, stopWordsCutoff):
-        """ Method to set stopWordsCutoff parameter vlaue
-        By default, Zingg extracts 10% of the high frequency unique words from a dataset. If user wants different selection, they should set up StopWordsCutoff property
-
-        :param stopWordsCutoff: The stop words cutoff parameter value of ClientOption object or file address of json file
-        :type stopWordsCutoff: float
-        """
-        self.args.setStopWordsCutoff(stopWordsCutoff)
-
     @staticmethod
     def createArgumentsFromJSON(fileName, phase):
         """ Method to create an object of this class from the JSON file and phase parameter value.
@@ -320,14 +295,10 @@ class ClientOptions:
     """:LOCATION: location parameter for this class"""
 
     def __init__(self, args = None):
-        if(args == None):
-            args = []
-        args.append(self.LICENSE)
-        args.append("zinggLic.txt")
-        args.append(self.EMAIL)
-        args.append("zingg@zingg.ai")
-        print("arguments for client options are ", args) 
-        self.co = jvm.zingg.client.ClientOptions(args)
+        if(args!=None):
+            self.co = jvm.zingg.client.ClientOptions(args)
+        else:
+            self.co = jvm.zingg.client.ClientOptions(["--phase", "trainMatch",  "--conf", "dummy", "--license", "dummy", "--email", "xxx@yyy.com"])
     
     def getClientOptions(self):
         """ Method to get pointer address of this class
@@ -412,18 +383,13 @@ class FieldDefinition:
     :type dataType: String
     :param matchType: match type of this field e.g. FUSSY, EXACT, etc.
     :type matchType: MatchType
-    :param stopWords: The stop Words containing csv file's location
-    :type stopWords: String or None
     """
 
-    def __init__(self, name, dataType, *matchType, stopWords = None):
-        self.fd = jvm.zingg.client.FieldDefinition()
+    def __init__(self, name, dataType, *matchType):
         self.fd.setFieldName(name)
         self.fd.setDataType(self.stringify(dataType))
         self.fd.setMatchType(matchType)
         self.fd.setFields(name)
-        if(stopWords!= None):
-            self.fd.setStopWords(stopWords)
 
     def getFieldDefinition(self):
         """ Method to get  pointer address of this class
@@ -443,7 +409,54 @@ class FieldDefinition:
         :rtype: String
         """
         return '"' + str + '"'
-        
+
+class Pipe:
+    """ Pipe class for working with different data-pipelines. Actual pipe def in the args. One pipe can be used at multiple places with different tables, locations, queries, etc
+
+    :param name: name of the pipe
+    :type name: String
+    :param format: formate of pipe e.g. bigquery,InMemory, etc.
+    :type format: Format
+    """
+
+    def __init__(self, name, format):
+        self.pipe = jvm.zingg.client.pipe.Pipe()
+        self.pipe.setName(name)
+        self.pipe.setFormat(jvm.zingg.client.pipe.Format.getPipeType(format))
+
+    def getPipe(self):
+        """ Method to get Pipe 
+
+        :return: pipe parameter values in the format of a list of string 
+        :rtype: Pipe
+        """
+        return self.pipe
+
+    def addProperty(self, name, value):
+        """ Method for adding different properties of pipe
+
+        :param name: name of the property
+        :type name: String
+        :param value: value you want to set for the property
+        :type value: String
+        """
+        self.pipe.setProp(name, value)
+    
+    def setSchema(self, s):
+        """ Method to set pipe schema value
+
+        :param s: json schema for the pipe
+        :type s: Schema
+        """
+        self.pipe.setSchema(s)
+
+    def toString(self):
+        """ Method to get pipe parameter values
+
+        :return: pipe information in list format
+        :rtype: List[String]
+        """
+        return self.pipe.toString()
 
 def parseArguments(argv):
     """ This method is used for checking mandatory arguments and creating an arguments list from Command line arguments
@@ -463,3 +476,5 @@ def parseArguments(argv):
     args, remaining_args = parser.parse_known_args()
     LOG.debug("args: ", args)
     return args
+
+    
