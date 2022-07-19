@@ -21,15 +21,23 @@ args.setLabelDataSampleSize(0.4)
 #reading dataset into inputPipe and settint it up in 'args'
 #below line should not be required if you are reading from in memory dataset
 #in that case, replace df with input df
-schema = "id string, title string, description string, manufacturer string, price double "
-inputPipeAmazon = CsvPipe("testAmazon", "examples/amazon-google/Amazon.csv", schema)
-inputPipeGoogle = CsvPipe("testGoogle", "examples/amazon-google/GoogleProducts.csv", schema)
+dfAmazon = spark.read.format("csv").schema("id string, title string, description string, manufacturer string, price double ").load("examples/amazon-google/Amazon.csv")
+dfSchemaAmazon = str(dfAmazon.schema.json())
+inputPipeAmazon = CsvPipe("testAmazon")
+inputPipeAmazon.setLocation("examples/amazon-google/Amazon.csv")
+inputPipeAmazon.setSchema(dfSchemaAmazon)
+
+dfGoogle = spark.read.format("csv").schema("id string, title string, description string, manufacturer string, price double ").load("examples/amazon-google/GoogleProducts.csv")
+dfSchemaGoogle = str(dfGoogle.schema.json())
+inputPipeGoogle = CsvPipe("testGoogle")
+inputPipeGoogle.setLocation("examples/amazon-google/GoogleProducts.csv")
+inputPipeGoogle.setSchema(dfSchemaGoogle)
 
 args.setData(inputPipeAmazon,inputPipeGoogle)
 
 #setting outputpipe in 'args'
-outputPipe = CsvPipe("resultAmazonGoogle", "/tmp/AwsGoogleOutput")
-
+outputPipe = CsvPipe("resultAmazonGoogle")
+outputPipe.setLocation("/tmp/AwsGoogleOutput")
 args.setOutput(outputPipe)
 
 options = ClientOptions()
