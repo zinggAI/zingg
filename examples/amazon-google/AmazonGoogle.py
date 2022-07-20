@@ -33,8 +33,7 @@ outputPipe = CsvPipe("resultAmazonGoogle", "/tmp/AwsGoogleOutput")
 
 args.setOutput(outputPipe)
 
-options = ClientOptions()
-options.setPhase("link")
+options = ClientOptions("link")
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)

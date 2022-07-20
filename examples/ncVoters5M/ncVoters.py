@@ -30,8 +30,7 @@ outputPipe = CsvPipe("ncVotersResult", "/tmp/ncVotersOutput")
 
 args.setOutput(outputPipe)
 
-options = ClientOptions()
-options.setPhase("trainMatch")
+options = ClientOptions("trainMatch")
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)

@@ -334,6 +334,15 @@ class ClientOptions:
         print("arguments for client options are ", args) 
         self.co = jvm.zingg.client.ClientOptions(args)
     
+    def __init__(self, args=[]):
+        print(args)
+        args.append(self.LICENSE)
+        args.append("zinggLic.txt")
+        args.append(self.EMAIL)
+        args.append("zingg@zingg.ai")
+        print("arguments for client options are ", args) 
+        self.co = jvm.zingg.client.ClientOptions(args)
+    
     def getClientOptions(self):
         """ Method to get pointer address of this class
 
