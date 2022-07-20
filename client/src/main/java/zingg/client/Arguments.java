@@ -652,11 +652,6 @@ public class Arguments implements Serializable {
 		this.showConcise = showConcise;
 	}
 
-<<<<<<< HEAD
-=======
-	String column;
->>>>>>> 213f7595fb8bfbdc05da1d626efe8727c21c471f
-
 	public String getColumn() {
 		return column;
 	}
@@ -689,8 +684,5 @@ public class Arguments implements Serializable {
     	return getZinggBaseModelDir() + "/stopWords/";
     }
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 213f7595fb8bfbdc05da1d626efe8727c21c471f
+
