@@ -98,6 +98,7 @@ public class ClientOptions {
 	   * @throws IllegalArgumentException If an error is found during parsing.
 	   */
 	  public final Option parse(List<String> args) {
+		for (String a: args) LOG.info(a);
 	    Pattern eqSeparatedOpt = Pattern.compile("(--[^=]+)=(.+)");
 
 	    int idx = 0;

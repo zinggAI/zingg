@@ -304,8 +304,9 @@ class Arguments:
 
 class ClientOptions:
     """ Class that contains Client options for Zingg object
-
-    :param args: Parse a list of Zingg command line options parameter values e.g. "--phase","match" etc. optional argument for initializing this class.
+    :param phase: trainMatch, train, match, link, findAndLabel, findTrainingData etc
+    :type phase: String
+    :param args: Parse a list of Zingg command line options parameter values e.g. "--location" etc. optional argument for initializing this class.
     :type args: List(String) or None
     """
     PHASE = jvm.zingg.client.ClientOptions.PHASE 
@@ -319,13 +320,17 @@ class ClientOptions:
     LOCATION = jvm.zingg.client.ClientOptions.LOCATION
     """:LOCATION: location parameter for this class"""
 
-    def __init__(self, args = None):
-        if(args == None):
-            args = []
+    def __init__(self, phase, args=[]):
+        print(args)
+        args.append(self.PHASE)
+        print(args)
+        args.append(phase)
         args.append(self.LICENSE)
         args.append("zinggLic.txt")
         args.append(self.EMAIL)
         args.append("zingg@zingg.ai")
+        args.append(self.CONF)
+        args.append("dummyConf.json")
         print("arguments for client options are ", args) 
         self.co = jvm.zingg.client.ClientOptions(args)
     
@@ -373,7 +378,7 @@ class ClientOptions:
         :return: The pointer containing address of the this class object after seting phase
         :rtype: pointer(ClientOptions) 
         """
-        return self.co.get(ClientOptions.PHASE).setValue(newValue)
+        self.co.get(ClientOptions.PHASE).setValue(newValue)
 
     def getConf(self):
         """ Method to get CONF value
