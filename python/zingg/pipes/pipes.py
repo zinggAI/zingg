@@ -79,7 +79,6 @@ class CsvPipe(Pipe):
             Pipe.addProperty(self, FilePipe.LOCATION, location)
             if(schema != None):
                 df = spark.read.format(Format.CSV.type()).schema(schema).load(location)
-
                 Pipe.setSchema(self, str(df.schema.json()))
     
     def setDelimiter(self, delimiter):

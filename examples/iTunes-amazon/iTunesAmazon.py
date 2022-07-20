@@ -27,34 +27,14 @@ args.setLabelDataSampleSize(0.4)
 #reading dataset into inputPipe and settint it up in 'args'
 #below line should not be required if you are reading from in memory dataset
 #in that case, replace df with input df
-<<<<<<< HEAD
-dfiTunes = spark.read.format("csv").schema("id string, Song_Name string, Artist_Name string, Album_Name string, Genre string, Price double, CopyRight string, Time string, Released string").load("examples/iTunes-amazon/iTunesMusic.csv")
-dfSchema = str(dfiTunes.schema.json())
-inputPipeiTunes = CsvPipe("testiTunes")
-inputPipeiTunes.setLocation("examples/iTunes-amazon/iTunesMusic.csv")
-inputPipeiTunes.setSchema(dfSchema)
-
-dfAmazon = spark.read.format("csv").schema("id string, Song_Name string, Artist_Name string, Album_Name string, Genre string, Price double, CopyRight string, Time string, Released string").load("examples/iTunes-amazon/AmazonMusic.csv")
-dfSchemaAmazon = str(dfAmazon.schema.json())
-inputPipeAmazon = CsvPipe("testAmazon")
-inputPipeAmazon.setLocation("examples/iTunes-amazon/AmazonMusic.csv")
-inputPipeAmazon.setSchema(dfSchemaAmazon)
-=======
 schema = "id string, Song_Name string, Artist_Name string, Album_Name string, Genre string, Price double, CopyRight string, Time string, Released string"
 inputPipeiTunes = CsvPipe("testiTunes", "examples/iTunes-amazon/iTunesMusic.csv", schema)
 inputPipeAmazon = CsvPipe("testAmazon", "examples/iTunes-amazon/AmazonMusic.csv", schema)
->>>>>>> Pipes changes issue #401
 
 args.setData(inputPipeiTunes,inputPipeAmazon)
 
 #setting outputpipe in 'args'
-<<<<<<< HEAD
-outputPipe = CsvPipe("iTunesAmazonresult")
-outputPipe.setLocation("/tmp/iTunesAmazonOutput")
-=======
 outputPipe = CsvPipe("iTunesAmazonresult", "/tmp/iTunesAmazonOutput")
->>>>>>> Pipes changes issue #401
-
 args.setOutput(outputPipe)
 
 options = ClientOptions()
