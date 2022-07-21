@@ -2,9 +2,9 @@
 nav_order: 7
 ---
 
-# Reporting bugs and contributing code
+# Reporting bugs and contributing
 
-Want to report a bug or request a feature? Let us know on [Slack](https://join.slack.com/t/zinggai/shared\_invite/zt-w7zlcnol-vEuqU9m\~Q56kLLUVxRgpOA), or open an [issue](https://github.com/zinggAI/zingg/issues/new/choose)
+Want to report a bug or request a feature? Let us know on [Slack](https://join.slack.com/t/zinggai/shared\_invite/zt-w7zlcnol-vEuqU9m\~Q56kLLUVxRgpOA), or open an [issue](https://github.com/zinggAI/zingg/issues/new/choose).
 
 Want to commit code? Please take a look at the [open issues](https://github.com/zinggAI/zingg/issues) or choose the ones marked [good first issue](https://github.com/zinggAI/zingg/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22+). Let us talk on [Slack](https://join.slack.com/t/zinggai/shared\_invite/zt-w7zlcnol-vEuqU9m\~Q56kLLUVxRgpOA) if you need help deciding what to fix or how.
 
@@ -16,7 +16,7 @@ Specifically, our Contributor License Agreement (CLA) grants the contributor and
 
 
 
-The above agreement is based on the Contributor License Agreements published by the [Apache Software Foundation](http://www.apache.org), with modifications:
+The above agreement is based on the Contributor License Agreements published by the [Apache Software Foundation](http://www.apache.org/), with modifications:
 
-* [Individual Contributor License Agreement ("Agreement") V2.0](http://www.apache.org/licenses/icla.txt)
+* [Individual Contributor License Agreement ("Agreement") V2.0](http://apache.org/licenses/icla.pdf)
 

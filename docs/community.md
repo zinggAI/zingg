@@ -1,7 +1,7 @@
 ---
+layout: default
 nav_order: 8
 ---
+## Community
 
-# Community
-
-Be a part of the conversation in the [Zingg Community Slack](https://join.slack.com/t/zinggai/shared\_invite/zt-w7zlcnol-vEuqU9m\~Q56kLLUVxRgpOA).
+Be part of the conversation in the [Zingg Community Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA)
