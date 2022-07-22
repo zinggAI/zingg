@@ -1,7 +1,7 @@
 """
 zingg
 ------------------------
-This module is the main interface to the Zingg Python API
+This module is the main point of the interface as Zingg python API
 """
 
 import logging
@@ -197,10 +197,10 @@ class Arguments:
         self.args.setFieldDefinition(javaFieldDef)
 
     def getArgs(self):
-        """ Method to get the underlying Java Arguments object
+        """ Method to get pointer address of this class
 
-        :return: The JVM Arguments object
-        :rtype: Arguments(zingg.client.Arguments)
+        :return: The pointer containing the address of this class object
+        :rtype: pointer(Arguments)
         
         """
         return self.args
@@ -208,13 +208,13 @@ class Arguments:
     def setArgs(self, argumentsObj):
         """ Method to set this class object
 
-        :param argumentsObj: Java Argument object to set this object
-        :type argumentsObj: java zingg.client.Arguments 
+        :param argumentsObj: Argument object to set this object
+        :type argumentsObj: pointer(Arguments)
         """
         self.args = argumentsObj
 
     def setData(self, *pipes):
-        """ Method to set the input data to be matched.
+        """ Method to set the file path of the file to be matched.
 
         :param pipes: input data pipes separated by comma e.g. (pipe1,pipe2,..)
         :type pipes: Pipe[]
@@ -225,9 +225,7 @@ class Arguments:
         self.args.setData(dataPipe)
 
     def setOutput(self, *pipes):
-        """ Method to set the output location where the match result will be saved.
-        Usually you want to save the data in one location but sometimes you want to
-        send in an array of pipes are write to each of them
+        """ Method to set the output directory where the match result will be saved
 
         :param pipes: output data pipes separated by comma e.g. (pipe1,pipe2,..)
         :type pipes: Pipe[]
@@ -238,9 +236,7 @@ class Arguments:
         self.args.setOutput(outputPipe)
 
     def setModelId(self, id):
-        """ The model id is the unique identifier for the model
-        The modelId along with the zinggDir are used to set the output directory (zinggDir/modelId)
-        where the training data and trained model will be saved
+        """ Method to set the output directory where the match output will be saved
 
         :param id: model id value 
         :type id: String
@@ -248,18 +244,16 @@ class Arguments:
         self.args.setModelId(id)
 
     def setZinggDir(self, f):
-        """ Sets the location for Zingg to save its internal computations and models. 
-        Please set it to a place where the program has write access.
+        """ Method to set the location for Zingg to save its internal computations and models. Please set it to a place where the program has to write access.
 
-        :param f: Zingg directory name which is the parent location of all models built with Zingg
+        :param f: Zingg directory name of the models
         :type f: String
         """
         self.args.setZinggDir(f)
 
     def setNumPartitions(self, numPartitions):
-        """ Method to set the number of partitions. The numPartitions are a Spark setting used 
-        to control 
-        We don't want to run over all the data, as we want a quick way to seed some labeled data that we can manually edit
+        """ Method to set NumPartitions parameter vlaue
+        Sample size to use for seeding labeled data We don't want to run over all the data, as we want a quick way to seed some labeled data that we can manually edit
 
         :param numPartitions: number of partitions for given data pipes
         :type numPartitions: int
@@ -310,8 +304,9 @@ class Arguments:
 
 class ClientOptions:
     """ Class that contains Client options for Zingg object
-
-    :param args: Parse a list of Zingg command line options parameter values e.g. "--phase","match" etc. optional argument for initializing this class.
+    :param phase: trainMatch, train, match, link, findAndLabel, findTrainingData etc
+    :type phase: String
+    :param args: Parse a list of Zingg command line options parameter values e.g. "--location" etc. optional argument for initializing this class.
     :type args: List(String) or None
     """
     PHASE = jvm.zingg.client.ClientOptions.PHASE 
@@ -325,9 +320,22 @@ class ClientOptions:
     LOCATION = jvm.zingg.client.ClientOptions.LOCATION
     """:LOCATION: location parameter for this class"""
 
-    def __init__(self, args = None):
-        if(args == None):
-            args = []
+    def __init__(self, phase, args=[]):
+        print(args)
+        args.append(self.PHASE)
+        print(args)
+        args.append(phase)
+        args.append(self.LICENSE)
+        args.append("zinggLic.txt")
+        args.append(self.EMAIL)
+        args.append("zingg@zingg.ai")
+        args.append(self.CONF)
+        args.append("dummyConf.json")
+        print("arguments for client options are ", args) 
+        self.co = jvm.zingg.client.ClientOptions(args)
+    
+    def __init__(self, args=[]):
+        print(args)
         args.append(self.LICENSE)
         args.append("zinggLic.txt")
         args.append(self.EMAIL)
@@ -379,7 +387,7 @@ class ClientOptions:
         :return: The pointer containing address of the this class object after seting phase
         :rtype: pointer(ClientOptions) 
         """
-        return self.co.get(ClientOptions.PHASE).setValue(newValue)
+        self.co.get(ClientOptions.PHASE).setValue(newValue)
 
     def getConf(self):
         """ Method to get CONF value
@@ -418,18 +426,22 @@ class FieldDefinition:
     :type dataType: String
     :param matchType: match type of this field e.g. FUSSY, EXACT, etc.
     :type matchType: MatchType
-    :param stopWords: The stop Words containing csv file's location
-    :type stopWords: String or None
     """
 
-    def __init__(self, name, dataType, *matchType, stopWords = None):
+    def __init__(self, name, dataType, *matchType):
         self.fd = jvm.zingg.client.FieldDefinition()
         self.fd.setFieldName(name)
         self.fd.setDataType(self.stringify(dataType))
         self.fd.setMatchType(matchType)
         self.fd.setFields(name)
-        if(stopWords!= None):
-            self.fd.setStopWords(stopWords)
+    
+    def setStopWords(self, stopWords):
+        """ Method to add stopwords to this class object
+
+        :param stopWords: The stop Words containing csv file's location
+        :type stopWords: String
+        """
+        self.fd.setStopWords(stopWords)
 
     def getFieldDefinition(self):
         """ Method to get  pointer address of this class
@@ -449,54 +461,7 @@ class FieldDefinition:
         :rtype: String
         """
         return '"' + str + '"'
-
-class Pipe:
-    """ Pipe class for working with different data-pipelines. Actual pipe def in the args. One pipe can be used at multiple places with different tables, locations, queries, etc
-
-    :param name: name of the pipe
-    :type name: String
-    :param format: formate of pipe e.g. bigquery,InMemory, etc.
-    :type format: Format
-    """
-
-    def __init__(self, name, format):
-        self.pipe = jvm.zingg.client.pipe.Pipe()
-        self.pipe.setName(name)
-        self.pipe.setFormat(jvm.zingg.client.pipe.Format.getPipeType(format))
-
-    def getPipe(self):
-        """ Method to get Pipe 
-
-        :return: pipe parameter values in the format of a list of string 
-        :rtype: Pipe
-        """
-        return self.pipe
-
-    def addProperty(self, name, value):
-        """ Method for adding different properties of pipe
-
-        :param name: name of the property
-        :type name: String
-        :param value: value you want to set for the property
-        :type value: String
-        """
-        self.pipe.setProp(name, value)
-    
-    def setSchema(self, s):
-        """ Method to set pipe schema value
-
-        :param s: json schema for the pipe
-        :type s: Schema
-        """
-        self.pipe.setSchema(s)
-
-    def toString(self):
-        """ Method to get pipe parameter values
-
-        :return: pipe information in list format
-        :rtype: List[String]
-        """
-        return self.pipe.toString()
+        
 
 def parseArguments(argv):
     """ This method is used for checking mandatory arguments and creating an arguments list from Command line arguments
@@ -516,5 +481,3 @@ def parseArguments(argv):
     args, remaining_args = parser.parse_known_args()
     LOG.debug("args: ", args)
     return args
-
-    

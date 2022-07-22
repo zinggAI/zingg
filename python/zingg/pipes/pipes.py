@@ -19,8 +19,8 @@ class Pipe:
 
     :param name: name of the pipe
     :type name: String
-    :param format: format of pipe e.g. bigquery,InMemory, etc.
-    :type format: String
+    :param format: formate of pipe e.g. bigquery,InMemory, etc.
+    :type format: Format
     """
 
     def __init__(self, name, format):
