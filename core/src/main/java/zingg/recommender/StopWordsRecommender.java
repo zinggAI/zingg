@@ -71,7 +71,7 @@ public class StopWordsRecommender {
 			data = data.select(split(data.col(fieldName), "\\s+").as(ColName.COL_SPLIT));
 			data = data.select(explode(data.col(ColName.COL_SPLIT)).as(ColName.COL_WORD));
 			data = data.filter(data.col(ColName.COL_WORD).notEqual(""));
-			data = data.groupBy(ColName.COL_WORD).count();
+			data = data.groupBy(ColName.COL_WORD).count().withColumnRenamed("count", ColName.COL_COUNT);
 			long count = data.agg(sum(ColName.COL_COUNT)).collectAsList().get(0).getLong(0);
 			double threshold = count * args.getStopWordsCutoff();
 			data = data.filter(data.col(ColName.COL_COUNT).gt(threshold));

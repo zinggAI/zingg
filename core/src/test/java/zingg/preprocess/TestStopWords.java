@@ -59,6 +59,7 @@ public class TestStopWords extends ZinggSparkTester{
 			assertTrue(datasetWithoutStopWords.except(datasetExpected).isEmpty());
 		} catch (Throwable e) {
 			fail("Unexpected exception " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -103,8 +104,10 @@ public class TestStopWords extends ZinggSparkTester{
 			assertTrue(newDataSet.except(datasetExpected).isEmpty());
 		} catch (Throwable e) {
 			fail("Unexpected exception " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
+
 
 	@Test
 	public void testStopWordColumnMissingFromStopWordFile() {

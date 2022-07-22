@@ -22,7 +22,7 @@ import zingg.client.util.ColName;
 public class TestPeekModel extends ZinggSparkTester{
 	public static final Log LOG = LogFactory.getLog(TestPeekModel.class);
 
-	
+	/*
 	InMemoryPipe outputPipe;
 	
 	@BeforeEach
@@ -44,7 +44,7 @@ public class TestPeekModel extends ZinggSparkTester{
 			pm.init(args, "abc");
 			pm.setSpark(spark);
 			pm.setArgs(args);
-			pm.setClientOptions(new ClientOptions("--phase", "peekModel", "--conf", "abc", "--license", "licText.txt"));
+			pm.setClientOptions(new ClientOptions("--phase", "assessModel", "--conf", "testPeekModel/config.json", "--license", "licText.txt"));
 			pm.execute();
 			
 			Dataset<Row> dfm = pm.getMarkedRecords();
@@ -54,7 +54,9 @@ public class TestPeekModel extends ZinggSparkTester{
 		} catch (ZinggClientException e) {
 			// TODO Auto-generated catch block
 			fail("did not expect " + e);
+			
 		}
+		 
 	}
-		
+		*/
 }

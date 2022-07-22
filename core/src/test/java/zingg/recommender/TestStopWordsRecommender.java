@@ -167,7 +167,7 @@ public class TestStopWordsRecommender extends ZinggSparkTester {
 		for (int index = 0; index < NO_OF_RECORDS; index++) {
 			List<String> strList = new ArrayList<String>();
 			for(WordByCount wc: wordCount){
-				strList.addAll(Collections.nCopies(wordDistribution[index][wordCount.indexOf(wc)],wc.word));
+				strList.addAll(Collections.nCopies(wordDistribution[index][wordCount.indexOf(wc)],wc.z_word));
 			}
 			records.add(RowFactory.create(getStringFromList(strList)));
 		}
@@ -180,11 +180,11 @@ public class TestStopWordsRecommender extends ZinggSparkTester {
 	}
 	/* WordByCount class containing word,count variable*/
 	class WordByCount{
-		String word;
-		Integer count;
+		String z_word;
+		Integer z_count;
 		public WordByCount(String word, Integer count){
-			this.word = word;
-			this.count = count;
+			this.z_word = word;
+			this.z_count = count;
 		}
 	}
 
@@ -198,7 +198,7 @@ public class TestStopWordsRecommender extends ZinggSparkTester {
 	public static int[][] randomDistributionList(int m, List<WordByCount> wbc) {
 		int[][] arr=new int[m][wbc.size()];
 		for (WordByCount c:wbc) {
-            for(int i = 0; i < c.count; i++){
+            for(int i = 0; i < c.z_count; i++){
 				arr[(int) (Math.random() * m)][wbc.indexOf(c)]++;
             }
 		}

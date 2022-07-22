@@ -1,0 +1,42 @@
+{
+  "output" : [ {
+    "name" : "output",
+    "format" : "csv",
+    "props" : {
+      "location" : "examples/febrl/output.csv"
+    },
+    "id" : 0
+  } ],
+  "data" : [ {
+    "name" : "test",
+    "format" : "csv",
+    "props" : {
+      "location" : "examples/febrl/test.csv"
+    },
+    "id" : 0
+  } ],
+  "zinggDir" : "/tmp/zingg",
+  "fieldDefinition" : [ {
+    "matchType" : "EXACT,FUZZY,PINCODE",
+    "fieldName" : "fname",
+    "fields" : "fname",
+    "stopWords" : null,
+    "abbreviations" : null,
+    "dataType" : "\"string\""
+  }, {
+    "matchType" : "FUZZY",
+    "fieldName" : "lname",
+    "fields" : "lname",
+    "stopWords" : null,
+    "abbreviations" : null,
+    "dataType" : "\"string\""
+  } ],
+  "numPartitions" : 10,
+  "labelDataSampleSize" : 0.01,
+  "modelId" : "500",
+  "jobId" : 1,
+  "collectMetrics" : true,
+  "showConcise" : false,
+  "stopWordsCutoff" : 0.1,
+  "blockSize" : 400
+}
