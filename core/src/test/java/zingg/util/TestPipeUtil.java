@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import zingg.ZinggSparkTester;
 import zingg.client.Arguments;
 import zingg.client.pipe.FilePipe;
-import zingg.client.pipe.Format;
 import zingg.client.pipe.Pipe;
 
 public class TestPipeUtil extends ZinggSparkTester{
@@ -22,7 +21,7 @@ public class TestPipeUtil extends ZinggSparkTester{
 		String fileName = args.getStopWordsDir() + "file";
 		Pipe p = PipeUtil.getStopWordsPipe(args, fileName);
 
-		assertEquals(Format.CSV, p.getFormat(), "Format is not CSV");
+		assertEquals(Pipe.FORMAT_CSV, p.getFormat(), "Format is not CSV");
 		assertEquals("true", p.get(FilePipe.HEADER).toLowerCase(), "Property 'header' is set to 'false'");
 		assertEquals(SaveMode.Overwrite, p.getMode(), "SaveMode is not 'Overwrite'");
 		assertEquals(fileName, p.get(FilePipe.LOCATION), "Absolute location of file differs");
