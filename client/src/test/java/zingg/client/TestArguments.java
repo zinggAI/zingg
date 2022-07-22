@@ -277,10 +277,10 @@ public class TestArguments {
 				args.setBlockSize(400L);
 				args.setCollectMetrics(true);
 				args.setModelId("500");
-                Arguments.writeArgumentsToJSON("configFromArgObject.json", args);
+                Arguments.writeArgumentsToJSON("/tmp/configFromArgObject.json", args);
 
 				//reload the same config file to check if deserialization is successful
-				Arguments newArgs = Arguments.createArgumentsFromJSON("configFromArgObject.json", "test");
+				Arguments newArgs = Arguments.createArgumentsFromJSON("/tmp/configFromArgObject.json", "test");
 				assertEquals(newArgs.getModelId(), "500", "Model id is different");
 				assertEquals(newArgs.getBlockSize(), 400L, "Block size is different");
 				assertEquals(newArgs.getFieldDefinition().get(0).getFieldName(), "fname", "Field Definition[0]'s name is different");

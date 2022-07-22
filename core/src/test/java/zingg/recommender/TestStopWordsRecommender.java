@@ -122,7 +122,7 @@ public class TestStopWordsRecommender extends ZinggSparkTester {
 		//create stopwords dataset and display according to stopWordsCutoff
 		args.setStopWordsCutoff(cutoff);
 		stopWords = recommender.findStopWords(dataset, COL_STOPWORDS);
-		stopWords.show();
+		//stopWords.show();
 
 		//convert spark Dataset<Row> into java List<Row>
 		stopwordRow = stopWords.collectAsList();
