@@ -11,7 +11,7 @@ import pandas as pd
 
 LOG = logging.getLogger("zingg.pipes")
 
-Format = jvm.zingg.client.pipe.Format
+JPipe = jvm.zingg.client.pipe.Pipe
 FilePipe = jvm.zingg.client.pipe.FilePipe
 
 class Pipe:
@@ -26,7 +26,7 @@ class Pipe:
     def __init__(self, name, format):
         self.pipe = jvm.zingg.client.pipe.Pipe()
         self.pipe.setName(name)
-        self.pipe.setFormat(jvm.zingg.client.pipe.Format.getPipeType(format))
+        self.pipe.setFormat(format)
 
     def getPipe(self):
         """ Method to get Pipe 
@@ -74,11 +74,11 @@ class CsvPipe(Pipe):
     :type schema: Schema or None
     """
     def __init__(self, name, location = None, schema = None):
-        Pipe.__init__(self, name, Format.CSV.type())
+        Pipe.__init__(self, name, JPipe.FORMAT_CSV)
         if(location != None):
             Pipe.addProperty(self, FilePipe.LOCATION, location)
             if(schema != None):
-                df = spark.read.format(Format.CSV.type()).schema(schema).load(location)
+                df = spark.read.format(JPipe.FORMAT_CSV).schema(schema).load(location)
                 Pipe.setSchema(self, str(df.schema.json()))
     
     def setDelimiter(self, delimiter):
@@ -118,7 +118,7 @@ class BigQueryPipe(Pipe):
     TEMP_GCS_BUCKET="temporaryGcsBucket"
 
     def __init__(self,name):
-        Pipe.__init__(self, name, Format.BIGQUERY.type())
+        Pipe.__init__(self, name, JPipe.FORMAT_BIGQUERY)
 
     def setCredentialFile(self, file):
         """ Method to set Credential file to the pipe
@@ -168,7 +168,7 @@ class SnowflakePipe(Pipe):
     DBTABLE = "dbtable"
 
     def __init__(self,name):
-        Pipe.__init__(self, name, Format.SNOWFLAKE.type())
+        Pipe.__init__(self, name, JPipe.FORMAT_SNOWFLAKE)
 
     def setURL(self, url):
         """ Method to set url to the pipe
@@ -237,7 +237,7 @@ class InMemoryPipe(Pipe):
     """    
 
     def __init__(self, name, df = None):
-        Pipe.__init__(self, name, Format.INMEMORY.type())
+        Pipe.__init__(self, name, JPipe.FORMAT_INMEMORY)
         if (df is not None):
             self.setDataset(df)
 
