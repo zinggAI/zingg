@@ -4,6 +4,7 @@ import seaborn as sn
 import matplotlib.pyplot as plt
 import sys
 from IPython.display import display
+import tk
 
 logging.basicConfig(level=logging.INFO)
 LOG = logging.getLogger("zingg.assessModel")

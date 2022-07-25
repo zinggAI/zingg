@@ -30,6 +30,7 @@ set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 #echo $PROPERTIES
 #echo $PROPERTIES_FILE
 #echo $@
+#echo $RUN_PYTHON_PHASE
 
 # if it is a python phase
 if [[ $RUN_PYTHON_PHASE -eq 1 ]]; then
