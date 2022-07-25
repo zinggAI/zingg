@@ -5,7 +5,7 @@ title: Using preexisting training data
 grand_parent: Step By Step Guide
 ---
 
-# Using preexisting training data
+# Using pre-existing training data
 
 ## Supplementing Zingg with existing training data
 
@@ -17,6 +17,6 @@ An example is provided in [Github training data](../../../examples/febrl/trainin
 
 The above training data can be specified using [trainingSamples attribute in the configuration.](../../../examples/febrl/configWithTrainingSamples.json)
 
-In addition, labeled data of one model can also be exported and used as training data for another model. For details, check out [exporting labelled data](exportLabeledData.md).
+In addition, labeled data of one model can also be exported and used as training data for another model. For details, check out [exporting labeled data](exportLabeledData.md).
 
-Please note: It is advisable to still run [findTrainingData](findTrainingData.html) and [label](label.html) a few rounds to tune Zingg with the supplied training data as well as patterns it needs to learn independently.
+Please note: It is advisable to still run [findTrainingData](findTrainingData.md) and [label](label.md) a few rounds to tune Zingg with the supplied training data as well as patterns it needs to learn independently.

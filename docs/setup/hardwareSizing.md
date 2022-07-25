@@ -6,7 +6,7 @@ nav_order: 4
 
 # Hardware Sizing
 
-Zingg has been built to scale. Performance is dependent on
+Zingg has been built to scale. Performance is dependent on:
 
 * The number of records to be matched.
 * The number of fields to be compared against each other.
