@@ -29,13 +29,13 @@ A) Java JDK - version "1.8.0\_131"
 
 B) Apache Spark - version spark-3.1.2-bin-hadoop3.2
 
-**Prerequisites for running Zingg on a single machine without setting up a Spark cluster**&#x20;
+**Prerequisites for running Zingg on a single machine without setting up a Spark cluster**
 
-(Good for a few million records)&#x20;
+(Good for a few million records)
 
 A) Install the specified JDK version
 
-B) Apache Spark - Download the specified version from spark.apache.org and unzip it        in a folder under home
+B) Apache Spark - Download the specified version from spark.apache.org and unzip it in a folder under home
 
 Please add the following entries to \~/.bash\_aliases
 
@@ -47,7 +47,7 @@ Please add the following entries to \~/.bash\_aliases
 
 C) Correct entry of host under /etc/hosts
 
-Run ifconfig to find the IP of the machine and make sure it is added to the /etc/hosts for localhost
+Run ifconfig to find the IP of the machine and make sure it is added to the /etc/hosts for localhost.
 
 **Prerequisites for running Zingg on a Spark cluster**
 
@@ -63,13 +63,13 @@ If you have a ready Spark cluster, you can run Zingg by configuring the followin
 
 Download the tar zingg-version.tar.gz to a folder of your choice and run the following:
 
->gzip -d zingg-0.3.4-SNAPSHOT-bin.tar.gz ; tar xvf zingg-0.3.4-SNAPSHOT-bin.tar 
+> gzip -d zingg-0.3.4-SNAPSHOT-bin.tar.gz ; tar xvf zingg-0.3.4-SNAPSHOT-bin.tar
 
-This will create a folder zingg-0.3.4-SNAPSHOT under the chosen folder. 
- 
-Move the above folder to zingg. 
+This will create a folder zingg-0.3.4-SNAPSHOT under the chosen folder.
 
->mv zingg-0.3.4-SNAPSHOT-bin ~/zingg 
+Move the above folder to zingg.
+
+> mv zingg-0.3.4-SNAPSHOT-bin \~/zingg
 
 > export ZINGG\_HOME=path to zingg
 
