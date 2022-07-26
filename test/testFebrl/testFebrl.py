@@ -32,8 +32,7 @@ inputPipe = CsvPipe("unittestFebrl", "examples/febrl/test.csv", schema)
 outputPipe = CsvPipe("unittestFebrlResult", "/tmp/pythonTestFebrl")
 args.setData(inputPipe)
 args.setOutput(outputPipe)
-options = ClientOptions()
-options.setPhase("trainMatch")
+options = ClientOptions([ClientOptions.PHASE,trainMatch"])
 
 #testing
 class Accuracy_recordCount(TestCase):

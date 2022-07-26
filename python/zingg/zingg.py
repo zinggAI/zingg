@@ -320,41 +320,25 @@ class ClientOptions:
     LOCATION = jvm.zingg.client.ClientOptions.LOCATION
     """:LOCATION: location parameter for this class"""
 
-    def __init__(self, phase, args=[]):
+    def __init__(self, args=None):
         print(args)
-        args.append(self.PHASE)
-        print(args)
-        args.append(phase)
-        args.append(self.LICENSE)
-        args.append("zinggLic.txt")
-        args.append(self.EMAIL)
-        args.append("zingg@zingg.ai")
-        args.append(self.CONF)
-        args.append("dummyConf.json")
+        if(args == None):
+            args = []
+        if (not (self.PHASE in args)):
+            args.append(self.PHASE)
+            args.append("peekModel")
+        if (not (self.LICENSE in args)):
+            args.append(self.LICENSE)
+            args.append("zinggLic.txt")
+        if (not (self.EMAIL in args)):
+            args.append(self.EMAIL)
+            args.append("zingg@zingg.ai")
+        if (not (self.CONF in args)):
+            args.append(self.CONF)
+            args.append("dummyConf.json")
         print("arguments for client options are ", args) 
         self.co = jvm.zingg.client.ClientOptions(args)
     
-    def __init__(self, args=[]):
-        print(args)
-        args.append(self.LICENSE)
-        args.append("zinggLic.txt")
-        args.append(self.EMAIL)
-        args.append("zingg@zingg.ai")
-        print("arguments for client options are ", args) 
-        self.co = jvm.zingg.client.ClientOptions(args)
-    
-    def __init__(self, phase):
-        args = []
-        args.append(self.PHASE)
-        args.append(phase)
-        args.append(self.CONF)
-        args.append("dummyConf.json")
-        args.append(self.LICENSE)
-        args.append("zinggLic.txt")
-        args.append(self.EMAIL)
-        args.append("zingg@zingg.ai")
-        print("arguments for client options are ", args) 
-        self.co = jvm.zingg.client.ClientOptions(args)
     
     def getClientOptions(self):
         """ Method to get pointer address of this class

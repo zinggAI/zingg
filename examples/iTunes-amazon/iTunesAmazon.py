@@ -37,7 +37,7 @@ args.setData(inputPipeiTunes,inputPipeAmazon)
 outputPipe = CsvPipe("iTunesAmazonresult", "/tmp/iTunesAmazonOutput")
 args.setOutput(outputPipe)
 
-options = ClientOptions("link")
+options = ClientOptions([ClientOptions.PHASE,"link"])
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
