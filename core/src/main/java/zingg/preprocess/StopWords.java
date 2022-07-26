@@ -19,13 +19,14 @@ import org.apache.spark.sql.types.DataTypes;
 import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
 import zingg.client.ZinggClientException;
+import zingg.client.util.ColName;
 import zingg.util.PipeUtil;
 
 public class StopWords {
 
 	protected static String name = "zingg.preprocess.StopWords";
 	public static final Log LOG = LogFactory.getLog(StopWords.class);
-	protected static String stopWordColumn = "StopWord";
+	protected static String stopWordColumn = ColName.COL_WORD;
 	protected static final int COLUMN_INDEX_DEFAULT = 0;
 
     public static Dataset<Row> preprocessForStopWords(SparkSession spark, Arguments args, Dataset<Row> ds) throws ZinggClientException {

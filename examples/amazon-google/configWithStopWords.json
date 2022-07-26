@@ -83,5 +83,5 @@
 		"numPartitions":4,
 		"modelId": 103,
 		"zinggDir": "models",
-		"stopWordsCutoff": 0.1
+		"stopWordsCutoff": 0.01
 }
