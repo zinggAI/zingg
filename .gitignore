@@ -18,4 +18,5 @@ __pycache__
 deps/**
 zingg.egg-info
 dist
-python/docs/_build/
+python/docs/_build/html
+python/docs/_build/_doctrees
