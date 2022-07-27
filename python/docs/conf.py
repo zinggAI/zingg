@@ -18,8 +18,8 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 
 project = 'zingg'
-copyright = '2022, zingg.AI'
-author = 'zingg.AI'
+copyright = '2022, Zingg.AI'
+author = 'Zingg.AI'
 
 # The full version, including alpha/beta/rc tags
 release = '0.3.4'
@@ -35,8 +35,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
-    'sphinx.ext.coverage',
-    'myst_parser'
+    'sphinx.ext.coverage'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
