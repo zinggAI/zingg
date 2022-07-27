@@ -34,7 +34,7 @@ extensions = [
     'sphinx.ext.duration',
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
-    'sphinx.ext.viewcbode',
+    'sphinx.ext.viewcode',
     'sphinx.ext.coverage',
     'myst_parser'
 ]
