@@ -6,8 +6,7 @@ This module is submodule of zingg to work with different types of Pipes. Classes
 
 
 import logging
-from zingg import *
-import pandas as pd
+from zingg.client import *
 
 LOG = logging.getLogger("zingg.pipes")
 

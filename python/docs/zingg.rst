@@ -1,26 +1,17 @@
-zingg package
+Zingg package
 =============
 
-.. Subpackages
-.. -----------
+Subpackages
+-----------
 
-.. .. toctree::
-..    :maxdepth: 4
+.. toctree::
+    :maxdepth: 1
+    
+    zingg.client
+    zingg.pipes
 
-..    zingg.pipes
 
-.. Submodules
-.. ----------
-
-.. zingg.zingg module
-.. ------------------
-
-.. .. automodule:: zingg.zingg
-..    :members:
-..    :undoc-members:
-..    :show-inheritance:
-
-Module contents
+Contents
 ---------------
 
 Zingg Python APIs for entity resolution, record linkage, data mastering and deduplication
@@ -29,7 +20,8 @@ Zingg Python APIs for entity resolution, record linkage, data mastering and dedu
 requires python 3.6+; spark 3.1.2
 Otherwise, :py:func:`zingg.Zingg` cannot be executed
 
-.. automodule:: zingg.zingg
+.. automodule:: zingg
    :members:
    :undoc-members:
    :show-inheritance:
+

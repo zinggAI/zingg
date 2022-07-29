@@ -135,7 +135,7 @@ try:
     
     packages = []
     packages.append('zingg')
-    packages.append('zingg.pipes')
+    #packages.append('zingg.pipes')
 
     with open('README.md') as f:
         long_description = f.read()

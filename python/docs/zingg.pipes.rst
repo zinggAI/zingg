@@ -1,16 +1,5 @@
-zingg.pipes package
+zingg.pipes module
 ===================
-
-.. Submodules
-.. ----------
-
-.. zingg.pipes.pipes module
-.. ------------------------
-
-Module contents
----------------
-
-Import module using ``import zingg.pipes``
 
 .. automodule:: zingg.pipes
    :members:

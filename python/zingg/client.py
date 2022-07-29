@@ -24,6 +24,8 @@ gateway = sc._gateway
 ColName = jvm.zingg.client.util.ColName
 MatchType = jvm.zingg.client.MatchType
 
+
+
 class Zingg:
     """ This class is the main point of interface with the Zingg matching product. Construct a client to Zingg using provided arguments and spark master. If running locally, set the master to local.
 

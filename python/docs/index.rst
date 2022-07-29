@@ -11,8 +11,7 @@ Welcome to Zingg's documentation!
    :caption: Contents:
 
    zingg
-   zingg.pipes
-
+ 
 Indices and tables
 ==================
 
@@ -24,5 +23,3 @@ Indices and tables
 
    This project is used by Zingg.AI
 
-Check out the :doc:`usage` section for further information, including how to
-:ref:`install <installation>` the project.
