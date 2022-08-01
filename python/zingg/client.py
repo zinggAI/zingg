@@ -1,7 +1,7 @@
 """
 zingg.client
 ------------------------
-This module is the main point of the interface as Zingg python API
+This module is the main entry point of the Zingg Python API
 """
 
 import logging
