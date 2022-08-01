@@ -16,6 +16,10 @@ Otherwise, :py:func:`zingg.client.Zingg` cannot be executed
    :undoc-members:
    :show-inheritance:
 
+.. automodule:: zingg.client
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 .. automodule:: zingg.pipes
    :members:
