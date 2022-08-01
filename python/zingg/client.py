@@ -1,5 +1,5 @@
 """
-zingg
+zingg.client
 ------------------------
 This module is the main point of the interface as Zingg python API
 """

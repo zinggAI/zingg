@@ -1,15 +1,6 @@
 Zingg package
 =============
 
-Subpackages
------------
-
-.. toctree::
-    :maxdepth: 1
-    
-    zingg.client
-    zingg.pipes
-
 
 Contents
 ---------------
@@ -24,4 +15,7 @@ Otherwise, :py:func:`zingg.Zingg` cannot be executed
    :members:
    :undoc-members:
    :show-inheritance:
+
+
+   
 
