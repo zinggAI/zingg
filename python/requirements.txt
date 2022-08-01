@@ -3,3 +3,4 @@ seaborn
 matplotlib
 sphinx
 sphinx-rtd-theme
+pyspark
