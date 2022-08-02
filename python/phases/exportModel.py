@@ -1,5 +1,4 @@
-
-from zingg import *
+from zingg.client import *
 import sys
 import argparse
 import os
