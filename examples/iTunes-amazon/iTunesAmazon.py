@@ -1,4 +1,4 @@
-from zingg import *
+from zingg.client import *
 from zingg.pipes import *
 
 #build the arguments for zingg
