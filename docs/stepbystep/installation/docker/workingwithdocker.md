@@ -25,7 +25,7 @@ The **zinggDir** location where model information is stored may use a shared loc
 zingg.sh --phase label --conf config.json --zinggDir /location
 ```
 
-Similarly, the output and data dir [configurations](configuration.md) inside config.json can be made using a shared location. Please ensure that the running user has access permissions for this location.
+Similarly, the output and data dir [configurations](../../../setup/configuration.md) inside config.json can be made using a shared location. Please ensure that the running user has access permissions for this location.
 
 ## File read/write permissions
 
