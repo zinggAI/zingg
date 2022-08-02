@@ -1,6 +1,6 @@
 ## The Problem
 
-Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields which makes it hard to combine them together, especially with growing data volumes. This hurts [customer analytics](docs/bizLeaderSurvey.md) - establishing lifetime value, loyalty programs or marketing channels is impossible when the base data is not linked. No AI algorithm for segmentation can produce right results when there are multiple copies of the same customer lurking in the data. No warehouse can live up to its promise if the dimension tables have duplicates. 
+Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields, which makes it hard to combine them together, especially with growing data volumes. This hurts [customer analytics](docs/bizLeaderSurvey.md) - establishing lifetime value, loyalty programs, or marketing channels is impossible when the base data is not linked. No AI algorithm for segmentation can produce the right results when there are multiple copies of the same customer lurking in the data. No warehouse can live up to its promise if the dimension tables have duplicates. 
 
 ![# Zingg - Data Silos](/assets/dataSilos.png)
 
@@ -10,13 +10,13 @@ With Zingg, the analytics engineer and the data scientist can quickly integrate 
 
 ![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
 
-Besides the probabilistic matching, also known as fuzzy matching, Zingg also does deterministic matching, which is useful in identity resolution and householding applications
+Besides probabilistic matching, also known as fuzzy matching, Zingg also does deterministic matching, which is useful in identity resolution and householding applications.
 
 ![#Zingg Detereministic Matching](/assets/deterministicMatching.png)
 
 ## Why Zingg
 
-Zingg is an ML based tool for entity resolution. The following features set Zingg apart from other tools and libraries 
+Zingg is an ML based tool for entity resolution. The following features set Zingg apart from other tools and libraries: 
 - Ability to handle any entity like customer, patient, supplier, product etc 
 - Ability to connect to [disparate data sources](https://docs.zingg.ai/zingg/connectors). Local and cloud file systems in any format, enterprise applications and relational, NoSQL and cloud databases and warehouses
 - Ability to scale to large volumes of data. [See why this is important](https://docs.zingg.ai/zingg/zmodels/) and [Zingg performance numbers](https://docs.zingg.ai/zingg/stepbystep/hardwaresizing)
@@ -54,11 +54,11 @@ Check the [step by step guide](https://docs.zingg.ai/zingg/stepbystep) for more 
 Zingg connects, reads and writes to most on-premise and cloud data sources. Zingg runs on any private or cloud based Spark service.
 ![zinggConnectors](assets/zinggOSS.png)
 
-Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBMS and any Spark supported data sources. Zingg also works with all major file formats like Parquet, Avro, JSON, XLSX, CSV, TSV etc. This is done through the Zingg [pipe](docs/dataSourcesAndSinks/pipes.md) abstraction.  
+Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBMS and any Spark supported data sources. Zingg also works with all major file formats including Parquet, Avro, JSON, XLSX, CSV & TSV. This is done through the Zingg [pipe](docs/dataSourcesAndSinks/pipes.md) abstraction.  
 
 ## Key Zingg Concepts
 
-Zingg learns 2 models on the data. 
+Zingg trains 2 models from the data:
 
 1. Blocking Model
 
@@ -70,7 +70,7 @@ Zingg learns a clustering/blocking model which indexes near similar records. Thi
 
 2. Similarity Model 
 
-The similarity model helps Zingg to predict which record pairs match. Similarity is run only on records within the same block/cluster to scale the problem to larger datasets. The similarity model is a classifier which predicts similarity of records which are not exactly same, but could belong together.
+The similarity model helps Zingg predict which record pairs match. Similarity is run only on records within the same block/cluster to scale the problem to larger datasets. The similarity model is a classifier which predicts similarity between records that are not exactly the same, but could belong together.
 
 ![Fuzzy matching comparisons](/assets/dataMatching.jpg) 
 
@@ -89,7 +89,7 @@ What is the [backstory behind Zingg](https://sonalgoyal.substack.com/p/time-to-z
 
 ## Documentation
 
-Check detailed Zingg [documentation](https://docs.zingg.ai/zingg/) 
+Check the detailed Zingg [documentation](https://docs.zingg.ai/zingg/) 
 
 ## Community
 
@@ -118,11 +118,11 @@ Need a different license? Write to us.
 
 ## People behind Zingg
 
-Zingg is being developed by [Zingg.AI](https://www.zingg.ai) team. 
+Zingg is being developed by the [Zingg.AI](https://www.zingg.ai) team. 
 
 ## Acknowledgements
 
-Zingg would have not have been possible without the excellent work below:
+Zingg would not have been possible without the excellent work below:
 - [Apache Spark](https://spark.apache.org)
 - [SecondString](http://secondstring.sourceforge.net/)
 - [Febrl](http://users.cecs.anu.edu.au/~Peter.Christen/Febrl/febrl-0.3/febrldoc-0.3/)
