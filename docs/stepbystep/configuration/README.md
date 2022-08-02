@@ -1,9 +1,3 @@
----
-title: Configuration
-parent: Step By Step Guide
-nav_order: 5
----
-
 # Configuration
 
 ### Configuration
