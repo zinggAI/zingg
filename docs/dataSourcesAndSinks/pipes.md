@@ -8,9 +8,9 @@ nav_order: 4
 
 Zingg Pipes are an abstraction for a data source from which Zingg fetches data for matching or to which Zingg writes its output. This lets users connect to literally any datastore that has a Spark connector.
 
-The pipe is an easy way to specify properties and formats for the Spark connector of the relevant data source. Zingg pipes can be configured through the config [JSON](../setup/configuration.md) passed to the program by outlining the datastore connection properties.
+The pipe is an easy way to specify properties and formats for the Spark connector of the relevant data source. Zingg pipes can be configured through the config [JSON](../stepbystep/configuration/) passed to the program by outlining the datastore connection properties.
 
-Pipes can be configured for the data or the output attributes on the [JSON](../setup/configuration.md).
+Pipes can be configured for the data or the output attributes on the [JSON](../stepbystep/configuration/).
 
 Each pipe has the following attributes:
 
