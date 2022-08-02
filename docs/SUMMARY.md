@@ -3,6 +3,7 @@
 * [Welcome to Zingg](README.md)
 * [Step-By-Step Guide](stepByStep.md)
   * [Installation](setup/installation.md)
+    * [Docker](stepbystep/installation/docker.md)
     * [Working with Docker Image](setup/workingWithDocker.md)
   * [Hardware Sizing](setup/hardwareSizing.md)
   * [Configuration](setup/configuration.md)
