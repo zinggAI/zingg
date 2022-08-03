@@ -1,5 +1,6 @@
 ---
 nav_order: 6
+description: A note about telemetry and product usage data collection in Zingg
 ---
 
 # Security And Privacy
@@ -18,4 +19,3 @@ The following details are captured:
 
 If you do not wish to send this data, please set collectMetrics flag to false in the configuration JSON while running Zingg.
 
-No usage data is being collected in the 0.3.0 release.
