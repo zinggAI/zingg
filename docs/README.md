@@ -1,11 +1,19 @@
-# Zingg Command Line
+---
+description: Hope you find us useful :-)
+---
 
-The Zingg command line interface is the way to interact with Zingg to fire labeling, training and matching jobs and perform other Zingg functions
+# Welcome to Zingg
 
-To invoke the command line and pass a json configuration:
+## Why?
 
-`./scripts/zingg.sh <optional --properties-file path to zingg.conf> --phase <phase> --conf <path to json>`&#x20;
+Data silos hurt all business functions - customer analytics, supplier consolidation, risk and compliance, and sales and marketing.
 
-To invoke the command line and run python programs
+![Data Silos](../assets/dataSilos.png)
 
-`./scripts/zingg.sh <optional --properties-file path-to-zingg.conf> --run <path-to-python-program>`
+Zingg is a quick and scalable way to build a single source of truth for core business entities. With Zingg, the analytics engineer and the data scientist can quickly integrate data silos and build unified views at scale!
+
+![# Zingg - Data Mastering At Scale with ML](../assets/dataMastering.png)
+
+## Book Office Hours
+
+If you want to schedule a 30-min call with our team to help you get set up, please select some time directly [here](https://calendly.com/sonalgoyal/30min).

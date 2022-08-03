@@ -1,7 +1,6 @@
 # Table of contents
 
-* [Zingg Command Line](README.md)
-* [Welcome to Zingg](<README (1).md>)
+* [Welcome to Zingg](README.md)
 * [Step-By-Step Guide](stepByStep.md)
   * [Installation](setup/installation.md)
     * [Docker](stepbystep/installation/docker/README.md)
@@ -17,6 +16,7 @@
     * [Compiling From Source](stepbystep/installation/compiling-from-source.md)
   * [Hardware Sizing](setup/hardwareSizing.md)
   * [Zingg Runtime Properties](stepbystep/zingg-runtime-properties.md)
+  * [Zingg Command Line](stepbystep/zingg-command-line.md)
   * [Configuration](stepbystep/configuration/README.md)
     * [Configuring Through Environment Variables](stepbystep/configuration/configuring-through-environment-variables.md)
     * [Data Input and Output](stepbystep/configuration/data-input-and-output/README.md)
@@ -54,8 +54,7 @@
 * [Zingg Models](zModels.md)
   * [Pretrained models](pretrainedModels.md)
 * [Improving Accuracy](improving-accuracy/README.md)
-  * [Ignoring Commonly Occuring Words While Matching](improving-accuracy/stopwordsremoval/README.md)
-    * [Stop Words](improving-accuracy/stopwordsremoval/stopwordsreco.md)
+  * [Ignoring Commonly Occuring Words While Matching](accuracy/stopWordsRemoval.md)
   * [Defining Own Functions](accuracy/definingOwn.md)
 * [Documenting The Model](generatingdocumentation.md)
 * [Output Scores](scoring.md)

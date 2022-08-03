@@ -1,7 +1,3 @@
----
-nav_order: 6
----
-
 # Documenting The Model
 
 Zingg generates readable documentation about the training data, including those marked as matches as non-matches. The documentation is written to the zinggDir/modelId folder and can be built using the following
