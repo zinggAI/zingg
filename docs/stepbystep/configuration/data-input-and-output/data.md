@@ -2,11 +2,11 @@
 
 #### data
 
-An array of input data. Each array entry here refers to a [Zingg Pipe](../../dataSourcesAndSinks/pipes.md). If the data is self-describing, for e.g. Avro or Parquet, there is no need to define the schema. Else field definitions with names and types need to be provided.
+An array of input data. Each array entry here refers to a [Zingg Pipe](../../../dataSourcesAndSinks/pipes.md). If the data is self-describing, for e.g. Avro or Parquet, there is no need to define the schema. Else field definitions with names and types need to be provided.
 
-For example, for the CSV under [examples/febrl/test.csv](../../../examples/febrl/test.csv)
+For example, for the CSV under [examples/febrl/test.csv](../../../../examples/febrl/test.csv)
 
-![febrl](../../.gitbook/assets/image.png)
+![febrl](../../../.gitbook/assets/image.png)
 
 ```python
  "data" : [ {
@@ -36,4 +36,4 @@ For example, for the CSV under [examples/febrl/test.csv](../../../examples/febrl
   }
 ```
 
-Read more about Zingg Pipes for datastore connections [here](../../dataSourcesAndSinks/pipes.md).
+Read more about Zingg Pipes for datastore connections [here](../../../dataSourcesAndSinks/pipes.md).
