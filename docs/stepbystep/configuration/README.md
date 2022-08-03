@@ -98,7 +98,7 @@ Fraction of the data to be used for training the models. Adjust it between 0.000
 
 #### showConcise
 
-When this flag is set to true, during [Label](../../setup/training/label.md) and [updateLabel](../createtrainingdata/updatinglabels.md), only those fields are displayed on the console which helps build the model. In other words, fields that have matchType as "DONT\_USE", are not displayed to the user. Default is false.
+When this flag is set to true, during [Label](../../setup/training/label.md) and [updateLabel](../../updatingLabels.md), only those fields are displayed on the console which helps build the model. In other words, fields that have matchType as "DONT\_USE", are not displayed to the user. Default is false.
 
 #### collectMetrics
 

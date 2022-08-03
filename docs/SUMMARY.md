@@ -24,7 +24,7 @@
     * [Find And Label](setup/training/findAndLabel.md)
     * [Using pre-existing training data](setup/training/addOwnTrainingData.md)
     * [Exporting labeled data as CSV](setup/training/exportLabeledData.md)
-    * [Updating Labeled Pairs](stepbystep/createtrainingdata/updatinglabels.md)
+    * [Updating Labeled Pairs](updatingLabels.md)
   * [Building and saving the model](setup/train.md)
   * [Finding the matches](setup/match.md)
   * [Linking across datasets](setup/link.md)
