@@ -2,7 +2,7 @@
 title: Installation
 parent: Step By Step Guide
 nav_order: 3
-description: from the prebuilt release hosted on github
+description: From the pre-built release hosted on GitHub
 ---
 
 # Installation

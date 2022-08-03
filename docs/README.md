@@ -1,10 +1,14 @@
+---
+description: Introduction to Zingg
+---
+
 # Welcome to Zingg
 
 ## Why?
 
 Data silos hurt all business functions - customer analytics, supplier consolidation, risk and compliance, and sales and marketing.
 
-![data silos](../assets/dataSilos.png)
+![Data Silos](../assets/dataSilos.png)
 
 Zingg is a quick and scalable way to build a single source of truth for core business entities. With Zingg, the analytics engineer and the data scientist can quickly integrate data silos and build unified views at scale!
 

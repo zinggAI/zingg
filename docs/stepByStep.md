@@ -1,3 +1,7 @@
+---
+description: Instructions on how to install and use Zingg
+---
+
 # Step-By-Step Guide
 
 ## Step 1: Install

@@ -1,5 +1,5 @@
 ---
-description: from prebuilt docker image with all dependencies included
+description: From pre-built Docker image with all dependencies included
 ---
 
 # Docker
