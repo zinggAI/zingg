@@ -28,10 +28,9 @@ The config value for the data and output attributes of the JSON is
 
 One must include Snowflake JDBC driver and Spark dependency on the classpath. The jars can be downloaded from the maven repository ([1](https://mvnrepository.com/artifact/net.snowflake/snowflake-jdbc), [2](https://mvnrepository.com/artifact/net.snowflake/spark-snowflake)).
 
-For Zingg to discover the Snowflake jars, please add the property **spark.jars** in Zingg's configuration properties.
+For Zingg to discover the Snowflake jars, please add the property **spark.jars** in [Zingg's runtime properties.](../stepbystep/zingg-runtime-properties.md)
 
 ```
 spark.jars=snowflake-jdbc-3.13.18.jar,spark-snowflake_2.12-2.10.0-spark_3.1.jar
 ```
 
-Optionally, instead of setting the env variable **ZINGG\_EXTRA\_JARS** as above, equivalent&#x20;
