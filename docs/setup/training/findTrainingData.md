@@ -5,9 +5,9 @@ grand_parent: Step By Step Guide
 description: pairs of records that could be similar to train Zingg
 ---
 
-# Finding records For Training Set Creation
+# Finding Records For Training Set Creation
 
-Zingg builds models to predict similarity. Training data is needed to build these models. The findTrainingData phase prompts Zingg to search for edge cases in the data. During findTrainingData, Zingg combs through the data samples and judiciously selects limited pairs for the user to mark. Zingg is very frugal about the training so that user effort is minimized and models can be built and deployed quickly.
+The findTrainingData phase prompts Zingg to search for edge cases in the data which can be labeled by the user and used for learning. During this phase, Zingg combs through the data samples and judiciously selects limited representative pairs which can be marked by the user.  Zingg is very frugal about the training so that user effort is minimized and models can be built and deployed quickly.
 
 This findTrainingData job writes the edge cases to the folder configured through zinggDir/modelId in the config.
 
