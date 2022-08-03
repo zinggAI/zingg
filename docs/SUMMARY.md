@@ -12,7 +12,7 @@
       * [Single Machine Setup](stepbystep/installation/installing-from-release/single-machine-setup.md)
       * [Spark Cluster Checklist](stepbystep/installation/installing-from-release/spark-cluster-checklist.md)
       * [Installing Zingg](stepbystep/installation/installing-from-release/installing-zingg.md)
-      * [Verification](stepbystep/installation/installing-from-release/verification.md)
+      * [Verifying The Installation](stepbystep/installation/installing-from-release/verifying-the-installation.md)
     * [Compiling From Source](stepbystep/installation/compiling-from-source.md)
   * [Hardware Sizing](setup/hardwareSizing.md)
   * [Zingg Runtime Properties](stepbystep/zingg-runtime-properties.md)
