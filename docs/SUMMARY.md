@@ -57,7 +57,7 @@
   * [Ignoring Commonly Occuring Words While Matching](accuracy/stopWordsRemoval.md)
   * [Defining Own Functions](accuracy/definingOwn.md)
 * [Documenting The Model](generatingdocumentation.md)
-* [Output Scores](scoring.md)
+* [Interpreting Output Scores](scoring.md)
 * [Reporting bugs and contributing](contributing.md)
   * [Setting Zingg Development Environment](settingUpZingg.md)
 * [Community](community.md)

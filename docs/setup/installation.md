@@ -2,7 +2,7 @@
 title: Installation
 parent: Step By Step Guide
 nav_order: 3
-description: Getting Zingg installed
+description: From the pre-built release hosted on GitHub
 ---
 
 # Installation

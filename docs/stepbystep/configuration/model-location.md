@@ -1,9 +1,3 @@
----
-description: >-
-  Place where Zingg saves training data, models, documentation and
-  recommendations
----
-
 # Model Location
 
 #### zinggDir

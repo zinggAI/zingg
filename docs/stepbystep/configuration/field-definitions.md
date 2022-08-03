@@ -1,16 +1,10 @@
----
-description: >-
-  Defining which fields should appear in the output and whether and how they
-  need to be used in matching
----
-
 # Field Definitions
 
 #### fieldDefinition
 
-This is a JSON array representing the fields from the source data to be used for matching, and the kind of matching they need.
+Which fields from the source data are to be used for matching, and what kind of matching do they need?
 
-#### FUZZY
+**FUZZY**
 
 Broad matches with typos, abbreviations, and other variations.
 
@@ -18,7 +12,7 @@ Broad matches with typos, abbreviations, and other variations.
 
 Less tolerant with variations, but would still match inexact strings to some degree. Preferable for country codes, pin codes, and other categorical variables where you expect fewer variations.
 
-**DONT\_USE**
+**"DONT\_USE"**
 
 The name says it :-) Appears in the output but no computation is done on these. Helpful for fields like ids that are required in the output.
 
