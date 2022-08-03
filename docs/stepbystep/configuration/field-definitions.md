@@ -10,7 +10,7 @@ description: >-
 
 This is a JSON array representing the fields from the source data to be used for matching, and the kind of matching they need.
 
-**FUZZY**
+#### FUZZY
 
 Broad matches with typos, abbreviations, and other variations.
 
@@ -18,7 +18,7 @@ Broad matches with typos, abbreviations, and other variations.
 
 Less tolerant with variations, but would still match inexact strings to some degree. Preferable for country codes, pin codes, and other categorical variables where you expect fewer variations.
 
-**"DONT\_USE"**
+**DONT\_USE**
 
 The name says it :-) Appears in the output but no computation is done on these. Helpful for fields like ids that are required in the output.
 
