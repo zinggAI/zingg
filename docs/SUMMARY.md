@@ -20,7 +20,7 @@
   * [Configuration](stepbystep/configuration/README.md)
     * [Configuring Through Environment Variables](stepbystep/configuration/configuring-through-environment-variables.md)
     * [Data Input and Output](stepbystep/configuration/data-input-and-output/README.md)
-      * [Data](stepbystep/configuration/data-input-and-output/data.md)
+      * [Input Data](stepbystep/configuration/data-input-and-output/input-data.md)
       * [Output](stepbystep/configuration/data-input-and-output/output.md)
     * [Field Definitions](stepbystep/configuration/field-definitions.md)
     * [Model Location](stepbystep/configuration/model-location.md)

@@ -1,4 +1,8 @@
-# Data
+---
+description: Details about data to be matched, its format and connection properties
+---
+
+# Input Data
 
 #### data
 

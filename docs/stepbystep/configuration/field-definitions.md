@@ -1,8 +1,14 @@
+---
+description: >-
+  Defining which fields should appear in the output and whether and how they
+  need to be used in matching
+---
+
 # Field Definitions
 
 #### fieldDefinition
 
-Which fields from the source data are to be used for matching, and what kind of matching do they need?
+This is a JSON array representing the fields from the source data to be used for matching, and the kind of matching they need.
 
 **FUZZY**
 
