@@ -1,6 +1,7 @@
 # Table of contents
 
-* [Welcome to Zingg](README.md)
+* [Zingg Command Line](README.md)
+* [Welcome to Zingg](<README (1).md>)
 * [Step-By-Step Guide](stepByStep.md)
   * [Installation](setup/installation.md)
     * [Docker](stepbystep/installation/docker/README.md)
@@ -25,7 +26,7 @@
     * [Model Location](stepbystep/configuration/model-location.md)
     * [Tuning Label, Match And Link Jobs](stepbystep/configuration/tuning-label-match-and-link-jobs.md)
     * [Telemetry](stepbystep/configuration/telemetry.md)
-  * [Training data](setup/training/createTrainingData.md)
+  * [Working With Training Data](setup/training/createTrainingData.md)
     * [Finding Records For Training Set Creation](setup/training/findTrainingData.md)
     * [Labeling Records](setup/training/label.md)
     * [Find And Label](setup/training/findAndLabel.md)
