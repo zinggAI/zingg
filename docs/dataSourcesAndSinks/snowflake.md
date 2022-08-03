@@ -6,9 +6,9 @@ nav_order: 4
 
 # Snowflake
 
-Check a step by step tutorial at [Towards Data Science](https://towardsdatascience.com/identifying-duplicates-in-snowflake-e95b3f3fce2b).
+Check a step-by-step tutorial at [Towards Data Science](https://towardsdatascience.com/identifying-duplicates-in-snowflake-e95b3f3fce2b).
 
-The config value for the data and output attributes of the JSON is
+The config value for the data and output attributes of the JSON is:
 
 ```json
  "data" : [ {

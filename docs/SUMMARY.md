@@ -27,7 +27,7 @@
 * [Data Sources and Sinks](dataSourcesAndSinks/connectors.md)
   * [Zingg Pipes](dataSourcesAndSinks/pipes.md)
   * [Snowflake](dataSourcesAndSinks/snowflake.md)
-  * [Jdbc](connectors/jdbc/README.md)
+  * [Jdbc](dataSourcesAndSinks/jdbc.md)
     * [Postgres](connectors/jdbc/postgres.md)
     * [MySQL](connectors/jdbc/mysql.md)
   * [Cassandra](dataSourcesAndSinks/cassandra.md)
