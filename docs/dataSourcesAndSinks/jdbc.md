@@ -8,9 +8,5 @@ To include the JDBC driver for your particular database on the Spark classpath, 
 spark.jars=<location of jdbc driver jar>
 ```
 
-Connection details are given below for a few JDBC sources. Please replace \<db\_name> with the name of the database in addition to other props. For more details, refer to the [spark documentation](https://spark.apache.org/docs/latest/sql-data-sources-jdbc.html).
-
-## Properties for PostgreSQL database:
-
-## Properties for MySQL database:
+Connection details are given in the following sections for a few common JDBC sources.&#x20;
 

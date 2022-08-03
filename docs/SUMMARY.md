@@ -15,7 +15,7 @@
   * [Zingg Runtime Properties](stepbystep/zingg-runtime-properties.md)
   * [Configuration](stepbystep/configuration/README.md)
     * [Configuring Through Environment Variables](stepbystep/configuration/configuring-through-environment-variables.md)
-  * [Creating training data](setup/training/createTrainingData.md)
+  * [Training data](setup/training/createTrainingData.md)
     * [Finding Records For Training Set Creation](setup/training/findTrainingData.md)
     * [Labeling Records](setup/training/label.md)
     * [findAndLabel](setup/training/findAndLabel.md)
