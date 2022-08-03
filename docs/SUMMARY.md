@@ -18,7 +18,7 @@
   * [Training data](setup/training/createTrainingData.md)
     * [Finding Records For Training Set Creation](setup/training/findTrainingData.md)
     * [Labeling Records](setup/training/label.md)
-    * [findAndLabel](setup/training/findAndLabel.md)
+    * [Find And Label](setup/training/findAndLabel.md)
     * [Using pre-existing training data](setup/training/addOwnTrainingData.md)
     * [Exporting labeled data as CSV](setup/training/exportLabeledData.md)
   * [Building and saving the model](setup/train.md)
