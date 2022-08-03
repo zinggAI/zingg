@@ -12,7 +12,7 @@ Entity Resolution and The Modern Data Stack.
 
 Identity Resolution and Why CDPs fail
 
-
+* [Identity Resolution - Why CDPs Fall Short](https://hightouch.io/blog/warehouse-identity-resolution/)
 
 Entity Resolution using a graph database.
 
