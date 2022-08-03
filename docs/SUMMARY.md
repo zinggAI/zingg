@@ -16,7 +16,7 @@
   * [Configuration](stepbystep/configuration/README.md)
     * [Configuring Through Environment Variables](stepbystep/configuration/configuring-through-environment-variables.md)
   * [Creating training data](setup/training/createTrainingData.md)
-    * [Finding records For Training Set Creation](setup/training/findTrainingData.md)
+    * [Finding Records For Training Set Creation](setup/training/findTrainingData.md)
     * [Labeling Records](setup/training/label.md)
     * [findAndLabel](setup/training/findAndLabel.md)
     * [Using pre-existing training data](setup/training/addOwnTrainingData.md)
