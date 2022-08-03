@@ -84,10 +84,10 @@ last1char(lastname, pair2, record b) =
 
 pair2 is getting eliminated above, not good.
 
-So first1char(firstname) or first1char(lastname) will be chosen at the root of the blocking tree. Child nodes get added in a similar function to build the hierarchial blocking function tree. This brings near similar records together - in a way, clusters them to break the cartesian join.
+So first1char(firstname) or first1char(lastname) will be chosen at the root of the blocking tree. Child nodes get added in a similar function to build the hierarchical blocking function tree. This brings near similar records together - in a way, clusters them to break the cartesian join.
 
 These business-specific blocking functions go into [Hash Functions](https://github.com/zinggAI/zingg/tree/main/core/src/main/java/zingg/hash) and must be added to [HashFunctionRegistry](../../core/src/main/java/zingg/hash/HashFunctionRegistry.java) and [hash functions config](../../core/src/main/resources/hashFunctions.json).
 
-Also, for similarity, you can define your own measures. Each dataType has predefined features, for example, [String](../../core/src/main/java/zingg/feature/StringFeature.java) fuzzy type is configured for affine and jaro.
+Also, for similarity, you can define your own measures. Each dataType has predefined features, for example, [String](../../core/src/main/java/zingg/feature/StringFeature.java) fuzzy type is configured for Affine and Jaro.
 
 You can define your own [comparisons](https://github.com/zinggAI/zingg/tree/main/core/src/main/java/zingg/similarity/function) and use them.

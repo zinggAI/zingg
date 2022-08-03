@@ -1,6 +1,6 @@
 # Preparing data with Stop Words Removal
 
-In order to remove stopwords from the data, configure JSON variable **"stopWords"** with a CSV file containing stop words inside the configuration file's Field Definition block. The CSV file should contain one stop word in each row.
+In order to remove stopwords from the data, configure the JSON variable **"stopWords"** with a CSV file containing stop words inside the configuration file's Field Definition block. The CSV file should contain one stop word in each row.
 
 ```
 "fieldDefinition":[

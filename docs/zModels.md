@@ -18,7 +18,7 @@ Zingg learns a clustering/blocking model which indexes near similar records. Thi
 
 ## 2. Similarity Model
 
-The similarity model helps Zingg to predict which record pairs match. The similarity is run only on records within the same block/cluster to scale the problem to larger datasets. The similarity model is a classifier that predicts the similarity of records which are not exactly the same but could belong together.
+The similarity model helps Zingg to predict which record pairs match. The similarity is run only on records within the same block/cluster to scale the problem to larger datasets. The similarity model is a classifier that predicts the similarity of records that are not exactly the same but could belong together.
 
 ![Fuzzy matching comparisons](../assets/dataMatching.jpg)
 
