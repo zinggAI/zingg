@@ -2,7 +2,7 @@
 
 **Please note: This is an experimental feature. Please keep a backup copy of your model folder in a separate place before running this**
 
-As our understanding of our data changes, we may need to revisit the previously marked pairs and update them. To do this, please [generate the documentation of the model.](generatingDocumentation.md)
+As our understanding of our data changes, we may need to revisit the previously marked pairs and update them. To do this, please [generate the documentation of the model.](generatingdocumentation.md)
 
 You can then invoke the updater by invoking\
 `./scripts/zingg.sh --phase updateLabel --conf <location to conf.json>`
