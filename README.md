@@ -58,7 +58,7 @@ Zingg can read and write to Snowflake, Cassandra, S3, Azure, Elastic, major RDBM
 
 ## Key Zingg Concepts
 
-Zingg trains 2 models from the data:
+Zingg learns 2 models on the data:
 
 1. Blocking Model
 
