@@ -2,7 +2,7 @@
 nav_order: 6
 ---
 
-# Generating Documentation & Recommendations
+# Documenting The Model
 
 Zingg generates readable documentation about the training data, including those marked as matches as non-matches. The documentation is written to the zinggDir/modelId folder and can be built using the following
 
@@ -14,4 +14,3 @@ The generated documentation file can be viewed in a browser and looks like as be
 
 ![Training Data](../assets/documentation1.png)
 
-To view Zingg's recommendations for stop words, click on the column header of that field in the above documentation. Stop word recommendation files are written in folder zinggDir/modelId/stopWords

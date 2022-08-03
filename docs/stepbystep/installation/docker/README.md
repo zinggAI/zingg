@@ -13,4 +13,6 @@ docker pull zingg/zingg:0.3.4
 docker run -it zingg/zingg:0.3.4 bash
 ```
 
-Detailed help instructions for working with the Zingg docker image can be found [here](workingwithdocker.md).
+To know more about Docker, please refer to the official [docker documentation](https://docs.docker.com/).
+
+##
