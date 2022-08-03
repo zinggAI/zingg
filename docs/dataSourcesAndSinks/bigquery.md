@@ -2,19 +2,17 @@
 
 Zingg can seamlessly work with Google BigQuery. Please find below details about the properties that must be set.
 
-The two driver jars namely **spark-bigquery-with-dependencies\_2.12-0.24.2.jar** and **gcs-connector-hadoop2-latest.jar** are required to work with BigQuery. To include these BigQuery drivers in the spark classpath, set the following environment variable before running Zingg.
+The two driver jars namely **spark-bigquery-with-dependencies\_2.12-0.24.2.jar** and **gcs-connector-hadoop2-latest.jar** are required to work with BigQuery. To include these BigQuery drivers in the classpath, please configure the [runtime properties](../stepbystep/zingg-runtime-properties.md) to include these
 
 ```bash
-export ZINGG_EXTRA_JARS=./spark-bigquery-with-dependencies_2.12-0.24.2.jar,./gcs-connector-hadoop2-latest.jar
+spark.jars=./spark-bigquery-with-dependencies_2.12-0.24.2.jar,./gcs-connector-hadoop2-latest.jar
 ```
 
-Set the following property in Zingg's configuration file i.e. in **config/zingg.conf**.
+In addition, the following property needs to be set
 
 ```bash
 spark.hadoop.fs.gs.impl=com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem                                                      
 ```
-
-Similarly, in place of setting env variable **ZINGG\_EXTRA\_JARS** as above, equivalent property **spark.jars** can also be set in the zingg.conf file.
 
 If Zingg is run from outside the Google cloud, it requires authentication, please set the following env variable to the location of the file containing the service account key. A service account key can be created and downloaded in JSON format from the [Google Cloud console](https://cloud.google.com/docs/authentication/getting-started).
 
