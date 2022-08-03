@@ -12,6 +12,7 @@
       * [Verification](stepbystep/installation/installing-from-release/verification.md)
     * [Compiling From Source](stepbystep/installation/compiling-from-source.md)
   * [Hardware Sizing](setup/hardwareSizing.md)
+  * [Zingg Runtime Properties](stepbystep/zingg-runtime-properties.md)
   * [Configuration](stepbystep/configuration/README.md)
     * [Configuring Through Environment Variables](stepbystep/configuration/configuring-through-environment-variables.md)
   * [Creating training data](setup/training/createTrainingData.md)
