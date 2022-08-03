@@ -10,7 +10,7 @@ Decide your hardware based on the [performance numbers](setup/hardwareSizing.md)
 
 ## Step 3: Build the config for your data
 
-Zingg needs a configuration file that defines the data and what kind of matching is needed. You can create the configuration file by following the instructions [here](stepbystep/configuration/).
+Zingg needs a configuration file that defines the data and what kind of matching is needed. You can create the configuration file by following the instructions [here](setup/configuration.md).
 
 ## Step 4: Create the training data
 
