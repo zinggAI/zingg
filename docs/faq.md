@@ -26,7 +26,7 @@ No, Zingg is not an MDM. An MDM is the system of record, it has its own store wh
 
 ## Is Zingg a CDP ?
 
-No, Zingg is not a CDP, as it does not stream events or customer data through different channels. Zingg does overlap with the CDPs identity resolution and building customer 360 views.
+No, Zingg is not a CDP, as it does not stream events or customer data through different channels. Zingg does overlap with the CDPs identity resolution and building customer 360 views. Here is an [article](https://hightouch.com/blog/warehouse-identity-resolution/) describing how you can build your own CDP on the warehouse with Zingg.
 
 ## I can do Entity Resolution using a graph database like TigerGraph/Neo4J, why do I need Zingg ?
 
