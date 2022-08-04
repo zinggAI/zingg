@@ -1,3 +1,7 @@
+---
+description: Product usage data captured by Zingg OSS to improve user experience
+---
+
 # Telemetry
 
 #### collectMetrics
