@@ -2,6 +2,7 @@
 title: Snowflake
 parent: Data Sources and Sinks
 nav_order: 4
+description: Instructions to work with Snowflake
 ---
 
 # Snowflake

@@ -1,8 +1,12 @@
+---
+description: Instructions to work with BigQuery
+---
+
 # BigQuery
 
 Zingg can seamlessly work with Google BigQuery. Please find below details about the properties that must be set.
 
-The two driver jars namely **spark-bigquery-with-dependencies\_2.12-0.24.2.jar** and **gcs-connector-hadoop2-latest.jar** are required to work with BigQuery. To include these BigQuery drivers in the classpath, please configure the [runtime properties](../stepbystep/zingg-runtime-properties.md) to include these
+The two driver jars namely **spark-bigquery-with-dependencies\_2.12-0.24.2.jar** and **gcs-connector-hadoop2-latest.jar** are required to work with BigQuery. To include these BigQuery drivers in the classpath, please configure the [runtime properties](../stepbystep/zingg-runtime-properties.md) to include these.
 
 ```bash
 spark.jars=./spark-bigquery-with-dependencies_2.12-0.24.2.jar,./gcs-connector-hadoop2-latest.jar

@@ -1,12 +1,12 @@
 ---
-layout: default
 title: Parquet
 parent: Data Sources and Sinks
 nav_order: 5
+description: Instructions to fetch data from Parquet
 ---
 
+# Parquet
 
-## Parquet files
 ```json
 "data" : [{
 		"name":"parquetFiles", 

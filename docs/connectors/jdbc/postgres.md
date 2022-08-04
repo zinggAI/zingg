@@ -1,3 +1,7 @@
+---
+description: Instructions to fetch data from Postgres database
+---
+
 # Postgres
 
 ## JSON Settings for reading data from Postgres database:

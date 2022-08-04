@@ -2,6 +2,7 @@
 title: Running on Databricks
 parent: Running Zingg on Cloud
 nav_order: 6
+description: Instructions on working with Databricks
 ---
 
 # Running on Databricks
@@ -10,7 +11,7 @@ The cloud environment does not have the system console for the labeler to work. 
 
 Please refer to the [Databricks Zingg tutorial](https://medium.com/@sonalgoyal/identity-resolution-on-databricks-for-customer-360-591661bcafce) for a detailed tutorial.
 
-Zingg is run as a Spark Submit task with the following parameters:
+Zingg is run as a Spark Submit task with the following parameters :
 
 ```json
 {
@@ -49,7 +50,7 @@ Zingg is run as a Spark Submit task with the following parameters:
 }
 ```
 
-The config file for Databricks needs modifications to accept dbfs locations. Here is a sample config that worked.
+The config file for Databricks needs modifications to accept dbfs locations. Here is a sample config that worked :
 
 ```json
 {	

@@ -1,5 +1,6 @@
 ---
 nav_order: 9
+description: Questions on your mind? Here are few of them answered!
 ---
 
 # Frequently Asked Questions
@@ -16,7 +17,7 @@ No, absolutely not! Train only if the schema(attributes or their types) has chan
 
 Depends on the data size you have. Check [hardware sizing](setup/hardwareSizing.md) for more details.
 
-## I dont have much background in ML or Spark. Can I still use Zingg ?
+## I don't have much background in ML or Spark. Can I still use Zingg?
 
 Very much! Zingg uses Spark and ML under the hood so that you don't have to worry about the rules and the scale.
 

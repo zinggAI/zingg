@@ -2,6 +2,7 @@
 title: Zingg Models
 nav_order: 5
 has_children: true
+description: Working of Zingg models
 ---
 
 # Zingg Models

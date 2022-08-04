@@ -1,12 +1,11 @@
 ---
-layout: default
 title: MongoDB
 parent: Data Sources and Sinks
 nav_order: 5
+description: Instructions to fetch data from MongoDB
 ---
 
-
-## MongoDB
+# MongoDB
 
 ```json
 "data" : [{
@@ -16,5 +15,4 @@ nav_order: 5
 			"uri": "mongodb://127.0.0.1/people.contacts"		
 			}	
 		}]
-
 ```
