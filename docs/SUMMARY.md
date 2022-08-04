@@ -55,7 +55,7 @@
   * [Pretrained models](pretrainedModels.md)
 * [Improving Accuracy](improving-accuracy/README.md)
   * [Ignoring Commonly Occuring Words While Matching](accuracy/stopWordsRemoval.md)
-  * [Defining Own Functions](accuracy/definingOwn.md)
+  * [Defining Domain Specific Blocking And Similarity Functions](accuracy/definingOwn.md)
 * [Documenting The Model](generatingdocumentation.md)
 * [Interpreting Output Scores](scoring.md)
 * [Reporting bugs and contributing](contributing.md)
