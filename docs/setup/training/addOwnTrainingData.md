@@ -3,7 +3,6 @@ parent: Creating training data
 nav_order: 3
 title: Using preexisting training data
 grand_parent: Step By Step Guide
-description: Instructions on using existing training data with Zingg
 ---
 
 # Using pre-existing training data
