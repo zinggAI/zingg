@@ -4,7 +4,7 @@ Real world data contains multiple records belonging to the same customer. These 
 
 ![# Zingg - Data Silos](/assets/dataSilos.png)
 
-With a modern data stack and DataOps, we have established patterns for E and L in ELT for building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like DBT are actively and successfully addressing this. What is also needed is a quick and scalable way to build the single source of truth of core business entities post Extraction and pre or post Loading.
+With a modern data stack and DataOps, we have established patterns for E and L in ELT for building data warehouses, datalakes and deltalakes. However, the T - getting data ready for analytics still needs a lot of effort. Modern tools like dbt are actively and successfully addressing this. What is also needed is a quick and scalable way to build the single source of truth of core business entities post Extraction and pre or post Loading.
 
 With Zingg, the analytics engineer and the data scientist can quickly integrate data silos and build unified views at scale!
 
