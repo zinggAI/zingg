@@ -2,7 +2,6 @@
 title: Zingg Pipes
 parent: Data Sources and Sinks
 nav_order: 4
-description: Information on Zingg pipes and their working
 ---
 
 # Zingg Pipes

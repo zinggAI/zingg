@@ -9,7 +9,7 @@ Zingg models are built on your data and deployed within your network. No data le
 
 However, Zingg does collect usage metrics and writes them to Google Analytics. This is done to understand and improve the user experience. Please be assured that **Zingg does not capture any user data or input data and will never do so.**
 
-The following details are captured :
+The following details are captured:
 
 * **Data source type:** type of data format e.g. CSV, snowflake
 * **Fields count:** number of fields used for training

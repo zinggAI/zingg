@@ -1,6 +1,5 @@
 ---
 nav_order: 7
-description: Contribute, report a bug and connect with us!
 ---
 
 # Reporting bugs and contributing

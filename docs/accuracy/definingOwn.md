@@ -1,13 +1,13 @@
 ---
 nav_order: 6
-description: To tune Zingg for more accurate matching with higher recall
+description: To add blocking functions and how they work
 ---
 
-# Defining Domain Specific Blocking And Similarity Functions
+# Defining Own Functions
 
 You can add your own [blocking functions](https://github.com/zinggAI/zingg/tree/main/core/src/main/java/zingg/hash) which will be evaluated by Zingg to build the [blocking tree.](../zModels.md)
 
-The blocking tree works on the matched records provided by the user as part of the training. At every node, it selects the hash function and the field on which it should be applied so that there is the least elimination of the matching pairs. Say we have data like this :
+The blocking tree works on the matched records provided by the user as part of the training. At every node, it selects the hash function and the field on which it should be applied so that there is the least elimination of the matching pairs. Say we have data like this:
 
 |  Pair 1  | firstname | lastname |
 | :------: | :-------: | :------: |
@@ -23,7 +23,7 @@ The blocking tree works on the matched records provided by the user as part of t
 
 
 
-Let us assume we have hash function first1char and we want to check if it is a good function to apply to firstname :
+Let us assume we have hash function first1char and we want to check if it is a good function to apply to firstname:
 
 | Pair |  Record  | Output |
 | :--: | :------: | ------ |
@@ -36,7 +36,7 @@ There is no elimination in the pairs above, hence it is a good function.
 
 
 
-Now let us try last1char on firstname :
+Now let us try last1char on firstname
 
 | Pair |  Record  | Output |
 | :--: | :------: | ------ |

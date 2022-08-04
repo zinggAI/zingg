@@ -47,6 +47,7 @@
   * [Neo4j](dataSourcesAndSinks/neo4j.md)
   * [Parquet](dataSourcesAndSinks/parquet.md)
   * [BigQuery](dataSourcesAndSinks/bigquery.md)
+* [Working With Python](working-with-python.md)
 * [Running Zingg on Cloud](running/running.md)
   * [Running on AWS](running/aws.md)
   * [Running on Azure](running/azure.md)

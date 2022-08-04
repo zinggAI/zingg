@@ -2,7 +2,6 @@
 title: Cassandra
 parent: Data Sources and Sinks
 nav_order: 5
-description: Instructions to fetch data from Cassandra
 ---
 
 # Cassandra

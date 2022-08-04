@@ -1,11 +1,10 @@
 ---
+layout: default
 title: Neo4j
 parent: Data Sources and Sinks
 nav_order: 5
-description: Instructions to fetch data from Neo4j
 ---
-
-# Neo4j
+## Neo4j
 
 ```json
 "data" : [{
@@ -16,4 +15,5 @@ description: Instructions to fetch data from Neo4j
             "labels":"Person"		
 			}	
 		}]
+
 ```

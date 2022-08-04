@@ -2,7 +2,6 @@
 title: Data Sources and Sinks
 nav_order: 3
 has_children: true
-description: Data sources and file formats supported by Zingg
 ---
 
 # Data Sources and Sinks

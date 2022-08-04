@@ -1,9 +1,8 @@
 ---
 nav_order: 6
-description: Analyzing the output scores generated
 ---
 
-# Interpreting Output Scores
+# Output Scores
 
 For each field(FNAME, NAME, EMAIL..), Zingg computes multiple features and feeds them to a classifier. These features are typically different ways to compare strings. We consider string lengths and their differences, character differences, and which characters actually differed.
 

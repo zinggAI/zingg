@@ -1,8 +1,4 @@
----
-description: Working with different databases using JDBC driver
----
-
-# JDBC
+# Jdbc
 
 Zingg can connect to various databases such as Mysql, DB2, MariaDB, MS SQL, Oracle, PostgreSQL, etc. using JDBC. One just needs to download the appropriate driver and made it accessible to the application.
 

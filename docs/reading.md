@@ -1,6 +1,5 @@
 ---
 nav_order: 11
-description: More information regarding the problem we are solving, read away folks!
 ---
 
 # Reading Material
@@ -11,9 +10,9 @@ Entity Resolution and The Modern Data Stack.
 
 * [From Rows to People](https://roundup.getdbt.com/p/from-rows-to-people)
 
-Identity Resolution and Why CDPs fail.
+Identity Resolution and Why CDPs fail
 
-* [Identity Resolution - Why CDPs Fall Short](https://hightouch.io/blog/warehouse-identity-resolution/)
+
 
 Entity Resolution using a graph database.
 

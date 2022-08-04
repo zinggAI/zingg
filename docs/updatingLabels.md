@@ -1,7 +1,3 @@
----
-description: To update the existing labeled pairs as the data modifies
----
-
 # Updating Labeled Pairs
 
 **Please note: This is an experimental feature. Please keep a backup copy of your model folder in a separate place before running this**

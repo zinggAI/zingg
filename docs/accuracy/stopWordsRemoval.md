@@ -1,14 +1,10 @@
----
-description: Guide on omitting different types of words
----
-
 # Ignoring Commonly Occuring Words While Matching
 
-Common words like Mr, Pvt, Av, St, Street, etc. do not add differential signals and confuse matching. These words are called stopwords and matching is more accurate when stopwords are ignored.
+Common words like Mr, Pvt, Av, St, Street etc do not add differential signal and confuse matching. These words are called stopwords and matching is more accurate when stopwrods are ignored.
 
-In order to remove stopwords from a field, configure.
+In order to remove stopwords from a field, configure&#x20;
 
-The stopwords can be recommended by Zingg by invoking :
+The stopwords can be recommended by Zingg by invoking
 
 `./scripts/zingg.sh --phase recommend --conf <conf.json> --columns <list of columns to generate stop word recommendations>`&#x20;
 
