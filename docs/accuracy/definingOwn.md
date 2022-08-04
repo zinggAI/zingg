@@ -1,9 +1,9 @@
 ---
 nav_order: 6
-description: To tune Zingg for more accurate matching with higher recall
+description: To add blocking functions and how they work
 ---
 
-# Defining Domain Specific Blocking And Similarity Functions
+# Defining Own Functions
 
 You can add your own [blocking functions](https://github.com/zinggAI/zingg/tree/main/core/src/main/java/zingg/hash) which will be evaluated by Zingg to build the [blocking tree.](../zModels.md)
 
