@@ -1,6 +1,10 @@
+---
+description: To match two datasets against each other
+---
+
 # Linking across datasets
 
-In many cases like reference data mastering, enrichment, etc, two individual datasets are duplicates free but they need to be matched against each other. The link phase is used for such scenarios.
+In many cases like reference data mastering, enrichment, etc, two individual datasets are free of duplicates but they need to be matched against each other. The link phase is used for such scenarios.
 
 `./zingg.sh --phase link --conf config.json`
 
