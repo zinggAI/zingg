@@ -1,5 +1,5 @@
 ---
-description: Without Spark Cluster
+description: For standalone local Spark without a cluster
 ---
 
 # Single Machine Setup
