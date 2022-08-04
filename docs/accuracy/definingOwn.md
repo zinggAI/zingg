@@ -1,5 +1,6 @@
 ---
 nav_order: 6
+description: To add blocking functions and how they work
 ---
 
 # Defining Own Functions
@@ -8,83 +9,45 @@ You can add your own [blocking functions](https://github.com/zinggAI/zingg/tree/
 
 The blocking tree works on the matched records provided by the user as part of the training. At every node, it selects the hash function and the field on which it should be applied so that there is the least elimination of the matching pairs. Say we have data like this:
 
-***
+|  Pair 1  | firstname | lastname |
+| :------: | :-------: | :------: |
+| Record A |    john   |    doe   |
+| Record B |   johnh   |   d oe   |
 
-**pair 1**
+****
 
-**record a:**
+|   Pair 2  | firstname | lastname |
+| :-------: | :-------: | :------: |
+| Rrecord A |    mary   |    ann   |
+|  Record B |   marry   |          |
 
-firstname: john
 
-last name: doe
 
-**record b:**
+Let us assume we have hash function first1char and we want to check if it is a good function to apply to firstname:
 
-firstname: johnh
+| Pair |  Record  | Output |
+| :--: | :------: | ------ |
+|   1  | Record A | j      |
+|   1  | Record B | j      |
+|   2  | Record A | m      |
+|   2  | Record B | m      |
 
-last name: d oe
+There is no elimination in the pairs above, hence it is a good function.
 
-***
 
-**pair 2**
 
-**record a:**
+Now let us try last1char on firstname
 
-firstname: mary
+| Pair |  Record  | Output |
+| :--: | :------: | ------ |
+|   1  | Record A | n      |
+|   1  | Record B | h      |
+|   2  | Record A | y      |
+|   2  | Record B | y      |
 
-last name: ann
+Pair 1 is getting eliminated above, hence last1char is not a good function.&#x20;
 
-**record b:**
-
-firstname: marry
-
-last name:
-
-***
-
-Let us assume we have hash functions first1char, last1char
-
-first1char(firstname, pair1, record a) = j
-
-first1char(firstname, pair1, record b) = j
-
-first1char(firstname, pair2, record a) = m
-
-first1char(firstname, pair2, record b) = m
-
-No elimination, good function.
-
-last1char(firstname, pair1, record a) = n
-
-last1char(firstname, pair1, record b) = h
-
-last1char(firstname, pair2, record a) = y
-
-last1char(firstname, pair2, record b) = y
-
-pair2 is getting eliminated above, not good.
-
-first1char(lastname, pair1, record a) = d
-
-first1char(lastname, pair1, record b) = d
-
-first1char(lastname, pair2, record a) = a
-
-first1char(lastname, pair2, record b) =
-
-pair2 is getting eliminated above, not good.
-
-last1char(lastname, pair1, record a) = e
-
-last1char(lastname, pair1, record b) = e
-
-last1char(lastname, pair2, record a) = n
-
-last1char(lastname, pair2, record b) =
-
-pair2 is getting eliminated above, not good.
-
-So first1char(firstname) or first1char(lastname) will be chosen at the root of the blocking tree. Child nodes get added in a similar function to build the hierarchical blocking function tree. This brings near similar records together - in a way, clusters them to break the cartesian join.
+So, first1char(firstname) will be chosen. This brings near similar records together - in a way, clusters them to break the cartesian join.
 
 These business-specific blocking functions go into [Hash Functions](https://github.com/zinggAI/zingg/tree/main/core/src/main/java/zingg/hash) and must be added to [HashFunctionRegistry](../../core/src/main/java/zingg/hash/HashFunctionRegistry.java) and [hash functions config](../../core/src/main/resources/hashFunctions.json).
 

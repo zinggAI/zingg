@@ -1,10 +1,36 @@
+---
+description: >-
+  Defining which fields should appear in the output and whether and how they
+  need to be used in matching
+---
+
 # Field Definitions
 
 #### fieldDefinition
 
-Which fields from the source data are to be used for matching, and what kind of matching do they need?
+This is a JSON array representing the fields from the source data to be used for matching, and the kind of matching they need.
 
-**FUZZY**
+Each field denotes a column from the input. Fields have the following JSON attributes
+
+**fieldName**
+
+The name of the field from the input data schema
+
+**fields**
+
+To be defined later. For now, please keep this as the fieldName
+
+**dataType**
+
+Type of the column - string, integer, double etc
+
+**matchType**
+
+&#x20;The way to match the given field. Here are the different types supported.&#x20;
+
+
+
+#### FUZZY
 
 Broad matches with typos, abbreviations, and other variations.
 
@@ -12,21 +38,24 @@ Broad matches with typos, abbreviations, and other variations.
 
 Less tolerant with variations, but would still match inexact strings to some degree. Preferable for country codes, pin codes, and other categorical variables where you expect fewer variations.
 
-**"DONT\_USE"**
+**DONT\_USE**
 
 The name says it :-) Appears in the output but no computation is done on these. Helpful for fields like ids that are required in the output.
 
 ```python
-"fieldDefinition" : [ {
-    "matchType" : "DONT_USE",
-    "fieldName" : "id",
-    "fields" : "id"
-  },
-  { 
-    "matchType" : "FUZZY",
-    "fieldName" : "firstName",
-    "fields" : "firstName"
-  }
+"fieldDefinition" : [ 
+		{
+			"fieldName" : "fname",
+			"matchType" : "fuzzy",
+			"fields" : "fname",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "lname",
+			"matchType" : "fuzzy",
+			"fields" : "lname",
+			"dataType": "\"string\"" 
+		}
   ]
 ```
 
