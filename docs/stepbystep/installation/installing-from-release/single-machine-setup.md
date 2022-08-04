@@ -4,9 +4,9 @@ description: For standalone local Spark without a cluster
 
 # Single Machine Setup
 
-Zingg can be easily run on a single machine to process upto a few million records.
+Zingg can be easily run on a single machine to process up to a few million records.
 
-To prepare your machine, please do the following steps.
+To prepare your machine, please do the following steps:
 
 A) Install the specified JDK version
 

@@ -4,7 +4,7 @@ description: From pre-built Docker image with all dependencies included
 
 # Docker
 
-### Running from Docker image from Docker hub
+## Running from Docker image from Docker hub
 
 The easiest way to get started is to pull the Docker image with the last release of Zingg.
 

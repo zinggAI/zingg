@@ -6,4 +6,4 @@ description: >-
 
 # Data Input and Output
 
-This section describes how to confgure Zingg to connect to cloud warehouses, file formats, graph and database systems.&#x20;
+This section describes how to configure Zingg to connect to cloud warehouses, file formats, graphs, and database systems.&#x20;

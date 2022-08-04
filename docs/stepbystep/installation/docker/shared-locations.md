@@ -1,3 +1,7 @@
+---
+description: Shared location used to store Zingg configurations
+---
+
 # Shared locations
 
 ## Zingg configurations using shared location

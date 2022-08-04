@@ -1,3 +1,7 @@
+---
+description: Information about output generated
+---
+
 # Output
 
 #### output

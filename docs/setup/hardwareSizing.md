@@ -2,6 +2,7 @@
 title: Hardware Sizing
 parent: Step By Step Guide
 nav_order: 4
+description: Hardware required for different sizes of data
 ---
 
 # Hardware Sizing
