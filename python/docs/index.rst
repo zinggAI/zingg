@@ -8,9 +8,8 @@ Welcome to Zingg's documentation!
    
 Contents:
 .. toctree::
- :maxdepth: 3
- :caption: 
-
+   :maxdepth: 2
+   
    zingg
  
 Indices and tables
