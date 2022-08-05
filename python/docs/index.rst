@@ -7,6 +7,7 @@ Welcome to Zingg's documentation!
 =================================
    
 Contents:
+
 .. toctree::
    :maxdepth: 2
    
