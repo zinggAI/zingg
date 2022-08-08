@@ -12,7 +12,9 @@ The Zingg Python package can be installed by invoking
 
 Detailed documentation of the python api is available at [https://readthedocs.org/projects/zingg/](https://readthedocs.org/projects/zingg/)
 
-Example programs for python exist under examples/febrl
+Example programs for python exist under examples. Please check examples/febrl/FebrlExample.py to get started.
+
+Please refer to the [command line guide](stepbystep/zingg-command-line.md) for running python programs. Please note that Zingg Python programs are PySpark programs and hence need the Zingg cli to execute.
 
 ``
 
