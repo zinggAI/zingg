@@ -26,7 +26,7 @@ Type of the column - string, integer, double, etc.
 
 **matchType**
 
-&#x20;The way to match the given field. Here are the different types supported.&#x20;
+&#x20;The way to match the given field. Multiple match types, separated by commas, can also be used. Here are the different types supported.&#x20;
 
 #### showConcise
 
