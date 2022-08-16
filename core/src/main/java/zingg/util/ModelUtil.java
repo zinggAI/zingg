@@ -1,42 +1,47 @@
 package zingg.util;
-
-import org.apache.spark.sql.functions;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.storage.StorageLevel;
-
+import zingg.client.Arguments;
+import zingg.client.FieldDefinition;
+import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
+import zingg.feature.Feature;
 import zingg.model.Model;
+
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.apache.spark.sql.SparkSession;
 
-public class ModelUtil {
+public abstract class ModelUtil<S,D,R,C> {
 
     public static final Log LOG = LogFactory.getLog(ModelUtil.class);
 
-	public static Model createModel(Dataset<Row> positives,
-        Dataset<Row> negatives, Model model, SparkSession spark) throws Exception, ZinggClientException {
+	public Model<S,D,R,C> createModel(ZFrame<D,R,C> positives,
+        ZFrame<D,R,C> negatives, Map<FieldDefinition, Feature> featurers, S spark, boolean isLabel) throws Exception, ZinggClientException {
         LOG.info("Learning similarity rules");
-        Dataset<Row> posLabeledPointsWithLabel = positives.withColumn(ColName.MATCH_FLAG_COL, functions.lit(ColValues.MATCH_TYPE_MATCH));
-        posLabeledPointsWithLabel = posLabeledPointsWithLabel.persist(StorageLevel.MEMORY_ONLY());
+        ZFrame<D,R,C> posLabeledPointsWithLabel = positives.withColumn(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_MATCH);
+        posLabeledPointsWithLabel = posLabeledPointsWithLabel.cache();
         posLabeledPointsWithLabel = posLabeledPointsWithLabel.drop(ColName.PREDICTION_COL);
-        Dataset<Row> negLabeledPointsWithLabel = negatives.withColumn(ColName.MATCH_FLAG_COL, functions.lit(ColValues.MATCH_TYPE_NOT_A_MATCH));
-        negLabeledPointsWithLabel = negLabeledPointsWithLabel.persist(StorageLevel.MEMORY_ONLY());
+        ZFrame<D,R,C> negLabeledPointsWithLabel = negatives.withColumn(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_NOT_A_MATCH);
+        negLabeledPointsWithLabel = negLabeledPointsWithLabel.cache();
         negLabeledPointsWithLabel = negLabeledPointsWithLabel.drop(ColName.PREDICTION_COL);
         if (LOG.isDebugEnabled()) {
             LOG.debug(" +,-,Total labeled data "
                     + posLabeledPointsWithLabel.count() + ", "
                     + negLabeledPointsWithLabel.count());
         }
+        Model<S,D,R,C> model = getModel(featurers, isLabel);
         model.register(spark);
         model.fit(posLabeledPointsWithLabel, negLabeledPointsWithLabel);
         return model;
     }
+
+    public abstract Model<S,D,R,C> getModel(Map<FieldDefinition, Feature> featurers, boolean isLabel);
+
+    public abstract Model<S,D,R,C> loadModel(Map<FieldDefinition, Feature> featurers, boolean isLabel, Arguments args);
+
 
 
 

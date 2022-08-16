@@ -7,8 +7,21 @@ import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.documenter.ModelDocumenter;
 import zingg.documenter.DataDocumenter;
+import zingg.client.ZFrame;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateExceptionHandler;
+import zingg.client.FieldDefinition;
+import zingg.client.MatchType;
+import zingg.client.ZinggClientException;
+import zingg.client.ZinggOptions;
+import zingg.client.util.ColName;
+import zingg.util.DSUtil;
+import zingg.util.PipeUtilBase;
+import zingg.util.RowAdapter;
+import zingg.util.RowWrapper;
 
-public class Documenter extends ZinggBase {
+public abstract class Documenter<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2> {
 
 	protected static String name = "zingg.Documenter";
 	public static final Log LOG = LogFactory.getLog(Documenter.class);

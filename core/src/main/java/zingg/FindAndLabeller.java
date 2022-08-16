@@ -3,28 +3,20 @@ package zingg;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 
-public class FindAndLabeller extends Labeller {
+public abstract class FindAndLabeller<S,D,R,C,T1,T2> extends Labeller<S,D,R,C,T1,T2> {
 	protected static String name = "zingg.FindAndLabeller";
 	public static final Log LOG = LogFactory.getLog(FindAndLabeller.class);
 
-	private TrainingDataFinder finder;
+	private TrainingDataFinder<S,D,R,C,T1,T2> finder;
 
 	public FindAndLabeller() {
-		setZinggOptions(ZinggOptions.FIND_AND_LABEL);
-		finder = new TrainingDataFinder();
+		setZinggOptions(ZinggOptions.FIND_AND_LABEL);		
 	}
 
-	@Override
-	public void init(Arguments args, String license)
-			throws ZinggClientException {
-		super.init(args, license);
-		finder.copyContext(this);
-	}
-
+	
 	@Override
 	public void execute() throws ZinggClientException {
 		finder.execute();

@@ -19,24 +19,29 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
 
 import zingg.client.FieldDefinition;
+import zingg.client.ZFrame;
 import zingg.client.util.ListMap;
 import zingg.hash.HashFunction;
 import zingg.client.util.ColName;
 import scala.collection.JavaConversions;
 import scala.collection.Seq;
 
-public class Block implements Serializable {
+public class Block<D,R,C,T,T1> implements Serializable {
 
 	public static final Log LOG = LogFactory.getLog(Block.class);
 
-	protected Dataset<Row> dupes;
+	protected ZFrame<D,R,C> dupes;
 	// Class[] types;
 	ListMap<DataType, HashFunction> functionsMap;
 	long maxSize;
-	Dataset<Row> training;
+	ZFrame<D,R,C> training;
 	protected ListMap<HashFunction, String> childless;
 
-	protected Block(Dataset<Row> training, Dataset<Row> dupes) {
+	public Block() {
+		
+	}
+
+	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes) {
 		this.training = training;
 		this.dupes = dupes;
 		childless = new ListMap<HashFunction, String>();
@@ -46,7 +51,7 @@ public class Block implements Serializable {
 		 */
 	}
 
-	public Block(Dataset<Row> training, Dataset<Row> dupes,
+	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes,
 			ListMap<DataType, HashFunction> functionsMap, long maxSize) {
 		this(training, dupes);
 		this.functionsMap = functionsMap;
@@ -57,7 +62,7 @@ public class Block implements Serializable {
 	/**
 	 * @return the dupes
 	 */
-	public Dataset<Row> getDupes() {
+	public ZFrame<D,R,C> getDupes() {
 		return dupes;
 	}
 
@@ -65,7 +70,7 @@ public class Block implements Serializable {
 	 * @param dupes
 	 *            the dupes to set
 	 */
-	public void setDupes(Dataset<Row> dupes) {
+	public void setDupes(ZFrame<D,R,C> dupes) {
 		this.dupes = dupes;
 	}
 
@@ -109,9 +114,9 @@ public class Block implements Serializable {
 	}
 
 	
-	public Canopy getNodeFromCurrent(Canopy node, HashFunction function,
+	public Canopy<R>getNodeFromCurrent(Canopy<R>node, HashFunction function,
 			FieldDefinition context) {
-		Canopy trial = new Canopy();
+		Canopy<R>trial = new Canopy<R>();
 		trial = node.copyTo(trial);
 		// node.training, node.dupeN, function, context);
 		trial.function = function;
@@ -119,11 +124,11 @@ public class Block implements Serializable {
 		return trial;
 	}
 
-	public Canopy getBestNode(Tree<Canopy> tree, Canopy parent, Canopy node,
+	public Canopy<R>getBestNode(Tree<Canopy<R>> tree, Canopy<R>parent, Canopy<R>node,
 			List<FieldDefinition> fieldsOfInterest) throws Exception {
 		long least = Long.MAX_VALUE;
 		int maxElimination = 0;
-		Canopy best = null;
+		Canopy<R>best = null;
 		for (FieldDefinition field : fieldsOfInterest) {
 			//LOG.debug("Trying for " + field);
 			//Class type = FieldClass.getFieldClassClass(field.getFieldClass());
@@ -142,7 +147,7 @@ public class Block implements Serializable {
 							{
 						LOG.debug("Evaluating field " + field.fieldName
 								+ " and function " + function + " for " + field.dataType);
-						Canopy trial = getNodeFromCurrent(node, function,
+						Canopy<R>trial = getNodeFromCurrent(node, function,
 								context);
 						trial.estimateElimCount();
 						long elimCount = trial.getElimCount();
@@ -200,8 +205,8 @@ public class Block implements Serializable {
 	 * @param used
 	 * @return
 	 */
-	public Tree<Canopy> getBlockingTree(Tree<Canopy> tree, Canopy parent,
-			Canopy node, List<FieldDefinition> fieldsOfInterest) throws Exception {
+	public Tree<Canopy<R>> getBlockingTree(Tree<Canopy<R>> tree, Canopy<R>parent,
+			Canopy<R>node, List<FieldDefinition> fieldsOfInterest) throws Exception {
 		/*if (LOG.isDebugEnabled()) {
 			LOG.debug("Tree so far ");
 			LOG.debug(tree);
@@ -212,7 +217,7 @@ public class Block implements Serializable {
 		}
 		if (size > maxSize && node.getDupeN() != null && node.getDupeN().size() > 0) {
 			//LOG.debug("Size is bigger ");
-			Canopy best = getBestNode(tree, parent, node, fieldsOfInterest);
+			Canopy<R>best = getBestNode(tree, parent, node, fieldsOfInterest);
 			if (best != null) {
 				if (LOG.isDebugEnabled()) {
 					LOG.debug(" HashFunction is " + best + " and node is " + node);
@@ -222,17 +227,17 @@ public class Block implements Serializable {
 				// best.getFunction());
 				// used.add(1, best.getFunction());
 				if (tree == null && parent == null) {
-					tree = new Tree<Canopy>(node);
+					tree = new Tree<Canopy<R>>(node);
 				} 
 				/*else {
 					// /tree.addLeaf(parent, node);
 					used = new ListMap<Integer, HashFunction>();
 				}*/
-				List<Canopy> canopies = node.getCanopies();
+				List<Canopy<R>> canopies = node.getCanopies();
 				if (LOG.isDebugEnabled()) {
 					LOG.debug(" Children size is " + canopies.size());
 				}
-				for (Canopy n : canopies) {
+				for (Canopy<R>n : canopies) {
 					node.clearBeforeSaving();
 					tree.addLeaf(node, n);
 					if (LOG.isDebugEnabled()) {
@@ -259,7 +264,7 @@ public class Block implements Serializable {
 		return tree;
 	}
 
-	public boolean checkFunctionInNode(Canopy node, String name,
+	public boolean checkFunctionInNode(Canopy<R>node, String name,
 			HashFunction function) {
 		if (node.getFunction() != null && node.getFunction().equals(function)
 				&& node.context.fieldName.equals(name)) {
@@ -268,7 +273,7 @@ public class Block implements Serializable {
 		return false;
 	}
 
-	public boolean isFunctionUsed(Tree<Canopy> tree, Canopy node, String fieldName,
+	public boolean isFunctionUsed(Tree<Canopy<R>> tree, Canopy<R>node, String fieldName,
 			HashFunction function) {
 		// //LOG.debug("Tree " + tree);
 		// //LOG.debug("Node  " + node);
@@ -279,17 +284,17 @@ public class Block implements Serializable {
 			return false;
 		if (checkFunctionInNode(node, fieldName, function))
 			return true;
-		Tree<Canopy> nodeTree = tree.getTree(node);
+		Tree<Canopy<R>> nodeTree = tree.getTree(node);
 		if (nodeTree == null)
 			return false;
 
-		Tree<Canopy> parent = nodeTree.getParent();
+		Tree<Canopy<R>> parent = nodeTree.getParent();
 		if (parent != null) {
-			Canopy head = parent.getHead();
+			Canopy<R>head = parent.getHead();
 			while (head != null) {
 				// check siblings of node
-				/*for (Tree<Canopy> siblings : parent.getSubTrees()) {
-					Canopy sibling = siblings.getHead();
+				/*for (Tree<Canopy<R>> siblings : parent.getSubTrees()) {
+					Canopy<R>sibling = siblings.getHead();
 					if (checkFunctionInNode(sibling, index, function))
 						return true;
 				}*/
@@ -300,15 +305,15 @@ public class Block implements Serializable {
 		return isUsed;
 	}
 	
-	public static StructType appendHashCol(StructType s) {
+	public StructType appendHashCol(StructType s) {
 		StructType retSchema = SchemaUtils.appendColumn(s, ColName.HASH_COL, DataTypes.IntegerType, false);
 		LOG.debug("returning schema after step 1 is " + retSchema);
 		return retSchema;
 	}
 
-	public static List<Canopy> getHashSuccessors(Collection<Canopy> successors, Object hash) {
-		List<Canopy> retCanopy = new ArrayList<Canopy>();
-		for (Canopy c: successors) {
+	public List<Canopy<R>> getHashSuccessors(Collection<Canopy<R>> successors, Object hash) {
+		List<Canopy<R>> retCanopy = new ArrayList<Canopy<R>>();
+		for (Canopy<R>c: successors) {
 			if (hash == null && c!= null && c.getHash() == null) retCanopy.add(c);
 			if (c!= null && c.getHash() != null && c.getHash().equals(hash)) {
 				retCanopy.add(c);
@@ -317,14 +322,14 @@ public class Block implements Serializable {
 		return retCanopy;
 	}
 
-	/*public static StringBuilder applyTree(Row tuple, Tree<Canopy> tree,
-			Canopy root, StringBuilder result) {
+	/*public static StringBuilder applyTree(Row tuple, Tree<Canopy<R>> tree,
+			Canopy<R>root, StringBuilder result) {
 		LOG.debug("Applying root " + root + " on " + tuple);
 		if (root.function != null) {
 			Object hash = root.function.apply(tuple, root.context.fieldName);
 			LOG.debug("Applied root " + root + " and got " + hash);
 			result = result.append("|").append(hash);
-			for (Canopy c : getHashSuccessors(tree.getSuccessors(root), hash)) {
+			for (Canopy<R>c : getHashSuccessors(tree.getSuccessors(root), hash)) {
 				// LOG.info("Successr hash " + c.getHash() + " and our hash "+
 				// hash);
 				if (c != null) {
@@ -343,13 +348,13 @@ public class Block implements Serializable {
 		return result;
 	}*/
 	
-	public static StringBuilder applyTree(Row tuple, Tree<Canopy> tree,
-			Canopy root, StringBuilder result) {
+	public static <R> StringBuilder applyTree(R tuple, Tree<Canopy<R>> tree,
+			Canopy<R>root, StringBuilder result) {
 		if (root.function != null) {
 			Object hash = root.function.apply(tuple, root.context.fieldName);
 			
 			result = result.append("|").append(hash);
-			for (Canopy c : tree.getSuccessors(root)) {
+			for (Canopy<R>c : tree.getSuccessors(root)) {
 				// LOG.info("Successr hash " + c.getHash() + " and our hash "+
 				// hash);
 				if (c != null) {
@@ -369,8 +374,8 @@ public class Block implements Serializable {
 		return result;
 	}
 
-	public static void printTree(Tree<Canopy> tree,
-			Canopy root) {
+	public void printTree(Tree<Canopy<R>> tree,
+			Canopy<R>root) {
 		if (root.dupeN != null) {
 			LOG.info(" dupeN not null " + root);
 			LOG.info(root.dupeN.size());
@@ -385,38 +390,11 @@ public class Block implements Serializable {
 			LOG.info(" training not null " + root);
 			LOG.info(root.training.size());
 		}
-		for (Canopy c : tree.getSuccessors(root)) {
+		for (Canopy<R>c : tree.getSuccessors(root)) {
 			printTree(tree, c);
 		}			
 	}
 	
-	public static class BlockFunction implements MapFunction<Row, Row> {
-		
-		Tree<Canopy> tree;
-		public BlockFunction(Tree<Canopy> tree) {
-			this.tree = tree;
-		}
-		
-		@Override
-		public Row call(Row r) {
-			StringBuilder bf = new StringBuilder();
-			bf = Block.applyTree(r, tree, tree.getHead(), bf);
-			Seq<Object> s = r.toSeq();
-			List<Object> seqList = JavaConversions.seqAsJavaList(s);
-			List<Object> returnList = new ArrayList<Object>(seqList.size()+1);
-			returnList.addAll(seqList);
-			returnList.add(bf.toString().hashCode());
-			if (LOG.isDebugEnabled()) {
-				for (Object o: returnList) {
-					LOG.debug("return row col is " + o );
-				}
-			LOG.debug("returning row " + RowFactory.create(returnList) );
-			}
-			
-			return RowFactory.create(returnList.toArray());			
-		}
-
-	}
-
+	
 }
 

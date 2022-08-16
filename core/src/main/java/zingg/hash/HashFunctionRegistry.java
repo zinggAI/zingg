@@ -1,16 +1,8 @@
 package zingg.hash;
 
-import java.util.HashMap;
+public interface HashFunctionRegistry<D,R,C,T,T1>  {
 
-public class HashFunctionRegistry {
-
-	public static HashMap<String, HashFunction> fns = new  HashMap<String,HashFunction>();
-		
-	public static HashFunction getFunction(String key) {
-		return fns.get(key);
-	}
-	
-	static {
+	//public static HashMap<String, HashFunction<D,R,C,T,T1> > fns = new  HashMap<String,HashFunction<D,R,C,T,T1>>();
 		
 		init(new IdentityString());
 		init(new IdentityInteger());
@@ -47,8 +39,6 @@ public class HashFunctionRegistry {
 		init(new RangeBetween1000And10000Dbl());
 	}
 	
-	public static void init(HashFunction fn) {
-		fns.put(fn.getName(), fn);
-	}
+	public void init(HashFunction<D,R,C,T,T1> fn);
 	
 }

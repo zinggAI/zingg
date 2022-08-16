@@ -4,10 +4,13 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataTypes;
 
-public class Round extends HashFunction implements UDF1<Double, Long>{
+import zingg.client.ZFrame;
+
+public abstract class Round<D,R,C,T,T1> extends HashFunction<D,R,C,T,T1> implements UDF1<Double, Long>{
 	
 	public Round() {
-		super("round", DataTypes.DoubleType, DataTypes.LongType);
+		super("round");
+		//, DataTypes.DoubleType, DataTypes.LongType);
 	}
 	
 
@@ -17,7 +20,9 @@ public class Round extends HashFunction implements UDF1<Double, Long>{
 	 }
 
 	 @Override
-	 public Object apply(Row ds, String column) {
-		 return call((Double) ds.getAs(column));
+	 public Object apply(R ds, String column) {
+		 return call((Double) getAs(ds, column));
 	}
 }
+
+

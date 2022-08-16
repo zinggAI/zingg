@@ -1,4 +1,4 @@
-package zingg.util;
+package zingg.spark.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.Column;
 import org.apache.spark.sql.DataFrameReader;
 import org.apache.spark.sql.DataFrameWriter;
 import org.apache.spark.sql.Dataset;
@@ -24,6 +25,8 @@ import org.apache.spark.storage.StorageLevel;
 //import zingg.scala.DFUtil;
 import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
+import zingg.client.SparkFrame;
+import zingg.client.ZFrame;
 import zingg.client.util.ColName;
 import zingg.client.pipe.CassandraPipe;
 import zingg.client.pipe.ElasticPipe;
@@ -45,17 +48,30 @@ import scala.collection.Seq;
 
 // import com.datastax.spark.connector.cql.*;
 import zingg.scala.DFUtil;
+import zingg.util.PipeUtilBase;
+import zingg.util.PipeUtilBase;
 
 //import com.datastax.spark.connector.cql.*;
 //import org.elasticsearch.spark.sql.api.java.JavaEsSparkSQL;
 //import zingg.scala.DFUtil;
 
-public class PipeUtil {
+public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, Row, Column>{
 
-	public static final Log LOG = LogFactory.getLog(PipeUtil.class);
+	SparkSession sparkSession;
 
-	private static DataFrameReader getReader(SparkSession spark, Pipe p) {
-		DataFrameReader reader = spark.read();
+	public  final Log LOG = LogFactory.getLog(SparkPipeUtil.class);
+
+	public SparkPipeUtil(SparkSession spark) {
+		this.sparkSession = spark;
+	}
+	
+
+	public void setSession(SparkSession session){
+		this.sparkSession = session;
+	}
+
+	private DataFrameReader getReader(Pipe p) {
+		DataFrameReader reader = getSession().read();
 
 		LOG.warn("Reading input " + p.getFormat());
 		reader = reader.format(p.getFormat());
@@ -92,7 +108,7 @@ public class PipeUtil {
 			LOG.warn(ex.getMessage());
 			throw new ZinggClientException("Could not read data.", ex);
 		}
-		return input;
+		return new SparkFrame(input);
 	}
 
 	private static Dataset<Row> readInternal(SparkSession spark, Pipe p, boolean addSource) throws ZinggClientException {
@@ -140,24 +156,16 @@ public class PipeUtil {
 
 		for (Pipe p : pipes) {
 			if (input == null) {
-				input = readInternal(spark, p, addSource);
+				input = readInternal(p, addSource);
 				LOG.debug("input size is " + input.count());				
 			} else {
-					if (p.get("type") != null && p.get("type").equals("join")) {
-						LOG.warn("joining inputs");
-						Dataset<Row> input1 = readInternal(spark, p, addSource);
-						LOG.warn("input now size is " + input1.count());	
-						input = joinTrainingSetstoGetLabels(input, input1 );
-					}
-					else {
-						input = input.union(readInternal(spark, p, addSource));
-					}				
+					input = input.union(readInternal(p, addSource));
 			}
 		}
 		// we will probably need to create row number as string with pipename/id as
 		// suffix
 		if (addLineNo)
-			input = DFUtil.addRowNumber(input, spark);
+			input = new SparkFrame(DFUtil.addRowNumber(input.df(), getSession()));
 		// we need to transform the input here by using stop words
 		return input;
 	}
@@ -187,14 +195,14 @@ public class PipeUtil {
 			boolean addSource, Pipe... pipes) throws ZinggClientException {
 		Dataset<Row> rows = readInternal(spark, addLineNo, addSource, pipes);
 		rows = rows.repartition(numPartitions);
-		rows = rows.persist(StorageLevel.MEMORY_ONLY());
+		rows = rows.cache();
 		return rows;
 	}
 
 	public static void write(Dataset<Row> toWriteOrig, Arguments args, JavaSparkContext ctx, Pipe... pipes) throws ZinggClientException {
 		try {
 			for (Pipe p: pipes) {
-			Dataset<Row> toWrite = toWriteOrig;
+			Dataset<Row> toWrite = toWriteOrig.df();
 			DataFrameWriter writer = toWrite.write();
 		
 			LOG.warn("Writing output " + p);
@@ -316,14 +324,14 @@ public class PipeUtil {
 		return p;
 	}
 
-	public static Pipe getTrainingDataMarkedPipe(Arguments args) {
+	public  Pipe getTrainingDataMarkedPipe(Arguments args) {
 		Pipe p = new Pipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getZinggTrainingDataMarkedDir());
 		return p;
 	}
 	
-	public static Pipe getModelDocumentationPipe(Arguments args) {
+	public  Pipe getModelDocumentationPipe(Arguments args) {
 		Pipe p = new Pipe();
 		p.setFormat(Pipe.FORMAT_TEXT);
 		p.setProp(FilePipe.LOCATION, args.getZinggModelDocFile());
@@ -347,7 +355,7 @@ public class PipeUtil {
 		return p;
 	}
 
-	public static String getPipesAsString(Pipe[] pipes) {
+	public  String getPipesAsString(Pipe[] pipes) {
 		return Arrays.stream(pipes)
 			.map(p -> p.getFormat())
 			.collect(Collectors.toList())
@@ -359,7 +367,7 @@ public class PipeUtil {
 
 
 	/*
-	 * public static String getTableCreateCQL(Pipe p, Dataset<Row> df) {
+	 * public  String getTableCreateCQL(Pipe p, Dataset<Row> df) {
 	 * 
 	 * Set<String> partitionKeys = new TreeSet<String>() { {
 	 * add(p.get(CassandraPipe.PRIMARY_KEY)); } }; int c = 0; Map<String, Integer>

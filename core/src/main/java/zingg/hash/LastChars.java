@@ -4,10 +4,12 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataTypes;
 
-public class LastChars extends HashFunction implements UDF1<String, String>{
+public abstract class LastChars<D,R,C,T,T1> extends HashFunction<D,R,C,T,T1> implements UDF1<String, String>{
 	int numChars;
+	
 	public LastChars(int endIndex) {
-		super("last" + endIndex + "Chars", DataTypes.StringType, DataTypes.StringType, true);
+		super("last" + endIndex + "Chars");
+		// DataTypes.StringType, DataTypes.StringType, true);
 		this.numChars = endIndex;
 	}
 
@@ -27,8 +29,8 @@ public class LastChars extends HashFunction implements UDF1<String, String>{
 				return r;
 			 }
 
-		 public Object apply(Row ds, String column) {
-			 return call((String) ds.getAs(column));
+		 public Object apply(R ds, String column) {
+			 return call((String) getAs(ds, column));
 		 }
 
 }

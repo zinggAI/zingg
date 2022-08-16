@@ -9,18 +9,19 @@ import org.apache.spark.sql.types.DataTypes;
 import zingg.block.Canopy;
 
 
-public class FirstChars extends HashFunction implements UDF1<String, String>{
+public abstract class FirstChars<D,R,C,T,T1> extends HashFunction<D,R,C,T,T1>{
 	
 	public static final Log LOG = LogFactory.getLog(FirstChars.class);
 
 	int endIndex;
 	
 	public FirstChars(int endIndex) {
-		super("first" + endIndex + "Chars", DataTypes.StringType, DataTypes.StringType);
+		super("first" + endIndex + "Chars");
+		//TODO, DataTypes.StringType, DataTypes.StringType);
 		this.endIndex = endIndex;
 	}
 	
-	 @Override
+	 
 	 public String call(String field) {
 		 
 		 String r = null;
@@ -41,9 +42,11 @@ public class FirstChars extends HashFunction implements UDF1<String, String>{
 			return r;
 	 }
 
-	public Object apply(Row ds, String column) {
-		 return call((String) ds.getAs(column));
+	public Object apply(R ds, String column) {
+		 return call((String) getAs(ds, column));
 	}
+
+	
 
 	
 

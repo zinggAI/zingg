@@ -3,7 +3,6 @@ package zingg;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,24 +20,30 @@ import zingg.client.MatchType;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.util.Analytics;
+import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
+import zingg.util.GraphUtil;
 import zingg.client.util.ListMap;
 import zingg.util.Metric;
+import zingg.util.ModelUtil;
 import zingg.feature.Feature;
 import zingg.feature.FeatureFactory;
 import zingg.hash.HashFunction;
 
 import zingg.util.HashUtil;
-import zingg.util.PipeUtil;
+import zingg.util.PipeUtilBase;
 
-public abstract class ZinggBase implements Serializable, IZingg {
+//Spark Session
+//Dataset
+//row
+//column
+public abstract class ZinggBase<S,D, R, C, T1,T2> implements Serializable, IZingg {
 
     protected Arguments args;
 	
-    protected JavaSparkContext ctx;
-	protected SparkSession spark;
+    protected S context;
     protected static String name;
     protected ZinggOptions zinggOptions;
 
@@ -64,44 +69,31 @@ public abstract class ZinggBase implements Serializable, IZingg {
     protected ClientOptions clientOptions;
 
     public static final Log LOG = LogFactory.getLog(ZinggBase.class);
+    protected PipeUtilBase<S,D,R,C> pipeUtil;
+    protected HashUtil<D,R,C,T1,T2> hashUtil;
+    protected DSUtil<S,D,R,C> dsUtil;
+    protected GraphUtil<D,R,C> graphUtil;
+    protected ModelUtil<S,D,R,C> modelUtil;
+    protected BlockingTreeUtil<D,R,C,T1,T2> blockingTreeUtil;
+    ZinggBase base;
 
-    @Override
+    public ZinggBase() {
+
+    }
+
+    public void setBase(ZinggBase<S,D,R,C,T1,T2> base) {
+        this.base = base;
+    }
+
+    
     public void init(Arguments args, String license)
         throws ZinggClientException {
-        startTime = System.currentTimeMillis();
-        this.args = args;
-        try{
-            spark = SparkSession
-                .builder()
-                .appName("Zingg"+args.getJobId())
-                .getOrCreate();
-            ctx = new JavaSparkContext(spark.sparkContext());
-            JavaSparkContext.jarOfClass(IZingg.class);
-            LOG.debug("Context " + ctx.toString());
-            initHashFns();
-            loadFeatures();
-            ctx.setCheckpointDir("/tmp/checkpoint");	
+            base.init(args, license);
         }
-        catch(Throwable e) {
-            if (LOG.isDebugEnabled()) e.printStackTrace();
-            throw new ZinggClientException(e.getMessage());
-        }
-    }
 
-
-    @Override
-    public void cleanup() throws ZinggClientException {
-        if (ctx != null) ctx.stop();
-    }
-
-    void initHashFns() throws ZinggClientException {
-		try {
-			//functions = Util.getFunctionList(this.functionFile);
-			hashFunctions = HashUtil.getHashFunctionList(this.hashFunctionFile, spark);
-		} catch (Exception e) {
-			if (LOG.isDebugEnabled()) e.printStackTrace();
-			throw new ZinggClientException("Unable to initialize base functions");
-		}		
+    
+    protected void initHashFns() throws ZinggClientException {
+        base.initHashFns();
 	}
 
     public void loadFeatures() throws ZinggClientException {
@@ -126,22 +118,15 @@ public abstract class ZinggBase implements Serializable, IZingg {
 		}
 	}
 
-    public void copyContext(ZinggBase b) {
-            this.args = b.args;
-            this.ctx = b.ctx;
-            this.spark = b.spark;
-            this.featurers = b.featurers;
-            this.hashFunctions = b.hashFunctions;
-    }
-
+    
 	public void postMetrics() {
         boolean collectMetrics = args.getCollectMetrics();
         Analytics.track(Metric.EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000, collectMetrics);
 		Analytics.track(Metric.TOTAL_FIELDS_COUNT, args.getFieldDefinition().size(), collectMetrics);
-        Analytics.track(Metric.MATCH_FIELDS_COUNT, DSUtil.getFieldDefinitionFiltered(args, MatchType.DONT_USE).size(),
+        Analytics.track(Metric.MATCH_FIELDS_COUNT, getDSUtil().getFieldDefinitionFiltered(args, MatchType.DONT_USE).size(),
                 collectMetrics);
-		Analytics.track(Metric.DATA_FORMAT, PipeUtil.getPipesAsString(args.getData()), collectMetrics);
-		Analytics.track(Metric.OUTPUT_FORMAT, PipeUtil.getPipesAsString(args.getOutput()), collectMetrics);
+		Analytics.track(Metric.DATA_FORMAT, getPipeUtil().getPipesAsString(args.getData()), collectMetrics);
+		Analytics.track(Metric.OUTPUT_FORMAT, getPipeUtil().getPipesAsString(args.getOutput()), collectMetrics);
 
 		Analytics.postEvent(zinggOptions.getValue(), collectMetrics);
 	}
@@ -154,11 +139,11 @@ public abstract class ZinggBase implements Serializable, IZingg {
         this.args = args;
     }
 
-    public ListMap<DataType,HashFunction> getHashFunctions() {
+    public ListMap getHashFunctions() {
         return this.hashFunctions;
     }
 
-    public void setHashFunctions(ListMap<DataType,HashFunction> hashFunctions) {
+    public void setHashFunctions(ListMap hashFunctions) {
         this.hashFunctions = hashFunctions;
     }
 
@@ -170,20 +155,13 @@ public abstract class ZinggBase implements Serializable, IZingg {
         this.featurers = featurers;
     }
 
-    public JavaSparkContext getCtx() {
-        return this.ctx;
+    
+    public S getContext() {
+        return this.context;
     }
 
-    public void setCtx(JavaSparkContext ctx) {
-        this.ctx = ctx;
-    }
-
-    public SparkSession getSpark() {
-        return this.spark;
-    }
-
-    public void setSpark(SparkSession spark) {
-        this.spark = spark;
+    public void setContext(S spark) {
+        this.context = spark;
     }
     public void setName(String name) {
         this.name = name;

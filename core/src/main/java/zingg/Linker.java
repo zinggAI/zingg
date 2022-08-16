@@ -1,8 +1,5 @@
 package zingg;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
@@ -20,20 +17,15 @@ import zingg.block.Canopy;
 import zingg.block.Tree;
 import zingg.model.Model;
 import zingg.client.ZinggClientException;
+
+import zingg.client.ZFrame;
 import zingg.client.ZinggOptions;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
-import zingg.client.util.Util;
-import zingg.util.BlockingTreeUtil;
-import zingg.util.DSUtil;
-import zingg.util.GraphUtil;
-import zingg.util.ModelUtil;
-import zingg.util.PipeUtil;
 
-import zingg.scala.TypeTags;
-import zingg.scala.DFUtil;
 
-public class Linker extends Matcher {
+
+public abstract class Linker<S,D,R,C,T1,T2> extends Matcher<S,D,R,C,T1,T2> {
 
 	protected static String name = "zingg.Linker";
 	public static final Log LOG = LogFactory.getLog(Linker.class);
@@ -42,19 +34,19 @@ public class Linker extends Matcher {
 		setZinggOptions(ZinggOptions.LINK);
 	}
 
-	protected Dataset<Row> getBlocks(Dataset<Row> blocked, Dataset<Row> bAll) throws Exception{
-		return DSUtil.joinWithItselfSourceSensitive(blocked, ColName.HASH_COL, args).cache();
+	protected ZFrame<D,R,C> getBlocks(ZFrame<D,R,C> blocked, ZFrame<D,R,C> bAll) throws Exception{
+		return getDSUtil().joinWithItselfSourceSensitive(blocked, ColName.HASH_COL, args).cache();
 	}
 
-	protected Dataset<Row> selectColsFromBlocked(Dataset<Row> blocked) {
+	protected ZFrame<D,R,C> selectColsFromBlocked(ZFrame<D,R,C> blocked) {
 		return blocked;
 	}
 
-	public void writeOutput(Dataset<Row> sampleOrginal, Dataset<Row> dupes) throws ZinggClientException {
+	public void writeOutput(ZFrame<D,R,C> blocked, ZFrame<D,R,C> dupes) throws ZinggClientException {
 		try {
 			// input dupes are pairs
 			/// pick ones according to the threshold by user
-			Dataset<Row> dupesActual = getDupesActualForGraph(dupes);
+			ZFrame<D,R,C> dupesActual = getDupesActualForGraph(dupes);
 
 			// all clusters consolidated in one place
 			if (args.getOutput() != null) {
@@ -73,10 +65,12 @@ public class Linker extends Matcher {
 		}
 	}
 
-	protected Dataset<Row> getDupesActualForGraph(Dataset<Row> dupes) {
-		Dataset<Row> dupesActual = dupes
-				.filter(dupes.col(ColName.PREDICTION_COL).equalTo(ColValues.IS_MATCH_PREDICTION));
+	protected ZFrame<D,R,C> getDupesActualForGraph(ZFrame<D,R,C> dupes) {
+		ZFrame<D,R,C> dupesActual = dupes
+				.filter(dupes.equalTo(ColName.PREDICTION_COL, ColValues.IS_MATCH_PREDICTION));
 		return dupesActual;
 	}
+
+	
 
 }

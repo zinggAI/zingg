@@ -9,27 +9,23 @@ import zingg.block.Canopy;
 import zingg.block.Tree;
 import zingg.model.Model;
 import zingg.preprocess.StopWords;
+import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.util.Analytics;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.util.Metric;
-
-import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
 import zingg.util.ModelUtil;
-import zingg.util.PipeUtil;
+import zingg.util.PipeUtilBase;
 
-public class Trainer extends ZinggBase{
+public abstract class Trainer<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
 
 	protected static String name = "zingg.Trainer";
 	public static final Log LOG = LogFactory.getLog(Trainer.class);    
 
-    public Trainer() {
-        setZinggOptions(ZinggOptions.TRAIN);
-    }
-
+    
 	public void execute() throws ZinggClientException {
         try {
 			LOG.info("Reading inputs for training phase ...");
@@ -55,14 +51,14 @@ public class Trainer extends ZinggBase{
 			if (blockingTree == null || blockingTree.getSubTrees() == null) {
 				LOG.warn("Seems like no indexing rules have been learnt");
 			}
-			BlockingTreeUtil.writeBlockingTree(spark, ctx, blockingTree, args);
+			getBlockingTreeUtil().writeBlockingTree(blockingTree, args);
 			LOG.info("Learnt indexing rules and saved output at " + args.getZinggDir());
 			// model
-			Model model = ModelUtil.createModel(positives, negatives, new Model(this.featurers), spark);
+			Model<S,D,R,C> model = getModelUtil().createModel(positives, negatives, this.featurers, getContext(), false);
 			model.save(args.getModel());
 			LOG.info("Learnt similarity rules and saved output at " + args.getZinggDir());
-			Analytics.track(Metric.TRAINING_MATCHES, Metric.approxCount(positives), args.getCollectMetrics());
-			Analytics.track(Metric.TRAINING_NONMATCHES, Metric.approxCount(negatives), args.getCollectMetrics());
+			Analytics.track(Metric.TRAINING_MATCHES, positives.count(), args.getCollectMetrics());
+			Analytics.track(Metric.TRAINING_NONMATCHES, negatives.count(), args.getCollectMetrics());
 			LOG.info("Finished Learning phase");			
 		} catch (Exception e) {
 			e.printStackTrace();

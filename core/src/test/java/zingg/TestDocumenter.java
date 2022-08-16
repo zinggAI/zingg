@@ -2,6 +2,8 @@ package zingg;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import org.apache.spark.api.java.JavaSparkContext;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +24,7 @@ public class TestDocumenter extends ZinggSparkTester{
 		}
     }
 
+    /*
     @Test
     public void testOutput() throws Throwable{
         Documenter doc = new Documenter();
@@ -29,4 +32,5 @@ public class TestDocumenter extends ZinggSparkTester{
         doc.setArgs(args);
         doc.execute();
     }
+    */
 }
