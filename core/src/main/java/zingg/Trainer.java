@@ -31,11 +31,11 @@ public abstract class Trainer<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
 			LOG.info("Reading inputs for training phase ...");
 			LOG.info("Initializing learning similarity rules");
 			
-			Dataset<Row> positives = null;
-			Dataset<Row> negatives = null;
-			Dataset<Row> traOriginal = DSUtil.getTraining(spark, args);
-			Dataset<Row> tra = StopWords.preprocessForStopWords(spark, args, traOriginal);
-			tra = DSUtil.joinWithItself(tra, ColName.CLUSTER_COLUMN, true);
+			ZFrame<D,R,C> positives = null;
+			ZFrame<D,R,C> negatives = null;
+			ZFrame<D,R,C> traOriginal = getDSUtil().getTraining(args);
+			ZFrame<D,R,C> tra = StopWords.preprocessForStopWords(args, traOriginal);
+			tra = getDSUtil().joinWithItself(tra, ColName.CLUSTER_COLUMN, true);
 			tra = tra.cache();
 			positives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH));
 			negatives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_A_MATCH));
@@ -43,10 +43,10 @@ public abstract class Trainer<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
 			verifyTraining(positives, negatives);
 
 				
-			Dataset<Row> testDataOriginal = PipeUtil.read(spark, true, args.getNumPartitions(), false, args.getData());
-			Dataset<Row> testData = StopWords.preprocessForStopWords(spark, args, testDataOriginal);
+			ZFrame<D,R,C> testDataOriginal = getPipeUtil().read(true, args.getNumPartitions(), false, args.getData());
+			ZFrame<D,R,C> testData = StopWords.preprocessForStopWords(args, testDataOriginal);
 
-			Tree<Canopy> blockingTree = BlockingTreeUtil.createBlockingTreeFromSample(testData,  positives, 0.5,
+			Tree<Canopy<R>> blockingTree = getBlockingTreeUtil().createBlockingTreeFromSample(testData,  positives, 0.5,
 					-1, args, hashFunctions);
 			if (blockingTree == null || blockingTree.getSubTrees() == null) {
 				LOG.warn("Seems like no indexing rules have been learnt");
@@ -66,7 +66,7 @@ public abstract class Trainer<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
 		}
     }
 
-	public void verifyTraining(Dataset<Row> positives, Dataset<Row> negatives) throws ZinggClientException {
+	public void verifyTraining(ZFrame<D,R,C> positives, ZFrame<D,R,C> negatives) throws ZinggClientException {
 		if (positives == null) {
 			throw new ZinggClientException("Unable to train as insufficient positive training data found. ");
 		}

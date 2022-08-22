@@ -17,6 +17,7 @@ import zingg.client.ClientOptions;
 import zingg.client.FieldDefinition;
 import zingg.client.IZingg;
 import zingg.client.MatchType;
+import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.util.Analytics;
@@ -39,13 +40,28 @@ import zingg.util.PipeUtilBase;
 //Dataset
 //row
 //column
-public abstract class ZinggBase<S,D, R, C, T1,T2> implements Serializable, IZingg {
+public abstract class ZinggBase<S,D, R, C, T1,T2> implements Serializable, IZingg<D, R, C> {
 
     protected Arguments args;
 	
     protected S context;
     protected static String name;
     protected ZinggOptions zinggOptions;
+    protected ListMap<DataType, HashFunction> hashFunctions;
+	protected Map<FieldDefinition, Feature> featurers;
+    protected long startTime;
+	public static final String hashFunctionFile = "hashFunctions.json";
+    protected ClientOptions clientOptions;
+
+    public static final Log LOG = LogFactory.getLog(ZinggBase.class);
+    protected PipeUtilBase<S,D,R,C> pipeUtil;
+    protected HashUtil<D,R,C,T1,T2> hashUtil;
+    protected DSUtil<S,D,R,C> dsUtil;
+    protected GraphUtil<D,R,C> graphUtil;
+    protected ModelUtil<S,D,R,C> modelUtil;
+    protected BlockingTreeUtil<D,R,C,T1,T2> blockingTreeUtil;
+    ZinggBase base;
+
 
     public long getStartTime() {
         return this.startTime;
@@ -62,21 +78,7 @@ public abstract class ZinggBase<S,D, R, C, T1,T2> implements Serializable, IZing
     public void setClientOptions(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
     }
-    protected ListMap<DataType, HashFunction> hashFunctions;
-	protected Map<FieldDefinition, Feature> featurers;
-    protected long startTime;
-	public static final String hashFunctionFile = "hashFunctions.json";
-    protected ClientOptions clientOptions;
-
-    public static final Log LOG = LogFactory.getLog(ZinggBase.class);
-    protected PipeUtilBase<S,D,R,C> pipeUtil;
-    protected HashUtil<D,R,C,T1,T2> hashUtil;
-    protected DSUtil<S,D,R,C> dsUtil;
-    protected GraphUtil<D,R,C> graphUtil;
-    protected ModelUtil<S,D,R,C> modelUtil;
-    protected BlockingTreeUtil<D,R,C,T1,T2> blockingTreeUtil;
-    ZinggBase base;
-
+    
     public ZinggBase() {
 
     }
@@ -178,48 +180,98 @@ public abstract class ZinggBase<S,D, R, C, T1,T2> implements Serializable, IZing
         return zinggOptions;
     }
 
-    public Dataset<Row> getMarkedRecords() {
+    public ZFrame<D,R,C> getMarkedRecords() {
 		try {
-			return PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
+			return getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
 		} catch (ZinggClientException e) {
 			LOG.warn("No record has been marked yet");
 		}
 		return null;
 	}
 
-	public Dataset<Row> getUnmarkedRecords() {
-		Dataset<Row> unmarkedRecords = null;
-		Dataset<Row> markedRecords = null;
-		try {
-			unmarkedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataUnmarkedPipe(args));
-			markedRecords = getMarkedRecords();
-			if (markedRecords != null ) {
-				unmarkedRecords = unmarkedRecords.join(markedRecords,
-						unmarkedRecords.col(ColName.CLUSTER_COLUMN).equalTo(markedRecords.col(ColName.CLUSTER_COLUMN)),
-						"left_anti");
-			} 
-		} catch (ZinggClientException e) {
-			LOG.warn("No unmarked record");
-		}
+	public ZFrame<D,R,C> getUnmarkedRecords() {
+		ZFrame<D,R,C> unmarkedRecords = null;
+		ZFrame<D,R,C> markedRecords = null;
+		unmarkedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataUnmarkedPipe(args));
+        markedRecords = getMarkedRecords();
+        if (markedRecords != null ) {
+        	unmarkedRecords = unmarkedRecords.join(markedRecords,ColName.CLUSTER_COLUMN, false, "left_anti");
+        }
 		return unmarkedRecords;
 	}
 
-    public Long getMarkedRecordsStat(Dataset<Row> markedRecords, long value) {
-        return markedRecords.filter(markedRecords.col(ColName.MATCH_FLAG_COL).equalTo(value)).count() / 2;
+   
+    public Long getMarkedRecordsStat(ZFrame<D,R,C> markedRecords, long value) {
+        return markedRecords.filter(markedRecords.equalTo(ColName.MATCH_FLAG_COL, value)).count() / 2;
     }
 
-    public Long getMatchedMarkedRecordsStat(Dataset<Row> markedRecords){
+    @Override
+    public Long getMatchedMarkedRecordsStat(ZFrame<D,R,C> markedRecords){
         return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_MATCH);
     }
 
-    public Long getUnmatchedMarkedRecordsStat(Dataset<Row> markedRecords){
+    @Override
+    public Long getUnmatchedMarkedRecordsStat(ZFrame<D,R,C> markedRecords){
         return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_NOT_A_MATCH);
     }
 
-    public Long getUnsureMarkedRecordsStat(Dataset<Row> markedRecords){
+    @Override
+    public Long getUnsureMarkedRecordsStat(ZFrame<D,R,C> markedRecords){
         return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_NOT_SURE);
     }
 
+
+
+    public HashUtil<D,R,C,T1,T2> getHashUtil() {
+        return base.getHashUtil();
+    }
+
+    public void setHashUtil(HashUtil<D,R,C,T1,T2> t) {
+        base.setHashUtil(t);
+    }
+
+    public GraphUtil<D,R,C> getGraphUtil() {
+        return base.getGraphUtil();
+    }
+
+    public void setGraphUtil(GraphUtil<D,R,C> t) {
+        base.setGraphUtil(t);
+    }
+
+    public void setModelUtil(ModelUtil<S,D,R,C> t) {
+        base.setModelUtil(t);
+    }
+
+    public ModelUtil<S,D,R,C>  getModelUtil() {
+        return base.getModelUtil();
+    }
+
+    public abstract void execute() throws ZinggClientException ;
+
+    
+    public void setPipeUtil(PipeUtilBase<S,D,R,C> pipeUtil) {
+        base.setPipeUtil(pipeUtil);
+        
+    }
+
+   
+    public void setDSUtil(DSUtil<S,D,R,C> pipeUtil) {
+       base.setDSUtil(pipeUtil);
+        
+    }
+
+    public DSUtil<S,D,R,C> getDSUtil() {
+        return base.dsUtil;
+    }
+
+    
+    public PipeUtilBase<S,D,R,C> getPipeUtil() {
+        return base.pipeUtil;
+    }
+
+    public BlockingTreeUtil<D,R,C,T1,T2> getBlockingTreeUtil() {
+        return base.blockingTreeUtil;
+    }
 
 
 

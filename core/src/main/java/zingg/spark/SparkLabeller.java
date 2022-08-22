@@ -41,6 +41,13 @@ public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Col
 	public static String name = "zingg.SparkLabeller";
 	public static final Log LOG = LogFactory.getLog(SparkLabeller.class);
 
+	private SparkSession sparkSession;
+	@Override
+	public void setSpark(SparkSession session) {
+		this.sparkSession = session;
+		
+	}
+
 	public SparkLabeller() {
 		setZinggOptions(ZinggOptions.LABEL);
 	}
@@ -51,6 +58,9 @@ public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Col
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	
 
 	
 }

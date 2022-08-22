@@ -16,8 +16,6 @@ import zingg.preprocess.StopWords;
 import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
 import zingg.util.ModelUtil;
-import zingg.util.PipeUtil;
-
 
 public abstract class TrainingDataFinder<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
 
@@ -28,27 +26,23 @@ public abstract class TrainingDataFinder<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,
         setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
     }
 
-	public Dataset<Row> getTraining() throws ZinggClientException {
-		return DSUtil.getTraining(spark, args);
-	}
-	
-	public ZFrame<D,R,C> getTraining() {
+	public ZFrame<D,R,C> getTraining() throws ZinggClientException {
 		return getDSUtil().getTraining(getPipeUtil(), args);
 	}
-
-    public void execute() throws ZinggClientException {
+	
+	 public void execute() throws ZinggClientException {
 			try{
 				ZFrame<D,R,C> data = getPipeUtil().read(true, true, args.getData());
 				LOG.warn("Read input data " + data.count());
 				//create 20 pos pairs
 
-				Dataset<Row> posPairs = null;
-				Dataset<Row> negPairs = null;
-				Dataset<Row> trFile = getTraining();					
+				ZFrame<D,R,C> posPairs = null;
+				ZFrame<D,R,C> negPairs = null;
+				ZFrame<D,R,C> trFile = getTraining();					
 
 				if (trFile != null) {
-					trFile = StopWords.preprocessForStopWords(spark, args, trFile);
-					Dataset<Row> trPairs = DSUtil.joinWithItself(trFile, ColName.CLUSTER_COLUMN, true);
+					trFile = StopWords.preprocessForStopWords(args, trFile);
+					ZFrame<D,R,C> trPairs = getDSUtil().joinWithItself(trFile, ColName.CLUSTER_COLUMN, true);
 						
 						posPairs = trPairs.filter(trPairs.equalTo(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_MATCH));
 						negPairs = trPairs.filter(trPairs.equalTo(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_NOT_A_MATCH));
@@ -66,8 +60,8 @@ public abstract class TrainingDataFinder<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,
 					
 					
 				if (posPairs == null || posPairs.count() <= 5) {
-					Dataset<Row> posSamplesOriginal = getPositiveSamples(data);
-					Dataset<Row> posSamples = StopWords.preprocessForStopWords(spark, args, posSamplesOriginal);
+					ZFrame<D,R,C> posSamplesOriginal = getPositiveSamples(data);
+					ZFrame<D,R,C> posSamples = StopWords.preprocessForStopWords(args, posSamplesOriginal);
 					//posSamples.printSchema();
 					if (posPairs != null) {
 						//posPairs.printSchema();
@@ -80,14 +74,14 @@ public abstract class TrainingDataFinder<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,
 				posPairs = posPairs.cache();
 				if (negPairs!= null) negPairs = negPairs.cache();
 				//create random samples for blocking
-				Dataset<Row> sampleOrginal = data.sample(false, args.getLabelDataSampleSize()).repartition(args.getNumPartitions()).persist(StorageLevel.MEMORY_ONLY());
-				sampleOrginal = DSUtil.getFieldDefColumnsDS(sampleOrginal, args, true);
+				ZFrame<D,R,C> sampleOrginal = data.sample(false, args.getLabelDataSampleSize()).repartition(args.getNumPartitions()).persist(StorageLevel.MEMORY_ONLY());
+				sampleOrginal = getDSUtil().getFieldDefColumnsDS(sampleOrginal, args, true);
 				LOG.info("Preprocessing DS for stopWords");
 
-				Dataset<Row> sample = StopWords.preprocessForStopWords(spark, args, sampleOrginal);
+				ZFrame<D,R,C> sample = StopWords.preprocessForStopWords(args, sampleOrginal);
 
-				Tree<Canopy> tree = BlockingTreeUtil.createBlockingTree(sample, posPairs, 1, -1, args, hashFunctions);			
-				Dataset<Row> blocked = sample.map(new Block.BlockFunction(tree), RowEncoder.apply(Block.appendHashCol(sample.schema())));
+				Tree<Canopy<R>> tree = getBlockingTreeUtil().createBlockingTree(sample, posPairs, 1, -1, args, hashFunctions);			
+				ZFrame<D,R,C> blocked = sample.map(new Block.BlockFunction(tree), RowEncoder.apply(Block.appendHashCol(sample.schema())));
 				blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
 				ZFrame<D,R,C> blocks = getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
 				blocks = blocks.cache();	
@@ -115,7 +109,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,
 				}
 				else {
 					LOG.info("Writing uncertain pairs when either positive or negative samples not provided ");
-					Dataset<Row> posFiltered = blocks.sample(false,  20.0d/blocks.count());
+					ZFrame<D,R,C> posFiltered = blocks.sample(false,  20.0d/blocks.count());
 					posFiltered = posFiltered.withColumn(ColName.PREDICTION_COL, functions.lit(ColValues.IS_NOT_KNOWN_PREDICTION));
 					posFiltered = posFiltered.withColumn(ColName.SCORE_COL, functions.lit(ColValues.ZERO_SCORE));
 					writeUncertain(posFiltered, sampleOrginal);		
@@ -127,16 +121,16 @@ public abstract class TrainingDataFinder<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,
 			}	
     }
 
-	public void writeUncertain(Dataset<Row> dupesActual, Dataset<Row> sampleOrginal) throws ZinggClientException {
+	public void writeUncertain(ZFrame<D,R,C> dupesActual, ZFrame<D,R,C> sampleOrginal) throws ZinggClientException {
 		//dupesActual.show(4);
 		//input dupes are pairs
-		dupesActual = DFUtil.addClusterRowNumber(dupesActual, spark);
-		dupesActual = Util.addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN );	
-		Dataset<Row> dupes1 = DSUtil.alignDupes(dupesActual, args);
-		dupes1 = DSUtil.postprocess(dupes1, sampleOrginal);	
-		Dataset<Row> dupes2 = dupes1.orderBy(ColName.CLUSTER_COLUMN);
-		LOG.debug("uncertain output schema is " + dupes2.schema());
-		PipeUtil.write(dupes2 , args, ctx, getUnmarkedLocation());
+		dupesActual = getDSUtil().addClusterRowNumber(dupesActual);
+		dupesActual = getDSUtil().addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN );	
+		ZFrame<D,R,C> dupes1 = getDSUtil().alignDupes(dupesActual, args);
+		dupes1 = getDSUtil().postprocess(dupes1, sampleOrginal);	
+		ZFrame<D,R,C> dupes2 = dupes1.orderBy(ColName.CLUSTER_COLUMN);
+		//LOG.debug("uncertain output schema is " + dupes2.schema());
+		getPipeUtil().write(dupes2 , args, getUnmarkedLocation());
 		//PipeUtil.write(jdbc, massageForJdbc(dupes2.cache()) , args, ctx);
 	}
 

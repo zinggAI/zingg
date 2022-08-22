@@ -85,7 +85,7 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		return reader;
 	}
 
-	private static Dataset<Row> read(DataFrameReader reader, Pipe p, boolean addSource) throws ZinggClientException{
+	private  Dataset<Row> read(DataFrameReader reader, Pipe p, boolean addSource) throws ZinggClientException{
 		Dataset<Row> input = null;
 		LOG.warn("Reading " + p);
 		try {
@@ -111,13 +111,14 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		return new SparkFrame(input);
 	}
 
-	private static Dataset<Row> readInternal(SparkSession spark, Pipe p, boolean addSource) throws ZinggClientException {
+	private  ZFrame<Dataset<Row>, Row, Column> readInternal(SparkSession spark, Pipe p, boolean addSource) throws ZinggClientException {
 		DataFrameReader reader = getReader(spark, p);
 		return read(reader, p, addSource);		
 	}
 
-	public static Dataset<Row> joinTrainingSetstoGetLabels(Dataset<Row> jdbc, 
-		Dataset<Row> file)  {
+	/*
+	public ZFrame<Dataset<Row>, Row, Column> joinTrainingSetstoGetLabels(ZFrame<Dataset<Row>, Row, Column> jdbc, 
+	ZFrame<Dataset<Row>, Row, Column> file)  {
 		file = file.drop(ColName.MATCH_FLAG_COL);
 		file.printSchema();
 		file.show();
@@ -148,11 +149,11 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		
 		return pairs;
 	}
+	*/
 
-
-	private static Dataset<Row> readInternal(SparkSession spark, boolean addLineNo,
+	private ZFrame<Dataset<Row>, Row, Column> readInternal(SparkSession spark, boolean addLineNo,
 			boolean addSource, Pipe... pipes) throws ZinggClientException {
-		Dataset<Row> input = null;
+		ZFrame<Dataset<Row>, Row, Column> input = null;
 
 		for (Pipe p : pipes) {
 			if (input == null) {
@@ -165,41 +166,42 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		// we will probably need to create row number as string with pipename/id as
 		// suffix
 		if (addLineNo)
-			input = new SparkFrame(DFUtil.addRowNumber(input.df(), getSession()));
+			input = new SparkFrame(getDFUtil().addRowNumber(input.df(), getSession()));
 		// we need to transform the input here by using stop words
 		return input;
 	}
 
-	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, boolean addSource, Pipe... pipes) throws ZinggClientException {
-		Dataset<Row> rows = readInternal(spark, addLineNo, addSource, pipes);
-		rows = rows.persist(StorageLevel.MEMORY_ONLY());
+	public ZFrame<Dataset<Row>, Row, Column> read(SparkSession spark, boolean addLineNo, boolean addSource, Pipe... pipes) throws ZinggClientException {
+		ZFrame<Dataset<Row>, Row, Column> rows = readInternal(spark, addLineNo, addSource, pipes);
+		rows = rows.cache();
 		return rows;
 	}
 
-	public static Dataset<Row> sample(SparkSession spark, Pipe p) throws ZinggClientException {
+	/*
+	public ZFrame<Dataset<Row>, Row, Column> sample(SparkSession spark, Pipe p) throws ZinggClientException {
 		DataFrameReader reader = getReader(spark, p);
 		reader.option("inferSchema", true);
 		reader.option("mode", "DROPMALFORMED");
 		LOG.info("reader is ready to sample with inferring " + p.get(FilePipe.LOCATION));
 		LOG.warn("Reading input of type " + p.getFormat());
-		Dataset<Row> input = read(reader, p, false);
+		ZFrame<Dataset<Row>, Row, Column> input = read(reader, p, false);
 		// LOG.warn("inferred schema " + input.schema());
 		List<Row> values = input.takeAsList(10);
 		values.forEach(r -> LOG.warn(r));
 		Dataset<Row> ret = spark.createDataFrame(values, input.schema());
 		return ret;
-
 	}
+	*/
 
-	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, int numPartitions,
+	public  ZFrame<Dataset<Row>, Row, Column> read(SparkSession spark, boolean addLineNo, int numPartitions,
 			boolean addSource, Pipe... pipes) throws ZinggClientException {
-		Dataset<Row> rows = readInternal(spark, addLineNo, addSource, pipes);
+		ZFrame<Dataset<Row>, Row, Column> rows = readInternal(spark, addLineNo, addSource, pipes);
 		rows = rows.repartition(numPartitions);
 		rows = rows.cache();
 		return rows;
 	}
 
-	public static void write(Dataset<Row> toWriteOrig, Arguments args, JavaSparkContext ctx, Pipe... pipes) throws ZinggClientException {
+	public  void write(ZFrame<Dataset<Row>, Row, Column> toWriteOrig, Arguments args, JavaSparkContext ctx, Pipe... pipes) throws ZinggClientException {
 		try {
 			for (Pipe p: pipes) {
 			Dataset<Row> toWrite = toWriteOrig.df();
@@ -307,17 +309,19 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		}
 	}
 
-	public static void writePerSource(Dataset<Row> toWrite, Arguments args, JavaSparkContext ctx, Pipe[] pipes ) throws ZinggClientException {
+	/*
+	public  void writePerSource(Dataset<Row> toWrite, Arguments args, JavaSparkContext ctx, Pipe[] pipes ) throws ZinggClientException {
 		List<Row> sources = toWrite.select(ColName.SOURCE_COL).distinct().collectAsList();
 		for (Row r : sources) {
 			Dataset<Row> toWriteNow = toWrite.filter(toWrite.col(ColName.SOURCE_COL).equalTo(r.get(0)));
 			toWriteNow = toWriteNow.drop(ColName.SOURCE_COL);
-			PipeUtil.write(toWriteNow, args, ctx, pipes);
+			write(toWriteNow, args, ctx, pipes);
 
 		}
 	}
+	*/
 
-	public static Pipe getTrainingDataUnmarkedPipe(Arguments args) {
+	public Pipe getTrainingDataUnmarkedPipe(Arguments args) {
 		Pipe p = new Pipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getZinggTrainingDataUnmarkedDir());
@@ -338,7 +342,7 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		return p;
 	}
 	
-	public static Pipe getStopWordsPipe(Arguments args, String fileName) {
+	public Pipe getStopWordsPipe(Arguments args, String fileName) {
 		Pipe p = new Pipe();
 		p.setFormat(Pipe.FORMAT_CSV);
 		p.setProp(FilePipe.HEADER, "true");
@@ -347,7 +351,7 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		return p;
 	}
 
-	public static Pipe getBlockingTreePipe(Arguments args) {
+	public  Pipe getBlockingTreePipe(Arguments args) {
 		Pipe p = new Pipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getBlockFile());
@@ -363,7 +367,6 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 			.map(Object::toString)
 			.orElse("");
 	}
-
 
 
 	/*

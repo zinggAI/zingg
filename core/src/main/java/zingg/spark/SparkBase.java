@@ -110,5 +110,11 @@ public class SparkBase extends ZinggBase<SparkSession, Dataset<Row>, Row,Column,
     public ModelUtil<SparkSession, Dataset<Row>, Row, Column>  getModelUtil() {
         return modelUtil;
     }
+
+    @Override
+    public void setSpark(SparkSession session) {
+        // TODO Auto-generated method stub
+        
+    }
   
  }

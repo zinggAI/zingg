@@ -66,22 +66,24 @@ public abstract class BlockingTreeUtil<D,R,C,T,T1> {
 		return createBlockingTree(sample, positives, sampleFraction, blockSize, args, hashFunctions);
 	}
 	
-	public static void writeBlockingTree(SparkSession spark, JavaSparkContext ctx, Tree<Canopy> blockingTree, Arguments args) throws Exception, ZinggClientException {
+	public void writeBlockingTree(Tree<Canopy<R>> blockingTree, Arguments args) throws Exception, ZinggClientException {
 		byte[] byteArray  = Util.convertObjectIntoByteArray(blockingTree);
-		StructType schema = DataTypes.createStructType(new StructField[] { DataTypes.createStructField("BlockingTree", DataTypes.BinaryType, false) });
+		/*StructType schema = DataTypes.createStructType(new StructField[] { DataTypes.createStructField("BlockingTree", DataTypes.BinaryType, false) });
 		List<Object> objList = new ArrayList<>();
 		objList.add(byteArray);
 		JavaRDD<Row> rowRDD = ctx.parallelize(objList).map((Object row) -> RowFactory.create(row));
 		Dataset<Row> df = spark.sqlContext().createDataFrame(rowRDD, schema).toDF().coalesce(1);
-		PipeUtil.write(df, args, ctx, PipeUtil.getBlockingTreePipe(args));
+		PipeUtil.write(df, args, ctx, PipeUtil.getBlockingTreePipe(args));*/
 	}
 
-	public static Tree<Canopy> readBlockingTree(SparkSession spark, Arguments args) throws Exception, ZinggClientException{
+	public Tree<Canopy<R>> readBlockingTree(Arguments args) throws Exception, ZinggClientException{
+		/*
 		Dataset<Row> tree = PipeUtil.read(spark, false, args.getNumPartitions(), false, PipeUtil.getBlockingTreePipe(args));
 		byte [] byteArrayBack = (byte[]) tree.head().get(0);
 		Tree<Canopy> blockingTree = null;
 		blockingTree =  (Tree<Canopy>) Util.revertObjectFromByteArray(byteArrayBack);
 		return blockingTree;
+		*/
 	}
 
 	public abstract ZFrame<D,R,C> getBlockHashes(ZFrame<D,R,C> testData, Tree<Canopy<R>> tree);

@@ -13,20 +13,20 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.StructField;
 
 import zingg.client.Arguments;
+import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
-import zingg.util.PipeUtil;
 
-public class DataDocumenter extends DocumenterBase {
+public class DataDocumenter<S,D,R,C,T,T1> extends DocumenterBase<S,D,R,C,T,T1> {
 	protected static String name = "zingg.DataDocumenter";
 	protected static String TEMPLATE_TITLE = "Data Documentation";
 	private final String DATA_DOC_TEMPLATE = "dataDocTemplate.ftlh";
 
 	public static final Log LOG = LogFactory.getLog(DataDocumenter.class);
-	protected Dataset<Row> data;
+	protected  ZFrame<D,R,C>  data;
 
-	public DataDocumenter(SparkSession spark, Arguments args) {
-		super(spark, args);
-		data = spark.emptyDataFrame();
+	public DataDocumenter(Arguments args) {
+		super(args);
+		data = getDFUtil().emptyDataFrame();
 	}
 	
 	public void process() throws ZinggClientException {

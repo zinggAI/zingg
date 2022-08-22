@@ -10,12 +10,13 @@ import org.apache.spark.sql.SparkSession;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
+import zingg.ZinggBase;
 import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 import zingg.util.RowWrapper;
 
-class DocumenterBase {
+class DocumenterBase<S,D,R,C,T,T1> extends ZinggBase<S,D,R,C,T,T1>{
 	protected static Configuration config;
 	protected SparkSession spark;
 	protected Arguments args;

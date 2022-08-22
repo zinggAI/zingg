@@ -13,23 +13,22 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 import zingg.client.Arguments;
+import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
-import zingg.util.PipeUtil;
 
-public class ModelDocumenter extends DocumenterBase {
+public class ModelDocumenter<S,D,R,C,T,T1> extends DocumenterBase<S,D,R,C,T,T1> {
 
 	protected static String name = "zingg.ModelDocumenter";
 	public static final Log LOG = LogFactory.getLog(ModelDocumenter.class);
 
 	private final String MODEL_TEMPLATE = "model.ftlh";
-	ModelColDocumenter modelColDoc;
-	protected Dataset<Row> markedRecords;
+	ModelColDocumenter<S,D,R,C,T,T1> modelColDoc;
+	protected  ZFrame<D,R,C>  markedRecords;
 
-	public ModelDocumenter(SparkSession spark, Arguments args) {
-		super(spark, args);
-		markedRecords = spark.emptyDataFrame();
-		modelColDoc = new ModelColDocumenter(spark, args);
+	public ModelDocumenter(Arguments args) {
+		super(args);
+		markedRecords = getDFUtil().emptyDataFrame();
 	}
 
 	public void process() throws ZinggClientException {

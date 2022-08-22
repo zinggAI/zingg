@@ -7,7 +7,7 @@ import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.recommender.StopWordsRecommender;
 
-public class Recommender extends ZinggBase {
+public class Recommender<S,D,R,C, T,T1> extends ZinggBase<S,D,R,C,T,T1> {
 
 	protected static String name = "zingg.Recommender";
 	public static final Log LOG = LogFactory.getLog(Recommender.class);
@@ -21,8 +21,8 @@ public class Recommender extends ZinggBase {
 			LOG.info("Recommender starts");
 
 			//Recommendations out of data
-			StopWordsRecommender stopWordsRecommender = new StopWordsRecommender(spark, ctx, args);
-			stopWordsRecommender.process();
+			//StopWordsRecommender stopWordsRecommender = new StopWordsRecommender(args);
+			//stopWordsRecommender.process();
 
 			LOG.info("Recommender finishes");
 		} catch (Exception e) {

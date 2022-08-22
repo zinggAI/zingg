@@ -34,10 +34,6 @@ public abstract class DSUtil<S, D, R, C> {
 
 	S session;
 
-	
-	
-    public Log LOG = LogFactory.getLog(DSUtil.class);	
-
 	public DSUtil(S s) {
 		this.session = s;
 	}
@@ -130,16 +126,10 @@ public abstract class DSUtil<S, D, R, C> {
 		return join(lines, lines1, joinColumn, false);
 	}
 
-<<<<<<< HEAD
-	public static Dataset<Row> alignLinked(Dataset<Row> dupesActual, Arguments args) {
-		dupesActual = dupesActual.cache();		
-		List<Column> cols = new ArrayList<Column>();
-=======
 	public  ZFrame<D, R, C> alignLinked(ZFrame<D, R, C> dupesActual, Arguments args) {
 		dupesActual = dupesActual.cache();
 		dupesActual = dupesActual.withColumnRenamed(ColName.ID_COL, ColName.CLUSTER_COLUMN);
 		List<C> cols = new ArrayList<C>();
->>>>>>> framework
 		cols.add(dupesActual.col(ColName.CLUSTER_COLUMN));
 		cols.add(dupesActual.col(ColName.ID_COL));
 		cols.add(dupesActual.col(ColName.SCORE_COL));
@@ -261,25 +251,12 @@ public abstract class DSUtil<S, D, R, C> {
 		return a;			
 	}	
 
-<<<<<<< HEAD
-	public static Dataset<Row> getTraining(SparkSession spark, Arguments args) throws ZinggClientException {
-		return getTraining(spark, args, PipeUtil.getTrainingDataMarkedPipe(args)); 			
-	}
-
-	public static Dataset<Row> getTrainingJdbc(SparkSession spark, Arguments args) throws ZinggClientException {
-		return getTraining(spark, args, args.getOutput()[0]);
-	}
-
-	private static Dataset<Row> getTraining(SparkSession spark, Arguments args, Pipe p) throws ZinggClientException {
-		Dataset<Row> trFile = null;
-=======
 	public  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, Arguments args) {
 		return getTraining(pipeUtil, args, pipeUtil.getTrainingDataMarkedPipe(args)); 			
 	}
 	
 	private  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, Arguments args, Pipe p) {
 		ZFrame<D, R, C> trFile = null;
->>>>>>> framework
 		try{
 			trFile = pipeUtil.read(false, false, p); 
 			LOG.warn("Read marked training samples ");
@@ -308,7 +285,6 @@ public abstract class DSUtil<S, D, R, C> {
 				.collect(Collectors.toList());
 	}
 
-<<<<<<< HEAD
     public static Dataset<Row> postprocess(Dataset<Row> actual, Dataset<Row> orig) {
     	List<Column> cols = new ArrayList<Column>();	
     	cols.add(actual.col(ColName.CLUSTER_COLUMN));
@@ -341,7 +317,6 @@ public abstract class DSUtil<S, D, R, C> {
     
     	return joined;
     }
-=======
+
 	public abstract ZFrame<D, R, C> addClusterRowNumber(ZFrame<D, R, C> ds);
->>>>>>> framework
 }

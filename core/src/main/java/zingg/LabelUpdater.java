@@ -47,11 +47,11 @@ public abstract class LabelUpdater<S,D,R,C,T1,T2> extends Labeller<S,D,R,C,T1,T2
 			getMarkedRecordsStat(lines);
 			printMarkedRecordsStat();
 
-			List<Column> displayCols = DSUtil.getFieldDefColumns(lines, args, false, args.getShowConcise());
+			List<C> displayCols = getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
 			try {
 				int matchFlag;
-				Dataset<Row> updatedRecords = null;
-				Dataset<Row> recordsToUpdate = lines;
+				ZFrame<D,R,C> updatedRecords = null;
+				ZFrame<D,R,C> recordsToUpdate = lines;
 				int selectedOption = -1;
 				String postMsg;
 
@@ -63,7 +63,7 @@ public abstract class LabelUpdater<S,D,R,C,T1,T2> extends Labeller<S,D,R,C,T1,T2
 						LOG.info("User has exit in the middle. Updating the records.");
 						break;
 					}
-					Dataset<Row> currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).equalTo(cluster_id));
+					ZFrame<D,R,C> currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).equalTo(cluster_id));
 					if (currentPair.isEmpty()) {
 						System.out.println("\tInvalid cluster id. Enter '9' to exit");
 						continue;
@@ -73,7 +73,7 @@ public abstract class LabelUpdater<S,D,R,C,T1,T2> extends Labeller<S,D,R,C,T1,T2
 					String preMsg = String.format("\n\tThe record pairs belonging to the input cluster id %s are:", cluster_id);
 					String matchType = LabelMatchType.get(matchFlag).msg;
 					postMsg = String.format("\tThe above pair is labeled as %s\n", matchType);
-					selectedOption = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), preMsg, postMsg);
+					selectedOption = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), preMsg, postMsg);
 					updateLabellerStat(selectedOption, +1);
 					updateLabellerStat(matchFlag, -1);
 					printMarkedRecordsStat();

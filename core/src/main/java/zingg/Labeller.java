@@ -34,7 +34,7 @@ public abstract class Labeller<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2> {
 		try {
 			LOG.info("Reading inputs for labelling phase ...");
 			getMarkedRecordsStat(getMarkedRecords());
-			Dataset<Row> unmarkedRecords = getUnmarkedRecords();
+			ZFrame<D,R,C>  unmarkedRecords = getUnmarkedRecords();
 			processRecordsCli(unmarkedRecords);
 			LOG.info("Finished labelling phase");
 		} catch (Exception e) {
@@ -43,7 +43,7 @@ public abstract class Labeller<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2> {
 		}
 	}
 
-	protected void getMarkedRecordsStat(Dataset<Row> markedRecords) {
+	protected void getMarkedRecordsStat(ZFrame<D,R,C>  markedRecords) {
 		if (markedRecords != null ) {
 			positivePairsCount = getMatchedMarkedRecordsStat(markedRecords);
 			negativePairsCount =  getUnmatchedMarkedRecordsStat(markedRecords);
@@ -52,7 +52,7 @@ public abstract class Labeller<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2> {
 		} 
 	}
 	
-	public ZFrame<D,R,C> getUnmarkedRecords() throws ZinggClientException {
+	public ZFrame<D,R,C> getUnmarkedRecords() {
 		ZFrame<D,R,C> unmarkedRecords = null;
 		ZFrame<D,R,C> markedRecords = null;
 		try {
@@ -70,26 +70,27 @@ public abstract class Labeller<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2> {
 		} catch (Exception e) {
 			LOG.warn("No unmarked record for labelling");
 		}
+		return unmarkedRecords;
 	}
 
-	public List<Row> getClusterIds(Dataset<Row> lines) {
+	public List<R>  getClusterIds(ZFrame<D,R,C>  lines) {
 		return 	lines.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();		
 	}
 
-	public List<Column> getDisplayColumns(Dataset<Row> lines, Arguments args) {
-		return DSUtil.getFieldDefColumns(lines, args, false, args.getShowConcise());
+	public List<C> getDisplayColumns(ZFrame<D,R,C>  lines, Arguments args) {
+		return getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
 	}
 
-	public Dataset<Row> getCurrentPair(Dataset<Row> lines, int index, List<Row> clusterIds) {
+	public ZFrame<D,R,C>  getCurrentPair(ZFrame<D,R,C>  lines, int index, List<R>  clusterIds) {
 		return lines.filter(lines.col(ColName.CLUSTER_COLUMN).equalTo(
 			clusterIds.get(index).getAs(ColName.CLUSTER_COLUMN))).cache();
 	}
 
-	public double getScore(Dataset<Row> currentPair) {
+	public double getScore(ZFrame<D,R,C>  currentPair) {
 		return currentPair.head().getAs(ColName.SCORE_COL);
 	}
 
-	public double getPrediction(Dataset<Row> currentPair) {
+	public double getPrediction(ZFrame<D,R,C>  currentPair) {
 		return currentPair.head().getAs(ColName.PREDICTION_COL);
 	}
 
@@ -110,24 +111,24 @@ public abstract class Labeller<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2> {
 		return msg2;
 	}
 
-	public void processRecordsCli(Dataset<Row> lines) throws ZinggClientException {
+	public void processRecordsCli(ZFrame<D,R,C>  lines) throws ZinggClientException {
 		LOG.info("Processing Records for CLI Labelling");
 		if (lines != null && lines.count() > 0) {
 			printMarkedRecordsStat();
 
 			lines = lines.cache();
-			List<Column> displayCols = getDisplayColumns(lines, args);
-			List<Row> clusterIDs = getClusterIds(lines);
+			List<C> displayCols = getDisplayColumns(lines, args);
+			List<R>  clusterIDs = getClusterIds(lines);
 			try {
 				double score;
 				double prediction;
-				Dataset<Row> updatedRecords = null;
+				ZFrame<D,R,C>  updatedRecords = null;
 				int selected_option = -1;
 				String msg1, msg2;
 				int totalPairs = clusterIDs.size();
 
 				for (int index = 0; index < totalPairs; index++) {
-					Dataset<Row> currentPair = getCurrentPair(lines, index, clusterIDs);
+					ZFrame<D,R,C>  currentPair = getCurrentPair(lines, index, clusterIDs);
 
 					score = getScore(currentPair);
 					prediction = getPrediction(currentPair);
@@ -136,7 +137,7 @@ public abstract class Labeller<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2> {
 					msg2 = getMsg2(prediction, score);
 					//String msgHeader = msg1 + msg2;
 
-					selected_option = displayRecordsAndGetUserInput(DSUtil.select(currentPair, displayCols), msg1, msg2);
+					selected_option = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), msg1, msg2);
 					updateLabellerStat(selected_option, 1);
 					printMarkedRecordsStat();
 					if (selected_option == 9) {

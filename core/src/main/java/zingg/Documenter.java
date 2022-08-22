@@ -34,11 +34,11 @@ public abstract class Documenter<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>
 		try {
 			LOG.info("Documenter starts");
 			//Documentation out of model
-			ModelDocumenter modelDoc = new ModelDocumenter(spark, args);
+			ModelDocumenter modelDoc = new ModelDocumenter(args);
 			modelDoc.process();
 
 			//Documnetation of data
-			DataDocumenter dataDoc = new DataDocumenter(spark, args);
+			DataDocumenter dataDoc = new DataDocumenter(args);
 			dataDoc.process();
 
 			LOG.info("Documenter finishes");

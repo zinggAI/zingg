@@ -28,12 +28,12 @@ public abstract class Matcher<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
         setZinggOptions(ZinggOptions.MATCH);
     }
 
-	protected Dataset<Row> getTestData() throws ZinggClientException{
-		Dataset<Row> data = PipeUtil.read(spark, true, args.getNumPartitions(), true, args.getData());
+	protected  ZFrame<D,R,C>  getTestData() throws ZinggClientException{
+		 ZFrame<D,R,C>  data = getPipeUtil().read(true, args.getNumPartitions(), true, args.getData());
 		return data;
 	}
 
-	protected Dataset<Row> getBlocked(Dataset<Row> testData) throws Exception, ZinggClientException{
+	protected  ZFrame<D,R,C>  getBlocked( ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
 		LOG.debug("Blocking model file location is " + args.getBlockFile());
 		Tree<Canopy<R>> tree = getBlockingTreeUtil().readBlockingTree(args);
 		ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(testData, tree);		
@@ -48,7 +48,7 @@ public abstract class Matcher<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
 	}
 
 	protected ZFrame<D,R,C> getBlocks(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
-		//ZFrame<D,R,C>joinH = DSUtil.joinWithItself(blocked, ColName.HASH_COL, true).cache();
+		//ZFrame<D,R,C>joinH =  getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true).cache();
 		ZFrame<D,R,C>joinH = blocked.as("first").join(blocked.as("second"), ColName.HASH_COL)
 			.selectExpr("first.z_zid as z_zid", "second.z_zid as z_z_zid");
 		joinH.show();
@@ -83,9 +83,9 @@ public abstract class Matcher<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
     public void execute() throws ZinggClientException {
         try {
 			// read input, filter, remove self joins
-			Dataset<Row> testDataOriginal = getTestData();
-			testDataOriginal = DSUtil.getFieldDefColumnsDS(testDataOriginal, args, true);
-			Dataset<Row> testData = StopWords.preprocessForStopWords(spark, args, testDataOriginal);
+			 ZFrame<D,R,C>  testDataOriginal = getTestData();
+			testDataOriginal =  getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
+			 ZFrame<D,R,C>  testData = StopWords.preprocessForStopWords(args, testDataOriginal);
 			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
 			long count = testData.count();
@@ -110,7 +110,7 @@ public abstract class Matcher<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
 			}
 			//blocks.toJavaRDD().saveAsTextFile("/tmp/zblocks");
 			//check if all fields equal			
-			//ZFrame<D,R,C>allEqual = DSUtil.allFieldsEqual(blocks, args);
+			//ZFrame<D,R,C>allEqual =  getDSUtil().allFieldsEqual(blocks, args);
 			//allEqual = allEqual.cache();
 			//send remaining to model 
 			Model model = getModel();
@@ -143,7 +143,7 @@ public abstract class Matcher<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
 		}
     }
 
-	public void writeOutput(Dataset<Row> blocked, Dataset<Row> dupesActual) throws ZinggClientException {
+	public void writeOutput( ZFrame<D,R,C>  blocked,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException {
 		try{
 		//input dupes are pairs
 		///pick ones according to the threshold by user
@@ -179,7 +179,7 @@ public abstract class Matcher<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
 			for (int i=0; i < cols.length - 1; ++i) {
 				columns.add(graphWithScores.col(cols[i]));
 			}
-			graphWithScores = DSUtil.select(graphWithScores, columns);
+			graphWithScores =  getDSUtil().select(graphWithScores, columns);
 			*/
 			getPipeUtil().write(graphWithScores, args, args.getOutput());
 		}

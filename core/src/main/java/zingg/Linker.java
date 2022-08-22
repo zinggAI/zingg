@@ -54,11 +54,11 @@ public abstract class Linker<S,D,R,C,T1,T2> extends Matcher<S,D,R,C,T1,T2> {
 				// input dupes are pairs
 				//dupesActual = DFUtil.addClusterRowNumber(dupesActual, spark);
 				dupesActual = dupesActual.withColumn(ColName.CLUSTER_COLUMN, dupesActual.col(ColName.ID_COL));
-				dupesActual = Util.addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN);
-				Dataset<Row> dupes2 = DSUtil.alignLinked(dupesActual, args);
-				dupes2 = DSUtil.postprocessLinked(dupes2, sampleOrginal);
+				dupesActual = getDSUtil().addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN);
+				ZFrame<D,R,C>dupes2 =  getDSUtil().alignLinked(dupesActual, args);
+				dupes2 =  getDSUtil().postprocessLinked(dupes2, sampleOrginal);
 				LOG.debug("uncertain output schema is " + dupes2.schema());
-				PipeUtil.write(dupes2, args, ctx, args.getOutput());
+				getPipeUtil().write(dupes2, args, args.getOutput());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

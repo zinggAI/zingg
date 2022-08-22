@@ -42,6 +42,13 @@ public class SparkFindAndLabeller extends FindAndLabeller<SparkSession, Dataset<
 	public static String name = "zingg.SparkFindAndLabeller";
 	public static final Log LOG = LogFactory.getLog(SparkFindAndLabeller.class);
 
+	private SparkSession sparkSession;
+	@Override
+	public void setSpark(SparkSession session) {
+		this.sparkSession = session;
+		
+	}
+
 	public SparkFindAndLabeller() {
 		setZinggOptions(ZinggOptions.FIND_AND_LABEL);
 	}

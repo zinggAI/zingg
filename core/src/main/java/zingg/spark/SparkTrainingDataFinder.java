@@ -51,5 +51,12 @@ public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Da
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public void setSpark(SparkSession session) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

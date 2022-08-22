@@ -18,9 +18,9 @@ import zingg.client.util.EmailBody;
  * @author sgoyal
  *
  */
-public class Client implements Serializable {
+public class Client<S, D,R,C,T,T1> implements Serializable {
 	private Arguments arguments;
-	private IZingg zingg;
+	private IZingg<D,R,C> zingg;
 	private ClientOptions options;
 	private SparkSession session;
 
@@ -258,27 +258,27 @@ public class Client implements Serializable {
 		this.options = options;
 	}
 
-	public Long getMarkedRecordsStat(Dataset<Row> markedRecords, long value) {
+	public Long getMarkedRecordsStat(ZFrame<D,R,C>  markedRecords, long value) {
 		return zingg.getMarkedRecordsStat(markedRecords, value);
 	}
 
-    public Long getMatchedMarkedRecordsStat(Dataset<Row> markedRecords) {
+    public Long getMatchedMarkedRecordsStat(ZFrame<D,R,C>  markedRecords) {
 		return zingg.getMatchedMarkedRecordsStat(markedRecords);
 	}
 
-    public Long getUnmatchedMarkedRecordsStat(Dataset<Row> markedRecords) {
+    public Long getUnmatchedMarkedRecordsStat(ZFrame<D,R,C>  markedRecords) {
 		return zingg.getUnmatchedMarkedRecordsStat(markedRecords);
 	}
 
-    public Long getUnsureMarkedRecordsStat(Dataset<Row> markedRecords) {
+    public Long getUnsureMarkedRecordsStat(ZFrame<D,R,C>  markedRecords) {
 		return zingg.getUnsureMarkedRecordsStat(markedRecords);
 	}
 
-	public Dataset<Row> getMarkedRecords() {
+	public ZFrame<D,R,C>  getMarkedRecords() {
 		return zingg.getMarkedRecords();
 	}
 
-	public Dataset<Row> getUnmarkedRecords() {
+	public ZFrame<D,R,C>  getUnmarkedRecords() {
 		return zingg.getUnmarkedRecords();
 	}
 
