@@ -16,7 +16,7 @@ import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 import zingg.util.RowWrapper;
 
-class DocumenterBase<S,D,R,C,T,T1> extends ZinggBase<S,D,R,C,T,T1>{
+class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected static Configuration config;
 	protected SparkSession spark;
 	protected Arguments args;

@@ -18,7 +18,7 @@ import zingg.client.util.EmailBody;
  * @author sgoyal
  *
  */
-public class Client<S, D,R,C,T,T1> implements Serializable {
+public class Client<S, D,R,C,T> implements Serializable {
 	private Arguments arguments;
 	private IZingg<D,R,C> zingg;
 	private ClientOptions options;

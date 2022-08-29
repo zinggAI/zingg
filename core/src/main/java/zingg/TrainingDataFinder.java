@@ -17,7 +17,7 @@ import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
 import zingg.util.ModelUtil;
 
-public abstract class TrainingDataFinder<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
+public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	protected static String name = "zingg.TrainingDataFinder";
 	public static final Log LOG = LogFactory.getLog(TrainingDataFinder.class);    

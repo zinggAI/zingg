@@ -21,7 +21,7 @@ import zingg.util.PipeUtilBase;
 import zingg.util.RowAdapter;
 import zingg.util.RowWrapper;
 
-public abstract class Documenter<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2> {
+public abstract class Documenter<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
 	protected static String name = "zingg.Documenter";
 	public static final Log LOG = LogFactory.getLog(Documenter.class);

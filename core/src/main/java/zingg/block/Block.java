@@ -26,7 +26,7 @@ import zingg.client.util.ColName;
 import scala.collection.JavaConversions;
 import scala.collection.Seq;
 
-public class Block<D,R,C,T,T1> implements Serializable {
+public class Block<D,R,C,T> implements Serializable {
 
 	public static final Log LOG = LogFactory.getLog(Block.class);
 

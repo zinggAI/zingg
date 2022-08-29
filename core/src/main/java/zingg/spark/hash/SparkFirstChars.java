@@ -14,7 +14,7 @@ import zingg.client.ZFrame;
 import zingg.hash.FirstChars;
 
 
-public class SparkFirstChars extends FirstChars<Dataset<Row>,Row,Column,DataType,DataType> implements UDF1<String, String>{
+public class SparkFirstChars extends FirstChars<Dataset<Row>,Row,Column,DataType> implements UDF1<String, String>{
 	
 	public static final Log LOG = LogFactory.getLog(SparkFirstChars.class);
 

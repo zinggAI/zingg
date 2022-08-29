@@ -18,7 +18,7 @@ import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.util.Metric;
 
-public abstract class Matcher<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
+public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 
 	protected static String name = "zingg.Matcher";

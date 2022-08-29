@@ -7,7 +7,7 @@ import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.recommender.StopWordsRecommender;
 
-public class Recommender<S,D,R,C, T,T1> extends ZinggBase<S,D,R,C,T,T1> {
+public class Recommender<S,D,R,C, T> extends ZinggBase<S,D,R,C,T> {
 
 	protected static String name = "zingg.Recommender";
 	public static final Log LOG = LogFactory.getLog(Recommender.class);

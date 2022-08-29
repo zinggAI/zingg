@@ -38,7 +38,7 @@ import zingg.util.HashUtil;
 import zingg.util.ModelUtil;
 import zingg.util.PipeUtilBase;
 
-public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,DataType,DataType>{
+public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,DataType>{
 
 
 	public static String name = "zingg.Matcher";

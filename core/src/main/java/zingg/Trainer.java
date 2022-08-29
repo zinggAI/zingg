@@ -20,7 +20,7 @@ import zingg.util.DSUtil;
 import zingg.util.ModelUtil;
 import zingg.util.PipeUtilBase;
 
-public abstract class Trainer<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2>{
+public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	protected static String name = "zingg.Trainer";
 	public static final Log LOG = LogFactory.getLog(Trainer.class);    

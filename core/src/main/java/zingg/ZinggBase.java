@@ -40,7 +40,7 @@ import zingg.util.PipeUtilBase;
 //Dataset
 //row
 //column
-public abstract class ZinggBase<S,D, R, C, T1,T2> implements Serializable, IZingg<D, R, C> {
+public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<D, R, C> {
 
     protected Arguments args;
 	
@@ -55,11 +55,11 @@ public abstract class ZinggBase<S,D, R, C, T1,T2> implements Serializable, IZing
 
     public static final Log LOG = LogFactory.getLog(ZinggBase.class);
     protected PipeUtilBase<S,D,R,C> pipeUtil;
-    protected HashUtil<D,R,C,T1,T2> hashUtil;
+    protected HashUtil<D,R,C,T> hashUtil;
     protected DSUtil<S,D,R,C> dsUtil;
     protected GraphUtil<D,R,C> graphUtil;
     protected ModelUtil<S,D,R,C> modelUtil;
-    protected BlockingTreeUtil<D,R,C,T1,T2> blockingTreeUtil;
+    protected BlockingTreeUtil<D,R,C,T> blockingTreeUtil;
     ZinggBase base;
 
 
@@ -83,7 +83,7 @@ public abstract class ZinggBase<S,D, R, C, T1,T2> implements Serializable, IZing
 
     }
 
-    public void setBase(ZinggBase<S,D,R,C,T1,T2> base) {
+    public void setBase(ZinggBase<S,D,R,C,T> base) {
         this.base = base;
     }
 
@@ -222,11 +222,11 @@ public abstract class ZinggBase<S,D, R, C, T1,T2> implements Serializable, IZing
 
 
 
-    public HashUtil<D,R,C,T1,T2> getHashUtil() {
+    public HashUtil<D,R,C,T> getHashUtil() {
         return base.getHashUtil();
     }
 
-    public void setHashUtil(HashUtil<D,R,C,T1,T2> t) {
+    public void setHashUtil(HashUtil<D,R,C,T> t) {
         base.setHashUtil(t);
     }
 
@@ -269,7 +269,7 @@ public abstract class ZinggBase<S,D, R, C, T1,T2> implements Serializable, IZing
         return base.pipeUtil;
     }
 
-    public BlockingTreeUtil<D,R,C,T1,T2> getBlockingTreeUtil() {
+    public BlockingTreeUtil<D,R,C,T> getBlockingTreeUtil() {
         return base.blockingTreeUtil;
     }
 

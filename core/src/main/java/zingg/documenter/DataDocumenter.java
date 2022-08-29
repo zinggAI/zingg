@@ -16,7 +16,7 @@ import zingg.client.Arguments;
 import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 
-public class DataDocumenter<S,D,R,C,T,T1> extends DocumenterBase<S,D,R,C,T,T1> {
+public class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 	protected static String name = "zingg.DataDocumenter";
 	protected static String TEMPLATE_TITLE = "Data Documentation";
 	private final String DATA_DOC_TEMPLATE = "dataDocTemplate.ftlh";

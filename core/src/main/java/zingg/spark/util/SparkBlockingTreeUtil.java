@@ -21,7 +21,7 @@ import zingg.client.ZFrame;
 import zingg.spark.SparkBlockFunction;
 import zingg.util.BlockingTreeUtil;
 
-public class SparkBlockingTreeUtil extends BlockingTreeUtil<Dataset<Row>, Row, Column, DataType, DataType>{
+public class SparkBlockingTreeUtil extends BlockingTreeUtil<Dataset<Row>, Row, Column, DataType>{
 
     public static final Log LOG = LogFactory.getLog(SparkBlockingTreeUtil.class);
 
@@ -29,7 +29,7 @@ public class SparkBlockingTreeUtil extends BlockingTreeUtil<Dataset<Row>, Row, C
     public ZFrame<Dataset<Row>, Row, Column> getBlockHashes(ZFrame<Dataset<Row>, Row, Column> testData,
             Tree<Canopy<Row>> tree) {
             Dataset<Row> retDF = testData.df().map(new SparkBlockFunction(tree), RowEncoder.apply(
-                    new Block<Dataset<Row>,Row,Column,DataType,DataType>().appendHashCol(testData.df().schema())));
+                    new Block<Dataset<Row>,Row,Column,DataType>().appendHashCol(testData.df().schema())));
             return new SparkFrame(retDF);
     }
 

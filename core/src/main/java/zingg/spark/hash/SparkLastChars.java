@@ -11,7 +11,7 @@ import org.apache.spark.sql.types.DataTypes;
 import zingg.client.ZFrame;
 import zingg.hash.LastChars;
 
-public class SparkLastChars extends LastChars<Dataset<Row>,Row,Column,DataType,DataType> implements UDF1<String, String>{
+public class SparkLastChars extends LastChars<Dataset<Row>,Row,Column,DataType> implements UDF1<String, String>{
 	
 	public SparkLastChars(int endIndex) {
 		super(endIndex);

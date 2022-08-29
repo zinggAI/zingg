@@ -6,12 +6,12 @@ import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 
-public abstract class TrainMatcher<S,D,R,C,T1,T2> extends Matcher<S,D,R,C,T1,T2>{
+public abstract class TrainMatcher<S,D,R,C,T> extends Matcher<S,D,R,C,T>{
 
 	protected static String name = "zingg.TrainMatcher";
 	public static final Log LOG = LogFactory.getLog(TrainMatcher.class); 
 	
-	private Trainer<S,D,R,C,T1,T2> trainer;
+	private Trainer<S,D,R,C,T> trainer;
 
     public TrainMatcher() {
         setZinggOptions(ZinggOptions.TRAIN_MATCH);		

@@ -37,7 +37,7 @@ import zingg.util.ModelUtil;
 import zingg.util.PipeUtilBase;
 
 
-public class SparkFindAndLabeller extends FindAndLabeller<SparkSession, Dataset<Row>, Row, Column,DataType,DataType> {
+public class SparkFindAndLabeller extends FindAndLabeller<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	public static String name = "zingg.SparkFindAndLabeller";
 	public static final Log LOG = LogFactory.getLog(SparkFindAndLabeller.class);

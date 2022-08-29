@@ -10,12 +10,12 @@ import org.apache.spark.sql.types.DataType;
 import zingg.hash.HashFunction;
 import zingg.hash.HashFunctionRegistry;
 
-public class SparkHashFunctionRegistry implements HashFunctionRegistry<Dataset<Row>,Row,Column,DataType,DataType>{
+public class SparkHashFunctionRegistry implements HashFunctionRegistry<Dataset<Row>,Row,Column,DataType>{
 
-	public HashMap<String, HashFunction<Dataset<Row>,Row,Column,DataType,DataType>> fns 
-		= new HashMap<String,HashFunction<Dataset<Row>,Row,Column,DataType,DataType>>();
+	public HashMap<String, HashFunction<Dataset<Row>,Row,Column,DataType>> fns 
+		= new HashMap<String,HashFunction<Dataset<Row>,Row,Column,DataType>>();
 		
-	public HashFunction<Dataset<Row>,Row,Column,DataType,DataType> getFunction(String key) {
+	public HashFunction<Dataset<Row>,Row,Column,DataType> getFunction(String key) {
 		return fns.get(key);
 	}
 	
@@ -37,7 +37,7 @@ public class SparkHashFunctionRegistry implements HashFunctionRegistry<Dataset<R
 		init(new SparkIsNullOrEmpty());
 	}
 	
-	public void init(HashFunction<Dataset<Row>,Row,Column,DataType,DataType> fn) {
+	public void init(HashFunction<Dataset<Row>,Row,Column,DataType> fn) {
 		fns.put(fn.getName(), fn);
 	}
 

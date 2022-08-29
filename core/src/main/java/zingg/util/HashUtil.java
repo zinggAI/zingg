@@ -4,7 +4,7 @@ import zingg.client.util.ListMap;
 import zingg.hash.HashFunction;
 
 
-public interface HashUtil<D,R,C,T,T1> {
+public interface HashUtil<D,R,C,T> {
     /**
 	 * Use only those functions which are defined in the conf
 	 * All functions exist in the registry
@@ -13,6 +13,6 @@ public interface HashUtil<D,R,C,T,T1> {
 	 * @return
 	 * @throws Exception
 	 */
-	public ListMap<T1, HashFunction<D,R,C,T,T1>> getHashFunctionList(String fileName, Object spark)
+	public ListMap<T, HashFunction<D,R,C,T>> getHashFunctionList(String fileName, Object spark)
 			throws Exception ;
 }

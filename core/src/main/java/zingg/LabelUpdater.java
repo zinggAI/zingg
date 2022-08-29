@@ -20,7 +20,7 @@ import zingg.util.DSUtil;
 import zingg.util.LabelMatchType;
 import zingg.util.PipeUtilBase;
 
-public abstract class LabelUpdater<S,D,R,C,T1,T2> extends Labeller<S,D,R,C,T1,T2> {
+public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	protected static String name = "zingg.LabelUpdater";
 	public static final Log LOG = LogFactory.getLog(LabelUpdater.class);
 

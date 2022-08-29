@@ -36,7 +36,7 @@ import zingg.util.ModelUtil;
 import zingg.util.PipeUtilBase;
 
 
-public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, Row, Column,DataType,DataType> {
+public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	public static String name = "zingg.SparkLabelUpdater";
 	public static final Log LOG = LogFactory.getLog(SparkLabelUpdater.class);

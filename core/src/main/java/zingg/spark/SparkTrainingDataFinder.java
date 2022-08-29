@@ -36,7 +36,7 @@ import zingg.util.ModelUtil;
 import zingg.util.PipeUtilBase;
 
 
-public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Dataset<Row>, Row, Column,DataType,DataType> {
+public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	public static String name = "zingg.SparkTrainingDataFinder";
 	public static final Log LOG = LogFactory.getLog(SparkTrainingDataFinder.class);

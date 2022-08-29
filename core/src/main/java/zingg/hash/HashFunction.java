@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import zingg.client.ZFrame;
 
-public abstract class HashFunction<D,R,C,T,T1> implements Serializable{
+public abstract class HashFunction<D,R,C,T> implements Serializable{
 		/**
 		 * 
 		 */
@@ -12,19 +12,19 @@ public abstract class HashFunction<D,R,C,T,T1> implements Serializable{
 		protected T dataType;
 		protected String name;
 		protected boolean isUdf = true;
-		protected T1 returnType;
+		protected T returnType;
 
 		public HashFunction(String name) {
 			this.name = name;
 		}
 		
-		public HashFunction(String name, T cl, T1 returnType) {
+		public HashFunction(String name, T cl, T returnType) {
 			this.name = name;
 			this.dataType = cl;
 			this.returnType = returnType;
 		}
 	
-		public HashFunction(String name, T cl, T1 returnType, boolean isUdf) {
+		public HashFunction(String name, T cl, T returnType, boolean isUdf) {
 			this(name, cl, returnType);
 			this.isUdf = isUdf;
 		}
@@ -51,11 +51,11 @@ public abstract class HashFunction<D,R,C,T,T1> implements Serializable{
 			this.isUdf = isUdf;
 		}
 
-		public T1 getReturnType() {
+		public T getReturnType() {
 			return returnType;
 		}
 
-		public void setReturnType(T1 returnType) {
+		public void setReturnType(T returnType) {
 			this.returnType = returnType;
 		}
 

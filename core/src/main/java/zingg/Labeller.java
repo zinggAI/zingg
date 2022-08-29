@@ -19,7 +19,7 @@ import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.util.LabelMatchType;
 
-public abstract class Labeller<S,D,R,C,T1,T2> extends ZinggBase<S,D,R,C,T1,T2> {
+public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
 	protected static String name = "zingg.Labeller";
 	public static final Log LOG = LogFactory.getLog(Labeller.class);

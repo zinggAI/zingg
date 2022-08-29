@@ -36,7 +36,7 @@ import zingg.util.ModelUtil;
 import zingg.util.PipeUtilBase;
 
 
-public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,DataType,DataType> {
+public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	public static String name = "zingg.SparkLinker";
 	public static final Log LOG = LogFactory.getLog(SparkLinker.class);

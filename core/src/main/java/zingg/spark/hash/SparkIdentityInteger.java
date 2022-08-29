@@ -10,7 +10,7 @@ import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.DataType;
 
-public class SparkIdentityInteger extends IdentityInteger<Dataset<Row>, Row, Column,DataType,DataType> implements UDF1<Integer, Integer>{
+public class SparkIdentityInteger extends IdentityInteger<Dataset<Row>, Row, Column,DataType> implements UDF1<Integer, Integer>{
 	
 	public SparkIdentityInteger() {
 		super();
