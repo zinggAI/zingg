@@ -6,7 +6,7 @@ import org.apache.spark.sql.types.DataTypes;
 
 import zingg.client.ZFrame;
 
-public abstract class Round<D,R,C,T,T1> extends HashFunction<D,R,C,T,T1> implements UDF1<Double, Long>{
+public abstract class Round<D,R,C,T> extends HashFunction<D,R,C,T> implements UDF1<Double, Long>{
 	
 	public Round() {
 		super("round");

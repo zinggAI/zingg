@@ -70,7 +70,7 @@ public class TestModelDocumenter extends ZinggSparkTester {
 	@Test
 	public void testPopulateTemplateDataWhenMarkedRecordsAreNone() throws Throwable {
 		ModelDocumenter modelDoc = new ModelDocumenter(spark, args);
-		modelDoc.markedRecords = spark.emptyDataFrame();;
+		modelDoc.markedRecords = spark.emptyDataFrame();
 
 		Map<String, Object> root =  modelDoc.populateTemplateData();
 		assertTrue(root.containsKey(TemplateFields.MODEL_ID), "The field does not exist - " + TemplateFields.MODEL_ID);

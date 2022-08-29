@@ -25,7 +25,7 @@ import zingg.client.util.ColValues;
 
 
 
-public abstract class Linker<S,D,R,C,T1,T2> extends Matcher<S,D,R,C,T1,T2> {
+public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 
 	protected static String name = "zingg.Linker";
 	public static final Log LOG = LogFactory.getLog(Linker.class);

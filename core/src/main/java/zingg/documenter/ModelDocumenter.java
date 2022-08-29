@@ -17,13 +17,13 @@ import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 
-public class ModelDocumenter<S,D,R,C,T,T1> extends DocumenterBase<S,D,R,C,T,T1> {
+public class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 
 	protected static String name = "zingg.ModelDocumenter";
 	public static final Log LOG = LogFactory.getLog(ModelDocumenter.class);
 
 	private final String MODEL_TEMPLATE = "model.ftlh";
-	ModelColDocumenter<S,D,R,C,T,T1> modelColDoc;
+	ModelColDocumenter<S,D,R,C,T> modelColDoc;
 	protected  ZFrame<D,R,C>  markedRecords;
 
 	public ModelDocumenter(Arguments args) {

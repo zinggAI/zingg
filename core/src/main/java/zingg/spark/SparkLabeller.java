@@ -36,7 +36,7 @@ import zingg.util.ModelUtil;
 import zingg.util.PipeUtilBase;
 
 
-public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Column,DataType,DataType> {
+public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	public static String name = "zingg.SparkLabeller";
 	public static final Log LOG = LogFactory.getLog(SparkLabeller.class);

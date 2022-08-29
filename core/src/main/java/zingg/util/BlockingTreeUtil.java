@@ -17,7 +17,7 @@ import zingg.client.ZFrame;
 import zingg.client.util.ListMap;
 import zingg.client.util.Util;
 
-public abstract class BlockingTreeUtil<D,R,C,T,T1> {
+public abstract class BlockingTreeUtil<D,R,C,T> {
 
     public final Log LOG = LogFactory.getLog(BlockingTreeUtil.class);
 	
@@ -37,7 +37,7 @@ public abstract class BlockingTreeUtil<D,R,C,T,T1> {
 		LOG.info("Learning indexing rules for block size " + blockSize);
        
 		positives = positives.coalesce(1); 
-		Block<D,R,C,T,T1> cblock = new Block<D,R,C,T,T1>(sample, positives, hashFunctions, blockSize);
+		Block<D,R,C,T> cblock = new Block<D,R,C,T>(sample, positives, hashFunctions, blockSize);
 		Canopy<R> root = new Canopy<R>(sample.collectAsList(), positives.collectAsList());
 
 		List<FieldDefinition> fd = new ArrayList<FieldDefinition> ();

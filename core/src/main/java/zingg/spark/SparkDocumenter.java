@@ -37,7 +37,7 @@ import zingg.util.ModelUtil;
 import zingg.util.PipeUtilBase;
 
 
-public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row, Column,DataType,DataType> {
+public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	public static String name = "zingg.SparkDocumenter";
 	public static final Log LOG = LogFactory.getLog(SparkDocumenter.class);

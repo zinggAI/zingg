@@ -11,7 +11,7 @@ import org.apache.spark.sql.types.DataTypes;
 import zingg.client.ZFrame;
 import zingg.hash.LastWord;
 
-public class SparkLastWord extends LastWord<Dataset<Row>,Row,Column,DataType,DataType> implements UDF1<String, String>{
+public class SparkLastWord extends LastWord<Dataset<Row>,Row,Column,DataType> implements UDF1<String, String>{
 	
 	public SparkLastWord() {
 		super();

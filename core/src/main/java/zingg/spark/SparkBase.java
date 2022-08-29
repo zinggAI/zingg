@@ -24,7 +24,7 @@ import zingg.util.PipeUtilBase;
 import zingg.spark.util.SparkDSUtil;
 import zingg.spark.util.SparkGraphUtil;
 
-public class SparkBase extends ZinggBase<SparkSession, Dataset<Row>, Row,Column,DataType,DataType>{
+public class SparkBase extends ZinggBase<SparkSession, Dataset<Row>, Row,Column,DataType>{
 
     JavaSparkContext ctx;
     public static final Log LOG = LogFactory.getLog(SparkBase.class);
@@ -80,7 +80,7 @@ public class SparkBase extends ZinggBase<SparkSession, Dataset<Row>, Row,Column,
     }   
 
     
-    public void setHashUtil(HashUtil<Dataset<Row>, Row, Column, DataType, DataType> t) {
+    public void setHashUtil(HashUtil<Dataset<Row>, Row, Column, DataType> t) {
         this.hashUtil = t;
     }
 
@@ -99,7 +99,7 @@ public class SparkBase extends ZinggBase<SparkSession, Dataset<Row>, Row,Column,
        this.dsUtil = pipeUtil;        
     }
 
-    public void setBlokingTreeUtil(BlockingTreeUtil<Dataset<Row>, Row, Column, DataType, DataType> d) {
+    public void setBlokingTreeUtil(BlockingTreeUtil<Dataset<Row>, Row, Column, DataType> d) {
         this.blockingTreeUtil = d;
     }
 

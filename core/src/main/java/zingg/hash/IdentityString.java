@@ -3,7 +3,7 @@ package zingg.hash;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataTypes;
-public abstract class IdentityString<D,R,C,T,T1> extends HashFunction<D,R,C,T,T1> implements UDF1<String, String>{
+public abstract class IdentityString<D,R,C,T> extends HashFunction<D,R,C,T> implements UDF1<String, String>{
 	
 	public IdentityString() {
 		super("identityString");

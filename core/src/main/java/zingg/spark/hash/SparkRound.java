@@ -11,7 +11,7 @@ import zingg.hash.Round;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
-public class SparkRound extends Round<Dataset<Row>,Row,Column,DataType,DataType> implements UDF1<Double, Long>{
+public class SparkRound extends Round<Dataset<Row>,Row,Column,DataType> implements UDF1<Double, Long>{
 	
 	public SparkRound() {
 		setDataType(DataTypes.DoubleType);

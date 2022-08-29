@@ -9,7 +9,7 @@ import org.apache.spark.sql.types.DataTypes;
 import zingg.block.Canopy;
 
 
-public abstract class FirstChars<D,R,C,T,T1> extends HashFunction<D,R,C,T,T1>{
+public abstract class FirstChars<D,R,C,T> extends HashFunction<D,R,C,T>{
 	
 	public static final Log LOG = LogFactory.getLog(FirstChars.class);
 

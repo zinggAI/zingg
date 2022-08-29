@@ -12,7 +12,7 @@ import zingg.hash.IdentityString;
 
 import org.apache.spark.sql.types.DataType;
 
-public class SparkIdentityString extends IdentityString<Dataset<Row>, Row, Column,DataType,DataType> implements UDF1<String, String>{
+public class SparkIdentityString extends IdentityString<Dataset<Row>, Row, Column,DataType> implements UDF1<String, String>{
 	
 	public SparkIdentityString() {
 		super();
