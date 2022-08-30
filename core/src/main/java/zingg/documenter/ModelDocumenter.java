@@ -17,7 +17,6 @@ import zingg.client.Arguments;
 import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
-import zingg.util.PipeUtilBase;
 
 
 public class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
@@ -44,7 +43,7 @@ public class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 			LOG.info("Model document generation starts");
 
 			try {
-				markedRecords = PipeUtilBase.read(session, 0, false, PipeUtilBase.getTrainingDataMarkedPipe(args));
+				markedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
 			} catch (ZinggClientException e) {
 				LOG.warn("No marked record has been found");
 			}
