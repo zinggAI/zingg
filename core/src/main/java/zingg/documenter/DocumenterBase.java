@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.Writer;
 import java.util.Map;
 
-import org.apache.spark.sql.SparkSession;
+// import org.apache.spark.sql.SparkSession;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -16,16 +16,22 @@ import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 import zingg.util.RowWrapper;
 
-class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
+abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected static Configuration config;
-	protected SparkSession spark;
+	protected S session;
 	protected Arguments args;
 
-	public DocumenterBase(SparkSession spark, Arguments args) {
-		this.spark = spark;
+	public DocumenterBase(S session, Arguments args) {
+		this.session = session;
 		this.args = args;
 		config = createConfigurationObject();
 	}
+
+	public void setSession(S session){
+
+	};
+
+	public abstract void cleanup() throws ZinggClientException;
 
 	public Configuration getTemplateConfig() {
 		if (config == null) {
