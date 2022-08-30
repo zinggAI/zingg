@@ -36,7 +36,7 @@ public class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 			LOG.info("Data document generation starts");
 
 			try {
-				data = PipeUtilBase.read(session, 0, false, args.getData());
+				data = getPipeUtil().read(false,false, args.getData());
 				LOG.info("Read input data : " + data.count());
 			} catch (ZinggClientException e) {
 				LOG.warn("No data has been found");
