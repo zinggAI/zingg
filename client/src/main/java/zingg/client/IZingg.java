@@ -1,7 +1,7 @@
 package zingg.client;
 import org.apache.spark.sql.SparkSession;
 
-public interface IZingg<D,R,C> {
+public interface IZingg<S,D,R,C,T> {
 
 	public void init(Arguments args, String license)
 			throws ZinggClientException;
@@ -30,7 +30,7 @@ public interface IZingg<D,R,C> {
 
     public Long getUnsureMarkedRecordsStat(ZFrame<D,R,C>  markedRecords);
 
-    public void setSpark(SparkSession session);
+    public void setSession(S session); // method name will have to be changed in Client too
 
 	public void setClientOptions(ClientOptions clientOptions);
 

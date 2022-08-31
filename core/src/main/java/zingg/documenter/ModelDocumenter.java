@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Dataset;
@@ -17,6 +18,7 @@ import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 
+
 public class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 
 	protected static String name = "zingg.ModelDocumenter";
@@ -26,8 +28,8 @@ public class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 	ModelColDocumenter<S,D,R,C,T> modelColDoc;
 	protected  ZFrame<D,R,C>  markedRecords;
 
-	public ModelDocumenter(Arguments args) {
-		super(args);
+	public ModelDocumenter(S session, Arguments args) {
+		super(session, args);
 		markedRecords = getDFUtil().emptyDataFrame();
 	}
 
@@ -41,7 +43,7 @@ public class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 			LOG.info("Model document generation starts");
 
 			try {
-				markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
+				markedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
 			} catch (ZinggClientException e) {
 				LOG.warn("No marked record has been found");
 			}

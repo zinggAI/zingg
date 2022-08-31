@@ -40,7 +40,7 @@ import zingg.util.PipeUtilBase;
 //Dataset
 //row
 //column
-public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<D, R, C> {
+public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S, D, R, C, T> {
 
     protected Arguments args;
 	

@@ -1,67 +1,68 @@
 package zingg.client;
 
 import java.util.List;
+
 //Dataset, Row, column
-public interface ZFrame<T, R, C> {
+public interface ZFrame<D, R, C> {
     
-    public ZFrame<T, R, C> cache();
-    public ZFrame<T, R, C> as(String s);
+    public ZFrame<D, R, C> cache();
+    public ZFrame<D, R, C> as(String s);
     public String[] columns();
-    public ZFrame<T, R, C> select(C... cols);
-    public ZFrame<T, R, C> select(List<C> cols);
-    public ZFrame<T, R, C> select(String col, String... cols);
-    public ZFrame<T, R, C> select(String col);
-    public ZFrame<T, R, C> selectExpr(String... col);
-    public ZFrame <T, R, C> distinct();
+    public ZFrame<D, R, C> select(C... cols);
+    public ZFrame<D, R, C> select(List<C> cols);
+    public ZFrame<D, R, C> select(String col, String... cols);
+    public ZFrame<D, R, C> select(String col);
+    public ZFrame<D, R, C> selectExpr(String... col);
+    public ZFrame <D, R, C> distinct();
     public List<R> collectAsList();
 
-    public ZFrame<T,R,C> toDF(String[] cols);
-    public ZFrame<T,R,C> toDF(String col1, String col2);
+    public ZFrame<D, R, C> toDF(String[] cols);
+    public ZFrame<D, R, C> toDF(String col1, String col2);
 
-    public ZFrame<T,R,C> join(ZFrame<T,R,C> lines1, String joinColumn);
+    public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, String joinColumn);
 
-    public ZFrame<T,R,C> joinRight(ZFrame<T,R,C> lines1, String joinColumn);
+    public ZFrame<D, R, C> joinRight(ZFrame<D, R, C> lines1, String joinColumn);
 
-    public ZFrame<T,R,C> join(ZFrame<T,R,C> lines1, String joinColumn, boolean addPrefixToCol, String jointype);    
+    public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, String joinColumn, boolean addPrefixToCol, String jointype);    
 
     public C col(String colname);
     
     public long count();
 
-    public ZFrame<T,R,C> filter(C col);
+    public ZFrame<D, R, C> filter(C col);
 
-    public T df();
+    public D df();
 
-    public ZFrame<T,R,C> withColumnRenamed(String s, String t);
+    public ZFrame<D, R, C> withColumnRenamed(String s, String t);
 
-    public ZFrame<T,R,C> dropDuplicates(String c, String... d);
+    public ZFrame<D, R, C> dropDuplicates(String c, String... d);
 
-    public ZFrame<T,R,C> dropDuplicates(String[] c);
+    public ZFrame<D, R, C> dropDuplicates(String[] c);
 
-    public ZFrame<T,R,C> drop(String c);
-    public ZFrame<T,R,C> drop(String... c);
-    public ZFrame<T,R,C> except(ZFrame<T,R,C> c);
+    public ZFrame<D, R, C> drop(String c);
+    public ZFrame<D, R, C> drop(String... c);
+    public ZFrame<D, R, C> except(ZFrame<D, R, C> c);
 
-    public ZFrame<T,R,C> groupByMinMax(C c);
+    public ZFrame<D, R, C> groupByMinMax(C c);
 
-    public ZFrame<T,R,C> union(ZFrame<T,R,C> other);
+    public ZFrame<D, R, C> union(ZFrame<D, R, C> other);
 
-    public ZFrame<T,R,C> unionByName(ZFrame<T,R,C> other, boolean flag);
+    public ZFrame<D, R, C> unionByName(ZFrame<D, R, C> other, boolean flag);
 
-    public ZFrame<T,R,C> withColumn(String s, int c);
-    public ZFrame<T,R,C> withColumn(String s, String c);
-    public ZFrame<T,R,C> withColumn(String s, double c);
-    public ZFrame<T,R,C> withColumn(String s, C c);
+    public ZFrame<D, R, C> withColumn(String s, int c);
+    public ZFrame<D, R, C> withColumn(String s, String c);
+    public ZFrame<D, R, C> withColumn(String s, double c);
+    public ZFrame<D, R, C> withColumn(String s, C c);
 
     
-    public ZFrame<T,R,C> repartition(int num);
-    public ZFrame<T,R,C> repartition(int num, C c);
+    public ZFrame<D, R, C> repartition(int num);
+    public ZFrame<D, R, C> repartition(int num, C c);
 
-    public ZFrame<T,R,C> sample(boolean repartition, float num);
-    public ZFrame<T,R,C> sample(boolean repartition, double num);
+    public ZFrame<D, R, C> sample(boolean repartition, float num);
+    public ZFrame<D, R, C> sample(boolean repartition, double num);
 
 
-    public ZFrame<T,R,C> coalesce(int num);
+    public ZFrame<D, R, C> coalesce(int num);
 
     public C gt(String c);
 
@@ -80,12 +81,13 @@ public interface ZFrame<T, R, C> {
     public void show();
 
     public String showSchema();
-    public ZFrame<T,R,C> orderBy(String c);
-    public ZFrame<T,R,C> sortAscending(String c);
-    public ZFrame<T,R,C> sortDescending(String c);
+
+    public ZFrame<D, R, C> orderBy(String c);
+    public ZFrame<D, R, C> sortAscending(String c);
+    public ZFrame<D, R, C> sortDescending(String c);
 
 
-    public ZFrame<T,R,C> limit(int l);
+    public ZFrame<D, R, C> limit(int l);
 
     public String getAsString(R r, String colName);
 

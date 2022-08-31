@@ -21,8 +21,8 @@ public class ModelColDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 	private final String COLUMN_DOC_TEMPLATE = "columnDocTemplate.ftlh";
 	private final String Z_COLUMN_TEMPLATE = "zColumnTemplate.ftlh";
 
-	public ModelColDocumenter(Arguments args) {
-		super(args);
+	public ModelColDocumenter(S session, Arguments args) {
+		super(session, args);
 	}
 
 	public void process( ZFrame<D,R,C>  data) throws ZinggClientException {
