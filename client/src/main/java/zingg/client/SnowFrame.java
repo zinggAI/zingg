@@ -1,13 +1,15 @@
 package zingg.client;
 
-import java.util.List;
-import javax.lang.model.util.ElementScanner6;
-
 import java.util.Arrays;
-import com.snowflake.snowpark_java.*;
+import java.util.List;
 
-import scala.collection.JavaConverters;
+import com.snowflake.snowpark_java.Column;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Functions;
+import com.snowflake.snowpark_java.Row;
+
 import zingg.client.util.ColName;
+
 
 public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
 
@@ -25,14 +27,14 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
         return new SnowFrame(df.cacheResult()); 
     }
 
-    // public ZFrame<DataFrame, Row, Column> as(String s) { // Creates alias for dataframe
-        // return new SnowFrame(df.as(s));
-    // }
+    public ZFrame<DataFrame, Row, Column> as(String s) { // Creates alias for dataframe
+        return new SnowFrame(null);
+    }
 
 
-    // public String[] columns() { // Returns all column names as array
-    //     // return df.getName();
-    // }
+    public String[] columns() { // Returns all column names as array
+        return null;
+    }
 
     public ZFrame<DataFrame, Row, Column> select(Column... cols) {
         // dfSelected = 
@@ -63,7 +65,6 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
     public List<Row> collectAsList() { // Returns a Java list that contains all rows in this Dataset. 
         return Arrays.asList(df.collect()); 
     }
-
 
 
     public ZFrame<DataFrame, Row, Column> toDF(String[] cols) {
@@ -154,13 +155,13 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
         return new SnowFrame(df.withColumn(s, Functions.lit(c))); 
     }
 
-    // public ZFrame<DataFrame, Row, Column> repartition(int nul){
-        // return new SnowFrame(df.repartition(nul));
-    // }
+    public ZFrame<DataFrame, Row, Column> repartition(int nul){
+        return new SnowFrame(null);
+    }
 
-    // public ZFrame<DataFrame, Row, Column> repartition(int nul, Column c){
-        // return new SnowFrame(df.repartition(nul, c));
-    // }
+    public ZFrame<DataFrame, Row, Column> repartition(int nul, Column c){
+        return new SnowFrame(null);
+    }
 
     public Column gt(String c) {
 		return df.col(c).gt(df.col(ColName.COL_PREFIX + c)); 
@@ -194,9 +195,9 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
         return new SnowFrame(df.sample(num)); //params
     }
 
-    // public ZFrame<DataFrame, Row, Column> coalesce(int num){
-        // return new SnowFrame(df.coalesce(num)); 
-    // }
+    public ZFrame<DataFrame, Row, Column> coalesce(int num){
+        return new SnowFrame(null); 
+    }
 
     public void show(int num) {
         df.show(num); 
@@ -241,19 +242,21 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
         return new SnowFrame(df.sort(df.col(c).desc())); 
     }
 
-    // @Override
-    // public String getAsString(Row r, String colName) { // Returns the value of a given fieldName.
-    //     return r.get(colName); //need index for colName
-    // }
+    @Override
+    public String getAsString(Row r, String colName) { // Returns the value of a given fieldName.
+        return null; //need index for colName
+    }
 
-    // @Override
-    // public double getAsDouble(Row r, String colName) {
-    //     return r.getAs(colName);
-    // }
-    // @Override
-    // public int getAsInt(Row r, String colName) {
-    //     return r.getAs(colName);
-    // }
+    @Override
+    public double getAsDouble(Row r, String colName) {
+        return Double.NaN;
+    }
+
+    @Override
+    public int getAsInt(Row r, String colName) {
+        return -1;
+     
+    }
 
     @Override
     public Row head() { // Returns the first row
