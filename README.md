@@ -104,11 +104,11 @@ Want to commit code? Please check the [contributing documentation.](https://docs
 
 ## Book Office Hours
 
-If you want to schedule a 30-min call with our team to help you get set up, please book a slot [here](https://calendly.com/sonalgoyal/30min). 
+If you want to schedule a 30-min call with our team to help you understand if Zingg is the right technology for your problem, please book a slot [here](https://calendly.com/sonalgoyal/30min). 
 
-## Asking questions
+## Asking questions on running Zingg
 
-If you have a question or issue while using Zingg, kindly log a [question](https://github.com/zinggAI/zingg/issues/new/choose) and we will reply very fast :-)
+If you have a question or issue while using Zingg, kindly log a [question](https://github.com/zinggAI/zingg/issues/new/choose) and we will reply very fast :-) Or you can use [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA)
 
 ## License
 
