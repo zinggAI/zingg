@@ -37,7 +37,6 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
     }
 
     public ZFrame<DataFrame, Row, Column> select(Column... cols) {
-        // dfSelected = 
         return new SnowFrame(df.select(cols)); 
     }
 
@@ -52,11 +51,22 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
     }
 
     public ZFrame<DataFrame, Row, Column> selectExpr(String... col) { // Selects a set of SQL expressions
-        return new SnowFrame(df.select(col)); 
+        String[] exprArr = new String[col.length];
+        for(int i=0; i<col.length; ++i)
+            exprArr[i] = col[i].substring(0,col[i].indexOf(" as"));
+            
+        return new SnowFrame(df.select(exprArr)); 
     } 
 
     public ZFrame<DataFrame, Row, Column> select(String col, String... col1) { // Selects columns
-        return new SnowFrame(df.select(col1)); // params
+        int i = col1.length;  
+        int n = ++i;  
+        String[] newColArray = new String[n];  
+        newColArray[0] = col;
+        for(int cnt=1;cnt<=col1.length;cnt++)
+            newColArray[cnt] = col1[cnt-1];  
+
+        return new SnowFrame(df.select(newColArray)); // params
     }
 
     public ZFrame<DataFrame, Row, Column> distinct() { // Returns a new Dataset that contains only the unique rows from this Dataset
