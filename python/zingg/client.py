@@ -190,7 +190,7 @@ class Arguments:
     def setFieldDefinition(self, fieldDef):
         """ Method convert python objects to java FieldDefinition objects and set the field definitions associated with this client
 
-        :param fieldDef: pyhton FieldDefinition object list
+        :param fieldDef: python FieldDefinition object list
         :type fieldDef: List(FieldDefinition)
         """
         javaFieldDef = []
@@ -254,7 +254,7 @@ class Arguments:
         self.args.setZinggDir(f)
 
     def setNumPartitions(self, numPartitions):
-        """ Method to set NumPartitions parameter vlaue
+        """ Method to set NumPartitions parameter value
         Sample size to use for seeding labeled data We don't want to run over all the data, as we want a quick way to seed some labeled data that we can manually edit
 
         :param numPartitions: number of partitions for given data pipes
@@ -263,7 +263,7 @@ class Arguments:
         self.args.setNumPartitions(numPartitions)
 
     def setLabelDataSampleSize(self, labelDataSampleSize):
-        """ Method to set labelDataSampleSize parameter vlaue
+        """ Method to set labelDataSampleSize parameter value
         Set the fraction of data to be used from the complete data set to be used for seeding the labeled data Labelling is costly and we want a fast approximate way of looking at a small sample of the records and identifying expected matches and nonmatches
 
         :param labelDataSampleSize: value between 0.0 and 1.0 denoting portion of dataset to use in generating seed samples
@@ -280,7 +280,7 @@ class Arguments:
         jvm.zingg.client.Arguments.writeArgumentsToJSON(fileName, self.args)
 
     def setStopWordsCutoff(self, stopWordsCutoff):
-        """ Method to set stopWordsCutoff parameter vlaue
+        """ Method to set stopWordsCutoff parameter value
         By default, Zingg extracts 10% of the high frequency unique words from a dataset. If user wants different selection, they should set up StopWordsCutoff property
 
         :param stopWordsCutoff: The stop words cutoff parameter value of ClientOption object or file address of json file
