@@ -28,12 +28,12 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
     }
 
     public ZFrame<DataFrame, Row, Column> as(String s) { // Creates alias for dataframe
-        return new SnowFrame(null);
+        return new SnowFrame(null);     // being used in Matcher
     }
 
 
     public String[] columns() { // Returns all column names as array
-        return null;
+        return df.schema().names();
     }
 
     public ZFrame<DataFrame, Row, Column> select(Column... cols) {
@@ -52,21 +52,15 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
 
     public ZFrame<DataFrame, Row, Column> selectExpr(String... col) { // Selects a set of SQL expressions
         String[] exprArr = new String[col.length];
-        for(int i=0; i<col.length; ++i)
+        for(int i=0; i<col.length; ++i){
             exprArr[i] = col[i].substring(0,col[i].indexOf(" as"));
-            
+        }
         return new SnowFrame(df.select(exprArr)); 
     } 
 
-    public ZFrame<DataFrame, Row, Column> select(String col, String... col1) { // Selects columns
-        int i = col1.length;  
-        int n = ++i;  
-        String[] newColArray = new String[n];  
-        newColArray[0] = col;
-        for(int cnt=1;cnt<=col1.length;cnt++)
-            newColArray[cnt] = col1[cnt-1];  
 
-        return new SnowFrame(df.select(newColArray)); // params
+    public ZFrame<DataFrame, Row, Column> select(String col, String... col1) { // Selects columns
+        return new SnowFrame(df.select(singleArr(col, col1)));
     }
 
     public ZFrame<DataFrame, Row, Column> distinct() { // Returns a new Dataset that contains only the unique rows from this Dataset
@@ -121,7 +115,7 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
 
     // Returns a new Dataset with duplicate rows removed, considering only the subset of columns.
     public ZFrame<DataFrame, Row, Column> dropDuplicates(String c, String... d) {
-        return new SnowFrame(df.dropDuplicates(d)); // params
+        return new SnowFrame(df.dropDuplicates(singleArr(c, d))); 
     }
 
     public ZFrame<DataFrame, Row, Column> drop(String c) {
@@ -133,11 +127,10 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
     }
 
     
-
     public ZFrame<DataFrame, Row, Column> groupByMinMax(Column c) {
         return new SnowFrame(df.groupBy(df.col(ColName.COL_PREFIX + ColName.ID_COL)).agg(
 			Functions.min(df.col(ColName.SCORE_COL)).as(ColName.SCORE_MIN_COL),
-			Functions.max(df.col(ColName.SCORE_COL)).as(ColName.SCORE_MAX_COL))); // D
+			Functions.max(df.col(ColName.SCORE_COL)).as(ColName.SCORE_MAX_COL))); 
     }
 
 
@@ -151,7 +144,7 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
     }
 
     public ZFrame<DataFrame, Row, Column> unionByName(ZFrame<DataFrame, Row, Column> other, boolean flag) {
-        return new SnowFrame(df.unionByName(other.df())); // D with d
+        return new SnowFrame(df.unionByName(other.df())); 
     }
 
     public ZFrame<DataFrame, Row, Column> withColumn(String s, int c){
@@ -165,12 +158,12 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
         return new SnowFrame(df.withColumn(s, Functions.lit(c))); 
     }
 
-    public ZFrame<DataFrame, Row, Column> repartition(int nul){
-        return new SnowFrame(null);
+    public ZFrame<DataFrame, Row, Column> repartition(int num){
+        return this;
     }
 
-    public ZFrame<DataFrame, Row, Column> repartition(int nul, Column c){
-        return new SnowFrame(null);
+    public ZFrame<DataFrame, Row, Column> repartition(int num, Column c){
+        return this;
     }
 
     public Column gt(String c) {
@@ -198,15 +191,15 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
 	}
 
     public ZFrame<DataFrame, Row, Column> sample(boolean withReplacement, float num){
-        return new SnowFrame(df.sample(num)); //params
+        return new SnowFrame(df.sample(num)); 
     }
 
     public ZFrame<DataFrame, Row, Column> sample(boolean withReplacement, double num){
-        return new SnowFrame(df.sample(num)); //params
+        return new SnowFrame(df.sample(num)); 
     }
 
     public ZFrame<DataFrame, Row, Column> coalesce(int num){
-        return new SnowFrame(null); 
+        return this; 
     }
 
     public void show(int num) {
@@ -254,17 +247,17 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
 
     @Override
     public String getAsString(Row r, String colName) { // Returns the value of a given fieldName.
-        return null; //need index for colName
+        return r.getString(getColIdx(colName));
     }
 
     @Override
     public double getAsDouble(Row r, String colName) {
-        return Double.NaN;
+        return r.getDouble(getColIdx(colName));
     }
 
     @Override
     public int getAsInt(Row r, String colName) {
-        return -1;
+        return r.getInt(getColIdx(colName));
      
     }
 
@@ -280,8 +273,32 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
 
     @Override
     public boolean isEmpty() {
-        if((int)df.count()==0)   return true;
-        else    return false; 
+        if((int)df.count()==0){   
+            return true;
+        }
+        else{    
+            return false; 
+        }
     }
 
+    public String[] singleArr(String c, String... cs){
+        String[] newColArray = new String[cs.length+1];  
+        newColArray[0] = c;
+        for(int cnt=1;cnt<=cs.length;++cnt){
+            newColArray[cnt] = cs[cnt-1];  
+        }
+        return newColArray;
+    }
+
+    public int getColIdx(String colName){
+        String[] colNames = df.schema().names();
+        int index = -1;
+        for (int idx=0;idx<colNames.length;idx++){
+            if (colNames[idx].equalsIgnoreCase(colName)){
+                index = idx+1;
+                break;
+            }
+        }
+        return index;
+    }
 }

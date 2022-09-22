@@ -27,6 +27,12 @@ public class TestSnowFrame extends TestSnowFrameBase {
 		assertTrue(new SnowFrame(df.except(createSampleDataset())).isEmpty(), "Two datasets are not equal");
 	}
 
+	@Test
+	public void testColumnsNamesandCount() {
+		SnowFrame sf = new SnowFrame(createSampleDataset());
+		assertTrue(Arrays.equals(sf.columns(), createSampleDataset().schema().names()),
+				"Columns of SparkFrame and the dataset are not equal");
+	}
 
 	@Test
 	public void testSelectWithSingleColumnName() {
@@ -143,6 +149,33 @@ public class TestSnowFrame extends TestSnowFrameBase {
 		assertTrue(sf.isEmpty(), "DataFrame is not empty");
 	 }
 
+	 @Test
+	public void testGetAsInt() {
+		DataFrame df = createSampleDatasetHavingMixedDataTypes();
+		SnowFrame sf = new SnowFrame(df);
+		Row row = sf.head();
+		LOG.debug("Value: " + row.getInt(getColIndex(sf, "recid")));
+		assertTrue(sf.getAsInt(row, "recid") == row.getInt(getColIndex(sf, "recid")), "row.getAsInt(col) hasn't returned correct int value");
+	}
+
+	@Test
+	public void testGetAsString() {
+		DataFrame df = createSampleDatasetHavingMixedDataTypes();
+		SnowFrame sf = new SnowFrame(df);
+		Row row = sf.head();
+		LOG.debug("Value: " + row.getString(getColIndex(sf, "recid")));
+		assertTrue(sf.getAsString(row, "surname").equals(row.getString(getColIndex(sf, "recid")).toString()), "row.getAsString(col) hasn't returned correct string value");
+	}
+
+	@Test
+	public void testGetAsDouble() {
+		DataFrame df = createSampleDatasetHavingMixedDataTypes();
+		SnowFrame sf = new SnowFrame(df);
+		Row row = sf.head();
+		LOG.debug("Value: " + row.getDouble(getColIndex(sf, "recid")));
+		assertTrue(sf.getAsDouble(row, "cost") == row.getDouble(getColIndex(sf, "recid")), "row.getAsDouble(col) hasn't returned correct double value");
+	}
+
 	@Test
 	public void testSortDescending() {
 		DataFrame df = createSampleDatasetHavingMixedDataTypes();
@@ -200,4 +233,16 @@ public class TestSnowFrame extends TestSnowFrameBase {
 		ZFrame<DataFrame,Row,Column> sf2 = sf.withColumn(newCol, df.col(oldCol));
   		assertTrueCheckingExceptOutput(sf2, df.withColumn(newCol, df.col(oldCol)), "SnowFrame.withColumn(c, Column) output is not as expected");
 	}
+
+	public int getColIndex(SnowFrame sf, String colName){
+        String[] colNames = sf.df().schema().names();
+        int index = -1;
+        for (int idx=0;idx<colNames.length;++idx){
+            if (colNames[idx].equalsIgnoreCase(colName)){
+                index = idx+1;
+                break;
+            }
+        }
+        return index;
+    }
 }

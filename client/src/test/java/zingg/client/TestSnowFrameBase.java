@@ -37,8 +37,8 @@ public class TestSnowFrameBase {
 		try {
 			Map<String, String> propMp = new HashMap<>();
 			propMp.put("URL", "https://fd11025.ap-south-1.aws.snowflakecomputing.com:443");
-			propMp.put("USER", "username");
-			propMp.put("PASSWORD", "password//key");
+			propMp.put("USER", "AKASHRR");
+			propMp.put("PASSWORD", "PmV4bFC3RgFWrNa");
 			propMp.put("ROLE", "ACCOUNTADMIN");
 			propMp.put("WAREHOUSE", "COMPUTE_WH");
 			propMp.put("DB", "TESTING_SNOWFRAME");
@@ -62,21 +62,21 @@ public class TestSnowFrameBase {
 
 	public DataFrame createSampleDataset() {
 
-		DataFrame sample = snowSession.table("EXAMPLE");// uploaded from samples.csv
+		DataFrame sample = snowSession.table("SAMPLE_DS");// uploaded from samples.csv
 								
 		return sample;
 	}
 
 	public DataFrame createSampleDatasetHavingMixedDataTypes() {
 		
-		DataFrame sample = snowSession.table("EXAMPLE_TWO");// uploaded from sample2.csv
+		DataFrame sample = snowSession.table("SAMPLE_DS_MIXED_TYPE");// uploaded from sample2.csv
 
 		return sample;
 	}
 
 	public DataFrame createEmptyDataFrame(){
 		
-		DataFrame sample = snowSession.table("EMPTY_EXAMPLE");// same schema as EXAMPLE_TWO
+		DataFrame sample = snowSession.table("SAMPLE_DS_EMPTY");// same schema as EXAMPLE_TWO
 
 		return sample;
 	}
