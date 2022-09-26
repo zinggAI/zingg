@@ -9,6 +9,7 @@ import com.snowflake.snowpark_java.types.DataTypes;
 import com.snowflake.snowpark_java.types.DataType;
 
 import zingg.client.ZFrame;
+import zingg.client.SnowFrame;
 import zingg.hash.First3CharsBox;
 
 public class SnowFirst3CharsBox<D,R,C,T> extends First3CharsBox<DataFrame,Row,Column,DataType> implements JavaUDF1<String, Integer>{
@@ -21,9 +22,11 @@ public class SnowFirst3CharsBox<D,R,C,T> extends First3CharsBox<DataFrame,Row,Co
 
 
 	@Override
-	public Object getAs(Row r, String column) {
-		return (String) r.getAs(column);
+	public Object getAs(DataFrame df, Row r, String column) {
+		SnowFrame sf = new SnowFrame(df);
+		return (String )sf.getAsString(r,column);
 	}
+
 
 
 
@@ -32,8 +35,6 @@ public class SnowFirst3CharsBox<D,R,C,T> extends First3CharsBox<DataFrame,Row,Co
 			String newColumn) {
 		return ds.withColumn(newColumn, Functions.callUDF(this.name, ds.col(column)));
 	}
-
-	
 	
 
 }

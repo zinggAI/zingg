@@ -11,7 +11,7 @@ import org.apache.spark.sql.types.DataTypes;
 import zingg.client.ZFrame;
 import zingg.hash.First2CharsBox;
 
-public class SparkFirst2CharsBox extends First2CharsBox<Dataset<Row>, Row, Column,DataType,DataType> implements UDF1<String, Integer>{
+public class SparkFirst2CharsBox extends First2CharsBox<Dataset<Row>, Row, Column,DataType> implements UDF1<String, Integer>{
 
 	public SparkFirst2CharsBox() {
 		super();
@@ -32,6 +32,11 @@ public class SparkFirst2CharsBox extends First2CharsBox<Dataset<Row>, Row, Colum
 		return ds.withColumn(newColumn, functions.callUDF(this.name, ds.col(column)));
 	}
 
+	@Override
+	public Object apply(Row ds, String column) {
+		return call((String) getAs(ds, column));
+	}
 
+	
 	
 }

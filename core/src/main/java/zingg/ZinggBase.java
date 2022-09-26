@@ -6,11 +6,6 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.DataType;
 
 import zingg.client.Arguments;
 import zingg.client.ClientOptions;
@@ -36,19 +31,16 @@ import zingg.hash.HashFunction;
 import zingg.util.HashUtil;
 import zingg.util.PipeUtilBase;
 
-//Spark Session
-//Dataset
-//row
-//column
+
 public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S, D, R, C, T> {
 
     protected Arguments args;
 	
     protected S context;
-    protected static String name;
+    protected String name;
     protected ZinggOptions zinggOptions;
-    protected ListMap<DataType, HashFunction> hashFunctions;
-	protected Map<FieldDefinition, Feature> featurers;
+    protected ListMap<D, HashFunction<D,R,C,T>> hashFunctions;
+	protected Map<FieldDefinition, Feature<T>> featurers;
     protected long startTime;
 	public static final String hashFunctionFile = "hashFunctions.json";
     protected ClientOptions clientOptions;
@@ -60,7 +52,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     protected GraphUtil<D,R,C> graphUtil;
     protected ModelUtil<S,D,R,C> modelUtil;
     protected BlockingTreeUtil<D,R,C,T> blockingTreeUtil;
-    ZinggBase base;
+    ZinggBase<S,D,R,C,T> base;
 
 
     public long getStartTime() {
@@ -102,10 +94,10 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
 		try{
 		LOG.info("Start reading internal configurations and functions");
 		if (args.getFieldDefinition() != null) {
-			featurers = new HashMap<FieldDefinition, Feature>();
+			featurers = new HashMap<FieldDefinition, Feature<T>>();
 			for (FieldDefinition def : args.getFieldDefinition()) {
 				if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
-					Feature fea = (Feature) FeatureFactory.get(def.getDataType());
+					Feature<T> fea = (Feature<T>) FeatureFactory.get(def.getDataType());
 					fea.init(def);
 					featurers.put(def, fea);			
 				}
@@ -141,19 +133,19 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
         this.args = args;
     }
 
-    public ListMap getHashFunctions() {
+    public ListMap<D, HashFunction<D,R,C,T>> getHashFunctions() {
         return this.hashFunctions;
     }
 
-    public void setHashFunctions(ListMap hashFunctions) {
+    public void setHashFunctions(ListMap<D, HashFunction<D,R,C,T>> hashFunctions) {
         this.hashFunctions = hashFunctions;
     }
 
-    public Map<FieldDefinition,Feature> getFeaturers() {
+    public Map<FieldDefinition,Feature<T>> getFeaturers() {
         return this.featurers;
     }
 
-    public void setFeaturers(Map<FieldDefinition,Feature> featurers) {
+    public void setFeaturers(Map<FieldDefinition,Feature<T>> featurers) {
         this.featurers = featurers;
     }
 
@@ -162,8 +154,8 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
         return this.context;
     }
 
-    public void setContext(S spark) {
-        this.context = spark;
+    public void setContext(S source) {
+        this.context = source;
     }
     public void setName(String name) {
         this.name = name;
@@ -181,12 +173,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     }
 
     public ZFrame<D,R,C> getMarkedRecords() {
-		try {
-			return getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
-		} catch (ZinggClientException e) {
-			LOG.warn("No record has been marked yet");
-		}
-		return null;
+		return getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
 	}
 
 	public ZFrame<D,R,C> getUnmarkedRecords() {

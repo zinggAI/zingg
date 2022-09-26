@@ -31,4 +31,6 @@ public class SparkIdentityInteger extends IdentityInteger<Dataset<Row>, Row, Col
 		return ds.withColumn(newColumn, functions.callUDF(this.name, ds.col(column)));
 	}
 
+	
+
 }

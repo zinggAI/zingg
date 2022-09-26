@@ -9,6 +9,7 @@ import com.snowflake.snowpark_java.types.DataType;
 import com.snowflake.snowpark_java.types.DataTypes;
 
 import zingg.client.ZFrame;
+import zingg.client.SnowFrame;
 import zingg.hash.LastWord;
 
 public class SnowLastWord extends LastWord<DataFrame,Row,Column,DataType> implements JavaUDF1<String, String>{
@@ -21,10 +22,10 @@ public class SnowLastWord extends LastWord<DataFrame,Row,Column,DataType> implem
 	}
 
 	@Override
-	public Object getAs(Row r, String column) {
-		return (String) r.getAs(column);
+	public Object getAs(DataFrame df, Row r, String column) {
+		SnowFrame sf = new SnowFrame(df);
+		return (String) sf.getAsString(r, column);
 	}
-
 
 
 	@Override
@@ -32,5 +33,17 @@ public class SnowLastWord extends LastWord<DataFrame,Row,Column,DataType> implem
 			String newColumn) {
 		return ds.withColumn(newColumn, Functions.callUDF(this.name, ds.col(column)));
 	}
+
+	@Override
+	public Object getAs(Row r, String column) {
+		return null;
+	}
+
+	@Override
+	public Object apply(DataFrame df, Row r, String column) {
+		SnowFrame sf = new SnowFrame(df);
+		return call((String) sf.getAsString(r, column));
+	}
+
 
 }

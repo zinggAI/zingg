@@ -2,11 +2,6 @@ package zingg.hash;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.api.java.UDF1;
-import org.apache.spark.sql.types.DataTypes;
-
-import zingg.block.Canopy;
 
 
 public abstract class FirstChars<D,R,C,T> extends HashFunction<D,R,C,T>{
@@ -17,7 +12,6 @@ public abstract class FirstChars<D,R,C,T> extends HashFunction<D,R,C,T>{
 	
 	public FirstChars(int endIndex) {
 		super("first" + endIndex + "Chars");
-		//TODO, DataTypes.StringType, DataTypes.StringType);
 		this.endIndex = endIndex;
 	}
 	
@@ -41,13 +35,22 @@ public abstract class FirstChars<D,R,C,T> extends HashFunction<D,R,C,T>{
 			LOG.debug("Applying " + this.name + " on " + field + " and returning " + r);
 			return r;
 	 }
+	
+	 @Override
+	 public Object apply(R r, String column) {
+		 return null;
+	 }
+ 
+ 
+	 @Override
+	 public Object apply(D df, R r, String column) {
+		 return null;
+	 }
+ 
 
-	public Object apply(R ds, String column) {
-		 return call((String) getAs(ds, column));
+	@Override
+	public Object getAs(R r, String column) {
+		return null;
 	}
-
-	
-
-	
 
 }

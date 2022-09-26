@@ -7,6 +7,7 @@ import com.snowflake.snowpark_java.types.DataType;
 import com.snowflake.snowpark_java.types.DataTypes;
 
 import zingg.client.ZFrame;
+import zingg.client.SnowFrame;
 import zingg.hash.Round;
 
 import com.snowflake.snowpark_java.Column;
@@ -21,7 +22,6 @@ public class SnowRound extends Round<DataFrame,Row,Column,DataType> implements J
 	}
 	
 
-	
 
 	@Override
 	public ZFrame<DataFrame,Row,Column> apply(ZFrame<DataFrame,Row,Column> ds, String column, String newColumn) {
@@ -30,8 +30,10 @@ public class SnowRound extends Round<DataFrame,Row,Column,DataType> implements J
 
 
 	@Override
-	public Object getAs(Row r, String column) {
-		return (Double) r.getAs(column);
+	public Object getAs(DataFrame df, Row r, String column) {
+		SnowFrame sf = new SnowFrame(df);
+		return (String) sf.getAsString(r, column);
 	}
+
 
 }

@@ -67,7 +67,11 @@ public abstract class HashFunction<D,R,C,T> implements Serializable{
 		public abstract ZFrame<D,R,C> apply(ZFrame<D,R,C> ds, String column, String newColumn) ;
 
 		public abstract Object getAs(R r, String column);
+
+		public abstract Object getAs(D df, R r, String column); // added for SnowFrame getAsString method 
 		
-		public abstract Object apply(R ds, String column);
+		public abstract Object apply(R r, String column);
+
+		public abstract Object apply(D df, R r, String column); // added for SnowFrame getAsString method
 }
 

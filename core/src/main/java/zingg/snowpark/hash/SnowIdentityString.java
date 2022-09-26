@@ -8,6 +8,7 @@ import com.snowflake.snowpark_java.udf.JavaUDF1;
 import com.snowflake.snowpark_java.types.DataTypes;
 
 import zingg.client.ZFrame;
+import zingg.client.SnowFrame;
 import zingg.hash.IdentityString;
 
 import com.snowflake.snowpark_java.types.DataType;
@@ -21,8 +22,9 @@ public class SnowIdentityString extends IdentityString<DataFrame, Row, Column,Da
 	}
 
 	@Override
-	public Object getAs(Row r, String column) {
-		return (String) r.getAs(column);
+	public Object getAs(DataFrame df, Row r, String column) {
+		SnowFrame sf = new SnowFrame(df);
+		return (String) sf.getAsString(r, column);
 	}
 
 

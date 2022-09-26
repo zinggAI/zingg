@@ -10,6 +10,7 @@ import com.snowflake.snowpark_java.types.DataTypes;
 
 
 import zingg.client.ZFrame;
+import zingg.client.SnowFrame;
 import zingg.hash.First2CharsBox;
 
 public class SnowFirst2CharsBox extends First2CharsBox<DataFrame, Row, Column,DataType> implements JavaUDF1<String, Integer>{
@@ -21,8 +22,9 @@ public class SnowFirst2CharsBox extends First2CharsBox<DataFrame, Row, Column,Da
 	}
 
 	@Override
-	public Object getAs(Row r, String column) {
-		return r.getString(column);
+	public Object getAs(DataFrame df, Row r, String column) {
+		SnowFrame sf = new SnowFrame(df);
+		return (String )sf.getAsString(r,column);
 	}
 
 
@@ -33,6 +35,6 @@ public class SnowFirst2CharsBox extends First2CharsBox<DataFrame, Row, Column,Da
 		return ds.withColumn(newColumn, Functions.callUDF(this.name, ds.col(column)));
 	}
 
-
+	
 	
 }

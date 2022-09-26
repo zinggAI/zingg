@@ -11,6 +11,7 @@ import com.snowflake.snowpark_java.types.DataType;
 import com.snowflake.snowpark_java.types.DataTypes;
 
 import zingg.client.ZFrame;
+import zingg.client.SnowFrame;
 import zingg.hash.FirstChars;
 
 
@@ -29,8 +30,9 @@ public class SnowFirstChars extends FirstChars<DataFrame,Row,Column,DataType> im
 	
 	
 	@Override
-	public Object getAs(Row r, String column) {
-		return (String) r.getString(column);
+	public Object getAs(DataFrame df, Row r, String column) {
+		SnowFrame sf = new SnowFrame(df);
+		return (String) sf.getAsString(r, column);
 	}
 
 
@@ -40,10 +42,6 @@ public class SnowFirstChars extends FirstChars<DataFrame,Row,Column,DataType> im
 			String newColumn) {
 		return ds.withColumn(newColumn, Functions.callUDF(this.name, ds.col(column)));
 	}
-
-	
-	
-
 	
 
 }

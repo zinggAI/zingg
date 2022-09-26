@@ -41,7 +41,22 @@ public class SparkFirstChars extends FirstChars<Dataset<Row>,Row,Column,DataType
 		return ds.withColumn(newColumn, functions.callUDF(this.name, ds.col(column)));
 	}
 
-	
+	@Override
+	public Object apply(Row ds, String column) {
+		return call((String) getAs(ds, column));
+   }
+
+
+	@Override
+	public Object getAs(Dataset<Row> df, Row r, String column) {
+		return null;
+	}
+
+
+	@Override
+	public Object apply(Dataset<Row> df, Row r, String column) {
+		return null;
+	}
 	
 
 	

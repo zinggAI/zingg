@@ -32,8 +32,6 @@ public class SparkFirst3CharsBox<D,R,C,T> extends First3CharsBox<Dataset<Row>,Ro
 			String newColumn) {
 		return ds.withColumn(newColumn, functions.callUDF(this.name, ds.col(column)));
 	}
-
-	
 	
 
 }

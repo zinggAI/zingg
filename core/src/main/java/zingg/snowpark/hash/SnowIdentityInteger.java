@@ -1,6 +1,7 @@
 package zingg.snowpark.hash;
 
 import zingg.client.ZFrame;
+import zingg.client.SnowFrame;
 import zingg.hash.IdentityInteger;
 import com.snowflake.snowpark_java.Row;
 import com.snowflake.snowpark_java.Functions;
@@ -19,8 +20,9 @@ public class SnowIdentityInteger extends IdentityInteger<DataFrame, Row, Column,
 	}
 
 	@Override
-	public Object getAs(Row r, String column) {
-		return (Integer) r.getAs(column);
+	public Object getAs(DataFrame df, Row r, String column) {
+		SnowFrame sf = new SnowFrame(df);
+		return (String) sf.getAsString(r, column);
 	}
 
 
@@ -30,5 +32,6 @@ public class SnowIdentityInteger extends IdentityInteger<DataFrame, Row, Column,
 			String newColumn) {
 		return ds.withColumn(newColumn, Functions.callUDF(this.name, ds.col(column)));
 	}
+	
 
 }
