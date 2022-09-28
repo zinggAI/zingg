@@ -32,4 +32,5 @@ public class SparkLastChars extends LastChars<Dataset<Row>,Row,Column,DataType> 
 		return ds.withColumn(newColumn, functions.callUDF(this.name, ds.col(column)));
 	}
 
+
 }

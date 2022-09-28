@@ -33,4 +33,11 @@ public class SparkLastWord extends LastWord<Dataset<Row>,Row,Column,DataType> im
 		return ds.withColumn(newColumn, functions.callUDF(this.name, ds.col(column)));
 	}
 
+	public Object apply(Row r, String column) {
+		return call((String) r.getAs(column));
+	}
+
+	
+
+
 }

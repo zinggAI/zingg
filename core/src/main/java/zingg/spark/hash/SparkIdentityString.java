@@ -33,6 +33,5 @@ public class SparkIdentityString extends IdentityString<Dataset<Row>, Row, Colum
 		return ds.withColumn(newColumn, functions.callUDF(this.name, ds.col(column)));
 	}
 
-
 	
 }

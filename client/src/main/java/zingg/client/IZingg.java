@@ -1,5 +1,4 @@
 package zingg.client;
-import org.apache.spark.sql.SparkSession;
 
 public interface IZingg<S,D,R,C,T> {
 

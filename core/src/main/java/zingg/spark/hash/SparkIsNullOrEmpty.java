@@ -32,6 +32,7 @@ public class SparkIsNullOrEmpty extends IsNullOrEmpty<Dataset<Row>,Row,Column,Da
 		return ds.withColumn(newColumn, functions.callUDF(this.name, ds.col(column)));
 	}
 
+
 }
 
 	
