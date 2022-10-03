@@ -62,6 +62,13 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
 		return model;
 	}
 
+
+	@Override
+	public void setSession(SparkSession session) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

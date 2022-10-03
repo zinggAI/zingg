@@ -19,7 +19,7 @@ public abstract class ModelUtil<S,D,R,C> {
     public static final Log LOG = LogFactory.getLog(ModelUtil.class);
 
 	public Model<S,D,R,C> createModel(ZFrame<D,R,C> positives,
-        ZFrame<D,R,C> negatives, Map<FieldDefinition, Feature> featurers, S spark, boolean isLabel) throws Exception, ZinggClientException {
+        ZFrame<D,R,C> negatives, Map<FieldDefinition, Feature<T>> featurers, S spark, boolean isLabel) throws Exception, ZinggClientException {
         LOG.info("Learning similarity rules");
         ZFrame<D,R,C> posLabeledPointsWithLabel = positives.withColumn(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_MATCH);
         posLabeledPointsWithLabel = posLabeledPointsWithLabel.cache();

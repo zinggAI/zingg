@@ -61,6 +61,13 @@ public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, 
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public void setSession(SparkSession session) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 

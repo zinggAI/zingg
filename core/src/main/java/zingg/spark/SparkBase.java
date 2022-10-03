@@ -112,7 +112,7 @@ public class SparkBase extends ZinggBase<SparkSession, Dataset<Row>, Row,Column,
     }
 
     @Override
-    public void setSpark(SparkSession session) {
+    public void setSession(SparkSession session) {
         // TODO Auto-generated method stub
         
     }

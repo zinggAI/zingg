@@ -32,7 +32,7 @@ import zingg.util.HashUtil;
 import zingg.util.PipeUtilBase;
 
 
-public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S, D, R, C, T> {
+public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S, D, R, C> {
 
     protected Arguments args;
 	
