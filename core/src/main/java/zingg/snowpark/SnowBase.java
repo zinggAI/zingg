@@ -123,7 +123,7 @@ public class SnowBase extends ZinggBase<Session,DataFrame,Row,Column,DataType>{
     }
 
     @Override
-    public void setSnow(Session session) {
+    public void setSession(Session session) {
         // TODO Auto-generated method stub
         
     }

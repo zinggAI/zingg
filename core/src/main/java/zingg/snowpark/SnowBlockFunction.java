@@ -3,7 +3,7 @@ package zingg.snowpark;
 import java.util.List;
 
 import com.snowflake.snowpark_java.Row;
-import org.apache.spark.sql.RowFactory;
+// import org.apache.spark.sql.RowFactory;
 
 import scala.collection.Seq;
 import zingg.block.BlockFunction;

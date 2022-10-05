@@ -1,6 +1,6 @@
 package zingg.client;
 
-public interface IZingg<S,D,R,C,T> {
+public interface IZingg<S,D,R,C> {
 
 	public void init(Arguments args, String license)
 			throws ZinggClientException;

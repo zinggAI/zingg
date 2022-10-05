@@ -10,6 +10,8 @@ import zingg.block.Tree;
 import zingg.model.Model;
 import zingg.preprocess.StopWords;
 import zingg.client.ZFrame;
+// import zingg.client.SnowFrame;
+// import zingg.client.SparkFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.util.Analytics;

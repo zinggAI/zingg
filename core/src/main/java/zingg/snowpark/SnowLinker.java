@@ -11,9 +11,6 @@ import com.snowflake.snowpark_java.RelationalGroupedDataFrame;
 import com.snowflake.snowpark_java.Row;
 import com.snowflake.snowpark_java.Session;
 import com.snowflake.snowpark_java.Functions;
-// import com.snowflake.snowpark_java.catalyst.encoders.RowEncoder;
-// import com.snowflake.snowpark_java.expressions.Window;
-// import com.snowflake.snowpark_java.expressions.WindowSpec;
 import com.snowflake.snowpark_java.types.DataType;
 
 import scala.collection.JavaConverters;
