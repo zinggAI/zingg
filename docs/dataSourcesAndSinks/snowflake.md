@@ -2,6 +2,7 @@
 title: Snowflake
 parent: Data Sources and Sinks
 nav_order: 4
+description: Instructions to work with Snowflake
 ---
 
 # Snowflake
@@ -21,7 +22,8 @@ The config value for the data and output attributes of the JSON is:
 				"sfDatabase":"TEST",				
 				"sfSchema":"PUBLIC",					
 				"sfWarehouse":"COMPUTE_WH",
-				"dbtable": "FEBRL"				
+				"dbtable": "FEBRL",
+				"application":"zinggai_zingg"			
 			}
 		} ]
 ```
