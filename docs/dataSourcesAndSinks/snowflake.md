@@ -22,7 +22,7 @@ The config value for the data and output attributes of the JSON is:
 				"sfSchema":"PUBLIC",					
 				"sfWarehouse":"COMPUTE_WH",
 				"dbtable": "FEBRL",
-				"application":"zinggai_zingg"				
+				"application":"zingg_zingg"				
 			}
 		} ]
 ```
