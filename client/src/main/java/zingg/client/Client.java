@@ -18,11 +18,11 @@ import zingg.client.util.EmailBody;
  * @author sgoyal
  *
  */
-public class Client<S, D,R,C,T> implements Serializable {
-	private Arguments arguments;
-	private IZingg<D,R,C> zingg;
-	private ClientOptions options;
-	private SparkSession session;
+public class Client<S,D,R,C,T> implements Serializable {
+	protected Arguments arguments;
+	protected IZingg<S,D,R,C> zingg;
+	protected ClientOptions options;
+	protected S session;
 
 	public static final Log LOG = LogFactory.getLog(Client.class);
 
@@ -52,18 +52,15 @@ public class Client<S, D,R,C,T> implements Serializable {
 		}
 	}
 
-	public Client(Arguments args, ClientOptions options, SparkSession session) throws ZinggClientException {
+	public Client(Arguments args, ClientOptions options, S session) throws ZinggClientException {
 		this(args, options);
 		this.session = session;
-		JavaSparkContext ctx = new JavaSparkContext(session.sparkContext());
-        JavaSparkContext.jarOfClass(IZingg.class);
 	}
 
 	
 
 
 	public void setZingg(Arguments args, ClientOptions options) throws Exception{
-		JavaSparkContext.jarOfClass(IZinggFactory.class);
 		IZinggFactory zf = (IZinggFactory) Class.forName("zingg.ZFactory").newInstance();
 		try{
 			setZingg(zf.get(ZinggOptions.getByValue(options.get(ClientOptions.PHASE).value.trim())));
@@ -74,7 +71,7 @@ public class Client<S, D,R,C,T> implements Serializable {
 		}
 	}
 
-	public void setZingg(IZingg zingg) {
+	public void setZingg(IZingg<S,D,R,C> zingg) {
 		this.zingg = zingg; 
 	}
 
@@ -222,7 +219,7 @@ public class Client<S, D,R,C,T> implements Serializable {
 
 	public void init() throws ZinggClientException {
 		zingg.init(getArguments(), "");
-		if (session != null) zingg.setSpark(session);
+		if (session != null) zingg.setSession(session);
 		zingg.setClientOptions(options);
 	}
 	

@@ -29,7 +29,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
  */
 
 @JsonInclude(Include.NON_NULL)
-public class Pipe<D,R,C,T, St, Sv> implements Serializable{ // St:StructType, Sv:SaveMode
+public abstract class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	
 	public static final String FORMAT_CSV = "csv";
 	public static final String FORMAT_PARQUET = "parquet";
@@ -48,21 +48,10 @@ public class Pipe<D,R,C,T, St, Sv> implements Serializable{ // St:StructType, Sv
 	String format;
 	String preprocessors;
 	Map<String, String> props = new HashMap<String, String>();
-	@JsonSerialize(using = CustomSchemaSerializer.class)
-	St schema = null;
-	Sv mode;
 	int id;
 	D dataset;
 
-	public Sv getMode() {
-		return mode;
-	}
-
-
-	public void setMode(Sv mode) {
-		this.mode = mode;
-	}
-
+	
 
 	public String getName() {
 		return name;
@@ -101,30 +90,10 @@ public class Pipe<D,R,C,T, St, Sv> implements Serializable{ // St:StructType, Sv
 		this.props = p.props;		
 	}
 	
-	@JsonProperty("schema")
-	public void setSchema(String s) {
-		if (s!= null) this.schema = (St) D.fromJson(s);
-		//schema = DataTypes.createStructType(s);
-	}
-	
-	/*
-	public void setSchema(JsonNode s) {
-		System.out.println("reached json node");
-		if (s!= null) this.schema = (StructType) DataType.fromJson(s.toString());
-	}*/
-	
-	
-	public St getSchema() {
-		return schema;
-	}
-	
 	public String get(String key) {
 		return props.get(key);
 	}
 	
-	public void setSchemaStruct(St s) {
-		this.schema = s;
-	}
 	
 	public String getPreprocessors() {
 		return preprocessors;
@@ -157,34 +126,12 @@ public class Pipe<D,R,C,T, St, Sv> implements Serializable{ // St:StructType, Sv
 	@Override
 	public String toString() {
 		return "Pipe [name=" + name + ", format=" + format + ", preprocessors="
-				+ preprocessors + ", props=" + props + ", schema=" + schema + "]";
+				+ preprocessors + ", props=" + props + "]";
 	}
 	
-	public void nullifySchema() {
-		this.schema = null;
-	}
-	
-	static class CustomSchemaSerializer extends StdSerializer<St> {
-		 
-	     public CustomSchemaSerializer() { 
-	        this(null); 
-	    } 
-	 
-	    public CustomSchemaSerializer(Class<St> t) {
-	        super(t); 
-	    }
-	 
-	    @Override
-	    public void serialize(
-	    		St value, JsonGenerator gen, SerializerProvider arg2) 
-	      throws IOException, JsonProcessingException {
-	        gen.writeObject(value.json());
-	    }
-	}
-
 	
 
-	
+	/* 
 	public Pipe clone() {
 		Pipe p = new Pipe();
 		p.name = name;
@@ -197,5 +144,6 @@ public class Pipe<D,R,C,T, St, Sv> implements Serializable{ // St:StructType, Sv
 		p.dataset = dataset;
 		return p;
 	}
+	*/
 	
 }
