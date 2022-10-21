@@ -18,7 +18,7 @@ import org.apache.spark.sql.Dataset;
 public class SparkPipe extends Pipe<Dataset, Row, Column> {
     
     @JsonSerialize(using = CustomSchemaSerializer.class)
-	protected StructType schema;
+	protected StructType schemaStruct;
     protected SaveMode mode;
     
     public SaveMode getMode() {
@@ -50,8 +50,8 @@ public class SparkPipe extends Pipe<Dataset, Row, Column> {
    }
 
     
-	public StructType getSchema() {
-		return schema;
+	public StructType getSchemaStruct() {
+		return schemaStruct;
 	}
 	
 }

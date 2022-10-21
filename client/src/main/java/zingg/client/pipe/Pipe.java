@@ -29,7 +29,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
  */
 
 @JsonInclude(Include.NON_NULL)
-public abstract class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
+public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	
 	public static final String FORMAT_CSV = "csv";
 	public static final String FORMAT_PARQUET = "parquet";
@@ -50,8 +50,21 @@ public abstract class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:
 	Map<String, String> props = new HashMap<String, String>();
 	int id;
 	D dataset;
+	String schema;
 
 	
+
+	
+
+	public String getSchema() {
+		return schema;
+	}
+
+
+	public void setSchema(String schema) {
+		this.schema = schema;
+	}
+
 
 	public String getName() {
 		return name;
