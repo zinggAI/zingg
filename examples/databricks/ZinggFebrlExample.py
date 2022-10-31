@@ -12,28 +12,50 @@ nowTime = str(time.time_ns())
 name = 'findTrainingData' + nowTime
 task_key = nowTime
 job_spec = {
-  'new_cluster': {
-      'spark_version': '7.3.x-scala2.12',
-      'spark_conf': {
-          'spark.databricks.delta.preview.enabled': 'true'
+ 
+        "name": name,
+        "email_notifications": {
+            "no_alert_for_skipped_runs": 'false'
         },
-      'node_type_id': 'm5.large',
-      'spark_env_vars': {
-          'PYSPARK_PYTHON': '/databricks/python3/bin/python3'
-        },
-      'enable_elastic_disk': 'true',
-      'num_workers': 1
-    },
-  'timeout_seconds': 0,
-  'email_notifications': {},
-  'name': name,
-  'max_concurrent_runs': 1,
-  'tasks' : [{
-      'task_key': task_key,
-      'notebook_path': '/Users/sonal@zingg.ai/FebrlExample',
-      "source": "WORKSPACE"
-      }]
-  }
+        "timeout_seconds": 0,
+        "max_concurrent_runs": 1,
+        "tasks": [
+            {
+                "task_key": task_key,
+                "notebook_task": {
+                    "notebook_path": "/Users/sonal@zingg.ai/FebrlExample",
+                    "source": "WORKSPACE"
+                },
+                "job_cluster_key": "_cluster",
+                "libraries": [
+                    {
+                        "pypi": {
+                            "package": "zingg"
+                        }
+                    }
+                ],
+                "timeout_seconds": 0,
+                "email_notifications": {}
+            }
+        ],
+        "job_clusters": [
+            {
+                "job_cluster_key": "_cluster",
+                "new_cluster": {
+                    "spark_version": "10.4.x-scala2.12",
+                    "node_type_id": "m5.large",
+                    "spark_env_vars": {
+                        "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+                    },
+                    "enable_elastic_disk": 'true',
+                    "num_workers": 1
+                }
+            }
+        ],
+        "format": "MULTI_TASK"
+    
+}
+
 
 print ('calling api client')
 api_client = ApiClient(
