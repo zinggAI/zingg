@@ -32,8 +32,11 @@ job_spec = {
                         "pypi": {
                             "package": "zingg"
                         }
-                    }
-                ],
+                    },
+                    {
+                      "jar": "dbfs:/FileStore/zingg_0_3_4_SNAPSHOT.jar"
+                   }
+                   ],
                 "timeout_seconds": 0,
                 "email_notifications": {}
             }
@@ -49,7 +52,7 @@ job_spec = {
                     },
                     "enable_elastic_disk": 'true',
                     "num_workers": 1
-                }
+            }
             }
         ],
         "format": "MULTI_TASK"
@@ -69,6 +72,7 @@ print(job)
 
 job['notebook_params'] = {}
 runs_api = RunsApi(api_client) 
-jobs_api.run_now(job['job_id'], None, None, None, None)
+jobRun = jobs_api.run_now(job['job_id'], None, None, None, None)
+print(jobRun)
 
 
