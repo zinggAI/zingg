@@ -1,0 +1,89 @@
+{
+    "job_id": 1084070946737917,
+    "creator_user_name": "sonal@zingg.ai",
+    "run_as_user_name": "sonal@zingg.ai",
+    "run_as_owner": true,
+    "settings": {
+        "name": "test",
+        "email_notifications": {
+            "no_alert_for_skipped_runs": false
+        },
+        "timeout_seconds": 0,
+        "max_concurrent_runs": 1,
+        "tasks": [
+            {
+                "task_key": "test",
+                "notebook_task": {
+                    "notebook_path": "/Users/sonal@zingg.ai/FebrlExample",
+                    "source": "WORKSPACE"
+                },
+                "existing_cluster_id": "1027-114139-gfqhyk9",
+                "timeout_seconds": 0,
+                "email_notifications": {}
+            }
+        ],
+        "format": "MULTI_TASK"
+    },
+    "created_time": 1667200485403
+}
+
+
+
+{
+    "job_id": 547881541792030,
+    "creator_user_name": "sonal@zingg.ai",
+    "run_as_user_name": "sonal@zingg.ai",
+    "run_as_owner": true,
+    "settings": {
+        "name": "test",
+        "email_notifications": {
+            "no_alert_for_skipped_runs": false
+        },
+        "timeout_seconds": 0,
+        "max_concurrent_runs": 1,
+        "tasks": [
+            {
+                "task_key": "test",
+                "notebook_task": {
+                    "notebook_path": "/Users/sonal@zingg.ai/FebrlExample",
+                    "source": "WORKSPACE"
+                },
+                "job_cluster_key": "_cluster",
+                "libraries": [
+                    {
+                        "pypi": {
+                            "package": "zingg"
+                        }
+                    }
+                ],
+                "timeout_seconds": 0,
+                "email_notifications": {}
+            }
+        ],
+        "job_clusters": [
+            {
+                "job_cluster_key": "_cluster",
+                "new_cluster": {
+                    "spark_version": "10.4.x-scala2.12",
+                    "aws_attributes": {
+                        "first_on_demand": 1,
+                        "availability": "SPOT_WITH_FALLBACK",
+                        "zone_id": "us-west-2c",
+                        "spot_bid_price_percent": 100,
+                        "ebs_volume_count": 0
+                    },
+                    "node_type_id": "i3.xlarge",
+                    "spark_env_vars": {
+                        "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+                    },
+                    "enable_elastic_disk": false,
+                    "data_security_mode": "LEGACY_SINGLE_USER_STANDARD",
+                    "runtime_engine": "STANDARD",
+                    "num_workers": 8
+                }
+            }
+        ],
+        "format": "MULTI_TASK"
+    },
+    "created_time": 1667204790002
+}
