@@ -1,5 +1,6 @@
 from zingg.client import *
 from zingg.pipes import *
+import sys
 
 #build the arguments for zingg
 args = Arguments()
@@ -37,7 +38,8 @@ outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
 
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
+print(sys.argv[0:])
+options = ClientOptions([ClientOptions.PHASE,sys.argv[1]])
 
 #Zingg execution for the given phase
 zingg = ZinggWithSpark(args, options)

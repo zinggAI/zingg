@@ -23,7 +23,7 @@ job_spec = {
             {
                 "task_key": task_key,
                 "spark_python_task": {
-                    "python_file": "/Repos/sonal@zingg.ai/zingg/febrlEx.py",
+                    "python_file": "dbfs:/FileStore/febrlEx.py",
                     "parameters": ["findTrainingData"]
                 },
                 "job_cluster_key": "_cluster",
