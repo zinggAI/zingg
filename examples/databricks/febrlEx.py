@@ -28,7 +28,7 @@ args.setLabelDataSampleSize(0.5)
 #below line should not be required if you are reading from in memory dataset
 #in that case, replace df with input df
 schema = "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string"
-inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
+inputPipe = CsvPipe("testFebrl", "/FileStore/test.csv", schema)
 
 args.setData(inputPipe)
 
@@ -37,8 +37,8 @@ outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
 
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"label"])
+options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
 
 #Zingg execution for the given phase
-zingg = Zingg(args, options)
+zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()

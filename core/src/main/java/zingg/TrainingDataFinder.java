@@ -127,7 +127,9 @@ public class TrainingDataFinder extends ZinggBase{
 				}
 				else {
 					LOG.info("Writing uncertain pairs when either positive or negative samples not provided ");
-					Dataset<Row> posFiltered = blocks.sample(false,  20.0d/blocks.count());
+					double blocksCount = blocks.count() * 1.0d;
+					if (20.0d/blocksCount > 1) blocksCount = 1.0d;
+					Dataset<Row> posFiltered = blocks.sample(false,  blocksCount);
 					posFiltered = posFiltered.withColumn(ColName.PREDICTION_COL, functions.lit(ColValues.IS_NOT_KNOWN_PREDICTION));
 					posFiltered = posFiltered.withColumn(ColName.SCORE_COL, functions.lit(ColValues.ZERO_SCORE));
 					writeUncertain(posFiltered, sampleOrginal);		

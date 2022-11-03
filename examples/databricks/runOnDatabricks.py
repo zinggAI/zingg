@@ -22,9 +22,9 @@ job_spec = {
         "tasks": [
             {
                 "task_key": task_key,
-                "notebook_task": {
-                    "notebook_path": "/Users/sonal@zingg.ai/FebrlExample",
-                    "source": "WORKSPACE"
+                "spark_python_task": {
+                    "python_file": "/Repos/sonal@zingg.ai/zingg/febrlEx.py",
+                    "parameters": ["findTrainingData"]
                 },
                 "job_cluster_key": "_cluster",
                 "libraries": [
@@ -74,5 +74,7 @@ job['notebook_params'] = {}
 runs_api = RunsApi(api_client) 
 jobRun = jobs_api.run_now(job['job_id'], None, None, None, None)
 print(jobRun)
+
+
 
 
