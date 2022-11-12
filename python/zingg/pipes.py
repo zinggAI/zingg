@@ -77,8 +77,9 @@ class CsvPipe(Pipe):
         if(location != None):
             Pipe.addProperty(self, FilePipe.LOCATION, location)
             if(schema != None):
-                df = spark.read.format(JPipe.FORMAT_CSV).schema(schema).load(location)
-                Pipe.setSchema(self, str(df.schema.json()))
+                #df = spark.read.format(JPipe.FORMAT_CSV).schema(schema).load(location)
+                #Pipe.setSchema(self, str(df.schema.json()))
+                print("nothing")
     
     def setDelimiter(self, delimiter):
         """ This method is used to define delimiter of CsvPipe

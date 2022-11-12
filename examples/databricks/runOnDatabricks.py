@@ -4,6 +4,8 @@ import os
 from databricks_cli.sdk.api_client import ApiClient
 from databricks_cli.jobs.api import JobsApi
 from databricks_cli.runs.api import RunsApi 
+from databricks_cli.dbfs.api import DbfsApi
+from databricks_cli.dbfs.dbfs_path import DbfsPath, DbfsPathClickType
 from copy import deepcopy
 import datetime
 import time
@@ -68,44 +70,9 @@ api_client = ApiClient(
 
 jobs_api = JobsApi(api_client)
 job = jobs_api.create_job(job_spec)
-print(job)
-
-job['notebook_params'] = {}
-runs_api = RunsApi(api_client) 
-jobRun = jobs_api.run_now(job['job_id'], None, None, None, None)
-print(jobRun)
 
 
-
-
-# seconds to sleep between checks
-sleep_seconds = 30
-start_time = time.time()
-
-# loop indefinitely
-while True:
-    
-    # retrieve job info
-    resp = runs_api.get_run(jobRun['run_id'])
-    
-    #calculate elapsed seconds
-    elapsed_seconds = int(time.time()-start_time)
-    
-    # get job lfe cycle state
-    life_cycle_state = resp['state']['life_cycle_state']
-    
-    # if terminated, then get result state & break loop
-    if life_cycle_state == 'TERMINATED':
-        result_state = resp['state']['result_state']
-        break
-        
-    # else, report to user and sleep
-    else:
-        if elapsed_seconds > 0:
-            print(f'Job in {life_cycle_state} state at { elapsed_seconds } seconds since launch.  Waiting {sleep_seconds} seconds before checking again.', end='\r')
-            time.sleep(sleep_seconds)
-
-# return results
-print(f'Job completed in {result_state} state after { elapsed_seconds } seconds.  Please proceed with next steps to process the records identified by the job.')
-print('\n')         
+dbfs_api=DbfsApi(api_client)
+#dbfs_api.cp(True, True, 'dbfs:/models/100', '.')
+dbfs_api.cp(True, True, '/tmp/dbfs/models/100', 'dbfs:/models/100')
 
