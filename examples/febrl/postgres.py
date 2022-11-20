@@ -25,7 +25,7 @@ fieldDefs = [fname, lname, streetnumber, street, address, locality, areacode, st
 args.setFieldDefinition(fieldDefs)
 
 #defining input pipe
-customerDataStaging = Pipe("test", "jdbc")
+customerDataStaging = Pipe("customerDataStaging", "jdbc")
 customerDataStaging.addProperty("url","jdbc:postgresql://localhost:5432/postgres")
 customerDataStaging.addProperty("dbtable", "customers")
 customerDataStaging.addProperty("driver", "org.postgresql.Driver")
@@ -36,15 +36,15 @@ customerDataStaging.addProperty("password","1234")
 args.setData(customerDataStaging)
 
 #defining output pipe
-customerIdentitiesResoled = Pipe("test", "jdbc")
-customerIdentitiesResoled.addProperty("url","jdbc:postgresql://localhost:5432/postgres")
-customerIdentitiesResoled.addProperty("dbtable", "customers_unified")
-customerIdentitiesResoled.addProperty("driver", "org.postgresql.Driver")
-customerIdentitiesResoled.addProperty("user","suchandra")
-customerIdentitiesResoled.addProperty("password","1234")
+customerIdentitiesResolved = Pipe("customerIdentitiesResolved", "jdbc")
+customerIdentitiesResolved.addProperty("url","jdbc:postgresql://localhost:5432/postgres")
+customerIdentitiesResolved.addProperty("dbtable", "customers_unified")
+customerIdentitiesResolved.addProperty("driver", "org.postgresql.Driver")
+customerIdentitiesResolved.addProperty("user","suchandra")
+customerIdentitiesResolved.addProperty("password","1234")
 
 #add output pipe to arguments for Zingg client
-args.setOutput(customerIdentitiesResoled)
+args.setOutput(customerIdentitiesResolved)
 
 #save latest model in directory models/customer360
 args.setModelId("customer360")
