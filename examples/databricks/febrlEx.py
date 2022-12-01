@@ -1,5 +1,6 @@
 from zingg.client import *
 from zingg.pipes import *
+from zingg.databricks import *
 import sys
 
 #build the arguments for zingg
@@ -42,5 +43,5 @@ print(sys.argv[0:])
 options = ClientOptions([ClientOptions.PHASE,sys.argv[1]])
 
 #Zingg execution for the given phase
-zingg = ZinggWithSpark(args, options)
+zingg = ZinggWithDatabricks(args, options, sys.argv)
 zingg.initAndExecute()
