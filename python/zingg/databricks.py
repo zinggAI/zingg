@@ -14,10 +14,7 @@ import sys
 ##retry
 ##check header is passed
 
-api_client = ApiClient(
-            host  = os.getenv('DATABRICKS_HOST'),
-            token = os.getenv('DATABRICKS_TOKEN')
-        )
+
 
 job_spec_template = {
      "email_notifications": {
@@ -32,7 +29,12 @@ job_spec_template = {
                 "job_cluster_key": "_cluster",
                 "libraries": [
                     {
-                        "whl":"dbfs:/FileStore/jars/a9f7fe7b_887a_4094_9dcc_11ca641cb6a3/zingg-0.3.4-py2.py3-none-any.whl"
+                        "whl":"dbfs:/FileStore/jars/e706b526_54a2_4edf_85c1_b0a511179def/zingg-0.3.4-py2.py3-none-any.whl"
+                    },
+                    {
+                        "pypi": {
+                            "package": "databricks-cli"
+                        }
                     },
                     {
                       "jar": "dbfs:/FileStore/zingg_0_3_4_SNAPSHOT.jar"
@@ -86,10 +88,11 @@ class ZinggWithDatabricks(Zingg):
             self.isRemote = options.getClientOptions().getOptionValue(ClientOptions.REMOTE)
         except:
             self.isRemote = False
-        self.localNotebooLocation = cliArgs[0]
-        self.dbfsHelper = DbfsHelper()
+            self.dbfsHelper = DbfsHelper()
+            self.jobsHelper = JobsHelper()
         self.cliArgs = cliArgs
-        self.jobsHelper = JobsHelper()
+        self.localNotebooLocation = cliArgs[0]
+        
     
 
     def init(self):
@@ -131,7 +134,11 @@ class ZinggWithDatabricks(Zingg):
 class DbfsHelper:
    
     def __init__(self):
-        self.dbfs_api=DbfsApi(api_client)
+        self.api_client = ApiClient(
+            host  = os.getenv('DATABRICKS_HOST'),
+            token = os.getenv('DATABRICKS_TOKEN')
+        )
+        self.dbfs_api=DbfsApi(self.api_client)
 
     def copyNotebookToDBFS(self, localLocation):
         print('copying over file to dbfs')
@@ -145,8 +152,12 @@ class DbfsHelper:
 class JobsHelper:
     
     def __init__(self):
-        self.jobs_api=JobsApi(api_client)
-        self.runs_api=RunsApi(api_client)
+        self.api_client = ApiClient(
+            host  = os.getenv('DATABRICKS_HOST'),
+            token = os.getenv('DATABRICKS_TOKEN')
+        )
+        self.jobs_api=JobsApi(self.api_client)
+        self.runs_api=RunsApi(self.api_client)
 
     def createJob(self, job_spec):
         job = self.jobs_api.create_job(job_spec, {'User-Agent':'zinggai_zingg'})
