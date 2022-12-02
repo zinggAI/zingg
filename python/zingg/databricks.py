@@ -10,6 +10,10 @@ import datetime
 import time
 import sys
 
+##handle internal error
+##retry
+##check header is passed
+
 api_client = ApiClient(
             host  = os.getenv('DATABRICKS_HOST'),
             token = os.getenv('DATABRICKS_TOKEN')
@@ -23,16 +27,12 @@ job_spec_template = {
         "max_concurrent_runs": 1,
         "tasks": [
             {
-                
                 "spark_python_task": {
-                    "python_file": "dbfs:/FileStore/febrlEx.py"
                 },
                 "job_cluster_key": "_cluster",
                 "libraries": [
                     {
-                        "pypi": {
-                            "package": "zingg"
-                        }
+                         "whl": "https://dbc-2e51e45f-aaeb.cloud.databricks.com/files/jars/a9f7fe7b_887a_4094_9dcc_11ca641cb6a3/zingg-0.3.4-py2.py3-none-any.whl"
                     },
                     {
                       "jar": "dbfs:/FileStore/zingg_0_3_4_SNAPSHOT.jar"
@@ -111,7 +111,11 @@ class ZinggWithDatabricks(Zingg):
         else:
             job_spec = deepcopy(job_spec_template)
             job_spec['tasks'][0]['task_key'] = self.phase+getCurrentTime()
-            job_spec['tasks'][0]['spark_python_task']['parameters'] = ['--phase', self.phase, '--remote', 'True']
+            job_spec['tasks'][0]['spark_python_task']['python_file'] ='dbfs:/Filestore/' + self.cliArgs[0]
+            paramsCopy = self.cliArgs.copy()
+            paramsCopy.append(ClientOptions.REMOTE)
+            paramsCopy.append("True")
+            job_spec['tasks'][0]['spark_python_task']['parameters'] = paramsCopy
             job = self.jobsHelper.createJob(job_spec)
             jobRun = self.jobsHelper.runJob(job)
             self.jobsHelper.pollJobStatus(jobRun)
