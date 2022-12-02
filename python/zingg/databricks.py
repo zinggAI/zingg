@@ -8,6 +8,7 @@ from databricks_cli.dbfs.dbfs_path import DbfsPath, DbfsPathClickType
 from copy import deepcopy
 import datetime
 import time
+import sys
 
 api_client = ApiClient(
             host  = os.getenv('DATABRICKS_HOST'),
@@ -70,19 +71,21 @@ class ZinggWithDatabricks(Zingg):
 
     """
     
-    def __init__(self, args, options, sysargs):
+    def __init__(self, args, options, cliArgs, isRemote = None):
         self.phase = options.getClientOptions().getOptionValue(ClientOptions.PHASE)
-        LOG.debug('phase ' + self.phase)
-        LOG.debug(sysargs)
+        print('phase ' + self.phase)
+        print('cliArgs are ' + '||'.join(cliArgs[1:]))
         if (self.phase == 'label'):
            self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions())
         else:
             self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions(), spark._jsparkSession)
+        self.isRemote = isRemote
     
 
     def init(self):
         ## if label, call dbfs service, copy model
         ## else cp over the notebook and execute that with param remote
+        print('phase ' + self.phase)
         self.client.init()
 
     def execute(self):
@@ -92,6 +95,7 @@ class ZinggWithDatabricks(Zingg):
         
     def initAndExecute(self):
         """ Method to run both init and execute methods consecutively """
+        print('phase ' + self.phase)
         self.init()
         self.execute()
 

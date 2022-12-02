@@ -322,10 +322,12 @@ class ClientOptions:
     LOCATION = jvm.zingg.client.ClientOptions.LOCATION
     """:LOCATION: location parameter for this class"""
 
-    def __init__(self, args=None):
-        print(args)
-        if(args == None):
+    def __init__(self, argsSent=None):
+        print(argsSent)
+        if(argsSent == None):
             args = []
+        else:
+            args = argsSent.copy()
         if (not (self.PHASE in args)):
             args.append(self.PHASE)
             args.append("peekModel")

@@ -39,8 +39,9 @@ outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
 
 args.setOutput(outputPipe)
 
+print('cli args :')
 print(sys.argv[0:])
-options = ClientOptions([ClientOptions.PHASE,sys.argv[1]])
+options = ClientOptions(sys.argv[1:])
 
 #Zingg execution for the given phase
 zingg = ZinggWithDatabricks(args, options, sys.argv)
