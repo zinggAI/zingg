@@ -321,6 +321,8 @@ class ClientOptions:
     """:EMAIL: e-mail parameter for this class"""
     LOCATION = jvm.zingg.client.ClientOptions.LOCATION
     """:LOCATION: location parameter for this class"""
+    REMOTE = jvm.zingg.client.ClientOptions.REMOTE
+    """:REMOTE: remote option used internally for running on Databricks"""
 
     def __init__(self, argsSent=None):
         print(argsSent)

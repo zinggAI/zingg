@@ -71,7 +71,7 @@ class ZinggWithDatabricks(Zingg):
 
     """
     
-    def __init__(self, args, options, cliArgs, isRemote = None):
+    def __init__(self, args, options, cliArgs):
         self.phase = options.getClientOptions().getOptionValue(ClientOptions.PHASE)
         print('phase ' + self.phase)
         print('cliArgs are ' + '||'.join(cliArgs[1:]))
@@ -79,25 +79,35 @@ class ZinggWithDatabricks(Zingg):
            self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions())
         else:
             self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions(), spark._jsparkSession)
-        self.isRemote = isRemote
+        try:
+            self.isRemote = options.getClientOptions().getOptionValue(ClientOptions.REMOTE)
+        except:
+            self.isRemote = False
+        self.localNotebooLocation = cliArgs[0]
+        self.dbfsHelper = DbfsHelper()
+        self.cliArgs = cliArgs
     
 
     def init(self):
         ## if label, call dbfs service, copy model
         ## else cp over the notebook and execute that with param remote
         print('phase ' + self.phase)
-        self.client.init()
+        if (self.isRemote):
+            self.client.init()
+        else:
+            self.dbfsHelper.copyNotebookToDBFS(self.cliArgs[0])
+        
 
     def execute(self):
         """ Method to execute this class object """
-        self.client.execute()
+        #self.client.execute()
         ## if label, call dbfs cp and send model back
         
     def initAndExecute(self):
         """ Method to run both init and execute methods consecutively """
         print('phase ' + self.phase)
         self.init()
-        self.execute()
+        #self.execute()
 
 
 
@@ -106,10 +116,11 @@ class DbfsHelper:
     def __init__(self):
         self.dbfs_api=DbfsApi(api_client)
 
-    def copyToDBFS(args):
-        dbfs_api.cp(True, True, '/tmp/dbfs/models/100', 'dbfs:/models/100')
+    def copyNotebookToDBFS(self, localLocation):
+        print('copying over file to dbfs')
+        self.dbfs_api.cp(True, True, localLocation, 'dbfs:/Filestore/' + localLocation)
 
-    def copyFromDBFS(args):
+    def copyFromDBFS(self, args):
         print ("copy from dbfs")
 
 
