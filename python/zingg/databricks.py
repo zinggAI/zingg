@@ -32,7 +32,7 @@ job_spec_template = {
                 "job_cluster_key": "_cluster",
                 "libraries": [
                     {
-                         "whl": "https://dbc-2e51e45f-aaeb.cloud.databricks.com/files/jars/a9f7fe7b_887a_4094_9dcc_11ca641cb6a3/zingg-0.3.4-py2.py3-none-any.whl"
+                        "whl":"dbfs:/FileStore/jars/a9f7fe7b_887a_4094_9dcc_11ca641cb6a3/zingg-0.3.4-py2.py3-none-any.whl"
                     },
                     {
                       "jar": "dbfs:/FileStore/zingg_0_3_4_SNAPSHOT.jar"
@@ -112,7 +112,7 @@ class ZinggWithDatabricks(Zingg):
             job_spec = deepcopy(job_spec_template)
             job_spec['tasks'][0]['task_key'] = self.phase+getCurrentTime()
             job_spec['tasks'][0]['spark_python_task']['python_file'] ='dbfs:/Filestore/' + self.cliArgs[0]
-            paramsCopy = self.cliArgs.copy()
+            paramsCopy = self.cliArgs[1:].copy()
             paramsCopy.append(ClientOptions.REMOTE)
             paramsCopy.append("True")
             job_spec['tasks'][0]['spark_python_task']['parameters'] = paramsCopy
