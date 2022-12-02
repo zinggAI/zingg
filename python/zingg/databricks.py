@@ -15,7 +15,7 @@ api_client = ApiClient(
             token = os.getenv('DATABRICKS_TOKEN')
         )
 
-job_spec = {
+job_spec_template = {
      "email_notifications": {
             "no_alert_for_skipped_runs": 'false'
         },
@@ -25,8 +25,7 @@ job_spec = {
             {
                 
                 "spark_python_task": {
-                    "python_file": "dbfs:/FileStore/febrlEx.py",
-                    "parameters": ["findTrainingData"]
+                    "python_file": "dbfs:/FileStore/febrlEx.py"
                 },
                 "job_cluster_key": "_cluster",
                 "libraries": [
@@ -60,6 +59,10 @@ job_spec = {
         "format": "MULTI_TASK"
     
 }
+
+def getCurrentTime():
+    return str(time.time_ns())
+
 class ZinggWithDatabricks(Zingg):
 
     """ This class is the main point of interface with the Zingg matching product. Construct a client to Zingg using provided arguments and spark master. If running locally, set the master to local.
@@ -106,8 +109,12 @@ class ZinggWithDatabricks(Zingg):
         if (self.isRemote):
             self.client.execute()
         else:
-            self.jobsHelper.runJob()
-            self.jobsHelper.pollJobStatus()
+            job_spec = deepcopy(job_spec_template)
+            job_spec['tasks'][0]['task_key'] = self.phase+getCurrentTime()
+            job_spec['tasks'][0]['spark_python_task']['parameters'] = ['--phase', self.phase, '--remote', 'True']
+            job = self.jobsHelper.createJob(job_spec)
+            jobRun = self.jobsHelper.runJob(job)
+            self.jobsHelper.pollJobStatus(jobRun)
         
     def initAndExecute(self):
         """ Method to run both init and execute methods consecutively """
@@ -125,6 +132,7 @@ class DbfsHelper:
     def copyNotebookToDBFS(self, localLocation):
         print('copying over file to dbfs')
         self.dbfs_api.cp(True, True, localLocation, 'dbfs:/Filestore/' + localLocation)
+        
 
     def copyFromDBFS(self, args):
         print ("copy from dbfs")
@@ -134,13 +142,48 @@ class JobsHelper:
     
     def __init__(self):
         self.jobs_api=JobsApi(api_client)
+        self.runs_api=RunsApi(api_client)
 
-    def runJob(self):
-        job = self.jobs_api.create_job(job_spec)
+    def createJob(self, job_spec):
+        job = self.jobs_api.create_job(job_spec, {'User-Agent':'zinggai_zingg'})
+        return job
+    
+    def runJob(self, job):
+        return self.jobs_api.run_now(job['job_id'], None, None, None, None)
 
 
-    def pollJobStatus(self):
-         print ("poll job status")
+    def pollJobStatus(self, jobRun):
+        print ("poll job status")
+         # seconds to sleep between checks
+        sleep_seconds = 30
+        start_time = time.time()
+
+        # loop indefinitely
+        while True:
+    
+            # retrieve job info
+            resp = self.runs_api.get_run(jobRun['run_id'])
+            
+            #calculate elapsed seconds
+            elapsed_seconds = int(time.time()-start_time)
+            
+            # get job lfe cycle state
+            life_cycle_state = resp['state']['life_cycle_state']
+            
+            # if terminated, then get result state & break loop
+            if life_cycle_state == 'TERMINATED':
+                result_state = resp['state']['result_state']
+                break
+                
+            # else, report to user and sleep
+            else:
+                if elapsed_seconds > 0:
+                    print(f'Job in {life_cycle_state} state at { elapsed_seconds } seconds since launch.  Waiting {sleep_seconds} seconds before checking again.', end='\r')
+                    time.sleep(sleep_seconds)
+
+        # return results
+        print(f'Job completed in {result_state} state after { elapsed_seconds } seconds.  Please proceed with next steps to process the records identified by the job.')
+        print('\n')        
 
 
 
