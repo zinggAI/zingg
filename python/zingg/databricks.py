@@ -86,6 +86,7 @@ class ZinggWithDatabricks(Zingg):
         self.localNotebooLocation = cliArgs[0]
         self.dbfsHelper = DbfsHelper()
         self.cliArgs = cliArgs
+        self.jobsHelper = JobsHelper()
     
 
     def init(self):
@@ -102,12 +103,17 @@ class ZinggWithDatabricks(Zingg):
         """ Method to execute this class object """
         #self.client.execute()
         ## if label, call dbfs cp and send model back
+        if (self.isRemote):
+            self.client.execute()
+        else:
+            self.jobsHelper.runJob()
+            self.jobsHelper.pollJobStatus()
         
     def initAndExecute(self):
         """ Method to run both init and execute methods consecutively """
         print('phase ' + self.phase)
         self.init()
-        #self.execute()
+        self.execute()
 
 
 
@@ -129,11 +135,11 @@ class JobsHelper:
     def __init__(self):
         self.jobs_api=JobsApi(api_client)
 
-    def runJob():
-        job = jobs_api.create_job(job_spec)
+    def runJob(self):
+        job = self.jobs_api.create_job(job_spec)
 
 
-    def pollJobStatus():
+    def pollJobStatus(self):
          print ("poll job status")
 
 
