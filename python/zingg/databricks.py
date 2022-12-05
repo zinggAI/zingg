@@ -29,7 +29,7 @@ job_spec_template = {
                 "job_cluster_key": "_cluster",
                 "libraries": [
                     {
-                        "whl":"dbfs:/FileStore/jars/e706b526_54a2_4edf_85c1_b0a511179def/zingg-0.3.4-py2.py3-none-any.whl"
+                        "whl":"dbfs:/FileStore/jars/zingg-0.3.4-py2.py3-none-any.whl"
                     },
                     {
                         "pypi": {

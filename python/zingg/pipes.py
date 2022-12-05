@@ -12,6 +12,7 @@ LOG = logging.getLogger("zingg.pipes")
 
 JPipe = jvm.zingg.client.pipe.Pipe
 FilePipe = jvm.zingg.client.pipe.FilePipe
+JStructType = jvm.org.apache.spark.sql.types.StructType
 
 class Pipe:
     """ Pipe class for working with different data-pipelines. Actual pipe def in the args. One pipe can be used at multiple places with different tables, locations, queries, etc
@@ -78,8 +79,9 @@ class CsvPipe(Pipe):
             Pipe.addProperty(self, FilePipe.LOCATION, location)
             if(schema != None):
                 #df = spark.read.format(JPipe.FORMAT_CSV).schema(schema).load(location)
-                #Pipe.setSchema(self, str(df.schema.json()))
-                print("nothing")
+                s = JStructType.fromDDL(schema)
+                Pipe.setSchema(self, s.json())
+                print("set schema ")
     
     def setDelimiter(self, delimiter):
         """ This method is used to define delimiter of CsvPipe
