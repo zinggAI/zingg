@@ -21,7 +21,7 @@ fieldDefs = [fname, lname, stNo, add1, add2, city, areacode, state, dob, ssn]
 
 args.setFieldDefinition(fieldDefs)
 #set the modelid and the zingg dir
-args.setModelId("100")
+args.setModelId("febrl")
 args.setZinggDir("models")
 args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
