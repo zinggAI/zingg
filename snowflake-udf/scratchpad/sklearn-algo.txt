@@ -1,0 +1,33 @@
+1. function takes 3 inputs:
+a) train data table name
+b) target data table name
+c) column name which has the binary result to be predicted
+(it would be populated already for train data)
+
+2. select from train data table into data frame
+
+3. convert data frame to numpy array => X_arr
+(number of columns should not matter)
+
+4. resize as per requirement
+
+5. move the target column => Y_arr
+
+6. # instantiate the model
+logreg = LogisticRegression(solver='liblinear', random_state=0)
+# fit the model
+logreg.fit(X_train, y_train)
+
+7. Predict on target
+
+8. return true if all went ok else false
+
+yet to do:
+
+1. how to save the trained model so that training is not required each time
+
+2. more efficient error handling
+
+3. asynchronous running or it would be synchronous? As may time out if UDF being run from console directly
+
+4. Get meaningful test data? May be from Kraggle?

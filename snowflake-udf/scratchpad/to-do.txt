@@ -1,0 +1,14 @@
+sklearn logistic regression multiple independent variables
+
+number of independent variables (X) could be any => value between 0 and 1
+
+(ASSUMPTION : ALL X PRESENT , NONE MISSING AND ALL FLOAT)
+
+dependent (Y) only 1 => value 0 or 1
+
+What's remaining:
+
+1. How to insert the result back into DB
+2. test by running it
+3. why should we need connection inside UDF? it is already sitting inside DB
+4. https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html

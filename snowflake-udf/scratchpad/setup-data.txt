@@ -1,0 +1,48 @@
+CREATE OR REPLACE TABLE train_data (x1 float,x2 float,x3 float,x4 float,x5 float,y int)
+
+CREATE OR REPLACE TABLE test_data (x1 float,x2 float,x3 float,x4 float,x5 float,y int)
+
+
+INSERT INTO train_data(x1 ,x2 ,x3 ,x4 ,x5 ,y) VALUES
+(0.9695,0.2741,0.4547,0.0213,0.5707,0),
+(0.1296,0.6567,0.6080,0.3869,0.7097,1),
+(0.1104,0.9981,0.6781,0.8108,0.1172,1),
+(0.4889,0.4554,0.3737,0.9828,0.1447,0),
+(0.4886,0.8365,0.6792,0.0233,0.8018,1),
+(0.9001,0.3865,0.0099,0.0443,0.4985,0),
+(0.1994,0.8024,0.1666,0.8804,0.3742,0),
+(0.5402,0.5782,0.9799,0.4147,0.0470,1),
+(0.3704,0.0613,0.7109,0.7417,0.5032,1),
+(0.0518,0.6125,0.0987,0.4782,0.2152,0),
+(0.7035,0.5262,0.5611,0.0595,0.0725,1),
+(0.2925,0.0552,0.8475,0.5924,0.1771,0),
+(0.5797,0.1765,0.0206,0.1190,0.5641,0),
+(0.3411,0.8561,0.8973,0.1613,0.9127,1),
+(0.7856,0.2720,0.4078,0.5679,0.3644,0),
+(0.6071,0.6736,0.7503,0.6355,0.1413,1),
+(0.0732,0.5854,0.9032,0.1516,0.5821,1),
+(0.7141,0.5229,0.8771,0.5353,0.8214,1),
+(0.4920,0.4610,0.9944,0.5055,0.2791,0),
+(0.7969,0.3836,0.2773,0.7231,0.1045,0);
+
+INSERT INTO test_data(x1 ,x2 ,x3 ,x4 ,x5) VALUES
+(0.0483,0.5395,0.7997,0.8835,0.2339),
+(0.0852,0.0425,0.3535,0.5133,0.9700),
+(0.9043,0.3612,0.2474,0.1905,0.1635),
+(0.9316,0.9959,0.5765,0.9885,0.2832),
+(0.3482,0.3738,0.0342,0.1129,0.6719);
+
+
+pip install scikit-learn
+pip install snowflake-connector-python[pandas]
+
+ValueError: Cannot add package snowflake because Anaconda terms must be accepted by ORGADMIN to use Anaconda 3rd party packages. Please follow the instructions at https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-packages.html#using-third-party-packages-from-anaconda.
+
+select * from information_schema.packages where language = 'python'
+-> to find packages that can be used
+
+pip install --upgrade snowflake-sqlalchemy
+
+create or replace table persist_model_table (model_obj binary)
+
+CALL persist_model_proc('train_data','persist_model_table')

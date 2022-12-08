@@ -1,0 +1,24 @@
+#CALL predict_proc('train_data','test_data', 'train_data3')
+
+#TODO logreg should do cross validation:
+
+https://python.plainenglish.io/using-k-fold-cross-validation-to-evaluate-the-performance-of-logistic-regression-4439215f24c4
+(kfold is 2 for zingg)
+
+https://vitalflux.com/grid-search-explained-python-sklearn-examples/
+(here the log reg example is searching grid for C - inverse reg param)
+
+#TODO save logreg model so that can be reused
+https://www.kaggle.com/code/prmohanty/python-how-to-save-and-load-ml-models
+#TODO : Can stored proc take custom data type so that train data can be sent directly
+
+#TODO predict should be in seperate module as both won't be called together
+
+#TODO has to be batched out as can't have everything in memory
+
+#TODO may be use DataFrame of Snowflake or make this a UDF which can be called per row    
+
+#TODO Challenge : Number of columns would be dynamic so it can't be given at compile time, it will be known only at run time
+
+#TODO persist probability instead of 0 , 1
+
