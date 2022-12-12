@@ -77,9 +77,15 @@ class ZinggWithDatabricks(Zingg):
     """
     
     def __init__(self, args, options, cliArgs):
+        self.args = args
+        self.cliArgs = cliArgs
         self.phase = options.getClientOptions().getOptionValue(ClientOptions.PHASE)
+        self.localNotebookLocation = cliArgs[0]
+        self.options = options
+        
         print('phase ' + self.phase)
         print('cliArgs are ' + '||'.join(cliArgs[1:]))
+        #remote is an option we set and send to job on databricks so that it can work as normal job there
         if (self.phase == 'label'):
            self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions())
         else:
@@ -90,8 +96,6 @@ class ZinggWithDatabricks(Zingg):
             self.isRemote = False
             self.dbfsHelper = DbfsHelper()
             self.jobsHelper = JobsHelper()
-        self.cliArgs = cliArgs
-        self.localNotebooLocation = cliArgs[0]
         
     
 
@@ -102,7 +106,8 @@ class ZinggWithDatabricks(Zingg):
         if (self.isRemote):
             self.client.init()
         else:
-            self.dbfsHelper.copyNotebookToDBFS(self.cliArgs[0])
+            if (self.phase != 'label'):
+                self.dbfsHelper.copyNotebookToDBFS(self.localNotebookLocation)
         
 
     def execute(self):
@@ -112,16 +117,25 @@ class ZinggWithDatabricks(Zingg):
         if (self.isRemote):
             self.client.execute()
         else:
-            job_spec = deepcopy(job_spec_template)
-            job_spec['tasks'][0]['task_key'] = self.phase+getCurrentTime()
-            job_spec['tasks'][0]['spark_python_task']['python_file'] ='dbfs:/Filestore/' + self.cliArgs[0]
-            paramsCopy = self.cliArgs[1:].copy()
-            paramsCopy.append(ClientOptions.REMOTE)
-            paramsCopy.append("True")
-            job_spec['tasks'][0]['spark_python_task']['parameters'] = paramsCopy
-            job = self.jobsHelper.createJob(job_spec)
-            jobRun = self.jobsHelper.runJob(job)
-            self.jobsHelper.pollJobStatus(jobRun)
+            if (self.phase == 'label'):
+                self.dbfsHelper.copyModelFromDBFS(self.args)
+                #massage args
+                localArgs = self.args.copyArgs(self.phase)
+                localArgs.setZinggDir(".")
+                zinggWithSpark = ZinggWithSpark(localArgs, self.options)
+                zinggWithSpark.initAndExecute()
+                self.dbfsHelper.copyModelToDBFS(self.args)
+            else:
+                job_spec = deepcopy(job_spec_template)
+                job_spec['tasks'][0]['task_key'] = self.phase+getCurrentTime()
+                job_spec['tasks'][0]['spark_python_task']['python_file'] ='dbfs:/Filestore/' + self.localNotebookLocation
+                paramsCopy = self.cliArgs[1:].copy()
+                paramsCopy.append(ClientOptions.REMOTE)
+                paramsCopy.append("True")
+                job_spec['tasks'][0]['spark_python_task']['parameters'] = paramsCopy
+                job = self.jobsHelper.createJob(job_spec)
+                jobRun = self.jobsHelper.runJob(job)
+                self.jobsHelper.pollJobStatus(jobRun)
         
     def initAndExecute(self):
         """ Method to run both init and execute methods consecutively """
@@ -145,8 +159,15 @@ class DbfsHelper:
         self.dbfs_api.cp(True, True, localLocation, 'dbfs:/Filestore/' + localLocation)
         
 
-    def copyFromDBFS(self, args):
-        print ("copy from dbfs")
+    def copyModelFromDBFS(self, args):
+        print ("copy model from dbfs")
+        self.dbfs_api.cp(True, True, 'dbfs:/' + args.getZinggBaseModelDir(), './' + args.getModelId())
+    
+    def copyModelToDBFS(self, args):
+        print ("copy model from dbfs")
+        ##backup in dbfs
+        self.dbfs_api.cp(True, True, 'dbfs:/' + args.getZinggBaseModelDir(), 'dbfs:/' + args.getZinggBaseModelDir() + "/backup/" + getCurrentTime())
+        self.dbfs_api.cp(True, True, './' + args.getModelId(), 'dbfs:/' + args.getZinggBaseModelDir())
 
 
 class JobsHelper:

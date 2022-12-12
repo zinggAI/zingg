@@ -236,6 +236,12 @@ class Arguments:
         for idx, pipe in enumerate(pipes):
             outputPipe[idx] = pipe.getPipe()
         self.args.setOutput(outputPipe)
+    
+    def getZinggBaseModelDir(self):
+        return self.args.getZinggBaseModelDir()
+
+    def getZinggModelDir(self):
+        return self.args.getZinggModelDir()
 
     def setModelId(self, id):
         """ Method to set the output directory where the match output will be saved
@@ -244,6 +250,9 @@ class Arguments:
         :type id: String
         """
         self.args.setModelId(id)
+    
+    def getModelId(self):
+        return self.args.getModelId()
 
     def setZinggDir(self, f):
         """ Method to set the location for Zingg to save its internal computations and models. Please set it to a place where the program has to write access.
@@ -302,6 +311,30 @@ class Arguments:
         obj = Arguments()
         obj.args = jvm.zingg.client.Arguments.createArgumentsFromJSON(fileName, phase)
         return obj
+    
+    
+    def writeArgumentsToJSONString(self):
+        """ Method to create an object of this class from the JSON file and phase parameter value.
+        
+        :param fileName: The CONF parameter value of ClientOption object
+        :type fileName: String
+        :param phase: The PHASE parameter value of ClientOption object
+        :type phase: String
+        :return: The pointer containing address of the this class object
+        :rtype: pointer(Arguments)
+        """
+        return jvm.zingg.client.Arguments.writeArgumentstoJSONString(self.args)
+    
+    @staticmethod
+    def createArgumentsFromJSONString(jsonArgs, phase):
+        obj = Arguments()
+        obj.args = jvm.zingg.client.Arguments.createArgumentsFromJSONString(jsonArgs, phase)
+        return obj
+    
+    
+    def copyArgs(self, phase):
+        argsString = self.writeArgumentsToJSONString()
+        return self.createArgumentsFromJSONString(argsString, phase)
 
 
 class ClientOptions:
