@@ -44,5 +44,5 @@ print(sys.argv[0:])
 options = ClientOptions(sys.argv[1:])
 
 #Zingg execution for the given phase
-zingg = ZinggWithDatabricks(args, options, sys.argv)
+zingg = ZinggWithDatabricks(args, options, 'm5.large', 1, sys.argv)
 zingg.initAndExecute()

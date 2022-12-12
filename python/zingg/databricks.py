@@ -17,6 +17,7 @@ import sys
 
 
 job_spec_template = {
+    
      "email_notifications": {
             "no_alert_for_skipped_runs": 'false'
         },
@@ -49,12 +50,11 @@ job_spec_template = {
                 "job_cluster_key": "_cluster",
                 "new_cluster": {
                     "spark_version": "10.4.x-scala2.12",
-                    "node_type_id": "m5.large",
+                    
                     "spark_env_vars": {
                         "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
                     },
-                    "enable_elastic_disk": 'true',
-                    "num_workers": 1
+                    "enable_elastic_disk": 'true'
             }
             }
         ],
@@ -76,12 +76,14 @@ class ZinggWithDatabricks(Zingg):
 
     """
     
-    def __init__(self, args, options, cliArgs):
+    def __init__(self, args, options, nodeType, numWorkers, cliArgs):
         self.args = args
         self.cliArgs = cliArgs
         self.phase = options.getClientOptions().getOptionValue(ClientOptions.PHASE)
         self.localNotebookLocation = cliArgs[0]
         self.options = options
+        self.nodeType = nodeType
+        self.numWorkers = numWorkers
         
         print('phase ' + self.phase)
         print('cliArgs are ' + '||'.join(cliArgs[1:]))
@@ -127,12 +129,18 @@ class ZinggWithDatabricks(Zingg):
                 self.dbfsHelper.copyModelToDBFS(self.args)
             else:
                 job_spec = deepcopy(job_spec_template)
-                job_spec['tasks'][0]['task_key'] = self.phase+getCurrentTime()
+                currTimeString = getCurrentTime()
+                job_spec['name'] = self.phase + currTimeString
+                job_spec['tasks'][0]['task_key'] = self.phase+currTimeString
                 job_spec['tasks'][0]['spark_python_task']['python_file'] ='dbfs:/Filestore/' + self.localNotebookLocation
                 paramsCopy = self.cliArgs[1:].copy()
                 paramsCopy.append(ClientOptions.REMOTE)
                 paramsCopy.append("True")
                 job_spec['tasks'][0]['spark_python_task']['parameters'] = paramsCopy
+                job_spec['job_clusters'][0]['new_cluster']['node_type_id'] = self.nodeType
+                job_spec['job_clusters'][0]['new_cluster']['num_workers'] = int(self.numWorkers)
+                print(job_spec)
+                
                 job = self.jobsHelper.createJob(job_spec)
                 jobRun = self.jobsHelper.runJob(job)
                 self.jobsHelper.pollJobStatus(jobRun)
