@@ -9,10 +9,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.expressions.UserDefinedFunction;
 import org.apache.spark.sql.types.DataTypes;
 
@@ -20,21 +17,21 @@ import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
 import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
-import zingg.util.PipeUtil;
+import zingg.util.PipeUtilBase;
 
-public class StopWords {
+public class StopWords<S,D,R,T> {
 
 	protected static String name = "zingg.preprocess.StopWords";
 	public static final Log LOG = LogFactory.getLog(StopWords.class);
 	protected static String stopWordColumn = ColName.COL_WORD;
 	protected static final int COLUMN_INDEX_DEFAULT = 0;
 
-    public static Dataset<Row> preprocessForStopWords(SparkSession spark, Arguments args, Dataset<Row> ds) throws ZinggClientException {
+    public static D preprocessForStopWords(S session, Arguments args, D ds) throws ZinggClientException {
 
 		List<String> wordList = new ArrayList<String>();
 		for (FieldDefinition def : args.getFieldDefinition()) {
 			if (!(def.getStopWords() == null || def.getStopWords() == "")) {
-				Dataset<Row> stopWords = PipeUtil.read(spark, false, false, PipeUtil.getStopWordsPipe(args, def.getStopWords()));
+				D stopWords = PipeUtilBase.read(session, false, false, PipeUtilBase.getStopWordsPipe(args, def.getStopWords()));
 				if (!Arrays.asList(stopWords.schema().fieldNames()).contains(stopWordColumn)) {
 					stopWordColumn = stopWords.columns()[COLUMN_INDEX_DEFAULT];
 				}

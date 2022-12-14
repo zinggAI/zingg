@@ -1,10 +1,6 @@
 package zingg.client;
 
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
-
-public interface IZingg {
+public interface IZingg<S,D,R,C> {
 
 	public void init(Arguments args, String license)
 			throws ZinggClientException;
@@ -21,19 +17,19 @@ public interface IZingg {
 
 	//** placing these methods for the assessModel phase */
 
-	public Dataset<Row> getMarkedRecords();
+	public ZFrame<D,R,C>  getMarkedRecords();
 
-	public Dataset<Row> getUnmarkedRecords();
+	public ZFrame<D,R,C>  getUnmarkedRecords();
 
-	public Long getMarkedRecordsStat(Dataset<Row> markedRecords, long value);
+	public Long getMarkedRecordsStat(ZFrame<D,R,C>  markedRecords, long value);
 
-    public Long getMatchedMarkedRecordsStat(Dataset<Row> markedRecords);
+    public Long getMatchedMarkedRecordsStat(ZFrame<D,R,C>  markedRecords);
 
-    public Long getUnmatchedMarkedRecordsStat(Dataset<Row> markedRecords);
+    public Long getUnmatchedMarkedRecordsStat(ZFrame<D,R,C>  markedRecords);
 
-    public Long getUnsureMarkedRecordsStat(Dataset<Row> markedRecords);
+    public Long getUnsureMarkedRecordsStat(ZFrame<D,R,C>  markedRecords);
 
-    public void setSpark(SparkSession session);
+    public void setSession(S session); // method name will have to be changed in Client too
 
 	public void setClientOptions(ClientOptions clientOptions);
 

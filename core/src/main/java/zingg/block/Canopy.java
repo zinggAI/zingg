@@ -16,7 +16,7 @@ import zingg.hash.HashFunction;
 import zingg.client.util.ColName;
 
 
-public class Canopy implements Serializable {
+public class Canopy<R> implements Serializable {
 
 	public static final Log LOG = LogFactory.getLog(Canopy.class);
 
@@ -25,25 +25,25 @@ public class Canopy implements Serializable {
 	// aplied on field
 	FieldDefinition context;
 	// list of duplicates passed from parent
-	List<Row> dupeN;
+	List<R> dupeN;
 	// number of duplicates eliminated after function applied on fn context
 	long elimCount;
 	// hash of canopy
 	Object hash;
 	// training set
-	List<Row> training;
+	List<R> training;
 	// duplicates remaining after function is applied
-	List<Row> dupeRemaining;
+	List<R> dupeRemaining;
 
 	public Canopy() {
 	}
 
-	public Canopy(List<Row> training, List<Row> dupeN) {
+	public Canopy(List<R> training, List<R> dupeN) {
 		this.training = training; //.cache();
 		this.dupeN = dupeN;
 	}
 
-	public Canopy(List<Row> training, List<Row> dupeN, HashFunction function,
+	public Canopy(List<R> training, List<R> dupeN, HashFunction function,
 			FieldDefinition context) {
 		this(training, dupeN);
 		this.function = function;
@@ -86,7 +86,7 @@ public class Canopy implements Serializable {
 	/**
 	 * @return the dupeN
 	 */
-	public List<Row> getDupeN() {
+	public List<R> getDupeN() {
 		return dupeN;
 	}
 
@@ -94,7 +94,7 @@ public class Canopy implements Serializable {
 	 * @param dupeN
 	 *            the dupeN to set
 	 */
-	public void setDupeN(List<Row> dupeN) {
+	public void setDupeN(List<R> dupeN) {
 		this.dupeN = dupeN;
 	}
 
@@ -131,7 +131,7 @@ public class Canopy implements Serializable {
 	/**
 	 * @return the training
 	 */
-	public List<Row> getTraining() {
+	public List<R> getTraining() {
 		return training;
 	}
 
@@ -139,23 +139,23 @@ public class Canopy implements Serializable {
 	 * @param training
 	 *            the training to set
 	 */
-	public void setTraining(List<Row> training) {
+	public void setTraining(List<R> training) {
 		this.training = training;
 	}
 
-	public List<Canopy> getCanopies() {
+	public List<Canopy<R>> getCanopies() {
 		//long ts = System.currentTimeMillis();
 		/*
-		List<Row> newTraining = function.apply(training, context.fieldName, ColName.HASH_COL).cache();
+		List<R> newTraining = function.apply(training, context.fieldName, ColName.HASH_COL).cache();
 		LOG.debug("getCanopies0" + (System.currentTimeMillis() - ts));
 		List<Canopy> returnCanopies = new ArrayList<Canopy>();
 		//first find unique hashes
 		//then split the training into per hash
-		List<Row> uniqueHashes = newTraining.select(ColName.HASH_COL).distinct().collectAsList();
+		List<R> uniqueHashes = newTraining.select(ColName.HASH_COL).distinct().collectAsList();
 		LOG.debug("getCanopies1" + (System.currentTimeMillis() - ts));
 		for (Row row : uniqueHashes) {
 			Object key = row.get(0);
-			List<Row> tupleList = newTraining.filter(newTraining.col(ColName.HASH_COL).equalTo(key))
+			List<R> tupleList = newTraining.filter(newTraining.col(ColName.HASH_COL).equalTo(key))
 					.cache();
 			tupleList = tupleList.drop(ColName.HASH_COL);
 			Canopy can = new Canopy(tupleList, dupeRemaining);
@@ -166,14 +166,14 @@ public class Canopy implements Serializable {
 		}
 		LOG.debug("getCanopies2" + (System.currentTimeMillis() - ts));
 		return returnCanopies;*/
-		ListMap<Object, Row> hashes = new ListMap<Object, Row>();
-		List<Canopy> returnCanopies = new ArrayList<Canopy>();
+		ListMap<Object, R> hashes = new ListMap<Object, R>();
+		List<Canopy<R>> returnCanopies = new ArrayList<Canopy<R>>();
 		
-		for (Row r : training) {
+		for (R r : training) {
 			hashes.add(function.apply(r, context.fieldName), r);
 		}
 		for (Object o: hashes.keySet()) {
-			Canopy can = new Canopy(hashes.get(o), dupeRemaining);
+			Canopy<R> can = new Canopy<R>(hashes.get(o), dupeRemaining);
 			can.hash = o;
 			returnCanopies.add(can);
 		}
@@ -185,11 +185,11 @@ public class Canopy implements Serializable {
 	public long estimateCanopies() {
 		//long ts = System.currentTimeMillis();	
 		Set<Object> hashes = new HashSet<Object>();
-		for (Row r : training) {
+		for (R r : training) {
 			hashes.add(function.apply(r, context.fieldName));
 		}
 		/*
-		List<Row> newTraining = function.apply(training, context.fieldName, ColName.HASH_COL);
+		List<R> newTraining = function.apply(training, context.fieldName, ColName.HASH_COL);
 		long uniqueHashes = (long) newTraining.select(functions.approxCountDistinct(
 				newTraining.col(ColName.HASH_COL))).takeAsList(1).get(0).get(0);
 		LOG.debug("estimateCanopies" + (System.currentTimeMillis() - ts) + " and count is " + uniqueHashes);
@@ -240,8 +240,8 @@ public class Canopy implements Serializable {
 		//if hash is equal, they are not going to be eliminated
 		//filter on hash equal and count 
 		LOG.debug("Applying " + function.getName());
-		dupeRemaining = new ArrayList<Row>();
-		for(Row r: dupeN) {
+		dupeRemaining = new ArrayList<R>();
+		for(R r: dupeN) {
 			Object hash1 = function.apply(r, context.fieldName);
 			Object hash2 = function.apply(r, ColName.COL_PREFIX + context.fieldName);
 			LOG.debug("hash1 " + hash1);		
@@ -261,8 +261,8 @@ public class Canopy implements Serializable {
 		//LOG.debug("estimateElimCount" + (System.currentTimeMillis() - ts));
 	}
 	
-	/*public ListMap<Object, Row> getHashForDupes(List<Row> d) {
-		//dupeRemaining = new ArrayList<Row>();
+	/*public ListMap<Object, Row> getHashForDupes(List<R> d) {
+		//dupeRemaining = new ArrayList<R>();
 		ListMap<Object, Row> returnMap = new ListMap<Object, Row>();
 		for (Row pair : d) {
 			Tuple first = pair.getFirst();

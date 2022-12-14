@@ -5,13 +5,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.SaveMode;
-import org.apache.spark.sql.types.DataType;
-import org.apache.spark.sql.types.StructType;
+// import org.apache.spark.sql.Dataset;
+// import org.apache.spark.sql.SaveMode;
+// import org.apache.spark.sql.types.DataType;
+// import org.apache.spark.sql.types.StructType;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonValue;
-import org.apache.spark.sql.Row;
+// import org.apache.spark.sql.Row;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -29,7 +29,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
  */
 
 @JsonInclude(Include.NON_NULL)
-public class Pipe implements Serializable{
+public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	
 	public static final String FORMAT_CSV = "csv";
 	public static final String FORMAT_PARQUET = "parquet";
@@ -48,19 +48,21 @@ public class Pipe implements Serializable{
 	String format;
 	String preprocessors;
 	Map<String, String> props = new HashMap<String, String>();
-	@JsonSerialize(using = CustomSchemaSerializer.class)
-	StructType schema = null;
-	SaveMode mode;
 	int id;
-	Dataset <Row> dataset;
+	D dataset;
+	String schema;
 
-	public SaveMode getMode() {
-		return mode;
+	
+
+	
+
+	public String getSchema() {
+		return schema;
 	}
 
 
-	public void setMode(SaveMode mode) {
-		this.mode = mode;
+	public void setSchema(String schema) {
+		this.schema = schema;
 	}
 
 
@@ -101,30 +103,10 @@ public class Pipe implements Serializable{
 		this.props = p.props;		
 	}
 	
-	@JsonProperty("schema")
-	public void setSchema(String s) {
-		if (s!= null) this.schema = (StructType) DataType.fromJson(s);
-		//schema = DataTypes.createStructType(s);
-	}
-	
-	/*
-	public void setSchema(JsonNode s) {
-		System.out.println("reached json node");
-		if (s!= null) this.schema = (StructType) DataType.fromJson(s.toString());
-	}*/
-	
-	
-	public StructType getSchema() {
-		return schema;
-	}
-	
 	public String get(String key) {
 		return props.get(key);
 	}
 	
-	public void setSchemaStruct(StructType s) {
-		this.schema = s;
-	}
 	
 	public String getPreprocessors() {
 		return preprocessors;
@@ -146,45 +128,23 @@ public class Pipe implements Serializable{
 		this.id = recId;
 	}
 
-	public Dataset <Row> getDataset(){
+	public D getDataset(){
 		return this.dataset;
 	}
 
-	public void setDataset(Dataset <Row> ds){
+	public void setDataset(D ds){
 		this.dataset = ds;
 	}
 
 	@Override
 	public String toString() {
 		return "Pipe [name=" + name + ", format=" + format + ", preprocessors="
-				+ preprocessors + ", props=" + props + ", schema=" + schema + "]";
+				+ preprocessors + ", props=" + props + "]";
 	}
 	
-	public void nullifySchema() {
-		this.schema = null;
-	}
-	
-	static class CustomSchemaSerializer extends StdSerializer<StructType> {
-		 
-	     public CustomSchemaSerializer() { 
-	        this(null); 
-	    } 
-	 
-	    public CustomSchemaSerializer(Class<StructType> t) {
-	        super(t); 
-	    }
-	 
-	    @Override
-	    public void serialize(
-	    		StructType value, JsonGenerator gen, SerializerProvider arg2) 
-	      throws IOException, JsonProcessingException {
-	        gen.writeObject(value.json());
-	    }
-	}
-
 	
 
-	
+	/* 
 	public Pipe clone() {
 		Pipe p = new Pipe();
 		p.name = name;
@@ -197,5 +157,6 @@ public class Pipe implements Serializable{
 		p.dataset = dataset;
 		return p;
 	}
+	*/
 	
 }

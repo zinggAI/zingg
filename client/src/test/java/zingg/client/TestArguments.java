@@ -17,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
 import zingg.client.pipe.Pipe;
+import zingg.client.pipe.SparkPipe;
 
 public class TestArguments {
 
@@ -262,13 +263,13 @@ public class TestArguments {
 				lname.setFields("lname");
 				args.setFieldDefinition(Arrays.asList(fname, lname));
 
-				Pipe inputPipe = new Pipe();
+				Pipe inputPipe = new SparkPipe();
 				inputPipe.setName("test");
 				inputPipe.setFormat(Pipe.FORMAT_CSV);
 				inputPipe.setProp("location", "examples/febrl/test.csv");
 				args.setData(new Pipe[] {inputPipe});
 
-				Pipe outputPipe = new Pipe();
+				Pipe outputPipe = new SparkPipe();
 				outputPipe.setName("output");
 				outputPipe.setFormat(Pipe.FORMAT_CSV);
 				outputPipe.setProp("location", "examples/febrl/output.csv");

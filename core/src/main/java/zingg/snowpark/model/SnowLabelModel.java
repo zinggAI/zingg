@@ -1,4 +1,4 @@
-package zingg.model;
+package zingg.snowpark.model;
 
 import java.io.IOException;
 import java.util.Map;
@@ -6,26 +6,28 @@ import java.util.Map;
 import org.apache.spark.ml.Pipeline;
 import org.apache.spark.ml.PipelineModel;
 import org.apache.spark.ml.PipelineStage;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
+import com.snowflake.snowpark_java.Column;
 
 import zingg.client.FieldDefinition;
+import zingg.client.ZFrame;
 import zingg.feature.Feature;
-import zingg.client.util.ColName;
 
-public class LabelModel extends Model{
+// need Snow specific ml library
+public class SnowLabelModel extends SnowModel{
 	
-	public LabelModel(Map<FieldDefinition, Feature> f) {
+	public SnowLabelModel(Map<FieldDefinition, Feature> f) {
 		super(f);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override	
-	public void fit(Dataset<Row> pos, Dataset<Row> neg) {
+	public void fit(ZFrame<DataFrame,Row,Column> pos, ZFrame<DataFrame,Row,Column> neg) {
 		//create features
 		Pipeline pipeline = new Pipeline();
 		pipeline.setStages(pipelineStage.toArray(new PipelineStage[pipelineStage.size()]));
-		PipelineModel pm = pipeline.fit(transform(pos.union(neg)).coalesce(1).cache());
+		PipelineModel pm = pipeline.fit(transform(pos.union(neg)).df().coalesce(1).cache());
 		transformer = pm;	
 	}
 	

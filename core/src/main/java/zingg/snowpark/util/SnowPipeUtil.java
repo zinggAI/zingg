@@ -1,4 +1,4 @@
-package zingg.util;
+package zingg.snowpark.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,18 +12,21 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.DataFrameReader;
-import org.apache.spark.sql.DataFrameWriter;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SaveMode;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.functions;
-import org.apache.spark.storage.StorageLevel;
+import com.snowflake.snowpark_java.Column;
+import com.snowflake.snowpark_java.DataFrameReader;
+import com.snowflake.snowpark_java.DataFrameWriter;
+import com.snowflake.snowpark_java.DataFrame;
+import com.snowflake.snowpark_java.Row;
+import com.snowflake.snowpark_java.SaveMode;
+import com.snowflake.snowpark_java.Session;
+import com.snowflake.snowpark_java.Functions;
+// import org.apache.spark.storage.StorageLevel;
 
 //import zingg.scala.DFUtil;
 import zingg.client.Arguments;
+import zingg.client.SnowFrame;
 import zingg.client.ZinggClientException;
+import zingg.client.ZFrame;
 import zingg.client.util.ColName;
 import zingg.client.pipe.CassandraPipe;
 import zingg.client.pipe.ElasticPipe;
@@ -45,17 +48,29 @@ import scala.collection.Seq;
 
 // import com.datastax.spark.connector.cql.*;
 import zingg.scala.DFUtil;
+import zingg.util.PipeUtilBase;
 
 //import com.datastax.spark.connector.cql.*;
 //import org.elasticsearch.spark.sql.api.java.JavaEsSparkSQL;
 //import zingg.scala.DFUtil;
 
-public class PipeUtil {
+public class SnowPipeUtil implements PipeUtilBase<Session, DataFrame, Row, Column>{
 
-	public static final Log LOG = LogFactory.getLog(PipeUtil.class);
+	Session snowSession;
 
-	private static DataFrameReader getReader(SparkSession spark, Pipe p) {
-		DataFrameReader reader = spark.read();
+	public  final Log LOG = LogFactory.getLog(SnowPipeUtil.class);
+
+	public SnowPipeUtil(Session snow) {
+		this.snowSession = snow;
+	}
+	
+
+	public void setSession(Session session){
+		this.snowSession = session;
+	}
+
+	private DataFrameReader getReader(Pipe p) {
+		DataFrameReader reader = getSession().read();
 
 		LOG.warn("Reading input " + p.getFormat());
 		reader = reader.format(p.getFormat());
@@ -69,8 +84,8 @@ public class PipeUtil {
 		return reader;
 	}
 
-	private static Dataset<Row> read(DataFrameReader reader, Pipe p, boolean addSource) throws ZinggClientException{
-		Dataset<Row> input = null;
+	private  SnowFrame read(DataFrameReader reader, Pipe p, boolean addSource) throws ZinggClientException{
+		DataFrame input = null;
 		LOG.warn("Reading " + p);
 		try {
 
@@ -86,22 +101,23 @@ public class PipeUtil {
 			}
     }
 			if (addSource) {
-				input = input.withColumn(ColName.SOURCE_COL, functions.lit(p.getName()));
+				input = input.withColumn(ColName.SOURCE_COL, Functions.lit(p.getName()));
 			}
 		} catch (Exception ex) {
 			LOG.warn(ex.getMessage());
 			throw new ZinggClientException("Could not read data.", ex);
 		}
-		return input;
+		return new SnowFrame(input);
 	}
 
-	private static Dataset<Row> readInternal(SparkSession spark, Pipe p, boolean addSource) throws ZinggClientException {
-		DataFrameReader reader = getReader(spark, p);
+	private  ZFrame<DataFrame, Row, Column> readInternal(Session snow, Pipe p, boolean addSource) throws ZinggClientException {
+		DataFrameReader reader = getReader(snow, p);
 		return read(reader, p, addSource);		
 	}
 
-	public static Dataset<Row> joinTrainingSetstoGetLabels(Dataset<Row> jdbc, 
-		Dataset<Row> file)  {
+	/*
+	public ZFrame<Dataset<Row>, Row, Column> joinTrainingSetstoGetLabels(ZFrame<Dataset<Row>, Row, Column> jdbc, 
+	ZFrame<Dataset<Row>, Row, Column> file)  {
 		file = file.drop(ColName.MATCH_FLAG_COL);
 		file.printSchema();
 		file.show();
@@ -132,69 +148,62 @@ public class PipeUtil {
 		
 		return pairs;
 	}
+	*/
 
-
-	private static Dataset<Row> readInternal(SparkSession spark, boolean addLineNo,
+	private ZFrame<DataFrame, Row, Column> readInternal(Session snow, boolean addLineNo,
 			boolean addSource, Pipe... pipes) throws ZinggClientException {
-		Dataset<Row> input = null;
+		ZFrame<DataFrame, Row, Column> input = null;
 
 		for (Pipe p : pipes) {
 			if (input == null) {
-				input = readInternal(spark, p, addSource);
+				input = readInternal(p, addSource);
 				LOG.debug("input size is " + input.count());				
 			} else {
-					if (p.get("type") != null && p.get("type").equals("join")) {
-						LOG.warn("joining inputs");
-						Dataset<Row> input1 = readInternal(spark, p, addSource);
-						LOG.warn("input now size is " + input1.count());	
-						input = joinTrainingSetstoGetLabels(input, input1 );
-					}
-					else {
-						input = input.union(readInternal(spark, p, addSource));
-					}				
+					input = input.union(readInternal(p, addSource));
 			}
 		}
 		// we will probably need to create row number as string with pipename/id as
 		// suffix
 		if (addLineNo)
-			input = DFUtil.addRowNumber(input, spark);
+			input = new SnowFrame(getDFUtil().addRowNumber(input.df(), getSession()));
 		// we need to transform the input here by using stop words
 		return input;
 	}
 
-	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, boolean addSource, Pipe... pipes) throws ZinggClientException {
-		Dataset<Row> rows = readInternal(spark, addLineNo, addSource, pipes);
-		rows = rows.persist(StorageLevel.MEMORY_ONLY());
+	public ZFrame<DataFrame, Row, Column> read(Session snow, boolean addLineNo, boolean addSource, Pipe... pipes) throws ZinggClientException {
+		ZFrame<DataFrame, Row, Column> rows = readInternal(snow, addLineNo, addSource, pipes);
+		rows = rows.cache();
 		return rows;
 	}
 
-	public static Dataset<Row> sample(SparkSession spark, Pipe p) throws ZinggClientException {
+	/*
+	public ZFrame<Dataset<Row>, Row, Column> sample(SparkSession spark, Pipe p) throws ZinggClientException {
 		DataFrameReader reader = getReader(spark, p);
 		reader.option("inferSchema", true);
 		reader.option("mode", "DROPMALFORMED");
 		LOG.info("reader is ready to sample with inferring " + p.get(FilePipe.LOCATION));
 		LOG.warn("Reading input of type " + p.getFormat());
-		Dataset<Row> input = read(reader, p, false);
+		ZFrame<Dataset<Row>, Row, Column> input = read(reader, p, false);
 		// LOG.warn("inferred schema " + input.schema());
 		List<Row> values = input.takeAsList(10);
 		values.forEach(r -> LOG.warn(r));
 		Dataset<Row> ret = spark.createDataFrame(values, input.schema());
 		return ret;
-
 	}
+	*/
 
-	public static Dataset<Row> read(SparkSession spark, boolean addLineNo, int numPartitions,
+	public  ZFrame<DataFrame, Row, Column> read(Session snow, boolean addLineNo, int numPartitions,
 			boolean addSource, Pipe... pipes) throws ZinggClientException {
-		Dataset<Row> rows = readInternal(spark, addLineNo, addSource, pipes);
+		ZFrame<DataFrame, Row, Column> rows = readInternal(snow, addLineNo, addSource, pipes);
 		rows = rows.repartition(numPartitions);
-		rows = rows.persist(StorageLevel.MEMORY_ONLY());
+		rows = rows.cache();
 		return rows;
 	}
 
-	public static void write(Dataset<Row> toWriteOrig, Arguments args, JavaSparkContext ctx, Pipe... pipes) throws ZinggClientException {
+	public  void write(ZFrame<DataFrame, Row, Column> toWriteOrig, Arguments args, JavaSparkContext ctx, Pipe... pipes) throws ZinggClientException {
 		try {
 			for (Pipe p: pipes) {
-			Dataset<Row> toWrite = toWriteOrig;
+			DataFrame toWrite = toWriteOrig.df();
 			DataFrameWriter writer = toWrite.write();
 		
 			LOG.warn("Writing output " + p);
@@ -299,38 +308,40 @@ public class PipeUtil {
 		}
 	}
 
-	public static void writePerSource(Dataset<Row> toWrite, Arguments args, JavaSparkContext ctx, Pipe[] pipes ) throws ZinggClientException {
+	/*
+	public  void writePerSource(Dataset<Row> toWrite, Arguments args, JavaSparkContext ctx, Pipe[] pipes ) throws ZinggClientException {
 		List<Row> sources = toWrite.select(ColName.SOURCE_COL).distinct().collectAsList();
 		for (Row r : sources) {
 			Dataset<Row> toWriteNow = toWrite.filter(toWrite.col(ColName.SOURCE_COL).equalTo(r.get(0)));
 			toWriteNow = toWriteNow.drop(ColName.SOURCE_COL);
-			PipeUtil.write(toWriteNow, args, ctx, pipes);
+			write(toWriteNow, args, ctx, pipes);
 
 		}
 	}
+	*/
 
-	public static Pipe getTrainingDataUnmarkedPipe(Arguments args) {
+	public Pipe getTrainingDataUnmarkedPipe(Arguments args) {
 		Pipe p = new Pipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getZinggTrainingDataUnmarkedDir());
 		return p;
 	}
 
-	public static Pipe getTrainingDataMarkedPipe(Arguments args) {
+	public  Pipe getTrainingDataMarkedPipe(Arguments args) {
 		Pipe p = new Pipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getZinggTrainingDataMarkedDir());
 		return p;
 	}
 	
-	public static Pipe getModelDocumentationPipe(Arguments args) {
+	public  Pipe getModelDocumentationPipe(Arguments args) {
 		Pipe p = new Pipe();
 		p.setFormat(Pipe.FORMAT_TEXT);
 		p.setProp(FilePipe.LOCATION, args.getZinggModelDocFile());
 		return p;
 	}
 	
-	public static Pipe getStopWordsPipe(Arguments args, String fileName) {
+	public Pipe getStopWordsPipe(Arguments args, String fileName) {
 		Pipe p = new Pipe();
 		p.setFormat(Pipe.FORMAT_CSV);
 		p.setProp(FilePipe.HEADER, "true");
@@ -339,7 +350,7 @@ public class PipeUtil {
 		return p;
 	}
 
-	public static Pipe getBlockingTreePipe(Arguments args) {
+	public  Pipe getBlockingTreePipe(Arguments args) {
 		Pipe p = new Pipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getBlockFile());
@@ -347,7 +358,7 @@ public class PipeUtil {
 		return p;
 	}
 
-	public static String getPipesAsString(Pipe[] pipes) {
+	public  String getPipesAsString(Pipe[] pipes) {
 		return Arrays.stream(pipes)
 			.map(p -> p.getFormat())
 			.collect(Collectors.toList())
@@ -357,9 +368,8 @@ public class PipeUtil {
 	}
 
 
-
 	/*
-	 * public static String getTableCreateCQL(Pipe p, Dataset<Row> df) {
+	 * public  String getTableCreateCQL(Pipe p, Dataset<Row> df) {
 	 * 
 	 * Set<String> partitionKeys = new TreeSet<String>() { {
 	 * add(p.get(CassandraPipe.PRIMARY_KEY)); } }; int c = 0; Map<String, Integer>

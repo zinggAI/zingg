@@ -13,28 +13,30 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.StructField;
 
 import zingg.client.Arguments;
+import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
-import zingg.util.PipeUtil;
+import zingg.util.PipeUtilBase;
 
-public class DataDocumenter extends DocumenterBase {
+public class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 	protected static String name = "zingg.DataDocumenter";
 	protected static String TEMPLATE_TITLE = "Data Documentation";
 	private final String DATA_DOC_TEMPLATE = "dataDocTemplate.ftlh";
 
 	public static final Log LOG = LogFactory.getLog(DataDocumenter.class);
-	protected Dataset<Row> data;
+	protected  ZFrame<D,R,C>  data;
 
-	public DataDocumenter(SparkSession spark, Arguments args) {
-		super(spark, args);
-		data = spark.emptyDataFrame();
+	public DataDocumenter(S session,Arguments args) {
+		super(session, args);
+		data = getDFUtil().emptyDataFrame();
 	}
 	
+
 	public void process() throws ZinggClientException {
 		try {
 			LOG.info("Data document generation starts");
 
 			try {
-				data = PipeUtil.read(spark, false, false, args.getData());
+				data = getPipeUtil().read(false,false, args.getData());
 				LOG.info("Read input data : " + data.count());
 			} catch (ZinggClientException e) {
 				LOG.warn("No data has been found");
@@ -54,11 +56,11 @@ public class DataDocumenter extends DocumenterBase {
 	protected void createDataDocument() throws ZinggClientException {
 		if (!data.isEmpty()) {
 			Map<String, Object> root = populateTemplateData();
-			writeMoelDocument(root);
+			writeModelDocument(root);
 		}
 	}
 
-	protected void writeMoelDocument(Map<String, Object> root) throws ZinggClientException {
+	protected void writeModelDocument(Map<String, Object> root) throws ZinggClientException {
 		writeDocument(DATA_DOC_TEMPLATE, root, args.getZinggDataDocFile());
 	}
 

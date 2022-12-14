@@ -1,31 +1,38 @@
 package zingg.hash;
 
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.api.java.UDF1;
-import org.apache.spark.sql.types.DataTypes;
 
-public class LastWord extends HashFunction implements UDF1<String, String>{
+public abstract class LastWord<D,R,C,T> extends HashFunction<D,R,C,T>{
 	public LastWord() {
-		super("lastWord", DataTypes.StringType, DataTypes.StringType, true);
+		super("lastWord");		
+	}
+
+			
+	public String call(String field) {
+		String r = null;
+		if (field == null ) {
+			r = field;
+		}
+		else {
+			String[] v= field.trim().toLowerCase().split(" ");
+			return v[v.length-1];
+		}
+		return r;
+	}
+
+	@Override
+	public Object getAs(D df, R r, String column) {
+		return null;
+	}
+
+	@Override
+	public Object apply(D df, R r, String column) {
+		return null;
+	}
+
+	@Override
+	public Object apply(R r, String column) {
+		return null;
 	}
 
 	
-	
-			 @Override
-			 public String call(String field) {
-					String r = null;
-					if (field == null ) {
-						r = field;
-					}
-					else {
-						String[] v= field.trim().toLowerCase().split(" ");
-						return v[v.length-1];
-					}
-					return r;
-				 }
-
-			 public Object apply(Row ds, String column) {
-				 return call((String) ds.getAs(column));
-			 }
-
 }

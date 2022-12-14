@@ -11,24 +11,25 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.StructField;
 
 import zingg.client.Arguments;
+import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 
-public class ModelColDocumenter extends DocumenterBase {
+public class ModelColDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 	protected static String name = "zingg.ModelColDocumenter";
 	public static final Log LOG = LogFactory.getLog(ModelColDocumenter.class);
 
 	private final String COLUMN_DOC_TEMPLATE = "columnDocTemplate.ftlh";
 	private final String Z_COLUMN_TEMPLATE = "zColumnTemplate.ftlh";
 
-	public ModelColDocumenter(SparkSession spark, Arguments args) {
-		super(spark, args);
+	public ModelColDocumenter(S session, Arguments args) {
+		super(session, args);
 	}
 
-	public void process(Dataset<Row> data) throws ZinggClientException {
+	public void process( ZFrame<D,R,C>  data) throws ZinggClientException {
 		createColumnDocuments(data);
 	}
 
-	private void createColumnDocuments(Dataset<Row> data) throws ZinggClientException {
+	private void createColumnDocuments( ZFrame<D,R,C>  data) throws ZinggClientException {
 		LOG.info("Column Documents generation starts");
 		if (!data.isEmpty()) {
 			String columnsDir = args.getZinggDocDir();

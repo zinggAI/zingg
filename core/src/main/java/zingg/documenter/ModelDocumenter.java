@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Dataset;
@@ -13,23 +14,23 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 import zingg.client.Arguments;
+import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
-import zingg.util.PipeUtil;
 
-public class ModelDocumenter extends DocumenterBase {
+
+public class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 
 	protected static String name = "zingg.ModelDocumenter";
 	public static final Log LOG = LogFactory.getLog(ModelDocumenter.class);
 
 	private final String MODEL_TEMPLATE = "model.ftlh";
-	ModelColDocumenter modelColDoc;
-	protected Dataset<Row> markedRecords;
+	ModelColDocumenter<S,D,R,C,T> modelColDoc;
+	protected  ZFrame<D,R,C>  markedRecords;
 
-	public ModelDocumenter(SparkSession spark, Arguments args) {
-		super(spark, args);
-		markedRecords = spark.emptyDataFrame();
-		modelColDoc = new ModelColDocumenter(spark, args);
+	public ModelDocumenter(S session, Arguments args) {
+		super(session, args);
+		markedRecords = getDFUtil().emptyDataFrame();
 	}
 
 	public void process() throws ZinggClientException {
@@ -42,7 +43,7 @@ public class ModelDocumenter extends DocumenterBase {
 			LOG.info("Model document generation starts");
 
 			try {
-				markedRecords = PipeUtil.read(spark, false, false, PipeUtil.getTrainingDataMarkedPipe(args));
+				markedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
 			} catch (ZinggClientException e) {
 				LOG.warn("No marked record has been found");
 			}

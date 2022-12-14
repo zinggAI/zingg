@@ -1,18 +1,17 @@
 package zingg.hash;
 
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.api.java.UDF1;
-import org.apache.spark.sql.types.DataTypes;
 
-public class First3CharsBox extends HashFunction implements UDF1<String, Integer>{
+
+public abstract class First3CharsBox<D,R,C,T> extends HashFunction<D,R,C,T>{
 
 	public First3CharsBox() {
-		super("first3CharsBox", DataTypes.StringType, DataTypes.IntegerType, true);
+		super("first3CharsBox");
+		//, DataTypes.StringType, DataTypes.IntegerType, true);
 	}
 
 	
 	
-	 @Override
+	//  @Override
 	 public Integer call(String field) {
 		 if (field == null || field.trim().length() <= 3) {
 				return 0;
@@ -37,8 +36,25 @@ public class First3CharsBox extends HashFunction implements UDF1<String, Integer
 	 }
 	 
 	 @Override
-	 public Object apply(Row ds, String column) {
-		 return call((String) ds.getAs(column));
+	 public Object apply(R ds, String column) {
+		 return call((String) getAs(ds, column));
 	}
+
+	@Override
+	public Object getAs(R r, String column) {
+		return null;
+	}
+
+	@Override
+	public Object apply(D df, R r, String column) {
+		return null;
+	}
+
+	@Override
+	public Object getAs(D df, R r, String column) {
+		return null;
+	}
+
+
 
 }
