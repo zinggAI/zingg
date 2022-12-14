@@ -169,13 +169,14 @@ class DbfsHelper:
 
     def copyModelFromDBFS(self, args):
         print ("copy model from dbfs")
-        self.dbfs_api.cp(True, True, 'dbfs:/' + args.getZinggBaseModelDir(), './' + args.getModelId())
+        print("dbfs location is " + "dbfs:" + args.getZinggBaseModelDir())
+        self.dbfs_api.cp(True, True, 'dbfs:' + args.getZinggBaseModelDir(), './' + args.getModelId())
     
     def copyModelToDBFS(self, args):
         print ("copy model from dbfs")
         ##backup in dbfs
-        self.dbfs_api.cp(True, True, 'dbfs:/' + args.getZinggBaseModelDir(), 'dbfs:/' + args.getZinggBaseModelDir() + "/backup/" + getCurrentTime())
-        self.dbfs_api.cp(True, True, './' + args.getModelId(), 'dbfs:/' + args.getZinggBaseModelDir())
+        self.dbfs_api.cp(True, True, 'dbfs:' + args.getZinggBaseModelDir(), 'dbfs:' + args.getZinggBaseModelDir() + "/backup/" + getCurrentTime())
+        self.dbfs_api.cp(True, True, './' + args.getModelId(), 'dbfs:' + args.getZinggBaseModelDir())
 
 
 class JobsHelper:
