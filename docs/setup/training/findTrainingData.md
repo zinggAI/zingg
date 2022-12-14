@@ -2,7 +2,7 @@
 parent: Creating training data
 nav_order: 1
 grand_parent: Step By Step Guide
-description: Pairs of records that could be similar to train Zingg
+description: pairs of records that could be similar to train Zingg
 ---
 
 # Finding Records For Training Set Creation

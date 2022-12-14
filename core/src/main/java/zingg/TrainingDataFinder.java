@@ -110,7 +110,11 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				}
 				else {
 					LOG.info("Writing uncertain pairs when either positive or negative samples not provided ");
-					ZFrame<D,R,C> posFiltered = blocks.sample(false,  20.0d/blocks.count());
+					double blocksCount = 20.0d/(blocks.count() * 1.0d);
+					if (blocksCount > 1) blocksCount = 1.0d;
+					LOG.info("block count " + blocksCount);
+					Dataset<Row> posFiltered = blocks.sample(false,  blocksCount);
+					//ZFrame<D,R,C> posFiltered = blocks.sample(false,  20.0d/blocks.count());
 					posFiltered = posFiltered.withColumn(ColName.PREDICTION_COL, functions.lit(ColValues.IS_NOT_KNOWN_PREDICTION));
 					posFiltered = posFiltered.withColumn(ColName.SCORE_COL, functions.lit(ColValues.ZERO_SCORE));
 					writeUncertain(posFiltered, sampleOrginal);		

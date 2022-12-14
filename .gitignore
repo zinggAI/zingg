@@ -20,3 +20,4 @@ zingg.egg-info
 dist
 python/docs/_build/html
 python/docs/_build/_doctrees
+**/python/build/*

@@ -7,10 +7,10 @@ Welcome to Zingg's documentation!
 =================================
    
 Contents:
-.. toctree::
- :maxdepth: 3
- :caption: 
 
+.. toctree::
+   :maxdepth: 2
+   
    zingg
  
 Indices and tables

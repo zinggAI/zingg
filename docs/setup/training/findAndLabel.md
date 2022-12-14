@@ -3,7 +3,6 @@ parent: Creating training data
 title: Find training data and labelling
 grand_parent: Step By Step Guide
 nav_order: 2
-description: Phase which creates training data
 ---
 
 # Find And Label
@@ -12,4 +11,4 @@ This phase is composed of two phases namely [findTrainingData](findTrainingData.
 
 `./zingg.sh --phase findAndLabel --conf config.json`
 
-As this phase runs findTrainingData and label together, it should be run only for small datasets where findTrainingData takes a short time to run, else the user will have to wait long for the console for labeling.&#x20;
+As this is phase runs findTrainingData and label together, it should be run only for small datasets where findTrainingData takes a short time to run, else the the user will have to wait long for the console for labeling.&#x20;

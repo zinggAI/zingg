@@ -56,7 +56,7 @@
 		},
 		{
 			"fieldName" : "SSN",
-			"matchType": "do_not_match",
+			"matchType": "dont_use",
 			"fields" : "SSN",
 			"dataType": "\"string\"" 
 		}],
@@ -70,7 +70,8 @@
 				"sfDatabase":"DEMO_DB",				
 				"sfSchema":"PUBLIC",					
 				"sfWarehouse":"COMPUTE_WH",
-				"dbtable": "UNIFIED_CUSTOMERS"
+				"dbtable": "UNIFIED_CUSTOMERS",
+				"application":"zingg_zingg"
 				}
 		}],
 		"data" : [{
@@ -83,7 +84,8 @@
 				"sfDatabase":"DEMO_DB",				
 				"sfSchema":"PUBLIC",					
 				"sfWarehouse":"COMPUTE_WH",
-				"dbtable": "CUSTOMERS"
+				"dbtable": "CUSTOMERS",
+				"application":"zingg_zingg"
 				}
 			}],
 

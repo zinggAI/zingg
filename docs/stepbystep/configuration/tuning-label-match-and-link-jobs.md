@@ -1,7 +1,3 @@
----
-description: Requirements to optimize the performance
----
-
 # Tuning Label, Match And Link Jobs
 
 #### numPartitions

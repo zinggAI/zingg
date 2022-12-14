@@ -280,6 +280,20 @@ public class Arguments implements Serializable {
 		}
 	}
 
+	public static final String writeArgumentstoJSONString(Arguments args) throws ZinggClientException {
+		try{
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS,
+					true);
+			mapper.registerModule(new DefaultScalaModule());
+			return mapper.writeValueAsString(args);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw new ZinggClientException("Unable to create arguments for the job");
+		}
+	}
+
 	public int getNumPartitions() {
 		return numPartitions;
 	}
