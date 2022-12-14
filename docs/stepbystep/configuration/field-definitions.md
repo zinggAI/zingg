@@ -26,7 +26,7 @@ Type of the column - string, integer, double, etc.
 
 **matchType**
 
-&#x20;The way to match the given field. Multiple match types, separated by commas, can also be used. Here are the different types supported.&#x20;
+&#x20;The way to match the given field. Here are the different types supported.&#x20;
 
 #### showConcise
 
@@ -37,7 +37,7 @@ Type of the column - string, integer, double, etc.
 | DONT\_USE              | Appears in the output but no computation is done on these. Helpful for fields like ids that are required in the output. DONT\_USE fields are not shown to the user while labeling, if [showConcise](field-definitions.md#showconcise) is set to true. | any                           |
 | EMAIL                  | Matches only the id part of the email before the @ character                                                                                                                                                                                          | any                           |
 | PINCODE                | Matches pin codes like xxxxx-xxxx with xxxxx                                                                                                                                                                                                          | string                        |
-| NULL\_OR\_BLANK      | By default Zingg marks matches as                                                                                                                                                                                                                     | string                        |
+| NULL\_OR_\__BLANK      | By default Zingg marks matches as                                                                                                                                                                                                                     | string                        |
 | TEXT                   | Compares words overlap between two strings.                                                                                                                                                                                                           | string                        |
 | NUMERIC                | extracts numbers from strings and compares how many of them are same across both strings                                                                                                                                                              |                               |
 | NUMERIC\_WITH\_UNITS   | extracts product codes or numbers with units, for example 16gb from strings and compares how many are same across both strings                                                                                                                        | string                        |

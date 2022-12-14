@@ -21,8 +21,7 @@ The config value for the data and output attributes of the JSON is:
 				"sfDatabase":"TEST",				
 				"sfSchema":"PUBLIC",					
 				"sfWarehouse":"COMPUTE_WH",
-				"dbtable": "FEBRL",
-				"application":"zingg_zingg"				
+				"dbtable": "FEBRL"				
 			}
 		} ]
 ```
@@ -34,3 +33,4 @@ For Zingg to discover the Snowflake jars, please add the property **spark.jars**
 ```
 spark.jars=snowflake-jdbc-3.13.18.jar,spark-snowflake_2.12-2.10.0-spark_3.1.jar
 ```
+

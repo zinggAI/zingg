@@ -4,11 +4,6 @@ description: Hope you find us useful :-)
 
 # Welcome to Zingg
 
-This is the latest documentation for Zingg. Release wise documentation can be accessed through:
-
-* [v0.3.4 ](https://docs.zingg.ai/zingg0.3.4/)
-* [v0.3.3](https://docs.zingg.ai/zingg0.3.3/)
-
 ## Why?
 
 Data silos hurt all business functions - customer analytics, supplier consolidation, risk and compliance, and sales and marketing.

@@ -190,7 +190,7 @@ class Arguments:
     def setFieldDefinition(self, fieldDef):
         """ Method convert python objects to java FieldDefinition objects and set the field definitions associated with this client
 
-        :param fieldDef: python FieldDefinition object list
+        :param fieldDef: pyhton FieldDefinition object list
         :type fieldDef: List(FieldDefinition)
         """
         javaFieldDef = []
@@ -236,12 +236,6 @@ class Arguments:
         for idx, pipe in enumerate(pipes):
             outputPipe[idx] = pipe.getPipe()
         self.args.setOutput(outputPipe)
-    
-    def getZinggBaseModelDir(self):
-        return self.args.getZinggBaseModelDir()
-
-    def getZinggModelDir(self):
-        return self.args.getZinggModelDir()
 
     def setModelId(self, id):
         """ Method to set the output directory where the match output will be saved
@@ -250,9 +244,6 @@ class Arguments:
         :type id: String
         """
         self.args.setModelId(id)
-    
-    def getModelId(self):
-        return self.args.getModelId()
 
     def setZinggDir(self, f):
         """ Method to set the location for Zingg to save its internal computations and models. Please set it to a place where the program has to write access.
@@ -263,7 +254,7 @@ class Arguments:
         self.args.setZinggDir(f)
 
     def setNumPartitions(self, numPartitions):
-        """ Method to set NumPartitions parameter value
+        """ Method to set NumPartitions parameter vlaue
         Sample size to use for seeding labeled data We don't want to run over all the data, as we want a quick way to seed some labeled data that we can manually edit
 
         :param numPartitions: number of partitions for given data pipes
@@ -272,7 +263,7 @@ class Arguments:
         self.args.setNumPartitions(numPartitions)
 
     def setLabelDataSampleSize(self, labelDataSampleSize):
-        """ Method to set labelDataSampleSize parameter value
+        """ Method to set labelDataSampleSize parameter vlaue
         Set the fraction of data to be used from the complete data set to be used for seeding the labeled data Labelling is costly and we want a fast approximate way of looking at a small sample of the records and identifying expected matches and nonmatches
 
         :param labelDataSampleSize: value between 0.0 and 1.0 denoting portion of dataset to use in generating seed samples
@@ -289,7 +280,7 @@ class Arguments:
         jvm.zingg.client.Arguments.writeArgumentsToJSON(fileName, self.args)
 
     def setStopWordsCutoff(self, stopWordsCutoff):
-        """ Method to set stopWordsCutoff parameter value
+        """ Method to set stopWordsCutoff parameter vlaue
         By default, Zingg extracts 10% of the high frequency unique words from a dataset. If user wants different selection, they should set up StopWordsCutoff property
 
         :param stopWordsCutoff: The stop words cutoff parameter value of ClientOption object or file address of json file
@@ -311,30 +302,6 @@ class Arguments:
         obj = Arguments()
         obj.args = jvm.zingg.client.Arguments.createArgumentsFromJSON(fileName, phase)
         return obj
-    
-    
-    def writeArgumentsToJSONString(self):
-        """ Method to create an object of this class from the JSON file and phase parameter value.
-        
-        :param fileName: The CONF parameter value of ClientOption object
-        :type fileName: String
-        :param phase: The PHASE parameter value of ClientOption object
-        :type phase: String
-        :return: The pointer containing address of the this class object
-        :rtype: pointer(Arguments)
-        """
-        return jvm.zingg.client.Arguments.writeArgumentstoJSONString(self.args)
-    
-    @staticmethod
-    def createArgumentsFromJSONString(jsonArgs, phase):
-        obj = Arguments()
-        obj.args = jvm.zingg.client.Arguments.createArgumentsFromJSONString(jsonArgs, phase)
-        return obj
-    
-    
-    def copyArgs(self, phase):
-        argsString = self.writeArgumentsToJSONString()
-        return self.createArgumentsFromJSONString(argsString, phase)
 
 
 class ClientOptions:
@@ -354,15 +321,11 @@ class ClientOptions:
     """:EMAIL: e-mail parameter for this class"""
     LOCATION = jvm.zingg.client.ClientOptions.LOCATION
     """:LOCATION: location parameter for this class"""
-    REMOTE = jvm.zingg.client.ClientOptions.REMOTE
-    """:REMOTE: remote option used internally for running on Databricks"""
 
-    def __init__(self, argsSent=None):
-        print(argsSent)
-        if(argsSent == None):
+    def __init__(self, args=None):
+        print(args)
+        if(args == None):
             args = []
-        else:
-            args = argsSent.copy()
         if (not (self.PHASE in args)):
             args.append(self.PHASE)
             args.append("peekModel")
