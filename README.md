@@ -120,7 +120,7 @@ Need a different license? Write to us.
 
 ## People behind Zingg
 
-Zingg is being developed by the [Zingg.AI](https://www.zingg.ai) team. 
+Zingg is being developed by the [Zingg.AI](https://www.zingg.ai) team. If you need [custom help with or around Zingg](https://www.zingg.ai/company/consulting), let us know. 
 
 ## Acknowledgements
 
