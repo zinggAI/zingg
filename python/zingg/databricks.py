@@ -65,6 +65,14 @@ job_spec_template = {
 def getCurrentTime():
     return str(time.time_ns())
 
+def get_dbutils(spark):
+  if spark.conf.get("spark.databricks.service.client.enabled") == "true":
+    from pyspark.dbutils import DBUtils
+    return DBUtils(spark)
+  else:
+    import IPython
+    return IPython.get_ipython().user_ns["dbutils"]
+
 class ZinggWithDatabricks(Zingg):
 
     """ This class is the main point of interface with Zingg to run on Databricks from user machine. 
@@ -184,7 +192,7 @@ class JobsHelper:
     
     def __init__(self):
         self.api_client = ApiClient(
-            host  = os.getenv('DATABRICKS_HOST'),
+            host = os.getenv('DATABRICKS_HOST'),
             token = os.getenv('DATABRICKS_TOKEN')
         )
         self.jobs_api=JobsApi(self.api_client)
@@ -242,7 +250,19 @@ class JobsHelper:
 
         # return results
         print(f'Job completed in {result_state} state after { elapsed_seconds } seconds.  Please proceed with next steps of the Zingg workflow.')
-        print('\n')        
+        print('\n')  
+
+class DatabricksJobsHelper(JobsHelper):
+
+    def __init__(self):
+        self.api_client = ApiClient(
+            host = 'https://' + spark.sparkContext.getConf().get('spark.databricks.workspaceUrl'),
+            token = get_dbutils(spark).notebook.entry_point.getDbutils().notebook().getContext().apiToken().getOrElse(None)
+        )
+        self.jobs_api=JobsApi(self.api_client)
+        self.runs_api=RunsApi(self.api_client)        
+
+
 
 
 
