@@ -1,0 +1,15 @@
+branch
+change version in pom
+change version in python
+build and upload tar
+docker for mac
+docker for linux
+pip package
+python documentation
+update read the docs
+merge changes back to main
+
+maven jar
+
+Databricks Wheel
+- update location of py package and maven loc of jar
