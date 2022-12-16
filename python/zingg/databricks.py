@@ -200,8 +200,8 @@ class JobsHelper:
     
     def createJob(self, name, notebookLocation, notebookParams, nodeType, numWorkers):
         job_spec = deepcopy(job_spec_template)
-        job_spec['name'] = name
-        job_spec['tasks'][0]['task_key'] = name
+        job_spec['name'] = 'zingg' + name
+        job_spec['tasks'][0]['task_key'] = 'zingg' + name
         job_spec['tasks'][0]['spark_python_task']['python_file'] = notebookLocation
         
         job_spec['tasks'][0]['spark_python_task']['parameters'] = notebookParams
