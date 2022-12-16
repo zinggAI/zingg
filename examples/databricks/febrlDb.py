@@ -39,7 +39,11 @@ outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
 
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
+print('cli args :')
+print(sys.argv[0:])
+options = ClientOptions(sys.argv[1:])
+
+#options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
 
 #Zingg execution for the given phase
 zingg = ZinggWithSpark(args, options)
