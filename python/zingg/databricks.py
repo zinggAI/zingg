@@ -128,7 +128,12 @@ class ZinggWithDatabricks(Zingg):
         
 
     def execute(self):
-        """ Method to execute this class object """
+        """ Method to execute this class object 
+        Runs label, generateDocs etc locally using the model copied from dbfs
+        Runs cluster specific jobs like findtrainingData, train, match, link etc on Databricks
+        Local notebook is copied over to dbfs at each invocation
+        model from dbfs is copied over to and fro local machine depending on the phase
+        """
         #self.client.execute()
         ## if label, call dbfs cp and send model back
         if (self.isRemote):
@@ -189,6 +194,10 @@ class DbfsHelper:
 
 
 class JobsHelper:
+
+     """ This class runs Databricks Zingg jobs using the Databricks REST API from user machine. 
+
+    """
     
     def __init__(self):
         self.api_client = ApiClient(
@@ -254,6 +263,11 @@ class JobsHelper:
 
 class DatabricksJobsHelper(JobsHelper):
 
+    """ This class is the main point of interface to run Zingg jobs directly on Databricks notebook. 
+    It triggers a dbfs/s3 notebook comtaining Zingg python code which defines the fields and the arguments
+    to Zingg. 
+
+    """
     def __init__(self):
         self.api_client = ApiClient(
             host = 'https://' + spark.sparkContext.getConf().get('spark.databricks.workspaceUrl'),
