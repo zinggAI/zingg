@@ -63,13 +63,13 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 						LOG.info("User has exit in the middle. Updating the records.");
 						break;
 					}
-					ZFrame<D,R,C> currentPair = lines.filter(lines.col(ColName.CLUSTER_COLUMN).equalTo(cluster_id));
+					ZFrame<D,R,C> currentPair = lines.filter(lines.equalTo(ColName.CLUSTER_COLUMN, cluster_id));
 					if (currentPair.isEmpty()) {
 						System.out.println("\tInvalid cluster id. Enter '9' to exit");
 						continue;
 					}
 
-					matchFlag = currentPair.head().getAs(ColName.MATCH_FLAG_COL);
+					matchFlag = currentPair.getAsInt(currentPair.head(),ColName.MATCH_FLAG_COL);
 					String preMsg = String.format("\n\tThe record pairs belonging to the input cluster id %s are:", cluster_id);
 					String matchType = LabelMatchType.get(matchFlag).msg;
 					postMsg = String.format("\tThe above pair is labeled as %s\n", matchType);
@@ -82,10 +82,10 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 						break;
 					}
 					recordsToUpdate = recordsToUpdate
-							.filter(recordsToUpdate.col(ColName.CLUSTER_COLUMN).notEqual(cluster_id));
+							.filter(recordsToUpdate.notEqual(ColName.CLUSTER_COLUMN,cluster_id));
 					if (updatedRecords != null) {
 						updatedRecords = updatedRecords
-								.filter(updatedRecords.col(ColName.CLUSTER_COLUMN).notEqual(cluster_id));
+								.filter(updatedRecords.notEqual(ColName.CLUSTER_COLUMN,cluster_id));
 					}
 					updatedRecords = updateRecords(selectedOption, currentPair, updatedRecords);
 				} while (selectedOption != 9);

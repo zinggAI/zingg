@@ -5,10 +5,6 @@ import java.util.Scanner;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.functions;
 
 import zingg.client.Arguments;
 import zingg.client.ZFrame;
@@ -82,16 +78,16 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 	}
 
 	public ZFrame<D,R,C>  getCurrentPair(ZFrame<D,R,C>  lines, int index, List<R>  clusterIds) {
-		return lines.filter(lines.col(ColName.CLUSTER_COLUMN).equalTo(
-			clusterIds.get(index).getAs(ColName.CLUSTER_COLUMN))).cache();
+		return lines.filter(lines.equalTo(ColName.CLUSTER_COLUMN,
+			lines.getAsString(clusterIds.get(index), ColName.CLUSTER_COLUMN))).cache();
 	}
 
 	public double getScore(ZFrame<D,R,C>  currentPair) {
-		return currentPair.head().getAs(ColName.SCORE_COL);
+		return currentPair.getAsDouble(currentPair.head(),ColName.SCORE_COL);
 	}
 
 	public double getPrediction(ZFrame<D,R,C>  currentPair) {
-		return currentPair.head().getAs(ColName.PREDICTION_COL);
+		return currentPair.getAsDouble(currentPair.head(), ColName.PREDICTION_COL);
 	}
 
 	public String getMsg1(int index, int totalPairs) {

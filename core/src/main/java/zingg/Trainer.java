@@ -35,12 +35,12 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			
 			ZFrame<D,R,C> positives = null;
 			ZFrame<D,R,C> negatives = null;
-			ZFrame<D,R,C> traOriginal = getDSUtil().getTraining(args);
+			ZFrame<D,R,C> traOriginal = getDSUtil().getTraining(getPipeUtil(), args);
 			ZFrame<D,R,C> tra = StopWords.preprocessForStopWords(args, traOriginal);
 			tra = getDSUtil().joinWithItself(tra, ColName.CLUSTER_COLUMN, true);
 			tra = tra.cache();
-			positives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_MATCH));
-			negatives = tra.filter(tra.col(ColName.MATCH_FLAG_COL).equalTo(ColValues.MATCH_TYPE_NOT_A_MATCH));
+			positives = tra.filter(tra.equalTo(ColName.MATCH_FLAG_COL,ColValues.MATCH_TYPE_MATCH));
+			negatives = tra.filter(tra.equalTo(ColName.MATCH_FLAG_COL,ColValues.MATCH_TYPE_NOT_A_MATCH));
 			
 			verifyTraining(positives, negatives);
 
@@ -56,7 +56,7 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			getBlockingTreeUtil().writeBlockingTree(blockingTree, args);
 			LOG.info("Learnt indexing rules and saved output at " + args.getZinggDir());
 			// model
-			Model<S,D,R,C> model = getModelUtil().createModel(positives, negatives, this.featurers, getContext(), false);
+			Model<S,T,D,R,C> model = getModelUtil().createModel(positives, negatives, this.featurers, getContext(), false);
 			model.save(args.getModel());
 			LOG.info("Learnt similarity rules and saved output at " + args.getZinggDir());
 			Analytics.track(Metric.TRAINING_MATCHES, positives.count(), args.getCollectMetrics());

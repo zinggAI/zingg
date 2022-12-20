@@ -42,7 +42,7 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 		return blocked;
 	}
 
-	public void writeOutput(ZFrame<D,R,C> blocked, ZFrame<D,R,C> dupes) throws ZinggClientException {
+	public void writeOutput(ZFrame<D,R,C> sampleOrginal, ZFrame<D,R,C> dupes) throws ZinggClientException {
 		try {
 			// input dupes are pairs
 			/// pick ones according to the threshold by user
@@ -57,7 +57,7 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 				dupesActual = getDSUtil().addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN);
 				ZFrame<D,R,C>dupes2 =  getDSUtil().alignLinked(dupesActual, args);
 				dupes2 =  getDSUtil().postprocessLinked(dupes2, sampleOrginal);
-				LOG.debug("uncertain output schema is " + dupes2.schema());
+				LOG.debug("uncertain output schema is " + dupes2.showSchema());
 				getPipeUtil().write(dupes2, args, args.getOutput());
 			}
 		} catch (Exception e) {

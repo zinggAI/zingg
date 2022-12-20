@@ -75,7 +75,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				posPairs = posPairs.cache();
 				if (negPairs!= null) negPairs = negPairs.cache();
 				//create random samples for blocking
-				ZFrame<D,R,C> sampleOrginal = data.sample(false, args.getLabelDataSampleSize()).repartition(args.getNumPartitions()).persist(StorageLevel.MEMORY_ONLY());
+				ZFrame<D,R,C> sampleOrginal = data.sample(false, args.getLabelDataSampleSize()).repartition(args.getNumPartitions()).cache();
 				sampleOrginal = getDSUtil().getFieldDefColumnsDS(sampleOrginal, args, true);
 				LOG.info("Preprocessing DS for stopWords");
 
