@@ -1,4 +1,4 @@
-package zingg.spark.util;
+package zingg.snowpark.util;
 
 import java.util.ArrayList;
 import java.util.List;

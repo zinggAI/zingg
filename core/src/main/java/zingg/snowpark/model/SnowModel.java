@@ -24,6 +24,7 @@ import com.snowflake.snowpark_java.Column;
 import com.snowflake.snowpark_java.DataFrame;
 import com.snowflake.snowpark_java.Row;
 import com.snowflake.snowpark_java.Session;
+import com.snowflake.snowpark_java.types.DataType;
 
 import zingg.client.FieldDefinition;
 import zingg.client.SparkFrame;
@@ -35,7 +36,7 @@ import zingg.client.util.ColName;
 
 
 //need Snow specific ml functions
-public class SnowModel extends Model<Session, DataFrame, Row, Column>{
+public class SnowModel extends Model<Session, DataType, DataFrame, Row, Column>{
 	
 	public static final Log LOG = LogFactory.getLog(SnowModel.class);
 	public static final Log DbLOG = LogFactory.getLog("WEB");

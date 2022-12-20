@@ -50,7 +50,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     protected HashUtil<D,R,C,T> hashUtil;
     protected DSUtil<S,D,R,C> dsUtil;
     protected GraphUtil<D,R,C> graphUtil;
-    protected ModelUtil<S,D,R,C> modelUtil;
+    protected ModelUtil<S,T,D,R,C> modelUtil;
     protected BlockingTreeUtil<D,R,C,T> blockingTreeUtil;
     ZinggBase<S,D,R,C,T> base;
 
@@ -225,11 +225,11 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
         base.setGraphUtil(t);
     }
 
-    public void setModelUtil(ModelUtil<S,D,R,C> t) {
+    public void setModelUtil(ModelUtil<S,T,D,R,C> t) {
         base.setModelUtil(t);
     }
 
-    public ModelUtil<S,D,R,C>  getModelUtil() {
+    public ModelUtil<S,T,D,R,C>  getModelUtil() {
         return base.getModelUtil();
     }
 

@@ -42,7 +42,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				ZFrame<D,R,C> trFile = getTraining();					
 
 				if (trFile != null) {
-					trFile = StopWords.preprocessForStopWords(args, trFile);
+					//trFile = StopWords.preprocessForStopWords(args, trFile);
 					ZFrame<D,R,C> trPairs = getDSUtil().joinWithItself(trFile, ColName.CLUSTER_COLUMN, true);
 						
 						posPairs = trPairs.filter(trPairs.equalTo(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_MATCH));
@@ -62,7 +62,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 					
 				if (posPairs == null || posPairs.count() <= 5) {
 					ZFrame<D,R,C> posSamplesOriginal = getPositiveSamples(data);
-					ZFrame<D,R,C> posSamples = StopWords.preprocessForStopWords(args, posSamplesOriginal);
+					ZFrame<D,R,C> posSamples = posSamplesOriginal ; //StopWords.preprocessForStopWords(args, posSamplesOriginal);
 					//posSamples.printSchema();
 					if (posPairs != null) {
 						//posPairs.printSchema();
@@ -79,7 +79,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				sampleOrginal = getDSUtil().getFieldDefColumnsDS(sampleOrginal, args, true);
 				LOG.info("Preprocessing DS for stopWords");
 
-				ZFrame<D,R,C> sample = StopWords.preprocessForStopWords(args, sampleOrginal);
+				ZFrame<D,R,C> sample = sampleOrginal; //StopWords.preprocessForStopWords(args, sampleOrginal);
 
 				Tree<Canopy<R>> tree = getBlockingTreeUtil().createBlockingTree(sample, posPairs, 1, -1, args, hashFunctions);			
 				ZFrame<D,R,C> blocked = sample.map(new Block.BlockFunction(tree), RowEncoder.apply(Block.appendHashCol(sample.schema())));
@@ -96,7 +96,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 						if (LOG.isDebugEnabled()) {
 							LOG.debug("num blocks " + blocks.count());		
 						}
-						Model<S,D,R,C> model = getModelUtil().createModel(posPairs, negPairs, this.featurers, getContext(), false);
+						Model<S,T,D,R,C> model = getModelUtil().createModel(posPairs, negPairs, this.featurers, getContext(), false);
 						ZFrame<D,R,C> dupes = model.predict(blocks); 
 						if (LOG.isDebugEnabled()) {
 							LOG.debug("num dupes " + dupes.count());	

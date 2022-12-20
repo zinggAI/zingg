@@ -19,14 +19,15 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataType;
 
 
-public class SparkModelUtil extends ModelUtil<SparkSession,Dataset<Row>, Row, Column> {
+public class SparkModelUtil extends ModelUtil<SparkSession,DataType,Dataset<Row>, Row, Column> {
 
     public static final Log LOG = LogFactory.getLog(SparkModelUtil.class);
 
-	public Model<SparkSession,Dataset<Row>, Row, Column> getModel(Map<FieldDefinition, Feature> featurers, boolean isLabel){
-        Model<SparkSession,Dataset<Row>, Row, Column> model = null;
+	public Model<SparkSession,DataType,Dataset<Row>, Row, Column> getModel(Map<FieldDefinition, Feature<DataType>> featurers, boolean isLabel){
+        Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = null;
         if (isLabel) {
             model = new SparkLabelModel(featurers);
         }
@@ -36,9 +37,9 @@ public class SparkModelUtil extends ModelUtil<SparkSession,Dataset<Row>, Row, Co
         return model;
     }
 
-    public Model<SparkSession,Dataset<Row>, Row, Column> loadModel(Map<FieldDefinition, Feature> featurers, boolean isLabel,
+    public Model<SparkSession,DataType,Dataset<Row>, Row, Column> loadModel(Map<FieldDefinition, Feature> featurers, boolean isLabel,
         Arguments args)    {
-        Model<SparkSession,Dataset<Row>, Row, Column> model = getModel(featurers, isLabel);
+        Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = getModel(featurers, isLabel);
         model.load(args.getModel());
         return model;
 

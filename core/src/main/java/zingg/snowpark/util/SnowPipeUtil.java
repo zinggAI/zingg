@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.JavaSparkContext;
 import com.snowflake.snowpark_java.Column;
 import com.snowflake.snowpark_java.DataFrameReader;
 import com.snowflake.snowpark_java.DataFrameWriter;
@@ -28,11 +27,10 @@ import zingg.client.SnowFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.ZFrame;
 import zingg.client.util.ColName;
-import zingg.client.pipe.CassandraPipe;
-import zingg.client.pipe.ElasticPipe;
 import zingg.client.pipe.FilePipe;
-import zingg.client.pipe.InMemoryPipe;
+//import zingg.client.pipe.InMemoryPipe;
 import zingg.client.pipe.Pipe;
+import zingg.client.pipe.SnowPipe;
 import scala.Option;
 import scala.collection.JavaConverters;
 import scala.collection.Seq;
@@ -73,7 +71,8 @@ public class SnowPipeUtil implements PipeUtilBase<Session, DataFrame, Row, Colum
 		DataFrameReader reader = getSession().read();
 
 		LOG.warn("Reading input " + p.getFormat());
-		reader = reader.format(p.getFormat());
+		//reader = reader.format(p.getFormat());
+		/* 
 		if (p.getSchema() != null) {
 			reader = reader.schema(p.getSchema());
 		}
@@ -81,6 +80,7 @@ public class SnowPipeUtil implements PipeUtilBase<Session, DataFrame, Row, Colum
 			reader = reader.option(key, p.get(key));
 		}
 		reader = reader.option("mode", "PERMISSIVE");
+		*/
 		return reader;
 	}
 
@@ -89,17 +89,20 @@ public class SnowPipeUtil implements PipeUtilBase<Session, DataFrame, Row, Colum
 		LOG.warn("Reading " + p);
 		try {
 
-		if (p.getFormat() == Pipe.FORMAT_INMEMORY) {
+		/*if (p.getFormat() == Pipe.FORMAT_INMEMORY) {
 			input = ((InMemoryPipe) p).getRecords();
 		}
-		else {		
+		else {*		
 			if (p.getProps().containsKey(FilePipe.LOCATION)) {
 				input = reader.load(p.get(FilePipe.LOCATION));
 			}
 			else {
 				input = reader.load();
 			}
-    }
+			
+    	}
+		*/
+		input = reader.table(p.get(SnowPipe.TABLE));
 			if (addSource) {
 				input = input.withColumn(ColName.SOURCE_COL, Functions.lit(p.getName()));
 			}
@@ -200,84 +203,40 @@ public class SnowPipeUtil implements PipeUtilBase<Session, DataFrame, Row, Colum
 		return rows;
 	}
 
-	public  void write(ZFrame<DataFrame, Row, Column> toWriteOrig, Arguments args, JavaSparkContext ctx, Pipe... pipes) throws ZinggClientException {
+	public void write(ZFrame<DataFrame, Row, Column> toWriteOrig, Arguments args, Session ctx, Pipe... pipes) throws ZinggClientException {
 		try {
-			for (Pipe p: pipes) {
+			for (Pipe pOrig: pipes) {
+				SnowPipe p = (SnowPipe) pOrig;
 			DataFrame toWrite = toWriteOrig.df();
 			DataFrameWriter writer = toWrite.write();
 		
 			LOG.warn("Writing output " + p);
-			
+			/* 
 			if (p.getFormat() == Pipe.FORMAT_INMEMORY) {
  				p.setDataset(toWriteOrig);
 				return;
 			}
-
+			*/
 			if (p.getMode() != null) {
 				writer.mode(p.getMode());
 			}
 			else {
 				writer.mode("Append");
 			}
+			/* 
 			if (p.getFormat().equals(Pipe.FORMAT_ELASTIC)) {
 				ctx.getConf().set(ElasticPipe.NODE, p.getProps().get(ElasticPipe.NODE));
 				ctx.getConf().set(ElasticPipe.PORT, p.getProps().get(ElasticPipe.PORT));
 				ctx.getConf().set(ElasticPipe.ID, ColName.ID_COL);
 				ctx.getConf().set(ElasticPipe.RESOURCE, p.getName());
-			}
-			writer = writer.format(p.getFormat());
+			}*/
+
+			//writer = writer.format(p.getFormat());
 			
 			for (String key: p.getProps().keySet()) {
 				writer = writer.option(key, p.get(key));
 			}
-			if (p.getFormat() == Pipe.FORMAT_CASSANDRA) {
-				/*
-				ctx.getConf().set(CassandraPipe.HOST, p.getProps().get(CassandraPipe.HOST));
-				toWrite.sparkSession().conf().set(CassandraPipe.HOST, p.getProps().get(CassandraPipe.HOST));
-				//df.createCassandraTable(p.get("keyspace"), p.get("table"), opPk, opCl, CassandraConnector.apply(ctx.getConf()));
-				
-				CassandraConnector connector = CassandraConnector.apply(ctx.getConf());
-				try (Session session = connector.openSession()) {
-					ResultSet rs = session.execute("SELECT table_name FROM system_schema.tables WHERE keyspace_name='" 
-								+ p.get(CassandraPipe.KEYSPACE) + "' AND table_name='" + p.get(CassandraPipe.TABLE) + "'");
-					if (rs.all().size() == 0) {
-						List<String> pk =  new ArrayList<String>();
-						if (p.get(CassandraPipe.PRIMARY_KEY) != null) {
-							//pk.add(p.get(CassandraPipe.PRIMARY_KEY));
-							pk = Arrays.asList(p.get(CassandraPipe.PRIMARY_KEY).split(","));
-						}
-						Option<Seq<String>> opPk = Option.apply(JavaConverters.asScalaIteratorConverter(pk.iterator()).asScala().toSeq());
-						List<String> cl =  new ArrayList<String>();
-						
-						if (p.getAddProps()!= null && p.getAddProps().containsKey("clusterBy")) {
-							cl=Arrays.asList(p.getAddProps().get("clusterBy").split(","));
-						}
-						Option<Seq<String>> opCl = Option.apply(JavaConverters.asScalaIteratorConverter(cl.iterator()).asScala().toSeq());
-						
-						DataFrameFunctions df = new DataFrameFunctions(toWrite); 
-						LOG.warn("received cassandra table  - " + p.get(CassandraPipe.KEYSPACE) + " and " + p.get(CassandraPipe.TABLE));
-						df.createCassandraTable(p.get(CassandraPipe.KEYSPACE), p.get(CassandraPipe.TABLE), opPk, opCl, CassandraConnector.apply(ctx.getConf()));
-						if (p.getAddProps()!= null && p.getAddProps().containsKey("indexBy")) {
-							LOG.warn("creating index on cassandra");
-
-							session.execute("CREATE INDEX " +  p.getAddProps().get("indexBy") + p.get(CassandraPipe.KEYSPACE) + "_" +  
-									p.get(CassandraPipe.TABLE) + "_idx ON " + p.get(CassandraPipe.KEYSPACE) + "." +  
-									p.get(CassandraPipe.TABLE) + "(" + p.getAddProps().get("indexBy") + 
-									")");
-						}
-					}
-					else {
-						LOG.warn("existing cassandra table  - " + p.get(CassandraPipe.KEYSPACE) + " and " + p.get(CassandraPipe.TABLE));
-					
-					}
-					
-				}
-				catch(Exception e) {
-					e.printStackTrace();
-					LOG.warn("Writing issue");
-				}*/
-			}
-			else if (p.getProps().containsKey("location")) {
+			/*else if (p.getProps().containsKey("location")) {
 				LOG.warn("Writing file");
 				writer.save(p.get(FilePipe.LOCATION));
 			}	
@@ -300,6 +259,8 @@ public class SnowPipeUtil implements PipeUtilBase<Session, DataFrame, Row, Colum
 				writer.save();
 			
 			}
+			*/
+			writer.saveAsTable(p.getProps().get(SnowPipe.TABLE));
 			
 			
 			}

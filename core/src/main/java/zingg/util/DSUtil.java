@@ -257,15 +257,15 @@ public abstract class DSUtil<S, D, R, C> {
 	
 	private  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, Arguments args, Pipe p) {
 		ZFrame<D, R, C> trFile = null;
-		try{
+		//try{
 			trFile = pipeUtil.read(false, false, p); 
 			LOG.warn("Read marked training samples ");
 			trFile = trFile.drop(ColName.PREDICTION_COL);
 			trFile = trFile.drop(ColName.SCORE_COL);				
-		}
-		catch (ZinggClientException e) {
-			LOG.warn("No preexisting marked training samples");
-		}
+		//}
+		//catch (ZinggClientException e) {
+		//	LOG.warn("No preexisting marked training samples");
+		//}
 		if (args.getTrainingSamples() != null) {
 			ZFrame<D, R, C> trSamples = pipeUtil.read(true, false, args.getTrainingSamples()); 
 			LOG.warn("Read all training samples ");
@@ -285,35 +285,32 @@ public abstract class DSUtil<S, D, R, C> {
 				.collect(Collectors.toList());
 	}
 
-    public static Dataset<Row> postprocess(Dataset<Row> actual, Dataset<Row> orig) {
-    	List<Column> cols = new ArrayList<Column>();	
+    public ZFrame<D,R,C> postprocess(ZFrame<D,R,C> actual, ZFrame<D,R,C> orig) {
+    	List<C> cols = new ArrayList<C>();	
     	cols.add(actual.col(ColName.CLUSTER_COLUMN));
     	cols.add(actual.col(ColName.ID_COL));
     	cols.add(actual.col(ColName.PREDICTION_COL));
     	cols.add(actual.col(ColName.SCORE_COL));
-    	cols.add(col(ColName.MATCH_FLAG_COL));
+    	cols.add(actual.col(ColName.MATCH_FLAG_COL));
     
-    	Dataset<Row> zFieldsFromActual = actual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
+    	ZFrame<D,R,C> zFieldsFromActual = actual.select(cols);
     	
-    	Dataset<Row> joined = zFieldsFromActual.join(orig, ColName.ID_COL);
+    	ZFrame<D,R,C> joined = zFieldsFromActual.join(orig, ColName.ID_COL);
     
     	return joined;
     }
 
-    public static Dataset<Row> postprocessLinked(Dataset<Row> actual, Dataset<Row> orig) {
-    	List<Column> cols = new ArrayList<Column>();
+    public ZFrame<D,R,C> postprocessLinked(ZFrame<D,R,C> actual, ZFrame<D,R,C> orig) {
+    	List<C> cols = new ArrayList<C>();
         cols.add(actual.col(ColName.CLUSTER_COLUMN));	
     	cols.add(actual.col(ColName.ID_COL));
     	cols.add(actual.col(ColName.SCORE_COL));
     	cols.add(actual.col(ColName.SOURCE_COL));	
     
-    	Dataset<Row> zFieldsFromActual = actual.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq());
-    	Dataset<Row> joined = zFieldsFromActual.join(orig,
-    			zFieldsFromActual.col(ColName.ID_COL).equalTo(orig.col(ColName.ID_COL))
-    					.and(zFieldsFromActual.col(ColName.SOURCE_COL).equalTo(orig.col(ColName.SOURCE_COL))))
-    					.drop(zFieldsFromActual.col(ColName.SOURCE_COL))
-    					.drop(zFieldsFromActual.col(ColName.ID_COL))
-    					.drop(orig.col(ColName.ID_COL));
+    	ZFrame<D,R,C> zFieldsFromActual = actual.select(cols);
+    	ZFrame<D,R,C> joined = zFieldsFromActual.join(orig,ColName.ID_COL,ColName.SOURCE_COL)
+    					.drop(ColName.SOURCE_COL)
+    					.drop(ColName.ID_COL);
     
     	return joined;
     }

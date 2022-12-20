@@ -23,6 +23,7 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataType;
 
 import zingg.client.FieldDefinition;
 import zingg.client.SparkFrame;
@@ -32,7 +33,7 @@ import zingg.model.Model;
 import zingg.similarity.function.BaseSimilarityFunction;
 import zingg.client.util.ColName;
 
-public class SparkModel extends Model<SparkSession, Dataset<Row>, Row, Column>{
+public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row, Column>{
 	
 	public static final Log LOG = LogFactory.getLog(SparkModel.class);
 	public static final Log DbLOG = LogFactory.getLog("WEB");
@@ -45,7 +46,7 @@ public class SparkModel extends Model<SparkSession, Dataset<Row>, Row, Column>{
 	List<String> columnsAdded;
 	VectorValueExtractor vve;
 	
-	public SparkModel(Map<FieldDefinition, Feature> f) {
+	public SparkModel(Map<FieldDefinition, Feature<DataType>> f) {
 		featureCreators = new ArrayList<BaseSimilarityFunction>();
 		pipelineStage = new ArrayList<PipelineStage> ();
 		columnsAdded = new ArrayList<String> ();

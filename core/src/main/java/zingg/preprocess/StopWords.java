@@ -15,23 +15,24 @@ import org.apache.spark.sql.types.DataTypes;
 
 import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
+import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 import zingg.util.PipeUtilBase;
 
-public class StopWords<S,D,R,T> {
+public class StopWords<S,D,R,C,T> {
 
 	protected static String name = "zingg.preprocess.StopWords";
 	public static final Log LOG = LogFactory.getLog(StopWords.class);
 	protected static String stopWordColumn = ColName.COL_WORD;
 	protected static final int COLUMN_INDEX_DEFAULT = 0;
 
-    public static D preprocessForStopWords(S session, Arguments args, D ds) throws ZinggClientException {
+    public ZFrame<D,R,C> preprocessForStopWords(S session, Arguments args, D ds) throws ZinggClientException {
 
 		List<String> wordList = new ArrayList<String>();
 		for (FieldDefinition def : args.getFieldDefinition()) {
 			if (!(def.getStopWords() == null || def.getStopWords() == "")) {
-				D stopWords = PipeUtilBase.read(session, false, false, PipeUtilBase.getStopWordsPipe(args, def.getStopWords()));
+				ZFrame<D,R,C> stopWords = PipeUtilBase.read(session, false, false, getPipeUtil().getStopWordsPipe(args, def.getStopWords()));
 				if (!Arrays.asList(stopWords.schema().fieldNames()).contains(stopWordColumn)) {
 					stopWordColumn = stopWords.columns()[COLUMN_INDEX_DEFAULT];
 				}

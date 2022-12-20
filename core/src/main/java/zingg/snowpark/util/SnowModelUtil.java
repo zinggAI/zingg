@@ -20,14 +20,15 @@ import com.snowflake.snowpark_java.Column;
 import com.snowflake.snowpark_java.DataFrame;
 import com.snowflake.snowpark_java.Row;
 import com.snowflake.snowpark_java.Session;
+import com.snowflake.snowpark_java.types.DataType;
 
 
-public class SnowModelUtil extends ModelUtil<Session,DataFrame, Row, Column> {
+public class SnowModelUtil extends ModelUtil<Session, DataType, DataFrame, Row, Column> {
 
     public static final Log LOG = LogFactory.getLog(SnowModelUtil.class);
 
-	public Model<Session,DataFrame, Row, Column> getModel(Map<FieldDefinition, Feature> featurers, boolean isLabel){
-        Model<Session,DataFrame, Row, Column> model = null;
+	public Model<Session, DataType, DataFrame, Row, Column> getModel(Map<FieldDefinition, Feature> featurers, boolean isLabel){
+        Model<Session,DataType, DataFrame, Row, Column> model = null;
         if (isLabel) {
             model = new SnowLabelModel(featurers);
         }
@@ -37,9 +38,9 @@ public class SnowModelUtil extends ModelUtil<Session,DataFrame, Row, Column> {
         return model;
     }
 
-    public Model<Session,DataFrame, Row, Column> loadModel(Map<FieldDefinition, Feature> featurers, boolean isLabel,
+    public Model<Session,DataType, DataFrame, Row, Column> loadModel(Map<FieldDefinition, Feature> featurers, boolean isLabel,
         Arguments args)    {
-        Model<Session,DataFrame, Row, Column> model = getModel(featurers, isLabel);
+        Model<Session, DataType, DataFrame, Row, Column> model = getModel(featurers, isLabel);
         model.load(args.getModel());
         return model;
 

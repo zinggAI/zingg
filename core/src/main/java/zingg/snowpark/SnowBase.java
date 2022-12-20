@@ -114,11 +114,11 @@ public class SnowBase extends ZinggBase<Session,DataFrame,Row,Column,DataType>{
         this.blockingTreeUtil = d;
     }
 
-    public void setModelUtil(ModelUtil<Session, DataFrame, Row, Column> t) {
+    public void setModelUtil(ModelUtil<Session, DataType,DataFrame, Row, Column> t) {
         this.modelUtil = t;
     }
 
-    public ModelUtil<Session, DataFrame, Row, Column>  getModelUtil() {
+    public ModelUtil<Session, DataType,DataFrame, Row, Column>  getModelUtil() {
         return modelUtil;
     }
 

@@ -16,7 +16,6 @@ import org.apache.spark.sql.SparkSession;
 import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
-import zingg.util.PipeUtil;
 
 public class StopWordsRecommender {
 	public static final Log LOG = LogFactory.getLog(StopWordsRecommender.class);

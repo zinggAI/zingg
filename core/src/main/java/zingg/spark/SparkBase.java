@@ -103,11 +103,11 @@ public class SparkBase extends ZinggBase<SparkSession, Dataset<Row>, Row,Column,
         this.blockingTreeUtil = d;
     }
 
-    public void setModelUtil(ModelUtil<SparkSession, Dataset<Row>, Row, Column> t) {
+    public void setModelUtil(ModelUtil<SparkSession, DataType, Dataset<Row>, Row, Column> t) {
         this.modelUtil = t;
     }
 
-    public ModelUtil<SparkSession, Dataset<Row>, Row, Column>  getModelUtil() {
+    public ModelUtil<SparkSession, DataType, Dataset<Row>, Row, Column>  getModelUtil() {
         return modelUtil;
     }
 

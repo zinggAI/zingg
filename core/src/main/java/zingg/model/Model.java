@@ -12,7 +12,7 @@ import zingg.client.FieldDefinition;
 import zingg.client.ZFrame;
 import zingg.feature.Feature;
 
-public abstract class Model<S,D,R,C> implements Serializable {
+public abstract class Model<S,T,D,R,C> implements Serializable {
 	
 	public static final Log LOG = LogFactory.getLog(Model.class);
 	//private Map<FieldDefinition, Feature> featurers;
