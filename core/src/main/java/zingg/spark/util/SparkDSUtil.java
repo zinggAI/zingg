@@ -33,6 +33,13 @@ public class SparkDSUtil extends DSUtil<SparkSession, Dataset<Row>, Row, Column>
         return new SparkFrame(DFUtil.addClusterRowNumber(((Dataset<Row>)ds.df()), getSession()));
     }
 
+
+
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> addRowNumber(ZFrame<Dataset<Row>, Row, Column> ds) {
+        return new SparkFrame(DFUtil.addRowNumber(((Dataset<Row>)ds.df()), getSession()));
+    }
+
 	
 
 	

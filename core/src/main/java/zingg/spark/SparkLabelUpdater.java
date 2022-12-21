@@ -5,12 +5,15 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.LabelUpdater;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
+import zingg.client.pipe.Pipe;
+import zingg.client.pipe.SparkPipe;
 
 
 
@@ -37,5 +40,13 @@ public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, 
 		
 	}
 
-	
+	protected Pipe setSaveModeOnPipe(Pipe p) {
+		SparkPipe pipe = (SparkPipe) p;
+		pipe.setMode(SaveMode.Overwrite);
+		return pipe;
+	}
 }
+	
+
+	
+

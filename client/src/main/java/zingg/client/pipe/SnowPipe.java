@@ -1,8 +1,5 @@
 package zingg.client.pipe;
 
-import java.io.IOException;
-
-
 import com.snowflake.snowpark_java.*;
 
 public class SnowPipe extends Pipe<DataFrame, Row, Column> {

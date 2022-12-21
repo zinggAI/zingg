@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import org.apache.spark.sql.Dataset;
 
-public class SparkPipe extends Pipe<Dataset, Row, Column> {
+public class SparkPipe extends Pipe<Dataset<Row>, Row, Column> {
     
     @JsonSerialize(using = CustomSchemaSerializer.class)
 	protected StructType schemaStruct;

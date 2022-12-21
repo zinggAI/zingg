@@ -14,7 +14,7 @@ import org.apache.spark.sql.types.DataType;
  * @author sgoyal
  *
  */
-public class SparkClient extends Client<SparkSession, Dataset, Row, Column, DataType>  implements Serializable {
+public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column, DataType>  implements Serializable {
 	
 	public SparkClient(Arguments args, ClientOptions options, SparkSession session) throws ZinggClientException {
 		super(args, options, session);

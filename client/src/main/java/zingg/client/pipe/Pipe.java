@@ -1,25 +1,16 @@
 package zingg.client.pipe;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-// import org.apache.spark.sql.Dataset;
-// import org.apache.spark.sql.SaveMode;
-// import org.apache.spark.sql.types.DataType;
-// import org.apache.spark.sql.types.StructType;
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonValue;
 // import org.apache.spark.sql.Row;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+
+import zingg.client.ZFrame;
 
 
 /**Actual pipe def in the args. One pipe can be used at multiple places with different tables, locations, queries etc
@@ -49,7 +40,7 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	String preprocessors;
 	Map<String, String> props = new HashMap<String, String>();
 	int id;
-	D dataset;
+	ZFrame<D, R, C> dataset;
 	String schema;
 
 	
@@ -84,12 +75,15 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	public void setFormat(String sinkType) {
 		this.format = sinkType;
 	}
-	public Map<String, String> getProps() {
-		return props;
-	}
+
+	
 	@JsonValue
 	public void setProps(Map<String, String> props) {
 		this.props = props;
+	}
+
+	public Map<String, String> getProps() {
+		return props;
 	}
 	
 	public void setProp(String k, String v) {
@@ -97,7 +91,7 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 		this.props.put(k, v);
 	}
 	
-	public void clone(Pipe p) {
+	public void clone(Pipe<D,R,C> p) {
 		this.name = p.name;
 		this.format = p.format;
 		this.props = p.props;		
@@ -128,11 +122,11 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 		this.id = recId;
 	}
 
-	public D getDataset(){
+	public ZFrame<D, R, C> getDataset(){
 		return this.dataset;
 	}
 
-	public void setDataset(D ds){
+	public void setDataset(ZFrame<D, R, C> ds){
 		this.dataset = ds;
 	}
 

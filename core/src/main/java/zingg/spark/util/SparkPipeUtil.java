@@ -31,6 +31,7 @@ import zingg.client.util.ColName;
 import zingg.client.pipe.FilePipe;
 //import zingg.client.pipe.InMemoryPipe;
 import zingg.client.pipe.Pipe;
+import zingg.client.pipe.SparkPipe;
 import scala.Option;
 import scala.collection.JavaConverters;
 import scala.collection.Seq;
@@ -63,12 +64,15 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		this.sparkSession = spark;
 	}
 	
+	public SparkSession getSession(){
+		return this.sparkSession;
+	}
 
 	public void setSession(SparkSession session){
 		this.sparkSession = session;
 	}
 
-	private DataFrameReader getReader(Pipe p) {
+	private DataFrameReader getReader(Pipe<Dataset<Row>, Row, Column> p) {
 		DataFrameReader reader = getSession().read();
 
 		LOG.warn("Reading input " + p.getFormat());
@@ -76,6 +80,7 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		if (p.getSchema() != null) {
 			reader = reader.schema(p.getSchema());
 		}
+		
 		for (String key : p.getProps().keySet()) {
 			reader = reader.option(key, p.get(key));
 		}
@@ -83,13 +88,13 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		return reader;
 	}
 
-	private  Dataset<Row> read(DataFrameReader reader, Pipe p, boolean addSource) throws ZinggClientException{
+	private  ZFrame<Dataset<Row>, Row, Column> read(DataFrameReader reader, Pipe<Dataset<Row>, Row, Column> p, boolean addSource) throws ZinggClientException{
 		Dataset<Row> input = null;
 		LOG.warn("Reading " + p);
 		try {
 
 		if (p.getFormat() == Pipe.FORMAT_INMEMORY) {
-			input = ((InMemoryPipe) p).getRecords();
+			input = p.getDataset().df();
 		}
 		else {		
 			if (p.getProps().containsKey(FilePipe.LOCATION)) {
@@ -102,6 +107,7 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 			if (addSource) {
 				input = input.withColumn(ColName.SOURCE_COL, functions.lit(p.getName()));
 			}
+			p.setDataset(new SparkFrame(input));
 		} catch (Exception ex) {
 			LOG.warn(ex.getMessage());
 			throw new ZinggClientException("Could not read data.", ex);
@@ -109,8 +115,9 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		return new SparkFrame(input);
 	}
 
-	private  ZFrame<Dataset<Row>, Row, Column> readInternal(SparkSession spark, Pipe p, boolean addSource) throws ZinggClientException {
-		DataFrameReader reader = getReader(spark, p);
+	public  ZFrame<Dataset<Row>, Row, Column> readInternal(Pipe<Dataset<Row>, Row, Column> p, 
+		boolean addSource) throws ZinggClientException {
+		DataFrameReader reader = getReader(p);
 		return read(reader, p, addSource);		
 	}
 
@@ -149,8 +156,8 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 	}
 	*/
 
-	private ZFrame<Dataset<Row>, Row, Column> readInternal(SparkSession spark, boolean addLineNo,
-			boolean addSource, Pipe... pipes) throws ZinggClientException {
+	public ZFrame<Dataset<Row>, Row, Column> readInternal(boolean addLineNo,
+			boolean addSource, Pipe<Dataset<Row>, Row, Column>... pipes) throws ZinggClientException {
 		ZFrame<Dataset<Row>, Row, Column> input = null;
 
 		for (Pipe p : pipes) {
@@ -164,13 +171,13 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		// we will probably need to create row number as string with pipename/id as
 		// suffix
 		if (addLineNo)
-			input = new SparkFrame(getDFUtil().addRowNumber(input.df(), getSession()));
+			input = new SparkFrame(new SparkDSUtil(getSession()).addRowNumber(input).df());
 		// we need to transform the input here by using stop words
 		return input;
 	}
 
-	public ZFrame<Dataset<Row>, Row, Column> read(SparkSession spark, boolean addLineNo, boolean addSource, Pipe... pipes) throws ZinggClientException {
-		ZFrame<Dataset<Row>, Row, Column> rows = readInternal(spark, addLineNo, addSource, pipes);
+	public ZFrame<Dataset<Row>, Row, Column> read(boolean addLineNo, boolean addSource, Pipe<Dataset<Row>, Row, Column>... pipes) throws ZinggClientException {
+		ZFrame<Dataset<Row>, Row, Column> rows = readInternal(addLineNo, addSource, pipes);
 		rows = rows.cache();
 		return rows;
 	}
@@ -191,17 +198,18 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 	}
 	*/
 
-	public  ZFrame<Dataset<Row>, Row, Column> read(SparkSession spark, boolean addLineNo, int numPartitions,
-			boolean addSource, Pipe... pipes) throws ZinggClientException {
-		ZFrame<Dataset<Row>, Row, Column> rows = readInternal(spark, addLineNo, addSource, pipes);
+	public  ZFrame<Dataset<Row>, Row, Column> read(boolean addLineNo, int numPartitions,
+			boolean addSource, Pipe<Dataset<Row>, Row, Column>... pipes) throws ZinggClientException {
+		ZFrame<Dataset<Row>, Row, Column> rows = readInternal(addLineNo, addSource, pipes);
 		rows = rows.repartition(numPartitions);
 		rows = rows.cache();
 		return rows;
 	}
 
-	public  void write(ZFrame<Dataset<Row>, Row, Column> toWriteOrig, Arguments args, JavaSparkContext ctx, Pipe... pipes) throws ZinggClientException {
+	public  void write(ZFrame<Dataset<Row>, Row, Column> toWriteOrig, Arguments args, 
+		Pipe<Dataset<Row>, Row, Column>... pipes) throws ZinggClientException {
 		try {
-			for (Pipe p: pipes) {
+			for (Pipe<Dataset<Row>, Row, Column> p: pipes) {
 			Dataset<Row> toWrite = toWriteOrig.df();
 			DataFrameWriter writer = toWrite.write();
 		
@@ -211,19 +219,21 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
  				p.setDataset(toWriteOrig);
 				return;
 			}
-
-			if (p.getMode() != null) {
-				writer.mode(p.getMode());
+			SparkPipe sPipe = (SparkPipe) p;
+			if (sPipe.getMode() != null) {
+				writer.mode(sPipe.getMode());
 			}
 			else {
 				writer.mode("Append");
 			}
+			/* 
 			if (p.getFormat().equals(Pipe.FORMAT_ELASTIC)) {
 				ctx.getConf().set(ElasticPipe.NODE, p.getProps().get(ElasticPipe.NODE));
 				ctx.getConf().set(ElasticPipe.PORT, p.getProps().get(ElasticPipe.PORT));
 				ctx.getConf().set(ElasticPipe.ID, ColName.ID_COL);
 				ctx.getConf().set(ElasticPipe.RESOURCE, p.getName());
 			}
+			*/
 			writer = writer.format(p.getFormat());
 			
 			for (String key: p.getProps().keySet()) {
@@ -284,8 +294,9 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 				writer = toWrite.write();
 				writer = writer.format(p.getFormat());				
 
-				if (p.getMode() != null) {
-					writer.mode(p.getMode());
+				//SparkPipe sPipe = (SparkPipe) p;
+				if (sPipe.getMode() != null) {
+					writer.mode((sPipe.getMode()));
 				}
 				else {
 					writer.mode("Append");
@@ -319,29 +330,29 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 	}
 	*/
 
-	public Pipe getTrainingDataUnmarkedPipe(Arguments args) {
-		Pipe p = new Pipe();
+	public Pipe<Dataset<Row>, Row, Column> getTrainingDataUnmarkedPipe(Arguments args) {
+		Pipe<Dataset<Row>, Row, Column> p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getZinggTrainingDataUnmarkedDir());
 		return p;
 	}
 
-	public  Pipe getTrainingDataMarkedPipe(Arguments args) {
-		Pipe p = new Pipe();
+	public  Pipe<Dataset<Row>, Row, Column> getTrainingDataMarkedPipe(Arguments args) {
+		Pipe<Dataset<Row>, Row, Column> p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getZinggTrainingDataMarkedDir());
 		return p;
 	}
 	
-	public  Pipe getModelDocumentationPipe(Arguments args) {
-		Pipe p = new Pipe();
+	public  Pipe<Dataset<Row>, Row, Column> getModelDocumentationPipe(Arguments args) {
+		Pipe<Dataset<Row>, Row, Column> p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_TEXT);
 		p.setProp(FilePipe.LOCATION, args.getZinggModelDocFile());
 		return p;
 	}
 	
-	public Pipe getStopWordsPipe(Arguments args, String fileName) {
-		Pipe p = new Pipe();
+	public Pipe<Dataset<Row>, Row, Column> getStopWordsPipe(Arguments args, String fileName) {
+		SparkPipe p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_CSV);
 		p.setProp(FilePipe.HEADER, "true");
 		p.setProp(FilePipe.LOCATION, fileName);
@@ -349,15 +360,15 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		return p;
 	}
 
-	public  Pipe getBlockingTreePipe(Arguments args) {
-		Pipe p = new Pipe();
+	public  Pipe<Dataset<Row>, Row, Column> getBlockingTreePipe(Arguments args) {
+		SparkPipe p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getBlockFile());
 		p.setMode(SaveMode.Overwrite);
 		return p;
 	}
 
-	public  String getPipesAsString(Pipe[] pipes) {
+	public  String getPipesAsString(Pipe<Dataset<Row>, Row, Column>[] pipes) {
 		return Arrays.stream(pipes)
 			.map(p -> p.getFormat())
 			.collect(Collectors.toList())
@@ -366,6 +377,7 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 			.orElse("");
 	}
 
+	
 
 	/*
 	 * public  String getTableCreateCQL(Pipe p, Dataset<Row> df) {
