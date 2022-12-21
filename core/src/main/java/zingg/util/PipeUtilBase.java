@@ -36,6 +36,8 @@ public interface PipeUtilBase<S, D, R, C> {
 	
 	public Pipe<D, R, C> getBlockingTreePipe(Arguments args);
 
+	public Pipe<D, R, C> getStopWordsPipe(Arguments args, String string);
+
 	public String getPipesAsString(Pipe<D, R, C>[] pipes);
 
 	public S getSession();

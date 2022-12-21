@@ -30,4 +30,16 @@ public class Recommender<S,D,R,C, T> extends ZinggBase<S,D,R,C,T> {
 			throw new ZinggClientException(e.getMessage());
 		}
 	}
+
+	@Override
+	public void cleanup() throws ZinggClientException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setSession(S session) {
+		// TODO Auto-generated method stub
+		
+	}
 }
