@@ -30,7 +30,7 @@ public class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 
 	public ModelDocumenter(S session, Arguments args) {
 		super(session, args);
-		markedRecords = getDFUtil().emptyDataFrame();
+		markedRecords = getDSUtil().emptyDataFrame();
 	}
 
 	public void process() throws ZinggClientException {
@@ -67,6 +67,7 @@ public class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 		/* Create a data-model */
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put(TemplateFields.MODEL_ID, args.getModelId());
+		/* 
 		if(!markedRecords.isEmpty()) {
 			markedRecords = markedRecords.cache();
 
@@ -87,6 +88,19 @@ public class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 			root.put(TemplateFields.ISMATCH_COLUMN_INDEX, 0);
 			root.put(TemplateFields.CLUSTER_COLUMN_INDEX, 1);
 		}
+		*/
 		return root;
+	}
+
+	@Override
+	public void cleanup() throws ZinggClientException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void execute() throws ZinggClientException {
+		// TODO Auto-generated method stub
+		
 	}
 }

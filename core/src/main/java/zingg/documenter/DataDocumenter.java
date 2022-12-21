@@ -27,7 +27,7 @@ public class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 
 	public DataDocumenter(S session,Arguments args) {
 		super(session, args);
-		data = getDFUtil().emptyDataFrame();
+		data = getDSUtil().emptyDataFrame();
 	}
 	
 
@@ -70,14 +70,29 @@ public class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 		root.put(TemplateFields.MODEL_ID, args.getModelId());
 
 		List<String[]> list = new ArrayList<String[]> ();
+		/* 
 		for (StructField field: data.schema().fields()) {
 			String[] row = new String [3];
 			row[0] = field.name();
 			row[1] = field.dataType().toString();
 			row[2] = field.nullable()? "true": "false";
 			list.add(row);
-		}
+		}*/
 		root.put(TemplateFields.DATA_FIELDS_LIST, list);
 		return root;
+	}
+
+
+	@Override
+	public void cleanup() throws ZinggClientException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void execute() throws ZinggClientException {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -111,11 +111,11 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	
 
 
-	protected Pipe getOutputPipe() {
-		Pipe p = getPipeUtil().getTrainingDataMarkedPipe(args);
+	protected Pipe<D,R,C> getOutputPipe() {
+		Pipe<D,R,C> p = getPipeUtil().getTrainingDataMarkedPipe(args);
 		p = setSaveModeOnPipe(p);
 		return p;
 	}
 
-	protected abstract Pipe setSaveModeOnPipe(Pipe p);
+	protected abstract Pipe setSaveModeOnPipe(Pipe<D,R,C> p);
 }

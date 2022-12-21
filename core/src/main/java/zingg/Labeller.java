@@ -65,6 +65,9 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 			} 
 		} catch (Exception e) {
 			LOG.warn("No unmarked record for labelling");
+		} catch (ZinggClientException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		return unmarkedRecords;
 	}

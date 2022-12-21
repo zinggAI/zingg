@@ -5,6 +5,7 @@ import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
 import zingg.client.MatchType;
 import zingg.client.ZFrame;
+import zingg.client.ZinggClientException;
 import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
@@ -241,24 +242,25 @@ public abstract class DSUtil<S, D, R, C> {
 		return getTraining(pipeUtil, args, pipeUtil.getTrainingDataMarkedPipe(args)); 			
 	}
 	
-	private  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, Arguments args, Pipe p) {
+	private  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, Arguments args, Pipe<D,R,C> p) {
 		ZFrame<D, R, C> trFile = null;
-		//try{
+		try{
 			trFile = pipeUtil.read(false, false, p); 
 			LOG.warn("Read marked training samples ");
 			trFile = trFile.drop(ColName.PREDICTION_COL);
 			trFile = trFile.drop(ColName.SCORE_COL);				
-		//}
-		//catch (ZinggClientException e) {
-		//	LOG.warn("No preexisting marked training samples");
-		//}
-		if (args.getTrainingSamples() != null) {
-			ZFrame<D, R, C> trSamples = pipeUtil.read(true, false, args.getTrainingSamples()); 
-			LOG.warn("Read all training samples ");
-			trFile = (trFile == null) ? trSamples : trFile.unionByName(trSamples, true);
-		} 
-		else {
-			LOG.warn("No configured training samples");
+		
+			if (args.getTrainingSamples() != null) {
+				ZFrame<D, R, C> trSamples = pipeUtil.read(true, false, args.getTrainingSamples()); 
+				LOG.warn("Read all training samples ");
+				trFile = (trFile == null) ? trSamples : trFile.unionByName(trSamples, true);
+			} 
+			else {
+				LOG.warn("No configured training samples");
+			}
+		}
+		catch (ZinggClientException e) {
+			LOG.warn("No preexisting marked training samples");
 		}
 		if (trFile == null) LOG.warn("No training data found");
 		return trFile;		
@@ -304,4 +306,8 @@ public abstract class DSUtil<S, D, R, C> {
 	public abstract ZFrame<D, R, C> addClusterRowNumber(ZFrame<D, R, C> ds);
 
 	public abstract ZFrame<D, R, C> addRowNumber(ZFrame<D, R, C> ds);
+
+	public ZFrame<D, R, C> emptyDataFrame() {
+		return null;
+	}
 }

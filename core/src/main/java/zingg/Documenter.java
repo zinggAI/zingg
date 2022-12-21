@@ -34,12 +34,13 @@ public abstract class Documenter<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 		try {
 			LOG.info("Documenter starts");
 			//Documentation out of model
-			ModelDocumenter modelDoc = new ModelDocumenter(args);
+			/*ModelDocumenter modelDoc = new ModelDocumenter(args);
 			modelDoc.process();
 
 			//Documnetation of data
 			DataDocumenter dataDoc = new DataDocumenter(args);
 			dataDoc.process();
+			*/
 
 			LOG.info("Documenter finishes");
 		} catch (Exception e) {

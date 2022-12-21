@@ -21,4 +21,16 @@ public class DataColDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 	public void process(ZFrame<D, R, C> data) throws ZinggClientException {
 	}
 
+	@Override
+	public void cleanup() throws ZinggClientException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void execute() throws ZinggClientException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

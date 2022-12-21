@@ -34,9 +34,11 @@ public class ModelColDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 		if (!data.isEmpty()) {
 			String columnsDir = args.getZinggDocDir();
 			checkAndCreateDir(columnsDir);
+			/* 
 			for (StructField field: data.schema().fields()) {
 				prepareAndWriteColumnDocument(field.name(), columnsDir);
 			}
+			*/
 		}
 		LOG.info("Column Documents generation finishes");
 	}
@@ -52,5 +54,17 @@ public class ModelColDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 		} else {
 			writeDocument(COLUMN_DOC_TEMPLATE, root, filenameHTML);
 		}
+	}
+
+	@Override
+	public void cleanup() throws ZinggClientException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void execute() throws ZinggClientException {
+		// TODO Auto-generated method stub
+		
 	}
 }
