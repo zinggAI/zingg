@@ -39,7 +39,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     protected S context;
     protected String name;
     protected ZinggOptions zinggOptions;
-    protected ListMap<D, HashFunction<D,R,C,T>> hashFunctions;
+    protected ListMap<T, HashFunction<D,R,C,T>> hashFunctions;
 	protected Map<FieldDefinition, Feature<T>> featurers;
     protected long startTime;
 	public static final String hashFunctionFile = "hashFunctions.json";
@@ -133,11 +133,11 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
         this.args = args;
     }
 
-    public ListMap<D, HashFunction<D,R,C,T>> getHashFunctions() {
+    public ListMap<T, HashFunction<D,R,C,T>> getHashFunctions() {
         return this.hashFunctions;
     }
 
-    public void setHashFunctions(ListMap<D, HashFunction<D,R,C,T>> hashFunctions) {
+    public void setHashFunctions(ListMap<T, HashFunction<D,R,C,T>> hashFunctions) {
         this.hashFunctions = hashFunctions;
     }
 
@@ -173,18 +173,29 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     }
 
     public ZFrame<D,R,C> getMarkedRecords() {
-		return getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
+		try {
+            return getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
+        } catch (ZinggClientException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
 	}
 
-	public ZFrame<D,R,C> getUnmarkedRecords() {
-		ZFrame<D,R,C> unmarkedRecords = null;
-		ZFrame<D,R,C> markedRecords = null;
-		unmarkedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataUnmarkedPipe(args));
-        markedRecords = getMarkedRecords();
-        if (markedRecords != null ) {
-        	unmarkedRecords = unmarkedRecords.join(markedRecords,ColName.CLUSTER_COLUMN, false, "left_anti");
+	public ZFrame<D,R,C> getUnmarkedRecords(){
+        try{
+            ZFrame<D,R,C> unmarkedRecords = null;
+            ZFrame<D,R,C> markedRecords = null;
+            unmarkedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataUnmarkedPipe(args));
+            markedRecords = getMarkedRecords();
+            if (markedRecords != null ) {
+                unmarkedRecords = unmarkedRecords.join(markedRecords,ColName.CLUSTER_COLUMN, false, "left_anti");
+            }
+            return unmarkedRecords;
         }
-		return unmarkedRecords;
+        catch(ZinggClientException e) {
+            return null;
+        }
 	}
 
    
