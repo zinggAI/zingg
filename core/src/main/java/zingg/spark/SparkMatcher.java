@@ -62,4 +62,12 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
 		return model;
 	}
 
+
+
+	@Override
+	public void setSession(SparkSession session) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

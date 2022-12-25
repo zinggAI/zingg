@@ -8,6 +8,7 @@ import org.apache.spark.ml.PipelineModel;
 import org.apache.spark.ml.PipelineStage;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.Column;
 
 import zingg.client.FieldDefinition;
@@ -16,7 +17,7 @@ import zingg.feature.Feature;
 
 public class SparkLabelModel extends SparkModel{
 	
-	public SparkLabelModel(Map<FieldDefinition, Feature> f) {
+	public SparkLabelModel(Map<FieldDefinition, Feature<DataType>> f) {
 		super(f);
 		// TODO Auto-generated constructor stub
 	}

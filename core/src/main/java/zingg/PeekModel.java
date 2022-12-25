@@ -48,4 +48,16 @@ public class PeekModel extends ZinggBase{
 		}
 	}
 
+	@Override
+	public void cleanup() throws ZinggClientException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setSession(Object session) {
+		// TODO Auto-generated method stub
+		
+	}
+
 } 

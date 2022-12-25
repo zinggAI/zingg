@@ -37,7 +37,7 @@ public class SparkModelUtil extends ModelUtil<SparkSession,DataType,Dataset<Row>
         return model;
     }
 
-    public Model<SparkSession,DataType,Dataset<Row>, Row, Column> loadModel(Map<FieldDefinition, Feature> featurers, boolean isLabel,
+    public Model<SparkSession,DataType,Dataset<Row>, Row, Column> loadModel(Map<FieldDefinition, Feature<DataType>> featurers, boolean isLabel,
         Arguments args)    {
         Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = getModel(featurers, isLabel);
         model.load(args.getModel());
