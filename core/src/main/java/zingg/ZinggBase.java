@@ -51,7 +51,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     protected DSUtil<S,D,R,C> dsUtil;
     protected GraphUtil<D,R,C> graphUtil;
     protected ModelUtil<S,T,D,R,C> modelUtil;
-    protected BlockingTreeUtil<D,R,C,T> blockingTreeUtil;
+    protected BlockingTreeUtil<S,D,R,C,T> blockingTreeUtil;
     ZinggBase<S,D,R,C,T> base;
 
 
@@ -267,7 +267,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
         return base.pipeUtil;
     }
 
-    public BlockingTreeUtil<D,R,C,T> getBlockingTreeUtil() {
+    public BlockingTreeUtil<S, D,R,C,T> getBlockingTreeUtil() {
         return base.blockingTreeUtil;
     }
 

@@ -82,7 +82,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				ZFrame<D,R,C> sample = sampleOrginal; //StopWords.preprocessForStopWords(args, sampleOrginal);
 
 				Tree<Canopy<R>> tree = getBlockingTreeUtil().createBlockingTree(sample, posPairs, 1, -1, args, hashFunctions);			
-				ZFrame<D,R,C> blocked = sample.map(new Block<D,R,C,T>().BlockFunction(tree), RowEncoder.apply(Block<D,R,C,T>.appendHashCol(sample.schema())));
+				ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(sample, tree); 
 				blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
 				ZFrame<D,R,C> blocks = getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
 				blocks = blocks.cache();	

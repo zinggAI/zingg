@@ -5,12 +5,10 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.function.MapFunction;
-
 import scala.collection.JavaConversions;
 import scala.collection.Seq;
 
-public abstract class BlockFunction<R> implements MapFunction<R,R> {
+public abstract class BlockFunction<R> {//implements MapFunction<R,R> {
 
     public static final Log LOG = LogFactory.getLog(BlockFunction.class);
 		
@@ -19,7 +17,7 @@ public abstract class BlockFunction<R> implements MapFunction<R,R> {
         this.tree = tree;
     }
     
-    @Override
+    
     public R call(R r) {
         StringBuilder bf = new StringBuilder();
         bf = Block.applyTree(r, tree, tree.getHead(), bf);

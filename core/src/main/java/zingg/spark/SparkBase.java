@@ -99,7 +99,7 @@ public class SparkBase extends ZinggBase<SparkSession, Dataset<Row>, Row,Column,
        this.dsUtil = pipeUtil;        
     }
 
-    public void setBlokingTreeUtil(BlockingTreeUtil<Dataset<Row>, Row, Column, DataType> d) {
+    public void setBlokingTreeUtil(BlockingTreeUtil<SparkSession,Dataset<Row>, Row, Column, DataType> d) {
         this.blockingTreeUtil = d;
     }
 

@@ -42,25 +42,6 @@
           </filters>
         </configuration>
       </plugin>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.4.1</version>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <descriptors>
-            <descriptor>${project.basedir}/src/assembly/dist.xml</descriptor>
-          </descriptors>
-          <tarLongFileMode>gnu</tarLongFileMode>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -227,14 +208,6 @@
           <groupId>commons-net</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>scala-xml_2.12</artifactId>
-          <groupId>org.scala-lang.modules</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>scala-reflect</artifactId>
-          <groupId>org.scala-lang</groupId>
-        </exclusion>
-        <exclusion>
           <artifactId>json4s-jackson_2.12</artifactId>
           <groupId>org.json4s</groupId>
         </exclusion>
@@ -289,10 +262,6 @@
         <exclusion>
           <artifactId>metrics-jmx</artifactId>
           <groupId>io.dropwizard.metrics</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jackson-databind</artifactId>
-          <groupId>com.fasterxml.jackson.core</groupId>
         </exclusion>
         <exclusion>
           <artifactId>jackson-module-scala_2.12</artifactId>
