@@ -68,7 +68,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public void buildAndSetArguments(Arguments args, ClientOptions options) {
-		LOG.warn("args are " + args);
 		int jobId = new Long(System.currentTimeMillis()).intValue();
 		if (options.get(options.JOBID)!= null) {
 			LOG.info("Using job id from command line");

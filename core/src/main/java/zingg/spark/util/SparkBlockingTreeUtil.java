@@ -24,7 +24,10 @@ import zingg.client.Arguments;
 import zingg.client.SparkFrame;
 import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
+import zingg.client.util.ListMap;
 import zingg.client.util.Util;
+import zingg.hash.HashFunction;
+import zingg.spark.block.SparkBlock;
 import zingg.spark.block.SparkBlockFunction;
 import zingg.util.BlockingTreeUtil;
 
@@ -59,5 +62,13 @@ public Tree<Canopy<Row>> readBlockingTree(Arguments args) throws Exception, Zing
         Tree<Canopy<Row>> blockingTree = null;
         blockingTree =  (Tree<Canopy<Row>>) Util.revertObjectFromByteArray(byteArrayBack);
         return blockingTree;
+}
+
+@Override
+public Block<Dataset<Row>, Row, Column, DataType> getBlock(ZFrame<Dataset<Row>, Row, Column> sample,
+                ZFrame<Dataset<Row>, Row, Column> positives,
+                ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions, long blockSize) {
+        // TODO Auto-generated method stub
+        return new SparkBlock(sample, positives, hashFunctions, blockSize);
 }
 }

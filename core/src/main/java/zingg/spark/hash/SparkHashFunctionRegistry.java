@@ -35,6 +35,8 @@ public class SparkHashFunctionRegistry implements HashFunctionRegistry<Dataset<R
 		init(new SparkFirst2CharsBox());
 		init(new SparkFirst3CharsBox());
 		init(new SparkIsNullOrEmpty());
+		
+		
 	}
 	
 	public void init(HashFunction<Dataset<Row>,Row,Column,DataType> fn) {

@@ -62,7 +62,7 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
             ctx.setCheckpointDir("/tmp/checkpoint");	
             setPipeUtil(new SparkPipeUtil(spark));
             setDSUtil(new SparkDSUtil(spark));
-            setHashUtil(new SparkHashUtil());
+            setHashUtil(new SparkHashUtil(spark));
             setGraphUtil(new SparkGraphUtil());
             setModelUtil(new SparkModelUtil());
             setBlokingTreeUtil(new SparkBlockingTreeUtil());

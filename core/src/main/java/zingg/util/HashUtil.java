@@ -13,6 +13,12 @@ public interface HashUtil<D,R,C,T> {
 	 * @return
 	 * @throws Exception
 	 */
-	public ListMap<T, HashFunction<D,R,C,T>> getHashFunctionList(String fileName, Object spark)
+	public ListMap<T, HashFunction<D,R,C,T>> getHashFunctionList(String fileName)
 			throws Exception ;
+	
+	
+	public ListMap<T, HashFunction<D,R,C,T>> getHashFunctionList() throws Exception ;
+	
+	
+	
 }

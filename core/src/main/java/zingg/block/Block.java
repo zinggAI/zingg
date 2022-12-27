@@ -32,10 +32,10 @@ public class Block<D,R,C,T> implements Serializable {
 
 	protected ZFrame<D,R,C> dupes;
 	// Class[] types;
-	ListMap<DataType, HashFunction> functionsMap;
+	ListMap<DataType, HashFunction<D,R,C,T>> functionsMap;
 	long maxSize;
 	ZFrame<D,R,C> training;
-	protected ListMap<HashFunction, String> childless;
+	protected ListMap<HashFunction<D,R,C,T>, String> childless;
 
 	public Block() {
 		
@@ -44,7 +44,7 @@ public class Block<D,R,C,T> implements Serializable {
 	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes) {
 		this.training = training;
 		this.dupes = dupes;
-		childless = new ListMap<HashFunction, String>();
+		childless =  new ListMap<HashFunction<D,R,C,T>, String>();
 		// types = getSampleTypes();
 		/*
 		 * for (Class type : types) { LOG.info("Type is " + type); }
@@ -52,7 +52,7 @@ public class Block<D,R,C,T> implements Serializable {
 	}
 
 	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes,
-			ListMap<DataType, HashFunction> functionsMap, long maxSize) {
+		ListMap<DataType, HashFunction<D, R, C, T>> functionsMap, long maxSize) {
 		this(training, dupes);
 		this.functionsMap = functionsMap;
 		// functionsMap.prettyPrint();
@@ -104,17 +104,17 @@ public class Block<D,R,C,T> implements Serializable {
 	/**
 	 * @return the functionsMap
 	 */
-	public Map<DataType, List<HashFunction>> getFunctionsMap() {
+	public Map<DataType, List<HashFunction<D,R,C,T>>> getFunctionsMap() {
 		return functionsMap;
 	}
 
 	
-	protected void setFunctionsMap(ListMap<DataType, HashFunction> m) {
+	protected void setFunctionsMap(ListMap<DataType, HashFunction<D,R,C,T>> m) {
 		this.functionsMap = m;
 	}
 
 	
-	public Canopy<R>getNodeFromCurrent(Canopy<R>node, HashFunction function,
+	public Canopy<R>getNodeFromCurrent(Canopy<R>node, HashFunction<D,R,C,T> function,
 			FieldDefinition context) {
 		Canopy<R>trial = new Canopy<R>();
 		trial = node.copyTo(trial);
@@ -135,7 +135,7 @@ public class Block<D,R,C,T> implements Serializable {
 			FieldDefinition context = field;
 			if (least ==0) break;//how much better can it get?
 			// applicable functions
-			List<HashFunction> functions = functionsMap.get(field.getDataType());
+			List<HashFunction<D,R,C,T>> functions = functionsMap.get(field.getDataType());
 			if (functions != null) {
 				
 				for (HashFunction function : functions) {

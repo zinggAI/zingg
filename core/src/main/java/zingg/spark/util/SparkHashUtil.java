@@ -29,8 +29,13 @@ public class SparkHashUtil implements HashUtil<Dataset<Row>, Row, Column,DataTyp
 	 * @throws Exception
 	 */
 
+	SparkSession spark;
+
+	public SparkHashUtil(SparkSession spark) {
+		this.spark = spark;
+	}
 	
-	public ListMap<DataType, HashFunction<Dataset<Row>, Row, Column,DataType>> getHashFunctionList(String fileName, Object spark)
+	public ListMap<DataType, HashFunction<Dataset<Row>, Row, Column,DataType>> getHashFunctionList(String fileName)
 			throws Exception {
 		ListMap<DataType, HashFunction<Dataset<Row>, Row, Column,DataType>> functions = new ListMap<DataType, 
 			HashFunction<Dataset<Row>, Row, Column,DataType>>();
@@ -41,11 +46,18 @@ public class SparkHashUtil implements HashUtil<Dataset<Row>, Row, Column,DataTyp
 				new TypeReference<List<HashFnFromConf>>() {
 				});
 		for (HashFnFromConf scriptArg : scriptArgs) {
+			System.out.println("scriptArg " + scriptArg.getName());
 			HashFunction<Dataset<Row>, Row, Column,DataType> fn = new SparkHashFunctionRegistry().getFunction(scriptArg.getName());
-			((SparkSession)spark).udf().register(fn.getName(), (UDF1) fn, fn.getReturnType());
+			spark.udf().register(fn.getName(), (UDF1) fn, fn.getReturnType());
 			functions.add(fn.getDataType(), fn);
 		}
 		return functions;
+	}
+
+	@Override
+	public ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> getHashFunctionList() throws Exception {
+		// TODO Auto-generated method stub
+		return getHashFunctionList("hashFunctions.json");
 	}
 
 	

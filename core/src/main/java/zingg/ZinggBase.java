@@ -40,8 +40,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     protected Context<S,D,R,C,T> context;
     protected String name;
     protected ZinggOptions zinggOptions;
-    protected ListMap<T, HashFunction<D,R,C,T>> hashFunctions;
-	protected long startTime;
+   protected long startTime;
     protected ClientOptions clientOptions;
 
     public static final Log LOG = LogFactory.getLog(ZinggBase.class);
@@ -99,14 +98,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
         this.args = args;
     }
 
-    public ListMap<T, HashFunction<D,R,C,T>> getHashFunctions() {
-        return this.hashFunctions;
-    }
-
-    public void setHashFunctions(ListMap<T, HashFunction<D,R,C,T>> hashFunctions) {
-        this.hashFunctions = hashFunctions;
-    }
-
+   
     
     
     public Context<S,D,R,C,T> getContext() {

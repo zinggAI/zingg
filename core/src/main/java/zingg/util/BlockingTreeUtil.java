@@ -15,13 +15,15 @@ import zingg.client.MatchType;
 import zingg.client.ZinggClientException;
 import zingg.client.ZFrame;
 import zingg.client.util.ListMap;
+import zingg.hash.HashFunction;
 
 public abstract class BlockingTreeUtil<S, D,R,C,T> {
 
     public final Log LOG = LogFactory.getLog(BlockingTreeUtil.class);
+	
 
 	private PipeUtilBase<S, D, R, C> pipeUtil;
-	
+
     public PipeUtilBase<S, D, R, C> getPipeUtil() {
 		return pipeUtil;
 	}
@@ -34,12 +36,14 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 	}
 
 
+	public abstract Block<D,R,C,T> getBlock(ZFrame<D,R,C> sample, ZFrame<D,R,C> positives, 
+		ListMap<T, HashFunction<D,R,C,T>>hashFunctions, long blockSize);
 
 
 	public Tree<Canopy<R>> createBlockingTree(ZFrame<D,R,C> testData,  
 			ZFrame<D,R,C> positives, double sampleFraction, long blockSize,
             Arguments args,
-            ListMap hashFunctions) throws Exception {
+			ListMap<T, HashFunction<D,R,C,T>> hashFunctions) throws Exception {
 		ZFrame<D,R,C> sample = testData.sample(false, sampleFraction);
 		sample = sample.cache();
 		long totalCount = sample.count();
@@ -51,7 +55,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 		LOG.info("Learning indexing rules for block size " + blockSize);
        
 		positives = positives.coalesce(1); 
-		Block<D,R,C,T> cblock = new Block<D,R,C,T>(sample, positives, hashFunctions, blockSize);
+		Block<D,R,C,T> cblock = getBlock(sample, positives, hashFunctions, blockSize);
 		Canopy<R> root = new Canopy<R>(sample.collectAsList(), positives.collectAsList());
 
 		List<FieldDefinition> fd = new ArrayList<FieldDefinition> ();
