@@ -20,6 +20,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.functions;
+import org.apache.spark.sql.types.StructType;
 import org.apache.spark.storage.StorageLevel;
 
 //import zingg.scala.DFUtil;
@@ -78,7 +79,7 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		LOG.warn("Reading input " + p.getFormat());
 		reader = reader.format(p.getFormat());
 		if (p.getSchema() != null) {
-			reader = reader.schema(p.getSchema());
+			reader = reader.schema(StructType.fromDDL(p.getSchema()));
 		}
 		
 		for (String key : p.getProps().keySet()) {

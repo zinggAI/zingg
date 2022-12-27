@@ -111,8 +111,13 @@
 			<groupId>com.snowflake</groupId>
 			<artifactId>snowpark</artifactId>
 			<version>1.6.0</version>
+			<exclusions>
+			<exclusion>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			</exclusion>
+			</exclusions>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-mllib_${scala.binary.version}</artifactId>

@@ -33,7 +33,6 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 	
 	 public void execute() throws ZinggClientException {
 			try{
-				LOG.warn("args " + args);
 				ZFrame<D,R,C> data = getPipeUtil().read(true, true, args.getData());
 				LOG.warn("Read input data " + data.count());
 				//create 20 pos pairs
