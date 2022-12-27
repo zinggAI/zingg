@@ -15,7 +15,7 @@ import zingg.client.ZinggOptions;
 
 public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
-	public static String name = "zingg.SparkDocumenter";
+	public static String name = "zingg.spark.SparkDocumenter";
 	public static final Log LOG = LogFactory.getLog(SparkDocumenter.class);
 
 	public SparkDocumenter() {
@@ -29,12 +29,6 @@ public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row,
 		
 	}
 
-
-	@Override
-	public void setSession(SparkSession session) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 

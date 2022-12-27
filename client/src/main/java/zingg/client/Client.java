@@ -48,12 +48,12 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 	}
 
-	
+	public abstract IZinggFactory getZinggFactory() throws Exception;//(IZinggFactory) Class.forName("zingg.ZFactory").newInstance();
 	
 
 
 	public void setZingg(Arguments args, ClientOptions options) throws Exception{
-		IZinggFactory zf = (IZinggFactory) Class.forName("zingg.ZFactory").newInstance();
+		IZinggFactory zf = getZinggFactory();
 		try{
 			setZingg(zf.get(ZinggOptions.getByValue(options.get(ClientOptions.PHASE).value.trim())));
 		}
@@ -68,6 +68,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public void buildAndSetArguments(Arguments args, ClientOptions options) {
+		LOG.warn("args are " + args);
 		int jobId = new Long(System.currentTimeMillis()).intValue();
 		if (options.get(options.JOBID)!= null) {
 			LOG.info("Using job id from command line");
@@ -193,6 +194,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			}
 			LOG.warn("Apologies for this message. Zingg has encountered an error. "
 					+ e.getMessage());
+					e.printStackTrace();
 			if (LOG.isDebugEnabled()) e.printStackTrace();
 		}
 		finally {
@@ -213,7 +215,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 
 	public void init() throws ZinggClientException {
 		zingg.init(getArguments(), "");
-		if (session != null) zingg.setSession(session);
+		//if (session != null) zingg.setSession(session);
 		zingg.setClientOptions(options);
 	}
 	

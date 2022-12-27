@@ -54,10 +54,6 @@ public class PeekModel extends ZinggBase{
 		
 	}
 
-	@Override
-	public void setSession(Object session) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 } 

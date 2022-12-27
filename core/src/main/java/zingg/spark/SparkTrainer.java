@@ -16,7 +16,7 @@ import zingg.client.ZinggOptions;
 
 public class SparkTrainer extends Trainer<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
-	public static String name = "zingg.SparkTrainer";
+	public static String name = "zingg.spark.SparkTrainer";
 	public static final Log LOG = LogFactory.getLog(SparkTrainer.class);
 
 	public SparkTrainer() {
@@ -30,12 +30,6 @@ public class SparkTrainer extends Trainer<SparkSession, Dataset<Row>, Row, Colum
 		
 	}
 
-
-	@Override
-	public void setSession(SparkSession session) {
-		// TODO Auto-generated method stub
-		
-	}
 
 		
 	

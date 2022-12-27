@@ -1,4 +1,4 @@
-package zingg;
+package zingg.common;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import zingg.util.HashUtil;
 import zingg.util.ModelUtil;
 import zingg.util.PipeUtilBase;
 
-public interface Context <S,D, R, C, T> extends Serializable {
+public interface Context <S,D, R, C,T> extends Serializable {
 
     public HashUtil<D,R,C,T> getHashUtil() ;
     public void setHashUtil(HashUtil<D,R,C,T> t) ;

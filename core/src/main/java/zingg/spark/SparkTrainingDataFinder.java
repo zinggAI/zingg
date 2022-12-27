@@ -9,16 +9,24 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.TrainingDataFinder;
+import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 
 public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
-	public static String name = "zingg.SparkTrainingDataFinder";
+	public static String name = "zingg.spark.SparkTrainingDataFinder";
 	public static final Log LOG = LogFactory.getLog(SparkTrainingDataFinder.class);
 
 	public SparkTrainingDataFinder() {
 		setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
+		setContext(new ZinggSparkContext());
+	}
+
+	@Override
+	public void init(Arguments args, String license)  throws ZinggClientException {
+		super.init(args, license);
+		getContext().init(license);
 	}
 
 	
@@ -29,10 +37,6 @@ public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Da
 	}
 
 
-	@Override
-	public void setSession(SparkSession session) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 }

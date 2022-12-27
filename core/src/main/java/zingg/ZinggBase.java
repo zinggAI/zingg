@@ -22,6 +22,7 @@ import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.util.GraphUtil;
 import zingg.client.util.ListMap;
+import zingg.common.Context;
 import zingg.util.Metric;
 import zingg.util.ModelUtil;
 import zingg.util.PipeUtilBase;
@@ -40,8 +41,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     protected String name;
     protected ZinggOptions zinggOptions;
     protected ListMap<T, HashFunction<D,R,C,T>> hashFunctions;
-	protected Map<FieldDefinition, Feature<T>> featurers;
-    protected long startTime;
+	protected long startTime;
     protected ClientOptions clientOptions;
 
     public static final Log LOG = LogFactory.getLog(ZinggBase.class);
@@ -73,33 +73,10 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
         throws ZinggClientException {
             startTime = System.currentTimeMillis();
             this.args = args;
-            loadFeatures();
-            context.init(license);
+            
         }
 
    
-
-    public void loadFeatures() throws ZinggClientException {
-		try{
-		LOG.info("Start reading internal configurations and functions");
-		if (args.getFieldDefinition() != null) {
-			featurers = new HashMap<FieldDefinition, Feature<T>>();
-			for (FieldDefinition def : args.getFieldDefinition()) {
-				if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
-					Feature<T> fea = (Feature<T>) FeatureFactory.get(def.getDataType());
-					fea.init(def);
-					featurers.put(def, fea);			
-				}
-			}
-			LOG.info("Finished reading internal configurations and functions");
-			}
-		}
-		catch(Throwable t) {
-			LOG.warn("Unable to initialize internal configurations and functions");
-			if (LOG.isDebugEnabled()) t.printStackTrace();
-			throw new ZinggClientException("Unable to initialize internal configurations and functions");
-		}
-	}
 
     
 	public void postMetrics() {
@@ -130,14 +107,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
         this.hashFunctions = hashFunctions;
     }
 
-    public Map<FieldDefinition,Feature<T>> getFeaturers() {
-        return this.featurers;
-    }
-
-    public void setFeaturers(Map<FieldDefinition,Feature<T>> featurers) {
-        this.featurers = featurers;
-    }
-
+    
     
     public Context<S,D,R,C,T> getContext() {
         return this.context;

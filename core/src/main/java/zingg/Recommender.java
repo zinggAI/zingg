@@ -37,9 +37,4 @@ public class Recommender<S,D,R,C, T> extends ZinggBase<S,D,R,C,T> {
 		
 	}
 
-	@Override
-	public void setSession(S session) {
-		// TODO Auto-generated method stub
-		
-	}
 }

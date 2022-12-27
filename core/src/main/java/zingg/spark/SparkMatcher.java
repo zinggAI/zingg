@@ -41,7 +41,7 @@ import zingg.util.PipeUtilBase;
 public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,DataType>{
 
 
-	public static String name = "zingg.Matcher";
+	public static String name = "zingg.spark.Matcher";
 	public static final Log LOG = LogFactory.getLog(SparkMatcher.class);    
 
 	
@@ -56,7 +56,7 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
 
 	@Override
 	protected Model getModel() {
-		Model model = new SparkModel(this.featurers);
+		Model model = new SparkModel(getModelUtil().getFeaturers());
 		model.register(getContext());
 		model.load(args.getModel());
 		return model;
@@ -64,10 +64,5 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
 
 
 
-	@Override
-	public void setSession(SparkSession session) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

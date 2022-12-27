@@ -13,6 +13,7 @@ import zingg.ZinggBase;
 import zingg.client.Arguments;
 import zingg.client.IZingg;
 import zingg.client.ZinggClientException;
+import zingg.common.Context;
 import zingg.spark.util.SparkHashUtil;
 import zingg.spark.util.SparkModelUtil;
 import zingg.spark.util.SparkPipeUtil;
@@ -25,7 +26,6 @@ import zingg.util.PipeUtilBase;
 import zingg.spark.util.SparkBlockingTreeUtil;
 import zingg.spark.util.SparkDSUtil;
 import zingg.spark.util.SparkGraphUtil;
-import zingg.Context;
 
 
 public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Row,Column,DataType>{

@@ -17,7 +17,7 @@ import zingg.client.ZinggOptions;
 
 public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
-	public static String name = "zingg.SparkLabeller";
+	public static String name = "zingg.spark.SparkLabeller";
 	public static final Log LOG = LogFactory.getLog(SparkLabeller.class);
 
 	SparkSession sparkSession;
@@ -27,11 +27,7 @@ public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Col
 		setZinggOptions(ZinggOptions.LABEL);
 	}
 
-	@Override
-	public void setSession(SparkSession session) {
-		this.sparkSession = session;
-		
-	}
+	
 
 	@Override
 	public void cleanup() throws ZinggClientException {

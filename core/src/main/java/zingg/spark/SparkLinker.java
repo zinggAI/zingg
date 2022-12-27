@@ -38,7 +38,7 @@ import zingg.util.PipeUtilBase;
 
 public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
-	public static String name = "zingg.SparkLinker";
+	public static String name = "zingg.spark.SparkLinker";
 	public static final Log LOG = LogFactory.getLog(SparkLinker.class);
 
 	public SparkLinker() {
@@ -56,18 +56,12 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
 
 	@Override
 	protected Model getModel() {
-		Model model = new SparkModel(this.featurers);
+		Model model = new SparkModel(getModelUtil().getFeaturers());
 		model.register(getContext());
 		model.load(args.getModel());
 		return model;
 	}
 
-
-	@Override
-	public void setSession(SparkSession session) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 	

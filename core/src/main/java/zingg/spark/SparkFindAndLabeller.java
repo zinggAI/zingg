@@ -18,15 +18,11 @@ import zingg.client.ZinggOptions;
 
 public class SparkFindAndLabeller extends FindAndLabeller<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
-	public static String name = "zingg.SparkFindAndLabeller";
+	public static String name = "zingg.spark.SparkFindAndLabeller";
 	public static final Log LOG = LogFactory.getLog(SparkFindAndLabeller.class);
 	SparkSession sparkSession;
 
-	@Override
-	public void setSession(SparkSession session) {
-		this.sparkSession = session;
-		
-	}
+	
 
 	public SparkFindAndLabeller() {
 		setZinggOptions(ZinggOptions.FIND_AND_LABEL);

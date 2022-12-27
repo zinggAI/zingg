@@ -19,7 +19,7 @@ import zingg.client.pipe.SparkPipe;
 
 public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
-	public static String name = "zingg.SparkLabelUpdater";
+	public static String name = "zingg.spark.SparkLabelUpdater";
 	public static final Log LOG = LogFactory.getLog(SparkLabelUpdater.class);
 
 	public SparkLabelUpdater() {
@@ -33,12 +33,6 @@ public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, 
 		
 	}
 
-
-	@Override
-	public void setSession(SparkSession session) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	protected Pipe setSaveModeOnPipe(Pipe p) {
 		SparkPipe pipe = (SparkPipe) p;

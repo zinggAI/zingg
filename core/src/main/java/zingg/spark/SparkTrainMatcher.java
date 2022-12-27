@@ -39,7 +39,7 @@ import zingg.util.PipeUtilBase;
 
 public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
-	public static String name = "zingg.SparkTrainMatcher";
+	public static String name = "zingg.spark.SparkTrainMatcher";
 	public static final Log LOG = LogFactory.getLog(SparkTrainMatcher.class);
 
 	public SparkTrainMatcher() {
@@ -49,7 +49,7 @@ public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, 
 
 	@Override
 	protected Model getModel() {
-		Model model = new SparkModel(this.featurers);
+		Model model = new SparkModel(getModelUtil().getFeaturers());
 		model.register(getContext());
 		model.load(args.getModel());
 		return model;
@@ -63,11 +63,6 @@ public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, 
 	}
 
 
-	@Override
-	public void setSession(SparkSession session) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
 

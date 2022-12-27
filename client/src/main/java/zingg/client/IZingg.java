@@ -29,8 +29,9 @@ public interface IZingg<S,D,R,C> {
 
     public Long getUnsureMarkedRecordsStat(ZFrame<D,R,C>  markedRecords);
 
-    public void setSession(S session); // method name will have to be changed in Client too
+    //public void setSession(S session); // method name will have to be changed in Client too
 
+	
 	public void setClientOptions(ClientOptions clientOptions);
 
 	public ClientOptions getClientOptions(); 

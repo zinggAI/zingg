@@ -6,9 +6,9 @@ import zingg.client.IZingg;
 import zingg.client.IZinggFactory;
 import zingg.client.ZinggOptions;
 
-public class ZFactory implements IZinggFactory{
+public class ZFactoryOld implements IZinggFactory{
 
-    public ZFactory() {}
+    public ZFactoryOld() {}
 
     public static HashMap<ZinggOptions, String> zinggers = new  HashMap<ZinggOptions, String>();
 
