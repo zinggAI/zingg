@@ -14,6 +14,7 @@ import zingg.client.Arguments;
 import zingg.client.IZingg;
 import zingg.client.ZinggClientException;
 import zingg.spark.util.SparkHashUtil;
+import zingg.spark.util.SparkModelUtil;
 import zingg.spark.util.SparkPipeUtil;
 import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
@@ -21,36 +22,50 @@ import zingg.util.GraphUtil;
 import zingg.util.HashUtil;
 import zingg.util.ModelUtil;
 import zingg.util.PipeUtilBase;
+import zingg.spark.util.SparkBlockingTreeUtil;
 import zingg.spark.util.SparkDSUtil;
 import zingg.spark.util.SparkGraphUtil;
+import zingg.Context;
 
-public class SparkBase extends ZinggBase<SparkSession, Dataset<Row>, Row,Column,DataType>{
 
-    JavaSparkContext ctx;
-    public static final Log LOG = LogFactory.getLog(SparkBase.class);
+public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Row,Column,DataType>{
+
+    
+    protected JavaSparkContext ctx;
+	protected SparkSession spark;
+    protected PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> pipeUtil;
+    protected HashUtil<Dataset<Row>, Row, Column, DataType> hashUtil;
+    protected DSUtil<SparkSession, Dataset<Row>, Row, Column> dsUtil;
+    protected GraphUtil<Dataset<Row>, Row, Column> graphUtil;
+    protected ModelUtil<SparkSession, DataType, Dataset<Row>, Row, Column> modelUtil;
+    protected BlockingTreeUtil<SparkSession, Dataset<Row>, Row, Column, DataType> blockingTreeUtil;
+
+	public static final String hashFunctionFile = "hashFunctions.json";
+    
+
+    public static final Log LOG = LogFactory.getLog(ZinggSparkContext.class);
     
 
     @Override
-    public void init(Arguments args, String license)
+    public void init(String license)
         throws ZinggClientException {
-        startTime = System.currentTimeMillis();
-        this.args = args;
         try{
-            context = SparkSession
+            spark = SparkSession
                 .builder()
-                .appName("Zingg"+args.getJobId())
+                .appName("Zingg")
                 .getOrCreate();
-            ctx = new JavaSparkContext(context.sparkContext());
+            ctx = new JavaSparkContext(spark.sparkContext());
             JavaSparkContext.jarOfClass(IZingg.class);
             LOG.debug("Context " + ctx.toString());
-            initHashFns();
-            loadFeatures();
+            //initHashFns();
+            
             ctx.setCheckpointDir("/tmp/checkpoint");	
-            setPipeUtil(new SparkPipeUtil(context));
-            setDSUtil(new SparkDSUtil(context));
+            setPipeUtil(new SparkPipeUtil(spark));
+            setDSUtil(new SparkDSUtil(spark));
             setHashUtil(new SparkHashUtil());
             setGraphUtil(new SparkGraphUtil());
-            
+            setModelUtil(new SparkModelUtil());
+            setBlokingTreeUtil(new SparkBlockingTreeUtil());
         }
         catch(Throwable e) {
             if (LOG.isDebugEnabled()) e.printStackTrace();
@@ -58,7 +73,8 @@ public class SparkBase extends ZinggBase<SparkSession, Dataset<Row>, Row,Column,
         }
     }
 
-    protected void initHashFns() throws ZinggClientException {
+    /** 
+    public void initHashFns() throws ZinggClientException {
 		try {
 			//functions = Util.getFunctionList(this.functionFile);
 			hashFunctions = getHashUtil().getHashFunctionList(hashFunctionFile, getContext());
@@ -67,17 +83,8 @@ public class SparkBase extends ZinggBase<SparkSession, Dataset<Row>, Row,Column,
 			throw new ZinggClientException("Unable to initialize base functions");
 		}		
 	}
+    */
 
-
-    @Override
-    public void cleanup() throws ZinggClientException {
-        if (ctx != null) ctx.stop();
-    }
-
-    @Override
-    public void execute() throws ZinggClientException {
-
-    }   
 
     
     public void setHashUtil(HashUtil<Dataset<Row>, Row, Column, DataType> t) {
@@ -103,18 +110,43 @@ public class SparkBase extends ZinggBase<SparkSession, Dataset<Row>, Row,Column,
         this.blockingTreeUtil = d;
     }
 
-    public void setModelUtil(ModelUtil<SparkSession, DataType, Dataset<Row>, Row, Column> t) {
+    public void setModelUtil(ModelUtil<SparkSession, DataType, Dataset<Row>, Row, Column>  t) {
         this.modelUtil = t;
     }
 
-    public ModelUtil<SparkSession, DataType, Dataset<Row>, Row, Column>  getModelUtil() {
+    public ModelUtil<SparkSession, DataType, Dataset<Row>, Row, Column>   getModelUtil() {
         return modelUtil;
     }
 
-    @Override
+   /*  @Override
     public void setSession(SparkSession session) {
-        // TODO Auto-generated method stub
-        
+        this.spark = session;        
+    }
+    */
+
+    @Override
+    public HashUtil<Dataset<Row>, Row, Column, DataType> getHashUtil() {
+        return hashUtil;
+    }
+
+    @Override
+    public GraphUtil<Dataset<Row>, Row, Column> getGraphUtil() {
+        return graphUtil;
+    }
+
+    @Override
+    public DSUtil<SparkSession, Dataset<Row>, Row, Column> getDSUtil() {
+         return dsUtil;
+    }
+
+    @Override
+    public PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> getPipeUtil() {
+        return pipeUtil;
+    }
+
+    @Override
+    public BlockingTreeUtil<SparkSession, Dataset<Row>, Row, Column, DataType> getBlockingTreeUtil() {
+        return blockingTreeUtil;
     }
   
  }

@@ -24,36 +24,28 @@ import zingg.util.GraphUtil;
 import zingg.client.util.ListMap;
 import zingg.util.Metric;
 import zingg.util.ModelUtil;
+import zingg.util.PipeUtilBase;
 import zingg.feature.Feature;
 import zingg.feature.FeatureFactory;
 import zingg.hash.HashFunction;
 
 import zingg.util.HashUtil;
-import zingg.util.PipeUtilBase;
 
 
 public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S, D, R, C> {
 
     protected Arguments args;
 	
-    protected S context;
+    protected Context<S,D,R,C,T> context;
     protected String name;
     protected ZinggOptions zinggOptions;
     protected ListMap<T, HashFunction<D,R,C,T>> hashFunctions;
 	protected Map<FieldDefinition, Feature<T>> featurers;
     protected long startTime;
-	public static final String hashFunctionFile = "hashFunctions.json";
     protected ClientOptions clientOptions;
 
     public static final Log LOG = LogFactory.getLog(ZinggBase.class);
-    protected PipeUtilBase<S,D,R,C> pipeUtil;
-    protected HashUtil<D,R,C,T> hashUtil;
-    protected DSUtil<S,D,R,C> dsUtil;
-    protected GraphUtil<D,R,C> graphUtil;
-    protected ModelUtil<S,T,D,R,C> modelUtil;
-    protected BlockingTreeUtil<S,D,R,C,T> blockingTreeUtil;
-    ZinggBase<S,D,R,C,T> base;
-
+   
 
     public long getStartTime() {
         return this.startTime;
@@ -75,20 +67,17 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
 
     }
 
-    public void setBase(ZinggBase<S,D,R,C,T> base) {
-        this.base = base;
-    }
-
+   
     
     public void init(Arguments args, String license)
         throws ZinggClientException {
-            base.init(args, license);
+            startTime = System.currentTimeMillis();
+            this.args = args;
+            loadFeatures();
+            context.init(license);
         }
 
-    
-    protected void initHashFns() throws ZinggClientException {
-        base.initHashFns();
-	}
+   
 
     public void loadFeatures() throws ZinggClientException {
 		try{
@@ -150,11 +139,11 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     }
 
     
-    public S getContext() {
+    public Context<S,D,R,C,T> getContext() {
         return this.context;
     }
 
-    public void setContext(S source) {
+    public void setContext(Context<S,D,R,C,T> source) {
         this.context = source;
     }
     public void setName(String name) {
@@ -218,57 +207,41 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
         return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_NOT_SURE);
     }
 
-
+    public abstract void execute() throws ZinggClientException ;
 
     public HashUtil<D,R,C,T> getHashUtil() {
-        return base.getHashUtil();
+        return context.getHashUtil();
     }
 
     public void setHashUtil(HashUtil<D,R,C,T> t) {
-        base.setHashUtil(t);
+        context.setHashUtil(t);
     }
 
     public GraphUtil<D,R,C> getGraphUtil() {
-        return base.getGraphUtil();
-    }
-
-    public void setGraphUtil(GraphUtil<D,R,C> t) {
-        base.setGraphUtil(t);
-    }
-
-    public void setModelUtil(ModelUtil<S,T,D,R,C> t) {
-        base.setModelUtil(t);
-    }
-
-    public ModelUtil<S,T,D,R,C>  getModelUtil() {
-        return base.getModelUtil();
-    }
-
-    public abstract void execute() throws ZinggClientException ;
-
-    
-    public void setPipeUtil(PipeUtilBase<S,D,R,C> pipeUtil) {
-        base.setPipeUtil(pipeUtil);
-        
+        return context.getGraphUtil();
     }
 
    
-    public void setDSUtil(DSUtil<S,D,R,C> pipeUtil) {
-       base.setDSUtil(pipeUtil);
-        
+
+    public ModelUtil<S,T,D,R,C>  getModelUtil() {
+        return context.getModelUtil();
     }
 
+   
+  
+   
+
     public DSUtil<S,D,R,C> getDSUtil() {
-        return base.dsUtil;
+        return context.getDSUtil();
     }
 
     
     public PipeUtilBase<S,D,R,C> getPipeUtil() {
-        return base.pipeUtil;
+        return context.getPipeUtil();
     }
 
     public BlockingTreeUtil<S, D,R,C,T> getBlockingTreeUtil() {
-        return base.blockingTreeUtil;
+        return context.getBlockingTreeUtil();
     }
 
 
