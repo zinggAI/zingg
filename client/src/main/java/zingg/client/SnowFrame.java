@@ -84,6 +84,12 @@ public class SnowFrame implements ZFrame<DataFrame, Row, Column> {
         return new SnowFrame(df.join(lines1.df(), df.col(joinColumn).equal_to(lines1.df().col(ColName.COL_PREFIX + joinColumn))));
     }
 
+    //TODO
+    public ZFrame<DataFrame, Row, Column> joinOnCol(ZFrame<DataFrame, Row, Column> lines1, String joinColumn){
+        return null;
+    }
+    
+
     public ZFrame<DataFrame, Row, Column> join(ZFrame<DataFrame, Row, Column> lines1, String joinColumn1, String joinColumn2) {
         return new SnowFrame(df.join(lines1.df(),new String[] {joinColumn1, joinColumn2}));
     }

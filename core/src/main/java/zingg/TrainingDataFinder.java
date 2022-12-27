@@ -84,10 +84,13 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				Tree<Canopy<R>> tree = getBlockingTreeUtil().createBlockingTree(sample, posPairs, 1, -1, args, getHashUtil().getHashFunctionList());		
 				tree.print(2);	
 				ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(sample, tree); 
-				blocked.show(true);
+				
 				blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
+				System.out.println("blocked");
+				blocked.show(true);
 				ZFrame<D,R,C> blocks = getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
 				blocks = blocks.cache();	
+				System.out.println("blocks");
 				blocks.show();
 				//TODO HASH Partition
 				if (negPairs!= null) negPairs = negPairs.cache();

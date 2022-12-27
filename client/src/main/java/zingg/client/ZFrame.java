@@ -21,6 +21,10 @@ public interface ZFrame<D, R, C> {
 
     public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, String joinColumn);
 
+    /**doesnt dupe the join col */
+    public ZFrame<D, R, C> joinOnCol(ZFrame<D, R, C> lines1, String joinColumn);
+    
+
     public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, String joinColumn1, String joinColumn2);
 
     public ZFrame<D, R, C> joinRight(ZFrame<D, R, C> lines1, String joinColumn);

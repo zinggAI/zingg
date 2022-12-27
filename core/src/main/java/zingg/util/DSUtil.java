@@ -56,8 +56,9 @@ public abstract class DSUtil<S, D, R, C> {
 			LOG.debug("pairs length " + pairs.count());
 		}
 		if (filter) {
-			pairs = pairs.filter(pairs.gt(joinColumn));	
+			pairs = pairs.filter(pairs.gt(ColName.ID_COL));	
 		}	
+		pairs.show(true);
 		return pairs;
 	}
 
@@ -102,6 +103,8 @@ public abstract class DSUtil<S, D, R, C> {
 	
     public ZFrame<D, R, C> joinWithItself(ZFrame<D, R, C> lines, String joinColumn, boolean filter) throws Exception {
 		ZFrame<D, R, C> lines1 = getPrefixedColumnsDS(lines); 
+		System.out.println("prefixed");
+		lines1.show(true);
 		return join(lines, lines1, joinColumn, filter);
 	}
 	
@@ -274,6 +277,10 @@ public abstract class DSUtil<S, D, R, C> {
 	}
 
     public ZFrame<D,R,C> postprocess(ZFrame<D,R,C> actual, ZFrame<D,R,C> orig) {
+		System.out.println("postproc  actual");
+		actual.show(true);
+		System.out.println("postproc  orig");
+		orig.show(true);
     	List<C> cols = new ArrayList<C>();	
     	cols.add(actual.col(ColName.CLUSTER_COLUMN));
     	cols.add(actual.col(ColName.ID_COL));
@@ -282,9 +289,10 @@ public abstract class DSUtil<S, D, R, C> {
     	cols.add(actual.col(ColName.MATCH_FLAG_COL));
     
     	ZFrame<D,R,C> zFieldsFromActual = actual.select(cols);
-    	
-    	ZFrame<D,R,C> joined = zFieldsFromActual.join(orig, ColName.ID_COL);
-    
+    	System.out.println("postproc  selected");
+		zFieldsFromActual.show(true);
+    	ZFrame<D,R,C> joined = zFieldsFromActual.joinOnCol(orig, ColName.ID_COL);
+		
     	return joined;
     }
 
