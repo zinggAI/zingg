@@ -1,5 +1,6 @@
 package zingg.block;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import scala.collection.JavaConversions;
 import scala.collection.Seq;
 
-public abstract class BlockFunction<R> {//implements MapFunction<R,R> {
+public abstract class BlockFunction<R> implements Serializable {
 
     public static final Log LOG = LogFactory.getLog(BlockFunction.class);
 		

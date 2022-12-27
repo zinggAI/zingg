@@ -13,6 +13,8 @@ import zingg.client.util.ListMap;
 import zingg.hash.HashFunction;
 
 public class SparkBlock extends Block<Dataset<Row>, Row, Column, DataType> {
+
+    public SparkBlock(){}
     
 
     public SparkBlock(ZFrame<Dataset<Row>, Row, Column> training, ZFrame<Dataset<Row>, Row, Column> dupes,

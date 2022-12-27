@@ -305,12 +305,7 @@ public class Block<D,R,C,T> implements Serializable {
 		return isUsed;
 	}
 	
-	public StructType appendHashCol(StructType s) {
-		StructType retSchema = SchemaUtils.appendColumn(s, ColName.HASH_COL, DataTypes.IntegerType, false);
-		LOG.debug("returning schema after step 1 is " + retSchema);
-		return retSchema;
-	}
-
+	
 	public List<Canopy<R>> getHashSuccessors(Collection<Canopy<R>> successors, Object hash) {
 		List<Canopy<R>> retCanopy = new ArrayList<Canopy<R>>();
 		for (Canopy<R>c: successors) {

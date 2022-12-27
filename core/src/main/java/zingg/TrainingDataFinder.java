@@ -81,11 +81,14 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 
 				ZFrame<D,R,C> sample = sampleOrginal; //StopWords.preprocessForStopWords(args, sampleOrginal);
 
-				Tree<Canopy<R>> tree = getBlockingTreeUtil().createBlockingTree(sample, posPairs, 1, -1, args, getHashUtil().getHashFunctionList());			
+				Tree<Canopy<R>> tree = getBlockingTreeUtil().createBlockingTree(sample, posPairs, 1, -1, args, getHashUtil().getHashFunctionList());		
+				tree.print(2);	
 				ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(sample, tree); 
+				blocked.show(true);
 				blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
 				ZFrame<D,R,C> blocks = getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
 				blocks = blocks.cache();	
+				blocks.show();
 				//TODO HASH Partition
 				if (negPairs!= null) negPairs = negPairs.cache();
 					//train classifier and predict the blocked values from classifier
@@ -127,7 +130,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
     }
 
 	public void writeUncertain(ZFrame<D,R,C> dupesActual, ZFrame<D,R,C> sampleOrginal) throws ZinggClientException {
-		//dupesActual.show(4);
+		dupesActual.show(40);
 		//input dupes are pairs
 		dupesActual = getDSUtil().addClusterRowNumber(dupesActual);
 		dupesActual = getDSUtil().addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN );	

@@ -16,6 +16,7 @@ import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
+import org.apache.spark.ml.util.SchemaUtils;
 
 import zingg.block.Block;
 import zingg.block.Canopy;
@@ -24,6 +25,7 @@ import zingg.client.Arguments;
 import zingg.client.SparkFrame;
 import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
+import zingg.client.util.ColName;
 import zingg.client.util.ListMap;
 import zingg.client.util.Util;
 import zingg.hash.HashFunction;
@@ -39,9 +41,16 @@ public class SparkBlockingTreeUtil extends BlockingTreeUtil<SparkSession, Datase
     public ZFrame<Dataset<Row>, Row, Column> getBlockHashes(ZFrame<Dataset<Row>, Row, Column> testData,
             Tree<Canopy<Row>> tree) {
             Dataset<Row> retDF = testData.df().map(new SparkBlockFunction(tree), RowEncoder.apply(
-                    new Block<Dataset<Row>,Row,Column,DataType>().appendHashCol(testData.df().schema())));
+                    appendHashCol(testData.df().schema())));
             return new SparkFrame(retDF);
     }
+
+    public StructType appendHashCol(StructType s) {
+        StructType retSchema = SchemaUtils.appendColumn(s, ColName.HASH_COL, DataTypes.IntegerType, false);
+        LOG.debug("returning schema after step 1 is " + retSchema);
+        return retSchema;
+}
+
 
 @Override
 public void writeBlockingTree(Tree<Canopy<Row>> blockingTree, Arguments args) throws Exception, ZinggClientException {
