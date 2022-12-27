@@ -4,10 +4,6 @@ import java.io.Serializable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
 
 import zingg.client.util.Email;
 import zingg.client.util.EmailBody;
@@ -18,7 +14,7 @@ import zingg.client.util.EmailBody;
  * @author sgoyal
  *
  */
-public class Client<S,D,R,C,T> implements Serializable {
+public abstract class Client<S,D,R,C,T> implements Serializable {
 	protected Arguments arguments;
 	protected IZingg<S,D,R,C> zingg;
 	protected ClientOptions options;
@@ -52,11 +48,7 @@ public class Client<S,D,R,C,T> implements Serializable {
 		}
 	}
 
-	public Client(Arguments args, ClientOptions options, S session) throws ZinggClientException {
-		this(args, options);
-		this.session = session;
-	}
-
+	
 	
 
 
@@ -115,7 +107,7 @@ public class Client<S,D,R,C,T> implements Serializable {
 		setArguments(args);
 	}
 	
-	public static void printBanner() {
+	public void printBanner() {
 		String versionStr = "0.3.4";
 		LOG.info("");
 		LOG.info("********************************************************");
@@ -127,7 +119,7 @@ public class Client<S,D,R,C,T> implements Serializable {
 		LOG.info("");
 	}
 	
-	public static void printAnalyticsBanner(boolean collectMetrics) {
+	public void printAnalyticsBanner(boolean collectMetrics) {
 		if(collectMetrics) {
 			LOG.info("");
 			LOG.info("**************************************************************************");
@@ -150,9 +142,11 @@ public class Client<S,D,R,C,T> implements Serializable {
 		}
 	}
 
-	public static void main(String... args) {
+	public abstract Client<S,D,R,C,T> getClient(Arguments args, ClientOptions options) throws ZinggClientException;
+	
+	public void mainMethod(String... args) {
 		printBanner();
-		Client client = null;
+		Client<S,D,R,C,T> client = null;
 		ClientOptions options = null;
 		try {
 			for (String a: args) LOG.debug("args " + a);
@@ -175,7 +169,7 @@ public class Client<S,D,R,C,T> implements Serializable {
 				arguments = Arguments.createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
 
-			client = new Client(arguments, options);	
+			client = getClient(arguments, options);	
 			client.init();
 			client.execute();
 			client.postMetrics();

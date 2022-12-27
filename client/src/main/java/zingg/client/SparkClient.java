@@ -16,10 +16,25 @@ import org.apache.spark.sql.types.DataType;
  */
 public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column, DataType>  implements Serializable {
 	
-	public SparkClient(Arguments args, ClientOptions options, SparkSession session) throws ZinggClientException {
-		super(args, options, session);
+	public SparkClient(Arguments args, ClientOptions options) throws ZinggClientException {
+		super(args, options);
 		JavaSparkContext ctx = new JavaSparkContext(session.sparkContext());
         JavaSparkContext.jarOfClass(IZingg.class);
+	}
+
+	public SparkClient() {
+
+	}
+
+	@Override
+	public Client<SparkSession, Dataset<Row>, Row, Column, DataType> getClient(Arguments args, ClientOptions options) throws ZinggClientException {
+		// TODO Auto-generated method stub
+		return new SparkClient(args, options);
+	}
+
+	public static void main(String... args) {
+		SparkClient client = new SparkClient();
+		client.mainMethod(args);
 	}
 
 	
