@@ -42,8 +42,8 @@ public class FieldDefinition implements
 	@JsonSerialize(using = MatchTypeSerializer.class)
 	public List<MatchType> matchType;
 	
-	@JsonSerialize(using = DataTypeSerializer.class)
-	public DataType dataType;
+	//@JsonSerialize(using = DataTypeSerializer.class)
+	public String dataType;
 	public String fieldName;
 	public String fields;
 	public String stopWords;
@@ -83,13 +83,15 @@ public class FieldDefinition implements
 	}
 	
 	
-	public DataType getDataType() {
+	public String getDataType() {
 		return dataType;
 	}
 
-	@JsonProperty("dataType")
+	//@JsonProperty("dataType")
 	public void setDataType(String d) {
-		if (d!= null) this.dataType =  DataType.fromJson(d);
+		this.dataType = d;
+
+		//if (d!= null) this.dataType =  DataType.fromJson(d);
 	}
 	
 	

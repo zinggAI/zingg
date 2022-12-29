@@ -22,15 +22,16 @@ public abstract class ModelUtil<S,T, D,R,C> {
     public static final Log LOG = LogFactory.getLog(ModelUtil.class);
     protected Map<FieldDefinition, Feature<T>> featurers;
     
+    public abstract FeatureFactory<T> getFeatureFactory();
 
     public void loadFeatures(Arguments args) throws ZinggClientException {
 		try{
 		LOG.info("Start reading internal configurations and functions");
-		if (args.getFieldDefinition() != null) {
+        if (args.getFieldDefinition() != null) {
 			featurers = new HashMap<FieldDefinition, Feature<T>>();
 			for (FieldDefinition def : args.getFieldDefinition()) {
 				if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
-					Feature<T> fea = (Feature<T>) FeatureFactory.get(def.getDataType());
+					Feature fea =  (Feature) getFeatureFactory().get(def.getDataType());
 					fea.init(def);
 					featurers.put(def, fea);			
 				}
@@ -40,6 +41,7 @@ public abstract class ModelUtil<S,T, D,R,C> {
 		}
 		catch(Throwable t) {
 			LOG.warn("Unable to initialize internal configurations and functions");
+            t.printStackTrace();
 			if (LOG.isDebugEnabled()) t.printStackTrace();
 			throw new ZinggClientException("Unable to initialize internal configurations and functions");
 		}
@@ -53,12 +55,9 @@ public abstract class ModelUtil<S,T, D,R,C> {
         this.featurers = featurers;
     }
 
-
-    
-
 	public Model<S,T,D,R,C> createModel(ZFrame<D,R,C> positives,
-        ZFrame<D,R,C> negatives, boolean isLabel) throws Exception, ZinggClientException {
-        if (this.featurers == null) loadFeatures(null);
+        ZFrame<D,R,C> negatives, boolean isLabel, Arguments args) throws Exception, ZinggClientException {
+        if (this.featurers == null) loadFeatures(args);
         LOG.info("Learning similarity rules");
         ZFrame<D,R,C> posLabeledPointsWithLabel = positives.withColumn(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_MATCH);
         posLabeledPointsWithLabel = posLabeledPointsWithLabel.cache();

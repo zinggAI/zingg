@@ -6,7 +6,9 @@ import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.feature.Feature;
+import zingg.feature.FeatureFactory;
 import zingg.model.Model;
+import zingg.spark.feature.SparkFeatureFactory;
 import zingg.spark.model.SparkLabelModel;
 import zingg.spark.model.SparkModel;
 import zingg.util.ModelUtil;
@@ -44,5 +46,10 @@ public class SparkModelUtil extends ModelUtil<SparkSession,DataType,Dataset<Row>
         return model;
 
      }
+
+    @Override
+    public FeatureFactory<DataType> getFeatureFactory() {
+        return new SparkFeatureFactory();
+    }
 
 }
