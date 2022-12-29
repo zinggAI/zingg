@@ -45,8 +45,8 @@ public class SparkTrimLastDigitsDbl extends TrimLastDigitsDbl<Dataset<Row>,Row,C
 
 
     @Override
-    public Object apply(Row ds, String column) {
-        return call((Double) getAs(ds, column));
+    public Object apply(Row r, String column) {
+        return call((Double) getAs(r, column));
    }
 
 
