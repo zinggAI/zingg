@@ -15,7 +15,12 @@ import zingg.client.ZinggOptions;
 import zingg.model.Model;
 import zingg.spark.model.SparkModel;
 
-
+/**
+ * Spark specific implementation of Linker
+ * 
+ * @author vikasgupta
+ *
+ */
 public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	public static String name = "zingg.spark.SparkLinker";

@@ -15,6 +15,12 @@ import zingg.client.ZinggOptions;
 import zingg.model.Model;
 import zingg.spark.model.SparkModel;
 
+/**
+ * Spark specific implementation of Matcher
+ * 
+ * @author vikasgupta
+ *
+ */
 public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,DataType>{
 
 
