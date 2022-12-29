@@ -51,6 +51,4 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
 	}
 
 
-
-
 }
