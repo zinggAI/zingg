@@ -10,7 +10,7 @@ import org.apache.spark.sql.types.DataType;
 import zingg.client.ZFrame;
 import zingg.hash.LessThanZeroDbl;
 
-public class SparkLessThanZeroDbl<D,R,C,T> extends LessThanZeroDbl<Dataset<Row>,Row,Column,DataType>  implements UDF1<Double, Boolean>{
+public class SparkLessThanZeroDbl extends LessThanZeroDbl<Dataset<Row>,Row,Column,DataType>  implements UDF1<Double, Boolean>{
 	
     @Override
     public ZFrame<Dataset<Row>, Row, Column> apply(ZFrame<Dataset<Row>, Row, Column> ds, String column,
