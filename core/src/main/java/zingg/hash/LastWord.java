@@ -18,21 +18,5 @@ public abstract class LastWord<D,R,C,T> extends HashFunction<D,R,C,T>{
 		}
 		return r;
 	}
-
-	@Override
-	public Object getAs(D df, R r, String column) {
-		return null;
-	}
-
-	@Override
-	public Object apply(D df, R r, String column) {
-		return null;
-	}
-
-	@Override
-	public Object apply(R r, String column) {
-		return null;
-	}
-
 	
 }
