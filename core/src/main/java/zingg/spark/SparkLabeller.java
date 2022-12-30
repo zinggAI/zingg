@@ -33,19 +33,18 @@ public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Col
 	}
 
 
-    @Override
-    public void init(Arguments args, String license)  throws ZinggClientException {
-        super.init(args, license);
-        getContext().init(license);
-    }
-        
+  @Override
+  public void init(Arguments args, String license)  throws ZinggClientException {
+    super.init(args, license);
+    getContext().init(license);
+  }
+
+	
 	@Override
 	public void cleanup() throws ZinggClientException {
 		// TODO Auto-generated method stub
 		
 	}
-
-
 	
 
 	

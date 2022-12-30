@@ -1,31 +1,31 @@
 package zingg.feature;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.types.DataType;
-import org.apache.spark.sql.types.DataTypes;
-public class FeatureFactory implements Serializable {
+
+public abstract class FeatureFactory<T> implements Serializable {
 
 	public static final Log LOG = LogFactory.getLog(FeatureFactory.class);
 
-	private static Map<DataType, Class> map;
+	protected Map<T, Class> map;
 
-	private static void init() {
-		map = new HashMap<DataType, Class>();
-		map.put(DataTypes.StringType, StringFeature.class);
-		map.put(DataTypes.IntegerType, IntFeature.class);
-		map.put(DataTypes.DateType, DateFeature.class);
-		map.put(DataTypes.DoubleType, DoubleFeature.class);
-	}
+	public abstract void init(); 
 
-	public static Object get(DataType dataType) throws Exception {
-		if (map == null)
+	public abstract T getDataTypeFromString(String t) ;
+
+	public Object get(String dataType) throws Exception {
+		if (map == null) {
 			init();
-		return map.get(dataType).newInstance();
+		} 
+		for (T v: map.keySet()) {
+			System.out.println("______________" + v);
+		}
+		System.out.println("***********************getDataTypeFromString " + dataType);
+		System.out.println("***********************and val is " + getDataTypeFromString(dataType));
+		return map.get(getDataTypeFromString(dataType)).newInstance();
 	}
 
 }

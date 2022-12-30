@@ -26,7 +26,7 @@ import zingg.client.util.ColName;
 import scala.collection.JavaConversions;
 import scala.collection.Seq;
 
-public class Block<D,R,C,T> implements Serializable {
+public abstract class Block<D,R,C,T> implements Serializable {
 
 	public static final Log LOG = LogFactory.getLog(Block.class);
 
@@ -124,6 +124,8 @@ public class Block<D,R,C,T> implements Serializable {
 		return trial;
 	}
 
+	public abstract T getDataTypeFromString(String t);
+
 	public Canopy<R>getBestNode(Tree<Canopy<R>> tree, Canopy<R>parent, Canopy<R>node,
 			List<FieldDefinition> fieldsOfInterest) throws Exception {
 		long least = Long.MAX_VALUE;
@@ -135,7 +137,7 @@ public class Block<D,R,C,T> implements Serializable {
 			FieldDefinition context = field;
 			if (least ==0) break;//how much better can it get?
 			// applicable functions
-			List<HashFunction<D,R,C,T>> functions = functionsMap.get(field.getDataType());
+			List<HashFunction<D,R,C,T>> functions = functionsMap.get(getDataTypeFromString(field.getDataType()));
 			if (functions != null) {
 				
 				for (HashFunction function : functions) {

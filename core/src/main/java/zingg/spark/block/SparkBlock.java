@@ -22,4 +22,10 @@ public class SparkBlock extends Block<Dataset<Row>, Row, Column, DataType> {
 		super(training, dupes, functionsMap, maxSize);
 	}
 
+
+    @Override
+    public DataType getDataTypeFromString(String t) {
+      return DataType.fromJson(t);
+    }
+
 }
