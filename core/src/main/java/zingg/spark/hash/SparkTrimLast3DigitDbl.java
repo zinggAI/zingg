@@ -14,8 +14,8 @@ public class SparkTrimLast3DigitDbl extends SparkTrimLastDigitsDbl {
 	
 	public static final Log LOG = LogFactory.getLog(SparkTrimLast3DigitDbl.class);
 
-	public SparkTrimLast3DigitDbl(int count){
-	    super(count);
+	public SparkTrimLast3DigitDbl(){
+	    super(3);
 	}
 	
 }

@@ -14,8 +14,8 @@ public class SparkTrimLast2DigitInt extends SparkTrimLastDigitsInt {
 	
 	public static final Log LOG = LogFactory.getLog(SparkTrimLast2DigitInt.class);
 
-	public SparkTrimLast2DigitInt(int count){
-	    super(count);
+	public SparkTrimLast2DigitInt(){
+	    super(2);
 	}
 	
 }
