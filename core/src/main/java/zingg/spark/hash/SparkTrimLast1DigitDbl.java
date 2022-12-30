@@ -3,8 +3,6 @@ package zingg.spark.hash;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.hash.TrimLastDigitsDbl;
-
 /**
  * Spark specific trim function for double last 1 digit
  * 
