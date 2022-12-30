@@ -35,22 +35,5 @@ public abstract class FirstChars<D,R,C,T> extends HashFunction<D,R,C,T>{
 			LOG.debug("Applying " + this.name + " on " + field + " and returning " + r);
 			return r;
 	 }
-	
-	 @Override
-	 public Object apply(R r, String column) {
-		 return null;
-	 }
- 
- 
-	 @Override
-	 public Object apply(D df, R r, String column) {
-		 return null;
-	 }
- 
-
-	@Override
-	public Object getAs(R r, String column) {
-		return null;
-	}
 
 }

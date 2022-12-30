@@ -1,7 +1,5 @@
 package zingg.hash;
 
-
-
 public abstract class First3CharsBox<D,R,C,T> extends HashFunction<D,R,C,T>{
 
 	public First3CharsBox() {
@@ -35,26 +33,5 @@ public abstract class First3CharsBox<D,R,C,T> extends HashFunction<D,R,C,T>{
 			}//else
 	 }
 	 
-	 @Override
-	 public Object apply(R ds, String column) {
-		 return call((String) getAs(ds, column));
-	}
-
-	@Override
-	public Object getAs(R r, String column) {
-		return null;
-	}
-
-	@Override
-	public Object apply(D df, R r, String column) {
-		return null;
-	}
-
-	@Override
-	public Object getAs(D df, R r, String column) {
-		return null;
-	}
-
-
 
 }

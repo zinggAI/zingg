@@ -6,20 +6,16 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.functions;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataType;
-import org.apache.spark.sql.types.DataTypes;
 
 import zingg.client.ZFrame;
-import zingg.hash.LastWord;
+import zingg.hash.RangeDbl;
 
-public class SparkLastWord extends LastWord<Dataset<Row>,Row,Column,DataType> implements UDF1<String, String>{
-	
-	public SparkLastWord() {
-		super();
-		setDataType(DataTypes.StringType);
-		setReturnType(DataTypes.StringType);
-		
+public class SparkRangeDbl<D,R,C,T> extends RangeDbl<Dataset<Row>,Row,Column,DataType>  implements UDF1<Double, Integer>{
+
+	public SparkRangeDbl(int lower, int upper) {
+		super(lower ,upper);
 	}
-
+	
     @Override
     public ZFrame<Dataset<Row>, Row, Column> apply(ZFrame<Dataset<Row>, Row, Column> ds, String column,
             String newColumn) {
@@ -28,7 +24,7 @@ public class SparkLastWord extends LastWord<Dataset<Row>,Row,Column,DataType> im
 
     @Override
     public Object getAs(Row r, String column) {
-        return (String) r.getAs(column);
+        return (Double) r.getAs(column);
     }
 
     @Override
@@ -39,7 +35,7 @@ public class SparkLastWord extends LastWord<Dataset<Row>,Row,Column,DataType> im
 
     @Override
     public Object apply(Row r, String column) {
-        return call((String) getAs(r, column));
+        return call((Double) getAs(r, column));
    }
 
 
