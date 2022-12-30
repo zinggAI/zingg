@@ -10,11 +10,11 @@ import org.apache.commons.logging.LogFactory;
  * @author vikasgupta
  *
  */
-public class SparkTrimLast3DigitDbl extends SparkTrimLastDigitsDbl {
+public class SparkTrimLast3DigitsDbl extends SparkTrimLastDigitsDbl {
 	
-	public static final Log LOG = LogFactory.getLog(SparkTrimLast3DigitDbl.class);
+	public static final Log LOG = LogFactory.getLog(SparkTrimLast3DigitsDbl.class);
 
-	public SparkTrimLast3DigitDbl(){
+	public SparkTrimLast3DigitsDbl(){
 	    super(3);
 	}
 	

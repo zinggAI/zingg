@@ -10,11 +10,11 @@ import org.apache.commons.logging.LogFactory;
  * @author vikasgupta
  *
  */
-public class SparkTruncateDoubleTo3Place extends SparkTruncateDouble {
+public class SparkTruncateDoubleTo3Places extends SparkTruncateDouble {
 	
-	public static final Log LOG = LogFactory.getLog(SparkTruncateDoubleTo3Place.class);
+	public static final Log LOG = LogFactory.getLog(SparkTruncateDoubleTo3Places.class);
 
-	public SparkTruncateDoubleTo3Place(){
+	public SparkTruncateDoubleTo3Places(){
 	    super(3);
 	}
 	
