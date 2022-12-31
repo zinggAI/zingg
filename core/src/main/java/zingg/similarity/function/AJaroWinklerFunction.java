@@ -21,11 +21,5 @@ public class AJaroWinklerFunction extends StringSimilarityDistanceFunction {
 		
 	}
 	
-	@Override
-	public String getUid() {
-   	if (uid == null) {
-   		uid = Identifiable$.MODULE$.randomUID("AJaroWinklerFunction");
-   	}
-   	return uid;
-   }
+	
 }

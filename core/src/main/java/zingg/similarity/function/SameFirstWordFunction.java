@@ -17,13 +17,7 @@ public class SameFirstWordFunction extends AffineGapSimilarityFunction {
 		//gap = new SAffineGap();
 	}
 
-	@Override
-	 public String getUid() {
-    	if (uid == null) {
-    		uid = Identifiable$.MODULE$.randomUID("SameFirstWordFunction");
-    	}
-    	return uid;
-    }
+	
 
 /*	public void operate(SimFunctionContext<String> context) {
 		String first = context.getFirstOperand();

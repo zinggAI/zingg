@@ -7,13 +7,11 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.functions;
 import org.apache.spark.sql.api.java.UDF1;
-import org.apache.spark.sql.api.java.UDF2;
 import org.apache.spark.sql.types.DataTypes;
 
-import zingg.similarity.function.BaseTransformer;
-import zingg.client.util.ColName;
+import zingg.spark.similarity.SparkTransformer;
 
-public class VectorValueExtractor extends BaseTransformer implements UDF1<Vector, Double>{
+public class VectorValueExtractor extends SparkTransformer implements UDF1<Vector, Double>{
 	
 	@Override
 	public Double call(Vector v) {

@@ -18,13 +18,6 @@ public class CheckBlankOrNullFunction extends BaseSimilarityFunction<String> {
 		super(name);
 	}
 
-	@Override
-	 public String getUid() {
-    	if (uid == null) {
-    		uid = Identifiable$.MODULE$.randomUID("CheckBlankOrNullFunction");
-    	}
-    	return uid;
-    }
 	
 
 	@Override
