@@ -1,4 +1,6 @@
-package zingg.hash;
+package zingg.hash.unused;
+
+import zingg.hash.TruncateDouble;
 
 public abstract class TruncateDoubleTo1Place extends TruncateDouble {
 

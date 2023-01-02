@@ -1,4 +1,6 @@
-package zingg.hash;
+package zingg.hash.unused;
+
+import zingg.hash.TrimLastDigitsDbl;
 
 public abstract class TrimLast1DigitDbl extends TrimLastDigitsDbl {
 	

@@ -1,4 +1,6 @@
-package zingg.hash;
+package zingg.hash.unused;
+
+import zingg.hash.RangeDbl;
 
 public abstract class RangeBetween1000And10000Dbl extends RangeDbl {
 

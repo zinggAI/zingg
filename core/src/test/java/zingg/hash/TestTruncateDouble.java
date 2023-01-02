@@ -2,6 +2,10 @@ package zingg.hash;
 
 import org.junit.jupiter.api.Test;
 
+import zingg.hash.unused.TruncateDoubleTo1Place;
+import zingg.hash.unused.TruncateDoubleTo2Places;
+import zingg.hash.unused.TruncateDoubleTo3Places;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestTruncateDouble {

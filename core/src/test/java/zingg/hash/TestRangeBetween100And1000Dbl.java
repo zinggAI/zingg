@@ -2,6 +2,8 @@ package zingg.hash;
 
 import org.junit.jupiter.api.Test;
 
+import zingg.hash.unused.RangeBetween100And1000Dbl;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestRangeBetween100And1000Dbl {

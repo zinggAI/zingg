@@ -1,4 +1,6 @@
-package zingg.hash;
+package zingg.hash.unused;
+
+import zingg.hash.RangeInt;
 
 public abstract class RangeBetween10And100Int extends RangeInt {
 
