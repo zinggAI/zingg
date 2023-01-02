@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="core/src/main/java"/>
-	<classpathentry kind="src" path="client/src/test/java"/>
+	<classpathentry kind="src" path="core/src/test/java">
+		<attributes>
+			<attribute name="test" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="client/src/main/java"/>
-	<classpathentry kind="src" path="core/src/test/java"/>
+	<classpathentry kind="src" path="client/src/test/java">
+		<attributes>
+			<attribute name="test" value="true"/>
+		</attributes>
+	</classpathentry>	
 	<classpathentry kind="src" path="license/src/main/java"/>
 	<classpathentry kind="src" path="reifierRT/src/main/java"/>
 	<classpathentry kind="src" path="core/src/main/scala"/>
