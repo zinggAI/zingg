@@ -1,39 +1,39 @@
-package zingg.hash;
-
-import org.junit.jupiter.api.Test;
+package zingg.spark.hash;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestLessThanZeroDbl {
+import org.junit.jupiter.api.Test;
+
+public class TestSparkLessThanZeroDbl {
 
 	@Test
 	public void testLessThanZeroDblForValueZero() {
-		LessThanZeroDbl value = new LessThanZeroDbl();
+	    SparkLessThanZeroDbl value = new SparkLessThanZeroDbl();
 		assertFalse(value.call(0d));
 	}
 
 	@Test
 	public void testLessThanZeroDblForValueNaN() {
-		LessThanZeroDbl value = new LessThanZeroDbl();
+	    SparkLessThanZeroDbl value = new SparkLessThanZeroDbl();
 		assertFalse(value.call(Double.NaN));
 	}
 
 	@Test
 	public void testLessThanZeroDblForValueNull() {
-		LessThanZeroDbl value = new LessThanZeroDbl();
+	    SparkLessThanZeroDbl value = new SparkLessThanZeroDbl();
 		assertFalse(value.call(null));
 	}
 
 	@Test
 	public void testLessThanZeroDblForPositiveDoubleValue() {
-		LessThanZeroDbl value = new LessThanZeroDbl();
+	    SparkLessThanZeroDbl value = new SparkLessThanZeroDbl();
 		assertFalse(value.call(543534.67734));
 	}
 
 	@Test
 	public void testLessThanZeroDblNegativeDoubleValue() {
-		LessThanZeroDbl value = new LessThanZeroDbl();
+	    SparkLessThanZeroDbl value = new SparkLessThanZeroDbl();
 		assertTrue(value.call(-543534.67734));
 	}
 

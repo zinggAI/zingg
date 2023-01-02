@@ -1,56 +1,54 @@
-package zingg.hash;
-
-import org.junit.jupiter.api.Test;
-
-import zingg.hash.unused.RangeBetween0And10Int;
+package zingg.spark.hash;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 public class TestRangeBetween0And10Int {
 
 	@Test
 	public void testRangeForValueZero() {
-		RangeInt value = new RangeBetween0And10Int();
+		SparkRangeInt value = new SparkRangeBetween0And10Int();
 		assertEquals(1, value.call(0));
 	}
 
 	@Test
 	public void testRangeForNegativeValue() {
-		RangeInt value = new RangeBetween0And10Int();
+        SparkRangeInt value = new SparkRangeBetween0And10Int();
 		assertEquals(0, value.call(-100));
 	}
 
 	@Test
 	public void testRangeForVeryHighValue() {
-		RangeInt value = new RangeBetween0And10Int();
+        SparkRangeInt value = new SparkRangeBetween0And10Int();
 		assertEquals(0, value.call(999999));
 	}
 
 	@Test
 	public void testRangeForValue8() {
-		RangeInt value = new RangeBetween0And10Int();
+        SparkRangeInt value = new SparkRangeBetween0And10Int();
 		assertEquals(1, value.call(8));
 	}
 
 	@Test
 	public void testRangeForValue65() {
-		RangeInt value = new RangeBetween0And10Int();
+        SparkRangeInt value = new SparkRangeBetween0And10Int();
 		assertEquals(0, value.call(65));
 	}
 
 	@Test
 	public void testRangeForValue867() {
-		RangeInt value = new RangeBetween0And10Int();
+        SparkRangeInt value = new SparkRangeBetween0And10Int();
 		assertEquals(0, value.call(867));
 	}
 	@Test
 	public void testRangeForValue8637() {
-		RangeInt value = new RangeBetween0And10Int();
+        SparkRangeInt value = new SparkRangeBetween0And10Int();
 		assertEquals(0, value.call(8637));
 	}
 	@Test
 	public void testRangeForNull() {
-		RangeInt value = new RangeBetween0And10Int();
+        SparkRangeInt value = new SparkRangeBetween0And10Int();
 		assertEquals(0, value.call(null));
 	}
 
