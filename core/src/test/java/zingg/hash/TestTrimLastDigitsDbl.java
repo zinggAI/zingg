@@ -2,6 +2,10 @@ package zingg.hash;
 
 import org.junit.jupiter.api.Test;
 
+import zingg.hash.unused.TrimLast1DigitDbl;
+import zingg.hash.unused.TrimLast2DigitsDbl;
+import zingg.hash.unused.TrimLast3DigitsDbl;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestTrimLastDigitsDbl {
