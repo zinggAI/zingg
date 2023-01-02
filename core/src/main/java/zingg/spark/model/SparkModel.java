@@ -30,7 +30,8 @@ import zingg.client.SparkFrame;
 import zingg.client.ZFrame;
 import zingg.feature.Feature;
 import zingg.model.Model;
-import zingg.similarity.function.BaseSimilarityFunction;
+import zingg.similarity.function.SimFunction;
+import zingg.spark.similarity.SparkSimFunction;
 import zingg.spark.similarity.SparkTransformer;
 import zingg.client.util.ColName;
 
@@ -54,13 +55,11 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 		int count = 0;
 		for (FieldDefinition fd : f.keySet()) {
 			Feature fea = f.get(fd);
-			List<BaseSimilarityFunction> sfList = fea.getSimFunctions();
-			for (BaseSimilarityFunction sf : sfList) {
-				SparkTransformer st = new SparkTransformer();
-				st.setInputCol(fd.fieldName);
+			List<SimFunction> sfList = fea.getSimFunctions();
+			for (SimFunction sf : sfList) {
 				String outputCol = ColName.SIM_COL + count;
 				columnsAdded.add(outputCol);	
-				st.setOutputCol(outputCol);
+				SparkTransformer st = new SparkTransformer(fd.fieldName, new SparkSimFunction(sf), outputCol);
 				count++;
 				//pipelineStage.add(sf);
 				featureCreators.add(st);
@@ -87,9 +86,9 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 		lr.setFitIntercept(true);
 		pipelineStage.add(lr);
 																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																					
-		vve = new VectorValueExtractor();
-		vve.setInputCol(ColName.PROBABILITY_COL);
-		vve.setOutputCol(ColName.SCORE_COL);
+		vve = new VectorValueExtractor(ColName.PROBABILITY_COL,ColName.SCORE_COL);
+		//vve.setInputCol(ColName.PROBABILITY_COL);
+		//vve.setOutputCol(ColName.SCORE_COL);
 		//pipelineStage.add(vve);
 		columnsAdded.add(ColName.PROBABILITY_COL);	
 		columnsAdded.add(ColName.RAW_PREDICTION);	

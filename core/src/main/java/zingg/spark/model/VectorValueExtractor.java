@@ -9,9 +9,17 @@ import org.apache.spark.sql.functions;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataTypes;
 
+import zingg.spark.similarity.SparkBaseTransformer;
 import zingg.spark.similarity.SparkTransformer;
 
-public class VectorValueExtractor extends SparkTransformer implements UDF1<Vector, Double>{
+public class VectorValueExtractor extends SparkBaseTransformer implements UDF1<Vector, Double>{
+
+
+
+	public VectorValueExtractor(String inputCol, String outputCol) {
+		super(inputCol, outputCol, "VectorValueExtractor");
+		
+	}
 	
 	@Override
 	public Double call(Vector v) {
@@ -23,13 +31,13 @@ public class VectorValueExtractor extends SparkTransformer implements UDF1<Vecto
     	spark.udf().register(uid, (UDF1) this, DataTypes.DoubleType);
     }
 	
-	@Override
+	/*@Override
 	public String getUid() {
    	if (uid == null) {
    		uid = Identifiable$.MODULE$.randomUID("VectorValueExtractor");
    	}
    	return uid;
-   }
+   }*/
 	
 	@Override	
 	public Dataset<Row> transform(Dataset<?> ds){

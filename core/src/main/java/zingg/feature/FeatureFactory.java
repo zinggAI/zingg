@@ -20,11 +20,6 @@ public abstract class FeatureFactory<T> implements Serializable {
 		if (map == null) {
 			init();
 		} 
-		for (T v: map.keySet()) {
-			System.out.println("______________" + v);
-		}
-		System.out.println("***********************getDataTypeFromString " + dataType);
-		System.out.println("***********************and val is " + getDataTypeFromString(dataType));
 		return map.get(getDataTypeFromString(dataType)).newInstance();
 	}
 

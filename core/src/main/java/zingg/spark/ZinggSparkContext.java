@@ -64,7 +64,7 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
             setDSUtil(new SparkDSUtil(spark));
             setHashUtil(new SparkHashUtil(spark));
             setGraphUtil(new SparkGraphUtil());
-            setModelUtil(new SparkModelUtil());
+            setModelUtil(new SparkModelUtil(spark));
             setBlokingTreeUtil(new SparkBlockingTreeUtil());
         }
         catch(Throwable e) {

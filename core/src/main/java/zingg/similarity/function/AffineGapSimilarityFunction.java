@@ -17,7 +17,7 @@ public class AffineGapSimilarityFunction extends StringSimilarityDistanceFunctio
 	}
 	
 	public AffineGapSimilarityFunction(String s) {
-		super(s);
+		this.name = s;
 		gap = new SAffineGap();
 	}
 

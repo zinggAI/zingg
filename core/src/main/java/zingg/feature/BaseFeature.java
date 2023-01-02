@@ -8,13 +8,13 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.client.FieldDefinition;
 import zingg.client.MatchType;
-import zingg.similarity.function.BaseSimilarityFunction;
+import zingg.similarity.function.SimFunction;
 
 public abstract class BaseFeature<T> implements Feature<T> {
 
 	public static final Log LOG = LogFactory.getLog(BaseFeature.class);
 
-	List<BaseSimilarityFunction<T>> simFunctions;
+	List<SimFunction<T>> simFunctions;
 	FieldDefinition fieldDefinition;
 	
 	public FieldDefinition getFieldDefinition() {
@@ -22,7 +22,7 @@ public abstract class BaseFeature<T> implements Feature<T> {
 	}
 
 	public BaseFeature() {
-		simFunctions = new ArrayList<BaseSimilarityFunction<T>>();
+		simFunctions = new ArrayList<SimFunction<T>>();
 	}
 
 	public BaseFeature(FieldDefinition fieldDefinition) {
@@ -48,14 +48,14 @@ public abstract class BaseFeature<T> implements Feature<T> {
 
 	
 
-	public BaseSimilarityFunction<T> getSimFunction(int i) {
+	public SimFunction<T> getSimFunction(int i) {
 		return simFunctions.get(i);
 	}
 
 	/**
 	 * @return the simFunctions
 	 */
-	public List<BaseSimilarityFunction<T>> getSimFunctions() {
+	public List<SimFunction<T>> getSimFunctions() {
 		return simFunctions;
 	}
 
@@ -63,12 +63,12 @@ public abstract class BaseFeature<T> implements Feature<T> {
 	 * @param simFunctions
 	 *            the simFunctions to set
 	 */
-	public void setSimFunctions(List<BaseSimilarityFunction<T>> simFunctions) {
+	public void setSimFunctions(List<SimFunction<T>> simFunctions) {
 		this.simFunctions = simFunctions;
 	}
 
 	@Override
-	public void addSimFunction(BaseSimilarityFunction<T> b) {
+	public void addSimFunction(SimFunction<T> b) {
 		//LOG.debug("Adding " + b + " with " + b.getNumFeatures() + " and "
 		//		+ b.getNorm());
 		this.simFunctions.add(b);

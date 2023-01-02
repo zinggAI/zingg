@@ -24,7 +24,7 @@ import zingg.spark.model.SparkModel;
 public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,DataType>{
 
 
-	public static String name = "zingg.spark.Matcher";
+	public static String name = "zingg.spark.SparkMatcher";
 	public static final Log LOG = LogFactory.getLog(SparkMatcher.class);    
 
 

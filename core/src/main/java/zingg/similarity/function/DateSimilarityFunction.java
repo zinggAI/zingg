@@ -5,7 +5,7 @@ import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class DateSimilarityFunction extends BaseSimilarityFunction<Date> {
+public class DateSimilarityFunction extends SimFunction<Date> {
 	
 	public static final Log LOG = LogFactory.getLog(DateSimilarityFunction.class);
 
