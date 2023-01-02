@@ -11,7 +11,7 @@ public abstract class TrainMatcher<S,D,R,C,T> extends Matcher<S,D,R,C,T>{
 	protected static String name = "zingg.TrainMatcher";
 	public static final Log LOG = LogFactory.getLog(TrainMatcher.class); 
 	
-	private Trainer<S,D,R,C,T> trainer;
+	protected Trainer<S,D,R,C,T> trainer;
 
     public TrainMatcher() {
         setZinggOptions(ZinggOptions.TRAIN_MATCH);		
@@ -20,6 +20,7 @@ public abstract class TrainMatcher<S,D,R,C,T> extends Matcher<S,D,R,C,T>{
 	@Override
 	public void init(Arguments args, String license)
         throws ZinggClientException {
+			trainer.init(args, license);
 			super.init(args, license);			
 	}
 

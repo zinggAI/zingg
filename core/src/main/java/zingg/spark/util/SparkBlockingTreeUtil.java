@@ -9,6 +9,7 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.catalyst.encoders.RowEncoder;
 import org.apache.spark.sql.Column;
@@ -32,10 +33,17 @@ import zingg.hash.HashFunction;
 import zingg.spark.block.SparkBlock;
 import zingg.spark.block.SparkBlockFunction;
 import zingg.util.BlockingTreeUtil;
+import zingg.util.PipeUtilBase;
 
 public class SparkBlockingTreeUtil extends BlockingTreeUtil<SparkSession, Dataset<Row>, Row, Column, DataType>{
 
     public static final Log LOG = LogFactory.getLog(SparkBlockingTreeUtil.class);
+    protected SparkSession spark;
+    
+    public SparkBlockingTreeUtil(SparkSession s, PipeUtilBase pipeUtil) {
+        this.spark = s;
+        setPipeUtil(pipeUtil);
+    }
 
     @Override
     public ZFrame<Dataset<Row>, Row, Column> getBlockHashes(ZFrame<Dataset<Row>, Row, Column> testData,
@@ -56,11 +64,10 @@ public class SparkBlockingTreeUtil extends BlockingTreeUtil<SparkSession, Datase
 public void writeBlockingTree(Tree<Canopy<Row>> blockingTree, Arguments args) throws Exception, ZinggClientException {
         byte[] byteArray  = Util.convertObjectIntoByteArray(blockingTree);
         StructType schema = DataTypes.createStructType(new StructField[] { DataTypes.createStructField("BlockingTree", DataTypes.BinaryType, false) });
-        List<Object> objList = new ArrayList<>();
-        objList.add(byteArray);
-        //TODOJavaRDD<Row> rowRDD = ctx.parallelize(objList).map((Object row) -> RowFactory.create(row));
-        //TODODataset<Row> df = spark.sqlContext().createDataFrame(rowRDD, schema).toDF().coalesce(1);
-        //TODOPipeUtil.write(df, args, ctx, PipeUtil.getBlockingTreePipe(args));
+        List<Row> objList = new ArrayList<>();
+        objList.add(RowFactory.create(byteArray));
+        Dataset<Row> df = spark.sqlContext().createDataFrame(objList, schema).toDF().coalesce(1);
+        getPipeUtil().write(new SparkFrame(df), args, getPipeUtil().getBlockingTreePipe(args));
         
 }
 
