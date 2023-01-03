@@ -8,31 +8,31 @@ public class TestTrimLastDigitsDbl {
 	
 	@Test
 	public void testTrimLast1DigitDbl() {
-		SparkTrimLast1DigitDbl value = new SparkTrimLast1DigitDbl();
+	    SparkTrimLastDigitsDbl value = new SparkTrimLastDigitsDbl(1);
 		assertEquals(54353d, value.call(543534.677));
 	}
 
 	@Test
 	public void testTrimLast2DigitsDbl() {
-	    SparkTrimLast2DigitsDbl value = new SparkTrimLast2DigitsDbl();
+	    SparkTrimLastDigitsDbl value = new SparkTrimLastDigitsDbl(2);
 		assertEquals(5435d, value.call(543534.677));
 	}
 
 	@Test
 	public void testTrimLast3DigitsDbl() {
-	    SparkTrimLast3DigitsDbl value = new SparkTrimLast3DigitsDbl();
+	    SparkTrimLastDigitsDbl value = new SparkTrimLastDigitsDbl(3);
 		assertEquals(543d, value.call(543534.677));
 	}
 
 	@Test
 	public void testTrimLast3DigitsDblNaNValue() {
-	    SparkTrimLast3DigitsDbl value = new SparkTrimLast3DigitsDbl();
+	    SparkTrimLastDigitsDbl value = new SparkTrimLastDigitsDbl(3);
 		assertEquals(Double.NaN, value.call(Double.NaN));
 	}
 
 	@Test
 	public void testTrimLast3DigitsDblNullValue() {
-	    SparkTrimLast3DigitsDbl value = new SparkTrimLast3DigitsDbl();
+	    SparkTrimLastDigitsDbl value = new SparkTrimLastDigitsDbl(3);
 		assertEquals(null, value.call(null));
 	}
 

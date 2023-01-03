@@ -21,39 +21,39 @@ public class SparkHashFunctionRegistry implements HashFunctionRegistry<Dataset<R
 	
 	public SparkHashFunctionRegistry() {
 		
-	    init(new SparkFirst1Chars());
-	    init(new SparkFirst2Chars());
+	    init(new SparkFirstChars(1));
+	    init(new SparkFirstChars(2));
 	    init(new SparkFirst2CharsBox());
-	    init(new SparkFirst3Chars());
+	    init(new SparkFirstChars(3));
 	    init(new SparkFirst3CharsBox());
-	    init(new SparkFirst4Chars());
+	    init(new SparkFirstChars(4));
 	    init(new SparkIdentityInteger());
 	    init(new SparkIdentityString());
 	    init(new SparkIsNullOrEmpty());
-	    init(new SparkLast1Chars());
-	    init(new SparkLast2Chars());
-	    init(new SparkLast3Chars());
+	    init(new SparkLastChars(1));
+	    init(new SparkLastChars(2));
+	    init(new SparkLastChars(3));
 	    init(new SparkLastWord());
 	    init(new SparkLessThanZeroDbl());
 	    init(new SparkLessThanZeroInt());
-	    init(new SparkRangeBetween0And10Dbl());
-	    init(new SparkRangeBetween0And10Int());
-	    init(new SparkRangeBetween1000And10000Dbl());
-	    init(new SparkRangeBetween1000And10000Int());
-	    init(new SparkRangeBetween100And1000Dbl());
-	    init(new SparkRangeBetween100And1000Int());
-	    init(new SparkRangeBetween10And100Dbl());
-	    init(new SparkRangeBetween10And100Int());
+	    init(new SparkRangeDbl(0,10));
+	    init(new SparkRangeInt(0,10));
+	    init(new SparkRangeDbl(1000,10000));
+	    init(new SparkRangeInt(1000,10000));
+	    init(new SparkRangeDbl(100,1000));
+	    init(new SparkRangeInt(100,1000));
+	    init(new SparkRangeDbl(10,100));
+	    init(new SparkRangeInt(10,100));
 	    init(new SparkRound());
-	    init(new SparkTrimLast1DigitDbl());
-	    init(new SparkTrimLast1DigitInt());
-	    init(new SparkTrimLast2DigitsDbl());
-	    init(new SparkTrimLast2DigitsInt());
-	    init(new SparkTrimLast3DigitsDbl());
-	    init(new SparkTrimLast3DigitsInt());
-	    init(new SparkTruncateDoubleTo1Place());
-	    init(new SparkTruncateDoubleTo2Places());
-	    init(new SparkTruncateDoubleTo3Places());		
+	    init(new SparkTrimLastDigitsDbl(1));
+	    init(new SparkTrimLastDigitsInt(1));
+	    init(new SparkTrimLastDigitsDbl(2));
+	    init(new SparkTrimLastDigitsInt(2));
+	    init(new SparkTrimLastDigitsDbl(3));
+	    init(new SparkTrimLastDigitsInt(3));
+	    init(new SparkTruncateDouble(1));
+	    init(new SparkTruncateDouble(2));
+	    init(new SparkTruncateDouble(3));		
 		
 	}
 	

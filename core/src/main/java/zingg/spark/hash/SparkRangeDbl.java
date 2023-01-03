@@ -11,7 +11,7 @@ import org.apache.spark.sql.types.DataTypes;
 import zingg.client.ZFrame;
 import zingg.hash.RangeDbl;
 
-public class SparkRangeDbl<D,R,C,T> extends RangeDbl<Dataset<Row>,Row,Column,DataType>  implements UDF1<Double, Integer>{
+public class SparkRangeDbl extends RangeDbl<Dataset<Row>,Row,Column,DataType>  implements UDF1<Double, Integer>{
 
 	public SparkRangeDbl(int lower, int upper) {
 		super(lower ,upper);

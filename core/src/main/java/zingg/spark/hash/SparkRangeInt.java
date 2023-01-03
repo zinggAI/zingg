@@ -11,7 +11,7 @@ import org.apache.spark.sql.types.DataTypes;
 import zingg.client.ZFrame;
 import zingg.hash.RangeInt;
 
-public class SparkRangeInt<D,R,C,T> extends RangeInt<Dataset<Row>,Row,Column,DataType>  implements UDF1<Integer, Integer>{
+public class SparkRangeInt extends RangeInt<Dataset<Row>,Row,Column,DataType>  implements UDF1<Integer, Integer>{
 
 	public SparkRangeInt(int lower, int upper) {
 		super(lower ,upper);

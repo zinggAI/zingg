@@ -1,4 +1,6 @@
-package zingg.spark.hash;
+package zingg.spark.hash.unused;
+
+import zingg.spark.hash.SparkLastChars;
 
 public class SparkLast3Chars extends SparkLastChars{
 	

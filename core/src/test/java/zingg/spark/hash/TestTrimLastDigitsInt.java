@@ -8,25 +8,25 @@ public class TestTrimLastDigitsInt {
 	
 	@Test
 	public void testTrimLast1Digit() {
-	    SparkTrimLast1DigitInt value = new SparkTrimLast1DigitInt();
+	    SparkTrimLastDigitsInt value = new SparkTrimLastDigitsInt(1);
 		assertEquals(54353, value.call(543534));
 	}
 
 	@Test
 	public void testTrimLast2DigitsInt() {
-	    SparkTrimLast2DigitsInt value = new SparkTrimLast2DigitsInt();
+	    SparkTrimLastDigitsInt value = new SparkTrimLastDigitsInt(2);
 		assertEquals(5435, value.call(543534));
 	}
 
 	@Test
 	public void testTrimLast3DigitsInt() {
-	    SparkTrimLast3DigitsInt value = new SparkTrimLast3DigitsInt();
+	    SparkTrimLastDigitsInt value = new SparkTrimLastDigitsInt(3);
 		assertEquals(543, value.call(543534));
 	}
 
 	@Test
 	public void testTrimLast3DigitsIntNullValue() {
-	    SparkTrimLast3DigitsInt value = new SparkTrimLast3DigitsInt();
+	    SparkTrimLastDigitsInt value = new SparkTrimLastDigitsInt(3);
 		assertEquals(null, value.call(null));
 	}
 

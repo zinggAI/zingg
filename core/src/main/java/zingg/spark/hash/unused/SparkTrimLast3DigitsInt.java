@@ -1,7 +1,9 @@
-package zingg.spark.hash;
+package zingg.spark.hash.unused;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import zingg.spark.hash.SparkTrimLastDigitsInt;
 
 /**
  * Spark specific trim function for integer last 3 digits

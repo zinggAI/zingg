@@ -1,4 +1,6 @@
-package zingg.spark.hash;
+package zingg.spark.hash.unused;
+
+import zingg.spark.hash.SparkFirstChars;
 
 public class SparkFirst4Chars extends SparkFirstChars{
 	

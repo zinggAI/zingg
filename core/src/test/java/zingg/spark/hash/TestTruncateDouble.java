@@ -8,49 +8,49 @@ public class TestTruncateDouble {
 	
 	@Test
 	public void testTruncateDoubleTo1Place() {
-	    SparkTruncateDoubleTo1Place value = new SparkTruncateDoubleTo1Place();
+	    SparkTruncateDouble value = new SparkTruncateDouble(1);
 		assertEquals(543534.6d, value.call(543534.67734));
 	}
 
 	@Test
 	public void testTruncateDoubleTo2Place() {
-	    SparkTruncateDoubleTo2Places value = new SparkTruncateDoubleTo2Places();
+	    SparkTruncateDouble value = new SparkTruncateDouble(2);
 		assertEquals(543534.67d, value.call(543534.67734));
 	}
 
 	@Test
 	public void testTruncateDoubleTo3Place() {
-	    SparkTruncateDoubleTo3Places value = new SparkTruncateDoubleTo3Places();
+	    SparkTruncateDouble value = new SparkTruncateDouble(3);
 		assertEquals(543534.677d, value.call(543534.67734));
 	}
 
 	@Test
 	public void testTruncateDoubleTo3PlaceWhenNumberhas2DecimalPlaces() {
-	    SparkTruncateDoubleTo3Places value = new SparkTruncateDoubleTo3Places();
+	    SparkTruncateDouble value = new SparkTruncateDouble(3);
 		assertEquals(543534.670d, value.call(543534.67));
 	}
 
 	@Test
 	public void testTruncateDoubleTo3PlaceForNumberWithNoDecimalPlaces() {
-	    SparkTruncateDoubleTo3Places value = new SparkTruncateDoubleTo3Places();
+	    SparkTruncateDouble value = new SparkTruncateDouble(3);
 		assertEquals(543534.000d, value.call(543534d));
 	}
 
 	@Test
 	public void testTruncateDoubleTo3PlaceForNumberNAN() {
-	    SparkTruncateDoubleTo3Places value = new SparkTruncateDoubleTo3Places();
+	    SparkTruncateDouble value = new SparkTruncateDouble(3);
 		assertEquals(Double.NaN, value.call(Double.NaN));
 	}
 
 	@Test
 	public void testTruncateDoubleTo3PlaceForNumber0() {
-	    SparkTruncateDoubleTo3Places value = new SparkTruncateDoubleTo3Places();
+	    SparkTruncateDouble value = new SparkTruncateDouble(3);
 		assertEquals(0d, value.call(0d));
 	}
 
 	@Test
 	public void testTruncateDoubleTo3PlaceForNull() {
-	    SparkTruncateDoubleTo3Places value = new SparkTruncateDoubleTo3Places();
+	    SparkTruncateDouble value = new SparkTruncateDouble(3);
 		assertEquals(null, value.call(null));
 	}
 
