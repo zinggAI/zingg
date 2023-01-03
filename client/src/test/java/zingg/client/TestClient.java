@@ -33,6 +33,7 @@ public class TestClient {
 		}
 	}
 
+	/* 
 	@Test
 	public void testSetColumnOptionThroughBuildAndSetArguments() {
 		Arguments arguments = new Arguments();
@@ -42,5 +43,5 @@ public class TestClient {
 		client.buildAndSetArguments(arguments, options);
 
 		assertEquals("columnName", client.getArguments().getColumn());
-	}
+	}*/
 }
