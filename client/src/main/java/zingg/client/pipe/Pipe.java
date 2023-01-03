@@ -42,6 +42,7 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	int id;
 	ZFrame<D, R, C> dataset;
 	String schema;
+	String mode;
 
 	
 
@@ -136,7 +137,13 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 				+ preprocessors + ", props=" + props + "]";
 	}
 	
-	
+	public String getMode(){
+		return mode;
+	}
+
+	public void setMode(String s) {
+		this.mode = s;
+	}
 
 	/* 
 	public Pipe clone() {

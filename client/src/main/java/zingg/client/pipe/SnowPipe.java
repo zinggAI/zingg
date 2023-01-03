@@ -14,14 +14,7 @@ public class SnowPipe extends Pipe<DataFrame, Row, Column> {
     public static final String TABLE = "table";
     public static final String xml = "xml";
     
-    public SaveMode getMode() {
-		return mode;
-	}
-
-
-	public void setMode(SaveMode mode) {
-		this.mode = mode;
-	}
+   
 
 
 	
