@@ -139,6 +139,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			
 		} catch (Exception e) {
 			if (LOG.isDebugEnabled()) e.printStackTrace();
+			e.printStackTrace();
 			throw new ZinggClientException(e.getMessage());
 		}
     }

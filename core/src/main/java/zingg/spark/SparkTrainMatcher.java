@@ -29,6 +29,7 @@ public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, 
 	public SparkTrainMatcher() {
 		setZinggOptions(ZinggOptions.TRAIN_MATCH);
 		setContext(new ZinggSparkContext());
+		trainer = new SparkTrainer();
 	}
 
     @Override

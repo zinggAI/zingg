@@ -15,6 +15,8 @@ public abstract class StringSimilarityDistanceFunction extends StringSimilarityF
 	public StringSimilarityDistanceFunction(String name) {
 		super(name);
 	}
+
+	public StringSimilarityDistanceFunction(){}
 	
 	public AbstractStringDistance getDistanceFunction(){
 		return gap;

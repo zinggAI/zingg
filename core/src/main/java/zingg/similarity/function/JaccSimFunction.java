@@ -19,14 +19,6 @@ public class JaccSimFunction extends StringSimilarityDistanceFunction {
 		gap = new SJacc();
 	}
 	
-	@Override
-	 public String getUid() {
-   	if (uid == null) {
-   		uid = Identifiable$.MODULE$.randomUID("JaccSimFunction");
-   	}
-   	return uid;
-   }
-
 	
 	
 }

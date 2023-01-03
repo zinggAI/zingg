@@ -3,13 +3,13 @@ package zingg.similarity.function;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class StringSimilarityFunction extends BaseSimilarityFunction<String> {
+public class StringSimilarityFunction extends SimFunction<String> {
 
 	public static final Log LOG = LogFactory
 			.getLog(StringSimilarityFunction.class);
 
 	public StringSimilarityFunction() {
-		super("StringSimilarityFunction");
+		this("StringSimilarityFunction");
 		// TODO Auto-generated constructor stub
 	}
 

@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.ml.util.Identifiable$;
 
-public class CheckBlankOrNullFunction extends BaseSimilarityFunction<String> {
+public class CheckBlankOrNullFunction extends SimFunction<String> {
 
 	public static final Log LOG = LogFactory
 			.getLog(CheckBlankOrNullFunction.class);
@@ -18,13 +18,6 @@ public class CheckBlankOrNullFunction extends BaseSimilarityFunction<String> {
 		super(name);
 	}
 
-	@Override
-	 public String getUid() {
-    	if (uid == null) {
-    		uid = Identifiable$.MODULE$.randomUID("CheckBlankOrNullFunction");
-    	}
-    	return uid;
-    }
 	
 
 	@Override

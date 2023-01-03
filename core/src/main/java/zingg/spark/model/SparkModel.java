@@ -30,7 +30,9 @@ import zingg.client.SparkFrame;
 import zingg.client.ZFrame;
 import zingg.feature.Feature;
 import zingg.model.Model;
-import zingg.similarity.function.BaseSimilarityFunction;
+import zingg.similarity.function.SimFunction;
+import zingg.spark.similarity.SparkSimFunction;
+import zingg.spark.similarity.SparkTransformer;
 import zingg.client.util.ColName;
 
 public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row, Column>{
@@ -39,7 +41,7 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 	public static final Log DbLOG = LogFactory.getLog("WEB");
 	//private Map<FieldDefinition, Feature> featurers;
 	List<PipelineStage> pipelineStage;
-	List<BaseSimilarityFunction> featureCreators; 
+	List<SparkTransformer> featureCreators; 
 	LogisticRegression lr;
 	Transformer transformer;
 	BinaryClassificationEvaluator binaryClassificationEvaluator;
@@ -47,21 +49,20 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 	VectorValueExtractor vve;
 	
 	public SparkModel(Map<FieldDefinition, Feature<DataType>> f) {
-		featureCreators = new ArrayList<BaseSimilarityFunction>();
+		featureCreators = new ArrayList<SparkTransformer>();
 		pipelineStage = new ArrayList<PipelineStage> ();
 		columnsAdded = new ArrayList<String> ();
 		int count = 0;
 		for (FieldDefinition fd : f.keySet()) {
 			Feature fea = f.get(fd);
-			List<BaseSimilarityFunction> sfList = fea.getSimFunctions();
-			for (BaseSimilarityFunction sf : sfList) {
-				sf.setInputCol(fd.fieldName);
+			List<SimFunction> sfList = fea.getSimFunctions();
+			for (SimFunction sf : sfList) {
 				String outputCol = ColName.SIM_COL + count;
 				columnsAdded.add(outputCol);	
-				sf.setOutputCol(outputCol);
+				SparkTransformer st = new SparkTransformer(fd.fieldName, new SparkSimFunction(sf), outputCol);
 				count++;
 				//pipelineStage.add(sf);
-				featureCreators.add(sf);
+				featureCreators.add(st);
 			}
 		}
 		
@@ -85,9 +86,9 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 		lr.setFitIntercept(true);
 		pipelineStage.add(lr);
 																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																					
-		vve = new VectorValueExtractor();
-		vve.setInputCol(ColName.PROBABILITY_COL);
-		vve.setOutputCol(ColName.SCORE_COL);
+		vve = new VectorValueExtractor(ColName.PROBABILITY_COL,ColName.SCORE_COL);
+		//vve.setInputCol(ColName.PROBABILITY_COL);
+		//vve.setOutputCol(ColName.SCORE_COL);
 		//pipelineStage.add(vve);
 		columnsAdded.add(ColName.PROBABILITY_COL);	
 		columnsAdded.add(ColName.RAW_PREDICTION);	
@@ -158,7 +159,7 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 	}
 
 	public ZFrame<Dataset<Row>,Row,Column> transform(Dataset<Row> input) {
-		for (BaseSimilarityFunction bsf: featureCreators) {
+		for (SparkTransformer bsf: featureCreators) {
 			input = bsf.transform(input);
 		}
 		return new SparkFrame(input); //.cache();
@@ -173,7 +174,7 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 	@Override
 	public void register(SparkSession spark) {
 		if (featureCreators != null) {
-			for (BaseSimilarityFunction bsf: featureCreators) {
+			for (SparkTransformer bsf: featureCreators) {
 				bsf.register(spark);
 			}
 		}

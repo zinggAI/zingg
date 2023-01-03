@@ -31,7 +31,7 @@ import zingg.client.SparkFrame;
 import zingg.client.ZFrame;
 import zingg.feature.Feature;
 import zingg.model.Model;
-import zingg.similarity.function.BaseSimilarityFunction;
+import zingg.similarity.function.SimFunction;
 import zingg.client.util.ColName;
 
 
@@ -42,7 +42,7 @@ public class SnowModel extends Model<Session, DataType, DataFrame, Row, Column>{
 	public static final Log DbLOG = LogFactory.getLog("WEB");
 	//private Map<FieldDefinition, Feature> featurers;
 	List<PipelineStage> pipelineStage;
-	List<BaseSimilarityFunction> featureCreators; 
+	List<SimFunction> featureCreators; 
 	LogisticRegression lr;
 	Transformer transformer;
 	BinaryClassificationEvaluator binaryClassificationEvaluator;
@@ -50,14 +50,14 @@ public class SnowModel extends Model<Session, DataType, DataFrame, Row, Column>{
 	VectorValueExtractor vve;
 	
 	public SnowModel(Map<FieldDefinition, Feature> f) {
-		featureCreators = new ArrayList<BaseSimilarityFunction>();
+		featureCreators = new ArrayList<SimFunction>();
 		pipelineStage = new ArrayList<PipelineStage> ();
 		columnsAdded = new ArrayList<String> ();
 		int count = 0;
 		for (FieldDefinition fd : f.keySet()) {
 			Feature fea = f.get(fd);
-			List<BaseSimilarityFunction> sfList = fea.getSimFunctions();
-			for (BaseSimilarityFunction sf : sfList) {
+			List<SimFunction> sfList = fea.getSimFunctions();
+			for (SimFunction sf : sfList) {
 				sf.setInputCol(fd.fieldName);
 				String outputCol = ColName.SIM_COL + count;
 				columnsAdded.add(outputCol);	
@@ -161,7 +161,7 @@ public class SnowModel extends Model<Session, DataType, DataFrame, Row, Column>{
 	}
 
 	public ZFrame<DataFrame,Row,Column> transform(DataFrame input) {
-		for (BaseSimilarityFunction bsf: featureCreators) {
+		for (SimFunction bsf: featureCreators) {
 			input = bsf.transform(input);
 		}
 		return new SnowFrame(input); //.cache();
@@ -176,7 +176,7 @@ public class SnowModel extends Model<Session, DataType, DataFrame, Row, Column>{
 	@Override
 	public void register(Session snow) {
 		if (featureCreators != null) {
-			for (BaseSimilarityFunction bsf: featureCreators) {
+			for (SimFunction bsf: featureCreators) {
 				bsf.register(snow);
 			}
 		}
