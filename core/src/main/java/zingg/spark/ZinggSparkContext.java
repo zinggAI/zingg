@@ -44,7 +44,15 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
     
 
     public static final Log LOG = LogFactory.getLog(ZinggSparkContext.class);
+
     
+    
+
+    public SparkSession getSession() {
+        return spark;
+    }
+
+
 
     @Override
     public void init(String license)

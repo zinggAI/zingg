@@ -19,17 +19,7 @@ public class SparkPipe extends Pipe<Dataset<Row>, Row, Column> {
     
     @JsonSerialize(using = CustomSchemaSerializer.class)
 	protected StructType schemaStruct;
-    protected SaveMode mode;
     
-    public SaveMode getMode() {
-		return mode;
-	}
-
-
-	public void setMode(SaveMode mode) {
-		this.mode = mode;
-	}
-
 
     static class CustomSchemaSerializer extends StdSerializer<StructType> {
 		 

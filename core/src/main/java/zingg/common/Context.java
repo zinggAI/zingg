@@ -31,6 +31,8 @@ public interface Context <S,D, R, C,T> extends Serializable {
     public void init(String license)
         throws ZinggClientException;
 
+    public S getSession();
+
     
     //public void initHashFns() throws ZinggClientException;
 

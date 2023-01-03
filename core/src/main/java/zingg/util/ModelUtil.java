@@ -48,7 +48,8 @@ public abstract class ModelUtil<S,T, D,R,C> {
 		}
 	}
 
-    public Map<FieldDefinition,Feature<T>> getFeaturers() {
+    public Map<FieldDefinition,Feature<T>> getFeaturers(Arguments args) throws ZinggClientException {
+        if (this.featurers == null) loadFeatures(args);
         return this.featurers;
     }
 
@@ -58,7 +59,6 @@ public abstract class ModelUtil<S,T, D,R,C> {
 
 	public Model<S,T,D,R,C> createModel(ZFrame<D,R,C> positives,
         ZFrame<D,R,C> negatives, boolean isLabel, Arguments args) throws Exception, ZinggClientException {
-        if (this.featurers == null) loadFeatures(args);
         LOG.info("Learning similarity rules");
         ZFrame<D,R,C> posLabeledPointsWithLabel = positives.withColumn(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_MATCH);
         posLabeledPointsWithLabel = posLabeledPointsWithLabel.cache();
@@ -71,15 +71,15 @@ public abstract class ModelUtil<S,T, D,R,C> {
                     + posLabeledPointsWithLabel.count() + ", "
                     + negLabeledPointsWithLabel.count());
         }
-        Model<S,T, D,R,C> model = getModel(featurers, isLabel);
+        Model<S,T, D,R,C> model = getModel(isLabel, args);
         model.register(session);
         model.fit(posLabeledPointsWithLabel, negLabeledPointsWithLabel);
         return model;
     }
 
-    public abstract Model<S,T,D,R,C> getModel(Map<FieldDefinition, Feature<T>> featurers, boolean isLabel);
+    public abstract Model<S,T,D,R,C> getModel(boolean isLabel, Arguments args) throws ZinggClientException;
 
-    public abstract Model<S,T,D,R,C> loadModel(Map<FieldDefinition, Feature<T>> featurers, boolean isLabel, Arguments args);
+    public abstract Model<S,T,D,R,C> loadModel(boolean isLabel, Arguments args) throws ZinggClientException;
 
 
 

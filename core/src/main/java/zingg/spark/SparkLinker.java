@@ -44,10 +44,9 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
 	}
 
 	@Override
-	protected Model getModel() {
-		Model model = new SparkModel(getModelUtil().getFeaturers());
-		model.register(getContext());
-		model.load(args.getModel());
+	protected Model getModel() throws ZinggClientException {
+		Model model = getModelUtil().loadModel(false, args);
+		model.register(getContext().getSession());
 		return model;
 	}
 	

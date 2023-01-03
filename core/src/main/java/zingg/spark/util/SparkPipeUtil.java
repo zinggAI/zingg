@@ -220,12 +220,12 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
  				p.setDataset(toWriteOrig);
 				return;
 			}
-			SparkPipe sPipe = (SparkPipe) p;
-			if (sPipe.getMode() != null) {
-				writer.mode(sPipe.getMode());
+			//SparkPipe sPipe = (SparkPipe) p;
+			if (p.getMode() != null) {
+				writer.mode(SaveMode.valueOf(p.getMode()));
 			}
 			else {
-				writer.mode("Append");
+				writer.mode(SaveMode.valueOf("Append"));
 			}
 			/* 
 			if (p.getFormat().equals(Pipe.FORMAT_ELASTIC)) {
@@ -296,11 +296,11 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 				writer = writer.format(p.getFormat());				
 
 				//SparkPipe sPipe = (SparkPipe) p;
-				if (sPipe.getMode() != null) {
-					writer.mode((sPipe.getMode()));
+				if (p.getMode() != null) {
+					writer.mode(SaveMode.valueOf(p.getMode()));
 				}
 				else {
-					writer.mode("Append");
+					writer.mode(SaveMode.valueOf("Append"));
 				}
 				for (String key: p.getProps().keySet()) {
 					writer = writer.option(key, p.get(key));
@@ -357,7 +357,7 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		p.setFormat(Pipe.FORMAT_CSV);
 		p.setProp(FilePipe.HEADER, "true");
 		p.setProp(FilePipe.LOCATION, fileName);
-		p.setMode(SaveMode.Overwrite);
+		p.setMode(SaveMode.Overwrite.toString());
 		return p;
 	}
 
@@ -365,7 +365,7 @@ public class SparkPipeUtil implements PipeUtilBase<SparkSession, Dataset<Row>, R
 		SparkPipe p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getBlockFile());
-		p.setMode(SaveMode.Overwrite);
+		p.setMode(SaveMode.Overwrite.toString());
 		return p;
 	}
 

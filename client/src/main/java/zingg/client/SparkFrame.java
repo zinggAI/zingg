@@ -88,7 +88,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     }
 
     public ZFrame<Dataset<Row>, Row, Column> joinRight(ZFrame<Dataset<Row>, Row, Column> lines1, String joinColumn) {
-        return join(lines1, joinColumn, true, "right");
+        return join(lines1, joinColumn, false, "right");
     }
 
     public ZFrame<Dataset<Row>, Row, Column> join(ZFrame<Dataset<Row>, Row, Column> lines1, String joinColumn, boolean addPrefixToCol, String joinType) {
@@ -130,7 +130,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     
 
     public ZFrame<Dataset<Row>, Row, Column> groupByMinMax(Column c) {
-        return new SparkFrame(df.groupBy(df.col(ColName.COL_PREFIX + ColName.ID_COL)).agg(
+        return new SparkFrame(df.groupBy(df.col(ColName.ID_COL)).agg(
 			functions.min(ColName.SCORE_COL).as(ColName.SCORE_MIN_COL),
 			functions.max(ColName.SCORE_COL).as(ColName.SCORE_MAX_COL)));
     }

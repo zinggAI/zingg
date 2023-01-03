@@ -33,20 +33,21 @@ public class SparkModelUtil extends ModelUtil<SparkSession,DataType,Dataset<Row>
         this.session = s;
     }
 
-	public Model<SparkSession,DataType,Dataset<Row>, Row, Column> getModel(Map<FieldDefinition, Feature<DataType>> featurers, boolean isLabel){
+	public Model<SparkSession,DataType,Dataset<Row>, Row, Column> getModel(boolean isLabel, Arguments args) throws ZinggClientException{
         Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = null;
         if (isLabel) {
-            model = new SparkLabelModel(featurers);
+            model = new SparkLabelModel(getFeaturers(args));
         }
         else {
-            model = new SparkModel(featurers);            
+            model = new SparkModel(getFeaturers(args));            
         }
         return model;
     }
 
-    public Model<SparkSession,DataType,Dataset<Row>, Row, Column> loadModel(Map<FieldDefinition, Feature<DataType>> featurers, boolean isLabel,
-        Arguments args)    {
-        Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = getModel(featurers, isLabel);
+    @Override
+    public Model<SparkSession,DataType,Dataset<Row>, Row, Column> loadModel(boolean isLabel,
+        Arguments args) throws ZinggClientException    {
+        Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = getModel(isLabel, args);
         model.load(args.getModel());
         return model;
 
