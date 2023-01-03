@@ -19,13 +19,7 @@ public class OnlyAlphabetsExactSimilarity extends StringSimilarityDistanceFuncti
 		super(s);
 	}
 	
-	@Override
-	 public String getUid() {
-    	if (uid == null) {
-    		uid = Identifiable$.MODULE$.randomUID("OnlyAlphabetsExactSimilarity");
-    	}
-    	return uid;
-    }
+	
 
 	@Override
 	public Double call(String first, String second) {

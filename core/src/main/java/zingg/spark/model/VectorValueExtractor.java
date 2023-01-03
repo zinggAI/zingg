@@ -7,13 +7,19 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.functions;
 import org.apache.spark.sql.api.java.UDF1;
-import org.apache.spark.sql.api.java.UDF2;
 import org.apache.spark.sql.types.DataTypes;
 
-import zingg.similarity.function.BaseTransformer;
-import zingg.client.util.ColName;
+import zingg.spark.similarity.SparkBaseTransformer;
+import zingg.spark.similarity.SparkTransformer;
 
-public class VectorValueExtractor extends BaseTransformer implements UDF1<Vector, Double>{
+public class VectorValueExtractor extends SparkBaseTransformer implements UDF1<Vector, Double>{
+
+
+
+	public VectorValueExtractor(String inputCol, String outputCol) {
+		super(inputCol, outputCol, "VectorValueExtractor");
+		
+	}
 	
 	@Override
 	public Double call(Vector v) {
@@ -25,13 +31,13 @@ public class VectorValueExtractor extends BaseTransformer implements UDF1<Vector
     	spark.udf().register(uid, (UDF1) this, DataTypes.DoubleType);
     }
 	
-	@Override
+	/*@Override
 	public String getUid() {
    	if (uid == null) {
    		uid = Identifiable$.MODULE$.randomUID("VectorValueExtractor");
    	}
    	return uid;
-   }
+   }*/
 	
 	@Override	
 	public Dataset<Row> transform(Dataset<?> ds){

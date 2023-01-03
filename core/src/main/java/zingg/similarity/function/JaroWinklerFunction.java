@@ -22,13 +22,5 @@ public class JaroWinklerFunction extends StringSimilarityDistanceFunction {
 		gap = new SJaroWinkler();
 	}
 	
-	@Override
-	public String getUid() {
-   	if (uid == null) {
-   		uid = Identifiable$.MODULE$.randomUID("JaroWinklerFunction");
-   	}
-   	return uid;
-   }
-	
 	
 }

@@ -27,6 +27,11 @@ import org.apache.spark.sql.types.DataType;
 public class SparkModelUtil extends ModelUtil<SparkSession,DataType,Dataset<Row>, Row, Column> {
 
     public static final Log LOG = LogFactory.getLog(SparkModelUtil.class);
+    
+
+    public SparkModelUtil(SparkSession s) {
+        this.session = s;
+    }
 
 	public Model<SparkSession,DataType,Dataset<Row>, Row, Column> getModel(Map<FieldDefinition, Feature<DataType>> featurers, boolean isLabel){
         Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = null;

@@ -17,7 +17,7 @@ public class AffineGapSimilarityFunction extends StringSimilarityDistanceFunctio
 	}
 	
 	public AffineGapSimilarityFunction(String s) {
-		super(s);
+		this.name = s;
 		gap = new SAffineGap();
 	}
 
@@ -26,13 +26,7 @@ public class AffineGapSimilarityFunction extends StringSimilarityDistanceFunctio
 		return super.call(first,second);
 	}
 	
-	@Override
-	 public String getUid() {
-    	if (uid == null) {
-    		uid = Identifiable$.MODULE$.randomUID("AffineGapSimilarityFunction");
-    	}
-    	return uid;
-    }
+	
 	
 	
 }

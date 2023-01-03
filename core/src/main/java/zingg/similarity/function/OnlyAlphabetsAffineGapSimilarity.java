@@ -21,13 +21,7 @@ public class OnlyAlphabetsAffineGapSimilarity extends StringSimilarityDistanceFu
 		gap = new SAffineGap();
 	}
 	
-	@Override
-	 public String getUid() {
-    	if (uid == null) {
-    		uid = Identifiable$.MODULE$.randomUID("OnlyAlphabetsAffineGapSimilarity");
-    	}
-    	return uid;
-    }
+	
 
 	@Override
 	public Double call(String first, String second) {

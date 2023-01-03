@@ -1,4 +1,4 @@
-package zingg.similarity.function;
+package zingg.spark.similarity;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,25 +17,27 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
 
 import zingg.client.util.ColName;
+import zingg.similarity.function.SimFunction;
 
-public abstract class BaseTransformer extends Transformer implements HasInputCol, HasOutputCol {
+
+public abstract class SparkBaseTransformer extends Transformer implements HasInputCol, HasOutputCol {
 	
-	Param<String> inputcol = new Param<String>(this, "inputCol", "input column name");
-	Param<String> outputcol = new Param<String>(this, "outputCol", "output column name");
-	//String inputColumn;
-	//String outputColumn;
-	protected String name;
+	Param<String> inputcol; //= new Param<String>(this, "inputCol", "input column name");
+	Param<String> outputcol; //= new Param<String>(this, "outputCol", "output column name");
 	protected String uid;
 	
-	public static final Log LOG = LogFactory.getLog(BaseTransformer.class);
+	public static final Log LOG = LogFactory.getLog(SparkTransformer.class);
 	
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String n) {
-		this.name = n;
-	}
+    public SparkBaseTransformer(String inputCol, String outputCol, String uid) {
+        this.uid = uid;
+        inputcol = new Param<String>(this, "inputCol", "input column name");
+        outputcol = new Param<String>(this, "outputCol", "output column name");	
+        setInputCol(inputCol);
+        setOutputCol(outputCol);
+    }
+
+	
 	
 	
 	@Override
@@ -74,7 +76,7 @@ public abstract class BaseTransformer extends Transformer implements HasInputCol
 	
 	
 	@Override
-    public BaseTransformer copy(ParamMap paramMap) {
+    public SparkTransformer copy(ParamMap paramMap) {
 	  LOG.debug("Copying params for " + this.uid);
 	  paramMap.put(inputcol, get(inputcol).get());
 	  paramMap.put(outputcol, get(outputcol).get());
@@ -87,9 +89,9 @@ public abstract class BaseTransformer extends Transformer implements HasInputCol
     } 
     
     public String getUid() {
-    	if (uid == null) {
+    	/*if (uid == null) {
     		uid = Identifiable$.MODULE$.randomUID(name);
-    	}
+    	}*/
     	return uid;
     }
     
@@ -111,19 +113,8 @@ public abstract class BaseTransformer extends Transformer implements HasInputCol
     	outputcol = param;
     }
     
-	
-	public BaseTransformer() {
-		
-	}
-
-	public BaseTransformer(String name) {
-		this.name = name;
-	}
-	
+     
 	 
-    public void register(SparkSession spark) {
-    	spark.udf().register(uid, (UDF2) this, DataTypes.DoubleType);
-    }
-   
-
+    public abstract void register(SparkSession spark);
 }
+

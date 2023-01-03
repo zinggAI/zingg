@@ -5,7 +5,7 @@ import java.util.List;
 
 import zingg.client.FieldDefinition;
 import zingg.client.MatchType;
-import zingg.similarity.function.BaseSimilarityFunction;
+import zingg.similarity.function.SimFunction;
 
 public interface Feature<T> extends Serializable {
 
@@ -15,13 +15,13 @@ public interface Feature<T> extends Serializable {
 
 	List<MatchType> getMatchType();
 
-	BaseSimilarityFunction<T> getSimFunction(int i);
+	SimFunction<T> getSimFunction(int i);
 	
-	List<BaseSimilarityFunction<T>> getSimFunctions();
+	List<SimFunction<T>> getSimFunctions();
 
 	void init(FieldDefinition newParam);
 	
 	//String[] getCols();
 
-	void addSimFunction(BaseSimilarityFunction<T> b);
+	void addSimFunction(SimFunction<T> b);
 }

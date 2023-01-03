@@ -3,7 +3,7 @@ package zingg.similarity.function;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class IntegerSimilarityFunction extends BaseSimilarityFunction<Integer> {
+public class IntegerSimilarityFunction extends SimFunction<Integer> {
 	public static final Log LOG = LogFactory
 			.getLog(IntegerSimilarityFunction.class);
 
