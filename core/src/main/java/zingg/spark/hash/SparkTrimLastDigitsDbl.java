@@ -8,6 +8,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.functions;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.types.DataTypes;
 
 import zingg.client.ZFrame;
 import zingg.hash.TrimLastDigitsDbl;
@@ -25,6 +26,8 @@ public class SparkTrimLastDigitsDbl extends TrimLastDigitsDbl<Dataset<Row>,Row,C
 
 	public SparkTrimLastDigitsDbl(int count){
 	    super(count);
+        setDataType(DataTypes.DoubleType);
+        setReturnType(DataTypes.DoubleType);
 	}
 
     @Override

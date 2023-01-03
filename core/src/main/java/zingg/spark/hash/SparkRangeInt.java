@@ -6,6 +6,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.functions;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.types.DataTypes;
 
 import zingg.client.ZFrame;
 import zingg.hash.RangeInt;
@@ -14,6 +15,8 @@ public class SparkRangeInt<D,R,C,T> extends RangeInt<Dataset<Row>,Row,Column,Dat
 
 	public SparkRangeInt(int lower, int upper) {
 		super(lower ,upper);
+        setDataType(DataTypes.IntegerType);
+        setReturnType(DataTypes.IntegerType);
 	}
 	
     @Override

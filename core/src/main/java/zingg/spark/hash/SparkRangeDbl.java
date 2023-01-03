@@ -6,6 +6,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.functions;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.types.DataTypes;
 
 import zingg.client.ZFrame;
 import zingg.hash.RangeDbl;
@@ -14,6 +15,8 @@ public class SparkRangeDbl<D,R,C,T> extends RangeDbl<Dataset<Row>,Row,Column,Dat
 
 	public SparkRangeDbl(int lower, int upper) {
 		super(lower ,upper);
+        setDataType(DataTypes.DoubleType);
+        setReturnType(DataTypes.IntegerType);
 	}
 	
     @Override
