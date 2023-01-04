@@ -10,15 +10,31 @@ import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.client.ZFrame;
+import zingg.hash.BaseHash;
 import zingg.hash.HashFunction;
 
 
 public abstract class SparkHashFunction<T1, R> extends HashFunction<Dataset<Row>,Row,Column,DataType> implements UDF1<T1, R>{
 	
 	public static final Log LOG = LogFactory.getLog(SparkHashFunction.class);
-
-	public abstract R call(T1 t1);
 	
+	private BaseHash<T1, R> baseHash;
+
+    public BaseHash<T1, R> getBaseHash() {
+        return baseHash;
+    }
+
+    public void setBaseHash(BaseHash<T1, R> baseHash) {
+        this.baseHash = baseHash;
+        this.setName(baseHash.getName());
+    }
+	
+	@Override
+	public R call(T1 t1) {
+	    return getBaseHash().call(t1);
+	}
+	
+
     @Override
     public ZFrame<Dataset<Row>, Row, Column> apply(ZFrame<Dataset<Row>, Row, Column> ds, String column,
             String newColumn) {

@@ -1,17 +1,16 @@
 package zingg.hash;
 
 
-public abstract class IdentityString<D,R,C,T> extends HashFunction<D,R,C,T>{
+public class IdentityString extends BaseHash<String,String>{
 	
 	public IdentityString() {
-		super("identityString");
-		//, DataTypes.StringType, DataTypes.StringType);
+	    setName("identityString");
 	}
 
-	 public String call(String field) {
+	public String call(String field) {
 		 if (field == null) return field;
 		 field = field.trim().toLowerCase();
 		 return field;
-	 }
+	}
 
 }

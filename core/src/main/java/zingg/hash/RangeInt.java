@@ -1,11 +1,11 @@
 package zingg.hash;
 
-public abstract class RangeInt<D,R,C,T> extends HashFunction<D,R,C,T>{
-	int lowerLimit;
-	int upperLimit;
+public class RangeInt extends BaseHash<Integer,Integer>{
+	private int lowerLimit;
+	private int upperLimit;
 
 	public RangeInt(int lower, int upper) {
-		super("rangeBetween" + lower + "And" + upper + "Int");//, DataTypes.IntegerType, DataTypes.IntegerType, true);
+	    setName("rangeBetween" + lower + "And" + upper + "Int");//, DataTypes.IntegerType, DataTypes.IntegerType, true);
 		this.lowerLimit = lower;
 		this.upperLimit = upper;
 	}
@@ -18,5 +18,15 @@ public abstract class RangeInt<D,R,C,T> extends HashFunction<D,R,C,T>{
 		}
 		return withinRange;
 	}
+
+
+    public int getLowerLimit() {
+        return lowerLimit;
+    }
+
+
+    public int getUpperLimit() {
+        return upperLimit;
+    }
 
 }

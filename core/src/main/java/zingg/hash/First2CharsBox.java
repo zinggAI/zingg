@@ -1,17 +1,12 @@
 package zingg.hash;
 
-
-public abstract class First2CharsBox<D,R,C,T>extends HashFunction<D,R,C,T>{
-
+public class First2CharsBox extends BaseHash<String,Integer>{
+    
 	public First2CharsBox() {
-		super("first2CharsBox");
-		//, DataTypes.StringType, DataTypes.IntegerType, true);
+	    setName("first2CharsBox");
 	}
 
-	
-	
-	//  @Override
-	 public Integer call(String field) {
+	public Integer call(String field) {
 		 if (field == null || field.trim().length() <= 2) {
 				return 0;
 			} else {
@@ -25,8 +20,7 @@ public abstract class First2CharsBox<D,R,C,T>extends HashFunction<D,R,C,T>{
 				} else {
 					return 4;
 				}
-			}//else
-	 }
-	 
+			}
+	}
 
 }

@@ -1,9 +1,9 @@
 package zingg.hash;
 
-public abstract class LessThanZeroDbl<D,R,C,T> extends HashFunction<D,R,C,T> {
+public class LessThanZeroDbl extends BaseHash<Double,Boolean>{
 
 	public LessThanZeroDbl() {
-		super("lessThanZeroDbl");
+	    setName("lessThanZeroDbl");
 	}
 
 	

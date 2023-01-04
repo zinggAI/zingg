@@ -1,8 +1,8 @@
 package zingg.hash;
 
-public abstract class LessThanZeroInt<D,R,C,T> extends HashFunction<D,R,C,T> {
+public class LessThanZeroInt extends BaseHash<Integer,Boolean>{
 	public LessThanZeroInt() {
-		super("lessThanZeroInt");//, DataTypes.IntegerType, DataTypes.BooleanType, true);
+	    setName("lessThanZeroInt");
 	}
 	
 	public Boolean call(Integer field) {

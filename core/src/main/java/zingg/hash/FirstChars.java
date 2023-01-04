@@ -1,21 +1,17 @@
 package zingg.hash;
 
-import java.io.Serializable;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class FirstChars implements Serializable{
+public class FirstChars extends BaseHash<String,String>{
 	
 	public static final Log LOG = LogFactory.getLog(FirstChars.class);
 
 	private int endIndex;
-	
-	private String name;
-	
+
 	public FirstChars(int endIndex) {
-	    this.name = "first" + endIndex + "Chars";
+	    setName("first" + endIndex + "Chars");
 		this.endIndex = endIndex;
 	}
 	
@@ -36,18 +32,13 @@ public class FirstChars implements Serializable{
 				r = field.trim().substring(0, endIndex);
 			}
 			}
-			LOG.debug("Applying " + this.name + " on " + field + " and returning " + r);
+			LOG.debug("Applying " + this.getName() + " on " + field + " and returning " + r);
 			return r;
 	 }
 
 
     public int getEndIndex() {
         return endIndex;
-    }
-
-
-    public String getName() {
-        return name;
     }
 
 }

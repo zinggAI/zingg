@@ -20,42 +20,14 @@ import zingg.hash.TruncateDouble;
  * @author vikasgupta
  *
  */
-public class SparkTruncateDouble extends TruncateDouble<Dataset<Row>,Row,Column,DataType>  implements UDF1<Double, Double>{
+public class SparkTruncateDouble extends SparkHashFunction<Double, Double>{
 	
 	public static final Log LOG = LogFactory.getLog(SparkTruncateDouble.class);
-
+	
 	public SparkTruncateDouble(int count){
-	    super(count);
+	    setBaseHash(new TruncateDouble(count));
 	    setDataType(DataTypes.DoubleType);
 	    setReturnType(DataTypes.DoubleType);
 	}
-
-    @Override
-    public ZFrame<Dataset<Row>, Row, Column> apply(ZFrame<Dataset<Row>, Row, Column> ds, String column,
-            String newColumn) {
-        return ds.withColumn(newColumn, functions.callUDF(this.name, ds.col(column)));
-    }
-
-    @Override
-    public Object getAs(Row r, String column) {
-        return (Double) r.getAs(column);
-    }
-
-    @Override
-    public Object getAs(Dataset<Row> df, Row r, String column) {
-        throw new UnsupportedOperationException("not supported for Spark");
-    }
-
-
-    @Override
-    public Object apply(Row r, String column) {
-        return call((Double) getAs(r, column));
-   }
-
-
-    @Override
-    public Object apply(Dataset<Row> df, Row r, String column) {
-        throw new UnsupportedOperationException("not supported for Spark");
-    }
 	
 }

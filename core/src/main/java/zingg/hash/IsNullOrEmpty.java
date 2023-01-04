@@ -1,16 +1,15 @@
 package zingg.hash;
 
 
-public abstract class IsNullOrEmpty<D,R,C,T> extends HashFunction<D,R,C,T>{
+public class IsNullOrEmpty extends BaseHash<String,Boolean>{
 	
 	public IsNullOrEmpty() {
-		super("isNullOrEmpty");
-		//, DataTypes.StringType, DataTypes.BooleanType);
+	    setName("isNullOrEmpty");
 	}
 
-	//  @Override
-	 public Boolean call(String field) {
+
+	public Boolean call(String field) {
 		 return (field == null || ((String ) field).trim().length() == 0);
-	 }
+	}
 
 }

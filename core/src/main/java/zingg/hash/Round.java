@@ -1,19 +1,14 @@
 package zingg.hash;
 
-
-
-public abstract class Round<D,R,C,T> extends HashFunction<D,R,C,T>{
+public class Round extends BaseHash<Double,Long>{
 	
 	public Round() {
-		super("round");
-		//, DataTypes.DoubleType, DataTypes.LongType);
+	    setName("round");
 	}
 	
-
-	
-	 public Long call(Double field) {
+	public Long call(Double field) {
 		 return field == null ? null : Math.round(field);
-	 }
+	}
 
 }
 

@@ -1,9 +1,9 @@
 package zingg.hash;
 
 
-public abstract class LastWord<D,R,C,T> extends HashFunction<D,R,C,T>{
+public class LastWord extends BaseHash<String,String>{
 	public LastWord() {
-		super("lastWord");		
+	    setName("lastWord");		
 	}
 
 			

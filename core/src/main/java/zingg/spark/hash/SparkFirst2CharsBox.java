@@ -1,51 +1,15 @@
 package zingg.spark.hash;
 
-import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.functions;
-import org.apache.spark.sql.api.java.UDF1;
-import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 
-import zingg.client.ZFrame;
 import zingg.hash.First2CharsBox;
 
-public class SparkFirst2CharsBox extends First2CharsBox<Dataset<Row>, Row, Column,DataType> implements UDF1<String, Integer>{
+public class SparkFirst2CharsBox extends SparkHashFunction<String, Integer>{
 
-	public SparkFirst2CharsBox() {
-		super();
+ 	public SparkFirst2CharsBox() {
+	    setBaseHash(new First2CharsBox());
 		setDataType(DataTypes.StringType);
 		setReturnType(DataTypes.IntegerType);
 	}
-
-    @Override
-    public ZFrame<Dataset<Row>, Row, Column> apply(ZFrame<Dataset<Row>, Row, Column> ds, String column,
-            String newColumn) {
-        return ds.withColumn(newColumn, functions.callUDF(this.name, ds.col(column)));
-    }
-
-    @Override
-    public Object getAs(Row r, String column) {
-        return (String) r.getAs(column);
-    }
-
-    @Override
-    public Object getAs(Dataset<Row> df, Row r, String column) {
-        throw new UnsupportedOperationException("not supported for Spark");
-    }
-
-
-    @Override
-    public Object apply(Row r, String column) {
-        return call((String) getAs(r, column));
-   }
-
-
-    @Override
-    public Object apply(Dataset<Row> df, Row r, String column) {
-        throw new UnsupportedOperationException("not supported for Spark");
-    }
-
 	
 }

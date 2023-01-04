@@ -1,16 +1,13 @@
 package zingg.hash;
 
-public abstract class First3CharsBox<D,R,C,T> extends HashFunction<D,R,C,T>{
+public class First3CharsBox extends BaseHash<String,Integer>{
 
 	public First3CharsBox() {
-		super("first3CharsBox");
-		//, DataTypes.StringType, DataTypes.IntegerType, true);
+	    setName("first3CharsBox");
 	}
 
-	
-	
-	//  @Override
-	 public Integer call(String field) {
+
+	public Integer call(String field) {
 		 if (field == null || field.trim().length() <= 3) {
 				return 0;
 			} else {
@@ -30,8 +27,8 @@ public abstract class First3CharsBox<D,R,C,T> extends HashFunction<D,R,C,T>{
 				} else {
 					return 7;
 				}
-			}//else
-	 }
+			}
+	}
 	 
 
 }
