@@ -1,17 +1,21 @@
 package zingg.hash;
 
+import java.io.Serializable;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public abstract class FirstChars<D,R,C,T> extends HashFunction<D,R,C,T>{
+public class FirstChars implements Serializable{
 	
 	public static final Log LOG = LogFactory.getLog(FirstChars.class);
 
-	int endIndex;
+	private int endIndex;
+	
+	private String name;
 	
 	public FirstChars(int endIndex) {
-		super("first" + endIndex + "Chars");
+	    this.name = "first" + endIndex + "Chars";
 		this.endIndex = endIndex;
 	}
 	
@@ -35,5 +39,15 @@ public abstract class FirstChars<D,R,C,T> extends HashFunction<D,R,C,T>{
 			LOG.debug("Applying " + this.name + " on " + field + " and returning " + r);
 			return r;
 	 }
+
+
+    public int getEndIndex() {
+        return endIndex;
+    }
+
+
+    public String getName() {
+        return name;
+    }
 
 }

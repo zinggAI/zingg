@@ -13,6 +13,9 @@ public abstract class HashFunction<D,R,C,T> implements Serializable{
 		protected String name;
 		protected boolean isUdf = true;
 		protected T returnType;
+		
+        public HashFunction() {           
+        }
 
 		public HashFunction(String name) {
 			this.name = name;
