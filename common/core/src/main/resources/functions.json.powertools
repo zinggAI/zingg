@@ -1,0 +1,88 @@
+[
+{
+	"name" :"isNull",
+	"returnType" : "java.lang.Integer",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "if (a == null || a.trim().length() == 0) {return new Integer(0);} else {return new Integer(1);}"
+},
+{
+	"name" :"round",
+	"returnType" : "java.lang.Integer",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.Float"],
+	"block" : "return Math.round(a);"
+	
+},
+{
+	"name" :"identityInteger",
+	"returnType" : "java.lang.Integer",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.Integer"],
+	"block" : "return a;"
+},
+{
+	"name" :"identityDouble",
+	"returnType" : "java.lang.Double",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.Double"],
+	"block" : "return a;"
+},
+{
+	"name" :"bosch",
+	"returnType" : "java.lang.Boolean",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "return a.toLowerCase().contains(\"bosch\");"
+},
+{
+	"name" :"bd",
+	"returnType" : "java.lang.Boolean",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "return a.toLowerCase().contains(\"\\bbd\\b\");"
+},
+{
+	"name" :"decker",
+	"returnType" : "java.lang.Boolean",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "return a.toLowerCase().contains(\"\\bdecker\\b\");"
+},
+{
+	"name" :"makita",
+	"returnType" : "java.lang.Boolean",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "return a.toLowerCase().contains(\"makita\");"
+},
+{
+	"name" :"haakse",
+	"returnType" : "java.lang.Boolean",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "return a.toLowerCase().contains(\"haakse\");"
+},
+{
+	"name" :"ferm",
+	"returnType" : "java.lang.Boolean",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "return a.toLowerCase().contains(\"ferm\");"
+},
+{
+	"name" :"karcher",
+	"returnType" : "java.lang.Boolean",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "return a.toLowerCase().contains(\"karcher\");"
+},
+{
+	"name" :"extractDigit",
+	"returnType" : "java.lang.String",
+	"parameterNames" : ["a"],
+	"parameterTypes" : ["java.lang.String"],
+	"block" : "return a.replaceAll(\"\\\\D+\",\"\");"
+}
+
+]
