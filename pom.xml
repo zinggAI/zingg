@@ -24,8 +24,8 @@
 		</developer>
 	</developers>
 	<modules>
-		<module>core</module>
-		<module>client</module>
+		<module>common</module>
+		<module>spark_zingg</module>
 		<module>assembly</module>
 	</modules>
 	<profiles>

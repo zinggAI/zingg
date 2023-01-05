@@ -11,12 +11,22 @@
 <dependencies>
 		<dependency>
 			<groupId>zingg</groupId>
-			<artifactId>core</artifactId>
+			<artifactId>common_core</artifactId>
 			<version>${zingg.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>zingg</groupId>
-			<artifactId>client</artifactId>
+			<artifactId>common_client</artifactId>
+			<version>${zingg.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>spark_zingg_core</artifactId>
+			<version>${zingg.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>spark_zingg_client</artifactId>
 			<version>${zingg.version}</version>
 		</dependency>
 </dependencies>
@@ -56,25 +66,30 @@
 						</transformer>
 					</transformers>
     -->  <filters>
-         <filter>
-            <artifact>*:*</artifact>
-               <excludes>
+         	<filter>
+            	<artifact>*:*</artifact>
+                <excludes>
                   <exclude>META-INF/*.SF</exclude>
                   <exclude>META-INF/*.DSA</exclude>
                   <exclude>META-INF/*.RSA</exclude>
                   <exclude>DUMMY.SF</exclude>
                   <exclude>DUMMY.DSA</exclude>
                   <exclude>**/*.RSA</exclude>
-               </excludes>
+                </excludes>
             </filter>
-	   <filter>
-	 	<artifact>zingg:client</artifact>
-	  </filter>
-					<filter>
-						<artifact>zingg:core</artifact>
-					</filter>
-
-				</filters>
+			<filter>
+				<artifact>zingg:common_client</artifact>
+			</filter>
+			<filter>
+				<artifact>zingg:common_core</artifact>
+			</filter>
+			<filter>
+				<artifact>zingg:spark_zingg_client</artifact>
+			</filter>
+			<filter>
+				<artifact>zingg:spark_zingg_core</artifact>
+			</filter>
+		</filters>
 				</configuration>
 				<executions>
 					<execution>

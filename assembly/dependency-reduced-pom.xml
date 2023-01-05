@@ -34,10 +34,16 @@
               </excludes>
             </filter>
             <filter>
-              <artifact>zingg:client</artifact>
+              <artifact>zingg:common_client</artifact>
             </filter>
             <filter>
-              <artifact>zingg:core</artifact>
+              <artifact>zingg:common_core</artifact>
+            </filter>
+            <filter>
+              <artifact>zingg:spark_zingg_client</artifact>
+            </filter>
+            <filter>
+              <artifact>zingg:spark_zingg_core</artifact>
             </filter>
           </filters>
         </configuration>
