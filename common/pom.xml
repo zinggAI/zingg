@@ -6,7 +6,7 @@
 		<artifactId>parent</artifactId>
 		<version>${zingg.version}</version>
 	</parent>
-	<artifactId>common</artifactId>
+	<artifactId>common_zingg</artifactId>
 	<packaging>pom</packaging>
 	<modules>
 		<module>core</module>

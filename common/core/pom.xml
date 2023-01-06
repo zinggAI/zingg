@@ -3,15 +3,15 @@
 	<modelVersion>4.0.0</modelVersion>
 <parent>
 	<groupId>zingg</groupId>
-	<artifactId>common</artifactId>
+	<artifactId>common_zingg</artifactId>
 	<version>${zingg.version}</version>
 </parent>
-		<artifactId>common_core</artifactId>
+		<artifactId>common_zingg_core</artifactId>
 		<packaging>jar</packaging>
 <dependencies>
 <dependency>
 	<groupId>zingg</groupId>
-	<artifactId>common_client</artifactId>
+	<artifactId>common_zingg_client</artifactId>
 	<version>${zingg.version}</version>
 </dependency>
 <dependency>
