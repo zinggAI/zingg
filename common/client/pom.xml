@@ -2,10 +2,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>zingg</groupId>
-		<artifactId>common</artifactId>
+		<artifactId>common_zingg</artifactId>
 		<version>${zingg.version}</version>
 	</parent>
-	<artifactId>common_client</artifactId>
+	<artifactId>common_zingg_client</artifactId>
 	<packaging>jar</packaging>
 	<properties>
 		<fasterxml.jackson.version>2.12.6</fasterxml.jackson.version>

@@ -11,12 +11,12 @@
 <dependencies>
 		<dependency>
 			<groupId>zingg</groupId>
-			<artifactId>common_core</artifactId>
+			<artifactId>common_zingg_core</artifactId>
 			<version>${zingg.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>zingg</groupId>
-			<artifactId>common_client</artifactId>
+			<artifactId>common_zingg_client</artifactId>
 			<version>${zingg.version}</version>
 		</dependency>
 		<dependency>
@@ -78,10 +78,10 @@
                 </excludes>
             </filter>
 			<filter>
-				<artifact>zingg:common_client</artifact>
+				<artifact>zingg:common_zingg_client</artifact>
 			</filter>
 			<filter>
-				<artifact>zingg:common_core</artifact>
+				<artifact>zingg:common_zingg_core</artifact>
 			</filter>
 			<filter>
 				<artifact>zingg:spark_zingg_client</artifact>

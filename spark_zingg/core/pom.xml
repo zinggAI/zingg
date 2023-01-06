@@ -16,12 +16,12 @@
 </dependency>
 <dependency>
 	<groupId>zingg</groupId>
-	<artifactId>common_core</artifactId>
+	<artifactId>common_zingg_core</artifactId>
 	<version>${zingg.version}</version>
 </dependency>
 <dependency>
 	<groupId>zingg</groupId>
-	<artifactId>common_client</artifactId>
+	<artifactId>common_zingg_client</artifactId>
 	<version>${zingg.version}</version>
 </dependency>
 <dependency>
