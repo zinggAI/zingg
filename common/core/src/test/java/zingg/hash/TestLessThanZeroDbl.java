@@ -1,4 +1,4 @@
-package zingg.spark.hash;
+package zingg.hash;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,30 +9,30 @@ public class TestLessThanZeroDbl {
 
 	@Test
 	public void testLessThanZeroDblForValueZero() {
-	    SparkLessThanZeroDbl value = getInstance();
+	    LessThanZeroDbl value = getInstance();
 		assertFalse(value.call(0.0));
 	}
 
 	@Test
 	public void testLessThanZeroDblForValueNull() {
-	    SparkLessThanZeroDbl value = getInstance();
+	    LessThanZeroDbl value = getInstance();
 		assertFalse(value.call(null));
 	}
 
 	@Test
 	public void testLessThanZeroDblNegativeInteger() {
-	    SparkLessThanZeroDbl value = getInstance();
+	    LessThanZeroDbl value = getInstance();
 		assertTrue(value.call(-5435.01));
 	}
 
 	@Test
 	public void testLessThanZeroDblPositiveInteger() {
-	    SparkLessThanZeroDbl value = getInstance();
+	    LessThanZeroDbl value = getInstance();
 		assertFalse(value.call(5435.01));
 	}
 
-    private SparkLessThanZeroDbl getInstance() {
-        return new SparkLessThanZeroDbl();
+    private LessThanZeroDbl getInstance() {
+        return new LessThanZeroDbl();
     }
 
 }

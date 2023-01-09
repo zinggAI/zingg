@@ -1,4 +1,4 @@
-package zingg.spark.hash;
+package zingg.hash;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -8,12 +8,12 @@ public class TestIdentityInteger {
 	
 	@Test
 	public void testIdentityInteger() {
-	    SparkIdentityInteger value = getInstance();
+	    IdentityInteger value = getInstance();
 		assertEquals(100101, value.call(100101));
 	}
 
-    private SparkIdentityInteger getInstance() {
-        return new SparkIdentityInteger();
+    private IdentityInteger getInstance() {
+        return new IdentityInteger();
     }
 
 

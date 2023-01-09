@@ -1,4 +1,4 @@
-package zingg.spark.hash;
+package zingg.hash;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -8,19 +8,19 @@ public class TestRound {
 	
 	@Test
 	public void testRound1() {
-	    SparkRound value = getInstance();
+	    Round value = getInstance();
 		assertEquals(543535, value.call(543534.677));
 	}
 
     @Test
     public void testRound2() {
-        SparkRound value = getInstance();
+        Round value = getInstance();
         assertEquals(543534, value.call(543534.377));
     }
 	
 	
-    private SparkRound getInstance() {
-        return new SparkRound();
+    private Round getInstance() {
+        return new Round();
     }
 
 
