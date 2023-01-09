@@ -18,6 +18,12 @@ public class TestLessThanZeroDbl {
 	    LessThanZeroDbl value = getInstance();
 		assertFalse(value.call(null));
 	}
+	
+    @Test
+    public void testLessThanZeroDblForValueNaN() {
+        LessThanZeroDbl value = getInstance();
+        assertFalse(value.call(Double.NaN));
+    }	
 
 	@Test
 	public void testLessThanZeroDblNegativeInteger() {
