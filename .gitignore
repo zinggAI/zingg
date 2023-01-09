@@ -21,4 +21,3 @@ dist
 python/docs/_build/html
 python/docs/_build/_doctrees
 **/python/build/*
-models/100/trainingData/unmarked/*
