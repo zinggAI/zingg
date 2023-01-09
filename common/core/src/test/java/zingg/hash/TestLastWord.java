@@ -1,4 +1,4 @@
-package zingg.spark.hash;
+package zingg.hash;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -8,19 +8,19 @@ public class TestLastWord {
 	
 	@Test
 	public void testLastWord1() {
-	    SparkLastWord value = getInstance();
+	    LastWord value = getInstance();
 		assertEquals("gupta", value.call("vikas gupta"));
 	}
 
     @Test
     public void testLastWord2() {
-        SparkLastWord value = getInstance();
+        LastWord value = getInstance();
         assertEquals("gupta", value.call("gupta"));
     }
 	
 	
-    private SparkLastWord getInstance() {
-        return new SparkLastWord();
+    private LastWord getInstance() {
+        return new LastWord();
     }
 
 
