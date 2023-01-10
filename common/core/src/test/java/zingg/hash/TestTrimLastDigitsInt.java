@@ -1,4 +1,4 @@
-package zingg.spark.hash;
+package zingg.hash;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -8,26 +8,30 @@ public class TestTrimLastDigitsInt {
 	
 	@Test
 	public void testTrimLast1Digit() {
-	    SparkTrimLastDigitsInt value = new SparkTrimLastDigitsInt(1);
+	    TrimLastDigitsInt value = getInstance(1);
 		assertEquals(54353, value.call(543534));
 	}
 
 	@Test
 	public void testTrimLast2DigitsInt() {
-	    SparkTrimLastDigitsInt value = new SparkTrimLastDigitsInt(2);
+	    TrimLastDigitsInt value = getInstance(2);
 		assertEquals(5435, value.call(543534));
 	}
 
 	@Test
 	public void testTrimLast3DigitsInt() {
-	    SparkTrimLastDigitsInt value = new SparkTrimLastDigitsInt(3);
+	    TrimLastDigitsInt value = getInstance(3);
 		assertEquals(543, value.call(543534));
 	}
 
 	@Test
 	public void testTrimLast3DigitsIntNullValue() {
-	    SparkTrimLastDigitsInt value = new SparkTrimLastDigitsInt(3);
+	    TrimLastDigitsInt value = getInstance(3);
 		assertEquals(null, value.call(null));
 	}
 
+    private TrimLastDigitsInt getInstance(int num) {
+        return new TrimLastDigitsInt(num);
+    }
+	
 }

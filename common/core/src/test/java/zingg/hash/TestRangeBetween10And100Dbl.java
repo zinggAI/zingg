@@ -1,60 +1,61 @@
-package zingg.spark.hash;
+package zingg.hash;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class TestRangeBetween1000And10000Dbl {
+public class TestRangeBetween10And100Dbl {
 
-    private SparkRangeDbl getInstance() {
-        return new SparkRangeDbl(1000,10000);
+    private RangeDbl getInstance() {
+        return new RangeDbl(10,100);
     }
-    
+
 	@Test
 	public void testRangeForValueZero() {
-		SparkRangeDbl value = getInstance();
+	    RangeDbl value = getInstance();
 		assertEquals(0, value.call(0d));
 	}
 
 	@Test
 	public void testRangeForNegativeValue() {
 		Double input = -100d;
-        SparkRangeDbl value = getInstance();
+		RangeDbl value = getInstance();
 		assertEquals(0, value.call(input));
+
 	}
 
 	@Test
 	public void testRangeForVeryHighValue() {
 		Double input = 999999d;
-        SparkRangeDbl value = getInstance();
+		RangeDbl value = getInstance();
 		assertEquals(0, value.call(input));
 	}
 
 	@Test
 	public void testRangeForValue8() {
-        SparkRangeDbl value = getInstance();
+	    RangeDbl value = getInstance();
 		assertEquals(0, value.call(8d));
 	}
 
 	@Test
 	public void testRangeForValue65() {
-        SparkRangeDbl value = getInstance();
-		assertEquals(0, value.call(65d));
+	    RangeDbl value = getInstance();
+		assertEquals(1, value.call(65d));
 	}
 
 	@Test
 	public void testRangeForValue867() {
-        SparkRangeDbl value = getInstance();
+	    RangeDbl value = getInstance();
 		assertEquals(0, value.call(867d));
 	}
 	@Test
-	public void testRangeLessThan10000() {
-        SparkRangeDbl value = getInstance();
-		assertEquals(1, value.call(8637d));
+	public void testRangeForValue8637() {
+	    RangeDbl value = getInstance();
+		assertEquals(0, value.call(8637d));
 	}
 	@Test
 	public void testRangeForNull() {
-        SparkRangeDbl value = getInstance();
+	    RangeDbl value = getInstance();
 		assertEquals(0, value.call(null));
 	}
 
