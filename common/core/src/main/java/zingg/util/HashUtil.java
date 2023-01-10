@@ -4,7 +4,7 @@ import zingg.client.util.ListMap;
 import zingg.hash.HashFunction;
 
 
-public interface HashUtil<D,R,C,T> {
+public interface HashUtil<S,D,R,C,T> {
     /**
 	 * Use only those functions which are defined in the conf
 	 * All functions exist in the registry

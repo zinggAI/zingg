@@ -34,7 +34,7 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
     protected JavaSparkContext ctx;
 	protected SparkSession spark;
     protected PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> pipeUtil;
-    protected HashUtil<Dataset<Row>, Row, Column, DataType> hashUtil;
+    protected HashUtil<SparkSession,Dataset<Row>, Row, Column, DataType> hashUtil;
     protected DSUtil<SparkSession, Dataset<Row>, Row, Column> dsUtil;
     protected GraphUtil<Dataset<Row>, Row, Column> graphUtil;
     protected ModelUtil<SparkSession, DataType, Dataset<Row>, Row, Column> modelUtil;
@@ -95,7 +95,7 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
 
 
     
-    public void setHashUtil(HashUtil<Dataset<Row>, Row, Column, DataType> t) {
+    public void setHashUtil(HashUtil<SparkSession,Dataset<Row>, Row, Column, DataType> t) {
         this.hashUtil = t;
     }
 
@@ -133,7 +133,7 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
     */
 
     @Override
-    public HashUtil<Dataset<Row>, Row, Column, DataType> getHashUtil() {
+    public HashUtil<SparkSession,Dataset<Row>, Row, Column, DataType> getHashUtil() {
         return hashUtil;
     }
 
