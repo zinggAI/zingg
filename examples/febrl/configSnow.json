@@ -1,0 +1,98 @@
+{	
+	"fieldDefinition":[
+		{
+			"fieldName" : "FNAME",
+			"matchType" : "fuzzy",
+			"fields" : "FNAME",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "LNAME",
+			"matchType" : "fuzzy",
+			"fields" : "LNAME",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "STREETNUMBER",
+			"matchType": "exact",
+			"fields" : "STREETNUMBER",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "STREET",
+			"matchType": "fuzzy",
+			"fields" : "STREET",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "ADDRESS",
+			"matchType": "fuzzy",
+			"fields" : "ADDRESS",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "LOCALITY",
+			"matchType": "fuzzy",
+			"fields" : "LOCALITY",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "AREACODE",
+			"matchType": "exact",
+			"fields" : "AREACODE",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "STATE",
+			"matchType": "fuzzy",
+			"fields" : "STATE",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "DATEOFBIRTH",
+			"matchType": "fuzzy",
+			"fields" : "DATEOFBIRTH",
+			"dataType": "\"string\"" 
+		},
+		{
+			"fieldName" : "SSN",
+			"matchType": "dont_use",
+			"fields" : "SSN",
+			"dataType": "\"string\"" 
+		}],
+		"output" : [{
+			"name":"unifiedCustomers", 
+			"format":"net.snowflake.spark.snowflake", 
+			"props": {
+				"sfUrl": "tsa87485.snowflakecomputing.com",
+				"sfUser": "sonalgoyal",
+				"sfPassword":"ZZZZZ",					
+				"sfDatabase":"DEMO_DB",				
+				"sfSchema":"PUBLIC",					
+				"sfWarehouse":"COMPUTE_WH",
+				"dbtable": "UNIFIED_CUSTOMERS",
+				"application":"zingg_zingg"
+				}
+		}],
+		"data" : [{
+			"name":"customers", 
+			"format":"net.snowflake.spark.snowflake", 
+			"props": {
+				"sfUrl": "tsa87485.snowflakecomputing.com",
+				"sfUser": "sonalgoyal",
+				"sfPassword":"ZZZZZ",					
+				"sfDatabase":"DEMO_DB",				
+				"sfSchema":"PUBLIC",					
+				"sfWarehouse":"COMPUTE_WH",
+				"dbtable": "CUSTOMERS",
+				"application":"zingg_zingg"
+				}
+			}],
+
+
+		"labelDataSampleSize" : 0.5,
+		"numPartitions":4,
+		"modelId": 1000,
+		"zinggDir": "models"
+
+}
