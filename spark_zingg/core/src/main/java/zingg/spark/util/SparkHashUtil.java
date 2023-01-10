@@ -1,64 +1,28 @@
 package zingg.spark.util;
 
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
-
-import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.Column;
 import org.apache.spark.sql.SparkSession;
-import zingg.client.util.ListMap;
+import org.apache.spark.sql.api.java.UDF1;
+import org.apache.spark.sql.types.DataType;
+
 import zingg.hash.HashFnFromConf;
 import zingg.hash.HashFunction;
 import zingg.spark.hash.SparkHashFunctionRegistry;
-import zingg.util.HashUtil;
-
-import java.util.List;
-import org.apache.spark.sql.api.java.UDF1;
+import zingg.util.BaseHashUtil;
 
 
-public class SparkHashUtil implements HashUtil<Dataset<Row>, Row, Column,DataType>{
-    /**
-	 * Use only those functions which are defined in the conf
-	 * All functions exist in the registry
-	 * but we return only those which are specified in the conf
-	 * @param fileName
-	 * @return
-	 * @throws Exception
-	 */
-
-	SparkSession spark;
+public class SparkHashUtil extends BaseHashUtil<SparkSession,Dataset<Row>, Row, Column,DataType>{
 
 	public SparkHashUtil(SparkSession spark) {
-		this.spark = spark;
+		super(spark);
 	}
 	
-	public ListMap<DataType, HashFunction<Dataset<Row>, Row, Column,DataType>> getHashFunctionList(String fileName)
-			throws Exception {
-		ListMap<DataType, HashFunction<Dataset<Row>, Row, Column,DataType>> functions = new ListMap<DataType, 
-			HashFunction<Dataset<Row>, Row, Column,DataType>>();
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
-		List<HashFnFromConf> scriptArgs = mapper.readValue(
-				zingg.ZinggBase.class.getResourceAsStream("/" + fileName),
-				new TypeReference<List<HashFnFromConf>>() {
-				});
-		for (HashFnFromConf scriptArg : scriptArgs) {
-			System.out.println("scriptArg " + scriptArg.getName());
-			HashFunction<Dataset<Row>, Row, Column,DataType> fn = new SparkHashFunctionRegistry().getFunction(scriptArg.getName());
-			spark.udf().register(fn.getName(), (UDF1) fn, fn.getReturnType());
-			functions.add(fn.getDataType(), fn);
-		}
-		return functions;
-	}
-
-	@Override
-	public ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> getHashFunctionList() throws Exception {
-		// TODO Auto-generated method stub
-		return getHashFunctionList("hashFunctions.json");
-	}
-
-	
+    public HashFunction<Dataset<Row>, Row, Column,DataType> registerHashFunction(HashFnFromConf scriptArg) {
+        HashFunction<Dataset<Row>, Row, Column,DataType> fn = new SparkHashFunctionRegistry().getFunction(scriptArg.getName());
+        getSessionObj().udf().register(fn.getName(), (UDF1) fn, fn.getReturnType());
+        return fn;
+    }
+    
 }

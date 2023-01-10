@@ -12,8 +12,8 @@ import zingg.util.PipeUtilBase;
 
 public interface Context <S,D, R, C,T> extends Serializable {
 
-    public HashUtil<D,R,C,T> getHashUtil() ;
-    public void setHashUtil(HashUtil<D,R,C,T> t) ;
+    public HashUtil<S,D,R,C,T> getHashUtil() ;
+    public void setHashUtil(HashUtil<S,D,R,C,T> t) ;
     public GraphUtil<D,R,C> getGraphUtil() ;
 
     public void setGraphUtil(GraphUtil<D,R,C> t) ;

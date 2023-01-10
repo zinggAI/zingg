@@ -171,11 +171,11 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
 
     public abstract void execute() throws ZinggClientException ;
 
-    public HashUtil<D,R,C,T> getHashUtil() {
+    public HashUtil<S,D,R,C,T> getHashUtil() {
         return context.getHashUtil();
     }
 
-    public void setHashUtil(HashUtil<D,R,C,T> t) {
+    public void setHashUtil(HashUtil<S,D,R,C,T> t) {
         context.setHashUtil(t);
     }
 
