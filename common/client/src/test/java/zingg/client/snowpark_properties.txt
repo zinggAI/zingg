@@ -1,0 +1,7 @@
+URL = https://fd11025.ap-south-1.aws.snowflakecomputing.com:443
+USER = username
+PASSWORD = password
+ROLE = ACCOUNTADMIN
+WAREHOUSE = COMPUTE_WH
+DB = TESTING_SNOWFRAME
+SCHEMA = TEST_SCHEMA
