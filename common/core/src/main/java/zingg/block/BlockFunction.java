@@ -1,13 +1,10 @@
 package zingg.block;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import scala.collection.JavaConversions;
-import scala.collection.Seq;
 
 public abstract class BlockFunction<R> implements Serializable {
 
@@ -22,23 +19,23 @@ public abstract class BlockFunction<R> implements Serializable {
     public R call(R r) {
         StringBuilder bf = new StringBuilder();
         bf = Block.applyTree(r, tree, tree.getHead(), bf);
-        Seq<Object> s = toSeq(r);
-        List<Object> seqList = JavaConversions.seqAsJavaList(s);
-        List<Object> returnList = new ArrayList<Object>(seqList.size()+1);
-        returnList.addAll(seqList);
-        returnList.add(bf.toString().hashCode());
+        return createRow(r, bf); //RowFactory.create(returnList);			
+    }
+
+    public abstract List<Object> getListFromRow(R r) ;
+
+    public abstract R getRowFromList(List<Object> lob);
+
+    public R createRow(R r, StringBuilder bf) {
+        List<Object> currentRowValues = getListFromRow(r);
+        currentRowValues.add(bf.toString().hashCode());
         if (LOG.isDebugEnabled()) {
-            for (Object o: returnList) {
+            for (Object o: currentRowValues) {
                 LOG.debug("return row col is " + o );
             }
         }
-        
-        return createRow(returnList); //RowFactory.create(returnList);			
+        return getRowFromList(currentRowValues);
     }
-
-    public abstract Seq<Object> toSeq(R r) ;
-
-    public abstract R createRow(List<Object> o);
 
 
 }
