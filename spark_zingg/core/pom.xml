@@ -3,25 +3,25 @@
 	<modelVersion>4.0.0</modelVersion>
 <parent>
 	<groupId>zingg</groupId>
-	<artifactId>spark_zingg</artifactId>
+	<artifactId>zingg-spark</artifactId>
 	<version>${zingg.version}</version>
 </parent>
-		<artifactId>spark_zingg_core</artifactId>
+		<artifactId>zingg-spark-core</artifactId>
 		<packaging>jar</packaging>
 <dependencies>
 <dependency>
 	<groupId>zingg</groupId>
-	<artifactId>spark_zingg_client</artifactId>
+	<artifactId>zingg-spark-client</artifactId>
 	<version>${zingg.version}</version>
 </dependency>
 <dependency>
 	<groupId>zingg</groupId>
-	<artifactId>common_zingg_core</artifactId>
+	<artifactId>zingg-common-core</artifactId>
 	<version>${zingg.version}</version>
 </dependency>
 <dependency>
 	<groupId>zingg</groupId>
-	<artifactId>common_zingg_client</artifactId>
+	<artifactId>zingg-common-client</artifactId>
 	<version>${zingg.version}</version>
 </dependency>
 <dependency>
