@@ -214,6 +214,14 @@
           <groupId>commons-net</groupId>
         </exclusion>
         <exclusion>
+          <artifactId>scala-xml_2.12</artifactId>
+          <groupId>org.scala-lang.modules</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>scala-reflect</artifactId>
+          <groupId>org.scala-lang</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>json4s-jackson_2.12</artifactId>
           <groupId>org.json4s</groupId>
         </exclusion>
