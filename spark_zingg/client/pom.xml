@@ -2,10 +2,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>zingg</groupId>
-		<artifactId>spark_zingg</artifactId>
+		<artifactId>zingg-spark</artifactId>
 		<version>${zingg.version}</version>
 	</parent>
-	<artifactId>spark_zingg_client</artifactId>
+	<artifactId>zingg-spark-client</artifactId>
 	<packaging>jar</packaging>
 	<properties>
 		<fasterxml.jackson.version>2.12.6</fasterxml.jackson.version>
@@ -14,12 +14,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>zingg</groupId>
-			<artifactId>common_zingg_core</artifactId>
+			<artifactId>zingg-common-core</artifactId>
 			<version>${zingg.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>zingg</groupId>
-			<artifactId>common_zingg_client</artifactId>
+			<artifactId>zingg-common-client</artifactId>
 			<version>${zingg.version}</version>
 		</dependency>
 		<dependency>
