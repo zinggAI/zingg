@@ -2,7 +2,6 @@ package zingg.similarity.function;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.ml.util.Identifiable$;
 
 import com.wcohen.ss.api.*;
 

@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.ml.util.Identifiable$;
 
 public class AJaroWinklerFunction extends StringSimilarityDistanceFunction {
 
