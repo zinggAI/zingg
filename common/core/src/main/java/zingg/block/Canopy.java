@@ -8,12 +8,11 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Row;
 
 import zingg.client.FieldDefinition;
+import zingg.client.util.ColName;
 import zingg.client.util.ListMap;
 import zingg.hash.HashFunction;
-import zingg.client.util.ColName;
 
 
 public class Canopy<R> implements Serializable {

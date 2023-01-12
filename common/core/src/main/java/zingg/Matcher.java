@@ -6,16 +6,16 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
+
 import zingg.block.Canopy;
 import zingg.block.Tree;
-import zingg.model.Model;
-import zingg.preprocess.StopWords;
 import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
-import zingg.util.Analytics;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
+import zingg.model.Model;
+import zingg.util.Analytics;
 import zingg.util.Metric;
 
 public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
