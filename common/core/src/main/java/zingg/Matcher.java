@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Column;
 
 import zingg.block.Canopy;
 import zingg.block.Tree;
@@ -224,7 +223,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		//add the graph discovered extra pairs
 		s1 = s1.union(graphPairsExtrawithDummyScore.select(ColName.SCORE_COL, ColName.ID_COL));
 		s2 = s2.union(graphPairsExtrawithDummyScore.select(ColName.SCORE_COL, ColName.COL_PREFIX + ColName.ID_COL));
-		List<Column> cols = new ArrayList<Column>();
+		List<C> cols = new ArrayList<C>();
 		
 		ZFrame<D,R,C>s2RightCols = s2.toDF(ColName.SCORE_COL, ColName.ID_COL).cache();
 		ZFrame<D,R,C>allScores = s2RightCols.union(s1);

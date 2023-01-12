@@ -9,14 +9,12 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.types.DataType;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -158,6 +156,7 @@ public class FieldDefinition implements
 		return true;
 	}
 
+	/* 
 	public static class DataTypeSerializer extends JsonSerializer<DataType>{
 		@Override
 	    public void serialize(DataType dType, JsonGenerator jsonGenerator, 
@@ -166,7 +165,7 @@ public class FieldDefinition implements
 				jsonGenerator.writeString(dType.json());
 	        
 		}
-	}
+	}*/
 
 	public static class MatchTypeSerializer extends StdSerializer<List<MatchType>> {
 		public MatchTypeSerializer() {
