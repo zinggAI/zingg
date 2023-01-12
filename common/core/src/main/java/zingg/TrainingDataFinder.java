@@ -2,7 +2,6 @@ package zingg;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.catalyst.encoders.RowEncoder;
 
 import zingg.block.Canopy;
 import zingg.block.Tree;
@@ -13,10 +12,6 @@ import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.model.Model;
-import zingg.preprocess.StopWords;
-import zingg.util.BlockingTreeUtil;
-import zingg.util.DSUtil;
-import zingg.util.ModelUtil;
 
 public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 

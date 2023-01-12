@@ -5,12 +5,12 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.spark.deploy.PythonRunner;
 
 import zingg.client.Arguments;
 import zingg.client.ClientOptions;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
-import org.apache.spark.deploy.PythonRunner;
 
 public class PeekModel extends ZinggBase{
 

@@ -3,28 +3,17 @@ package zingg.block;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.function.MapFunction;
-import org.apache.spark.ml.util.SchemaUtils;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.types.DataType;
-import org.apache.spark.sql.types.DataTypes;
-import org.apache.spark.sql.types.StructType;
 
 import zingg.client.FieldDefinition;
 import zingg.client.ZFrame;
 import zingg.client.util.ListMap;
 import zingg.hash.HashFunction;
-import zingg.client.util.ColName;
-import scala.collection.JavaConversions;
-import scala.collection.Seq;
 
 public abstract class Block<D,R,C,T> implements Serializable {
 
