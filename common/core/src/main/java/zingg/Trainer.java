@@ -3,24 +3,17 @@ package zingg;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
 import zingg.block.Canopy;
 import zingg.block.Tree;
-import zingg.model.Model;
-import zingg.preprocess.StopWords;
 import zingg.client.ZFrame;
 // import zingg.client.SnowFrame;
 // import zingg.client.SparkFrame;
 import zingg.client.ZinggClientException;
-import zingg.client.ZinggOptions;
-import zingg.util.Analytics;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
+import zingg.model.Model;
+import zingg.util.Analytics;
 import zingg.util.Metric;
-import zingg.util.DSUtil;
-import zingg.util.ModelUtil;
-import zingg.util.PipeUtilBase;
 
 public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 

@@ -1,22 +1,14 @@
 package zingg.documenter;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
 
 import zingg.client.Arguments;
 import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
-import zingg.client.util.ColName;
 
 
 public class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {

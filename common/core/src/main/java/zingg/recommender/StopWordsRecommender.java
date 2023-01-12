@@ -1,22 +1,11 @@
 package zingg.recommender;
 
-import java.util.Arrays;
-
-import static org.apache.spark.sql.functions.explode;
-import static org.apache.spark.sql.functions.split;
-import static org.apache.spark.sql.functions.sum;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
 
 import zingg.client.Arguments;
 import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
-import zingg.client.util.ColName;
 
 public class StopWordsRecommender<S,D,R,C,T> {
 	public static final Log LOG = LogFactory.getLog(StopWordsRecommender.class);

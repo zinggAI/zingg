@@ -5,17 +5,13 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.api.java.JavaPairRDD;
-import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.function.Function;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
 
+import com.google.common.collect.ImmutableMap;
+
+import scala.Tuple2;
 import zingg.client.Arguments;
 import zingg.client.pipe.Pipe;
 import zingg.client.util.Util;
-import scala.Tuple2;
-
-import com.google.common.collect.ImmutableMap;
 
 public class Sinker {
 	
