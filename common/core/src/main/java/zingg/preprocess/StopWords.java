@@ -4,8 +4,6 @@ import static org.apache.spark.sql.functions.udf;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.expressions.UserDefinedFunction;
-import org.apache.spark.sql.types.DataTypes;
 
 import zingg.client.Arguments;
 import zingg.client.ZFrame;
@@ -51,10 +49,12 @@ public class StopWords<S,D,R,C,T> {
 		return ds;
 	}
 	
+	/* 
 	public static UserDefinedFunction removeStopWords(String stopWordsRegexString) {
 		return udf((String s) -> {
 				if (s == null) return null;
 				return s.toLowerCase().replaceAll(stopWordsRegexString, "");
 			}, DataTypes.StringType);
 	}
+	*/
 }
