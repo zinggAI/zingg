@@ -1,4 +1,4 @@
-package zingg;
+package zingg.spark;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.deploy.PythonRunner;
 
+import zingg.ZinggBase;
 import zingg.client.Arguments;
 import zingg.client.ClientOptions;
 import zingg.client.ZinggClientException;
