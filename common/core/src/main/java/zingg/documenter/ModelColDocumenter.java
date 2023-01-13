@@ -10,7 +10,7 @@ import zingg.client.Arguments;
 import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 
-public class ModelColDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
+public abstract class ModelColDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 	protected static String name = "zingg.ModelColDocumenter";
 	public static final Log LOG = LogFactory.getLog(ModelColDocumenter.class);
 
