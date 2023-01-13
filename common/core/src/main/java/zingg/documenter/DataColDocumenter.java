@@ -7,7 +7,7 @@ import zingg.client.Arguments;
 import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 
-public class DataColDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
+public abstract class DataColDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 	protected static String name = "zingg.DataColDocumenter";
 	public static final Log LOG = LogFactory.getLog(DataColDocumenter.class);
 	
