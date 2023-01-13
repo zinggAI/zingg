@@ -1,7 +1,5 @@
 package zingg.util;
 
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
 
 public class Metric {
     public static final String DATA_FORMAT = "dataFormat";
@@ -16,7 +14,9 @@ public class Metric {
     public static final long timeout = 1200L;
     public static final double confidence = 0.95; // default value
 
+    /* 
     public static double approxCount(Dataset<Row> data) {
         return data.rdd().countApprox(timeout, confidence).initialValue().mean();
     }
+    */
 }

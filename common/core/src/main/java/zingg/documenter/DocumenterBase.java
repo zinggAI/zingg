@@ -6,7 +6,7 @@ import java.io.Writer;
 import java.util.Map;
 
 // import org.apache.spark.sql.SparkSession;
-
+import freemarker.template.Version;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
@@ -54,7 +54,8 @@ abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		cfg.setLogTemplateExceptions(false);
 		cfg.setWrapUncheckedExceptions(true);
 		cfg.setFallbackOnNullLoopVariable(false);
-		cfg.setObjectWrapper(new RowWrapper(cfg.getIncompatibleImprovements()));
+		//TODOcfg.setObjectWrapper(new RowWrapper(cfg.getIncompatibleImprovements()));
+		cfg.setObjectWrapper(getRowWrapper(cfg.getIncompatibleImprovements()));
 
 		/* ------------------------------------------------------------------------ */
 		/* You usually do these for MULTIPLE TIMES in the application life-cycle: */
@@ -85,4 +86,6 @@ abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	public boolean isZColumn(String colName) {
 		return colName.startsWith(ColName.COL_PREFIX);
 	}
+
+	public abstract RowWrapper<R> getRowWrapper(Version v) ;
 }

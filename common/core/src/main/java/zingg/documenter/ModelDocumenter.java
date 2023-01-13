@@ -11,7 +11,7 @@ import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 
 
-public class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
+public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 
 	protected static String name = "zingg.ModelDocumenter";
 	public static final Log LOG = LogFactory.getLog(ModelDocumenter.class);
