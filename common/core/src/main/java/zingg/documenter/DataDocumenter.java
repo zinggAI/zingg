@@ -7,15 +7,10 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.StructField;
 
 import zingg.client.Arguments;
 import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
-import zingg.util.PipeUtilBase;
 
 public abstract class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 	protected static String name = "zingg.DataDocumenter";
