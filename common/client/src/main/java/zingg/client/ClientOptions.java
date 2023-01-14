@@ -1,6 +1,5 @@
 package zingg.client;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.hadoop.yarn.util.constraint.PlacementConstraintParser.SourceTags;
 
 import zingg.client.util.Util;
 
