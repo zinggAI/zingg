@@ -24,10 +24,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
 
 public class Util implements Serializable {
 
@@ -422,34 +418,7 @@ public class Util implements Serializable {
 	
 	
 	
-		
-	public static String getNextLabelPath(String path) throws IOException {
-		Configuration conf = new Configuration();
-		FileSystem fs = FileSystem.get(conf);
-		Path fsPath = new Path(path);
-		String pathPrefix = "";
-		if (!fs.exists(fsPath)) {
-			pathPrefix += "0";
-		}
-		else {
-			FileStatus[] fileStatus = fs.listStatus(fsPath);
-			pathPrefix += fileStatus.length;
-		}
-		return pathPrefix;
-		
-	}
-	
-	public static String getCurrentLabelPath(String path) throws IOException {
-		Configuration conf = new Configuration();
-		FileSystem fs = FileSystem.get(conf);
-		Path fsPath = new Path(path);
-		int pathPrefix = 0;
-		FileStatus[] fileStatus = fs.listStatus(fsPath);
-		pathPrefix = fileStatus.length -1;
-		return new Integer(pathPrefix).toString();
-		
-	}
-	
+			
 	
 	
 	public static byte[] convertObjectIntoByteArray(Object obj) throws IOException {

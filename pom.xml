@@ -94,59 +94,26 @@
 		<commons.lang.version>2.3</commons.lang.version>
 		<shade.plugin.version>2.4.3</shade.plugin.version>
 		<mainClass>zingg.client.Client</mainClass>
-		<spark.master>spark://pc-sonal2:7077</spark.master>
 	</properties>
 
 	<repositories>
 		<!-- list of other repositories -->
 		<repository>
+			<id>Central Repository</id>
+			<url>https://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
 			<id>SparkPackagesRepo</id>
 			<url>https://repos.spark-packages.org/</url>
-		</repository>
+		</repository>		
 	</repositories>
 
 	<dependencies>
-
-		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-mllib_${scala.binary.version}</artifactId>
-			<version>${spark.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-core_${scala.binary.version}</artifactId>
-			<version>${spark.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-graphx_${scala.binary.version}</artifactId>
-			<version>${spark.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<!-- Spark dependency -->
-			<groupId>org.scala-lang</groupId>
-			<artifactId>scala-library</artifactId>
-			<version>${scala.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<!--
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>${guava.version}</version>
-  			<scope>provided</scope>
-		</dependency>
-		-->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
@@ -188,6 +155,41 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>	
+       <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.12.0</version>
+        </dependency>	
+       <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.12.0</version>
+        </dependency>
+       <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.0</version>
+        </dependency>	
+       <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-scala_2.12</artifactId>
+            <version>2.12.2</version>
+        </dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.2</version>
+		</dependency>																
 	</dependencies>
 	<build>
 		
