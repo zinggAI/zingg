@@ -1,7 +1,5 @@
 package zingg.preprocess;
 
-import static org.apache.spark.sql.functions.udf;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

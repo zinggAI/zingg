@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.types.DataType;
 
 import zingg.client.FieldDefinition;
 import zingg.client.ZFrame;
@@ -21,7 +20,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 
 	protected ZFrame<D,R,C> dupes;
 	// Class[] types;
-	ListMap<DataType, HashFunction<D,R,C,T>> functionsMap;
+	ListMap<T, HashFunction<D,R,C,T>> functionsMap;
 	long maxSize;
 	ZFrame<D,R,C> training;
 	protected ListMap<HashFunction<D,R,C,T>, String> childless;
@@ -41,7 +40,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	}
 
 	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes,
-		ListMap<DataType, HashFunction<D, R, C, T>> functionsMap, long maxSize) {
+		ListMap<T, HashFunction<D, R, C, T>> functionsMap, long maxSize) {
 		this(training, dupes);
 		this.functionsMap = functionsMap;
 		// functionsMap.prettyPrint();
@@ -93,12 +92,12 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	/**
 	 * @return the functionsMap
 	 */
-	public Map<DataType, List<HashFunction<D,R,C,T>>> getFunctionsMap() {
+	public Map<T, List<HashFunction<D,R,C,T>>> getFunctionsMap() {
 		return functionsMap;
 	}
 
 	
-	protected void setFunctionsMap(ListMap<DataType, HashFunction<D,R,C,T>> m) {
+	protected void setFunctionsMap(ListMap<T, HashFunction<D,R,C,T>> m) {
 		this.functionsMap = m;
 	}
 
