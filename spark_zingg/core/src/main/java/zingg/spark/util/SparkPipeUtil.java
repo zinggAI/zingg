@@ -59,9 +59,11 @@ public class SparkPipeUtil extends PipeUtil<SparkSession, Dataset<Row>, Row, Col
 
 	
 	public  final Log LOG = LogFactory.getLog(SparkPipeUtil.class);
-
+	private SparkDFReader reader;
+	
 	public SparkPipeUtil(SparkSession spark) {
 		super(spark);
+		this.reader = new SparkDFReader(this.session);
 	}
 	
 	public SparkSession getSession(){
@@ -73,17 +75,14 @@ public class SparkPipeUtil extends PipeUtil<SparkSession, Dataset<Row>, Row, Col
 	}
 
 	public DFReader<Dataset<Row>, Row, Column> getReader() {
-		return new SparkDFReader(this.session);
+		return reader;
 	}
 
 	public DFWriter<Dataset<Row>, Row, Column> getWriter(ZFrame<Dataset<Row>, Row, Column> toWrite){
 		return new SparkDFWriter(toWrite);
 	}
 
-	public DFReader<Dataset<Row>, Row, Column> getReader(Pipe<Dataset<Row>, Row, Column> p) {
-		return new SparkDFReader(this.session);
-	}
-
+	
 	public ZFrame<Dataset<Row>, Row, Column> addLineNo (ZFrame<Dataset<Row>, Row, Column> input) {
 		return new SparkFrame(new SparkDSUtil(getSession()).addRowNumber(input).df());
 
