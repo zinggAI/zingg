@@ -51,8 +51,9 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 
 	public DFReader<D,R,C> getReader(Pipe<D,R,C> p) {
 		DFReader<D,R,C> reader = getReader();
-
+		LOG.warn("Got df reader");
 		LOG.warn("Reading input " + p.getFormat());
+		LOG.warn("setting format " + p.getFormat());
 		reader = reader.format(p.getFormat());
 		if (p.getSchema() != null) {
 			reader = reader.setSchema(p.getSchema()); //.schema(StructType.fromDDL(p.getSchema()));
