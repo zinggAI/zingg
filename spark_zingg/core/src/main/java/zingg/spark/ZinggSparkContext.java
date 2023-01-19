@@ -73,7 +73,7 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
             setHashUtil(new SparkHashUtil(spark));
             setGraphUtil(new SparkGraphUtil());
             setModelUtil(new SparkModelUtil(spark));
-            setBlokingTreeUtil(new SparkBlockingTreeUtil(spark, getPipeUtil()));
+            setBlockingTreeUtil(new SparkBlockingTreeUtil(spark, getPipeUtil()));
         }
         catch(Throwable e) {
             if (LOG.isDebugEnabled()) e.printStackTrace();
@@ -114,7 +114,7 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
        this.dsUtil = pipeUtil;        
     }
 
-    public void setBlokingTreeUtil(BlockingTreeUtil<SparkSession,Dataset<Row>, Row, Column, DataType> d) {
+    public void setBlockingTreeUtil(BlockingTreeUtil<SparkSession,Dataset<Row>, Row, Column, DataType> d) {
         this.blockingTreeUtil = d;
     }
 

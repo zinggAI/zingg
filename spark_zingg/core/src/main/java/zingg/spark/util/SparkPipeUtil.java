@@ -59,11 +59,11 @@ public class SparkPipeUtil extends PipeUtil<SparkSession, Dataset<Row>, Row, Col
 
 	
 	public  final Log LOG = LogFactory.getLog(SparkPipeUtil.class);
-	private SparkDFReader reader;
+	//private SparkDFReader reader;
 	
 	public SparkPipeUtil(SparkSession spark) {
 		super(spark);
-		this.reader = new SparkDFReader(this.session);
+		
 	}
 	
 	public SparkSession getSession(){
@@ -75,6 +75,7 @@ public class SparkPipeUtil extends PipeUtil<SparkSession, Dataset<Row>, Row, Col
 	}
 
 	public DFReader<Dataset<Row>, Row, Column> getReader() {
+		SparkDFReader reader = new SparkDFReader(this.session);
 		return reader;
 	}
 

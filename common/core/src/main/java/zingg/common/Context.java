@@ -19,6 +19,7 @@ public interface Context <S,D, R, C,T> extends Serializable {
     public void setGraphUtil(GraphUtil<D,R,C> t) ;
 
     public void setModelUtil(ModelUtil<S,T,D,R,C> t);
+    public void setBlockingTreeUtil(BlockingTreeUtil<S, D,R,C,T> t) ;
 
     public ModelUtil<S,T,D,R,C>  getModelUtil();
 
