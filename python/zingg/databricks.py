@@ -65,14 +65,29 @@ job_spec_template = {
 def getCurrentTime():
     return str(time.time_ns())
 
+def get_dbutils(spark):
+  if spark.conf.get("spark.databricks.service.client.enabled") == "true":
+    from pyspark.dbutils import DBUtils
+    return DBUtils(spark)
+  else:
+    import IPython
+    return IPython.get_ipython().user_ns["dbutils"]
+
 class ZinggWithDatabricks(Zingg):
 
-    """ This class is the main point of interface with the Zingg matching product. Construct a client to Zingg using provided arguments and spark master. If running locally, set the master to local.
+    """ This class is the main point of interface with Zingg to run on Databricks from user machine. 
+    Construct a client to Zingg using arguments and options, along with cluster instance type, number of workers
 
     :param args: arguments for training and matching
     :type args: Arguments
     :param options: client option for this class object
     :type options: ClientOptions
+    :param nodeType
+    :type nodeType: string for Databricks worker instance
+    :param numWorkers
+    :type numWorkers: number of workers in the cluster
+    :cliAgrs
+    :type cliArgs: sys argv
 
     """
     
@@ -113,7 +128,12 @@ class ZinggWithDatabricks(Zingg):
         
 
     def execute(self):
-        """ Method to execute this class object """
+        """ Method to execute this class object 
+        Runs label, generateDocs etc locally using the model copied from dbfs
+        Runs cluster specific jobs like findtrainingData, train, match, link etc on Databricks
+        Local notebook is copied over to dbfs at each invocation
+        model from dbfs is copied over to and fro local machine depending on the phase
+        """
         #self.client.execute()
         ## if label, call dbfs cp and send model back
         if (self.isRemote):
@@ -128,20 +148,14 @@ class ZinggWithDatabricks(Zingg):
                 zinggWithSpark.initAndExecute()
                 self.dbfsHelper.copyModelToDBFS(self.args)
             else:
-                job_spec = deepcopy(job_spec_template)
                 currTimeString = getCurrentTime()
-                job_spec['name'] = self.phase + currTimeString
-                job_spec['tasks'][0]['task_key'] = self.phase+currTimeString
-                job_spec['tasks'][0]['spark_python_task']['python_file'] ='dbfs:/Filestore/' + self.localNotebookLocation
-                paramsCopy = self.cliArgs[1:].copy()
-                paramsCopy.append(ClientOptions.REMOTE)
-                paramsCopy.append("True")
-                job_spec['tasks'][0]['spark_python_task']['parameters'] = paramsCopy
-                job_spec['job_clusters'][0]['new_cluster']['node_type_id'] = self.nodeType
-                job_spec['job_clusters'][0]['new_cluster']['num_workers'] = int(self.numWorkers)
-                print(job_spec)
+                name = self.phase + currTimeString
+                notebookLocation ='dbfs:/Filestore/' + self.localNotebookLocation
+                notebookParams = self.cliArgs[1:].copy()
+                notebookParams.append(ClientOptions.REMOTE)
+                notebookParams.append("True")
                 
-                job = self.jobsHelper.createJob(job_spec)
+                job = self.jobsHelper.createJob(name, notebookLocation, notebookParams, self.nodeType, self.numWorkers)
                 jobRun = self.jobsHelper.runJob(job)
                 self.jobsHelper.pollJobStatus(jobRun)
         
@@ -163,7 +177,7 @@ class DbfsHelper:
         self.dbfs_api=DbfsApi(self.api_client)
 
     def copyNotebookToDBFS(self, localLocation):
-        print('copying over file to dbfs')
+        print('copying over Zingg program to dbfs')
         self.dbfs_api.cp(True, True, localLocation, 'dbfs:/Filestore/' + localLocation)
         
 
@@ -173,23 +187,40 @@ class DbfsHelper:
         self.dbfs_api.cp(True, True, 'dbfs:' + args.getZinggBaseModelDir(), './' + args.getModelId())
     
     def copyModelToDBFS(self, args):
-        print ("copy model from dbfs")
+        print ("copy model to dbfs")
         ##backup in dbfs
         self.dbfs_api.cp(True, True, 'dbfs:' + args.getZinggBaseModelDir(), 'dbfs:' + args.getZinggBaseModelDir() + "/backup/" + getCurrentTime())
         self.dbfs_api.cp(True, True, './' + args.getModelId(), 'dbfs:' + args.getZinggBaseModelDir())
 
 
 class JobsHelper:
+
+     """ This class runs Databricks Zingg jobs using the Databricks REST API from user machine. 
+
+    """
     
     def __init__(self):
         self.api_client = ApiClient(
-            host  = os.getenv('DATABRICKS_HOST'),
+            host = os.getenv('DATABRICKS_HOST'),
             token = os.getenv('DATABRICKS_TOKEN')
         )
         self.jobs_api=JobsApi(self.api_client)
         self.runs_api=RunsApi(self.api_client)
+    
+    def createJob(self, name, notebookLocation, notebookParams, nodeType, numWorkers):
+        job_spec = deepcopy(job_spec_template)
+        job_spec['name'] = 'zingg' + name
+        job_spec['tasks'][0]['task_key'] = 'zingg' + name
+        job_spec['tasks'][0]['spark_python_task']['python_file'] = notebookLocation
+        
+        job_spec['tasks'][0]['spark_python_task']['parameters'] = notebookParams
+        job_spec['job_clusters'][0]['new_cluster']['node_type_id'] = nodeType
+        job_spec['job_clusters'][0]['new_cluster']['num_workers'] = int(numWorkers)
+        print(job_spec)
+        
+        return self.createJobFromSpec(job_spec)
 
-    def createJob(self, job_spec):
+    def createJobFromSpec(self, job_spec):
         job = self.jobs_api.create_job(job_spec, {'User-Agent':'zinggai_zingg'})
         return job
     
@@ -227,8 +258,25 @@ class JobsHelper:
                     time.sleep(sleep_seconds)
 
         # return results
-        print(f'Job completed in {result_state} state after { elapsed_seconds } seconds.  Please proceed with next steps to process the records identified by the job.')
-        print('\n')        
+        print(f'Job completed in {result_state} state after { elapsed_seconds } seconds.  Please proceed with next steps of the Zingg workflow.')
+        print('\n')  
+
+class DatabricksJobsHelper(JobsHelper):
+
+    """ This class is the main point of interface to run Zingg jobs directly on Databricks notebook. 
+    It triggers a dbfs/s3 notebook comtaining Zingg python code which defines the fields and the arguments
+    to Zingg. 
+
+    """
+    def __init__(self):
+        self.api_client = ApiClient(
+            host = 'https://' + spark.sparkContext.getConf().get('spark.databricks.workspaceUrl'),
+            token = get_dbutils(spark).notebook.entry_point.getDbutils().notebook().getContext().apiToken().getOrElse(None)
+        )
+        self.jobs_api=JobsApi(self.api_client)
+        self.runs_api=RunsApi(self.api_client)        
+
+
 
 
 

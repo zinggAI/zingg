@@ -242,6 +242,35 @@ class Arguments:
 
     def getZinggModelDir(self):
         return self.args.getZinggModelDir()
+    
+    def getZinggBaseTrainingDataDir(self):
+        """ Method to get the location of the folder where Zingg 
+        saves the training data found by findTrainingData  
+        """
+        return self.args.getZinggBaseTrainingDataDir()
+
+    def getZinggTrainingDataUnmarkedDir(self):
+        """ Method to get the location of the folder where Zingg 
+        saves the training data found by findTrainingData  
+        """
+        return self.args.getZinggTrainingDataUnmarkedDir()
+    
+    def getZinggTrainingDataMarkedDir(self):
+        """ Method to get the location of the folder where Zingg 
+        saves the marked training data labeled by the user  
+        """
+        return self.args.getZinggTrainingDataMarkedDir()
+    
+    def setTrainingSamples(self, *pipes):
+        """ Method to set existing training samples to be matched.
+
+        :param pipes: input training data pipes separated by comma e.g. (pipe1,pipe2,..)
+        :type pipes: Pipe[]
+        """
+        dataPipe = gateway.new_array(jvm.zingg.client.pipe.Pipe, len(pipes))
+        for idx, pipe in enumerate(pipes):
+            dataPipe[idx] = pipe.getPipe()
+        self.args.setTrainingSamples(dataPipe)
 
     def setModelId(self, id):
         """ Method to set the output directory where the match output will be saved

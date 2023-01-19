@@ -4,7 +4,7 @@ description: Downloading and setting things up
 
 # Installing Zingg
 
-Download the tar zingg-version.tar.gz to a folder of your choice and run the following:
+Download the tar zingg-version.tar.gz from the [Zingg releases page](https://github.com/zinggAI/zingg/releases) to a folder of your choice and run the following:
 
 > gzip -d zingg-0.3.4-SNAPSHOT-bin.tar.gz ; tar xvf zingg-0.3.4-SNAPSHOT-bin.tar
 
