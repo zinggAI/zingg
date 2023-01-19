@@ -40,7 +40,6 @@ public abstract class BaseHashUtil<S,D,R,C,T> implements HashUtil<S,D,R,C,T>{
 				new TypeReference<List<HashFnFromConf>>() {
 				});
 		for (HashFnFromConf scriptArg : scriptArgs) {
-		    System.out.println("scriptArg " + scriptArg.getName());
 		    HashFunction<D,R,C,T> fn = registerHashFunction(scriptArg);
 		    functions.add(fn.getDataType(), fn);
 		}

@@ -62,20 +62,27 @@ public class SparkBlockingTreeUtil extends BlockingTreeUtil<SparkSession, Datase
 
 @Override
 public void writeBlockingTree(Tree<Canopy<Row>> blockingTree, Arguments args) throws Exception, ZinggClientException {
+        //blockingTree.print(2);
         byte[] byteArray  = Util.convertObjectIntoByteArray(blockingTree);
         StructType schema = DataTypes.createStructType(new StructField[] { DataTypes.createStructField("BlockingTree", DataTypes.BinaryType, false) });
         List<Row> objList = new ArrayList<>();
         objList.add(RowFactory.create(byteArray));
         Dataset<Row> df = spark.sqlContext().createDataFrame(objList, schema).toDF().coalesce(1);
-        getPipeUtil().write(new SparkFrame(df), args, getPipeUtil().getBlockingTreePipe(args));
+        //df.show();
+        PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> pu = getPipeUtil();
+        pu.write(new SparkFrame(df), args, pu.getBlockingTreePipe(args));
         
 }
 
 @Override
 public Tree<Canopy<Row>> readBlockingTree(Arguments args) throws Exception, ZinggClientException {
-        ZFrame<Dataset<Row>, Row, Column> tree = getPipeUtil().read(false, 1, false, getPipeUtil().getBlockingTreePipe(args));
+        PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> pu = getPipeUtil();
+        ZFrame<Dataset<Row>, Row, Column> tree = pu.read(false, 1, false, pu.getBlockingTreePipe(args));
+        tree.show();
+        tree.df().show();
         byte [] byteArrayBack = (byte[]) tree.df().head().get(0);
         Tree<Canopy<Row>> blockingTree = null;
+        LOG.warn("byte array back is " + byteArrayBack);
         blockingTree =  (Tree<Canopy<Row>>) Util.revertObjectFromByteArray(byteArrayBack);
         return blockingTree;
 }
