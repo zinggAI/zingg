@@ -3,6 +3,7 @@
 ZINGG_JARS=$ZINGG_HOME/zingg-0.3.4-SNAPSHOT.jar
 EMAIL=zingg@zingg.ai
 LICENSE=zinggLicense.txt
+log4j_setting="-Dlog4j.configuration=file:log4j.properties"
 
 POSITIONAL_ARGS=() # Need to save all the arguments in the list
 while [[ $# -gt 0 ]]; do
@@ -20,6 +21,13 @@ while [[ $# -gt 0 ]]; do
 			  shift # past argument "run"
 			  shift
 			;;
+                --log)
+			LOG_FILE=$2
+			LOGGING="--files $LOG_FILE"
+        		shift
+				shift
+					;;
+
 		*)
 			POSITIONAL_ARGS+=("$1") # save positional arg
 			shift # past argument
@@ -40,4 +48,4 @@ else
 fi
 
 # All the additional options must be added here
-$SPARK_HOME/bin/spark-submit --master $SPARK_MASTER $PROPERTIES --conf spark.executor.extraJavaOptions="-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+HeapDumpOnOutOfMemoryError -Xloggc:/tmp/memLog.txt -XX:+UseCompressedOops" --driver-class-path $ZINGG_JARS $EXECUTABLE $@ --email $EMAIL --license $LICENSE
+$SPARK_HOME/bin/spark-submit --master $SPARK_MASTER $PROPERTIES --conf spark.executor.extraJavaOptions="log4j_setting -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+HeapDumpOnOutOfMemoryError -Xloggc:/tmp/memLog.txt -XX:+UseCompressedOops" --conf spark.driver.extraJavaOptions="$log4j_setting" $LOGGING --driver-class-path $ZINGG_JARS $EXECUTABLE $@ --email $EMAIL --license $LICENSE
