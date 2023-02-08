@@ -15,6 +15,7 @@ import zingg.client.MatchType;
 import zingg.client.ZinggClientException;
 import zingg.client.ZFrame;
 import zingg.client.util.ListMap;
+import zingg.client.util.Util;
 import zingg.hash.HashFunction;
 
 public abstract class BlockingTreeUtil<S, D,R,C,T> {
@@ -86,24 +87,28 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 		return createBlockingTree(sample, positives, sampleFraction, blockSize, args, hashFunctions);
 	}
 	
-	public abstract void writeBlockingTree(Tree<Canopy<R>> blockingTree, Arguments args) throws Exception, ZinggClientException; // {
-		/*byte[] byteArray  = Util.convertObjectIntoByteArray(blockingTree);
-		StructType schema = DataTypes.createStructType(new StructField[] { DataTypes.createStructField("BlockingTree", DataTypes.BinaryType, false) });
-		List<Object> objList = new ArrayList<>();
-		objList.add(byteArray);
-		JavaRDD<Row> rowRDD = ctx.parallelize(objList).map((Object row) -> RowFactory.create(row));
-		Dataset<Row> df = spark.sqlContext().createDataFrame(rowRDD, schema).toDF().coalesce(1);
-		PipeUtil.write(df, args, ctx, PipeUtil.getBlockingTreePipe(args));*/
-	//}
+	public void writeBlockingTree(Tree<Canopy<R>> blockingTree, Arguments args) throws Exception, ZinggClientException {
+		byte[] byteArray  = Util.convertObjectIntoByteArray(blockingTree);
+        PipeUtilBase<S, D, R, C> pu = getPipeUtil();
+        pu.write(getTreeDF(byteArray), args, pu.getBlockingTreePipe(args));
+	}
 
-	public abstract Tree<Canopy<R>> readBlockingTree(Arguments args) throws Exception, ZinggClientException; //{
-		/*
-		Dataset<Row> tree = PipeUtil.read(spark, false, args.getNumPartitions(), false, PipeUtil.getBlockingTreePipe(args));
-		byte [] byteArrayBack = (byte[]) tree.head().get(0);
-		Tree<Canopy> blockingTree = null;
-		blockingTree =  (Tree<Canopy>) Util.revertObjectFromByteArray(byteArrayBack);
-		return blockingTree;
-		*/
+	public abstract ZFrame<D, R, C> getTreeDF(byte[] tree) ;
+
+	public abstract byte[] getTreeFromDF(ZFrame<D,R,C> z);
+
+	public Tree<Canopy<R>> readBlockingTree(Arguments args) throws Exception, ZinggClientException{
+		PipeUtilBase<S, D, R, C> pu = getPipeUtil();
+        ZFrame<D, R, C> tree = pu.read(false, 1, false, pu.getBlockingTreePipe(args));
+        //tree.show();
+        //tree.df().show();
+        //byte [] byteArrayBack = (byte[]) tree.df().head().get(0);
+		byte[] byteArrayBack = getTreeFromDF(tree);
+        Tree<Canopy<R>> blockingTree = null;
+        LOG.warn("byte array back is " + byteArrayBack);
+        blockingTree =  (Tree<Canopy<R>>) Util.revertObjectFromByteArray(byteArrayBack);
+        return blockingTree;
+	}
 	
 
 	public abstract ZFrame<D,R,C> getBlockHashes(ZFrame<D,R,C> testData, Tree<Canopy<R>> tree);
