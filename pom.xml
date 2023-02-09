@@ -144,11 +144,7 @@
     			<version>0.10.0</version>
 		</dependency>	
 		-->
-		<dependency>
-			<groupId>graphframes</groupId>
-			<artifactId>graphframes</artifactId>
-			<version>${graphframes.version}</version>
-		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
 		<dependency>
 			<groupId>commons-logging</groupId>

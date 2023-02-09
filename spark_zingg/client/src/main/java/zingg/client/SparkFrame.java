@@ -267,6 +267,11 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     }
 
     @Override
+    public Object getOnlyObjectFromRow(Row r){
+        return r.get(0);
+    }
+
+    @Override
     public void show(boolean a){
         df.show(a);
     }

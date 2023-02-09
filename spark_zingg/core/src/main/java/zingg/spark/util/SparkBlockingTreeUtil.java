@@ -71,11 +71,6 @@ public ZFrame<Dataset<Row>, Row, Column> getTreeDF(byte[] blockingTree){
         return new SparkFrame(df);
 }
 
-@Override
-public byte[] getTreeFromDF(ZFrame<Dataset<Row>, Row, Column> z){
-        byte [] byteArrayBack = (byte[]) z.df().head().get(0);
-        return byteArrayBack;
-}
 
 /* 
 @Override
