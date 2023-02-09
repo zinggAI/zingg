@@ -103,6 +103,8 @@ public interface ZFrame<D, R, C> {
 
     public R head();
 
+    public Object getOnlyObjectFromRow(R r);
+
     public void show(boolean a);
 
     public boolean isEmpty();

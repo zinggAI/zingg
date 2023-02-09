@@ -95,7 +95,12 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 
 	public abstract ZFrame<D, R, C> getTreeDF(byte[] tree) ;
 
-	public abstract byte[] getTreeFromDF(ZFrame<D,R,C> z);
+	
+	public byte[] getTreeFromDF(ZFrame<D, R, C> z){
+        byte [] byteArrayBack = (byte[]) z.getOnlyObjectFromRow(z.head());
+        return byteArrayBack;
+	}
+
 
 	public Tree<Canopy<R>> readBlockingTree(Arguments args) throws Exception, ZinggClientException{
 		PipeUtilBase<S, D, R, C> pu = getPipeUtil();

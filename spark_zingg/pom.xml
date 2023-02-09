@@ -37,6 +37,11 @@
 			<artifactId>scala-library</artifactId>
 			<version>${scala.version}</version>
 			<scope>provided</scope>
-		</dependency>		
+		</dependency>	
+		<dependency>
+			<groupId>graphframes</groupId>
+			<artifactId>graphframes</artifactId>
+			<version>${graphframes.version}</version>
+		</dependency>	
 	</dependencies>
 </project>
