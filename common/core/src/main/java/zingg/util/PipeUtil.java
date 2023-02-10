@@ -348,6 +348,7 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getBlockFile());
 		//p.setMode(SaveMode.Overwrite.toString());
+		
 		p = setOverwriteMode(p);
 		return p;
 	}

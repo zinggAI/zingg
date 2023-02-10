@@ -119,13 +119,17 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		long least = Long.MAX_VALUE;
 		int maxElimination = 0;
 		Canopy<R>best = null;
+
 		for (FieldDefinition field : fieldsOfInterest) {
-			//LOG.debug("Trying for " + field);
+			LOG.debug("Trying for " + field + " with data type " + field.getDataType() + " and real dt " 
+				+ getDataTypeFromString(field.getDataType()));
 			//Class type = FieldClass.getFieldClassClass(field.getFieldClass());
 			FieldDefinition context = field;
 			if (least ==0) break;//how much better can it get?
 			// applicable functions
 			List<HashFunction<D,R,C,T>> functions = functionsMap.get(getDataTypeFromString(field.getDataType()));
+			LOG.debug("functions are " + functions);
+			
 			if (functions != null) {
 				
 				for (HashFunction function : functions) {
@@ -181,6 +185,9 @@ public abstract class Block<D,R,C,T> implements Serializable {
 					}
 				}
 			}
+			else {
+				LOG.debug("functions are null??????");
+			}
 		}
 		return best;
 
@@ -197,16 +204,16 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	 */
 	public Tree<Canopy<R>> getBlockingTree(Tree<Canopy<R>> tree, Canopy<R>parent,
 			Canopy<R>node, List<FieldDefinition> fieldsOfInterest) throws Exception {
-		/*if (LOG.isDebugEnabled()) {
+		if (LOG.isDebugEnabled()) {
 			LOG.debug("Tree so far ");
 			LOG.debug(tree);
-		}*/
+		}
 		long size = node.getTrainingSize();
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Size, maxSize " + size + ", " + maxSize);
 		}
 		if (size > maxSize && node.getDupeN() != null && node.getDupeN().size() > 0) {
-			//LOG.debug("Size is bigger ");
+			LOG.debug("Size is bigger ");
 			Canopy<R>best = getBestNode(tree, parent, node, fieldsOfInterest);
 			if (best != null) {
 				if (LOG.isDebugEnabled()) {
