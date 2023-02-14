@@ -8,8 +8,10 @@ import org.apache.spark.sql.DataFrameReader;
 import org.apache.spark.sql.DataFrameWriter;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.StructType;
+
 import zingg.client.SparkFrame;
 import zingg.client.ZFrame;
+import zingg.client.ZinggClientException;
 
 public class SparkDFReader implements DFReader<Dataset<Row>, Row, Column> {
     
@@ -42,11 +44,11 @@ public class SparkDFReader implements DFReader<Dataset<Row>, Row, Column> {
         return this;
     }
 
-    public ZFrame<Dataset<Row>, Row, Column> load() {
+    public ZFrame<Dataset<Row>, Row, Column> load() throws ZinggClientException {
         return new SparkFrame(this.reader.load());
     }
 
-    public ZFrame<Dataset<Row>, Row, Column> load(String location) {
+    public ZFrame<Dataset<Row>, Row, Column> load(String location) throws ZinggClientException{
         return new SparkFrame(this.reader.load(location));
     }
     
