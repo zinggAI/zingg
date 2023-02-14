@@ -72,17 +72,21 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 		return unmarkedRecords;
 	}
 
+	public ZFrame<D,R,C>  getClusterIdsFrame(ZFrame<D,R,C>  lines) {
+		return 	lines.select(ColName.CLUSTER_COLUMN).distinct();		
+	}
+
 	public List<R>  getClusterIds(ZFrame<D,R,C>  lines) {
-		return 	lines.select(ColName.CLUSTER_COLUMN).distinct().collectAsList();		
+		return 	lines.collectAsList();		
 	}
 
 	public List<C> getDisplayColumns(ZFrame<D,R,C>  lines, Arguments args) {
 		return getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
 	}
 
-	public ZFrame<D,R,C>  getCurrentPair(ZFrame<D,R,C>  lines, int index, List<R>  clusterIds) {
+	public ZFrame<D,R,C>  getCurrentPair(ZFrame<D,R,C>  lines, int index, List<R>  clusterIds, ZFrame<D,R,C>  clusterLines) {
 		return lines.filter(lines.equalTo(ColName.CLUSTER_COLUMN,
-			lines.getAsString(clusterIds.get(index), ColName.CLUSTER_COLUMN))).cache();
+			clusterLines.getAsString(clusterIds.get(index), ColName.CLUSTER_COLUMN))).cache();
 	}
 
 	public double getScore(ZFrame<D,R,C>  currentPair) {
@@ -117,7 +121,12 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
 			lines = lines.cache();
 			List<C> displayCols = getDisplayColumns(lines, args);
-			List<R>  clusterIDs = getClusterIds(lines);
+			//have to introduce as snowframe can not handle row.getAs with column
+			//name and row and lines are out of order for the code to work properly
+			//snow getAsString expects row to have same struc as dataframe which is 
+			//not happening
+			ZFrame<D,R,C> clusterIdZFrame = getClusterIdsFrame(lines);
+			List<R>  clusterIDs = getClusterIds(clusterIdZFrame);
 			try {
 				double score;
 				double prediction;
@@ -127,7 +136,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 				int totalPairs = clusterIDs.size();
 
 				for (int index = 0; index < totalPairs; index++) {
-					ZFrame<D,R,C>  currentPair = getCurrentPair(lines, index, clusterIDs);
+					ZFrame<D,R,C>  currentPair = getCurrentPair(lines, index, clusterIDs, clusterIdZFrame);
 
 					score = getScore(currentPair);
 					prediction = getPrediction(currentPair);
