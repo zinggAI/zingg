@@ -47,9 +47,10 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	protected ZFrame<D,R,C> getBlocks(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
-		//ZFrame<D,R,C>joinH =  getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true).cache();
-		ZFrame<D,R,C>joinH = blocked.as("first").joinOnCol(blocked.as("second"), ColName.HASH_COL)
+		ZFrame<D,R,C>joinH =  getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true).cache();
+		/*ZFrame<D,R,C>joinH = blocked.as("first").joinOnCol(blocked.as("second"), ColName.HASH_COL)
 			.selectExpr("first.z_zid as z_zid", "second.z_zid as z_z_zid");
+		*/
 		//joinH.show();
 		joinH = joinH.filter(joinH.gt(ColName.ID_COL));	
 		LOG.warn("Num comparisons " + joinH.count());
@@ -99,6 +100,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 				*/
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Num distinct hashes " + blocked.select(ColName.HASH_COL).distinct().count());
+				blocked.show();
 			}
 				//LOG.warn("Num distinct hashes " + blocked.agg(functions.approx_count_distinct(ColName.HASH_COL)).count());
 			ZFrame<D,R,C>blocks = getBlocks(selectColsFromBlocked(blocked), testData);
