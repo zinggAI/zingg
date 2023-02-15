@@ -197,7 +197,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		
 	}
 
-	protected ZFrame<D,R,C>getMinMaxScores(ZFrame<D,R,C>dupes, ZFrame<D,R,C>graph) {
+	protected ZFrame<D,R,C>getMinMaxScores(ZFrame<D,R,C>dupes, ZFrame<D,R,C>graph) throws Exception {
 		if (LOG.isDebugEnabled()) dupes.show(500);
 		
 		ZFrame<D,R,C> graph1 = graph.select(ColName.ID_COL, ColName.CLUSTER_COLUMN);
@@ -206,9 +206,13 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		ZFrame<D,R,C> dupesWithIds = dupes.select(ColName.ID_COL, ColName.COL_PREFIX + ColName.ID_COL);
 		LOG.warn("Dupes with ids ");
 		if (LOG.isDebugEnabled()) dupesWithIds.show(500);
-		ZFrame<D,R,C>graphPairsFound = graph1.as("first").joinOnCol(graph1.as("second"), ColName.CLUSTER_COLUMN)
+		/*ZFrame<D,R,C>graphPairsFound = graph1.as("first").joinOnCol(graph1.as("second"), ColName.CLUSTER_COLUMN)
 			.selectExpr("first.z_zid as z_zid", "second.z_zid as z_z_zid");
-		graphPairsFound = graphPairsFound.filter(graphPairsFound.gt(ColName.ID_COL));
+			*/
+		ZFrame<D,R,C> graphPairsFound =  getDSUtil().joinWithItself(graph1, ColName.CLUSTER_COLUMN, true).
+			select(ColName.ID_COL, ColName.COL_PREFIX + ColName.ID_COL).cache();
+		//graphPairsFound = graphPairsFound.filter(graphPairsFound.gt(ColName.ID_COL));*/
+
 		
 		LOG.warn("graph pairs ");
 		if (LOG.isDebugEnabled()) graphPairsFound.show(500);
