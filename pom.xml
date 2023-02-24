@@ -40,7 +40,7 @@
 			</activation>
 			<properties>
 				<spark.version>3.1.2</spark.version>
-				<scala.version>2.12.11</scala.version>
+				<scala.version>2.12.15</scala.version>
 				<spark.binary.version>3.1</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
 				<graphframes.version>0.8.1-spark3.0-s_2.12</graphframes.version>
@@ -83,13 +83,13 @@
 		<zingg.version>0.3.4-SNAPSHOT</zingg.version>
 		<skipTests>false</skipTests>
 		<failIfNoTests>false</failIfNoTests>
-		<maven.compiler.source>8</maven.compiler.source>
-		<maven.compiler.target>8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mcheckstyle.version>2.10</mcheckstyle.version>
 		<mfindbugs.version>2.5.2</mfindbugs.version>
 		<mjavadoc.version>2.9.1</mjavadoc.version>
-		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<maven-jar-plugin.version>2.3.2</maven-jar-plugin.version>
 		<commons.lang.version>2.3</commons.lang.version>
 		<shade.plugin.version>2.4.3</shade.plugin.version>
@@ -261,7 +261,7 @@
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
 					<source>${maven.compiler.source}</source>
-					<target>${maven.compiler.source}</target>
+					<target>${maven.compiler.target}</target>
 					<showWarnings>true</showWarnings>
 				</configuration>
 			</plugin>
