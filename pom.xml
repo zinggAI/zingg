@@ -40,7 +40,7 @@
 			</activation>
 			<properties>
 				<spark.version>3.1.2</spark.version>
-				<scala.version>2.12.15</scala.version>
+				<scala.version>2.12.10</scala.version>
 				<spark.binary.version>3.1</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
 				<graphframes.version>0.8.1-spark3.0-s_2.12</graphframes.version>

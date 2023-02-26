@@ -95,12 +95,4 @@
       </includes>
     </fileSet>
   </fileSets>
-<dependencySets>
-<dependencySet>
-	<excludes>
-		<exclude>*unused*.jar</exclude>
-		<exclude>*:jar:*</exclude>
-	</excludes>
-</dependencySet>
-</dependencySets>
 </assembly>

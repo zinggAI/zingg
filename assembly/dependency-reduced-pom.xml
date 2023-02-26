@@ -21,31 +21,25 @@
           </execution>
         </executions>
         <configuration>
-          <filters>
-            <filter>
-              <artifact>*:*</artifact>
-              <excludes>
-                <exclude>META-INF/*.SF</exclude>
-                <exclude>META-INF/*.DSA</exclude>
-                <exclude>META-INF/*.RSA</exclude>
-                <exclude>DUMMY.SF</exclude>
-                <exclude>DUMMY.DSA</exclude>
-                <exclude>**/*.RSA</exclude>
-              </excludes>
-            </filter>
-            <filter>
-              <artifact>zingg:zingg-common-client</artifact>
-            </filter>
-            <filter>
-              <artifact>zingg:zingg-common-core</artifact>
-            </filter>
-            <filter>
-              <artifact>zingg:zingg-spark-client</artifact>
-            </filter>
-            <filter>
-              <artifact>zingg:zingg-spark-core</artifact>
-            </filter>
-          </filters>
+          <artifactSet>
+            <excludes>
+              <exclude>META-INF/*.SF</exclude>
+              <exclude>META-INF/*.DSA</exclude>
+              <exclude>META-INF/*.RSA</exclude>
+              <exclude>DUMMY.SF</exclude>
+              <exclude>DUMMY.DSA</exclude>
+              <exclude>**/*.RSA</exclude>
+              <exclude>*unused*.jar</exclude>
+              <exclude>org.scala-lang:scala-library:jar:2.12.12</exclude>
+              <exclude>org.codehaus.jackson:jackson-mapper-asl:jar:1.9.13</exclude>
+              <exclude>com.fasterxml.jackson.core:jackson-core:jar:2.12.0</exclude>
+              <exclude>com.fasterxml.jackson*:*</exclude>
+              <exclude>org.codehaus.jackson:*</exclude>
+              <exclude>org.scala-lang:*</exclude>
+              <exclude>sonal</exclude>
+              <exclude>*:jar:*</exclude>
+            </excludes>
+          </artifactSet>
         </configuration>
       </plugin>
       <plugin>
@@ -117,6 +111,42 @@
       <artifactId>hamcrest-all</artifactId>
       <version>1.3</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-core-asl</artifactId>
+      <version>1.9.13</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>1.9.13</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.12.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.12.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.12.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.module</groupId>
+      <artifactId>jackson-module-scala_2.12</artifactId>
+      <version>2.12.2</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>
