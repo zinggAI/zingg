@@ -65,9 +65,8 @@
 							<resource>reference.conf</resource>
 						</transformer>
 					</transformers>
-    -->  <filters>
-         	<filter>
-            	<artifact>*:*</artifact>
+    -->  
+            	<artifactSet>
                 <excludes>
                   <exclude>META-INF/*.SF</exclude>
                   <exclude>META-INF/*.DSA</exclude>
@@ -75,8 +74,18 @@
                   <exclude>DUMMY.SF</exclude>
                   <exclude>DUMMY.DSA</exclude>
                   <exclude>**/*.RSA</exclude>
-                </excludes>
-            </filter>
+		<exclude>*unused*.jar</exclude>
+		<exclude>org.scala-lang:scala-library:jar:2.12.12</exclude>
+		<exclude>org.codehaus.jackson:jackson-mapper-asl:jar:1.9.13</exclude>
+		<exclude>com.fasterxml.jackson.core:jackson-core:jar:2.12.0</exclude>
+		<exclude>com.fasterxml.jackson*:*</exclude>
+		<exclude>org.codehaus.jackson:*</exclude>
+		<exclude>org.scala-lang:*</exclude>
+		<exclude>sonal</exclude>
+		<exclude>*:jar:*</exclude>
+	</excludes>
+</artifactSet>
+<!--
 			<filter>
 				<artifact>zingg:zingg-common-client</artifact>
 			</filter>
@@ -89,7 +98,7 @@
 			<filter>
 				<artifact>zingg:zingg-spark-core</artifact>
 			</filter>
-		</filters>
+	-->
 				</configuration>
 				<executions>
 					<execution>
