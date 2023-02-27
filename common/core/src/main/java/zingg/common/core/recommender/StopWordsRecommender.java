@@ -12,7 +12,8 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.core.Context;
 
-public class StopWordsRecommender<S,D,R,C,T> {
+public abstract class StopWordsRecommender<S,D,R,C,T> {
+	private static final String REGEX_WHITESPACE = "\\s+";
 	public static final Log LOG = LogFactory.getLog(StopWordsRecommender.class);
 	protected Context<S,D,R,C,T> context;
 	protected ZFrame<D,R,C> data;
@@ -60,23 +61,46 @@ public class StopWordsRecommender<S,D,R,C,T> {
 		}
 		
  	}
+	
+	protected ZFrame<D,R,C> filterOnThreshold(ZFrame<D,R,C> zDF, double threshold, String countColName) {
+		return zDF.filter(zDF.gt(countColName,threshold)).coalesce(1);
+	}
 
-	public ZFrame<D,R,C> findStopWords(ZFrame<D,R,C> data, String fieldName) {
+	protected double getThreshold(ZFrame<D,R,C> zDF, String countColName) {
+		double totalCount = zDF.aggSum(countColName);
+		double threshold = totalCount * args.getStopWordsCutoff();
+		return threshold;		
+	}
+
+	protected ZFrame<D,R,C> addCountColumn(ZFrame<D,R,C> zDF, String fieldName, String resultColName) {
+		return zDF.groupByCount(fieldName, resultColName);
+	}
+
+	protected ZFrame<D,R,C> convertToRows(ZFrame<D,R,C> zDF, String fieldName, String resultColName){
+		return zDF.explode(fieldName, resultColName);
+	}
+
+	protected ZFrame<D,R,C> splitFieldOnWhiteSpace(ZFrame<D,R,C> zDF, String fieldName, String resultColName){
+		return zDF.split(fieldName, REGEX_WHITESPACE, resultColName);
+	}
+
+	protected ZFrame<D,R,C> removeEmpty(ZFrame<D,R,C> zDF, String wordColName) {
+		return zDF.filter(zDF.notEqual(wordColName,""));
+	}
+
+	public ZFrame<D,R,C> findStopWords(ZFrame<D,R,C> zDF, String fieldName) {
 		LOG.debug("Field: " + fieldName);
 		
-		System.out.println("inside findStopWords");
+		if(!zDF.isEmpty()) {
+			zDF = splitFieldOnWhiteSpace(zDF, fieldName, ColName.COL_SPLIT);
+			zDF = convertToRows(zDF,ColName.COL_SPLIT,ColName.COL_WORD);
+			zDF = removeEmpty(zDF,ColName.COL_WORD);
+			zDF = addCountColumn(zDF,ColName.COL_WORD, ColName.COL_COUNT);
+			double threshold = getThreshold(zDF, ColName.COL_COUNT);
+			zDF = filterOnThreshold(zDF, threshold, ColName.COL_COUNT);
+		}
 		
-//		if(!data.isEmpty()) {
-//			data = data.select(split(data.col(fieldName), "\\s+").as(ColName.COL_SPLIT));
-//			data = data.select(explode(data.col(ColName.COL_SPLIT)).as(ColName.COL_WORD));
-//			data = data.filter(data.col(ColName.COL_WORD).notEqual(""));
-//			data = data.groupBy(ColName.COL_WORD).count().withColumnRenamed("count", ColName.COL_COUNT);
-//			long count = data.agg(sum(ColName.COL_COUNT)).collectAsList().get(0).getLong(0);
-//			double threshold = count * args.getStopWordsCutoff();
-//			data = data.filter(data.col(ColName.COL_COUNT).gt(threshold));
-//			data = data.coalesce(1);
-//		}
-		
-		return data;
+		return zDF;		
+
 	}
 }

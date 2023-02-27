@@ -8,11 +8,13 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.common.core.executor.Recommender;
-import zingg.common.core.executor.Trainer;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
+
+import zingg.common.core.executor.Recommender;
+import zingg.common.core.recommender.StopWordsRecommender;
+import zingg.spark.core.recommender.SparkStopWordsRecommender;
 
 
 /**
@@ -37,11 +39,11 @@ public class SparkRecommender extends Recommender<SparkSession, Dataset<Row>, Ro
         super.init(args, license);
         getContext().init(license);
     }	
-	
-	@Override
-	public void cleanup() throws ZinggClientException {
-		// TODO Auto-generated method stub
-		
-	}		
+
+    @Override
+    public StopWordsRecommender<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWordsRecommender() {
+    	StopWordsRecommender<SparkSession, Dataset<Row>, Row, Column, DataType> stopWordsRecommender = new SparkStopWordsRecommender(getContext(),args);    	
+    	return stopWordsRecommender;
+    }
 	
 }

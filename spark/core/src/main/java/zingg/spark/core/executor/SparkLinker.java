@@ -13,13 +13,10 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 import zingg.common.core.executor.Linker;
 import zingg.common.core.model.Model;
+import zingg.common.core.preprocess.StopWordsRemover;
+import zingg.spark.core.preprocess.SparkStopWordsRemover;
 
-/**
- * Spark specific implementation of Linker
- * 
- * @author vikasgupta
- *
- */
+
 public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	public static String name = "zingg.spark.core.executor.SparkLinker";
@@ -47,6 +44,11 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
 		Model model = getModelUtil().loadModel(false, args);
 		model.register(getContext().getSession());
 		return model;
+	}
+
+	@Override
+	protected StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
+		return new SparkStopWordsRemover(getContext(),getArgs());
 	}
 	
 }
