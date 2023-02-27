@@ -13,6 +13,7 @@ import zingg.Trainer;
 import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
+import zingg.recommender.StopWordsRecommender;
 
 
 /**
@@ -37,11 +38,11 @@ public class SparkRecommender extends Recommender<SparkSession, Dataset<Row>, Ro
         super.init(args, license);
         getContext().init(license);
     }	
-	
-	@Override
-	public void cleanup() throws ZinggClientException {
-		// TODO Auto-generated method stub
-		
-	}		
+
+    @Override
+    public StopWordsRecommender<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWordsRecommender() {
+    	StopWordsRecommender<SparkSession, Dataset<Row>, Row, Column, DataType> stopWordsRecommender = new SparkStopWordsRecommender(getContext(),args);    	
+    	return stopWordsRecommender;
+    }
 	
 }

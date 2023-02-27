@@ -8,10 +8,9 @@ import org.apache.commons.logging.LogFactory;
 import zingg.client.Arguments;
 import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
-import zingg.client.util.ColName;
 import zingg.common.Context;
 
-public class StopWordsRecommender<S,D,R,C,T> {
+public abstract class StopWordsRecommender<S,D,R,C,T> {
 	public static final Log LOG = LogFactory.getLog(StopWordsRecommender.class);
 	protected Context<S,D,R,C,T> context;
 	protected ZFrame<D,R,C> data;
@@ -60,22 +59,5 @@ public class StopWordsRecommender<S,D,R,C,T> {
 		
  	}
 
-	public ZFrame<D,R,C> findStopWords(ZFrame<D,R,C> data, String fieldName) {
-		LOG.debug("Field: " + fieldName);
-		
-		System.out.println("inside findStopWords");
-		
-//		if(!data.isEmpty()) {
-//			data = data.select(split(data.col(fieldName), "\\s+").as(ColName.COL_SPLIT));
-//			data = data.select(explode(data.col(ColName.COL_SPLIT)).as(ColName.COL_WORD));
-//			data = data.filter(data.col(ColName.COL_WORD).notEqual(""));
-//			data = data.groupBy(ColName.COL_WORD).count().withColumnRenamed("count", ColName.COL_COUNT);
-//			long count = data.agg(sum(ColName.COL_COUNT)).collectAsList().get(0).getLong(0);
-//			double threshold = count * args.getStopWordsCutoff();
-//			data = data.filter(data.col(ColName.COL_COUNT).gt(threshold));
-//			data = data.coalesce(1);
-//		}
-		
-		return data;
-	}
+	public abstract ZFrame<D,R,C> findStopWords(ZFrame<D,R,C> data, String fieldName);
 }
