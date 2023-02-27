@@ -11,6 +11,7 @@ import zingg.spark.SparkLabelUpdater;
 import zingg.spark.SparkLabeller;
 import zingg.spark.SparkLinker;
 import zingg.spark.SparkMatcher;
+import zingg.spark.SparkRecommender;
 import zingg.spark.SparkTrainMatcher;
 import zingg.spark.SparkTrainer;
 import zingg.spark.SparkTrainingDataFinder;
@@ -31,6 +32,7 @@ public class SparkZFactory implements IZinggFactory{
         zinggers.put(ZinggOptions.GENERATE_DOCS, SparkDocumenter.name);
         zinggers.put(ZinggOptions.UPDATE_LABEL, SparkLabelUpdater.name);
         zinggers.put(ZinggOptions.FIND_AND_LABEL, SparkFindAndLabeller.name);
+        zinggers.put(ZinggOptions.RECOMMEND, SparkRecommender.name);
     }
 
     public IZingg get(ZinggOptions z) throws InstantiationException, IllegalAccessException, ClassNotFoundException {

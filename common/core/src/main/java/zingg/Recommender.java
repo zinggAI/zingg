@@ -21,8 +21,8 @@ public class Recommender<S,D,R,C, T> extends ZinggBase<S,D,R,C,T> {
 			LOG.info("Recommender starts");
 
 			//Recommendations out of data
-			//StopWordsRecommender stopWordsRecommender = new StopWordsRecommender(args);
-			//stopWordsRecommender.process();
+			StopWordsRecommender<S,D,R,C, T> stopWordsRecommender = new StopWordsRecommender<S,D,R,C, T>(getContext(),args);
+			stopWordsRecommender.process();
 
 			LOG.info("Recommender finishes");
 		} catch (Exception e) {
