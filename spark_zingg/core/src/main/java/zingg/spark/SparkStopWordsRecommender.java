@@ -40,8 +40,6 @@ public class SparkStopWordsRecommender extends StopWordsRecommender<SparkSession
 	public ZFrame<Dataset<Row>, Row, Column> findStopWords(ZFrame<Dataset<Row>, Row, Column> zDF, String fieldName) {
 		LOG.debug("Field: " + fieldName);
 		
-		System.out.println("inside findStopWords of SparkStopWordsRecommender");
-		
 		Dataset<Row> data = zDF.df();
 		
 		if(!data.isEmpty()) {
