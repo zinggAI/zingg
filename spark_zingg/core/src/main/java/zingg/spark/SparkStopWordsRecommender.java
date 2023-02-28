@@ -15,7 +15,6 @@ import org.apache.spark.sql.types.DataType;
 import zingg.client.Arguments;
 import zingg.client.SparkFrame;
 import zingg.client.ZFrame;
-import zingg.client.util.ColName;
 import zingg.common.Context;
 import zingg.recommender.StopWordsRecommender;
 
@@ -37,24 +36,37 @@ public class SparkStopWordsRecommender extends StopWordsRecommender<SparkSession
 	}
 	
 	@Override
-	public ZFrame<Dataset<Row>, Row, Column> findStopWords(ZFrame<Dataset<Row>, Row, Column> zDF, String fieldName) {
-		LOG.debug("Field: " + fieldName);
-		
-		Dataset<Row> data = zDF.df();
-		
-		if(!data.isEmpty()) {
-			data = data.select(split(data.col(fieldName), "\\s+").as(ColName.COL_SPLIT));
-			data = data.select(explode(data.col(ColName.COL_SPLIT)).as(ColName.COL_WORD));
-			data = data.filter(data.col(ColName.COL_WORD).notEqual(""));
-			data = data.groupBy(ColName.COL_WORD).count().withColumnRenamed("count", ColName.COL_COUNT);
-			long count = data.agg(sum(ColName.COL_COUNT)).collectAsList().get(0).getLong(0);
-			double threshold = count * args.getStopWordsCutoff();
-			data = data.filter(data.col(ColName.COL_COUNT).gt(threshold));
-			data = data.coalesce(1);
-		}
-		
-		return new SparkFrame(data);		
+	protected ZFrame<Dataset<Row>, Row, Column> filterOnThreshold(ZFrame<Dataset<Row>, Row, Column> zDF, double threshold, String countColName) {
+		Dataset<Row> sparkDF = zDF.df();
+		sparkDF = sparkDF.filter(sparkDF.col(countColName).gt(threshold));
+		sparkDF = sparkDF.coalesce(1);
+		return new SparkFrame(sparkDF);	
+	}
 
+	@Override
+	protected double getThreshold(ZFrame<Dataset<Row>, Row, Column> zDF, String countColName) {
+		Dataset<Row> sparkDF = zDF.df();
+		long count = sparkDF.agg(sum(countColName)).collectAsList().get(0).getLong(0);
+		double threshold = count * args.getStopWordsCutoff();
+		return threshold;
+	}
+	
+	@Override
+	protected ZFrame<Dataset<Row>, Row, Column> getCount(ZFrame<Dataset<Row>, Row, Column> zDF, String wordColName, String countColName) {
+		Dataset<Row> sparkDF = zDF.df();
+		return new SparkFrame(sparkDF.groupBy(wordColName).count().withColumnRenamed("count",countColName));
+	}
+	
+	@Override
+	protected ZFrame<Dataset<Row>, Row, Column> convertToRows(ZFrame<Dataset<Row>, Row, Column> zDF, String splitColName, String wordColName) {
+		Dataset<Row> sparkDF = zDF.df();
+		return new SparkFrame(sparkDF.select(explode(sparkDF.col(splitColName)).as(wordColName)));
+	}
+	
+	@Override
+	protected ZFrame<Dataset<Row>, Row, Column> splitFieldOnWhiteSpace(ZFrame<Dataset<Row>, Row, Column> zDF, String fieldName, String splitColName) {
+		Dataset<Row> sparkDF = zDF.df();
+		return new SparkFrame(sparkDF.select(split(sparkDF.col(fieldName), "\\s+").as(splitColName)));
 	}	
 	
 }

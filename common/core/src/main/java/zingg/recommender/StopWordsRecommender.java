@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import zingg.client.Arguments;
 import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
+import zingg.client.util.ColName;
 import zingg.common.Context;
 
 public abstract class StopWordsRecommender<S,D,R,C,T> {
@@ -58,6 +59,39 @@ public abstract class StopWordsRecommender<S,D,R,C,T> {
 		}
 		
  	}
+	
+	protected abstract  ZFrame<D,R,C> filterOnThreshold(ZFrame<D,R,C> zDF, double threshold, String countColName);
 
-	public abstract ZFrame<D,R,C> findStopWords(ZFrame<D,R,C> data, String fieldName);
+	protected abstract  double getThreshold(ZFrame<D,R,C> zDF, String countColName);
+
+	protected abstract  ZFrame<D,R,C> getCount(ZFrame<D,R,C> zDF, String wordColName, String countColName);
+
+	protected abstract  ZFrame<D,R,C> convertToRows(ZFrame<D,R,C> zDF, String splitColName, String wordColName);
+
+	protected abstract  ZFrame<D,R,C> splitFieldOnWhiteSpace(ZFrame<D,R,C> zDF, String fieldName, String splitColName);	
+
+	protected ZFrame<D,R,C> removeEmpty(ZFrame<D,R,C> zDF, String wordColName) {
+		return zDF.filter(zDF.notEqual(wordColName,""));
+	}
+
+	public ZFrame<D,R,C> findStopWords(ZFrame<D,R,C> zDF, String fieldName) {
+		LOG.debug("Field: " + fieldName);
+		
+		if(!zDF.isEmpty()) {
+			zDF = splitFieldOnWhiteSpace(zDF, fieldName, ColName.COL_SPLIT);
+
+			zDF = convertToRows(zDF,ColName.COL_SPLIT,ColName.COL_WORD);
+
+			zDF = removeEmpty(zDF,ColName.COL_WORD);
+
+			zDF = getCount(zDF,ColName.COL_WORD, ColName.COL_COUNT);
+
+			double threshold = getThreshold(zDF, ColName.COL_COUNT);
+			
+			zDF = filterOnThreshold(zDF, threshold, ColName.COL_COUNT);
+		}
+		
+		return zDF;		
+
+	}
 }
