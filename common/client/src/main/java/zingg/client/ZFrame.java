@@ -48,8 +48,12 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> drop(String c);
     public ZFrame<D, R, C> drop(String... c);
     public ZFrame<D, R, C> except(ZFrame<D, R, C> c);
+    
+    public double aggSum(String colName);
 
     public ZFrame<D, R, C> groupByMinMax(C c);
+    
+    public ZFrame<D, R, C> groupByCount(String colName, String countColName);
 
     public ZFrame<D, R, C> union(ZFrame<D, R, C> other);
 
@@ -72,6 +76,8 @@ public interface ZFrame<D, R, C> {
 
     public C gt(String c);
 
+    public C gt(String c, double val);
+    
 	public C equalTo(String c, String e);
 
 	public C notEqual(String c, String e);
@@ -108,5 +114,12 @@ public interface ZFrame<D, R, C> {
     public void show(boolean a);
 
     public boolean isEmpty();
+    
+    public ZFrame<D, R, C> split(String colName,String pattern, String resultColName);
+    
+    /**
+     * Creates a new row for each element in the given array or map column
+     */
+    public ZFrame<D, R, C> explode(String colName, String resultColName);
     
 }

@@ -12,6 +12,7 @@ import zingg.client.util.ColName;
 import zingg.common.Context;
 
 public abstract class StopWordsRecommender<S,D,R,C,T> {
+	private static final String REGEX_WHITESPACE = "\\s+";
 	public static final Log LOG = LogFactory.getLog(StopWordsRecommender.class);
 	protected Context<S,D,R,C,T> context;
 	protected ZFrame<D,R,C> data;
@@ -60,15 +61,27 @@ public abstract class StopWordsRecommender<S,D,R,C,T> {
 		
  	}
 	
-	protected abstract  ZFrame<D,R,C> filterOnThreshold(ZFrame<D,R,C> zDF, double threshold, String countColName);
+	protected ZFrame<D,R,C> filterOnThreshold(ZFrame<D,R,C> zDF, double threshold, String countColName) {
+		return zDF.filter(zDF.gt(countColName,threshold)).coalesce(1);
+	}
 
-	protected abstract  double getThreshold(ZFrame<D,R,C> zDF, String countColName);
+	protected double getThreshold(ZFrame<D,R,C> zDF, String countColName) {
+		double totalCount = zDF.aggSum(countColName);
+		double threshold = totalCount * args.getStopWordsCutoff();
+		return threshold;		
+	}
 
-	protected abstract  ZFrame<D,R,C> getCount(ZFrame<D,R,C> zDF, String wordColName, String countColName);
+	protected ZFrame<D,R,C> addCountColumn(ZFrame<D,R,C> zDF, String fieldName, String resultColName) {
+		return zDF.groupByCount(fieldName, resultColName);
+	}
 
-	protected abstract  ZFrame<D,R,C> convertToRows(ZFrame<D,R,C> zDF, String splitColName, String wordColName);
+	protected ZFrame<D,R,C> convertToRows(ZFrame<D,R,C> zDF, String fieldName, String resultColName){
+		return zDF.explode(fieldName, resultColName);
+	}
 
-	protected abstract  ZFrame<D,R,C> splitFieldOnWhiteSpace(ZFrame<D,R,C> zDF, String fieldName, String splitColName);	
+	protected ZFrame<D,R,C> splitFieldOnWhiteSpace(ZFrame<D,R,C> zDF, String fieldName, String resultColName){
+		return zDF.split(fieldName, REGEX_WHITESPACE, resultColName);
+	}
 
 	protected ZFrame<D,R,C> removeEmpty(ZFrame<D,R,C> zDF, String wordColName) {
 		return zDF.filter(zDF.notEqual(wordColName,""));
@@ -79,15 +92,10 @@ public abstract class StopWordsRecommender<S,D,R,C,T> {
 		
 		if(!zDF.isEmpty()) {
 			zDF = splitFieldOnWhiteSpace(zDF, fieldName, ColName.COL_SPLIT);
-
 			zDF = convertToRows(zDF,ColName.COL_SPLIT,ColName.COL_WORD);
-
 			zDF = removeEmpty(zDF,ColName.COL_WORD);
-
-			zDF = getCount(zDF,ColName.COL_WORD, ColName.COL_COUNT);
-
+			zDF = addCountColumn(zDF,ColName.COL_WORD, ColName.COL_COUNT);
 			double threshold = getThreshold(zDF, ColName.COL_COUNT);
-			
 			zDF = filterOnThreshold(zDF, threshold, ColName.COL_COUNT);
 		}
 		

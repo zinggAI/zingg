@@ -3,13 +3,12 @@ package zingg.client;
 import java.util.List;
 
 import org.apache.spark.sql.Column;
+import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.functions;
 
 import scala.collection.JavaConverters;
 import zingg.client.util.ColName;
-
-import org.apache.spark.sql.Dataset;
 
 //Dataset, Row, column
 public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
@@ -127,7 +126,10 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.except(c.df()));
     }
 
-    
+    @Override
+    public double aggSum(String colName) {
+    	return df.agg(functions.sum(colName).cast("double")).collectAsList().get(0).getDouble(0);
+    }
 
     public ZFrame<Dataset<Row>, Row, Column> groupByMinMax(Column c) {
         return new SparkFrame(df.groupBy(df.col(ColName.ID_COL)).agg(
@@ -135,7 +137,11 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 			functions.max(ColName.SCORE_COL).as(ColName.SCORE_MAX_COL)));
     }
 
-
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> groupByCount(String colName, String countColName){
+    	return new SparkFrame(df.groupBy(colName).count().withColumnRenamed("count",countColName));
+    }
+    
     public ZFrame<Dataset<Row>, Row, Column> dropDuplicates(String[] c) {
         return new SparkFrame(df.dropDuplicates(c));
     }
@@ -171,7 +177,12 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     public Column gt(String c) {
 		return df.col(c).gt(df.col(ColName.COL_PREFIX + c));
 	}
-
+    
+    @Override
+    public Column gt(String c, double val) {
+		return df.col(c).gt(val);
+	}
+    
 	public Column equalTo(String c, String e){
 		return df.col(c).equalTo(e);
 	}
@@ -280,5 +291,15 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     public boolean isEmpty() {
         return df.isEmpty();
     }
-
+    
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> split(String colName,String pattern, String resultColName) {
+    	return new SparkFrame(df.select(functions.split(df.col(colName), pattern).as(resultColName)));
+    }
+    
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> explode(String colName, String resultColName) {
+    	return new SparkFrame(df.select(functions.explode(df.col(colName)).as(resultColName)));
+    }
+    
 }
