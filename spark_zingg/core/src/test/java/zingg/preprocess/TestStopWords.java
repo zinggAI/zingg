@@ -222,7 +222,7 @@ public class TestStopWords extends ZinggSparkTester{
 			assertTrue(original.except(newDataset.select(ColName.ID_COL, "field1", "field2", "field3", ColName.SOURCE_COL)).isEmpty());
 	}
 
-/*	@Test
+	@Test
 	public void testOriginalDataAfterPostprocessLinked() {
 			StructType schemaActual = new StructType(new StructField[] {
 					new StructField(ColName.CLUSTER_COLUMN, DataTypes.StringType, false, Metadata.empty()),
@@ -265,10 +265,16 @@ public class TestStopWords extends ZinggSparkTester{
 							RowFactory.create("1648811730857:40", "40", "1.0", "1.0", "-1", "Best luck zingg", "Five",
 									"thank", "test")),
 					schemaActual);
-
+			
+			System.out.println("testOriginalDataAfterPostprocessLinked original :");
+			original.show(200);
+			
 			Dataset<Row> newDataset = ((SparkFrame)(zsCTX.getDSUtil().postprocessLinked(new SparkFrame(actual), new SparkFrame(original)))).df();
-
-			assertTrue(newDataset.select("field1", "field2", "field3", ColName.SOURCE_COL).except(original.drop(ColName.ID_COL)).isEmpty());
-			assertTrue(original.drop(ColName.ID_COL).except(newDataset.select("field1", "field2", "field3", ColName.SOURCE_COL)).isEmpty());
-	}*/
+			
+			System.out.println("testOriginalDataAfterPostprocessLinked newDataset :");
+			newDataset.show(200);
+			
+			assertTrue(newDataset.select("field1", "field2", "field3").except(original.select("field1", "field2", "field3")).isEmpty());
+			assertTrue(original.select("field1", "field2", "field3").except(newDataset.select("field1", "field2", "field3")).isEmpty());
+	}
 }
