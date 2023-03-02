@@ -13,7 +13,7 @@ import org.apache.spark.sql.Column;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
-import zingg.feature.Feature;
+import zingg.common.core.feature.Feature;
 
 public class SparkLabelModel extends SparkModel{
 	

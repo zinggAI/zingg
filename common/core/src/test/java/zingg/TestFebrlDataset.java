@@ -21,6 +21,7 @@ import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.InMemoryPipe;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
+import zingg.common.core.executor.TrainMatcher;
 /**end to end integration test*/
 public class TestFebrlDataset extends ZinggSparkTester{
 	public static final Log LOG = LogFactory.getLog(TestFebrlDataset.class);

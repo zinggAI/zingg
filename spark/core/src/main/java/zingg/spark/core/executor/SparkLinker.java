@@ -8,12 +8,11 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.Linker;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
-import zingg.model.Model;
-import zingg.spark.core.model.SparkModel;
+import zingg.common.core.executor.Linker;
+import zingg.common.core.model.Model;
 
 /**
  * Spark specific implementation of Linker

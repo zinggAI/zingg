@@ -9,23 +9,23 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.ZinggBase;
 import zingg.common.client.Arguments;
 import zingg.common.client.IZingg;
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.Context;
+import zingg.common.core.executor.ZinggBase;
 import zingg.spark.core.util.SparkBlockingTreeUtil;
 import zingg.spark.core.util.SparkDSUtil;
 import zingg.spark.core.util.SparkGraphUtil;
 import zingg.spark.core.util.SparkHashUtil;
 import zingg.spark.core.util.SparkModelUtil;
 import zingg.spark.core.util.SparkPipeUtil;
-import zingg.common.Context;
-import zingg.util.BlockingTreeUtil;
-import zingg.util.DSUtil;
-import zingg.util.GraphUtil;
-import zingg.util.HashUtil;
-import zingg.util.ModelUtil;
-import zingg.util.PipeUtilBase;
+import zingg.common.core.util.BlockingTreeUtil;
+import zingg.common.core.util.DSUtil;
+import zingg.common.core.util.GraphUtil;
+import zingg.common.core.util.HashUtil;
+import zingg.common.core.util.ModelUtil;
+import zingg.common.core.util.PipeUtilBase;
 
 
 public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Row,Column,DataType>{

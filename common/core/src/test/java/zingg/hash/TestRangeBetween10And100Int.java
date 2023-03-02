@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import zingg.common.core.hash.RangeInt;
+
 public class TestRangeBetween10And100Int {
 
     private RangeInt getInstance() {

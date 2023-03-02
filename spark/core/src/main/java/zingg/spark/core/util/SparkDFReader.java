@@ -1,6 +1,6 @@
 package zingg.spark.core.util;
 
-import zingg.util.DFReader;
+import zingg.common.core.util.DFReader;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;

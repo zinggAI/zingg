@@ -18,6 +18,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import zingg.ZinggSparkTester;
+import zingg.common.core.documenter.DocumenterBase;
+import zingg.common.core.documenter.TemplateFields;
 
 
 public class TestDocumenterBase extends ZinggSparkTester {

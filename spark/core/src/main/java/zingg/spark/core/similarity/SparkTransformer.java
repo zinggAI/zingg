@@ -6,7 +6,7 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.api.java.UDF2;
 import org.apache.spark.sql.types.DataTypes;
 
-import zingg.similarity.function.SimFunction;
+import zingg.common.core.similarity.function.SimFunction;
 
 
 public class SparkTransformer extends SparkBaseTransformer {

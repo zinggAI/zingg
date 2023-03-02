@@ -1,7 +1,7 @@
 package zingg.spark.core.util;
 
 import freemarker.template.Version;
-import zingg.util.RowWrapper;
+import zingg.common.core.util.RowWrapper;
 
 import org.apache.spark.sql.Row;
 import freemarker.template.DefaultObjectWrapper;

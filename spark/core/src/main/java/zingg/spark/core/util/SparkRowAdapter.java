@@ -8,7 +8,7 @@ import freemarker.template.AdapterTemplateModel;
 import freemarker.template.TemplateModelException;
 import freemarker.template.TemplateSequenceModel;
 import freemarker.template.WrappingTemplateModel;
-import zingg.util.RowAdapter;
+import zingg.common.core.util.RowAdapter;
 
 public class SparkRowAdapter extends RowAdapter<Row>{
 

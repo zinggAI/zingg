@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import zingg.common.core.hash.LastChars;
+
 public class TestLastChars {
 	
 	@Test

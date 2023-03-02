@@ -1,4 +1,4 @@
-package zingg.similarity.function;
+package zingg.common.core.similarity.function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

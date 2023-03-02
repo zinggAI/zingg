@@ -6,11 +6,11 @@ import java.util.Map;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 
-import zingg.feature.DateFeature;
-import zingg.feature.DoubleFeature;
-import zingg.feature.FeatureFactory;
-import zingg.feature.IntFeature;
-import zingg.feature.StringFeature;
+import zingg.common.core.feature.DateFeature;
+import zingg.common.core.feature.DoubleFeature;
+import zingg.common.core.feature.FeatureFactory;
+import zingg.common.core.feature.IntFeature;
+import zingg.common.core.feature.StringFeature;
 
 public class SparkFeatureFactory extends FeatureFactory<DataType>{
 

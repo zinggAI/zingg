@@ -8,9 +8,9 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.Documenter;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
+import zingg.common.core.executor.Documenter;
 
 
 public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row, Column,DataType> {

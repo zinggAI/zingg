@@ -8,10 +8,10 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.Trainer;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
+import zingg.common.core.executor.Trainer;
 
 
 /**

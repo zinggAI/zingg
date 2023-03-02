@@ -10,8 +10,8 @@ import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.ZFrame;
-import zingg.hash.BaseHash;
-import zingg.hash.HashFunction;
+import zingg.common.core.hash.BaseHash;
+import zingg.common.core.hash.HashFunction;
 
 
 public abstract class SparkHashFunction<T1, R> extends HashFunction<Dataset<Row>,Row,Column,DataType> implements UDF1<T1, R>{

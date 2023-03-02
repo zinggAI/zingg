@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.types.DataTypes;
 
-import zingg.hash.LastChars;
+import zingg.common.core.hash.LastChars;
 
 public class SparkLastChars extends SparkHashFunction<String, String>{
     

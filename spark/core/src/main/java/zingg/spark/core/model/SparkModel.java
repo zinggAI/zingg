@@ -30,10 +30,10 @@ import zingg.spark.client.SparkFrame;
 import zingg.spark.core.similarity.SparkSimFunction;
 import zingg.spark.core.similarity.SparkTransformer;
 import zingg.common.client.ZFrame;
-import zingg.feature.Feature;
-import zingg.model.Model;
-import zingg.similarity.function.SimFunction;
+import zingg.common.core.model.Model;
+import zingg.common.core.similarity.function.SimFunction;
 import zingg.common.client.util.ColName;
+import zingg.common.core.feature.Feature;
 
 public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row, Column>{
 	

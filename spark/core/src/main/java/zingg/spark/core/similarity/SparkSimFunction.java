@@ -2,7 +2,7 @@ package zingg.spark.core.similarity;
 
 import org.apache.spark.sql.api.java.UDF2;
 
-import zingg.similarity.function.SimFunction;
+import zingg.common.core.similarity.function.SimFunction;
 
 public class SparkSimFunction<T> implements UDF2<T, T, Double> {
 

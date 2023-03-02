@@ -2,7 +2,7 @@ package zingg.spark.core.hash;
 
 import org.apache.spark.sql.types.DataTypes;
 
-import zingg.hash.First3CharsBox;
+import zingg.common.core.hash.First3CharsBox;
 
 public class SparkFirst3CharsBox extends SparkHashFunction<String, Integer>{
 

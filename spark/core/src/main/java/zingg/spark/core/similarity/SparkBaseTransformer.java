@@ -17,7 +17,7 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
 
 import zingg.common.client.util.ColName;
-import zingg.similarity.function.SimFunction;
+import zingg.common.core.similarity.function.SimFunction;
 
 
 public abstract class SparkBaseTransformer extends Transformer implements HasInputCol, HasOutputCol {

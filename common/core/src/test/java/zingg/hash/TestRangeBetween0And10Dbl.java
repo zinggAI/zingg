@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import zingg.common.core.hash.RangeDbl;
+
 public class TestRangeBetween0And10Dbl {
 
     private RangeDbl getInstance() {

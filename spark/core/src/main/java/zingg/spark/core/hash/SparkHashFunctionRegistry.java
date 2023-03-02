@@ -7,8 +7,8 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.hash.HashFunction;
-import zingg.hash.HashFunctionRegistry;
+import zingg.common.core.hash.HashFunction;
+import zingg.common.core.hash.HashFunctionRegistry;
 
 public class SparkHashFunctionRegistry implements HashFunctionRegistry<Dataset<Row>,Row,Column,DataType>{
 

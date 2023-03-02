@@ -1,4 +1,4 @@
-package zingg.util;
+package zingg.common.core.util;
 
 import static org.apache.spark.sql.functions.col;
 import static org.junit.jupiter.api.Assertions.assertTrue;

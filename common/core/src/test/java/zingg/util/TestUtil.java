@@ -1,4 +1,4 @@
-package zingg.util;
+package zingg.common.core.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

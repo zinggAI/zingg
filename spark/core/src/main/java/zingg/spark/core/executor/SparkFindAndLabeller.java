@@ -10,9 +10,9 @@ import org.apache.spark.sql.SparkSession;
 
 import org.apache.spark.sql.types.DataType;
 
-import zingg.FindAndLabeller;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
+import zingg.common.core.executor.FindAndLabeller;
 
 
 

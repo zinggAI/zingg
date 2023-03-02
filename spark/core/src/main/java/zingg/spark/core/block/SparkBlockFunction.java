@@ -9,9 +9,9 @@ import org.apache.spark.sql.RowFactory;
 
 import scala.collection.JavaConversions;
 import scala.collection.Seq;
-import zingg.block.BlockFunction;
-import zingg.block.Canopy;
-import zingg.block.Tree;
+import zingg.common.core.block.BlockFunction;
+import zingg.common.core.block.Canopy;
+import zingg.common.core.block.Tree;
 
 public class SparkBlockFunction extends BlockFunction<Row> implements MapFunction<Row, Row>{
    

@@ -7,11 +7,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.deploy.PythonRunner;
 
-import zingg.ZinggBase;
 import zingg.common.client.Arguments;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
+import zingg.common.core.executor.ZinggBase;
 
 public class PeekModel extends ZinggBase{
 

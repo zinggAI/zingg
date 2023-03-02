@@ -22,7 +22,7 @@ import zingg.common.client.util.ColName;
 import scala.collection.JavaConverters;
 import scala.reflect.ClassTag;
 import zingg.scala.DFUtil;
-import zingg.util.GraphUtil;
+import zingg.common.core.util.GraphUtil;
 
 public class SparkGraphUtil implements GraphUtil<Dataset<Row>, Row, Column> {
 

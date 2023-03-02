@@ -46,9 +46,9 @@ import scala.collection.Seq;
 
 // import com.datastax.spark.connector.cql.*;
 import zingg.scala.DFUtil;
-import zingg.util.PipeUtil;
-import zingg.util.DFReader;
-import zingg.util.DFWriter;
+import zingg.common.core.util.PipeUtil;
+import zingg.common.core.util.DFReader;
+import zingg.common.core.util.DFWriter;
 
 
 //import com.datastax.spark.connector.cql.*;

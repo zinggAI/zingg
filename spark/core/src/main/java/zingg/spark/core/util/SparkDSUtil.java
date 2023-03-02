@@ -7,7 +7,7 @@ import org.apache.spark.sql.SparkSession;
 
 import zingg.spark.client.SparkFrame;
 import zingg.common.client.ZFrame;
-import zingg.util.DSUtil;
+import zingg.common.core.util.DSUtil;
 import zingg.scala.DFUtil;
 
 

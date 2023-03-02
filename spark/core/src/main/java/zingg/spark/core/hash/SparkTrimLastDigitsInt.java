@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.types.DataTypes;
 
-import zingg.hash.TrimLastDigitsInt;
+import zingg.common.core.hash.TrimLastDigitsInt;
 
 /**
  * Spark specific trim function for Integer

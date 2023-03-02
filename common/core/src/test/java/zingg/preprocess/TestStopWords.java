@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import zingg.ZinggSparkTester;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.util.ColName;
-import zingg.util.DSUtil;
+import zingg.common.core.util.DSUtil;
 
 public class TestStopWords extends ZinggSparkTester{
 

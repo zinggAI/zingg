@@ -19,9 +19,6 @@ import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import org.apache.spark.ml.util.SchemaUtils;
 
-import zingg.block.Block;
-import zingg.block.Canopy;
-import zingg.block.Tree;
 import zingg.common.client.Arguments;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.block.SparkBlock;
@@ -31,9 +28,12 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ListMap;
 import zingg.common.client.util.Util;
-import zingg.hash.HashFunction;
-import zingg.util.BlockingTreeUtil;
-import zingg.util.PipeUtilBase;
+import zingg.common.core.block.Block;
+import zingg.common.core.block.Canopy;
+import zingg.common.core.block.Tree;
+import zingg.common.core.hash.HashFunction;
+import zingg.common.core.util.BlockingTreeUtil;
+import zingg.common.core.util.PipeUtilBase;
 
 public class SparkBlockingTreeUtil extends BlockingTreeUtil<SparkSession, Dataset<Row>, Row, Column, DataType>{
 

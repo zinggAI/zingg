@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.types.DataTypes;
 
-import zingg.hash.LessThanZeroDbl;
+import zingg.common.core.hash.LessThanZeroDbl;
 
 public class SparkLessThanZeroDbl extends SparkHashFunction<Double, Boolean>{
 	

@@ -9,11 +9,11 @@ import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.LabelUpdater;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 import zingg.common.client.pipe.Pipe;
+import zingg.common.core.executor.LabelUpdater;
 
 
 /**

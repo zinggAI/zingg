@@ -5,10 +5,10 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.block.Block;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ListMap;
-import zingg.hash.HashFunction;
+import zingg.common.core.block.Block;
+import zingg.common.core.hash.HashFunction;
 
 public class SparkBlock extends Block<Dataset<Row>, Row, Column, DataType> {
 

@@ -7,10 +7,10 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.hash.HashFnFromConf;
-import zingg.hash.HashFunction;
+import zingg.common.core.hash.HashFnFromConf;
+import zingg.common.core.hash.HashFunction;
 import zingg.spark.core.hash.SparkHashFunctionRegistry;
-import zingg.util.BaseHashUtil;
+import zingg.common.core.util.BaseHashUtil;
 
 
 public class SparkHashUtil extends BaseHashUtil<SparkSession,Dataset<Row>, Row, Column,DataType>{

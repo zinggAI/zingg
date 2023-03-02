@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.types.DataTypes;
 
-import zingg.hash.IdentityString;
+import zingg.common.core.hash.IdentityString;
 
 public class SparkIdentityString extends SparkHashFunction<String, String>{
     

@@ -11,7 +11,7 @@ import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 
 import zingg.common.client.ZFrame;
-import zingg.hash.TruncateDouble;
+import zingg.common.core.hash.TruncateDouble;
 
 /**
  * Spark specific trunc function for double

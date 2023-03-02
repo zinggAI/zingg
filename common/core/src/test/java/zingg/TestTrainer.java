@@ -11,6 +11,7 @@ import org.junit.jupiter.api.TestInstance;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.executor.Trainer;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TestTrainer extends ZinggSparkTester{

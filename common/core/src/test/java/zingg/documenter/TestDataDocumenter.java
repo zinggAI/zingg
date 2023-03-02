@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 
 import zingg.ZinggSparkTester;
 import zingg.common.client.Arguments;
+import zingg.common.core.documenter.DataDocumenter;
+import zingg.common.core.documenter.TemplateFields;
 import zingg.util.PipeUtil;
 
 public class TestDataDocumenter extends ZinggSparkTester {

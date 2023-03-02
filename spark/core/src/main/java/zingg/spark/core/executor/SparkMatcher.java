@@ -8,11 +8,11 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.Matcher;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
-import zingg.model.Model;
+import zingg.common.core.executor.Matcher;
+import zingg.common.core.model.Model;
 import zingg.spark.core.model.SparkModel;
 
 /**

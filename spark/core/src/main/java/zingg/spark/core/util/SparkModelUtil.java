@@ -5,13 +5,13 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
-import zingg.feature.Feature;
-import zingg.feature.FeatureFactory;
-import zingg.model.Model;
+import zingg.common.core.feature.Feature;
+import zingg.common.core.feature.FeatureFactory;
+import zingg.common.core.model.Model;
 import zingg.spark.core.feature.SparkFeatureFactory;
 import zingg.spark.core.model.SparkLabelModel;
 import zingg.spark.core.model.SparkModel;
-import zingg.util.ModelUtil;
+import zingg.common.core.util.ModelUtil;
 
 import java.util.Map;
 

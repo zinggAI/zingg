@@ -1,6 +1,6 @@
 package zingg.spark.core.util;
 
-import zingg.util.DFWriter;
+import zingg.common.core.util.DFWriter;
 import zingg.common.client.pipe.Pipe;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.Column;
