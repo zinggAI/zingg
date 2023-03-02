@@ -1,9 +1,10 @@
 package zingg.client;
 
+import java.io.Serializable;
 import java.util.List;
 
 //Dataset, Row, column
-public interface ZFrame<D, R, C> {
+public interface ZFrame<D, R, C> extends Serializable{
     
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
@@ -15,6 +16,7 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> selectExpr(String... col);
     public ZFrame <D, R, C> distinct();
     public List<R> collectAsList();
+    public List<String> collectAsListOfStrings();
 
     public ZFrame<D, R, C> toDF(String[] cols);
     public ZFrame<D, R, C> toDF(String col1, String col2);
@@ -121,5 +123,8 @@ public interface ZFrame<D, R, C> {
      * Creates a new row for each element in the given array or map column
      */
     public ZFrame<D, R, C> explode(String colName, String resultColName);
+    
+    public String[] fieldNames();
+    
     
 }

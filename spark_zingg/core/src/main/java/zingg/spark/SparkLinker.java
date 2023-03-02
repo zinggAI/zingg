@@ -13,7 +13,8 @@ import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.model.Model;
-import zingg.spark.model.SparkModel;
+import zingg.preprocess.StopWords;
+import zingg.spark.preprocess.SparkStopWords;
 
 /**
  * Spark specific implementation of Linker
@@ -48,6 +49,11 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
 		Model model = getModelUtil().loadModel(false, args);
 		model.register(getContext().getSession());
 		return model;
+	}
+
+	@Override
+	protected StopWords<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
+		return new SparkStopWords(getContext(),getArgs());
 	}
 	
 }

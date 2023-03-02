@@ -12,9 +12,12 @@ import zingg.TrainingDataFinder;
 import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
+import zingg.preprocess.StopWords;
+import zingg.spark.preprocess.SparkStopWords;
 
 public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
+	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.SparkTrainingDataFinder";
 	public static final Log LOG = LogFactory.getLog(SparkTrainingDataFinder.class);
 
@@ -36,7 +39,9 @@ public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Da
 		
 	}
 
-
-	
+	@Override
+	protected StopWords<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
+		return new SparkStopWords(getContext(),getArgs());
+	}
 	
 }

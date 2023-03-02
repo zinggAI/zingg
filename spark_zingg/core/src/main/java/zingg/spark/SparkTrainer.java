@@ -12,6 +12,8 @@ import zingg.Trainer;
 import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
+import zingg.preprocess.StopWords;
+import zingg.spark.preprocess.SparkStopWords;
 
 
 /**
@@ -22,6 +24,7 @@ import zingg.client.ZinggOptions;
  */
 public class SparkTrainer extends Trainer<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
+	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.SparkTrainer";
 	public static final Log LOG = LogFactory.getLog(SparkTrainer.class);
 
@@ -41,5 +44,10 @@ public class SparkTrainer extends Trainer<SparkSession, Dataset<Row>, Row, Colum
 		// TODO Auto-generated method stub
 		
 	}		
+
+	@Override
+	protected StopWords<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
+		return new SparkStopWords(getContext(),getArgs());
+	}
 	
 }

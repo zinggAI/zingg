@@ -12,6 +12,7 @@ import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.model.Model;
+import zingg.preprocess.StopWords;
 
 public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
@@ -37,7 +38,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				ZFrame<D,R,C> trFile = getTraining();					
 
 				if (trFile != null) {
-					//trFile = StopWords.preprocessForStopWords(args, trFile);
+					trFile = getStopWords().preprocessForStopWords(trFile);
 					ZFrame<D,R,C> trPairs = getDSUtil().joinWithItself(trFile, ColName.CLUSTER_COLUMN, true);
 						
 						posPairs = trPairs.filter(trPairs.equalTo(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_MATCH));
@@ -57,7 +58,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 					
 				if (posPairs == null || posPairs.count() <= 5) {
 					ZFrame<D,R,C> posSamplesOriginal = getPositiveSamples(data);
-					ZFrame<D,R,C> posSamples = posSamplesOriginal ; //StopWords.preprocessForStopWords(args, posSamplesOriginal);
+					ZFrame<D,R,C> posSamples = getStopWords().preprocessForStopWords(posSamplesOriginal);
 					//posSamples.printSchema();
 					if (posPairs != null) {
 						//posPairs.printSchema();
@@ -74,7 +75,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				sampleOrginal = getDSUtil().getFieldDefColumnsDS(sampleOrginal, args, true);
 				LOG.info("Preprocessing DS for stopWords");
 
-				ZFrame<D,R,C> sample = sampleOrginal; //StopWords.preprocessForStopWords(args, sampleOrginal);
+				ZFrame<D,R,C> sample = getStopWords().preprocessForStopWords(sampleOrginal);
 
 				Tree<Canopy<R>> tree = getBlockingTreeUtil().createBlockingTree(sample, posPairs, 1, -1, args, getHashUtil().getHashFunctionList());		
 				tree.print(2);	
@@ -183,5 +184,6 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 		return posPairs;
 	}
 
+    protected abstract StopWords<S,D,R,C,T> getStopWords();
 		    
 }

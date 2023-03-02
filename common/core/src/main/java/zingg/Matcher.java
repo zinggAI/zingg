@@ -14,6 +14,7 @@ import zingg.client.ZinggOptions;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.model.Model;
+import zingg.preprocess.StopWords;
 import zingg.util.Analytics;
 import zingg.util.Metric;
 
@@ -83,9 +84,9 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     public void execute() throws ZinggClientException {
         try {
 			// read input, filter, remove self joins
-			 ZFrame<D,R,C>  testDataOriginal = getTestData();
+			ZFrame<D,R,C>  testDataOriginal = getTestData();
 			testDataOriginal =  getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
-			 ZFrame<D,R,C>  testData = testDataOriginal; //StopWords.preprocessForStopWords(args, testDataOriginal);
+			ZFrame<D,R,C>  testData = getStopWords().preprocessForStopWords(testDataOriginal);
 			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
 			long count = testData.count();
@@ -267,7 +268,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		ZFrame<D,R,C> dupesActual1 = dupesActual.select(cols); //.cache();
 		return dupesActual1;
 	}
-	
 
+    protected abstract StopWords<S,D,R,C,T> getStopWords();
 	    
 }
