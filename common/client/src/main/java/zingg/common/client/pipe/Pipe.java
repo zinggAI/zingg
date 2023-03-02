@@ -4,11 +4,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.codehaus.jackson.annotate.JsonValue;
-// import org.apache.spark.sql.Row;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import zingg.common.client.ZFrame;
 

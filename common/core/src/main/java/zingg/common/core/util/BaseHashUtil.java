@@ -2,9 +2,9 @@ package zingg.common.core.util;
 
 import java.util.List;
 
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import zingg.common.client.util.ListMap;
 import zingg.common.core.hash.HashFnFromConf;
@@ -34,7 +34,8 @@ public abstract class BaseHashUtil<S,D,R,C,T> implements HashUtil<S,D,R,C,T>{
 			throws Exception {
 		ListMap<T, HashFunction<D,R,C,T>> functions = new ListMap<T, HashFunction<D,R,C,T>>();
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS,
+					true);
 		List<HashFnFromConf> scriptArgs = mapper.readValue(
 				zingg.common.core.executor.ZinggBase.class.getResourceAsStream("/" + fileName),
 				new TypeReference<List<HashFnFromConf>>() {
