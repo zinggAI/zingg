@@ -30,4 +30,34 @@
 			<version>4.5.2</version>
 		</dependency>	
 	</dependencies>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.5.2</version>
+					<inherited>false</inherited>
+					<executions>
+						<execution>
+							<id>install-external</id>
+							<phase>initialize</phase>
+							<configuration>
+								<file>${project.parent.parent.basedir}/thirdParty/lib/secondstring.jar</file>
+								<repositoryLayout>default</repositoryLayout>
+								<groupId>com.wcohen.ss</groupId>
+								<artifactId>secondstring</artifactId>
+								<version>2021</version>
+								<packaging>jar</packaging>
+								<generatePom>true</generatePom>
+							</configuration>
+							<goals>
+								<goal>install-file</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>
