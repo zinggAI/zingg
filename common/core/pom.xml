@@ -24,6 +24,10 @@
     <artifactId>freemarker</artifactId>
     <version>2.3.31</version>
 </dependency>
-
+<dependency>
+	<groupId>org.apache.httpcomponents</groupId>
+	<artifactId>httpclient</artifactId>
+	<version>4.5.2</version>
+</dependency>	
 </dependencies>
 </project>
