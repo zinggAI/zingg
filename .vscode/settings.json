@@ -1,4 +1,5 @@
 {
     "editor.definitionLinkOpensInPeek": true,
-    "java.dependency.syncWithFolderExplorer": true
+    "java.dependency.syncWithFolderExplorer": true,
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

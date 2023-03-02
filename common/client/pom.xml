@@ -7,40 +7,11 @@
 	</parent>
 	<artifactId>zingg-common-client</artifactId>
 	<packaging>jar</packaging>
-	<properties>
-		<fasterxml.jackson.version>2.12.6</fasterxml.jackson.version>
-		<fasterxml.jackson.databind.version>2.12.6.1</fasterxml.jackson.databind.version>
-	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>${fasterxml.jackson.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${fasterxml.jackson.databind.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>${fasterxml.jackson.version}</version>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9.1</version>
-				<configuration>
-					<sourcepath>${basedir}/src/main/java/zingg/client</sourcepath>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
