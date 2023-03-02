@@ -1,6 +1,6 @@
 package zingg.util;
 
-import zingg.client.util.ColValues;
+import zingg.common.client.util.ColValues;
 
 public enum LabelMatchType {
 	UNDEFINED(ColValues.IS_NOT_KNOWN_PREDICTION, "ARE NOT KNOWN IF MATCH"), 

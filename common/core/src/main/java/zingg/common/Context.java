@@ -2,7 +2,7 @@ package zingg.common;
 
 import java.io.Serializable;
 
-import zingg.client.ZinggClientException;
+import zingg.common.client.ZinggClientException;
 import zingg.util.BlockingTreeUtil;
 import zingg.util.DSUtil;
 import zingg.util.GraphUtil;

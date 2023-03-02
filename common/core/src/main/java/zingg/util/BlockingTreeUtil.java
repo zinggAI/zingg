@@ -9,13 +9,13 @@ import org.apache.commons.logging.LogFactory;
 import zingg.block.Block;
 import zingg.block.Canopy;
 import zingg.block.Tree;
-import zingg.client.Arguments;
-import zingg.client.FieldDefinition;
-import zingg.client.MatchType;
-import zingg.client.ZinggClientException;
-import zingg.client.ZFrame;
-import zingg.client.util.ListMap;
-import zingg.client.util.Util;
+import zingg.common.client.Arguments;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.MatchType;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.ZFrame;
+import zingg.common.client.util.ListMap;
+import zingg.common.client.util.Util;
 import zingg.hash.HashFunction;
 
 public abstract class BlockingTreeUtil<S, D,R,C,T> {

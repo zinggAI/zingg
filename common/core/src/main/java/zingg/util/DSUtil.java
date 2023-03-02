@@ -1,14 +1,14 @@
 package zingg.util;
 
 
-import zingg.client.Arguments;
-import zingg.client.FieldDefinition;
-import zingg.client.MatchType;
-import zingg.client.ZFrame;
-import zingg.client.ZinggClientException;
-import zingg.client.pipe.Pipe;
-import zingg.client.util.ColName;
-import zingg.client.util.ColValues;
+import zingg.common.client.Arguments;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.MatchType;
+import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.pipe.Pipe;
+import zingg.common.client.util.ColName;
+import zingg.common.client.util.ColValues;
 
 import java.util.ArrayList;
 import java.util.List;

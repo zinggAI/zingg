@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.client.FieldDefinition;
-import zingg.client.MatchType;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.MatchType;
 import zingg.similarity.function.SimFunction;
 
 public abstract class BaseFeature<T> implements Feature<T> {

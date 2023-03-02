@@ -6,7 +6,7 @@ import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
-import zingg.client.util.ListMap;
+import zingg.common.client.util.ListMap;
 import zingg.hash.HashFnFromConf;
 import zingg.hash.HashFunction;
 

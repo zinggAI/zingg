@@ -21,3 +21,4 @@ dist
 python/docs/_build/html
 python/docs/_build/_doctrees
 **/python/build/*
+**/assembly/.classpath

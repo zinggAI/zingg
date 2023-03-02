@@ -1,4 +1,4 @@
-import zingg.client._;
+import zingg.common.client._;
 import java.util.ArrayList;
 import java.util.Arrays;
 //setting silent mode for Argument creation only 
@@ -90,7 +90,7 @@ args.setLabelDataSampleSize(0.5f);
 //below line should not be required if you are reading from in memory dataset
 //in that case, replace df with input df
 val df = spark.read.format("csv").option("header",false).schema("id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string").load("examples/febrl/test.csv")
-import zingg.client.pipe.InMemoryPipe;
+import zingg.common.client.pipe.InMemoryPipe;
 import java.util.HashMap
 
 val inputPipe = new InMemoryPipe(df);

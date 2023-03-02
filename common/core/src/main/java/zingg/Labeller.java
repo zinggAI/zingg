@@ -6,13 +6,13 @@ import java.util.Scanner;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.client.Arguments;
-import zingg.client.ZFrame;
-import zingg.client.ZinggClientException;
-import zingg.client.ZinggOptions;
-import zingg.client.pipe.Pipe;
-import zingg.client.util.ColName;
-import zingg.client.util.ColValues;
+import zingg.common.client.Arguments;
+import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.ZinggOptions;
+import zingg.common.client.pipe.Pipe;
+import zingg.common.client.util.ColName;
+import zingg.common.client.util.ColValues;
 import zingg.util.LabelMatchType;
 
 public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {

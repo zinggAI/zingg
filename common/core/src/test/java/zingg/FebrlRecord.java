@@ -3,7 +3,7 @@ package zingg;
 import java.io.Serializable;
 import java.util.List;
 
-import zingg.client.util.Util;
+import zingg.common.client.util.Util;
 import scala.Tuple2;
 
 public class FebrlRecord implements Serializable{

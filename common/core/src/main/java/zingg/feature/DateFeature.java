@@ -2,8 +2,8 @@ package zingg.feature;
 
 import java.util.Date;
 
-import zingg.client.FieldDefinition;
-import zingg.client.MatchType;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.MatchType;
 import zingg.similarity.function.DateSimilarityFunction;
 
 public class DateFeature extends BaseFeature<Date> {

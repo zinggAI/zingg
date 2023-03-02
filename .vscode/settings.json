@@ -1,3 +1,4 @@
 {
-    "editor.definitionLinkOpensInPeek": true
+    "editor.definitionLinkOpensInPeek": true,
+    "java.dependency.syncWithFolderExplorer": true
 }

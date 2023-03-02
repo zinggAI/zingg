@@ -5,12 +5,12 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.block.Canopy;
 import zingg.block.Tree;
-import zingg.client.ZFrame;
-// import zingg.client.SnowFrame;
-// import zingg.client.SparkFrame;
-import zingg.client.ZinggClientException;
-import zingg.client.util.ColName;
-import zingg.client.util.ColValues;
+import zingg.common.client.ZFrame;
+// import zingg.common.client.SnowFrame;
+// import zingg.spark.client.SparkFrame;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.ColName;
+import zingg.common.client.util.ColValues;
 import zingg.model.Model;
 import zingg.util.Analytics;
 import zingg.util.Metric;

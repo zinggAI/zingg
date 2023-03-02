@@ -1,6 +1,6 @@
 package zingg.util;
 
-import zingg.client.ZFrame;
+import zingg.common.client.ZFrame;
 
 public interface GraphUtil<D,R,C> {
 

@@ -3,8 +3,8 @@ package zingg;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.client.ZinggClientException;
-import zingg.client.ZinggOptions;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.ZinggOptions;
 
 public abstract class FindAndLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	protected static String name = "zingg.FindAndLabeller";

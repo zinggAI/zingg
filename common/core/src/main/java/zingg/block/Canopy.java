@@ -9,9 +9,9 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.client.FieldDefinition;
-import zingg.client.util.ColName;
-import zingg.client.util.ListMap;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.util.ColName;
+import zingg.common.client.util.ListMap;
 import zingg.hash.HashFunction;
 
 

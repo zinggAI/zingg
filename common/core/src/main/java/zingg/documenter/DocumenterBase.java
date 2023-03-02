@@ -11,9 +11,9 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import zingg.ZinggBase;
-import zingg.client.Arguments;
-import zingg.client.ZinggClientException;
-import zingg.client.util.ColName;
+import zingg.common.client.Arguments;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.ColName;
 import zingg.util.RowWrapper;
 
 abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{

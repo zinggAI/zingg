@@ -20,8 +20,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import zingg.ZinggSparkTester;
-import zingg.client.FieldDefinition;
-import zingg.client.util.ColName;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.util.ColName;
 import zingg.util.DSUtil;
 
 public class TestStopWords extends ZinggSparkTester{

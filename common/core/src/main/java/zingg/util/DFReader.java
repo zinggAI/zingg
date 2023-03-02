@@ -1,7 +1,7 @@
 package zingg.util;
 
-import zingg.client.ZFrame;
-import zingg.client.ZinggClientException;
+import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
 
 public interface DFReader<D, R, C> {
 

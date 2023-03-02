@@ -44,7 +44,7 @@ set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 if [[ $RUN_PYTHON_PHASE -eq 1 ]]; then
   EXECUTABLE="$PYTHON_SCRIPT"
 else  
-  EXECUTABLE="--class zingg.client.SparkClient $ZINGG_JARS"
+  EXECUTABLE="--class zingg.spark.client.SparkClient $ZINGG_JARS"
 fi
 
 # All the additional options must be added here

@@ -1,7 +1,7 @@
 package zingg.feature;
 
-import zingg.client.FieldDefinition;
-import zingg.client.MatchType;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.MatchType;
 import zingg.similarity.function.IntegerSimilarityFunction;
 public class IntFeature extends BaseFeature<Integer> {
 

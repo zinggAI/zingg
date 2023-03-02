@@ -19,6 +19,8 @@ import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
+import zingg.spark.client.SparkFrame;
+
 public class TestSparkFrameBase {
 
 	public static Arguments args;

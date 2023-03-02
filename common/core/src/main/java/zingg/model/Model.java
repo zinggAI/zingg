@@ -8,8 +8,8 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import zingg.client.FieldDefinition;
-import zingg.client.ZFrame;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.ZFrame;
 import zingg.feature.Feature;
 
 public abstract class Model<S,T,D,R,C> implements Serializable {

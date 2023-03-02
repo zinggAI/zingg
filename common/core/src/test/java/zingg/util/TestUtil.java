@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.Test;
 
-import zingg.client.util.*;
+import zingg.common.client.util.*;
 
 
 

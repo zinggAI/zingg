@@ -1,7 +1,7 @@
 package zingg.feature;
 
-import zingg.client.FieldDefinition;
-import zingg.client.MatchType;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.MatchType;
 import zingg.similarity.function.AJaroWinklerFunction;
 import zingg.similarity.function.AffineGapSimilarityFunction;
 import zingg.similarity.function.CheckBlankOrNullFunction;

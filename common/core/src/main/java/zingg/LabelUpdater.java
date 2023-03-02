@@ -6,11 +6,11 @@ import java.util.Scanner;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.client.ZFrame;
-import zingg.client.ZinggClientException;
-import zingg.client.ZinggOptions;
-import zingg.client.pipe.Pipe;
-import zingg.client.util.ColName;
+import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.ZinggOptions;
+import zingg.common.client.pipe.Pipe;
+import zingg.common.client.util.ColName;
 import zingg.util.LabelMatchType;
 
 public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {

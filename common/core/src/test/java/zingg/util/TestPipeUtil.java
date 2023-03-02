@@ -8,9 +8,9 @@ import org.apache.spark.sql.SaveMode;
 import org.junit.jupiter.api.Test;
 
 import zingg.ZinggSparkTester;
-import zingg.client.Arguments;
-import zingg.client.pipe.FilePipe;
-import zingg.client.pipe.Pipe;
+import zingg.common.client.Arguments;
+import zingg.common.client.pipe.FilePipe;
+import zingg.common.client.pipe.Pipe;
 
 public class TestPipeUtil extends ZinggSparkTester{
 	public static final Log LOG = LogFactory.getLog(TestPipeUtil.class);

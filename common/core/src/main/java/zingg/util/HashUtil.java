@@ -1,6 +1,6 @@
 package zingg.util;
 
-import zingg.client.util.ListMap;
+import zingg.common.client.util.ListMap;
 import zingg.hash.HashFunction;
 
 

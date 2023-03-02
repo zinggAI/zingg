@@ -16,7 +16,7 @@ import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-import zingg.client.Arguments;
+import zingg.common.client.Arguments;
 import zingg.preprocess.TestStopWords;
 
 public class ZinggSparkTester {

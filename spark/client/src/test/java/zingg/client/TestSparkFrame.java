@@ -15,6 +15,7 @@ import org.apache.spark.sql.Row;
 import org.junit.jupiter.api.Test;
 
 import scala.collection.JavaConverters;
+import zingg.spark.client.SparkFrame;
 
 public class TestSparkFrame extends TestSparkFrameBase {
 	public static final Log LOG = LogFactory.getLog(TestSparkFrame.class);

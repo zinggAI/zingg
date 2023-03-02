@@ -15,12 +15,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import zingg.client.Arguments;
-import zingg.client.ZinggClientException;
-import zingg.client.pipe.FilePipe;
-import zingg.client.pipe.InMemoryPipe;
-import zingg.client.pipe.Pipe;
-import zingg.client.util.ColName;
+import zingg.common.client.Arguments;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.pipe.FilePipe;
+import zingg.common.client.pipe.InMemoryPipe;
+import zingg.common.client.pipe.Pipe;
+import zingg.common.client.util.ColName;
 /**end to end integration test*/
 public class TestFebrlDataset extends ZinggSparkTester{
 	public static final Log LOG = LogFactory.getLog(TestFebrlDataset.class);

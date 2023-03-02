@@ -19,11 +19,11 @@ import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 
 import zingg.ZinggSparkTester;
-import zingg.client.Arguments;
-import zingg.client.FieldDefinition;
-import zingg.client.MatchType;
-import zingg.client.ZinggClientException;
-import zingg.client.util.ColName;
+import zingg.common.client.Arguments;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.MatchType;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.ColName;
 
 public class TestDSUtil extends ZinggSparkTester{
 	public static final Log LOG = LogFactory.getLog(TestDSUtil.class);

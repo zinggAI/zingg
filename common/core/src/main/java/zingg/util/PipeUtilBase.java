@@ -1,9 +1,9 @@
 package zingg.util;
 
-import zingg.client.Arguments;
-import zingg.client.ZFrame;
-import zingg.client.ZinggClientException;
-import zingg.client.pipe.Pipe;
+import zingg.common.client.Arguments;
+import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.pipe.Pipe;
 
 //spark session 
 //dataset

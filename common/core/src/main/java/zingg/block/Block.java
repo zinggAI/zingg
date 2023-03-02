@@ -9,9 +9,9 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.client.FieldDefinition;
-import zingg.client.ZFrame;
-import zingg.client.util.ListMap;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.ZFrame;
+import zingg.common.client.util.ListMap;
 import zingg.hash.HashFunction;
 
 public abstract class Block<D,R,C,T> implements Serializable {

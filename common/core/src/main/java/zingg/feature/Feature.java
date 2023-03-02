@@ -3,8 +3,8 @@ package zingg.feature;
 import java.io.Serializable;
 import java.util.List;
 
-import zingg.client.FieldDefinition;
-import zingg.client.MatchType;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.MatchType;
 import zingg.similarity.function.SimFunction;
 
 public interface Feature<T> extends Serializable {

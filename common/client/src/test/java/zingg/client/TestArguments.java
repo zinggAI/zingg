@@ -16,8 +16,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
-import zingg.client.pipe.Pipe;
-import zingg.client.pipe.SparkPipe;
+import zingg.common.client.pipe.Pipe;
+import zingg.common.client.pipe.SparkPipe;
 
 public class TestArguments {
 

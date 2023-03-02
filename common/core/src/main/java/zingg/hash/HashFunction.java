@@ -2,7 +2,7 @@ package zingg.hash;
 
 import java.io.Serializable;
 
-import zingg.client.ZFrame;
+import zingg.common.client.ZFrame;
 
 public abstract class HashFunction<D,R,C,T> implements Serializable{
 		/**

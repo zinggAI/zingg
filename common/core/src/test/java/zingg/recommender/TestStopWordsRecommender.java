@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import zingg.ZinggSparkTester;
-import zingg.client.ZinggClientException;
+import zingg.common.client.ZinggClientException;
 
 public class TestStopWordsRecommender extends ZinggSparkTester {
 

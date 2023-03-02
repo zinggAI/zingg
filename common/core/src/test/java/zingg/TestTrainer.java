@@ -9,8 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import zingg.client.Arguments;
-import zingg.client.ZinggClientException;
+import zingg.common.client.Arguments;
+import zingg.common.client.ZinggClientException;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TestTrainer extends ZinggSparkTester{
