@@ -14,7 +14,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import zingg.spark.ZinggSparkTester;
 import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.pipe.FilePipe;

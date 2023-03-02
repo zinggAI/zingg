@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.SaveMode;
 import org.junit.jupiter.api.Test;
 
-import zingg.ZinggSparkTester;
+import zingg.spark.ZinggSparkTester;
 import zingg.client.Arguments;
 import zingg.client.pipe.FilePipe;
 import zingg.client.pipe.Pipe;

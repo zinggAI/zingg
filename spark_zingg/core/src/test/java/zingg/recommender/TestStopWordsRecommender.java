@@ -17,8 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import zingg.ZinggSparkTester;
+import zingg.client.SparkFrame;
 import zingg.client.ZinggClientException;
+import zingg.spark.ZinggSparkTester;
+import zingg.spark.recommender.SparkStopWordsRecommender;
 
 public class TestStopWordsRecommender extends ZinggSparkTester {
 
@@ -26,7 +28,7 @@ public class TestStopWordsRecommender extends ZinggSparkTester {
 	private static final String COL_STOPWORDS = "stopwords";
 	public static final Log LOG = LogFactory.getLog(TestStopWordsRecommender.class);
 
-	StopWordsRecommender recommender = new StopWordsRecommender(spark, ctx, args);
+	StopWordsRecommender recommender = new SparkStopWordsRecommender(zsCTX, args);
 	Dataset<Row> dataset = createDFWithGivenStopWords();
 	List<Row> stopwordRow= new ArrayList<>();
 	List<String> stopwordList = new ArrayList<String>();
@@ -121,7 +123,7 @@ public class TestStopWordsRecommender extends ZinggSparkTester {
 	public List<String> getStopWordList(float cutoff ) throws Throwable {
 		//create stopwords dataset and display according to stopWordsCutoff
 		args.setStopWordsCutoff(cutoff);
-		stopWords = recommender.findStopWords(dataset, COL_STOPWORDS);
+		stopWords = ((SparkFrame)(recommender.findStopWords(new SparkFrame(dataset), COL_STOPWORDS))).df();
 		//stopWords.show();
 
 		//convert spark Dataset<Row> into java List<Row>

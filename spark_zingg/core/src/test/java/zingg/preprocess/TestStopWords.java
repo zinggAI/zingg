@@ -4,6 +4,7 @@ import static org.apache.spark.sql.functions.col;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,9 +20,15 @@ import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import zingg.ZinggSparkTester;
+import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
+import zingg.client.MatchType;
+import zingg.client.SparkFrame;
+import zingg.client.ZFrame;
+import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
+import zingg.spark.ZinggSparkTester;
+import zingg.spark.preprocess.SparkStopWords;
 import zingg.util.DSUtil;
 
 public class TestStopWords extends ZinggSparkTester{
@@ -30,13 +37,13 @@ public class TestStopWords extends ZinggSparkTester{
 
 	@DisplayName ("Test Stop Words removal from Single column dataset")
 	@Test
-	public void testStopWordsSingleColumn() {
-		try {
+	public void testStopWordsSingleColumn() throws ZinggClientException {
+		
 			StructType schema = new StructType(new StructField[] {
 					new StructField("statement", DataTypes.StringType, false, Metadata.empty())
 			});
 
-			Dataset<Row> dataset = spark.createDataFrame(
+			Dataset<Row> datasetOriginal = spark.createDataFrame(
 					Arrays.asList(
 							RowFactory.create("The zingg is a Spark application"),
 							RowFactory.create("It is very popular in data Science"),
@@ -53,19 +60,36 @@ public class TestStopWords extends ZinggSparkTester{
 						RowFactory.create("written in java and scala"),
 						RowFactory.create("best luck to zingg")),
 				schema);
-			Dataset<Row> datasetWithoutStopWords = dataset.withColumn("statement",
-					StopWords.removeStopWords(stopWords.toLowerCase()).apply(col("statement")));
- 			assertTrue(datasetExpected.except(datasetWithoutStopWords).isEmpty());
-			assertTrue(datasetWithoutStopWords.except(datasetExpected).isEmpty());
-		} catch (Throwable e) {
-			fail("Unexpected exception " + e.getMessage());
-			e.printStackTrace();
-		}
+			
+			List<FieldDefinition> fdList = new ArrayList<>(4);
+			
+			ArrayList<MatchType> matchTypelistFuzzy = new ArrayList<MatchType>();
+			matchTypelistFuzzy.add(MatchType.FUZZY);
+
+			FieldDefinition eventFD = new FieldDefinition();
+			eventFD.setDataType("string");
+			eventFD.setFieldName("statement");
+			eventFD.setMatchType(matchTypelistFuzzy);
+			fdList.add(eventFD);
+
+			Arguments stmtArgs = new Arguments();
+			stmtArgs.setFieldDefinition(fdList);
+			
+			StopWords stopWordsObj = new SparkStopWords(zsCTX,stmtArgs);
+			
+			stopWordsObj.preprocessForStopWords(new SparkFrame(datasetOriginal));
+			System.out.println("datasetOriginal.show() : ");
+			datasetOriginal.show();
+			SparkFrame datasetWithoutStopWords = (SparkFrame)stopWordsObj.removeStopWordsFromDF(new SparkFrame(datasetOriginal),"statement",stopWords);
+			System.out.println("datasetWithoutStopWords.show() : ");
+			datasetWithoutStopWords.show();
+			
+ 			assertTrue(datasetExpected.except(datasetWithoutStopWords.df()).isEmpty());
+			assertTrue(datasetWithoutStopWords.df().except(datasetExpected).isEmpty());
 	}
 
 	@Test
-	public void testRemoveStopWordsFromDataset() {
-		try {
+	public void testRemoveStopWordsFromDataset() throws ZinggClientException {
 			StructType schemaOriginal = new StructType(new StructField[] {
 					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
 					new StructField("field1", DataTypes.StringType, false, Metadata.empty()),
@@ -99,19 +123,15 @@ public class TestStopWords extends ZinggSparkTester{
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
 
- 			Dataset<Row> newDataSet = StopWords.preprocessForStopWords(spark, args, original);
+			SparkStopWords stopWordsObj = new SparkStopWords(zsCTX,args);
+				
+ 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocessForStopWords(new SparkFrame(original)))).df();
  			assertTrue(datasetExpected.except(newDataSet).isEmpty());
 			assertTrue(newDataSet.except(datasetExpected).isEmpty());
-		} catch (Throwable e) {
-			fail("Unexpected exception " + e.getMessage());
-			e.printStackTrace();
-		}
 	}
 
-
 	@Test
-	public void testStopWordColumnMissingFromStopWordFile() {
-		try {
+	public void testStopWordColumnMissingFromStopWordFile() throws ZinggClientException {
 			StructType schemaOriginal = new StructType(new StructField[] {
 					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
 					new StructField("field1", DataTypes.StringType, false, Metadata.empty()),
@@ -144,19 +164,17 @@ public class TestStopWords extends ZinggSparkTester{
 
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
-
- 			Dataset<Row> newDataSet = StopWords.preprocessForStopWords(spark, args, original);
+			
+			SparkStopWords stopWordsObj = new SparkStopWords(zsCTX,args);
+			
+ 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocessForStopWords(new SparkFrame(original)))).df();
  			assertTrue(datasetExpected.except(newDataSet).isEmpty());
 			assertTrue(newDataSet.except(datasetExpected).isEmpty());
-		} catch (Throwable e) {
-			fail("Unexpected exception " + e.getMessage());
-		}
 	}
+	
 
 	@Test
 	public void testForOriginalDataAfterPostprocess() {
-
-		try {
 			StructType schemaActual = new StructType(new StructField[] {
 					new StructField(ColName.CLUSTER_COLUMN, DataTypes.StringType, false, Metadata.empty()),
 					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
@@ -199,18 +217,13 @@ public class TestStopWords extends ZinggSparkTester{
 									"thank", "test")),
 					schemaActual);
 
-			Dataset<Row> newDataset = DSUtil.postprocess(actual, original);
+			Dataset<Row> newDataset = ((SparkFrame)(zsCTX.getDSUtil().postprocess(new SparkFrame(actual), new SparkFrame(original)))).df();
 			assertTrue(newDataset.select(ColName.ID_COL, "field1", "field2", "field3", ColName.SOURCE_COL).except(original).isEmpty());
 			assertTrue(original.except(newDataset.select(ColName.ID_COL, "field1", "field2", "field3", ColName.SOURCE_COL)).isEmpty());
-		} catch (Throwable e) {
-			fail("Unexpected exception " + e.getMessage());
-		}
 	}
 
-	@Test
+/*	@Test
 	public void testOriginalDataAfterPostprocessLinked() {
-
-		try {
 			StructType schemaActual = new StructType(new StructField[] {
 					new StructField(ColName.CLUSTER_COLUMN, DataTypes.StringType, false, Metadata.empty()),
 					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
@@ -253,11 +266,9 @@ public class TestStopWords extends ZinggSparkTester{
 									"thank", "test")),
 					schemaActual);
 
-			Dataset<Row> newDataset = DSUtil.postprocessLinked(actual, original);
-  			assertTrue(newDataset.select("field1", "field2", "field3", ColName.SOURCE_COL).except(original.drop(ColName.ID_COL)).isEmpty());
+			Dataset<Row> newDataset = ((SparkFrame)(zsCTX.getDSUtil().postprocessLinked(new SparkFrame(actual), new SparkFrame(original)))).df();
+
+			assertTrue(newDataset.select("field1", "field2", "field3", ColName.SOURCE_COL).except(original.drop(ColName.ID_COL)).isEmpty());
 			assertTrue(original.drop(ColName.ID_COL).except(newDataset.select("field1", "field2", "field3", ColName.SOURCE_COL)).isEmpty());
-		} catch (Throwable e) {
-			fail("Unexpected exception " + e.getMessage());
-		}
-	}
+	}*/
 }

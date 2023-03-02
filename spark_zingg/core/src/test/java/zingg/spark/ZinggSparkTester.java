@@ -1,4 +1,4 @@
-package zingg;
+package zingg.spark;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +17,22 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 import zingg.client.Arguments;
+import zingg.client.IZingg;
 import zingg.preprocess.TestStopWords;
+import zingg.spark.preprocess.SparkStopWords;
+import zingg.spark.util.SparkBlockingTreeUtil;
+import zingg.spark.util.SparkDSUtil;
+import zingg.spark.util.SparkGraphUtil;
+import zingg.spark.util.SparkHashUtil;
+import zingg.spark.util.SparkModelUtil;
+import zingg.spark.util.SparkPipeUtil;
 
 public class ZinggSparkTester {
 
     public static Arguments args;
     public static JavaSparkContext ctx;
     public static SparkSession spark;
+    public static ZinggSparkContext zsCTX;
 
     public static final Log LOG = LogFactory.getLog(ZinggSparkTester.class);
 
@@ -39,8 +48,20 @@ public class ZinggSparkTester {
     				.appName("Zingg" + "Junit")
     				.getOrCreate();
     		ctx = new JavaSparkContext(spark.sparkContext());
-    		JavaSparkContext.jarOfClass(zingg.client.Arguments.class);    
-			args = new Arguments();		
+    		JavaSparkContext.jarOfClass(IZingg.class);    
+			args = new Arguments();
+			zsCTX = new ZinggSparkContext();
+			zsCTX.ctx = ctx;
+			zsCTX.spark = spark;
+			
+            ctx.setCheckpointDir("/tmp/checkpoint");	
+            zsCTX.setPipeUtil(new SparkPipeUtil(spark));
+            zsCTX.setDSUtil(new SparkDSUtil(spark));
+            zsCTX.setHashUtil(new SparkHashUtil(spark));
+            zsCTX.setGraphUtil(new SparkGraphUtil());
+            zsCTX.setModelUtil(new SparkModelUtil(spark));
+            zsCTX.setBlockingTreeUtil(new SparkBlockingTreeUtil(spark, zsCTX.getPipeUtil()));
+			
     	} catch (Throwable e) {
     		if (LOG.isDebugEnabled())
     			e.printStackTrace();
