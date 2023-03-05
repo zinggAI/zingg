@@ -5,21 +5,8 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
-import zingg.common.client.ZFrame;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateExceptionHandler;
-import zingg.common.client.FieldDefinition;
-import zingg.common.client.MatchType;
-import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
-import zingg.common.client.util.ColName;
 import zingg.common.core.documenter.DataDocumenter;
 import zingg.common.core.documenter.ModelDocumenter;
-import zingg.common.core.util.DSUtil;
-import zingg.common.core.util.PipeUtilBase;
-import zingg.common.core.util.RowAdapter;
-import zingg.common.core.util.RowWrapper;
 
 public abstract class Documenter<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
@@ -34,13 +21,13 @@ public abstract class Documenter<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 		try {
 			LOG.info("Documenter starts");
 			//Documentation out of model
-			/*ModelDocumenter modelDoc = new ModelDocumenter(args);
+			ModelDocumenter modelDoc = getModelDocumenter();
 			modelDoc.process();
 
-			//Documnetation of data
-			DataDocumenter dataDoc = new DataDocumenter(args);
+			//Documentation of data
+			DataDocumenter dataDoc = getDataDocumenter();
 			dataDoc.process();
-			*/
+			
 
 			LOG.info("Documenter finishes");
 		} catch (Exception e) {
@@ -48,4 +35,9 @@ public abstract class Documenter<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 			throw new ZinggClientException(e.getMessage());
 		}
 	}
+	
+	protected abstract ModelDocumenter<S,D,R,C,T> getModelDocumenter();
+	
+	protected abstract DataDocumenter<S,D,R,C,T> getDataDocumenter();
+	
 }

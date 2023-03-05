@@ -1,7 +1,10 @@
 package zingg.common.core.documenter;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -9,6 +12,8 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.ColName;
+import zingg.common.core.Context;
 
 
 public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
@@ -17,11 +22,11 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 	public static final Log LOG = LogFactory.getLog(ModelDocumenter.class);
 
 	private final String MODEL_TEMPLATE = "model.ftlh";
-	ModelColDocumenter<S,D,R,C,T> modelColDoc;
+	protected ModelColDocumenter<S,D,R,C,T> modelColDoc;
 	protected  ZFrame<D,R,C>  markedRecords;
 
-	public ModelDocumenter(S session, Arguments args) {
-		super(session, args);
+	public ModelDocumenter(Context<S,D,R,C,T> context, Arguments args) {
+		super(context, args);
 		markedRecords = getDSUtil().emptyDataFrame();
 	}
 
@@ -59,7 +64,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		/* Create a data-model */
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put(TemplateFields.MODEL_ID, args.getModelId());
-		/* 
+		
 		if(!markedRecords.isEmpty()) {
 			markedRecords = markedRecords.cache();
 
@@ -67,9 +72,9 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 			root.put(TemplateFields.NUM_COLUMNS, markedRecords.columns().length);
 			root.put(TemplateFields.COLUMNS, markedRecords.columns());
 			root.put(TemplateFields.ISMATCH_COLUMN_INDEX,
-					markedRecords.schema().fieldIndex(ColName.MATCH_FLAG_COL));
+					markedRecords.fieldIndex(ColName.MATCH_FLAG_COL));
 			root.put(TemplateFields.CLUSTER_COLUMN_INDEX,
-					markedRecords.schema().fieldIndex(ColName.CLUSTER_COLUMN));
+					markedRecords.fieldIndex(ColName.CLUSTER_COLUMN));
 		} else {
 			// fields required to generate basic document
 			List<String> columnList = args.getFieldDefinition().stream().map(fd -> fd.getFieldName())
@@ -80,10 +85,10 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 			root.put(TemplateFields.ISMATCH_COLUMN_INDEX, 0);
 			root.put(TemplateFields.CLUSTER_COLUMN_INDEX, 1);
 		}
-		*/
+		
 		return root;
 	}
-
+	
 	@Override
 	public void cleanup() throws ZinggClientException {
 		// TODO Auto-generated method stub

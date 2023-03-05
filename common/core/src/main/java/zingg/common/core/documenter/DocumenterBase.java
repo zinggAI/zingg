@@ -5,31 +5,26 @@ import java.io.FileWriter;
 import java.io.Writer;
 import java.util.Map;
 
-// import org.apache.spark.sql.SparkSession;
-import freemarker.template.Version;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
+// import org.apache.spark.sql.SparkSession;
+import freemarker.template.Version;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
+import zingg.common.core.Context;
 import zingg.common.core.executor.ZinggBase;
 import zingg.common.core.util.RowWrapper;
 
-abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
+public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected static Configuration config;
-	protected S session;
-	protected Arguments args;
 
-	public DocumenterBase(S session, Arguments args) {
-		this.session = session;
-		this.args = args;
+	public DocumenterBase(Context<S,D,R,C,T> context, Arguments args) {
+		super.context = context;
+		super.args = args;
 		config = createConfigurationObject();
 	}
-
-	public void setSession(S session){
-
-	};
 
 	public abstract void cleanup() throws ZinggClientException;
 
@@ -54,7 +49,6 @@ abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		cfg.setLogTemplateExceptions(false);
 		cfg.setWrapUncheckedExceptions(true);
 		cfg.setFallbackOnNullLoopVariable(false);
-		//TODOcfg.setObjectWrapper(new RowWrapper(cfg.getIncompatibleImprovements()));
 		cfg.setObjectWrapper(getRowWrapper(cfg.getIncompatibleImprovements()));
 
 		/* ------------------------------------------------------------------------ */

@@ -4,10 +4,7 @@ import org.apache.spark.sql.Row;
 
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateModel;
-import freemarker.template.AdapterTemplateModel;
 import freemarker.template.TemplateModelException;
-import freemarker.template.TemplateSequenceModel;
-import freemarker.template.WrappingTemplateModel;
 import zingg.common.core.util.RowAdapter;
 
 public class SparkRowAdapter extends RowAdapter<Row>{
