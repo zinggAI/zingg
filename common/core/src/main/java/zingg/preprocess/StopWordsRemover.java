@@ -1,7 +1,6 @@
 package zingg.preprocess;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,12 +34,11 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 	}
 
 	public ZFrame<D, R, C> preprocessForStopWords(ZFrame<D, R, C> ds) throws ZinggClientException {
-		List<String> wordList = new ArrayList<String>();
 		for (FieldDefinition def : getArgs().getFieldDefinition()) {
 			if (!(def.getStopWords() == null || def.getStopWords() == "")) {
 				ZFrame<D, R, C> stopWords = getStopWords(def);
 				resetStopWordColumn(stopWords);
-				wordList = getWordList(stopWords);
+				List<String> wordList = getWordList(stopWords);
 				String pattern = getPattern(wordList);
 				ds = removeStopWordsFromDF(ds, def.getFieldName(), pattern);
 			}
