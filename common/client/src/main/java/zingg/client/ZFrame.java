@@ -1,10 +1,9 @@
 package zingg.client;
 
-import java.io.Serializable;
 import java.util.List;
 
 //Dataset, Row, column
-public interface ZFrame<D, R, C> extends Serializable{
+public interface ZFrame<D, R, C> {
     
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
