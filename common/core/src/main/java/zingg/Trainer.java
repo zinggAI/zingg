@@ -12,7 +12,7 @@ import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.model.Model;
-import zingg.preprocess.StopWords;
+import zingg.preprocess.StopWordsRemover;
 import zingg.util.Analytics;
 import zingg.util.Metric;
 
@@ -81,6 +81,6 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	}
 
-    protected abstract StopWords<S,D,R,C,T> getStopWords();
+    protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
 		    
 }

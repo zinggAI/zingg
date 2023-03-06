@@ -12,7 +12,7 @@ import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.model.Model;
-import zingg.preprocess.StopWords;
+import zingg.preprocess.StopWordsRemover;
 
 public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
@@ -184,6 +184,6 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 		return posPairs;
 	}
 
-    protected abstract StopWords<S,D,R,C,T> getStopWords();
+    protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
 		    
 }

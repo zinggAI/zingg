@@ -19,7 +19,7 @@ import org.junit.jupiter.api.BeforeAll;
 import zingg.client.Arguments;
 import zingg.client.IZingg;
 import zingg.preprocess.TestStopWords;
-import zingg.spark.preprocess.SparkStopWords;
+import zingg.spark.preprocess.SparkStopWordsRemover;
 import zingg.spark.util.SparkBlockingTreeUtil;
 import zingg.spark.util.SparkDSUtil;
 import zingg.spark.util.SparkGraphUtil;

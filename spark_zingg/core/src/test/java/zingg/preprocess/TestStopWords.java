@@ -28,7 +28,7 @@ import zingg.client.ZFrame;
 import zingg.client.ZinggClientException;
 import zingg.client.util.ColName;
 import zingg.spark.ZinggSparkTester;
-import zingg.spark.preprocess.SparkStopWords;
+import zingg.spark.preprocess.SparkStopWordsRemover;
 import zingg.util.DSUtil;
 
 public class TestStopWords extends ZinggSparkTester{
@@ -75,7 +75,7 @@ public class TestStopWords extends ZinggSparkTester{
 			Arguments stmtArgs = new Arguments();
 			stmtArgs.setFieldDefinition(fdList);
 			
-			StopWords stopWordsObj = new SparkStopWords(zsCTX,stmtArgs);
+			StopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,stmtArgs);
 			
 			stopWordsObj.preprocessForStopWords(new SparkFrame(datasetOriginal));
 			System.out.println("datasetOriginal.show() : ");
@@ -123,7 +123,7 @@ public class TestStopWords extends ZinggSparkTester{
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
 
-			SparkStopWords stopWordsObj = new SparkStopWords(zsCTX,args);
+			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,args);
 				
  			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocessForStopWords(new SparkFrame(original)))).df();
  			assertTrue(datasetExpected.except(newDataSet).isEmpty());
@@ -165,7 +165,7 @@ public class TestStopWords extends ZinggSparkTester{
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
 			
-			SparkStopWords stopWordsObj = new SparkStopWords(zsCTX,args);
+			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,args);
 			
  			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocessForStopWords(new SparkFrame(original)))).df();
  			assertTrue(datasetExpected.except(newDataSet).isEmpty());

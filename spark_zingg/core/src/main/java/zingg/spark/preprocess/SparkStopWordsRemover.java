@@ -17,15 +17,15 @@ import zingg.client.Arguments;
 import zingg.client.SparkFrame;
 import zingg.client.ZFrame;
 import zingg.common.Context;
-import zingg.preprocess.StopWords;
+import zingg.preprocess.StopWordsRemover;
 
-public class SparkStopWords extends StopWords<SparkSession,Dataset<Row>,Row,Column,DataType>  implements Serializable {
+public class SparkStopWordsRemover extends StopWordsRemover<SparkSession,Dataset<Row>,Row,Column,DataType>  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	protected static String name = "zingg.preprocess.SparkStopWords";
-	public static final Log LOG = LogFactory.getLog(SparkStopWords.class);
+	protected static String name = "zingg.spark.preprocess.SparkStopWordsRemover";
+	public static final Log LOG = LogFactory.getLog(SparkStopWordsRemover.class);
 	
-	public SparkStopWords(Context<SparkSession, Dataset<Row>, Row, Column,DataType> context,Arguments args) {
+	public SparkStopWordsRemover(Context<SparkSession, Dataset<Row>, Row, Column,DataType> context,Arguments args) {
 		super(context,args);
 	}
 	

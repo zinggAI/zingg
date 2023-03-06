@@ -17,18 +17,18 @@ import zingg.client.util.ColName;
 import zingg.common.Context;
 import zingg.util.PipeUtilBase;
 
-public abstract class StopWords<S,D,R,C,T> implements Serializable{
+public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	protected static String name = "zingg.preprocess.StopWords";
-	public static final Log LOG = LogFactory.getLog(StopWords.class);
+	protected static String name = "zingg.preprocess.StopWordsRemover";
+	public static final Log LOG = LogFactory.getLog(StopWordsRemover.class);
 	protected String stopWordColumn = ColName.COL_WORD;
 	protected static final int COLUMN_INDEX_DEFAULT = 0;
 	
 	protected Context<S,D,R,C,T> context;
 	protected Arguments args;
 
-	public StopWords(Context<S, D, R, C, T> context,Arguments args) {
+	public StopWordsRemover(Context<S, D, R, C, T> context,Arguments args) {
 		super();
 		this.context = context;
 		this.args = args;
