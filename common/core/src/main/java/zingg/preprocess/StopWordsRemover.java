@@ -21,7 +21,6 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.preprocess.StopWordsRemover";
 	public static final Log LOG = LogFactory.getLog(StopWordsRemover.class);
-	protected String stopWordColumn = ColName.COL_WORD;
 	protected static final int COLUMN_INDEX_DEFAULT = 0;
 	
 	protected Context<S,D,R,C,T> context;
@@ -37,8 +36,8 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 		for (FieldDefinition def : getArgs().getFieldDefinition()) {
 			if (!(def.getStopWords() == null || def.getStopWords() == "")) {
 				ZFrame<D, R, C> stopWords = getStopWords(def);
-				resetStopWordColumn(stopWords);
-				List<String> wordList = getWordList(stopWords);
+				String stopWordColumn = getStopWordColumnName(stopWords);
+				List<String> wordList = getWordList(stopWords,stopWordColumn);
 				String pattern = getPattern(wordList);
 				ds = removeStopWordsFromDF(ds, def.getFieldName(), pattern);
 			}
@@ -52,15 +51,21 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 		return stopWords;
 	}
 
-	protected void resetStopWordColumn(ZFrame<D,R,C> stopWords) {
+	/**
+	 * Return the 0th column name if the column ColName.COL_WORD is not in the list of the columns of the stopwords DF
+	 * @return
+	 */
+	protected String getStopWordColumnName(ZFrame<D,R,C> stopWords) {
 		String[] fieldNames = stopWords.fieldNames();
-		if (!Arrays.asList(fieldNames).contains(getStopWordColumn())) {
-			setStopWordColumn(stopWords.columns()[getColumnIndexDefault()]);
+		if (!Arrays.asList(fieldNames).contains(ColName.COL_WORD)) {
+			return stopWords.columns()[getColumnIndexDefault()];
+		} else {
+			return ColName.COL_WORD;
 		}
 	}
 	
-	protected List<String> getWordList(ZFrame<D,R,C> stopWords) {
-		return stopWords.select(getStopWordColumn()).collectAsListOfStrings();
+	protected List<String> getWordList(ZFrame<D,R,C> stopWords, String stopWordColumn) {
+		return stopWords.select(stopWordColumn).collectAsListOfStrings();
 	}
 	
 	/**
@@ -75,14 +80,6 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 	// implementation specific as may require UDF
 	protected abstract ZFrame<D,R,C> removeStopWordsFromDF(ZFrame<D,R,C> ds,String fieldName, String pattern);
 	
-	public  String getStopWordColumn() {
-		return stopWordColumn;
-	}
-
-	public  void setStopWordColumn(String stopWordColumn) {
-		this.stopWordColumn = stopWordColumn;
-	}
-
 	public Context<S, D, R, C, T> getContext() {
 		return context;
 	}
