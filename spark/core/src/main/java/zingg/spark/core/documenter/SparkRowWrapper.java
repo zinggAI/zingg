@@ -1,11 +1,11 @@
-package zingg.spark.core.util;
+package zingg.spark.core.documenter;
 
 import org.apache.spark.sql.Row;
 
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import freemarker.template.Version;
-import zingg.common.core.util.RowWrapper;
+import zingg.common.core.documenter.RowWrapper;
 
 public class SparkRowWrapper extends RowWrapper<Row> {
 

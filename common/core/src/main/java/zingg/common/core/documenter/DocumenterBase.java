@@ -15,7 +15,6 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.core.Context;
 import zingg.common.core.executor.ZinggBase;
-import zingg.common.core.util.RowWrapper;
 
 public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected static Configuration config;

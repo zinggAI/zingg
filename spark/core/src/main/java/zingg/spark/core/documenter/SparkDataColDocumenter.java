@@ -10,8 +10,7 @@ import freemarker.template.Version;
 import zingg.common.client.Arguments;
 import zingg.common.core.Context;
 import zingg.common.core.documenter.DataColDocumenter;
-import zingg.common.core.util.RowWrapper;
-import zingg.spark.core.util.SparkRowWrapper;
+import zingg.common.core.documenter.RowWrapper;
 
 /**
  * Spark specific implementation of DataColDocumenter

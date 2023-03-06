@@ -17,7 +17,6 @@ import zingg.common.client.util.ColName;
 //Dataset, Row, column
 public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 
-    private static final long serialVersionUID = 1L;
 	public Dataset<Row> df;
 
     public SparkFrame(Dataset<Row> df) {

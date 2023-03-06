@@ -1,4 +1,4 @@
-package zingg.common.core.util;
+package zingg.common.core.documenter;
 
 import freemarker.template.AdapterTemplateModel;
 import freemarker.template.ObjectWrapper;
