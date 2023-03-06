@@ -13,8 +13,7 @@ import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.model.Model;
-import zingg.preprocess.StopWordsRemover;
-import zingg.spark.preprocess.SparkStopWordsRemover;
+import zingg.spark.model.SparkModel;
 
 /**
  * Spark specific implementation of Matcher
@@ -24,9 +23,11 @@ import zingg.spark.preprocess.SparkStopWordsRemover;
  */
 public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,DataType>{
 
-	private static final long serialVersionUID = 1L;
+
 	public static String name = "zingg.spark.SparkMatcher";
 	public static final Log LOG = LogFactory.getLog(SparkMatcher.class);    
+
+
 
     public SparkMatcher() {
         setZinggOptions(ZinggOptions.MATCH);
@@ -54,9 +55,5 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
 		return model;
 	}
 
-	@Override
-	protected StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
-		return new SparkStopWordsRemover(getContext(),getArgs());
-	}
-	
+
 }

@@ -1,4 +1,4 @@
-package zingg.spark.recommender;
+package zingg.spark;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

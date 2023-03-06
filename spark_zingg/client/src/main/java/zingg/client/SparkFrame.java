@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.functions;
 
@@ -14,7 +13,7 @@ import zingg.client.util.ColName;
 //Dataset, Row, column
 public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 
-	public Dataset<Row> df;
+    public Dataset<Row> df;
 
     public SparkFrame(Dataset<Row> df) {
         this.df = df;
@@ -62,15 +61,10 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     public ZFrame<Dataset<Row>, Row, Column> distinct() {
         return new SparkFrame(df.distinct());
     }
-
     public List<Row> collectAsList() {
         return df.collectAsList();
     }
 
-    public List<String> collectAsListOfStrings() {
-        return df.as(Encoders.STRING()).collectAsList();
-    }
-    
     public ZFrame<Dataset<Row>, Row, Column> toDF(String[] cols) {
         return new SparkFrame(df.toDF(cols));
     }
@@ -307,10 +301,5 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     public ZFrame<Dataset<Row>, Row, Column> explode(String colName, String resultColName) {
     	return new SparkFrame(df.select(functions.explode(df.col(colName)).as(resultColName)));
     }
-    
-    @Override
-    public String[] fieldNames() {
-    	return df.schema().fieldNames();
-    }    
     
 }

@@ -17,7 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import zingg.spark.ZinggSparkTester;
+import zingg.ZinggSparkTester;
 
 
 public class TestDocumenterBase extends ZinggSparkTester {

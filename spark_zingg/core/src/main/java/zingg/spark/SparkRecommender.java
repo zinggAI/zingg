@@ -14,7 +14,6 @@ import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.ZinggOptions;
 import zingg.recommender.StopWordsRecommender;
-import zingg.spark.recommender.SparkStopWordsRecommender;
 
 
 /**

@@ -10,7 +10,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import zingg.spark.ZinggSparkTester;
+
 import zingg.client.Arguments;
 import zingg.client.ClientOptions;
 import zingg.client.ZinggClientException;

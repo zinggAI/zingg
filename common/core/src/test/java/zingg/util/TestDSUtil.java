@@ -18,7 +18,7 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 
-import zingg.spark.ZinggSparkTester;
+import zingg.ZinggSparkTester;
 import zingg.client.Arguments;
 import zingg.client.FieldDefinition;
 import zingg.client.MatchType;

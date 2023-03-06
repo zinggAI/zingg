@@ -12,7 +12,6 @@ import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
 import zingg.client.util.ColValues;
 import zingg.model.Model;
-import zingg.preprocess.StopWordsRemover;
 
 public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
@@ -38,7 +37,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				ZFrame<D,R,C> trFile = getTraining();					
 
 				if (trFile != null) {
-					trFile = getStopWords().preprocessForStopWords(trFile);
+					//trFile = StopWords.preprocessForStopWords(args, trFile);
 					ZFrame<D,R,C> trPairs = getDSUtil().joinWithItself(trFile, ColName.CLUSTER_COLUMN, true);
 						
 						posPairs = trPairs.filter(trPairs.equalTo(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_MATCH));
@@ -58,7 +57,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 					
 				if (posPairs == null || posPairs.count() <= 5) {
 					ZFrame<D,R,C> posSamplesOriginal = getPositiveSamples(data);
-					ZFrame<D,R,C> posSamples = getStopWords().preprocessForStopWords(posSamplesOriginal);
+					ZFrame<D,R,C> posSamples = posSamplesOriginal ; //StopWords.preprocessForStopWords(args, posSamplesOriginal);
 					//posSamples.printSchema();
 					if (posPairs != null) {
 						//posPairs.printSchema();
@@ -75,7 +74,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				sampleOrginal = getDSUtil().getFieldDefColumnsDS(sampleOrginal, args, true);
 				LOG.info("Preprocessing DS for stopWords");
 
-				ZFrame<D,R,C> sample = getStopWords().preprocessForStopWords(sampleOrginal);
+				ZFrame<D,R,C> sample = sampleOrginal; //StopWords.preprocessForStopWords(args, sampleOrginal);
 
 				Tree<Canopy<R>> tree = getBlockingTreeUtil().createBlockingTree(sample, posPairs, 1, -1, args, getHashUtil().getHashFunctionList());		
 				tree.print(2);	
@@ -184,6 +183,5 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 		return posPairs;
 	}
 
-    protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
 		    
 }

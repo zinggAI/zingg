@@ -1,5 +1,5 @@
 package zingg;
-import zingg.spark.ZinggSparkTester;
+
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeEach;

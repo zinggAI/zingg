@@ -14,7 +14,7 @@ import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
-import zingg.spark.ZinggSparkTester;
+import zingg.ZinggSparkTester;
 
 public class TestGetAs extends ZinggSparkTester {
 
