@@ -51,7 +51,7 @@ public class TestStopWords extends ZinggSparkTester{
 							RowFactory.create("Best of luck to zingg")),
 					schema);
 
-			String stopWords = "\\b(a|an|the|is|It|of|yes|no|I|has|have|you)\\b\\s?";
+			String stopWords = "\\b(a|an|the|is|It|of|yes|no|I|has|have|you)\\b\\s?".toLowerCase();
 
 			Dataset<Row> datasetExpected = spark.createDataFrame(
 				Arrays.asList(

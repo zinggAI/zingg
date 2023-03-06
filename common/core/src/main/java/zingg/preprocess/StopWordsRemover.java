@@ -74,7 +74,9 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 	 * @return
 	 */
 	protected String getPattern(List<String> wordList) {
-		return wordList.stream().collect(Collectors.joining("|", "\\b(", ")\\b\\s?"));
+		String pattern = wordList.stream().collect(Collectors.joining("|", "\\b(", ")\\b\\s?"));
+		String lowerCasePattern = pattern.toLowerCase();
+		return lowerCasePattern;
 	}
     
 	// implementation specific as may require UDF
