@@ -1,7 +1,7 @@
 package zingg.spark.preprocess;
 
 import static org.apache.spark.sql.functions.callUDF;
-
+import static org.apache.spark.sql.functions.lit;
 import java.io.Serializable;
 
 import org.apache.commons.logging.Log;
@@ -25,23 +25,27 @@ public class SparkStopWordsRemover extends StopWordsRemover<SparkSession,Dataset
 	protected static String name = "zingg.spark.preprocess.SparkStopWordsRemover";
 	public static final Log LOG = LogFactory.getLog(SparkStopWordsRemover.class);
 	
+	private String udfName;
+	
 	public SparkStopWordsRemover(Context<SparkSession, Dataset<Row>, Row, Column,DataType> context,Arguments args) {
 		super(context,args);
+		this.udfName = registerUDF();
 	}
 	
  	@Override
 	protected ZFrame<Dataset<Row>, Row, Column> removeStopWordsFromDF(ZFrame<Dataset<Row>, Row, Column> ds,
 			String fieldName, String pattern) {
-		
-		RemoveStopWordsUDF removeStopWordsUDF = new RemoveStopWordsUDF(pattern.toLowerCase());
+ 		Dataset<Row> dfAfterRemoval = ds.df().withColumn(fieldName,callUDF(udfName, ds.df().col(fieldName),lit(pattern)));
+		return new SparkFrame(dfAfterRemoval);
+	}
+
+	protected String registerUDF() {
+		RemoveStopWordsUDF removeStopWordsUDF = new RemoveStopWordsUDF();
 		// Each field will have different pattern
-		String udfName = removeStopWordsUDF.getName()+"_"+fieldName;
+		String udfName = removeStopWordsUDF.getName();
 		// register the UDF
 		getContext().getSession().udf().register(udfName, removeStopWordsUDF, DataTypes.StringType);
-		
-		Dataset<Row> dfAfterRemoval = ds.df().withColumn(fieldName,callUDF(udfName, ds.df().col(fieldName)));
-		
-		return new SparkFrame(dfAfterRemoval);
+		return udfName;
 	}
 
 }

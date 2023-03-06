@@ -4,17 +4,15 @@ import java.io.Serializable;
 
 public class RemoveStopWords implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String stopWordsRegexString;
 	private String name = "removeStopWordsUDF";
 	
-	public RemoveStopWords(String stopWordsRegexString) {
+	public RemoveStopWords() {
 		super();
-		this.stopWordsRegexString = stopWordsRegexString;
 	}
 
-	protected String removeStopWordsUsingRegex(String s) {
-		if (s == null) return null;
-		return s.toLowerCase().replaceAll(stopWordsRegexString, "");
+	protected String removeStopWordsUsingRegex(String s,String stopWordsRegexString) {
+		if (s == null || stopWordsRegexString==null) return null;
+		return s.toLowerCase().replaceAll(stopWordsRegexString.toLowerCase(), "");
 	}
 	
 	public String getName() {

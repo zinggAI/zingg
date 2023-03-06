@@ -167,7 +167,13 @@ public class TestStopWords extends ZinggSparkTester{
 			
 			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,args);
 			
+			System.out.println("testStopWordColumnMissingFromStopWordFile : orginal ");			
+			original.show(200);
  			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocessForStopWords(new SparkFrame(original)))).df();
+ 			System.out.println("testStopWordColumnMissingFromStopWordFile : newDataSet ");		
+ 			newDataSet.show(200);
+ 			System.out.println("testStopWordColumnMissingFromStopWordFile : datasetExpected ");	
+ 			datasetExpected.show(200);
  			assertTrue(datasetExpected.except(newDataSet).isEmpty());
 			assertTrue(newDataSet.except(datasetExpected).isEmpty());
 	}
