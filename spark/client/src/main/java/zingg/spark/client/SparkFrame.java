@@ -7,9 +7,11 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.functions;
+import org.apache.spark.sql.types.StructField;
 
 import scala.collection.JavaConverters;
-import zingg.common.client.*;
+import zingg.common.client.FieldData;
+import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 
 //Dataset, Row, column
@@ -314,4 +316,22 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     	return df.schema().fieldNames();
     }    
     
+
+    @Override
+    public int fieldIndex(String colName) {
+    	return df.schema().fieldIndex(colName);
+    }    
+    
+    @Override
+    public FieldData[]  fields() {
+		StructField[] fields = df().schema().fields();
+		FieldData[] fieldDataArr = new FieldData[fields.length]; 
+		int i = 0;
+		for (StructField field: fields) {
+			FieldData fieldData = new FieldData(field.name(),field.dataType().toString(),field.nullable());
+			fieldDataArr[i++]=fieldData;
+		}
+		return fieldDataArr;
+    }
+
 }
