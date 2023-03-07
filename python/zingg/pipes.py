@@ -171,6 +171,8 @@ class SnowflakePipe(Pipe):
 
     def __init__(self,name):
         Pipe.__init__(self, name, JPipe.FORMAT_SNOWFLAKE)
+        Pipe.addProperty(self, "application", "zinggai_zingg")
+        
 
     def setURL(self, url):
         """ Method to set url to the pipe
