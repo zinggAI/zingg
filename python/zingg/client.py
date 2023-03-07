@@ -21,8 +21,8 @@ spark = SparkSession(sc)
 jvm = sc._jvm
 gateway = sc._gateway
 
-ColName = jvm.zingg.client.util.ColName
-MatchType = jvm.zingg.client.MatchType
+ColName = jvm.zingg.common.client.util.ColName
+MatchType = jvm.zingg.common.client.MatchType
 
 
 
@@ -37,7 +37,7 @@ class Zingg:
     """
 
     def __init__(self, args, options):
-        self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions())
+        self.client = jvm.zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions())
 
        
     def init(self):
@@ -173,7 +173,7 @@ class ZinggWithSpark(Zingg):
     """
 
     def __init__(self, args, options):
-        self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions(), spark._jsparkSession)
+        self.client = jvm.zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions(), spark._jsparkSession)
 
 
 class Arguments:
@@ -185,7 +185,7 @@ class Arguments:
     """
 
     def __init__(self):
-        self.args = jvm.zingg.client.Arguments()
+        self.args = jvm.zingg.common.client.Arguments()
 
     def setFieldDefinition(self, fieldDef):
         """ Method convert python objects to java FieldDefinition objects and set the field definitions associated with this client
@@ -221,7 +221,7 @@ class Arguments:
         :param pipes: input data pipes separated by comma e.g. (pipe1,pipe2,..)
         :type pipes: Pipe[]
         """
-        dataPipe = gateway.new_array(jvm.zingg.client.pipe.Pipe, len(pipes))
+        dataPipe = gateway.new_array(jvm.zingg.common.client.pipe.Pipe, len(pipes))
         for idx, pipe in enumerate(pipes):
             dataPipe[idx] = pipe.getPipe()
         self.args.setData(dataPipe)
@@ -232,7 +232,7 @@ class Arguments:
         :param pipes: output data pipes separated by comma e.g. (pipe1,pipe2,..)
         :type pipes: Pipe[]
         """
-        outputPipe = gateway.new_array(jvm.zingg.client.pipe.Pipe, len(pipes))
+        outputPipe = gateway.new_array(jvm.zingg.common.client.pipe.Pipe, len(pipes))
         for idx, pipe in enumerate(pipes):
             outputPipe[idx] = pipe.getPipe()
         self.args.setOutput(outputPipe)
@@ -267,7 +267,7 @@ class Arguments:
         :param pipes: input training data pipes separated by comma e.g. (pipe1,pipe2,..)
         :type pipes: Pipe[]
         """
-        dataPipe = gateway.new_array(jvm.zingg.client.pipe.Pipe, len(pipes))
+        dataPipe = gateway.new_array(jvm.zingg.common.client.pipe.Pipe, len(pipes))
         for idx, pipe in enumerate(pipes):
             dataPipe[idx] = pipe.getPipe()
         self.args.setTrainingSamples(dataPipe)
@@ -315,7 +315,7 @@ class Arguments:
         :param fileName: The CONF parameter value of ClientOption object or file address of json file
         :type fileName: String
         """
-        jvm.zingg.client.Arguments.writeArgumentsToJSON(fileName, self.args)
+        jvm.zingg.common.client.Arguments.writeArgumentsToJSON(fileName, self.args)
 
     def setStopWordsCutoff(self, stopWordsCutoff):
         """ Method to set stopWordsCutoff parameter value
@@ -338,7 +338,7 @@ class Arguments:
         :rtype: pointer(Arguments)
         """
         obj = Arguments()
-        obj.args = jvm.zingg.client.Arguments.createArgumentsFromJSON(fileName, phase)
+        obj.args = jvm.zingg.common.client.Arguments.createArgumentsFromJSON(fileName, phase)
         return obj
     
     
@@ -352,12 +352,12 @@ class Arguments:
         :return: The pointer containing address of the this class object
         :rtype: pointer(Arguments)
         """
-        return jvm.zingg.client.Arguments.writeArgumentstoJSONString(self.args)
+        return jvm.zingg.common.client.Arguments.writeArgumentstoJSONString(self.args)
     
     @staticmethod
     def createArgumentsFromJSONString(jsonArgs, phase):
         obj = Arguments()
-        obj.args = jvm.zingg.client.Arguments.createArgumentsFromJSONString(jsonArgs, phase)
+        obj.args = jvm.zingg.common.client.Arguments.createArgumentsFromJSONString(jsonArgs, phase)
         return obj
     
     
@@ -373,17 +373,17 @@ class ClientOptions:
     :param args: Parse a list of Zingg command line options parameter values e.g. "--location" etc. optional argument for initializing this class.
     :type args: List(String) or None
     """
-    PHASE = jvm.zingg.client.ClientOptions.PHASE 
+    PHASE = jvm.zingg.common.client.ClientOptions.PHASE 
     """:PHASE: phase parameter for this class"""
-    CONF = jvm.zingg.client.ClientOptions.CONF
+    CONF = jvm.zingg.common.client.ClientOptions.CONF
     """:CONF: conf parameter for this class"""
-    LICENSE = jvm.zingg.client.ClientOptions.LICENSE
+    LICENSE = jvm.zingg.common.client.ClientOptions.LICENSE
     """:LICENSE: license parameter for this class"""
-    EMAIL = jvm.zingg.client.ClientOptions.EMAIL
+    EMAIL = jvm.zingg.common.client.ClientOptions.EMAIL
     """:EMAIL: e-mail parameter for this class"""
-    LOCATION = jvm.zingg.client.ClientOptions.LOCATION
+    LOCATION = jvm.zingg.common.client.ClientOptions.LOCATION
     """:LOCATION: location parameter for this class"""
-    REMOTE = jvm.zingg.client.ClientOptions.REMOTE
+    REMOTE = jvm.zingg.common.client.ClientOptions.REMOTE
     """:REMOTE: remote option used internally for running on Databricks"""
 
     def __init__(self, argsSent=None):
@@ -405,7 +405,7 @@ class ClientOptions:
             args.append(self.CONF)
             args.append("dummyConf.json")
         print("arguments for client options are ", args) 
-        self.co = jvm.zingg.client.ClientOptions(args)
+        self.co = jvm.zingg.common.client.ClientOptions(args)
     
     
     def getClientOptions(self):
@@ -494,7 +494,7 @@ class FieldDefinition:
     """
 
     def __init__(self, name, dataType, *matchType):
-        self.fd = jvm.zingg.client.FieldDefinition()
+        self.fd = jvm.zingg.common.client.FieldDefinition()
         self.fd.setFieldName(name)
         self.fd.setDataType(self.stringify(dataType))
         self.fd.setMatchType(matchType)

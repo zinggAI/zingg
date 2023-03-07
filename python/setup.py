@@ -68,7 +68,7 @@ PHASES_TARGET = os.path.join("zingg", "phases")
 # This is important because we only want to build the symlink farm while under Zingg otherwise we
 # want to use the symlink farm. And if the symlink farm exists under while under Zingg (e.g. a
 # partially built sdist) we should error and have the user sort it out.
-in_zingg = (os.path.isfile("../core/src/main/java/zingg/Trainer.java") == 1)
+in_zingg = (os.path.isfile("../common/client/src/main/java/zingg/common/client/pipe/Pipe.java") == 1)
 
 
 def _supports_symlinks():
@@ -99,6 +99,7 @@ try:
         os.makedirs("zingg")
     except OSError:
         # Don't worry if the directory already exists.
+        print("could not create")
         pass
     
     if (in_zingg):

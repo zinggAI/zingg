@@ -104,9 +104,9 @@ class ZinggWithDatabricks(Zingg):
         print('cliArgs are ' + '||'.join(cliArgs[1:]))
         #remote is an option we set and send to job on databricks so that it can work as normal job there
         if (self.phase == 'label'):
-           self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions())
+           self.client = jvm.zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions())
         else:
-            self.client = jvm.zingg.client.Client(args.getArgs(), options.getClientOptions(), spark._jsparkSession)
+            self.client = jvm.zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions(), spark._jsparkSession)
         try:
             self.isRemote = options.getClientOptions().getOptionValue(ClientOptions.REMOTE)
         except:
@@ -150,7 +150,7 @@ class ZinggWithDatabricks(Zingg):
             else:
                 currTimeString = getCurrentTime()
                 name = self.phase + currTimeString
-                notebookLocation ='dbfs:/Filestore/' + self.localNotebookLocation
+                notebookLocation ='dbfs:/FileStore/' + self.localNotebookLocation
                 notebookParams = self.cliArgs[1:].copy()
                 notebookParams.append(ClientOptions.REMOTE)
                 notebookParams.append("True")
@@ -178,7 +178,7 @@ class DbfsHelper:
 
     def copyNotebookToDBFS(self, localLocation):
         print('copying over Zingg program to dbfs')
-        self.dbfs_api.cp(True, True, localLocation, 'dbfs:/Filestore/' + localLocation)
+        self.dbfs_api.cp(True, True, localLocation, 'dbfs:/FileStore/' + localLocation)
         
 
     def copyModelFromDBFS(self, args):
