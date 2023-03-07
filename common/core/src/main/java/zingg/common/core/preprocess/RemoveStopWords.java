@@ -12,7 +12,7 @@ public class RemoveStopWords implements Serializable {
 
 	protected String removeStopWordsUsingRegex(String s,String stopWordsRegexString) {
 		if (s == null || stopWordsRegexString==null) return null;
-		return s.toLowerCase().replaceAll(stopWordsRegexString.toLowerCase(), "");
+		return s.toLowerCase().replaceAll(stopWordsRegexString, "");
 	}
 	
 	public String getName() {
