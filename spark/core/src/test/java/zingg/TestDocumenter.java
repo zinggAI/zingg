@@ -1,10 +1,10 @@
 package zingg;
-import zingg.spark.ZinggSparkTester;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeEach;
 
 import zingg.common.client.Arguments;
+import zingg.spark.core.executor.ZinggSparkTester;
 
 public class TestDocumenter extends ZinggSparkTester{
     

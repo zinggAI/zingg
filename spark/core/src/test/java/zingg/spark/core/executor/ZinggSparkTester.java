@@ -1,4 +1,4 @@
-package zingg.spark;
+package zingg.spark.core.executor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,20 +16,14 @@ import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-<<<<<<< HEAD:common/core/src/test/java/zingg/ZinggSparkTester.java
 import zingg.common.client.Arguments;
-=======
-import zingg.client.Arguments;
-import zingg.client.IZingg;
->>>>>>> dad33a5 (Untrack files in .gitignore):spark_zingg/core/src/test/java/zingg/spark/ZinggSparkTester.java
-import zingg.preprocess.TestStopWords;
-import zingg.spark.preprocess.SparkStopWordsRemover;
-import zingg.spark.util.SparkBlockingTreeUtil;
-import zingg.spark.util.SparkDSUtil;
-import zingg.spark.util.SparkGraphUtil;
-import zingg.spark.util.SparkHashUtil;
-import zingg.spark.util.SparkModelUtil;
-import zingg.spark.util.SparkPipeUtil;
+import zingg.common.client.IZingg;
+import zingg.spark.core.util.SparkBlockingTreeUtil;
+import zingg.spark.core.util.SparkDSUtil;
+import zingg.spark.core.util.SparkGraphUtil;
+import zingg.spark.core.util.SparkHashUtil;
+import zingg.spark.core.util.SparkModelUtil;
+import zingg.spark.core.util.SparkPipeUtil;
 
 public class ZinggSparkTester {
 

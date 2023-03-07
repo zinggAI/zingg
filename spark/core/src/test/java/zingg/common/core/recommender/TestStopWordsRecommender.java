@@ -1,4 +1,8 @@
-package zingg.recommender;
+package zingg.common.core.recommender;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,19 +17,10 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
-<<<<<<< HEAD:common/core/src/test/java/zingg/recommender/TestStopWordsRecommender.java
-import zingg.ZinggSparkTester;
 import zingg.common.client.ZinggClientException;
-=======
-import zingg.client.SparkFrame;
-import zingg.client.ZinggClientException;
-import zingg.spark.ZinggSparkTester;
-import zingg.spark.recommender.SparkStopWordsRecommender;
->>>>>>> dad33a5 (Untrack files in .gitignore):spark_zingg/core/src/test/java/zingg/recommender/TestStopWordsRecommender.java
+import zingg.spark.client.SparkFrame;
+import zingg.spark.core.executor.ZinggSparkTester;
+import zingg.spark.core.recommender.SparkStopWordsRecommender;
 
 public class TestStopWordsRecommender extends ZinggSparkTester {
 

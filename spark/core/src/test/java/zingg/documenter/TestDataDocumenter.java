@@ -13,15 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-<<<<<<< HEAD:common/core/src/test/java/zingg/documenter/TestDataDocumenter.java
-import zingg.ZinggSparkTester;
-import zingg.common.client.Arguments;
-import zingg.common.core.documenter.DataDocumenter;
-import zingg.common.core.documenter.TemplateFields;
-=======
-import zingg.spark.ZinggSparkTester;
 import zingg.client.Arguments;
->>>>>>> dad33a5 (Untrack files in .gitignore):spark_zingg/core/src/test/java/zingg/documenter/TestDataDocumenter.java
+import zingg.spark.core.executor.ZinggSparkTester;
 import zingg.util.PipeUtil;
 
 public class TestDataDocumenter extends ZinggSparkTester {

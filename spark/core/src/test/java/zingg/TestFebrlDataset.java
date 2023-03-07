@@ -14,24 +14,14 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-<<<<<<< HEAD:common/core/src/test/java/zingg/TestFebrlDataset.java
 
-import zingg.common.client.Arguments;
-import zingg.common.client.ZinggClientException;
-import zingg.common.client.pipe.FilePipe;
-import zingg.common.client.pipe.InMemoryPipe;
-import zingg.common.client.pipe.Pipe;
-import zingg.common.client.util.ColName;
-import zingg.common.core.executor.TrainMatcher;
-=======
-import zingg.spark.ZinggSparkTester;
 import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
 import zingg.client.pipe.FilePipe;
 import zingg.client.pipe.InMemoryPipe;
 import zingg.client.pipe.Pipe;
 import zingg.client.util.ColName;
->>>>>>> dad33a5 (Untrack files in .gitignore):spark_zingg/core/src/test/java/zingg/TestFebrlDataset.java
+import zingg.spark.core.executor.ZinggSparkTester;
 /**end to end integration test*/
 public class TestFebrlDataset extends ZinggSparkTester{
 	public static final Log LOG = LogFactory.getLog(TestFebrlDataset.class);

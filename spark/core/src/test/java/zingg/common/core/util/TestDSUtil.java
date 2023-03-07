@@ -1,8 +1,6 @@
 package zingg.common.core.util;
 
-import static org.apache.spark.sql.functions.col;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,22 +15,14 @@ import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
+import org.junit.jupiter.api.Test;
 
-<<<<<<< HEAD:common/core/src/test/java/zingg/util/TestDSUtil.java
-import zingg.ZinggSparkTester;
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
-=======
-import zingg.spark.ZinggSparkTester;
-import zingg.client.Arguments;
-import zingg.client.FieldDefinition;
-import zingg.client.MatchType;
-import zingg.client.ZinggClientException;
-import zingg.client.util.ColName;
->>>>>>> dad33a5 (Untrack files in .gitignore):spark_zingg/core/src/test/java/zingg/util/TestDSUtil.java
+import zingg.spark.core.executor.ZinggSparkTester;
 
 public class TestDSUtil extends ZinggSparkTester{
 	public static final Log LOG = LogFactory.getLog(TestDSUtil.class);

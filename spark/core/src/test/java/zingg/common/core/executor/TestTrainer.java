@@ -1,4 +1,4 @@
-package zingg;
+package zingg.common.core.executor;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -8,16 +8,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-<<<<<<< HEAD:common/core/src/test/java/zingg/TestTrainer.java
 
-import zingg.common.client.Arguments;
-import zingg.common.client.ZinggClientException;
-import zingg.common.core.executor.Trainer;
-=======
-import zingg.spark.ZinggSparkTester;
 import zingg.client.Arguments;
 import zingg.client.ZinggClientException;
->>>>>>> dad33a5 (Untrack files in .gitignore):spark_zingg/core/src/test/java/zingg/TestTrainer.java
+import zingg.spark.core.executor.ZinggSparkTester;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TestTrainer extends ZinggSparkTester{
