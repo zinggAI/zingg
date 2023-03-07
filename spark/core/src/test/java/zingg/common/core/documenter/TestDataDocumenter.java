@@ -1,4 +1,4 @@
-package zingg.documenter;
+package zingg.common.core.documenter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,14 +8,13 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import zingg.client.Arguments;
+import zingg.common.client.Arguments;
+import zingg.spark.core.documenter.SparkDataDocumenter;
 import zingg.spark.core.executor.ZinggSparkTester;
-import zingg.util.PipeUtil;
 
 public class TestDataDocumenter extends ZinggSparkTester {
 	public static final Log LOG = LogFactory.getLog(TestDataDocumenter.class);
@@ -34,8 +33,8 @@ public class TestDataDocumenter extends ZinggSparkTester {
 	@DisplayName ("Test template data")
 	@Test
 	public void testPopulateTemplateData() throws Throwable {
-		DataDocumenter dataDoc = new DataDocumenter(spark, args);
-		dataDoc.data = PipeUtil.read(spark, false, false, args.getData());
+		DataDocumenter dataDoc = new SparkDataDocumenter(zsCTX, args);
+		dataDoc.data = zsCTX.getPipeUtil().read(false, false, args.getData());
 
 		Map<String, Object> root =  dataDoc.populateTemplateData();
 		assertTrue(root.containsKey(TemplateFields.TITLE), "The field does not exist - " + TemplateFields.TITLE);
