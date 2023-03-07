@@ -7,7 +7,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 import zingg.common.core.recommender.StopWordsRecommender;
 
-public class Recommender<S,D,R,C, T> extends ZinggBase<S,D,R,C,T> {
+public abstract class Recommender<S,D,R,C, T> extends ZinggBase<S,D,R,C,T> {
 
 	protected static String name = "zingg.Recommender";
 	public static final Log LOG = LogFactory.getLog(Recommender.class);
@@ -21,8 +21,9 @@ public class Recommender<S,D,R,C, T> extends ZinggBase<S,D,R,C,T> {
 			LOG.info("Recommender starts");
 
 			//Recommendations out of data
-			//StopWordsRecommender stopWordsRecommender = new StopWordsRecommender(args);
-			//stopWordsRecommender.process();
+			StopWordsRecommender<S,D,R,C, T> stopWordsRecommender = getStopWordsRecommender();
+			//new StopWordsRecommender<S,D,R,C, T>(getContext(),args);
+			stopWordsRecommender.process();
 
 			LOG.info("Recommender finishes");
 		} catch (Exception e) {
@@ -36,5 +37,11 @@ public class Recommender<S,D,R,C, T> extends ZinggBase<S,D,R,C,T> {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	/**
+	 * To be implemented by concrete implementation of Spark/Snow etc.
+	 * @return
+	 */
+	public abstract StopWordsRecommender<S,D,R,C, T> getStopWordsRecommender();
 
 }

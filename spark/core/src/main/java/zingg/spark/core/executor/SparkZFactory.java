@@ -5,6 +5,16 @@ import java.util.HashMap;
 import zingg.common.client.IZingg;
 import zingg.common.client.IZinggFactory;
 import zingg.common.client.ZinggOptions;
+import zingg.spark.core.executor.SparkDocumenter;
+import zingg.spark.core.executor.SparkFindAndLabeller;
+import zingg.spark.core.executor.SparkLabelUpdater;
+import zingg.spark.core.executor.SparkLabeller;
+import zingg.spark.core.executor.SparkLinker;
+import zingg.spark.core.executor.SparkMatcher;
+import zingg.spark.core.executor.SparkRecommender;
+import zingg.spark.core.executor.SparkTrainMatcher;
+import zingg.spark.core.executor.SparkTrainer;
+import zingg.spark.core.executor.SparkTrainingDataFinder;
 
 public class SparkZFactory implements IZinggFactory{
 
@@ -22,6 +32,7 @@ public class SparkZFactory implements IZinggFactory{
         zinggers.put(ZinggOptions.GENERATE_DOCS, SparkDocumenter.name);
         zinggers.put(ZinggOptions.UPDATE_LABEL, SparkLabelUpdater.name);
         zinggers.put(ZinggOptions.FIND_AND_LABEL, SparkFindAndLabeller.name);
+        zinggers.put(ZinggOptions.RECOMMEND, SparkRecommender.name);
     }
 
     public IZingg get(ZinggOptions z) throws InstantiationException, IllegalAccessException, ClassNotFoundException {

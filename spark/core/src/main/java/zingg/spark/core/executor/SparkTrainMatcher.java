@@ -13,14 +13,9 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 import zingg.common.core.executor.TrainMatcher;
 import zingg.common.core.model.Model;
-import zingg.spark.core.model.SparkModel;
-
-/**
- * Spark specific implementation of TrainMatcher
- * 
- * @author vikasgupta
- *
- */
+import zingg.common.core.preprocess.StopWordsRemover;
+import zingg.spark.core.preprocess.SparkStopWordsRemover;
+ 
 public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	public static String name = "zingg.spark.core.executor.SparkTrainMatcher";
@@ -53,10 +48,9 @@ public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, 
 		
 	}
 
-
-	
-	
-
-		
+	@Override
+	protected StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
+		return new SparkStopWordsRemover(getContext(),getArgs());
+	}
 	
 }

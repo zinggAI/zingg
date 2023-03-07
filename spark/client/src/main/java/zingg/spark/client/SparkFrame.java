@@ -316,6 +316,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     	return df.schema().fieldNames();
     }    
     
+
     @Override
     public int fieldIndex(String colName) {
     	return df.schema().fieldIndex(colName);
@@ -332,4 +333,5 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 		}
 		return fieldDataArr;
     }
+
 }
