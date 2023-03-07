@@ -21,13 +21,12 @@ import zingg.spark.core.preprocess.SparkStopWordsRemover;
 /**
  * Spark specific implementation of Matcher
  * 
- * @author vikasgupta
  *
  */
 public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,DataType>{
 
 
-	public static String name = "zingg.spark.SparkMatcher";
+	public static String name = "zingg.spark.core.executor.SparkMatcher";
 	public static final Log LOG = LogFactory.getLog(SparkMatcher.class);    
 
     public SparkMatcher() {
