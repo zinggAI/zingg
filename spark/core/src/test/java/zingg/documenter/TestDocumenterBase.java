@@ -17,13 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-<<<<<<< HEAD:common/core/src/test/java/zingg/documenter/TestDocumenterBase.java
-import zingg.ZinggSparkTester;
-import zingg.common.core.documenter.DocumenterBase;
-import zingg.common.core.documenter.TemplateFields;
-=======
-import zingg.spark.ZinggSparkTester;
->>>>>>> dad33a5 (Untrack files in .gitignore):spark_zingg/core/src/test/java/zingg/documenter/TestDocumenterBase.java
+import zingg.spark.core.executor.ZinggSparkTester;
 
 
 public class TestDocumenterBase extends ZinggSparkTester {

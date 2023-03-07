@@ -1,8 +1,6 @@
-package zingg.preprocess;
+package zingg.common.core.preprocess;
 
-import static org.apache.spark.sql.functions.col;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,23 +18,14 @@ import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-<<<<<<< HEAD:common/core/src/test/java/zingg/preprocess/TestStopWords.java
-import zingg.ZinggSparkTester;
+import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
+import zingg.common.client.MatchType;
+import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
-import zingg.common.core.util.DSUtil;
-=======
-import zingg.client.Arguments;
-import zingg.client.FieldDefinition;
-import zingg.client.MatchType;
-import zingg.client.SparkFrame;
-import zingg.client.ZFrame;
-import zingg.client.ZinggClientException;
-import zingg.client.util.ColName;
-import zingg.spark.ZinggSparkTester;
-import zingg.spark.preprocess.SparkStopWordsRemover;
-import zingg.util.DSUtil;
->>>>>>> dad33a5 (Untrack files in .gitignore):spark_zingg/core/src/test/java/zingg/preprocess/TestStopWords.java
+import zingg.spark.client.SparkFrame;
+import zingg.spark.core.executor.ZinggSparkTester;
+import zingg.spark.core.preprocess.SparkStopWordsRemover;
 
 public class TestStopWords extends ZinggSparkTester{
 
@@ -58,7 +47,7 @@ public class TestStopWords extends ZinggSparkTester{
 							RowFactory.create("Best of luck to zingg")),
 					schema);
 
-			String stopWords = "\\b(a|an|the|is|It|of|yes|no|I|has|have|you)\\b\\s?";
+			String stopWords = "\\b(a|an|the|is|It|of|yes|no|I|has|have|you)\\b\\s?".toLowerCase();
 
 			Dataset<Row> datasetExpected = spark.createDataFrame(
 				Arrays.asList(
@@ -122,7 +111,7 @@ public class TestStopWords extends ZinggSparkTester{
 						RowFactory.create("30", "written java scala", "four", "", "test"),
 						RowFactory.create("40", "best luck to zingg ", "Five", "thank you", "test")),
 				schemaOriginal);
-  			String stopWordsFileName = getClass().getResource("../../preProcess/stopWords.csv").getFile();
+  			String stopWordsFileName = getClass().getResource("../../../../preProcess/stopWords.csv").getFile();
  			FieldDefinition fd = new FieldDefinition();
 			fd.setStopWords(stopWordsFileName);
 			fd.setFieldName("field1");
@@ -164,7 +153,7 @@ public class TestStopWords extends ZinggSparkTester{
 						RowFactory.create("30", "written java scala", "four", "", "test"),
 						RowFactory.create("40", "best luck to zingg ", "Five", "thank you", "test")),
 				schemaOriginal);
-  			String stopWordsFileName = getClass().getResource("../../preProcess/stopWordsWithoutHeader.csv").getFile();
+  			String stopWordsFileName = getClass().getResource("../../../../preProcess/stopWordsWithoutHeader.csv").getFile();
  			FieldDefinition fd = new FieldDefinition();
 			fd.setStopWords(stopWordsFileName);
 			fd.setFieldName("field1");
