@@ -10,8 +10,8 @@ from zingg.client import *
 
 LOG = logging.getLogger("zingg.pipes")
 
-JPipe = jvm.zingg.client.pipe.Pipe
-FilePipe = jvm.zingg.client.pipe.FilePipe
+JPipe = jvm.zingg.common.client.pipe.Pipe
+FilePipe = jvm.zingg.common.client.pipe.FilePipe
 JStructType = jvm.org.apache.spark.sql.types.StructType
 
 class Pipe:
@@ -24,7 +24,7 @@ class Pipe:
     """
 
     def __init__(self, name, format):
-        self.pipe = jvm.zingg.client.pipe.Pipe()
+        self.pipe = jvm.zingg.common.client.pipe.Pipe()
         self.pipe.setName(name)
         self.pipe.setFormat(format)
 
@@ -252,12 +252,16 @@ class InMemoryPipe(Pipe):
         :type df: DataFrame
         """
         if (isinstance(df, pd.DataFrame)):
-            ds = spark.createDataFrame(df)
+            print(Pipe.getPipe(self).getSchema())
+            if (Pipe.getPipe(self).getSchema() is not None):
+                ds = spark.createDataFrame(df, schema=Pipe.getPipe(self).getSchema())
+            else:
+                ds = spark.createDataFrame(df)
             Pipe.getPipe(self).setDataset(ds._jdf)
         elif (isinstance(df, DataFrame)):
             Pipe.getPipe(self).setDataset(df._jdf)
         else:
-            LOG.error(" setDataset(): NUll or Unsuported type: %s", type(df))
+            LOG.error(" setDataset(): NUll or Unsupported type: %s", type(df))
 
     def getDataset(self):
         """ Method to get Dataset from pipe
