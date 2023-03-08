@@ -9,7 +9,6 @@ import zingg.spark.core.hash.SparkTrimLastDigitsDbl;
  * Spark specific trim function for double last 2 digits
  * 
  * 
- * @author vikasgupta
  *
  */
 public class SparkTrimLast2DigitsDbl extends SparkTrimLastDigitsDbl {

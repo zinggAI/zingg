@@ -2,7 +2,6 @@ package zingg.common.core.hash;
 
 /**
  * Base class for hash functions related to trimming of integers
- * @author vikasgupta
  *
  */
 public class TrimLastDigitsInt extends BaseHash<Integer,Integer>{

@@ -19,8 +19,6 @@ import zingg.spark.core.recommender.SparkStopWordsRecommender;
 
 /**
  * Spark specific implementation of Recommender
- * 
- * @author vikasgupta
  *
  */
 public class SparkRecommender extends Recommender<SparkSession, Dataset<Row>, Row, Column,DataType> {

@@ -17,7 +17,6 @@ import zingg.common.core.hash.TruncateDouble;
  * Spark specific trunc function for double
  * 
  * 
- * @author vikasgupta
  *
  */
 public class SparkTruncateDouble extends SparkHashFunction<Double, Double>{

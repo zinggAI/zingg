@@ -9,7 +9,6 @@ import zingg.spark.core.hash.SparkTrimLastDigitsInt;
  * Spark specific trim function for integer last 1 digit
  * 
  * 
- * @author vikasgupta
  *
  */
 public class SparkTrimLast1DigitInt extends SparkTrimLastDigitsInt {

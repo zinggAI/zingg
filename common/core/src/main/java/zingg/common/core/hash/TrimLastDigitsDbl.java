@@ -2,7 +2,6 @@ package zingg.common.core.hash;
 
 /**
  * Base class for hash functions related to trimming of doubles
- * @author vikasgupta
  *
  */
 public class TrimLastDigitsDbl extends BaseHash<Double,Double>{

@@ -3,7 +3,6 @@ package zingg.common.core.hash;
 /**
  * Base class for hash functions related to truncating of doubles
  * 
- * @author vikasgupta
  *
  */
 public class TruncateDouble extends BaseHash<Double,Double>{

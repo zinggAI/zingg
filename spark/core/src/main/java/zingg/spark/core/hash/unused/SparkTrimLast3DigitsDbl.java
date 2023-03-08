@@ -8,8 +8,6 @@ import zingg.spark.core.hash.SparkTrimLastDigitsDbl;
 /**
  * Spark specific trim function for double last 3 digits
  * 
- * 
- * @author vikasgupta
  *
  */
 public class SparkTrimLast3DigitsDbl extends SparkTrimLastDigitsDbl {
