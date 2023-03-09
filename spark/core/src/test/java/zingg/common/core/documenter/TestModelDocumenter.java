@@ -31,9 +31,10 @@ public class TestModelDocumenter extends ZinggSparkTester {
 	public void setUp(){
 
 		try {
-			docArguments = Arguments.createArgumentsFromJSON(getClass().getResource("/documenter/config.json").getFile());
-			String ZINGG_HOME =System.getenv("ZINGG_HOME");
-			docArguments.setZinggDir(ZINGG_HOME+"/../../common/core/"+docArguments.getZinggDir());
+			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
+			docArguments = Arguments.createArgumentsFromJSON(configPath);
+			String zinggDirPath = getClass().getResource("../../../../"+docArguments.getZinggDir()).getFile();
+			docArguments.setZinggDir(zinggDirPath);
 		} catch (Throwable e) {
 			e.printStackTrace();
 			LOG.info("Unexpected exception received " + e.getMessage());

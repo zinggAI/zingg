@@ -23,11 +23,11 @@ public class TestDataDocumenter extends ZinggSparkTester {
 	public static final Log LOG = LogFactory.getLog(TestDataDocumenter.class);
 
 	private Arguments docArguments = new Arguments();
-	private String ZINGG_HOME =System.getenv("ZINGG_HOME");
 	@BeforeEach
 	public void setUp(){
 		try {
-			docArguments = Arguments.createArgumentsFromJSON(ZINGG_HOME+"/../../examples/febrl/config.json");
+			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
+			docArguments = Arguments.createArgumentsFromJSON(configPath);
 		} catch (Throwable e) {
 			e.printStackTrace();
 			LOG.info("Unexpected exception received " + e.getMessage());
@@ -42,7 +42,8 @@ public class TestDataDocumenter extends ZinggSparkTester {
 		Pipe[] dataPipeArr = docArguments.getData();
 		
 		for (int i = 0; i < dataPipeArr.length; i++) {
-			dataPipeArr[i].setProp(FilePipe.LOCATION, ZINGG_HOME+"/../../examples/febrl/test.csv");
+			String file = getClass().getResource("../../../../documenter/test.csv").getFile();
+			dataPipeArr[i].setProp(FilePipe.LOCATION, file);
 		}
 				
 		dataDoc.data = zsCTX.getPipeUtil().read(false, false, dataPipeArr);
