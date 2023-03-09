@@ -16,7 +16,6 @@ import zingg.common.core.executor.Labeller;
 /**
  * Spark specific implementation of Labeller
  * 
- * @author vikasgupta
  *
  */
 public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Column,DataType> {

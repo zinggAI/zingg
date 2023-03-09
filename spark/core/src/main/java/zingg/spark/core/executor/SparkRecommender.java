@@ -19,14 +19,12 @@ import zingg.spark.core.recommender.SparkStopWordsRecommender;
 
 /**
  * Spark specific implementation of Recommender
- * 
- * @author vikasgupta
  *
  */
 public class SparkRecommender extends Recommender<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
-	public static String name = "zingg.spark.SparkRecommender";
+	public static String name = "zingg.spark.core.executor.SparkRecommender";
 	public static final Log LOG = LogFactory.getLog(SparkRecommender.class);
 
 	public SparkRecommender() {

@@ -14,8 +14,6 @@ import zingg.common.core.documenter.RowWrapper;
 
 /**
  * Spark specific implementation of ModelDocumenter
- * 
- * @author vikasgupta
  *
  */
 public class SparkModelDocumenter extends ModelDocumenter<SparkSession, Dataset<Row>, Row, Column,DataType> {

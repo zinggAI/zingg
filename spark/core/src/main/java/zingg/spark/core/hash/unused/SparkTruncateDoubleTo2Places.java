@@ -9,7 +9,6 @@ import zingg.spark.core.hash.SparkTruncateDouble;
  * Spark specific trunc function for double (2 digit)
  * 
  * 
- * @author vikasgupta
  *
  */
 public class SparkTruncateDoubleTo2Places extends SparkTruncateDouble {

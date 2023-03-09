@@ -1,4 +1,4 @@
-package zingg.documenter;
+package zingg.common.core.documenter;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import zingg.spark.core.documenter.SparkModelDocumenter;
 import zingg.spark.core.executor.ZinggSparkTester;
 
 
@@ -27,7 +28,7 @@ public class TestDocumenterBase extends ZinggSparkTester {
 	@DisplayName ("Test Column is a Z column or not")
 	@Test
 	public void testIfColumnIsZColumn() throws Throwable {
-		DocumenterBase base = new DocumenterBase(spark, args);
+		DocumenterBase base = new SparkModelDocumenter(zsCTX, args);
 		String aZColumn = "z_sampleColumn";
 		
 		assertTrue(base.isZColumn(aZColumn), "Column is not a Z column");
@@ -39,7 +40,7 @@ public class TestDocumenterBase extends ZinggSparkTester {
 	@DisplayName ("Test if a directory already exists else it is created")
 	@Test
 	public void testIfDirectoryAlreadyExistsElseCreate() throws Throwable {
-		DocumenterBase base = new DocumenterBase(spark, args);
+		DocumenterBase base = new SparkModelDocumenter(zsCTX, args);
 		base.checkAndCreateDir(args.getZinggDir());
 		assertTrue(Files.exists(Paths.get(args.getZinggDir())), "The directory doesn't exist");
 		base.checkAndCreateDir("/an/invalid/dir");
@@ -50,7 +51,7 @@ public class TestDocumenterBase extends ZinggSparkTester {
 	@Test
 	public void testProcessTemplateToMakeDocument() throws Throwable {
 		
-		DocumenterBase base = new DocumenterBase(spark, args);
+		DocumenterBase base = new SparkModelDocumenter(zsCTX, args);
 		base.checkAndCreateDir(args.getZinggDir());
 
 		Map<String, Object> root = new HashMap<String, Object>();

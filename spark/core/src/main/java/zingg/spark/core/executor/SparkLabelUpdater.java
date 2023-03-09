@@ -19,7 +19,6 @@ import zingg.common.core.executor.LabelUpdater;
 /**
  * Spark specific implementation of LabelUpdater
  * 
- * @author vikasgupta
  *
  */
 public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, Row, Column,DataType> {

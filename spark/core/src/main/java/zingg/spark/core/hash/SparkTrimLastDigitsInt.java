@@ -9,8 +9,6 @@ import zingg.common.core.hash.TrimLastDigitsInt;
 /**
  * Spark specific trim function for Integer
  * 
- * 
- * @author vikasgupta
  *
  */
 public class SparkTrimLastDigitsInt extends SparkHashFunction<Integer, Integer>{

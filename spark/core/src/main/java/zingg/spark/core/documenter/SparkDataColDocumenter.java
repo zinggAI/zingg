@@ -14,8 +14,6 @@ import zingg.common.core.documenter.RowWrapper;
 
 /**
  * Spark specific implementation of DataColDocumenter
- * 
- * @author vikasgupta
  *
  */
 public class SparkDataColDocumenter extends DataColDocumenter<SparkSession, Dataset<Row>, Row, Column,DataType> {
