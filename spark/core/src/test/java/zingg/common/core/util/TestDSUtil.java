@@ -12,6 +12,7 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
+import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
@@ -22,6 +23,7 @@ import zingg.common.client.FieldDefinition;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
+import zingg.spark.client.SparkFrame;
 import zingg.spark.core.executor.ZinggSparkTester;
 
 public class TestDSUtil extends ZinggSparkTester{
@@ -60,9 +62,9 @@ public class TestDSUtil extends ZinggSparkTester{
 			e.printStackTrace();
 		}
 		StructType schema = DataTypes.createStructType(new StructField[] { 
-			DataTypes.createStructField(def1.getFieldName(), def1.getDataType(), false), 
-			DataTypes.createStructField(def2.getFieldName(), def2.getDataType(), false),
-			DataTypes.createStructField(def3.getFieldName(), def3.getDataType(), false),
+			DataTypes.createStructField(def1.getFieldName(), DataType.fromJson(def1.getDataType()), false), 
+			DataTypes.createStructField(def2.getFieldName(), DataType.fromJson(def2.getDataType()), false),
+			DataTypes.createStructField(def3.getFieldName(), DataType.fromJson(def3.getDataType()), false),
 			DataTypes.createStructField(ColName.SOURCE_COL, DataTypes.StringType, false) 
 		});
 		List<Row> list = Arrays.asList(RowFactory.create("1", "first", "one", "Junit"), RowFactory.create("2", "second", "two", "Junit"), 
@@ -72,7 +74,7 @@ public class TestDSUtil extends ZinggSparkTester{
 		List<String> expectedColumns = new ArrayList<String>();
 		expectedColumns.add("field_fuzzy");
 		expectedColumns.add(ColName.SOURCE_COL);
-		List<Column> colList = DSUtil.getFieldDefColumns (ds, args, false, true);
+		List<Column> colList = zsCTX.getDSUtil().getFieldDefColumns(new SparkFrame(ds), args, false, true);
 		assertTrue(expectedColumns.size() == colList.size());
 		for (int i = 0; i < expectedColumns.size(); i++) {
 			assertTrue(expectedColumns.get(i).equals(colList.get(i).toString()));
@@ -111,16 +113,16 @@ public class TestDSUtil extends ZinggSparkTester{
 			e.printStackTrace();
 		}
 		StructType schema = DataTypes.createStructType(new StructField[] { 
-			DataTypes.createStructField(def1.getFieldName(), def1.getDataType(), false), 
-			DataTypes.createStructField(def2.getFieldName(), def2.getDataType(), false),
-			DataTypes.createStructField(def3.getFieldName(), def3.getDataType(), false),
+			DataTypes.createStructField(def1.getFieldName(), DataType.fromJson(def1.getDataType()), false), 
+			DataTypes.createStructField(def2.getFieldName(), DataType.fromJson(def2.getDataType()), false),
+			DataTypes.createStructField(def3.getFieldName(), DataType.fromJson(def3.getDataType()), false),
 			DataTypes.createStructField(ColName.SOURCE_COL, DataTypes.StringType, false) 
 		});
 		List<Row> list = Arrays.asList(RowFactory.create("1", "first", "one", "Junit"), RowFactory.create("2", "second", "two", "Junit"), 
 				RowFactory.create("3", "third", "three", "Junit"), RowFactory.create("4", "forth", "Four", "Junit"));
 		Dataset<Row> ds = spark.createDataFrame(list, schema);
 
-		List<Column> colListTest2 = DSUtil.getFieldDefColumns (ds, args, false, false);
+		List<Column> colListTest2 = zsCTX.getDSUtil().getFieldDefColumns (new SparkFrame(ds), args, false, false);
 		List<String> expectedColumnsTest2 = new ArrayList<String>();
 		expectedColumnsTest2.add("field_fuzzy");
 		expectedColumnsTest2.add("field_match_type_DONT_USE");
