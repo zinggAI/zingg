@@ -1,4 +1,4 @@
-package zingg.client;
+package zingg.common.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

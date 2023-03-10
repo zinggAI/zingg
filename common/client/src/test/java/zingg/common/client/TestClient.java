@@ -1,12 +1,9 @@
-package zingg.client;
+package zingg.common.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import org.junit.jupiter.api.Test;
 
 public class TestClient {
@@ -33,15 +30,5 @@ public class TestClient {
 		}
 	}
 
-	/* 
-	@Test
-	public void testSetColumnOptionThroughBuildAndSetArguments() {
-		Arguments arguments = new Arguments();
-		String[] args = {ClientOptions.CONF, "configFile", ClientOptions.PHASE, "train", ClientOptions.COLUMN, "columnName", ClientOptions.SHOW_CONCISE, "true", ClientOptions.LICENSE, "licenseFile"};
-		ClientOptions options = new ClientOptions(args);
-		Client client = new Client();
-		client.buildAndSetArguments(arguments, options);
-
-		assertEquals("columnName", client.getArguments().getColumn());
-	}*/
+	 
 }

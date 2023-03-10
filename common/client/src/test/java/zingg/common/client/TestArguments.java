@@ -1,4 +1,4 @@
-package zingg.client;
+package zingg.common.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +14,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
-
-import zingg.common.client.pipe.Pipe;
-import zingg.common.client.pipe.SparkPipe;
 
 public class TestArguments {
 
@@ -36,7 +32,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "400");
 	
 			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../testArguments/testConfigTemplate.json.env").getFile()));
+					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
 			Arguments args = Arguments.createArgumentsFromJSONString(json, "");
@@ -57,7 +53,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "400");
 
 			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../testArguments/testConfigTemplate.json.env").getFile()));
+					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -77,7 +73,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "400");
 
 			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../testArguments/testConfigTemplate.json.env").getFile()));
+					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -99,7 +95,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "400");
 
 			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../testArguments/testConfigTemplate.json.env").getFile()));
+					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -120,7 +116,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "400");
 
 			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../testArguments/testConfigTemplate.json.env").getFile()));
+					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -142,7 +138,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "ONEHUNDRED");
 
 			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../testArguments/testConfigTemplate.json.env").getFile()));
+					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -164,7 +160,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "500");
 
 			byte[] encoded = Files.readAllBytes(
-					Paths.get(getClass().getResource("../../testArguments/testNumericWithinQuotesTemplate.json.env").getFile()));
+					Paths.get(getClass().getResource("../../../testArguments/testNumericWithinQuotesTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -187,7 +183,7 @@ public class TestArguments {
 			env.put(KEY_MODEL_ID, "500");
 
 			byte[] encoded = Files.readAllBytes(
-					Paths.get(getClass().getResource("../../testArguments/testMalformedConfigTemplate.json.env").getFile()));
+					Paths.get(getClass().getResource("../../../testArguments/testMalformedConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = Arguments.substituteVariables(template, env);
@@ -214,7 +210,7 @@ public class TestArguments {
 	public void testMatchTypeMultiple() {
 			Arguments args;
             try {
-                args = Arguments.createArgumentsFromJSON(getClass().getResource("../../testArguments/configWithMultipleMatchTypes.json").getFile(), "test");
+                args = Arguments.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile(), "test");
 				List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
 				assertEquals(2, fNameMatchType.size());
 				assertEquals(MatchType.FUZZY, fNameMatchType.get(0));
@@ -233,62 +229,16 @@ public class TestArguments {
 	public void testMatchTypeWrong() {
 			Arguments args;
             try {
-                args = Arguments.createArgumentsFromJSON(getClass().getResource("../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
+                args = Arguments.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
 				//List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
 				fail("config had error, should have flagged");
 				
             } catch (Exception | ZinggClientException e) {
-                // TODO Auto-generated catch block
-               // e.printStackTrace();				
+//                e.printStackTrace();
             }
 			
 			
 		
 	}
-
-	@Test
-	public void testWriteArgumentObjectToJSONFile() {
-			Arguments args = new Arguments();
-			try {
-				FieldDefinition fname = new FieldDefinition();
-				fname.setFieldName("fname");
-				fname.setDataType("\"string\"");
-				fname.setMatchType(Arrays.asList(MatchType.EXACT, MatchType.FUZZY, MatchType.PINCODE));
-				//fname.setMatchType(Arrays.asList(MatchType.EXACT));
-				fname.setFields("fname");
-				FieldDefinition lname = new FieldDefinition();
-				lname.setFieldName("lname");
-				lname.setDataType("\"string\"");
-				lname.setMatchType(Arrays.asList(MatchType.FUZZY));
-				lname.setFields("lname");
-				args.setFieldDefinition(Arrays.asList(fname, lname));
-
-				Pipe inputPipe = new SparkPipe();
-				inputPipe.setName("test");
-				inputPipe.setFormat(Pipe.FORMAT_CSV);
-				inputPipe.setProp("location", "examples/febrl/test.csv");
-				args.setData(new Pipe[] {inputPipe});
-
-				Pipe outputPipe = new SparkPipe();
-				outputPipe.setName("output");
-				outputPipe.setFormat(Pipe.FORMAT_CSV);
-				outputPipe.setProp("location", "examples/febrl/output.csv");
-				args.setOutput(new Pipe[] {outputPipe});
-
-				args.setBlockSize(400L);
-				args.setCollectMetrics(true);
-				args.setModelId("500");
-                Arguments.writeArgumentsToJSON("/tmp/configFromArgObject.json", args);
-
-				//reload the same config file to check if deserialization is successful
-				Arguments newArgs = Arguments.createArgumentsFromJSON("/tmp/configFromArgObject.json", "test");
-				assertEquals(newArgs.getModelId(), "500", "Model id is different");
-				assertEquals(newArgs.getBlockSize(), 400L, "Block size is different");
-				assertEquals(newArgs.getFieldDefinition().get(0).getFieldName(), "fname", "Field Definition[0]'s name is different");
-				String expectedMatchType =  "[EXACT, FUZZY, PINCODE]";
-				assertEquals(newArgs.getFieldDefinition().get(0).getMatchType().toString(), expectedMatchType);
-			} catch (Exception | ZinggClientException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+	
+}
