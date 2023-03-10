@@ -1,4 +1,4 @@
-package zingg.client.input;
+package zingg.common.client;
 
 import java.io.File;
 
