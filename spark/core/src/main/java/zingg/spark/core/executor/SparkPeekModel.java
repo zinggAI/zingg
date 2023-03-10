@@ -7,26 +7,35 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.deploy.PythonRunner;
 
+import org.apache.spark.sql.Column;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataType;
+
 import zingg.common.client.Arguments;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 import zingg.common.core.executor.ZinggBase;
 
-public class PeekModel extends ZinggBase{
+public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, Column, DataType>{
 
-	protected static String name = "zingg.spark.core.executor.PeekModel";
-	public static final Log LOG = LogFactory.getLog(PeekModel.class); 
+	protected static String name = "zingg.spark.core.executor.SparkPeekModel";
+	public static final Log LOG = LogFactory.getLog(SparkPeekModel.class); 
 	
-	public PeekModel() {
+	public SparkPeekModel() {
 		setZinggOptions(ZinggOptions.PEEK_MODEL);
+		setContext(new ZinggSparkContext());
 	}
 
 	@Override
     public void init(Arguments args, String license)
         throws ZinggClientException {
         startTime = System.currentTimeMillis();
-        this.args = args;        
+        this.args = args;     
+		//dont call init here as spark session already created   
+		getContext().setUtils();
     }
 
 	@Override

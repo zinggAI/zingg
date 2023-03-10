@@ -68,17 +68,22 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
             //initHashFns();
             
             ctx.setCheckpointDir("/tmp/checkpoint");	
-            setPipeUtil(new SparkPipeUtil(spark));
-            setDSUtil(new SparkDSUtil(spark));
-            setHashUtil(new SparkHashUtil(spark));
-            setGraphUtil(new SparkGraphUtil());
-            setModelUtil(new SparkModelUtil(spark));
-            setBlockingTreeUtil(new SparkBlockingTreeUtil(spark, getPipeUtil()));
+            setUtils();
         }
         catch(Throwable e) {
             if (LOG.isDebugEnabled()) e.printStackTrace();
             throw new ZinggClientException(e.getMessage());
         }
+    }
+
+    @Override
+    public void setUtils() {
+        setPipeUtil(new SparkPipeUtil(spark));
+        setDSUtil(new SparkDSUtil(spark));
+        setHashUtil(new SparkHashUtil(spark));
+        setGraphUtil(new SparkGraphUtil());
+        setModelUtil(new SparkModelUtil(spark));
+        setBlockingTreeUtil(new SparkBlockingTreeUtil(spark, getPipeUtil()));
     }
 
     /** 
