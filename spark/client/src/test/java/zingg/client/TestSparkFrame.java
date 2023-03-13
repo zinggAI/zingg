@@ -155,6 +155,9 @@ public class TestSparkFrame extends TestSparkFrameBase {
 
 	@Test
 	public void testIsEmpty() {
+		if (spark==null) {
+			setUpSpark();
+		}
 		Dataset<Row> df = spark.emptyDataFrame();
 		SparkFrame sf = new SparkFrame(df);
 		assertTrue(sf.isEmpty(), "DataFrame is not empty");

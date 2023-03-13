@@ -40,6 +40,10 @@ public class TestSparkFrameBase {
 
 	@BeforeAll
 	public static void setup() {
+		setUpSpark();
+	}
+
+	protected static void setUpSpark() {
 		try {
 			spark = SparkSession
 					.builder()
@@ -69,6 +73,11 @@ public class TestSparkFrameBase {
 	}
 
 	public Dataset<Row> createSampleDataset() {
+		
+		if (spark==null) {
+			setUpSpark();
+		}
+		
 		StructType schemaOfSample = new StructType(new StructField[] {
 				new StructField("recid", DataTypes.StringType, false, Metadata.empty()),
 				new StructField("givenname", DataTypes.StringType, false, Metadata.empty()),
@@ -93,6 +102,10 @@ public class TestSparkFrameBase {
 	}
 
 	public Dataset<Row> createSampleDatasetHavingMixedDataTypes() {
+		if (spark==null) {
+			setUpSpark();
+		}
+		
 		StructType schemaOfSample = new StructType(new StructField[] {
 				new StructField(STR_RECID, DataTypes.IntegerType, false, Metadata.empty()),
 				new StructField(STR_GIVENNAME, DataTypes.StringType, false, Metadata.empty()),
