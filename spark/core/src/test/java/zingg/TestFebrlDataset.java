@@ -8,51 +8,56 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.api.java.JavaPairRDD;
-import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import zingg.client.Arguments;
-import zingg.client.ZinggClientException;
-import zingg.client.pipe.FilePipe;
-import zingg.client.pipe.InMemoryPipe;
-import zingg.client.pipe.Pipe;
-import zingg.client.util.ColName;
+import zingg.common.client.Arguments;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.pipe.FilePipe;
+import zingg.common.client.pipe.Pipe;
+import zingg.common.client.util.ColName;
+import zingg.common.core.executor.TrainMatcher;
+import zingg.spark.client.pipe.SparkPipe;
+import zingg.spark.core.executor.SparkTrainMatcher;
 import zingg.spark.core.executor.ZinggSparkTester;
 /**end to end integration test*/
 public class TestFebrlDataset extends ZinggSparkTester{
 	public static final Log LOG = LogFactory.getLog(TestFebrlDataset.class);
 
 	
-	InMemoryPipe outputPipe;
+	SparkPipe outputPipe;
 	
 	@BeforeEach
     public void setUp() throws Exception, ZinggClientException{
-		args = Arguments.createArgumentsFromJSON(getClass().getResource("/testFebrl/config.json").getFile());
-		args.setZinggDir(getClass().getResource("/testFebrl/models").getPath());
+		String configFilePath = getClass().getResource("../testFebrl/config.json").getFile();
+		System.out.println("configFilePath "+configFilePath);
+		args = Arguments.createArgumentsFromJSON(configFilePath);
+		String modelPath = getClass().getResource("../testFebrl/models").getPath();
+		System.out.println("modelPath "+modelPath);
+		args.setZinggDir(modelPath);
 		Pipe dataPipe = args.getData()[0];
-		dataPipe.setProp(FilePipe.LOCATION, getClass().getResource("/testFebrl/test.csv").getPath());
+		String csvPath = getClass().getResource("../testFebrl/test.csv").getPath();
+		System.out.println("csvPath "+csvPath);
+		dataPipe.setProp(FilePipe.LOCATION, csvPath);
 		args.setData(new Pipe[]{dataPipe});
-		outputPipe = new InMemoryPipe();
+		outputPipe = new SparkPipe();
+		outputPipe.setFormat(Pipe.FORMAT_INMEMORY);
 		args.setOutput(new Pipe[]{outputPipe});
     }
 
     
 	@Test
 	public void testModelAccuracy(){
-		TrainMatcher tm = new TrainMatcher();
+		TrainMatcher tm = new SparkTrainMatcher();
 		try {
 			tm.init(args, "");
-			tm.setSpark(spark);
-			tm.setCtx(ctx);
+//			tm.setSpark(spark);
+//			tm.setCtx(ctx);
 			tm.setArgs(args);
 			tm.execute();
 			
 
-			Dataset<Row> df = outputPipe.getRecords();
+			Dataset<Row> df = outputPipe.getDataset().df();
 			assertEquals(65,df.count());
 
 			
