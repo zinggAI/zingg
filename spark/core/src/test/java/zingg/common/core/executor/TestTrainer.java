@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import zingg.client.Arguments;
-import zingg.client.ZinggClientException;
+import zingg.common.client.ZinggClientException;
+import zingg.spark.client.SparkFrame;
+import zingg.spark.core.executor.SparkTrainer;
 import zingg.spark.core.executor.ZinggSparkTester;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -28,8 +28,8 @@ public class TestTrainer extends ZinggSparkTester{
     @Test
     public void testVerifyTrainingPosDatasetLess() throws Throwable{
         try {
-            Trainer trainer = new Trainer();
-            trainer.verifyTraining(oneRowsDF, tenRowsDF);
+            Trainer trainer = new SparkTrainer();
+            trainer.verifyTraining(new SparkFrame(oneRowsDF), new SparkFrame(tenRowsDF));
             fail("Expected exception not getting thrown when training data is less");
         }
         catch(ZinggClientException e) {
@@ -40,8 +40,8 @@ public class TestTrainer extends ZinggSparkTester{
     @Test
     public void testVerifyTrainingNegDatasetLess() throws Throwable{
         try {
-            Trainer trainer = new Trainer();
-            trainer.verifyTraining(tenRowsDF, oneRowsDF);
+            Trainer trainer = new SparkTrainer();
+            trainer.verifyTraining(new SparkFrame(tenRowsDF), new SparkFrame(oneRowsDF));
             fail("Expected exception not getting thrown when training data is less");
         }
         catch(ZinggClientException e) {
@@ -52,8 +52,8 @@ public class TestTrainer extends ZinggSparkTester{
     @Test
     public void testVerifyTrainingBothDatasetLess() throws Throwable{
         try {
-            Trainer trainer = new Trainer();
-            trainer.verifyTraining(oneRowsDF, oneRowsDF);
+            Trainer trainer = new SparkTrainer();
+            trainer.verifyTraining(new SparkFrame(oneRowsDF), new SparkFrame(oneRowsDF));
             fail("Expected exception not getting thrown when training data is less");
         }
         catch(ZinggClientException e) {
@@ -65,8 +65,8 @@ public class TestTrainer extends ZinggSparkTester{
     @Test
     public void testVerifyTrainingBothDatasetMore() throws Throwable{
         try {
-            Trainer trainer = new Trainer();
-            trainer.verifyTraining(tenRowsDF, tenRowsDF);
+            Trainer trainer = new SparkTrainer();
+            trainer.verifyTraining(new SparkFrame(tenRowsDF), new SparkFrame(tenRowsDF));
             
         }
         catch(ZinggClientException e) {
@@ -78,7 +78,7 @@ public class TestTrainer extends ZinggSparkTester{
     @Test
     public void testVerifyTrainingBothDatasetNull() throws Throwable{
         try {
-            Trainer trainer = new Trainer();
+            Trainer trainer = new SparkTrainer();
             trainer.verifyTraining(null, null);
             fail("Expected exception not getting thrown when training data is less");
         }
@@ -91,8 +91,8 @@ public class TestTrainer extends ZinggSparkTester{
     @Test
     public void testVerifyTrainingPosDatasetNull() throws Throwable{
         try {
-            Trainer trainer = new Trainer();
-            trainer.verifyTraining(null, tenRowsDF);
+            Trainer trainer = new SparkTrainer();
+            trainer.verifyTraining(null, new SparkFrame(tenRowsDF));
             fail("Expected exception not getting thrown when training data is less");
         }
         catch(ZinggClientException e) {
@@ -104,8 +104,8 @@ public class TestTrainer extends ZinggSparkTester{
     @Test
     public void testVerifyTrainingNegDatasetNull() throws Throwable{
         try {
-            Trainer trainer = new Trainer();
-            trainer.verifyTraining(tenRowsDF, null);
+            Trainer trainer = new SparkTrainer();
+            trainer.verifyTraining(new SparkFrame(tenRowsDF), null);
             fail("Expected exception not getting thrown when training data is less");
         }
         catch(ZinggClientException e) {
