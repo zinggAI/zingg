@@ -1,7 +1,6 @@
 package zingg.client;
 
 import static org.apache.spark.sql.functions.col;
-import org.apache.spark.sql.functions;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -12,9 +11,11 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.functions;
 import org.junit.jupiter.api.Test;
 
 import scala.collection.JavaConverters;
+import zingg.common.client.ZFrame;
 import zingg.spark.client.SparkFrame;
 
 public class TestSparkFrame extends TestSparkFrameBase {
