@@ -9,29 +9,28 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.IZingg;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.Context;
-import zingg.common.core.executor.ZinggBase;
-import zingg.spark.core.util.SparkBlockingTreeUtil;
-import zingg.spark.core.util.SparkDSUtil;
-import zingg.spark.core.util.SparkGraphUtil;
-import zingg.spark.core.util.SparkHashUtil;
-import zingg.spark.core.util.SparkModelUtil;
-import zingg.spark.core.util.SparkPipeUtil;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.DSUtil;
 import zingg.common.core.util.GraphUtil;
 import zingg.common.core.util.HashUtil;
 import zingg.common.core.util.ModelUtil;
 import zingg.common.core.util.PipeUtilBase;
+import zingg.spark.core.util.SparkBlockingTreeUtil;
+import zingg.spark.core.util.SparkDSUtil;
+import zingg.spark.core.util.SparkGraphUtil;
+import zingg.spark.core.util.SparkHashUtil;
+import zingg.spark.core.util.SparkModelUtil;
+import zingg.spark.core.util.SparkPipeUtil;
 
 
 public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Row,Column,DataType>{
 
     
-    protected JavaSparkContext ctx;
+    private static final long serialVersionUID = 1L;
+	protected JavaSparkContext ctx;
 	protected SparkSession spark;
     protected PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> pipeUtil;
     protected HashUtil<SparkSession,Dataset<Row>, Row, Column, DataType> hashUtil;
@@ -76,6 +75,23 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
         }
     }
 
+	@Override
+	public void cleanup() {
+		try {
+				if (ctx != null) {
+					ctx.stop();
+				}
+				if (spark != null) {
+					spark.stop();
+				}
+				ctx = null;
+				spark = null;
+		} catch (Exception e) {
+			// ignore any exception in cleanup
+			e.printStackTrace();
+		}
+	}
+    
     @Override
     public void setUtils() {
         setPipeUtil(new SparkPipeUtil(spark));

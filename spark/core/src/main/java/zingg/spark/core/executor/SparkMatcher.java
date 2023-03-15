@@ -42,13 +42,6 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
 	
 
 	@Override
-	public void cleanup() throws ZinggClientException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
 	protected Model getModel() throws ZinggClientException {
 		Model model = getModelUtil().loadModel(false, args);
 		model.register(getContext().getSession());

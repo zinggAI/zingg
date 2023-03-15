@@ -34,12 +34,6 @@ public class SparkTrainer extends Trainer<SparkSession, Dataset<Row>, Row, Colum
     }	
 	
 	@Override
-	public void cleanup() throws ZinggClientException {
-		// TODO Auto-generated method stub
-		
-	}		
-
-	@Override
 	protected StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
 		return new SparkStopWordsRemover(getContext(),getArgs());
 	}

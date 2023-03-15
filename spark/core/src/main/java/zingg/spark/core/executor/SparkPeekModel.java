@@ -58,12 +58,5 @@ public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, C
 		}
 	}
 
-	@Override
-	public void cleanup() throws ZinggClientException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 
 } 

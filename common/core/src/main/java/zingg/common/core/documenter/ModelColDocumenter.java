@@ -54,12 +54,6 @@ public abstract class ModelColDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R
 	}
 
 	@Override
-	public void cleanup() throws ZinggClientException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void execute() throws ZinggClientException {
 		// TODO Auto-generated method stub
 		

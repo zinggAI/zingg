@@ -38,12 +38,6 @@ public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, 
         getContext().init(license);
     }
     	
-	@Override
-	public void cleanup() throws ZinggClientException {
-		// TODO Auto-generated method stub
-		
-	}
-
 	protected Pipe setSaveModeOnPipe(Pipe p) {
 		p.setMode(SaveMode.Overwrite.toString());
 		return p;

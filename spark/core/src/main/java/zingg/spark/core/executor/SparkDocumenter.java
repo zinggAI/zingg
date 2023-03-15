@@ -36,13 +36,6 @@ public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row,
 	}
 	
 	@Override
-	public void cleanup() throws ZinggClientException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
 	protected ModelDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> getModelDocumenter() {
 		return new SparkModelDocumenter(getContext(),getArgs());
 	}

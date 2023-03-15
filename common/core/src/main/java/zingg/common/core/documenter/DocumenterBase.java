@@ -25,8 +25,6 @@ public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		config = createConfigurationObject();
 	}
 
-	public abstract void cleanup() throws ZinggClientException;
-
 	public Configuration getTemplateConfig() {
 		if (config == null) {
 			config = createConfigurationObject();
