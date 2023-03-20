@@ -40,6 +40,9 @@
 		"name":"identityInteger"
 	},
 	{
+		"name":"identityLong"
+	},	
+	{
 		"name":"truncateDoubleTo1Places"
 	},
 	{
@@ -53,6 +56,9 @@
 	},
 	{
 		"name":"lessThanZeroInt"
+	},
+	{
+		"name":"lessThanZeroLong"
 	},
 	{
 		"name":"trimLast1DigitsDbl"
@@ -71,6 +77,15 @@
 	},
 	{
 		"name":"trimLast3DigitsInt"
+	},
+	{
+		"name":"trimLast1DigitsLong"
+	},
+	{
+		"name":"trimLast2DigitsLong"
+	},
+	{
+		"name":"trimLast3DigitsLong"
 	},
 	{
 		"name":"rangeBetween0And10Dbl"
@@ -96,6 +111,18 @@
 	{
 		"name":"rangeBetween1000And10000Int"
 	},
+	{
+		"name":"rangeBetween0And10Long"
+	},
+	{
+		"name":"rangeBetween10And100Long"
+	},
+	{
+		"name":"rangeBetween100And1000Long"
+	},
+	{
+		"name":"rangeBetween1000And10000Long"
+	},	
 	{
 		"name":"round"
 	}

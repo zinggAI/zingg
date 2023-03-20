@@ -40,6 +40,8 @@ public class SparkHashFunctionRegistry implements HashFunctionRegistry<Dataset<R
         init(new SparkFirst3CharsBox());
         
         init(new SparkIdentityInteger());
+        
+        init(new SparkIdentityLong());
 	
         init(new SparkTruncateDouble(1));
         init(new SparkTruncateDouble(2));
@@ -49,6 +51,8 @@ public class SparkHashFunctionRegistry implements HashFunctionRegistry<Dataset<R
 	    
 	    init(new SparkLessThanZeroInt());
 	    
+	    init(new SparkLessThanZeroLong());
+	    
         init(new SparkTrimLastDigitsDbl(1));
         init(new SparkTrimLastDigitsDbl(2));
         init(new SparkTrimLastDigitsDbl(3));
@@ -57,6 +61,10 @@ public class SparkHashFunctionRegistry implements HashFunctionRegistry<Dataset<R
         init(new SparkTrimLastDigitsInt(2));        
         init(new SparkTrimLastDigitsInt(3));
 
+        init(new SparkTrimLastDigitsLong(1));
+        init(new SparkTrimLastDigitsLong(2));        
+        init(new SparkTrimLastDigitsLong(3));
+        
 	    init(new SparkRangeDbl(0,10));
 	    init(new SparkRangeDbl(10,100));
 	    init(new SparkRangeDbl(100,1000));
@@ -67,6 +75,11 @@ public class SparkHashFunctionRegistry implements HashFunctionRegistry<Dataset<R
 	    init(new SparkRangeInt(100,1000));
 	    init(new SparkRangeInt(1000,10000));
 
+	    init(new SparkRangeLong(0,10));
+	    init(new SparkRangeLong(10,100));
+	    init(new SparkRangeLong(100,1000));
+	    init(new SparkRangeLong(1000,10000));
+	    
 	    init(new SparkRound());
 		
 	}
