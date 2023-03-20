@@ -31,14 +31,7 @@ public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Da
 		super.init(args, license);
 		getContext().init(license);
 	}
-
 	
-	@Override
-	public void cleanup() throws ZinggClientException {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	protected StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
 		return new SparkStopWordsRemover(getContext(),getArgs());

@@ -26,13 +26,6 @@ public class SparkFindAndLabeller extends FindAndLabeller<SparkSession, Dataset<
 
 	public SparkFindAndLabeller() {
 		setZinggOptions(ZinggOptions.FIND_AND_LABEL);
-	}
-
-	
-	@Override
-	public void cleanup() throws ZinggClientException {
-		// TODO Auto-generated method stub
-		
-	}
+	}	
 	
 }

@@ -32,12 +32,6 @@ public abstract class Recommender<S,D,R,C, T> extends ZinggBase<S,D,R,C,T> {
 		}
 	}
 
-	@Override
-	public void cleanup() throws ZinggClientException {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	/**
 	 * To be implemented by concrete implementation of Spark/Snow etc.
 	 * @return

@@ -32,6 +32,8 @@ public interface Context <S,D, R, C,T> extends Serializable {
     public void init(String license)
         throws ZinggClientException;
     
+    public void cleanup();
+    
     /**convenience method to set all utils
      * especially useful when you dont want to create the connection/spark context etc
      * */
