@@ -19,6 +19,8 @@ import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
+import zingg.common.client.Arguments;
+import zingg.common.client.ZFrame;
 import zingg.spark.client.SparkFrame;
 
 public class TestSparkFrameBase {
@@ -38,6 +40,10 @@ public class TestSparkFrameBase {
 
 	@BeforeAll
 	public static void setup() {
+		setUpSpark();
+	}
+
+	protected static void setUpSpark() {
 		try {
 			spark = SparkSession
 					.builder()
@@ -67,6 +73,11 @@ public class TestSparkFrameBase {
 	}
 
 	public Dataset<Row> createSampleDataset() {
+		
+		if (spark==null) {
+			setUpSpark();
+		}
+		
 		StructType schemaOfSample = new StructType(new StructField[] {
 				new StructField("recid", DataTypes.StringType, false, Metadata.empty()),
 				new StructField("givenname", DataTypes.StringType, false, Metadata.empty()),
@@ -91,6 +102,10 @@ public class TestSparkFrameBase {
 	}
 
 	public Dataset<Row> createSampleDatasetHavingMixedDataTypes() {
+		if (spark==null) {
+			setUpSpark();
+		}
+		
 		StructType schemaOfSample = new StructType(new StructField[] {
 				new StructField(STR_RECID, DataTypes.IntegerType, false, Metadata.empty()),
 				new StructField(STR_GIVENNAME, DataTypes.StringType, false, Metadata.empty()),
@@ -109,10 +124,12 @@ public class TestSparkFrameBase {
 		return sample;
 	}
 
+	
 	protected void assertTrueCheckingExceptOutput(ZFrame<Dataset<Row>, Row, Column> sf1, ZFrame<Dataset<Row>, Row, Column> sf2, String message) {
 		assertTrue(sf1.except(sf2).isEmpty(), message);
 	}
-
+	
+	
 	protected void assertTrueCheckingExceptOutput(ZFrame<Dataset<Row>, Row, Column> sf1, Dataset<Row> df2, String message) {
 		SparkFrame sf2 = new SparkFrame(df2);
 		assertTrue(sf1.except(sf2).isEmpty(), message);
