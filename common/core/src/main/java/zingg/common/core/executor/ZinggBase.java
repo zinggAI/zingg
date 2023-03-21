@@ -39,7 +39,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     protected Context<S,D,R,C,T> context;
     protected String name;
     protected ZinggOptions zinggOptions;
-   protected long startTime;
+    protected long startTime;
     protected ClientOptions clientOptions;
 
     public static final Log LOG = LogFactory.getLog(ZinggBase.class);
@@ -74,6 +74,10 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
             
         }
 
+
+    public void setSession(S s) {
+        getContext().setSession(s);
+    }
    
 
     

@@ -45,10 +45,13 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
     public static final Log LOG = LogFactory.getLog(ZinggSparkContext.class);
 
     
-    
-
     public SparkSession getSession() {
         return spark;
+    }
+
+    public void setSession(SparkSession spark) {
+        LOG.debug("Session passed to context is " + spark);
+        this.spark = spark;
     }
 
 
@@ -57,11 +60,13 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
     public void init(String license)
         throws ZinggClientException {
         try{
-            spark = SparkSession
-                .builder()
-                .appName("Zingg")
-                .getOrCreate();
-            ctx = new JavaSparkContext(spark.sparkContext());
+            if (spark == null) {
+                spark = SparkSession
+                    .builder()
+                    .appName("Zingg")
+                    .getOrCreate();
+            }
+            ctx = JavaSparkContext.fromSparkContext(spark.sparkContext());
             JavaSparkContext.jarOfClass(IZingg.class);
             LOG.debug("Context " + ctx.toString());
             //initHashFns();
@@ -94,6 +99,7 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
     
     @Override
     public void setUtils() {
+        LOG.debug("Session passed to utils is " + spark);
         setPipeUtil(new SparkPipeUtil(spark));
         setDSUtil(new SparkDSUtil(spark));
         setHashUtil(new SparkHashUtil(spark));

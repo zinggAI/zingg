@@ -41,6 +41,8 @@ public interface Context <S,D, R, C,T> extends Serializable {
 
     public S getSession();
 
+    public void setSession(S session);
+
     
     //public void initHashFns() throws ZinggClientException;
 

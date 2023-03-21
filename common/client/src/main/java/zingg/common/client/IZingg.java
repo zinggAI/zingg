@@ -36,4 +36,6 @@ public interface IZingg<S,D,R,C> {
 
 	public ClientOptions getClientOptions(); 
 
+	public void setSession(S session);
+
 }

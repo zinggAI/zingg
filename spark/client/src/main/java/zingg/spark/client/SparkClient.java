@@ -23,6 +23,10 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 		
 	}
 
+	public SparkClient(Arguments args, ClientOptions options, SparkSession s) throws ZinggClientException {
+		super(args, options, s);
+	}
+
 	public SparkClient() {
 		/*SparkSession session = SparkSession
                 .builder()
@@ -44,7 +48,16 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 	public Client<SparkSession, Dataset<Row>, Row, Column, DataType> getClient(Arguments args, 
 		ClientOptions options) throws ZinggClientException {
 		// TODO Auto-generated method stub
-		return new SparkClient(args, options);
+		SparkClient client = null;
+		if ((session != null)) {
+			LOG.debug("Creating client with existing session");
+			client = new SparkClient(args, options, session);
+		}
+		else {
+			client = new SparkClient(args, options);
+		}
+		
+		return client;
 	}
 
 	public static void main(String... args) {

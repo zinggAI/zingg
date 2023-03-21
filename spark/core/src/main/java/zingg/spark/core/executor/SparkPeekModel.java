@@ -27,15 +27,17 @@ public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, C
 	public SparkPeekModel() {
 		setZinggOptions(ZinggOptions.PEEK_MODEL);
 		setContext(new ZinggSparkContext());
+		
 	}
 
 	@Override
     public void init(Arguments args, String license)
         throws ZinggClientException {
-        startTime = System.currentTimeMillis();
-        this.args = args;     
-		//dont call init here as spark session already created   
+		super.init(args, license);
 		getContext().setUtils();
+		//we wil not init here as we wnt py to drive
+		//the spark session etc
+		//getContext().init(license);
     }
 
 	@Override

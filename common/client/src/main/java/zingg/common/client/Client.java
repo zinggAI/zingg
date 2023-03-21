@@ -48,6 +48,13 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 	}
 
+	public Client(Arguments args, ClientOptions options, S s) throws ZinggClientException {
+		this(args, options);
+		this.session = s;
+		LOG.debug("Session passed is " + s);
+		if (session != null) zingg.setSession(session);
+	}
+
 	public abstract IZinggFactory getZinggFactory() throws Exception;//(IZinggFactory) Class.forName("zingg.ZFactory").newInstance();
 	
 
@@ -170,7 +177,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 				arguments = Arguments.createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
 
-			client = getClient(arguments, options);	
+			client = getClient(arguments, options);
 			client.init();
 			client.execute();
 			client.postMetrics();
@@ -216,7 +223,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 
 	public void init() throws ZinggClientException {
 		zingg.init(getArguments(), "");
-		//if (session != null) zingg.setSession(session);
+		if (session != null) zingg.setSession(session);
 		zingg.setClientOptions(options);
 	}
 	
