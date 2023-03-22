@@ -107,6 +107,8 @@ public interface ZFrame<D, R, C> {
     public double getAsDouble(R r, String colName);
 
     public int getAsInt(R r, String colName);
+    
+    public long getAsLong(R r, String colName);
 
     public R head();
 

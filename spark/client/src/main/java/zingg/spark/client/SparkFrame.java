@@ -282,6 +282,11 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     }
 
     @Override
+    public long getAsLong(Row r, String colName) {
+        return r.getAs(colName);
+    }
+
+    @Override
     public Row head() {
         return df.head();
     }
