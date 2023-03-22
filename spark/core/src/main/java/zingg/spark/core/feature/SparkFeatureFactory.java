@@ -8,6 +8,7 @@ import org.apache.spark.sql.types.DataTypes;
 import zingg.common.core.feature.DateFeature;
 import zingg.common.core.feature.DoubleFeature;
 import zingg.common.core.feature.FeatureFactory;
+import zingg.common.core.feature.FloatFeature;
 import zingg.common.core.feature.IntFeature;
 import zingg.common.core.feature.LongFeature;
 import zingg.common.core.feature.StringFeature;
@@ -24,6 +25,7 @@ public class SparkFeatureFactory extends FeatureFactory<DataType>{
             map.put(DataTypes.IntegerType, IntFeature.class);
             map.put(DataTypes.DateType, DateFeature.class);
             map.put(DataTypes.DoubleType, DoubleFeature.class);
+            map.put(DataTypes.FloatType, FloatFeature.class);
             map.put(DataTypes.LongType, LongFeature.class);
         
     }

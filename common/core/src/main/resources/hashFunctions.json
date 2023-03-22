@@ -52,7 +52,19 @@
 		"name":"truncateDoubleTo3Places"
 	},
 	{
+		"name":"truncateFloatTo1Places"
+	},
+	{
+		"name":"truncateFloatTo2Places"
+	},
+	{
+		"name":"truncateFloatTo3Places"
+	},
+	{
 		"name":"lessThanZeroDbl"
+	},
+	{
+		"name":"lessThanZeroFloat"
 	},
 	{
 		"name":"lessThanZeroInt"
@@ -68,6 +80,15 @@
 	},
 	{
 		"name":"trimLast3DigitsDbl"
+	},
+	{
+		"name":"trimLast1DigitsFloat"
+	},
+	{
+		"name":"trimLast2DigitsFloat"
+	},
+	{
+		"name":"trimLast3DigitsFloat"
 	},
 	{
 		"name":"trimLast1DigitsInt"
@@ -98,6 +119,18 @@
 	},
 	{
 		"name":"rangeBetween1000And10000Dbl"
+	},
+	{
+		"name":"rangeBetween0And10Float"
+	},
+	{
+		"name":"rangeBetween10And100Float"
+	},
+	{
+		"name":"rangeBetween100And1000Float"
+	},
+	{
+		"name":"rangeBetween1000And10000Float"
 	},
 	{
 		"name":"rangeBetween0And10Int"
