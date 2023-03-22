@@ -14,18 +14,7 @@
   <table class="table table-borderless">
 	  <tbody>
 		  	<tr>
-				<td>
-					<ul>
-						<li>Identified Pairs : ${identifiedPairs}</li>
-						<li>Unmarked Pairs : ${unmarkedPairs}</li>
-						<li>Marked Pairs : ${markedPairs}</li>
-						<ul>
-							<li>Matching Pairs : ${matchPairs}</li>
-							<li>Non Matching Pairs : ${nonMatchPairs}</li>
-							<li>Not Sure Pairs : ${notSurePairs}</li>
-						</ul>
-					</ul>
-				</td>
+				<td>Unmarked ${unmarkedPairs}/${identifiedPairs}, Marked ${markedPairs}/${identifiedPairs} (${matchPairs} Matches, ${nonMatchPairs} Non-Matches, ${notSurePairs} Unsure)</td>
 		  	</tr>
 	  </tbody>
   </table>
