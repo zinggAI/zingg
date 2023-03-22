@@ -14,7 +14,7 @@
   <table class="table table-borderless">
 	  <tbody>
 		  	<tr>
-				<td>Unmarked ${unmarkedPairs}/${identifiedPairs}, Marked ${markedPairs}/${identifiedPairs} (${matchPairs} Matches, ${nonMatchPairs} Non-Matches, ${notSurePairs} Unsure)</td>
+				<th class="border-right border-white" style="width: 160px;" >Unmarked ${unmarkedPairs}/${identifiedPairs}, Marked ${markedPairs}/${identifiedPairs} (<font color="#28a745">${matchPairs} Matches</font>, <font color="#FF4500">${nonMatchPairs} Non-Matches</font>, ${notSurePairs} Unsure)</th>
 		  	</tr>
 	  </tbody>
   </table>
