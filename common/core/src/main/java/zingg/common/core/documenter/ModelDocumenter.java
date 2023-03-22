@@ -122,7 +122,12 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		root.put(TemplateFields.NOT_SURE_PAIRS, notSurePairs);
 		
 		long markedPairs = markedRecords.count()/2;
-		long unmarkedPairs = unmarkedRecords.count()/2;
+		long unmarkedPairs = 0;
+		
+		if(unmarkedRecords!=null && !unmarkedRecords.isEmpty()) {
+			unmarkedPairs = unmarkedRecords.count()/2;
+		}
+		
 		long identifiedPairs = markedPairs+unmarkedPairs;
 
 		root.put(TemplateFields.MARKED_PAIRS, markedPairs);
