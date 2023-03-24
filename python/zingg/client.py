@@ -17,7 +17,9 @@ LOG = logging.getLogger("zingg")
 
 sc = SparkContext.getOrCreate()
 sqlContext = SQLContext(sc)
-spark = SparkSession(sc)
+#spark = SparkSession(sc)
+spark = SparkSession.builder.getOrCreate()
+#sc = SparkContext.getOrCreate()
 jvm = sc._jvm
 gateway = sc._gateway
 
@@ -147,7 +149,7 @@ class Zingg:
         :return: converted spark dataframe
         :rtype: DataFrame 
         """
-        return DataFrame(data, spark)
+        return DataFrame(data.df(), sqlContext)
 
     def getPandasDfFromDs(self, data):
         """ Method to convert spark dataset to pandas dataframe
@@ -365,6 +367,9 @@ class Arguments:
         argsString = self.writeArgumentsToJSONString()
         return self.createArgumentsFromJSONString(argsString, phase)
 
+   
+    
+
 
 class ClientOptions:
     """ Class that contains Client options for Zingg object
@@ -385,6 +390,10 @@ class ClientOptions:
     """:LOCATION: location parameter for this class"""
     REMOTE = jvm.zingg.common.client.ClientOptions.REMOTE
     """:REMOTE: remote option used internally for running on Databricks"""
+    ZINGG_DIR = jvm.zingg.common.client.ClientOptions.ZINGG_DIR
+    """:ZINGG_DIR: location where Zingg saves the model, training data etc"""
+    MODEL_ID = jvm.zingg.common.client.ClientOptions.MODEL_ID
+    """:MODEL_ID: ZINGG_DIR/MODEL_ID is used to save the model"""
 
     def __init__(self, argsSent=None):
         print(argsSent)
