@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Zingg model documentation</title>
+  <title>Zingg Model Documentation</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
@@ -9,8 +9,16 @@
     <img src="https://github.com/zinggai/zingg/raw/main/assets/zinggWhiteTransparent.png" class="d-inline-block align-top" alt="">
   </a>
   <div class="justify-content=flex-end" style="float:right;" >Model ${modelId}</div>
-</nav>
-   <p>
+ </nav>
+  <p>
+  <table class="table table-borderless">
+	  <tbody>
+		  	<tr>
+				<th class="border-right border-white" style="width: 160px;" >Unmarked ${unmarkedPairs}/${identifiedPairs}, Marked ${markedPairs}/${identifiedPairs} (<font color="#28a745">${matchPairs} Matches</font>, <font color="#FF4500">${nonMatchPairs} Non-Matches</font>, ${notSurePairs} Unsure)</th>
+		  	</tr>
+	  </tbody>
+  </table>
+ <p>
   <table class="table table-borderless">
 
   

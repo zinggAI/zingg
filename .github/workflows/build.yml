@@ -22,4 +22,4 @@ jobs:
           distribution: 'adopt'
           cache: maven
       - name: Build ${{ matrix.profile }} profile with Maven
-        run: mvn --batch-mode ${{ matrix.profile }} clean package
+        run: mvn --batch-mode ${{ matrix.profile }} clean initialize compile package
