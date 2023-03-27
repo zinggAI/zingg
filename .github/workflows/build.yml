@@ -2,10 +2,17 @@ name: Java CI
 
 on: [push]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [ '-Pspark-2.4', '-Pspark-3.0', '-Pspark-3.1', '-Pspark-3.2', '-Pspark-3.3' ]
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 11
@@ -14,5 +21,5 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: maven
-      - name: Build with Maven
-        run: mvn --batch-mode clean package
+      - name: Build ${{ matrix.profile }} profile with Maven
+        run: mvn --batch-mode ${{ matrix.profile }} clean package
