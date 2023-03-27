@@ -1,14 +1,18 @@
 package zingg.spark.client;
 
 import java.io.Serializable;
-import org.apache.spark.api.java.JavaSparkContext;
+
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.common.client.*;
+import zingg.common.client.Arguments;
+import zingg.common.client.Client;
+import zingg.common.client.ClientOptions;
+import zingg.common.client.IZinggFactory;
+import zingg.common.client.ZinggClientException;
 
 /**
  * This is the main point of interface with the Zingg matching product.
@@ -18,6 +22,8 @@ import zingg.common.client.*;
  */
 public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column, DataType>  implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	public SparkClient(Arguments args, ClientOptions options) throws ZinggClientException {
 		super(args, options);
 		
