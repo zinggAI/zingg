@@ -30,6 +30,7 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	public static final String FORMAT_CASSANDRA = "org.apache.spark.sql.cassandra";
 	public static final String FORMAT_SNOWFLAKE = "net.snowflake.spark.snowflake";
 	public static final String FORMAT_ELASTIC = "org.elasticsearch.spark.sql";
+	public static final String FORMAT_EXASOL = "com.exasol.spark";
 	public static final String FORMAT_BIGQUERY = "bigquery";
 	public static final String FORMAT_INMEMORY = "inMemory";
 
