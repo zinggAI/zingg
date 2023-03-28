@@ -10,8 +10,7 @@ nav_order: 4
 
 ## Prerequisites
 
-To use the Exasol database with Zingg, first you should download the required
-dependencies and set them in the Zingg configuration file.
+To use the Exasol database with Zingg, first you should download the required dependencies and set them in the Zingg configuration file.
 
 ### Download Assembled Exasol Spark Connector Jar
 
@@ -27,7 +26,7 @@ For example:
 spark.jars=spark-connector_2.12-1.3.0-spark-3.3.2-assembly.jar
 ```
 
-If there are more than one jar files, please use comma as separator. Additionally, please change the version according to your setup.
+If there are more than one jar files, please use comma as separator. Additionally, please change the version accordingly so that it matches your Zingg and Spark versions.
 
 ## Connector Settings
 
@@ -52,4 +51,4 @@ For example:
  ],
  ...
 ```
-Zingg uses [Exasol Spark connector](https://github.com/exasol/spark-connector) underneath, so please also check out the [user guide](https://github.com/exasol/spark-connector/blob/main/doc/user_guide/user_guide.md) for more settings.
+Zingg uses [Exasol Spark connector](https://github.com/exasol/spark-connector) underneath, so please also check out the [user guide](https://github.com/exasol/spark-connector/blob/main/doc/user_guide/user_guide.md) and [configuration options](https://github.com/exasol/spark-connector/blob/main/doc/user_guide/user_guide.md#configuration-options) for more information.
