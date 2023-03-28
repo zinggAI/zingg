@@ -113,7 +113,7 @@
 		</profile>
 	</profiles>
 	<properties>
-		<zingg.version>0.3.4-SNAPSHOT</zingg.version>
+		<zingg.version>0.3.5-SNAPSHOT</zingg.version>
 		<skipTests>false</skipTests>
 		<failIfNoTests>false</failIfNoTests>
 		<maven.compiler.source>11</maven.compiler.source>
