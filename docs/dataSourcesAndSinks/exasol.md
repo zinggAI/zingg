@@ -37,18 +37,41 @@ For example:
 ```json
 ...
  "data": [
-   {
-     "name": "customers",
-     "format": "com.exasol.spark",
-     "props": {
-       "host": "10.11.0.2",
-       "port": "8563",
-       "user": "sys",
-       "password": "exasol",
-       "query": "SELECT * FROM TEST.T1"
-     }
-   }
+    {
+        "name": "input",
+        "format": "com.exasol.spark",
+        "props": {
+            "host": "10.11.0.2",
+            "port": "8563",
+            "username": "sys",
+            "password": "exasol",
+            "query": "SELECT * FROM DB_SCHEMA.CUSTOMERS"
+        }
+    }
  ],
  ...
 ```
+
+ Similarly, for output:
+
+ ```json
+ ...
+"output": [
+    {
+        "name": "output",
+        "format": "com.exasol.spark",
+        "props": {
+            "host": "10.11.0.2",
+            "port": "8563",
+            "username": "sys",
+            "password": "exasol",
+            "create_table": "true",
+            "table": "DB_SCHEMA.ENTITY_RESOLUTION",
+        },
+        "mode": "Append"
+    }
+],
+...
+```
+
 Zingg uses [Exasol Spark connector](https://github.com/exasol/spark-connector) underneath, so please also check out the [user guide](https://github.com/exasol/spark-connector/blob/main/doc/user_guide/user_guide.md) and [configuration options](https://github.com/exasol/spark-connector/blob/main/doc/user_guide/user_guide.md#configuration-options) for more information.
