@@ -21,5 +21,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: maven
+      - name: Install secondstring and thirdparty
+        run: mvn initialize
       - name: Build ${{ matrix.profile }} profile with Maven
-        run: mvn --batch-mode ${{ matrix.profile }} clean initialize compile package
+        run: mvn --batch-mode ${{ matrix.profile }} clean compile package
