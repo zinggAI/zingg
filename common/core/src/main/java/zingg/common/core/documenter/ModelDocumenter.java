@@ -22,7 +22,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 
 	private static final long serialVersionUID = 1L;
 	
-	private static final String PAIR_WISE_COUNT = "PairWiseCount";
+	private static final String PAIR_WISE_COUNT = ColName.COL_PREFIX + "pair_wise_count";
 	protected static String name = "zingg.ModelDocumenter";
 	public static final Log LOG = LogFactory.getLog(ModelDocumenter.class);
 
