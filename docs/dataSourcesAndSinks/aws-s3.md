@@ -5,10 +5,10 @@ parent: Data Sources and Sinks
 
 # S3
 
-1. set a bucket e.g. zingg28032023 and a folder inside it e.g. zingg
+1. Set a bucket e.g. zingg28032023 and a folder inside it e.g. zingg
 => make it publicly accessible
 
-2. create aws access key and export via env vars:
+2. Create aws access key and export via env vars:
 
 export AWS_ACCESS_KEY_ID=<access key id>
 export AWS_SECRET_ACCESS_KEY=<access key>
@@ -17,7 +17,7 @@ export AWS_SECRET_ACCESS_KEY=<access key>
 
 3. Download hadoop-aws-3.1.0.jar and aws-java-sdk-bundle-1.11.271.jar via maven
 
-4. set above in zingg.conf :
+4. Set above in zingg.conf :
 spark.jars=/<location>/hadoop-aws-3.1.0.jar,/<location>/aws-java-sdk-bundle-1.11.271.jar
 
 5. Run using:
