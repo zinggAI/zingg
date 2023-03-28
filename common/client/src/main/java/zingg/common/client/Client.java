@@ -116,7 +116,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 	
 	public void printBanner() {
-		String versionStr = "0.3.5";
+		String versionStr = "0.3.4";
 		LOG.info("");
 		LOG.info("********************************************************");
 		LOG.info("*                    Zingg AI                          *");

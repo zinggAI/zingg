@@ -8,7 +8,6 @@ description: Hope you find us useful :-)
 
 This is the latest documentation for Zingg. Release wise documentation can be accessed through:
 
-* [v0.3.5 ](https://docs.zingg.ai/zingg0.3.5/)
 * [v0.3.4 ](https://docs.zingg.ai/zingg0.3.4/)
 * [v0.3.3](https://docs.zingg.ai/zingg0.3.3/)
 
