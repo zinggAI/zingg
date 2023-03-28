@@ -6,9 +6,8 @@ parent: Data Sources and Sinks
 # S3
 
 1. Set a bucket e.g. zingg28032023 and a folder inside it e.g. zingg
-=> make it publicly accessible
 
-2. Create aws access key and export via env vars:
+2. Create aws access key and export via env vars (ensure that the user with below keys has read/write access to above):
 
 export AWS_ACCESS_KEY_ID=<access key id>
 export AWS_SECRET_ACCESS_KEY=<access key>
@@ -29,7 +28,3 @@ spark.jars=/<location>/hadoop-aws-3.1.0.jar,/<location>/aws-java-sdk-bundle-1.11
 
 6. Models etc. would get saved in 
 Amazon S3 > Buckets > zingg28032023 >zingg > 100
-
-References:
-
-1. https://spark.apache.org/docs/latest/cloud-integration.html
