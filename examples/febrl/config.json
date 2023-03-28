@@ -20,7 +20,7 @@
 		},
 		{
 			"fieldName" : "stNo",
-			"matchType": "exact",
+			"matchType": "fuzzy",
 			"fields" : "stNo",
 			"dataType": "\"string\"" 
 		},
@@ -44,7 +44,7 @@
 		},
 		{
 			"fieldName" : "areacode",
-			"matchType": "exact",
+			"matchType": "fuzzy",
 			"fields" : "areacode",
 			"dataType": "\"string\"" 
 		},
