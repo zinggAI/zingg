@@ -71,20 +71,7 @@
 				"delimiter": ",",
 				"header":true					
 			},
-			"schema": 
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
-					{\"name\":\"Song_Name\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"Artist_Name\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"Album_Name\",\"type\":\"string\",\"nullable\":true},
-					{\"name\":\"Genre\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"Price\", \"type\":\"double\", \"nullable\":true},
-					{\"name\":\"CopyRight\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"Time\",\"type\":\"string\",\"nullable\":true},
-					{\"name\":\"Released\", \"type\":\"string\", \"nullable\":true}
-				]
-			}"
+			"schema": "id string, Song_Name string, Artist_Name string, Album_Name string, Genre string, Price double, CopyRight string, Time string, Released string"
 		},
 		{
 			"name":"amazon", 
@@ -94,20 +81,7 @@
 				"delimiter": ",",
 				"header":true					
 			},
-			"schema": 
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
-					{\"name\":\"Song_Name\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"Artist_Name\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"Album_Name\",\"type\":\"string\",\"nullable\":true},
-					{\"name\":\"Genre\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"Price\", \"type\":\"double\", \"nullable\":true},
-					{\"name\":\"CopyRight\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"Time\",\"type\":\"string\",\"nullable\":true},
-					{\"name\":\"Released\", \"type\":\"string\", \"nullable\":true}
-				]
-			}"
+			"schema": "id string, Song_Name string, Artist_Name string, Album_Name string, Genre string, Price double, CopyRight string, Time string, Released string"
 		}
 		],
 		"labelDataSampleSize" : 0.4,
