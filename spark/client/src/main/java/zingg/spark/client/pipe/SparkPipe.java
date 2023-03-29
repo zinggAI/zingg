@@ -14,11 +14,16 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import org.apache.spark.sql.Dataset;
 import zingg.common.client.pipe.Pipe;
+import zingg.spark.client.SparkFrame;
 
 public class SparkPipe extends Pipe<Dataset<Row>, Row, Column> {
     
     @JsonSerialize(using = CustomSchemaSerializer.class)
 	protected StructType schemaStruct;
+
+    public void setDataset(Dataset<Row> ds){
+		this.dataset = new SparkFrame(ds);
+	}
     
 
     static class CustomSchemaSerializer extends StdSerializer<StructType> {

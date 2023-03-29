@@ -22,7 +22,7 @@ def main():
     client = ZinggWithSpark(arguments, options)
     client.init()
 
-    pMarkedDF = client.getPandasDfFromDs(client.getMarkedRecords())
+    pMarkedDF = getPandasDfFromDs(client.getMarkedRecords())
     labelledData = spark.createDataFrame(pMarkedDF)
     location = options.getLocation()
 

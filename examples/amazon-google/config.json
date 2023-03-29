@@ -39,7 +39,7 @@
 				"header":false
 			}
 		}],
-		"data" : [{
+		"data" :[{
 			"name":"aws", 
 			"format":"csv", 
 			"props": {
@@ -47,17 +47,8 @@
 				"delimiter": ",",
 				"header":true					
 			},
-			"schema": 
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
-					{\"name\":\"title\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"description\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"manufacturer\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"price\", \"type\":\"double\", \"nullable\":true}
-				]
-			}"
-		},
+			"schema": "id string, title string, description string, manufacturer string, price double" 
+			},
 		{
 			"name":"google", 
 			"format":"csv", 
@@ -66,16 +57,7 @@
 				"delimiter": ",",
 				"header":true					
 			},
-			"schema": 
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
-					{\"name\":\"title\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"description\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"manufacturer\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"price\", \"type\":\"double\", \"nullable\":true}
-				]
-			}"
+			"schema": "id string, title string, description string, manufacturer string, price double" 
 		}
 		],
 		"labelDataSampleSize" : 0.4,

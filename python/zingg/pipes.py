@@ -10,7 +10,7 @@ from zingg.client import *
 
 LOG = logging.getLogger("zingg.pipes")
 
-JPipe = jvm.zingg.common.client.pipe.Pipe
+JPipe = jvm.zingg.spark.client.pipe.SparkPipe
 FilePipe = jvm.zingg.common.client.pipe.FilePipe
 JStructType = jvm.org.apache.spark.sql.types.StructType
 
@@ -24,7 +24,7 @@ class Pipe:
     """
 
     def __init__(self, name, format):
-        self.pipe = jvm.zingg.common.client.pipe.Pipe()
+        self.pipe = jvm.zingg.spark.client.pipe.SparkPipe()
         self.pipe.setName(name)
         self.pipe.setFormat(format)
 
@@ -252,11 +252,12 @@ class InMemoryPipe(Pipe):
         :type df: DataFrame
         """
         if (isinstance(df, pd.DataFrame)):
-            print(Pipe.getPipe(self).getSchema())
+            print('schema of pandas df is ' , Pipe.getPipe(self).getSchema())
             if (Pipe.getPipe(self).getSchema() is not None):
                 ds = spark.createDataFrame(df, schema=Pipe.getPipe(self).getSchema())
             else:
                 ds = spark.createDataFrame(df)
+            
             Pipe.getPipe(self).setDataset(ds._jdf)
         elif (isinstance(df, DataFrame)):
             Pipe.getPipe(self).setDataset(df._jdf)
@@ -269,4 +270,4 @@ class InMemoryPipe(Pipe):
         :return: dataset of the pipe in the format of spark dataset 
         :rtype: Dataset<Row>
         """
-        return Pipe.getPipe(self).getDataset()
+        return Pipe.getPipe(self).getDataset().df()

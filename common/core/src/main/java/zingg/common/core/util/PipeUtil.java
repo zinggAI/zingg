@@ -68,7 +68,7 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 		LOG.warn("Reading " + p);
 		try {
 
-		if (p.getFormat() == Pipe.FORMAT_INMEMORY) {
+		if (p.getFormat().equals(Pipe.FORMAT_INMEMORY)) {
 			input = p.getDataset(); //.df();
 		}
 		else {		
@@ -194,7 +194,7 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 		
 			LOG.warn("Writing output " + p);
 			
-			if (p.getFormat() == Pipe.FORMAT_INMEMORY) {
+			if (p.getFormat().equals(Pipe.FORMAT_INMEMORY)) {
  				p.setDataset(toWriteOrig);
 				return;
 			}

@@ -22,8 +22,8 @@ def main():
 
     #exec(open(sys.argv[2] + ".py"))
 
-    pMarkedDF = client.getPandasDfFromDs(client.getMarkedRecords())
-    pUnmarkedDF = client.getPandasDfFromDs(client.getUnmarkedRecords())
+    pMarkedDF = getPandasDfFromDs(client.getMarkedRecords())
+    pUnmarkedDF = getPandasDfFromDs(client.getUnmarkedRecords())
 
     total_marked = pMarkedDF.shape[0]
     total_unmarked = pUnmarkedDF.shape[0]

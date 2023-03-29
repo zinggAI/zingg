@@ -32,14 +32,14 @@ inputPipe = CsvPipe("unittestFebrl", "examples/febrl/test.csv", schema)
 outputPipe = CsvPipe("unittestFebrlResult", "/tmp/pythonTestFebrl")
 args.setData(inputPipe)
 args.setOutput(outputPipe)
-options = ClientOptions([ClientOptions.PHASE,trainMatch"])
+options = ClientOptions([ClientOptions.PHASE,"trainMatch"])
 
 #testing
 class Accuracy_recordCount(TestCase):
 	def test_recordCount(self):
 		client = Zingg(args, options)
 		client.initAndExecute()
-		pMarkedDF = client.getPandasDfFromDs(client.getMarkedRecords())
+		pMarkedDF = getPandasDfFromDs(client.getMarkedRecords())
 		labelledData = spark.createDataFrame(pMarkedDF)
 
 		total_marked = pMarkedDF.shape[0]

@@ -26,6 +26,26 @@ gateway = sc._gateway
 ColName = jvm.zingg.common.client.util.ColName
 MatchType = jvm.zingg.common.client.MatchType
 
+def getDfFromDs(data):
+    """ Method to convert spark dataset to dataframe
+
+    :param data: provide spark dataset
+    :type data: DataSet
+    :return: converted spark dataframe
+    :rtype: DataFrame 
+    """
+    return DataFrame(data.df(), sqlContext)
+
+def getPandasDfFromDs(data):
+    """ Method to convert spark dataset to pandas dataframe
+
+    :param data: provide spark dataset
+    :type data: DataSet
+    :return: converted pandas dataframe
+    :rtype: DataFrame 
+    """
+    df = getDfFromDs(data)
+    return pd.DataFrame(df.collect(), columns=df.columns)
 
 
 class Zingg:
@@ -141,27 +161,7 @@ class Zingg:
         """
         return self.client.getUnsureMarkedRecordsStat(self.getMarkedRecords())
 
-    def getDfFromDs(self, data):
-        """ Method to convert spark dataset to dataframe
-
-        :param data: provide spark dataset
-        :type data: DataSet
-        :return: converted spark dataframe
-        :rtype: DataFrame 
-        """
-        return DataFrame(data.df(), sqlContext)
-
-    def getPandasDfFromDs(self, data):
-        """ Method to convert spark dataset to pandas dataframe
-
-        :param data: provide spark dataset
-        :type data: DataSet
-        :return: converted pandas dataframe
-        :rtype: DataFrame 
-        """
-        df = self.getDfFromDs(data)
-        return pd.DataFrame(df.collect(), columns=df.columns)
-
+    
 
 class ZinggWithSpark(Zingg):
 
