@@ -84,22 +84,7 @@
 				"delimiter": ",",
 				"header":false					
 			},
-			"schema": 
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
-					{\"name\":\"fname\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"lname\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"stNo\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"add1\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"add2\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"city\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"areacode\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"state\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"dob\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"ssn\",\"type\":\"string\",\"nullable\":true}
-				]
-			}"
+			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
 		}],
 		"labelDataSampleSize" : 0.1,
 		"numPartitions":5000,
