@@ -74,4 +74,6 @@ For example:
 ...
 ```
 
-Zingg uses [Exasol Spark connector](https://github.com/exasol/spark-connector) underneath, so please also check out the [user guide](https://github.com/exasol/spark-connector/blob/main/doc/user_guide/user_guide.md) and [configuration options](https://github.com/exasol/spark-connector/blob/main/doc/user_guide/user_guide.md#configuration-options) for more information.
+Please note that, the `host` parameter should be the first internal node's IPv4 address.
+
+As Zingg uses [Exasol Spark connector](https://github.com/exasol/spark-connector) underneath, please also check out the [user guide](https://github.com/exasol/spark-connector/blob/main/doc/user_guide/user_guide.md) and [configuration options](https://github.com/exasol/spark-connector/blob/main/doc/user_guide/user_guide.md#configuration-options) for more information.
