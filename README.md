@@ -34,6 +34,22 @@ Zingg is useful for
 - Data enrichment from external sources
 - Establishing customer [households](docs/households.md)
 
+## The Story
+
+What is the [backstory behind Zingg](https://sonalgoyal.substack.com/p/time-to-zingg)? 
+
+## Documentation
+
+Check the detailed Zingg [documentation](https://docs.zingg.ai/zingg/) 
+
+## Community
+
+Be part of the conversation in the [Zingg Community Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA)
+
+## People behind Zingg
+
+Zingg is being developed by the [Zingg.AI](https://www.zingg.ai) team. If you need [custom help with or around Zingg](https://www.zingg.ai/company/consulting), let us know. 
+
 ## Demo
 
 See Zingg in action [here](https://www.youtube.com/watch?v=zOabyZxN9b0)
@@ -82,20 +98,6 @@ To build these models, training data is needed. Zingg comes with an interactive 
 
 Zingg comes with pretrained models for the Febrl dataset under the [models](models) folder.
 
-
-## The Story
-
-What is the [backstory behind Zingg](https://sonalgoyal.substack.com/p/time-to-zingg)? 
-
-## Documentation
-
-Check the detailed Zingg [documentation](https://docs.zingg.ai/zingg/) 
-
-## Community
-
-Be part of the conversation in the [Zingg Community Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA)
-
-
 ## Reporting bugs and contributing 
 
 Want to report a bug or request a feature? Let us know on [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA), or open an [issue](https://github.com/zinggAI/zingg/issues/new/choose)
@@ -119,9 +121,6 @@ AGPL allows unresticted use of Zingg by end users and solution builders and part
 
 Need a different license? Write to us.
 
-## People behind Zingg
-
-Zingg is being developed by the [Zingg.AI](https://www.zingg.ai) team. If you need [custom help with or around Zingg](https://www.zingg.ai/company/consulting), let us know. 
 
 ## Acknowledgements
 
