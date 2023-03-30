@@ -1,6 +1,7 @@
 name: Java CI
 
-on: [push]
+on:
+  workflow_call:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -18,7 +19,7 @@ jobs:
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '8'
           distribution: 'adopt'
           cache: maven
       - name: Install secondstring and thirdparty
