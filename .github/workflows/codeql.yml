@@ -53,12 +53,7 @@ jobs:
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 https://git.io/JvXDl
-  build:
-    # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
-    # If this step fails, then you should remove it and run the build manually (see below)
-    - name: Maven Build
-      runs-on: ubuntu-latest
-      uses: ./.build.yml
-      steps:
-        - name: Perform CodeQL Analysis
-          uses: github/codeql-action/analyze@v2
+  java_build:
+    uses: ./.github/workflows/build.yml
+  codeql_analyze:
+    uses: github/codeql-action/analyze@v2
