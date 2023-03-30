@@ -65,7 +65,6 @@
 		<profile>
 			<id>spark-3.1</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
 				<property>
 					<name>spark</name>
 					<value>3.1</value>
@@ -116,8 +115,8 @@
 		<zingg.version>0.3.5-SNAPSHOT</zingg.version>
 		<skipTests>false</skipTests>
 		<failIfNoTests>false</failIfNoTests>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
+		<maven.compiler.source>8</maven.compiler.source>
+		<maven.compiler.target>8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mcheckstyle.version>2.10</mcheckstyle.version>
 		<mfindbugs.version>2.5.2</mfindbugs.version>
