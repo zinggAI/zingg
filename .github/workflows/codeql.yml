@@ -24,6 +24,7 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
+    needs: java_build
     permissions:
       actions: read
       contents: read
@@ -49,11 +50,13 @@ jobs:
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
+    - name: Analyze
+      uses: github/codeql-action/analyze@v2
    
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 https://git.io/JvXDl
   java_build:
     uses: ./.github/workflows/build.yml
-  codeql_analyze:
-    uses: github/codeql-action/analyze@v2
+  
+      
