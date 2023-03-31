@@ -8,7 +8,7 @@ recid = FieldDefinition("recid", "string", MatchType.DONT_USE)
 givenname = FieldDefinition("givenname", "string", MatchType.FUZZY)
 surname = FieldDefinition("surname", "string", MatchType.EXACT)
 suburb = FieldDefinition("suburb","string", MatchType.FUZZY)
-postcode = FieldDefinition("postcode", "double", MatchType.EXACT)
+postcode = FieldDefinition("postcode", "string", MatchType.EXACT)
 
 fieldDefs = [recid, givenname, surname, suburb, postcode]
 args.setFieldDefinition(fieldDefs)
@@ -21,7 +21,7 @@ args.setLabelDataSampleSize(0.1)
 #reading dataset into inputPipe and settint it up in 'args'
 #below line should not be required if you are reading from in memory dataset
 #in that case, replace df with input df
-schema = "recid string, givenname string, surname string, suburb string, postcode double "
+schema = "recid string, givenname string, surname string, suburb string, postcode string "
 inputPipe = CsvPipe("ncVotersTest", "examples/ncVoters5M/5Party-ocp20/", schema)
 args.setData(inputPipe)
 
@@ -30,7 +30,7 @@ outputPipe = CsvPipe("ncVotersResult", "/tmp/ncVotersOutput")
 
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"trainMatch"])
+options = ClientOptions([ClientOptions.PHASE,"match"])
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
