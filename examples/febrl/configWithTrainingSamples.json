@@ -8,26 +8,7 @@
 			"header":false,
 			"badRecordsPath":"/tmp/bad"					
 			},
-		"schema":  
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					
-					 {\"name\" : \"z_cluster\",\"type\" : \"string\",\"nullable\" : false, \"metadata\" : {}}, 
-					{\"name\":\"z_ismatch\",\"type\":\"integer\",\"nullable\":true,\"metadata\" : {}},
-					{\"name\":\"fname\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}},
-					{\"name\":\"lname\",\"type\":\"string\",\"nullable\":true,\"metadata\" : {}},
-					{\"name\":\"stNo\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}}, 
-					{\"name\":\"add1\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}},
-					{\"name\":\"add2\",\"type\":\"string\",\"nullable\":true,\"metadata\" : {}},
-					{\"name\":\"city\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}}, 
-					{\"name\":\"areacode\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}},
-					{\"name\":\"state\", \"type\":\"string\", \"nullable\":true,\"metadata\" : {}},
-					{\"name\":\"dob\",\"type\":\"string\",\"nullable\":true,\"metadata\" : {}},
-					{\"name\":\"ssn\",\"type\":\"string\",\"nullable\":true,\"metadata\" : {}}
-					
-				]
-				}"
-				
+		"schema": "z_cluster string, z_ismatch integer, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
 		}],
 	"fieldDefinition":[
 		{
@@ -108,22 +89,7 @@
 				"delimiter": ",",
 				"header":false					
 			},
-			"schema": 
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
-					{\"name\":\"fname\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"lname\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"stNo\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"add1\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"add2\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"city\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"areacode\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"state\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"dob\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"ssn\",\"type\":\"string\",\"nullable\":true}
-				]
-			}"
+			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
 		}],
 		"labelDataSampleSize" : 0.5,
 		"numPartitions":4,
