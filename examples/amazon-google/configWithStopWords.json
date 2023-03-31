@@ -48,7 +48,16 @@
 				"delimiter": ",",
 				"header":true					
 			},
-			"schema": "id string, title string, description string, manufacturer string, price double"
+			"schema": 
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
+					{\"name\":\"title\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"description\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"manufacturer\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"price\", \"type\":\"double\", \"nullable\":true}
+				]
+			}"
 		},
 		{
 			"name":"google", 
@@ -58,7 +67,16 @@
 				"delimiter": ",",
 				"header":true					
 			},
-			"schema": "id string, title string, description string, manufacturer string, price double"
+			"schema": 
+				"{\"type\" : \"struct\",
+				\"fields\" : [ 
+					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
+					{\"name\":\"title\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"description\", \"type\":\"string\", \"nullable\":true},
+					{\"name\":\"manufacturer\",\"type\":\"string\",\"nullable\":true} ,
+					{\"name\":\"price\", \"type\":\"double\", \"nullable\":true}
+				]
+			}"
 		}
 		],
 		"labelDataSampleSize" : 0.4,
