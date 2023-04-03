@@ -1,7 +1,3 @@
----
-title: AWS S3
-parent: Data Sources and Sinks
----
 
 # S3
 
