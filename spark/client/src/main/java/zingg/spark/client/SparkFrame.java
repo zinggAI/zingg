@@ -130,7 +130,12 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     public ZFrame<Dataset<Row>, Row, Column> drop(String c) {
         return new SparkFrame(df.drop(c));
     }
-
+    
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> drop(Column c) {
+        return new SparkFrame(df.drop(c));
+    }
+    
     public ZFrame<Dataset<Row>, Row, Column> except(ZFrame<Dataset<Row>, Row, Column> c) {
         return new SparkFrame(df.except(c.df()));
     }
