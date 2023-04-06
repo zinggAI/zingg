@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ListMap;
 import zingg.common.core.hash.HashFunction;
 
@@ -201,9 +202,10 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	 * @param node
 	 * @param used
 	 * @return
+	 * @throws ZinggClientException 
 	 */
 	public Tree<Canopy<R>> getBlockingTree(Tree<Canopy<R>> tree, Canopy<R>parent,
-			Canopy<R>node, List<FieldDefinition> fieldsOfInterest) throws Exception {
+			Canopy<R>node, List<FieldDefinition> fieldsOfInterest) throws Exception, ZinggClientException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Tree so far ");
 			LOG.debug(tree);
@@ -253,6 +255,9 @@ public abstract class Block<D,R,C,T> implements Serializable {
 			}
 			else {
 				LOG.debug("Min size reached " + size + " for node " + node);
+				if (tree==null) {
+					throw new ZinggClientException("Unable to create Zingg models due to insufficient data. Please run Zingg after adding more data");
+				}
 			}
 			// tree.addLeaf(parent, node);
 			node.clearBeforeSaving();
