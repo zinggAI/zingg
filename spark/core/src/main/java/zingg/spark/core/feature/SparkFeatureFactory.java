@@ -16,7 +16,8 @@ import zingg.common.core.feature.StringFeature;
 
 public class SparkFeatureFactory extends FeatureFactory<DataType>{
 
-	public static final String ARR_DOUBLE_TYPE_STR = "\"ARR_DOUBLE_TYPE\"";
+	public static final String ARR_DOUBLE_TYPE = "\"ARR_DOUBLE_TYPE\"";
+	public static final String ARR_STR_TYPE = "\"ARR_STR_TYPE\"";
 
 	private static final long serialVersionUID = 1L;
     
@@ -34,11 +35,17 @@ public class SparkFeatureFactory extends FeatureFactory<DataType>{
 
     @Override
     public DataType getDataTypeFromString(String t) {
-        if (ARR_DOUBLE_TYPE_STR.equals(t)) {
+    	
+        if (ARR_DOUBLE_TYPE.equals(t)) {
         	return DataTypes.createArrayType(DataTypes.DoubleType);
-        } else {
-        	return DataType.fromJson(t);
+        } 
+        
+        if (ARR_STR_TYPE.equals(t)) {
+        	return DataTypes.createArrayType(DataTypes.StringType);
         }
+        
+        return DataType.fromJson(t);
+        
     }
     
 }

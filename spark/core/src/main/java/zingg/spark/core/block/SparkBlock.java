@@ -28,12 +28,16 @@ public class SparkBlock extends Block<Dataset<Row>, Row, Column, DataType> {
 
     @Override
     public DataType getDataTypeFromString(String t) {
-    	//NOT NEEDED
-        if (SparkFeatureFactory.ARR_DOUBLE_TYPE_STR.equals(t)) {
+    	//TODO MAY OR MAY NOT BE NEEDED, ALSO DUPLICATE CODE TO SparkFeatureFactory
+        if (SparkFeatureFactory.ARR_DOUBLE_TYPE.equals(t)) {
         	return DataTypes.createArrayType(DataTypes.DoubleType);
-        } else {
-        	return DataType.fromJson(t);
+        } 
+        
+        if (SparkFeatureFactory.ARR_STR_TYPE.equals(t)) {
+        	return DataTypes.createArrayType(DataTypes.StringType);
         }
+        
+        return DataType.fromJson(t);
     }
 
 }

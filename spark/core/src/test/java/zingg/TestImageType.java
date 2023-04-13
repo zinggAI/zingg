@@ -1,6 +1,5 @@
 package zingg;
 
-import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 import org.junit.jupiter.api.Test;
 
@@ -31,8 +30,8 @@ public class TestImageType {
 		System.out.println(ArrayDoubleSimilarityFunction.cosineSimilarity(d7, d7));
 		System.out.println(ArrayDoubleSimilarityFunction.cosineSimilarity(d8, d8));
 		
-		System.out.print(DataTypes.createArrayType(DataTypes.DoubleType));
-		
+		System.out.println(DataTypes.createArrayType(DataTypes.DoubleType));
+		System.out.println(DataTypes.createArrayType(DataTypes.StringType));
 	}
 
 	
