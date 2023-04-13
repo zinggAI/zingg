@@ -145,7 +145,7 @@ outputPipe = CsvPipe("resultSmallImages", "/tmp/resultSmallImages")
 
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"match"])
+options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
