@@ -132,8 +132,8 @@ args.setFieldDefinition(fieldDefs)
 #set the modelid and the zingg dir
 args.setModelId("9999")
 args.setZinggDir("/tmp/modelSmallImages")
-args.setNumPartitions(6)
-args.setLabelDataSampleSize(0.05)
+args.setNumPartitions(8)
+args.setLabelDataSampleSize(0.01)
 
 inputPipeSmallImages=InMemoryPipe("smallImages")
 inputPipeSmallImages.setDataset(items)
