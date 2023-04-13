@@ -133,7 +133,7 @@ args.setFieldDefinition(fieldDefs)
 args.setModelId("9999")
 args.setZinggDir("/tmp/modelSmallImages")
 args.setNumPartitions(8)
-args.setLabelDataSampleSize(0.01)
+args.setLabelDataSampleSize(0.005)
 
 inputPipeSmallImages=InMemoryPipe("smallImages")
 inputPipeSmallImages.setDataset(items)
