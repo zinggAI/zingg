@@ -109,7 +109,7 @@ items = (
       how='left'
       )
     .withColumn('main_image_embedding', get_image_embedding(fn.col('path')))
-    .drop('main_image_id','image_id','path')
+    .drop('main_image_id','image_id','path','bulletpoint','item_keywords','hierarchy')
   )
 
 #build the arguments for zingg
@@ -122,18 +122,19 @@ marketplace = FieldDefinition("marketplace", "string", MatchType.FUZZY)
 brand = FieldDefinition("brand","string", MatchType.FUZZY)
 item_name = FieldDefinition("item_name", "string", MatchType.FUZZY)
 product_description = FieldDefinition("product_description", "string", MatchType.DONT_USE)
-bulletpoint = FieldDefinition("bulletpoint", "ARR_STR_TYPE", MatchType.DONT_USE)
-item_keywords = FieldDefinition("item_keywords", "ARR_STR_TYPE", MatchType.DONT_USE)
-hierarchy = FieldDefinition("hierarchy","ARR_STR_TYPE", MatchType.DONT_USE)
+#bulletpoint = FieldDefinition("bulletpoint", "ARR_STR_TYPE", MatchType.DONT_USE)
+#item_keywords = FieldDefinition("item_keywords", "ARR_STR_TYPE", MatchType.DONT_USE)
+#hierarchy = FieldDefinition("hierarchy","ARR_STR_TYPE", MatchType.DONT_USE)
 main_image_embedding = FieldDefinition("main_image_embedding", "ARR_DOUBLE_TYPE", MatchType.FUZZY)
 
-fieldDefs = [item_id, domain_name, marketplace, brand, item_name,product_description, bulletpoint, item_keywords, hierarchy, main_image_embedding]
+#fieldDefs = [item_id, domain_name, marketplace, brand, item_name,product_description, bulletpoint, item_keywords, hierarchy, main_image_embedding]
+fieldDefs = [item_id, domain_name, marketplace, brand, item_name,product_description, main_image_embedding]
 args.setFieldDefinition(fieldDefs)
 #set the modelid and the zingg dir
 args.setModelId("9999")
 args.setZinggDir("/tmp/modelSmallImages")
 args.setNumPartitions(8)
-args.setLabelDataSampleSize(0.005)
+args.setLabelDataSampleSize(0.001)
 
 inputPipeSmallImages=InMemoryPipe("smallImages")
 inputPipeSmallImages.setDataset(items)
