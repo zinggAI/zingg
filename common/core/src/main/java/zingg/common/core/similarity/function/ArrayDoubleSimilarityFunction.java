@@ -12,7 +12,7 @@ public class ArrayDoubleSimilarityFunction extends SimFunction<WrappedArray<Doub
 
 	
 	public static Double cosineSimilarity(Double[] vectorA, Double[] vectorB) {
-    	if (vectorA==null || vectorB==null) {
+    	if (vectorA==null || vectorB==null || vectorA.length==0 || vectorB.length==0 || vectorA.length != vectorB.length) {
     		return 0.0;
     	}
 	    double dotProduct = 0.0;

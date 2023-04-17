@@ -23,6 +23,9 @@ import zingg.spark.core.executor.ZinggSparkTester;
 public class TestImageType extends ZinggSparkTester{
 	
 	
+	private static final double SMALL_DELTA = 0.0000000001;
+
+
 	@Test
 	public void testImageType() {
 		
@@ -36,14 +39,24 @@ public class TestImageType extends ZinggSparkTester{
 		Double[] d8 = {1.0,0.0,0.0};
 		
 		
-		System.out.println(ArrayDoubleSimilarityFunction.cosineSimilarity(d1, d2));
-		System.out.println(ArrayDoubleSimilarityFunction.cosineSimilarity(d2, d3));
-		System.out.println(ArrayDoubleSimilarityFunction.cosineSimilarity(d4, d3));
-		System.out.println(ArrayDoubleSimilarityFunction.cosineSimilarity(d5, d6));
-		System.out.println(ArrayDoubleSimilarityFunction.cosineSimilarity(d7, d8));
-		System.out.println(ArrayDoubleSimilarityFunction.cosineSimilarity(d8, d7));
-		System.out.println(ArrayDoubleSimilarityFunction.cosineSimilarity(d7, d7));
-		System.out.println(ArrayDoubleSimilarityFunction.cosineSimilarity(d8, d8));
+		assertEquals(1.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d1, d2));
+		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d2, d3));
+		double diff = 0.7071067811865475-ArrayDoubleSimilarityFunction.cosineSimilarity(d4, d3);
+		assertTrue(diff<SMALL_DELTA);
+		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d5, d6));
+		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d7, d8));
+		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d8, d7));
+		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d7, d7));
+		assertEquals(1.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d8, d8));
+		
+		System.out.println("edge cases , all should be 0: ");
+		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(null, d2));
+		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(null, null));
+		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(null, new Double[] {}));
+		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(new Double[] {},null));
+		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(new Double[] {}, new Double[] {}));
+		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d1,d5));
+		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d5,d1));
 		
 		System.out.println(DataTypes.createArrayType(DataTypes.DoubleType));
 		System.out.println(DataTypes.createArrayType(DataTypes.StringType));
@@ -153,7 +166,7 @@ public class TestImageType extends ZinggSparkTester{
 		double diff = 1-cos;
 		System.out.println("cos diff "+diff+ " "+cos.getClass());
 		
-		assertTrue(diff<0.0000000001);
+		assertTrue(diff<SMALL_DELTA);
 		
 		
 	}
