@@ -1,21 +1,21 @@
 package zingg;
 
+import static org.apache.spark.sql.functions.callUDF;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.Arrays;
 
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
-import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
-import static org.apache.spark.sql.functions.callUDF;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import zingg.common.core.similarity.function.ArrayDoubleSimilarityFunction;
 import zingg.spark.core.executor.ZinggSparkTester;
@@ -28,7 +28,14 @@ public class TestImageType extends ZinggSparkTester{
 
 	@Test
 	public void testImageType() {
-		
+		assertEquals("ArrayType(DoubleType,true)",String.valueOf(DataTypes.createArrayType(DataTypes.DoubleType)));
+		assertEquals("ArrayType(StringType,true)",String.valueOf(DataTypes.createArrayType(DataTypes.StringType)));
+		assertEquals("ArrayType(DoubleType,true)",String.valueOf(DataType.fromJson("{\"type\":\"array\",\"elementType\":\"double\",\"containsNull\":true}")));
+		assertEquals("ArrayType(StringType,true)",String.valueOf(DataType.fromJson("{\"type\":\"array\",\"elementType\":\"string\",\"containsNull\":true}")));
+	}
+
+	@Test
+	public void testCosine() {
 		Double[] d1 = {0.0,2.0};
 		Double[] d2 = {0.0,1.0};
 		Double[] d3 = {1.0,0.0};
@@ -57,11 +64,6 @@ public class TestImageType extends ZinggSparkTester{
 		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(new Double[] {}, new Double[] {}));
 		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d1,d5));
 		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d5,d1));
-		
-		System.out.println(DataTypes.createArrayType(DataTypes.DoubleType));
-		System.out.println(DataTypes.createArrayType(DataTypes.StringType));
-		System.out.println(DataType.fromJson("{\"type\":\"array\",\"elementType\":\"double\",\"containsNull\":true}"));
-		System.out.println(DataType.fromJson("{\"type\":\"array\",\"elementType\":\"string\",\"containsNull\":true}"));
 	}
 	
 	@Test

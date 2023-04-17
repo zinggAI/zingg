@@ -144,8 +144,8 @@ inputPipeSmallImages.setDataset(items)
 args.setData(inputPipeSmallImages)
 
 #setting outputpipe in 'args'
-outputPipe = CsvPipe("resultSmallImages", "/tmp/resultSmallImages")
-
+outputPipe = Pipe("resultSmallImages", "parquet")
+outputPipe.addProperty("location", "/tmp/resultSmallImages")
 args.setOutput(outputPipe)
 
 options = ClientOptions([ClientOptions.PHASE,"match"])
