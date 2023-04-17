@@ -136,7 +136,7 @@ args.setFieldDefinition(fieldDefs)
 args.setModelId("9999")
 args.setZinggDir("/tmp/modelSmallImages")
 args.setNumPartitions(8)
-args.setLabelDataSampleSize(0.001)
+args.setLabelDataSampleSize(0.1)
 
 inputPipeSmallImages=InMemoryPipe("smallImages")
 inputPipeSmallImages.setDataset(items)
@@ -148,7 +148,7 @@ outputPipe = CsvPipe("resultSmallImages", "/tmp/resultSmallImages")
 
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
+options = ClientOptions([ClientOptions.PHASE,"match"])
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
