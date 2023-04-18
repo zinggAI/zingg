@@ -109,7 +109,7 @@ items = (
       how='left'
       )
     .withColumn('main_image_embedding', get_image_embedding(fn.col('path')))
-    .drop('main_image_id','image_id','path','bulletpoint','item_keywords','hierarchy')
+    .drop('main_image_id','image_id','bulletpoint','item_keywords','hierarchy')
   )
 
 items.show()
@@ -117,20 +117,17 @@ items.show()
 #build the arguments for zingg
 args = Arguments()
 #set field definitions
-#TODO MARKING STR ARRAYS AS DONT_USE FOR NOW
 item_id = FieldDefinition("item_id", "string", MatchType.DONT_USE)
 domain_name = FieldDefinition("domain_name", "string", MatchType.FUZZY)
 marketplace = FieldDefinition("marketplace", "string", MatchType.FUZZY)
 brand = FieldDefinition("brand","string", MatchType.FUZZY)
 item_name = FieldDefinition("item_name", "string", MatchType.FUZZY)
 product_description = FieldDefinition("product_description", "string", MatchType.TEXT)
-#bulletpoint = FieldDefinition("bulletpoint", "ARR_STR_TYPE", MatchType.DONT_USE)
-#item_keywords = FieldDefinition("item_keywords", "ARR_STR_TYPE", MatchType.DONT_USE)
-#hierarchy = FieldDefinition("hierarchy","ARR_STR_TYPE", MatchType.DONT_USE)
-main_image_embedding = FieldDefinition("main_image_embedding", "ARR_DOUBLE_TYPE", MatchType.FUZZY)
+path = FieldDefinition("path", "string", MatchType.DONT_USE)
+main_image_embedding = FieldDefinition("main_image_embedding", "{\"type\":\"array\",\"elementType\":\"double\",\"containsNull\":true}", MatchType.FUZZY)
 
-#fieldDefs = [item_id, domain_name, marketplace, brand, item_name,product_description, bulletpoint, item_keywords, hierarchy, main_image_embedding]
-fieldDefs = [item_id, domain_name, marketplace, brand, item_name,product_description,main_image_embedding]
+#fieldDefs = [item_id, domain_name, marketplace, brand, item_name,product_description, bulletpoint, item_keywords, hierarchy,path, main_image_embedding]
+fieldDefs = [item_id, domain_name, marketplace, brand, item_name,product_description,path,main_image_embedding]
 args.setFieldDefinition(fieldDefs)
 #set the modelid and the zingg dir
 args.setModelId("9999")
@@ -148,7 +145,7 @@ outputPipe = Pipe("resultSmallImages", "parquet")
 outputPipe.addProperty("location", "/tmp/resultSmallImages")
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"match"])
+options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
