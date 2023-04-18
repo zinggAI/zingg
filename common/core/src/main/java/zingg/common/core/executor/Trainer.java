@@ -38,6 +38,7 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 				
 			ZFrame<D,R,C> testDataOriginal = getPipeUtil().read(true, args.getNumPartitions(), false, args.getData());
+			LOG.warn("testDataOriginal schema is " +testDataOriginal.showSchema());
 			ZFrame<D,R,C> testData = getStopWords().preprocessForStopWords(testDataOriginal);
 
 			Tree<Canopy<R>> blockingTree = getBlockingTreeUtil().createBlockingTreeFromSample(testData,  positives, 0.5,
