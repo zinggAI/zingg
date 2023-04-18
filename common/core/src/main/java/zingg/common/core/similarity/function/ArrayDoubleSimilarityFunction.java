@@ -31,7 +31,15 @@ public class ArrayDoubleSimilarityFunction extends SimFunction<WrappedArray<Doub
 	   
 	    // If any of them is 0 then doesn't match
 	    if (normA > 0 && normB > 0) {
-	   	    return Math.abs(dotProduct / (Math.sqrt(normA) * Math.sqrt(normB)));
+	   	    double cosineVal = Math.abs(dotProduct / (Math.sqrt(normA) * Math.sqrt(normB)));
+	   	    
+	   	    // to avoid floating point errors
+	   	    if(cosineVal > 1) {
+	   	    	return 1.0;
+	   	    } else {
+	   	    	return cosineVal;
+	   	    }
+			
 	    } else {
 	    	return 0.0;
 	    }

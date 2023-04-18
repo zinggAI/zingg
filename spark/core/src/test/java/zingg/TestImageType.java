@@ -49,7 +49,7 @@ public class TestImageType extends ZinggSparkTester{
 		assertEquals(1.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d1, d2));
 		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d2, d3));
 		double diff = 0.7071067811865475-ArrayDoubleSimilarityFunction.cosineSimilarity(d4, d3);
-		assertTrue(diff<SMALL_DELTA);
+		assertTrue(Math.abs(diff) <SMALL_DELTA);
 		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d5, d6));
 		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d7, d8));
 		assertEquals(0.0,ArrayDoubleSimilarityFunction.cosineSimilarity(d8, d7));
@@ -168,7 +168,7 @@ public class TestImageType extends ZinggSparkTester{
 		double diff = 1-cos;
 		System.out.println("cos diff "+diff+ " "+cos.getClass());
 		
-		assertTrue(diff<SMALL_DELTA);
+		assertTrue(Math.abs(diff) <SMALL_DELTA);
 		
 		
 	}
