@@ -534,7 +534,8 @@ class FieldDefinition:
         :return: The stringify'ed value of the dataType
         :rtype: String
         """
-        return '"' + str + '"'
+        
+        return str
         
 
 def parseArguments(argv):
