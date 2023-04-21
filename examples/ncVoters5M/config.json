@@ -4,31 +4,31 @@
 			"fieldName" : "recid",
 			"matchType" : "dont_use",
 			"fields" : "recid",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "givenname",
 			"matchType" : "fuzzy",
 			"fields" : "givenname",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "surname",
 			"matchType": "exact",
 			"fields" : "surname",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "suburb",
 			"matchType": "fuzzy",
 			"fields" : "suburb",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "postcode",
 			"matchType": "exact",
 			"fields" : "postcode",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		}
 		],
 		"output" : [{

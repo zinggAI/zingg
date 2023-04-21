@@ -124,7 +124,7 @@ brand = FieldDefinition("brand","string", MatchType.FUZZY)
 item_name = FieldDefinition("item_name", "string", MatchType.TEXT)
 product_description = FieldDefinition("product_description", "string", MatchType.DONT_USE)
 path = FieldDefinition("path", "string", MatchType.DONT_USE)
-main_image_embedding = FieldDefinition("main_image_embedding", "{\"type\":\"array\",\"elementType\":\"double\",\"containsNull\":true}", MatchType.FUZZY)
+main_image_embedding = FieldDefinition("main_image_embedding", "array<double>", MatchType.FUZZY)
 
 #fieldDefs = [item_id, domain_name, marketplace, brand, item_name,product_description, bulletpoint, item_keywords, hierarchy,path, main_image_embedding]
 fieldDefs = [item_id, domain_name, marketplace, brand, item_name,product_description,path,main_image_embedding]

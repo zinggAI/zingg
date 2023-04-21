@@ -58,55 +58,55 @@ The config file for Databricks needs modifications to accept dbfs locations. Her
 			"fieldName" : "fname",
 			"matchType" : "email",
 			"fields" : "fname",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "lname",
 			"matchType" : "fuzzy",
 			"fields" : "lname",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "stNo",
 			"matchType": "fuzzy",
 			"fields" : "stNo",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "add1",
 			"matchType": "fuzzy",
 			"fields" : "add1",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "add2",
 			"matchType": "fuzzy",
 			"fields" : "add2",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "city",
 			"matchType": "fuzzy",
 			"fields" : "city",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "state",
 			"matchType": "fuzzy",
 			"fields" : "state",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "dob",
 			"matchType": "fuzzy",
 			"fields" : "dob",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "ssn",
 			"matchType": "fuzzy",
 			"fields" : "ssn",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		}
 		],
 		"output" : [{
@@ -127,18 +127,18 @@ The config file for Databricks needs modifications to accept dbfs locations. Her
 				"header":false					
 			},
 			"schema": 
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
-					{\"name\":\"fname\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"lname\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"stNo\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"add1\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"add2\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"city\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"state\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"dob\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"ssn\",\"type\":\"string\",\"nullable\":true}
+				"{type : struct,
+				fields : [ 
+					{name:id, type:string, nullable:false}, 
+					{name:fname, type:string, nullable:true},
+					{name:lname,type:string,nullable:true} ,
+					{name:stNo, type:string, nullable:true}, 
+					{name:add1, type:string, nullable:true},
+					{name:add2,type:string,nullable:true} ,
+					{name:city, type:string, nullable:true}, 
+					{name:state, type:string, nullable:true},
+					{name:dob,type:string,nullable:true} ,
+					{name:ssn,type:string,nullable:true}
 				]
 			}"
 		}],

@@ -32,7 +32,7 @@ public class SparkFeatureFactory extends FeatureFactory<DataType>{
 
     @Override
     public DataType getDataTypeFromString(String t) {
-        return DataType.fromJson(t);
+        return DataType.fromDDL(t);
     }
     
 }

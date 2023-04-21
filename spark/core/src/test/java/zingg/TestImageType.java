@@ -32,6 +32,19 @@ public class TestImageType extends ZinggSparkTester{
 		assertEquals("ArrayType(StringType,true)",String.valueOf(DataTypes.createArrayType(DataTypes.StringType)));
 		assertEquals("ArrayType(DoubleType,true)",String.valueOf(DataType.fromJson("{\"type\":\"array\",\"elementType\":\"double\",\"containsNull\":true}")));
 		assertEquals("ArrayType(StringType,true)",String.valueOf(DataType.fromJson("{\"type\":\"array\",\"elementType\":\"string\",\"containsNull\":true}")));
+		assertEquals("ArrayType(DoubleType,true)",String.valueOf(DataType.fromDDL("ARRAY<DOUBLE>")));
+		assertEquals("ArrayType(StringType,true)",String.valueOf(DataType.fromDDL("ARRAY<STRING>")));
+		assertEquals("ArrayType(DoubleType,true)",String.valueOf(DataType.fromDDL("array<double>")));
+		
+//		DataType arrDbl2 = DataType.fromDDL("array<double>");
+//		DataType string1 = DataType.fromDDL("STRING");
+//		DataType string2 = DataType.fromDDL("String");
+//		DataType string3 = DataType.fromDDL("string");
+//		
+//		System.out.println(string1);
+//		System.out.println(string2);
+//		System.out.println(string3);
+//		System.out.println(arrDbl2);
 	}
 
 	@Test
@@ -85,7 +98,7 @@ public class TestImageType extends ZinggSparkTester{
 			df.show();
 			fail("exception expected");
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		
@@ -111,7 +124,7 @@ public class TestImageType extends ZinggSparkTester{
 			df.show();
 			fail("exception expected");
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		
@@ -137,7 +150,7 @@ public class TestImageType extends ZinggSparkTester{
 			df.show();
 			fail("exception expected");
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		
