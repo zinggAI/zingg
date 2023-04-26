@@ -1,9 +1,9 @@
 i== Physical Plan ==
-*(11) Project [z_z_zid#597L, z_zid#367L, id#72, fname#73, lname#74, stNo#75, add1#76, add2#77, city#78, state#79, dob#80, ssn#81, z_source#82, z_id#1103, z_fname#1104, z_lname#1105, z_stNo#1106, z_add1#1107, z_add2#1108, z_city#1109, z_state#1110, z_dob#1111, z_ssn#1112, z_z_source#1113]
+*(11) Project [z_z_zid#597L, z_zid#367L, id#72, fname#73, lname#74, stNo#75, add1#76, add2#77, city#78, state#79, dob#80, ssn#81, z_zsource#82, z_id#1103, z_fname#1104, z_lname#1105, z_stNo#1106, z_add1#1107, z_add2#1108, z_city#1109, z_state#1110, z_dob#1111, z_ssn#1112, z_z_zsource#1113]
 +- *(11) SortMergeJoin [z_z_zid#597L], [z_z_zid#1102L], Inner
    :- *(9) Sort [z_z_zid#597L ASC NULLS FIRST], false, 0
    :  +- Exchange hashpartitioning(z_z_zid#597L, 3000), false, [id=#472]
-   :     +- *(8) Project [z_zid#367L, z_z_zid#597L, id#72, fname#73, lname#74, stNo#75, add1#76, add2#77, city#78, state#79, dob#80, ssn#81, z_source#82]
+   :     +- *(8) Project [z_zid#367L, z_z_zid#597L, id#72, fname#73, lname#74, stNo#75, add1#76, add2#77, city#78, state#79, dob#80, ssn#81, z_zsource#82]
    :        +- *(8) SortMergeJoin [z_zid#367L], [z_zid#71L], Inner
    :           :- *(6) Sort [z_zid#367L ASC NULLS FIRST], false, 0
    :           :  +- Exchange hashpartitioning(z_zid#367L, 3000), false, [id=#456]
@@ -13,16 +13,16 @@ i== Physical Plan ==
    :           :           :  +- Exchange hashpartitioning(z_hash#379, 3000), false, [id=#372]
    :           :           :     +- *(1) SerializeFromObject [validateexternaltype(getexternalrowfield(assertnotnull(input[0, org.apache.spark.sql.Row, true]), 0, z_zid), LongType) AS z_zid#367L, validateexternaltype(getexternalrowfield(assertnotnull(input[0, org.apache.spark.sql.Row, true]), 12, z_hash), IntegerType) AS z_hash#379]
    :           :           :        +- *(1) MapElements zingg.block.Block$BlockFunction@37e7e089, obj#366: org.apache.spark.sql.Row
-   :           :           :           +- *(1) DeserializeToObject createexternalrow(z_zid#71L, id#72.toString, fname#73.toString, lname#74.toString, stNo#75.toString, add1#76.toString, add2#77.toString, city#78.toString, state#79.toString, dob#80.toString, ssn#81.toString, z_source#82.toString, StructField(z_zid,LongType,false), StructField(id,StringType,true), StructField(fname,StringType,true), StructField(lname,StringType,true), StructField(stNo,StringType,true), StructField(add1,StringType,true), StructField(add2,StringType,true), StructField(city,StringType,true), StructField(state,StringType,true), StructField(dob,StringType,true), StructField(ssn,StringType,true), StructField(z_source,StringType,false)), obj#365: org.apache.spark.sql.Row
+   :           :           :           +- *(1) DeserializeToObject createexternalrow(z_zid#71L, id#72.toString, fname#73.toString, lname#74.toString, stNo#75.toString, add1#76.toString, add2#77.toString, city#78.toString, state#79.toString, dob#80.toString, ssn#81.toString, z_zsource#82.toString, StructField(z_zid,LongType,false), StructField(id,StringType,true), StructField(fname,StringType,true), StructField(lname,StringType,true), StructField(stNo,StringType,true), StructField(add1,StringType,true), StructField(add2,StringType,true), StructField(city,StringType,true), StructField(state,StringType,true), StructField(dob,StringType,true), StructField(ssn,StringType,true), StructField(z_zsource,StringType,false)), obj#365: org.apache.spark.sql.Row
    :           :           :              +- Exchange hashpartitioning(z_zid#71L, 3000), false, [id=#324]
-   :           :           :                 +- InMemoryTableScan [z_zid#71L, id#72, fname#73, lname#74, stNo#75, add1#76, add2#77, city#78, state#79, dob#80, ssn#81, z_source#82]
-   :           :           :                       +- InMemoryRelation [z_zid#71L, id#72, fname#73, lname#74, stNo#75, add1#76, add2#77, city#78, state#79, dob#80, ssn#81, z_source#82], StorageLevel(memory, deserialized, 1 replicas)
+   :           :           :                 +- InMemoryTableScan [z_zid#71L, id#72, fname#73, lname#74, stNo#75, add1#76, add2#77, city#78, state#79, dob#80, ssn#81, z_zsource#82]
+   :           :           :                       +- InMemoryRelation [z_zid#71L, id#72, fname#73, lname#74, stNo#75, add1#76, add2#77, city#78, state#79, dob#80, ssn#81, z_zsource#82], StorageLevel(memory, deserialized, 1 replicas)
    :           :           :                             +- Exchange RoundRobinPartitioning(3000), false, [id=#40]
-   :           :           :                                +- *(1) Scan ExistingRDD[z_zid#71L,id#72,fname#73,lname#74,stNo#75,add1#76,add2#77,city#78,state#79,dob#80,ssn#81,z_source#82]
+   :           :           :                                +- *(1) Scan ExistingRDD[z_zid#71L,id#72,fname#73,lname#74,stNo#75,add1#76,add2#77,city#78,state#79,dob#80,ssn#81,z_zsource#82]
    :           :           +- *(4) Sort [z_hash#592 ASC NULLS FIRST], false, 0
    :           :              +- ReusedExchange [z_zid#580L, z_hash#592], Exchange hashpartitioning(z_hash#379, 3000), false, [id=#372]
    :           +- *(7) Sort [z_zid#71L ASC NULLS FIRST], false, 0
-   :              +- ReusedExchange [z_zid#71L, id#72, fname#73, lname#74, stNo#75, add1#76, add2#77, city#78, state#79, dob#80, ssn#81, z_source#82], Exchange hashpartitioning(z_zid#71L, 3000), false, [id=#324]
+   :              +- ReusedExchange [z_zid#71L, id#72, fname#73, lname#74, stNo#75, add1#76, add2#77, city#78, state#79, dob#80, ssn#81, z_zsource#82], Exchange hashpartitioning(z_zid#71L, 3000), false, [id=#324]
    +- *(10) Sort [z_z_zid#1102L ASC NULLS FIRST], false, 0
-      +- *(10) Project [z_zid#71L AS z_z_zid#1102L, id#72 AS z_id#1103, fname#73 AS z_fname#1104, lname#74 AS z_lname#1105, stNo#75 AS z_stNo#1106, add1#76 AS z_add1#1107, add2#77 AS z_add2#1108, city#78 AS z_city#1109, state#79 AS z_state#1110, dob#80 AS z_dob#1111, ssn#81 AS z_ssn#1112, z_source#82 AS z_z_source#1113]
-         +- ReusedExchange [z_zid#71L, id#72, fname#73, lname#74, stNo#75, add1#76, add2#77, city#78, state#79, dob#80, ssn#81, z_source#82], Exchange hashpartitioning(z_zid#71L, 3000), false, [id=#324]
+      +- *(10) Project [z_zid#71L AS z_z_zid#1102L, id#72 AS z_id#1103, fname#73 AS z_fname#1104, lname#74 AS z_lname#1105, stNo#75 AS z_stNo#1106, add1#76 AS z_add1#1107, add2#77 AS z_add2#1108, city#78 AS z_city#1109, state#79 AS z_state#1110, dob#80 AS z_dob#1111, ssn#81 AS z_ssn#1112, z_zsource#82 AS z_z_zsource#1113]
+         +- ReusedExchange [z_zid#71L, id#72, fname#73, lname#74, stNo#75, add1#76, add2#77, city#78, state#79, dob#80, ssn#81, z_zsource#82], Exchange hashpartitioning(z_zid#71L, 3000), false, [id=#324]

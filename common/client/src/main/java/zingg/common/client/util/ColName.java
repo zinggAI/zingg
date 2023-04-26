@@ -19,7 +19,7 @@ public interface ColName {
 	public static final String SCORE_MIN_COL = COL_PREFIX + "minScore";
 	public static final String SCORE_MAX_COL = COL_PREFIX + "maxScore";
 	public static final String SPARK_JOB_ID_COL = COL_PREFIX + "sparkJobId";
-	public static final String SOURCE_COL = COL_PREFIX + "source";
+	public static final String SOURCE_COL = COL_PREFIX + "zsource";
 	public static final String SCORE_KEY_COL = COL_PREFIX + "scorekey";
 	public static final String DENSE_COL = COL_PREFIX + "dense";
 	public static final String UPDATED_AT = COL_PREFIX + "updated";
