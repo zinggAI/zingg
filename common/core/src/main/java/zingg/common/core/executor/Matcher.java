@@ -85,7 +85,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
         try {
 			// read input, filter, remove self joins
 			ZFrame<D,R,C>  testDataOriginal = getTestData();
-			LOG.warn("testDataOriginal schema is " +testDataOriginal.showSchema());
+			LOG.debug("testDataOriginal schema is " +testDataOriginal.showSchema());
 			testDataOriginal =  getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
 			ZFrame<D,R,C>  testData = getStopWords().preprocessForStopWords(testDataOriginal);
 			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
