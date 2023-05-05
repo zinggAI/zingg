@@ -1,35 +1,29 @@
 package zingg.common.core.executor;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ClientOptions;
-import zingg.common.client.FieldDefinition;
+import zingg.common.client.ITrainingHelper;
 import zingg.common.client.IZingg;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
+import zingg.common.client.util.ColName;
+import zingg.common.client.util.ColValues;
+import zingg.common.core.Context;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.DSUtil;
-import zingg.common.client.util.ColName;
-import zingg.common.client.util.ColValues;
 import zingg.common.core.util.GraphUtil;
-import zingg.common.client.util.ListMap;
-import zingg.common.core.Context;
-import zingg.common.core.feature.Feature;
-import zingg.common.core.feature.FeatureFactory;
-import zingg.common.core.hash.HashFunction;
+import zingg.common.core.util.HashUtil;
 import zingg.common.core.util.Metric;
 import zingg.common.core.util.ModelUtil;
 import zingg.common.core.util.PipeUtilBase;
-import zingg.common.core.util.HashUtil;
 
 
 public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S, D, R, C> {
@@ -130,8 +124,6 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
 		try {
             return getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
         } catch (ZinggClientException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
             return null;
         }
 	}
@@ -213,8 +205,10 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     public BlockingTreeUtil<S, D,R,C,T> getBlockingTreeUtil() {
         return context.getBlockingTreeUtil();
     }
-
-
-
-  
+    
+    @Override
+    public ITrainingHelper<S, D, R, C> getTrainingHelper() throws UnsupportedOperationException {
+    	throw new UnsupportedOperationException("not implement in "+this.getClass());
+    }    
+	  
  }

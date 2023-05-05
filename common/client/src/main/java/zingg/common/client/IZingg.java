@@ -37,5 +37,7 @@ public interface IZingg<S,D,R,C> {
 	public ClientOptions getClientOptions(); 
 
 	public void setSession(S session);
+	
+	public ITrainingHelper<S, D, R, C> getTrainingHelper() throws UnsupportedOperationException;
 
 }

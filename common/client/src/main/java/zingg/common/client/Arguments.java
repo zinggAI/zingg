@@ -92,6 +92,7 @@ import org.apache.commons.logging.LogFactory;
 @JsonInclude(Include.NON_NULL)
 public class Arguments implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	// creates DriverArgs and invokes the main object
 	Pipe[] output; 
 	Pipe[] data;	

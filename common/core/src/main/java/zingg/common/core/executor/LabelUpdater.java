@@ -14,11 +14,13 @@ import zingg.common.client.util.ColName;
 import zingg.common.core.util.LabelMatchType;
 
 public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
+	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.LabelUpdater";
 	public static final Log LOG = LogFactory.getLog(LabelUpdater.class);
 
 	public LabelUpdater() {
 		setZinggOptions(ZinggOptions.UPDATE_LABEL);
+		setTrainingHelper(new TrainingHelper<S,D,R,C>());
 	}
 
 	public void execute() throws ZinggClientException {
@@ -33,12 +35,12 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 		}
 	}
 
-	public void processRecordsCli(ZFrame<D,R,C> lines) throws ZinggClientException {
+	public ZFrame<D,R,C> processRecordsCli(ZFrame<D,R,C> lines) throws ZinggClientException {
 		LOG.info("Processing Records for CLI updateLabelling");
 
 		if (lines != null && lines.count() > 0) {
-			getMarkedRecordsStat(lines);
-			printMarkedRecordsStat();
+			getTrainingHelper().setMarkedRecordsStat(lines);
+			getTrainingHelper().printMarkedRecordsStat();
 
 			List<C> displayCols = getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
 			try {
@@ -63,13 +65,15 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 					}
 
 					matchFlag = currentPair.getAsInt(currentPair.head(),ColName.MATCH_FLAG_COL);
+					System.out.println("matchFlag :" +matchFlag);
+					currentPair.show();
 					String preMsg = String.format("\n\tThe record pairs belonging to the input cluster id %s are:", cluster_id);
 					String matchType = LabelMatchType.get(matchFlag).msg;
 					postMsg = String.format("\tThe above pair is labeled as %s\n", matchType);
 					selectedOption = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), preMsg, postMsg);
-					updateLabellerStat(selectedOption, +1);
-					updateLabellerStat(matchFlag, -1);
-					printMarkedRecordsStat();
+					getTrainingHelper().updateLabellerStat(selectedOption, +1);
+					getTrainingHelper().updateLabellerStat(matchFlag, -1);
+					getTrainingHelper().printMarkedRecordsStat();
 					if (selectedOption == 9) {
 						LOG.info("User has quit in the middle. Updating the records.");
 						break;
@@ -80,15 +84,16 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 						updatedRecords = updatedRecords
 								.filter(updatedRecords.notEqual(ColName.CLUSTER_COLUMN,cluster_id));
 					}
-					updatedRecords = updateRecords(selectedOption, currentPair, updatedRecords);
+					updatedRecords = getTrainingHelper().updateRecords(selectedOption, currentPair, updatedRecords);
 				} while (selectedOption != 9);
 
 				if (updatedRecords != null) {
 					updatedRecords = updatedRecords.union(recordsToUpdate);
 				}
-				writeLabelledOutput(updatedRecords);
+				getTrainingHelper().writeLabelledOutput(updatedRecords,args);
 				sc.close();
 				LOG.info("Processing finished.");
+				return updatedRecords;
 			} catch (Exception e) {
 				if (LOG.isDebugEnabled()) {
 					e.printStackTrace();
@@ -98,6 +103,7 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 			}
 		} else {
 			LOG.info("There is no marked record for updating. Please run findTrainingData/label jobs to generate training data.");
+			return null;
 		}
 	}
 
