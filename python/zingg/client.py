@@ -10,21 +10,72 @@ import pandas as pd
 from pyspark.sql import DataFrame
 
 from pyspark import SparkConf, SparkContext, SQLContext
-from pyspark.sql.session import SparkSession
+
 from py4j.java_collections import SetConverter, MapConverter, ListConverter
 
+from pyspark.sql import SparkSession
+import os
 LOG = logging.getLogger("zingg")
 
-sc = SparkContext.getOrCreate()
-sqlContext = SQLContext(sc)
-#spark = SparkSession(sc)
-spark = SparkSession.builder.getOrCreate()
-#sc = SparkContext.getOrCreate()
-jvm = sc._jvm
-gateway = sc._gateway
+_spark_ctxt = None
+_sqlContext = None
+_spark = None
 
-ColName = jvm.zingg.common.client.util.ColName
-MatchType = jvm.zingg.common.client.MatchType
+def initSparkClient():
+    global _spark_ctxt
+    global _sqlContext
+    global _spark    
+    _spark_ctxt = SparkContext.getOrCreate()
+    _sqlContext = SQLContext(_spark_ctxt)
+    _spark = SparkSession.builder.getOrCreate()
+    return 1
+
+def initDataBricksConectClient():
+    global _spark_ctxt
+    global _sqlContext
+    global _spark    
+    jar_path = os.getenv('ZINGG_HOME')+'/zingg-0.3.5-SNAPSHOT.jar'
+    _spark = SparkSession.builder.config('spark.jars', jar_path).getOrCreate()
+    _spark_ctxt = _spark.sparkContext
+    _sqlContext = SQLContext(_spark_ctxt)
+    return 1
+
+def initClient():
+    global _spark_ctxt
+    global _sqlContext
+    global _spark    
+    if _spark_ctxt is None:
+        DATA_BRICKS_CONNECT = os.getenv('DATA_BRICKS_CONNECT')
+        if DATA_BRICKS_CONNECT=='Y' or DATA_BRICKS_CONNECT=='y':
+            return initDataBricksConectClient()
+        else:
+            return initSparkClient()
+    else:
+        return 1
+
+def getSparkContext():
+    if _spark_ctxt is None:
+        initClient()
+    return _spark_ctxt
+
+def getSparkSession():
+    if _spark is None:
+        initClient()
+    return _spark
+
+def getSqlContext():
+    if _sqlContext is None:
+        initClient()
+    return _sqlContext
+
+def getJVM():
+    return getSparkContext()._jvm
+
+def getGateway():
+    return getSparkContext()._gateway
+
+ColName = getJVM().zingg.common.client.util.ColName
+MatchType = getJVM().zingg.common.client.MatchType
 
 def getDfFromDs(data):
     """ Method to convert spark dataset to dataframe
@@ -34,7 +85,7 @@ def getDfFromDs(data):
     :return: converted spark dataframe
     :rtype: DataFrame 
     """
-    return DataFrame(data.df(), sqlContext)
+    return DataFrame(data.df(), getSqlContext())
 
 def getPandasDfFromDs(data):
     """ Method to convert spark dataset to pandas dataframe
@@ -59,7 +110,7 @@ class Zingg:
     """
 
     def __init__(self, args, options):
-        self.client = jvm.zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions())
+        self.client = getJVM().zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions())
 
        
     def init(self):
@@ -90,6 +141,53 @@ class Zingg:
         :rtype: Dataset<Row> 
         """
         return self.client.getUnmarkedRecords()
+
+    def processRecordsCli(self,unmarkedRecords,args):
+        """ Method to get user input on unmarked records
+
+        :return: spark dataset containing updated records
+        :rtype: Dataset<Row> 
+        """
+        trainingHelper = self.client.getTrainingHelper()
+        if unmarkedRecords is not None and unmarkedRecords.count() > 0:
+            trainingHelper.printMarkedRecordsStat()
+            unmarkedRecords = unmarkedRecords.cache()
+            displayCols = trainingHelper.getDisplayColumns(unmarkedRecords, args.getArgs())
+            clusterIdZFrame = trainingHelper.getClusterIdsFrame(unmarkedRecords)
+            clusterIDs = trainingHelper.getClusterIds(clusterIdZFrame)
+            selected_option = -1
+            totalPairs = clusterIDs.size()
+            updatedRecords = None
+            for index in range(totalPairs):
+                currentPair = trainingHelper.getCurrentPair(unmarkedRecords, index, clusterIDs, clusterIdZFrame)
+
+                score = trainingHelper.getScore(currentPair)
+                prediction = trainingHelper.getPrediction(currentPair)
+
+                msg1 = trainingHelper.getMsg1(index, totalPairs)
+                msg2 = trainingHelper.getMsg2(prediction, score)
+
+                selected_option = trainingHelper.displayRecords(trainingHelper.getDSUtil().select(currentPair, displayCols), msg1, msg2)
+                selected_option = input("Enter choice: ")
+                #TODO if user does not input out of 0,1,2,9
+                trainingHelper.updateLabellerStat(int(selected_option), 1)
+                trainingHelper.printMarkedRecordsStat()
+                if int(selected_option) == 9:
+                    print("User has quit in the middle. Updating the records.")
+                    break               
+                updatedRecords = trainingHelper.updateRecords(int(selected_option), currentPair, updatedRecords)
+            
+            print("Processing finished.")
+            return updatedRecords
+        else:
+            print("It seems there are no unmarked records at this moment. Please run findTrainingData job to build some pairs to be labelled and then run this labeler.")
+            return None
+        
+    def writeLabelledOutput(self,updatedRecords,args):
+        """ Method to write updated records after user input
+        """
+        trainingHelper = self.client.getTrainingHelper()
+        trainingHelper.writeLabelledOutput(updatedRecords,args.getArgs())
 
     def setArguments(self, args):
         """ Method to set Arguments
@@ -175,7 +273,7 @@ class ZinggWithSpark(Zingg):
     """
 
     def __init__(self, args, options):
-        self.client = jvm.zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions(), spark._jsparkSession)
+        self.client = getJVM().zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions(), getSparkSession()._jsparkSession)
 
 
 class Arguments:
@@ -187,7 +285,7 @@ class Arguments:
     """
 
     def __init__(self):
-        self.args = jvm.zingg.common.client.Arguments()
+        self.args = getJVM().zingg.common.client.Arguments()
 
     def setFieldDefinition(self, fieldDef):
         """ Method convert python objects to java FieldDefinition objects and set the field definitions associated with this client
@@ -223,7 +321,7 @@ class Arguments:
         :param pipes: input data pipes separated by comma e.g. (pipe1,pipe2,..)
         :type pipes: Pipe[]
         """
-        dataPipe = gateway.new_array(jvm.zingg.common.client.pipe.Pipe, len(pipes))
+        dataPipe = getGateway().new_array(getJVM().zingg.common.client.pipe.Pipe, len(pipes))
         for idx, pipe in enumerate(pipes):
             dataPipe[idx] = pipe.getPipe()
         self.args.setData(dataPipe)
@@ -234,7 +332,7 @@ class Arguments:
         :param pipes: output data pipes separated by comma e.g. (pipe1,pipe2,..)
         :type pipes: Pipe[]
         """
-        outputPipe = gateway.new_array(jvm.zingg.common.client.pipe.Pipe, len(pipes))
+        outputPipe = getGateway().new_array(getJVM().zingg.common.client.pipe.Pipe, len(pipes))
         for idx, pipe in enumerate(pipes):
             outputPipe[idx] = pipe.getPipe()
         self.args.setOutput(outputPipe)
@@ -269,7 +367,7 @@ class Arguments:
         :param pipes: input training data pipes separated by comma e.g. (pipe1,pipe2,..)
         :type pipes: Pipe[]
         """
-        dataPipe = gateway.new_array(jvm.zingg.common.client.pipe.Pipe, len(pipes))
+        dataPipe = getGateway().new_array(getJVM().zingg.common.client.pipe.Pipe, len(pipes))
         for idx, pipe in enumerate(pipes):
             dataPipe[idx] = pipe.getPipe()
         self.args.setTrainingSamples(dataPipe)
@@ -317,7 +415,7 @@ class Arguments:
         :param fileName: The CONF parameter value of ClientOption object or file address of json file
         :type fileName: String
         """
-        jvm.zingg.common.client.Arguments.writeArgumentsToJSON(fileName, self.args)
+        getJVM().zingg.common.client.Arguments.writeArgumentsToJSON(fileName, self.args)
 
     def setStopWordsCutoff(self, stopWordsCutoff):
         """ Method to set stopWordsCutoff parameter value
@@ -340,7 +438,7 @@ class Arguments:
         :rtype: pointer(Arguments)
         """
         obj = Arguments()
-        obj.args = jvm.zingg.common.client.Arguments.createArgumentsFromJSON(fileName, phase)
+        obj.args = getJVM().zingg.common.client.Arguments.createArgumentsFromJSON(fileName, phase)
         return obj
     
     
@@ -354,12 +452,12 @@ class Arguments:
         :return: The pointer containing address of the this class object
         :rtype: pointer(Arguments)
         """
-        return jvm.zingg.common.client.Arguments.writeArgumentstoJSONString(self.args)
+        return getJVM().zingg.common.client.Arguments.writeArgumentstoJSONString(self.args)
     
     @staticmethod
     def createArgumentsFromJSONString(jsonArgs, phase):
         obj = Arguments()
-        obj.args = jvm.zingg.common.client.Arguments.createArgumentsFromJSONString(jsonArgs, phase)
+        obj.args = getJVM().zingg.common.client.Arguments.createArgumentsFromJSONString(jsonArgs, phase)
         return obj
     
     
@@ -378,21 +476,21 @@ class ClientOptions:
     :param args: Parse a list of Zingg command line options parameter values e.g. "--location" etc. optional argument for initializing this class.
     :type args: List(String) or None
     """
-    PHASE = jvm.zingg.common.client.ClientOptions.PHASE 
+    PHASE = getJVM().zingg.common.client.ClientOptions.PHASE 
     """:PHASE: phase parameter for this class"""
-    CONF = jvm.zingg.common.client.ClientOptions.CONF
+    CONF = getJVM().zingg.common.client.ClientOptions.CONF
     """:CONF: conf parameter for this class"""
-    LICENSE = jvm.zingg.common.client.ClientOptions.LICENSE
+    LICENSE = getJVM().zingg.common.client.ClientOptions.LICENSE
     """:LICENSE: license parameter for this class"""
-    EMAIL = jvm.zingg.common.client.ClientOptions.EMAIL
+    EMAIL = getJVM().zingg.common.client.ClientOptions.EMAIL
     """:EMAIL: e-mail parameter for this class"""
-    LOCATION = jvm.zingg.common.client.ClientOptions.LOCATION
+    LOCATION = getJVM().zingg.common.client.ClientOptions.LOCATION
     """:LOCATION: location parameter for this class"""
-    REMOTE = jvm.zingg.common.client.ClientOptions.REMOTE
+    REMOTE = getJVM().zingg.common.client.ClientOptions.REMOTE
     """:REMOTE: remote option used internally for running on Databricks"""
-    ZINGG_DIR = jvm.zingg.common.client.ClientOptions.ZINGG_DIR
+    ZINGG_DIR = getJVM().zingg.common.client.ClientOptions.ZINGG_DIR
     """:ZINGG_DIR: location where Zingg saves the model, training data etc"""
-    MODEL_ID = jvm.zingg.common.client.ClientOptions.MODEL_ID
+    MODEL_ID = getJVM().zingg.common.client.ClientOptions.MODEL_ID
     """:MODEL_ID: ZINGG_DIR/MODEL_ID is used to save the model"""
 
     def __init__(self, argsSent=None):
@@ -414,7 +512,7 @@ class ClientOptions:
             args.append(self.CONF)
             args.append("dummyConf.json")
         print("arguments for client options are ", args) 
-        self.co = jvm.zingg.common.client.ClientOptions(args)
+        self.co = getJVM().zingg.common.client.ClientOptions(args)
     
     
     def getClientOptions(self):
@@ -503,7 +601,7 @@ class FieldDefinition:
     """
 
     def __init__(self, name, dataType, *matchType):
-        self.fd = jvm.zingg.common.client.FieldDefinition()
+        self.fd = getJVM().zingg.common.client.FieldDefinition()
         self.fd.setFieldName(name)
         self.fd.setDataType(self.stringify(dataType))
         self.fd.setMatchType(matchType)

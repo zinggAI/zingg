@@ -21,29 +21,18 @@ args.setZinggDir("dbfs:/FileStore/tables/models")
 args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.4)
 
-#reading dataset into inputPipe and settint it up in 'args'
-#below line should not be required if you are reading from in memory dataset
-#in that case, replace df with input df
-#schemaType = {'id': 'string', 'title': 'string', 'description': 'string', 'manufacturer': 'string', 'price': 'string'}
-#amzDF = pandas.read_csv("~/zingg/examples/amazon-google/Amazon.csv", encoding="iso-8859-1", dtype=schemaType)
-#amzDF.info()
-#print(amzDF)
-#amzDF = amzDF[~amzDF['description'].isnull()] 
-#amzDF.info()
+
 schema = StructType([StructField("id", StringType(), True)\
                    ,StructField("title", StringType(), True)\
                    ,StructField("description", StringType(), True)\
                    ,StructField("manufacturer", StringType(), True)\
                    ,StructField("price", DoubleType(), True)])
 
-#gDF = pandas.read_csv("~/zingg/examples/amazon-google/Amazon.csv", encoding="iso-8859-1")
-#amzDF = pandas.DataFrame()
-#gDF=pandas.DataFrame()
+
 inputPipeAmazon=InMemoryPipe("amz")
-#inputPipeAmazon.setSchema("id string, title string, description string, manufacturer string, price string")
-inputPipeAmazon.setDataset(spark.read.format("csv").schema(schema).load("dbfs:/FileStore/tables/Amazon.csv"))
+inputPipeAmazon.setDataset(getSparkSession().read.format("csv").schema(schema).load("dbfs:/FileStore/tables/Amazon.csv"))
 inputPipeGoogle=InMemoryPipe("google")
-inputPipeGoogle.setDataset(spark.read.format("csv").schema(schema).load("dbfs:/FileStore/tables/GoogleProducts.csv"))
+inputPipeGoogle.setDataset(getSparkSession().read.format("csv").schema(schema).load("dbfs:/FileStore/tables/GoogleProducts.csv"))
 
 args.setData(inputPipeAmazon,inputPipeGoogle)
 
@@ -52,9 +41,24 @@ outputPipe = CsvPipe("resultAmazonGoogle", "dbfs:/FileStore/tables/AwsGoogleOutp
 
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
+inpPhase = input("Enter phase: ")
+
+options = ClientOptions([ClientOptions.PHASE,inpPhase])
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
-zingg.initAndExecute()
+
+if (inpPhase!="label"):
+    zingg.initAndExecute()
+else:
+    print("label phase")
+    zingg.init()
+    unmarkedRecords = zingg.getUnmarkedRecords()
+    unmarkedRecords.show()
+    print(unmarkedRecords.count())
+    updatedRecords = zingg.processRecordsCli(unmarkedRecords,args)
+    print("updated records")
+    if updatedRecords is not None:
+        updatedRecords.show()
+        zingg.writeLabelledOutput(updatedRecords,args)
 
