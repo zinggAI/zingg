@@ -10,7 +10,7 @@ def main():
     
     # ckecking for mandatory option --location for this phase
     if(ClientOptions(sys.argv[1:]).hasLocation()==False):
-        LOG.error("--location argument is mandatory for this phase")
+        LOG.error("--location argument is mandatory for this phase, please specify")
         LOG.info("--location is location of CSV file for exported data")
         sys.exit()
     
@@ -23,7 +23,7 @@ def main():
     client.init()
 
     pMarkedDF = getPandasDfFromDs(client.getMarkedRecords())
-    labelledData = spark.createDataFrame(pMarkedDF)
+    labelledData = getSparkSession().createDataFrame(pMarkedDF)
     location = options.getLocation()
 
     export_data(labelledData, location)
