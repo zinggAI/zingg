@@ -4,6 +4,20 @@ parent: Running Zingg on Cloud
 nav_order: 6
 ---
 
+# Running using Databricks Connect
+
+1. Configure databricks connect 11.3 and create correspoding workspace/cluster
+https://docs.databricks.com/dev-tools/databricks-connect-legacy.html
+
+2. Set env variable ZINGG_HOME to the path where latest zingg release jar is e.g. location of zingg-0.3.5-SNAPSHOT.jar
+
+4. Set env variable DATA_BRICKS_CONNECT to Y
+
+5. pip install zingg
+
+6. Now run zingg using the shell script with --run option, SPARK session would be made remotely to data bricks and job would run on your databricks environment
+https://docs.zingg.ai/zingg/stepbystep/zingg-command-line
+
 # Running on Databricks
 
 The cloud environment does not have the system console for the labeler to work. Zingg is run as a Spark Submit Job along with a python notebook-based labeler specially created to run within the Databricks cloud.
