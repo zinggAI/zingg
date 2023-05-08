@@ -2,6 +2,8 @@ package zingg.common.client;
 
 import java.util.List;
 
+import zingg.common.client.pipe.Pipe;
+
 public interface ITrainingHelper<S, D, R, C> {
 
 	public void setMarkedRecordsStat(ZFrame<D, R, C> markedRecords);
@@ -39,5 +41,7 @@ public interface ITrainingHelper<S, D, R, C> {
 	public void printMarkedRecordsStat();
 
 	public void writeLabelledOutput(ZFrame<D, R, C> records, Arguments args) throws ZinggClientException;
+	
+	public void writeLabelledOutput(ZFrame<D,R,C> records, Arguments args, Pipe p) throws ZinggClientException;
 	
 }

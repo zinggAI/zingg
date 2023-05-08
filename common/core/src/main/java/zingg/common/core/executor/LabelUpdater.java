@@ -65,8 +65,6 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 					}
 
 					matchFlag = currentPair.getAsInt(currentPair.head(),ColName.MATCH_FLAG_COL);
-					System.out.println("matchFlag :" +matchFlag);
-					currentPair.show();
 					String preMsg = String.format("\n\tThe record pairs belonging to the input cluster id %s are:", cluster_id);
 					String matchType = LabelMatchType.get(matchFlag).msg;
 					postMsg = String.format("\tThe above pair is labeled as %s\n", matchType);
@@ -90,7 +88,7 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 				if (updatedRecords != null) {
 					updatedRecords = updatedRecords.union(recordsToUpdate);
 				}
-				getTrainingHelper().writeLabelledOutput(updatedRecords,args);
+				getTrainingHelper().writeLabelledOutput(updatedRecords,args,getOutputPipe());
 				sc.close();
 				LOG.info("Processing finished.");
 				return updatedRecords;

@@ -134,7 +134,7 @@ public class TrainingHelper<S,D,R,C>  implements Serializable, ITrainingHelper<S
 	@Override
 	public ZFrame<D,R,C> updateRecords(int matchValue, ZFrame<D,R,C> newRecords, ZFrame<D,R,C> updatedRecords) {
 		newRecords = newRecords.withColumn(ColName.MATCH_FLAG_COL, matchValue);
-		if (updatedRecords == null) {
+		if (updatedRecords == null) {			
 			updatedRecords = newRecords;
 		} else {
 			updatedRecords = updatedRecords.union(newRecords);
@@ -170,20 +170,25 @@ public class TrainingHelper<S,D,R,C>  implements Serializable, ITrainingHelper<S
 		System.out.println();					
 		System.out.println(msg);
 	}
-
+	
 	@Override
 	public void writeLabelledOutput(ZFrame<D,R,C> records, Arguments args) throws ZinggClientException {
+		Pipe p = getOutputPipe(args);
+		writeLabelledOutput(records,args,p);
+	}
+
+	@Override
+	public void writeLabelledOutput(ZFrame<D,R,C> records, Arguments args, Pipe p) throws ZinggClientException {
 		if (records == null) {
 			LOG.warn("No records to be labelled.");
 			return;
-		}		
-		getPipeUtil().write(records, args,getOutputPipe(args));
+		}
+		getPipeUtil().write(records, args,p);
 	}
-
+	
 	protected Pipe getOutputPipe(Arguments args) {
 		return getPipeUtil().getTrainingDataMarkedPipe(args);
 	}
-	
 
 	public DSUtil<S,D,R,C> getDSUtil() {
         return dsUtil;
