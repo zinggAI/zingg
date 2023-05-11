@@ -15,7 +15,6 @@ import sys
 ##check header is passed
 
 
-
 job_spec_template = {
     
      "email_notifications": {
@@ -195,7 +194,7 @@ class DbfsHelper:
 
 class JobsHelper:
 
-     """ This class runs Databricks Zingg jobs using the Databricks REST API from user machine. 
+    """ This class runs Databricks Zingg jobs using the Databricks REST API from user machine. 
 
     """
     
@@ -275,10 +274,4 @@ class DatabricksJobsHelper(JobsHelper):
         )
         self.jobs_api=JobsApi(self.api_client)
         self.runs_api=RunsApi(self.api_client)        
-
-
-
-
-
-
 
