@@ -189,6 +189,13 @@ class Zingg:
         trainingHelper = self.client.getTrainingHelper()
         trainingHelper.writeLabelledOutput(updatedRecords,args.getArgs())
 
+    def writeLabelledOutputFromPandas(self,candidate_pairs_pd,args):
+        """ Method to write updated records (as pandas df) after user input
+        """
+        markedRecordsAsDS = (getSparkSession().createDataFrame(candidate_pairs_pd))._jdf
+        updatedRecords = getJVM().zingg.spark.client.SparkFrame(markedRecordsAsDS)
+        self.writeLabelledOutput(updatedRecords,args)
+
     def setArguments(self, args):
         """ Method to set Arguments
 
