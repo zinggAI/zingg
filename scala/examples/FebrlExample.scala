@@ -9,61 +9,61 @@ val args = new Arguments();
 //set field definitions
 val fname = new FieldDefinition();
 fname.setFieldName("fname");
-fname.setDataType("\"string\"");
+fname.setDataType("string");
 fname.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.FUZZY)));
 fname.setFields("fname");
 
 val lname = new FieldDefinition();
 lname.setFieldName("lname");
-lname.setDataType("\"string\"");
+lname.setDataType("string");
 lname.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.FUZZY)));
 lname.setFields("lname");
 
 val stNo = new FieldDefinition();
 stNo.setFieldName("stNo");
-stNo.setDataType("\"string\"");
+stNo.setDataType("string");
 stNo.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.EXACT)));
 stNo.setFields("stNo");
 
 val add1 = new FieldDefinition();
 add1.setFieldName("add1");
-add1.setDataType("\"string\"");
+add1.setDataType("string");
 add1.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.FUZZY)));
 add1.setFields("add1");
 
 val add2 = new FieldDefinition();
 add2.setFieldName("add2");
-add2.setDataType("\"string\"");
+add2.setDataType("string");
 add2.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.FUZZY)));
 add2.setFields("add2");
 
 val city = new FieldDefinition();
 city.setFieldName("city");
-city.setDataType("\"string\"");
+city.setDataType("string");
 city.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.FUZZY)));
 city.setFields("city");
 
 val areacode = new FieldDefinition();
 areacode.setFieldName("areacode");
-areacode.setDataType("\"string\"");
+areacode.setDataType("string");
 areacode.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.EXACT)));
 areacode.setFields("areacode");
 
 val state = new FieldDefinition();
 state.setFieldName("state");
-state.setDataType("\"string\"");
+state.setDataType("string");
 state.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.FUZZY)));
 state.setFields("state");
 
 val dob = new FieldDefinition();
 dob.setFieldName("dob");
-dob.setDataType("\"string\"");
+dob.setDataType("string");
 dob.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.FUZZY)));
 dob.setFields("dob");
 
 val ssn = new FieldDefinition();
 ssn.setFieldName("ssn");
-ssn.setDataType("\"string\"");
+ssn.setDataType("string");
 ssn.setMatchType(new ArrayList[MatchType](Arrays.asList(MatchType.FUZZY)));
 ssn.setFields("ssn");
 :silent

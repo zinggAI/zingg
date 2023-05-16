@@ -22,7 +22,7 @@ Once you have verified the above stop words, you can configure them in the JSON 
    		"fieldName" : "fname",
    		"matchType" : "fuzzy",
    		"fields" : "fname",
-   		"dataType": "\"string\"",
+   		"dataType": "string",
    		"stopWords": "models/100/stopWords/fname.csv"
    	},
 ```
