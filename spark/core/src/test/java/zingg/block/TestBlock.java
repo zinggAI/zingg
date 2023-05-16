@@ -90,7 +90,7 @@ public class TestBlock  extends ZinggSparkTester {
 		List<FieldDefinition> fdList = new ArrayList<>(4);
 
 		FieldDefinition idFD = new FieldDefinition();
-		idFD.setDataType("\"integer\"");
+		idFD.setDataType("integer");
 		idFD.setFieldName("id");
 		ArrayList<MatchType> matchTypelistId = new ArrayList<MatchType>();
 		matchTypelistId.add(MatchType.DONT_USE);
@@ -102,19 +102,19 @@ public class TestBlock  extends ZinggSparkTester {
 
 		
 		FieldDefinition yearFD = new FieldDefinition();
-		yearFD.setDataType("\"integer\"");
+		yearFD.setDataType("integer");
 		yearFD.setFieldName("year");
 		yearFD.setMatchType(matchTypelistFuzzy);
 		fdList.add(yearFD);
 		
 		FieldDefinition eventFD = new FieldDefinition();
-		eventFD.setDataType("\"string\"");
+		eventFD.setDataType("string");
 		eventFD.setFieldName("event");
 		eventFD.setMatchType(matchTypelistFuzzy);
 		fdList.add(eventFD);
 		
 		FieldDefinition commentFD = new FieldDefinition();
-		commentFD.setDataType("\"string\"");
+		commentFD.setDataType("string");
 		commentFD.setFieldName("comment");
 		commentFD.setMatchType(matchTypelistFuzzy);
 		fdList.add(commentFD);

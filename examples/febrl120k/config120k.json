@@ -4,61 +4,61 @@
 			"fieldName" : "fname",
 			"matchType" : "email",
 			"fields" : "fname",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "lname",
 			"matchType" : "fuzzy",
 			"fields" : "lname",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "stNo",
 			"matchType": "exact",
 			"fields" : "stNo",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "add1",
 			"matchType": "fuzzy",
 			"fields" : "add1",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "add2",
 			"matchType": "fuzzy",
 			"fields" : "add2",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "city",
 			"matchType": "fuzzy",
 			"fields" : "city",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "areacode",
 			"matchType": "exact",
 			"fields" : "areacode",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "state",
 			"matchType": "fuzzy",
 			"fields" : "state",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "dob",
 			"matchType": "fuzzy",
 			"fields" : "dob",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "ssn",
 			"matchType": "fuzzy",
 			"fields" : "ssn",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		}
 		],
 		"output" : [{

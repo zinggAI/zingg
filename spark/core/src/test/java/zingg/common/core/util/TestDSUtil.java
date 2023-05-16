@@ -34,19 +34,19 @@ public class TestDSUtil extends ZinggSparkTester{
 		
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field_fuzzy");
-		def1.setDataType("\"string\"");
+		def1.setDataType("string");
 		def1.setMatchTypeInternal(MatchType.FUZZY);
 		def1.setFields("field_fuzzy");
 
 		FieldDefinition def2 = new FieldDefinition();
 		def2.setFieldName("field_match_type_DONT_USE");
-		def2.setDataType("\"string\"");
+		def2.setDataType("string");
 		def2.setMatchTypeInternal(MatchType.DONT_USE);
 		def2.setFields("field_match_type_DONT_USE");
 
 		FieldDefinition def3 = new FieldDefinition();
 		def3.setFieldName("field_str_DONTspaceUSE");
-		def3.setDataType("\"string\"");
+		def3.setDataType("string");
 		def3.setMatchTypeInternal(MatchType.getMatchType("DONT_USE"));
 		def3.setFields("field_str_DONTspaceUSE");
 
@@ -62,9 +62,9 @@ public class TestDSUtil extends ZinggSparkTester{
 			e.printStackTrace();
 		}
 		StructType schema = DataTypes.createStructType(new StructField[] { 
-			DataTypes.createStructField(def1.getFieldName(), DataType.fromJson(def1.getDataType()), false), 
-			DataTypes.createStructField(def2.getFieldName(), DataType.fromJson(def2.getDataType()), false),
-			DataTypes.createStructField(def3.getFieldName(), DataType.fromJson(def3.getDataType()), false),
+			DataTypes.createStructField(def1.getFieldName(), DataType.fromDDL(def1.getDataType()), false), 
+			DataTypes.createStructField(def2.getFieldName(), DataType.fromDDL(def2.getDataType()), false),
+			DataTypes.createStructField(def3.getFieldName(), DataType.fromDDL(def3.getDataType()), false),
 			DataTypes.createStructField(ColName.SOURCE_COL, DataTypes.StringType, false) 
 		});
 		List<Row> list = Arrays.asList(RowFactory.create("1", "first", "one", "Junit"), RowFactory.create("2", "second", "two", "Junit"), 
@@ -85,19 +85,19 @@ public class TestDSUtil extends ZinggSparkTester{
 	public void testGetFieldDefColumnsWhenShowConciseIsFalse() throws ZinggClientException {
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field_fuzzy");
-		def1.setDataType("\"string\"");
+		def1.setDataType("string");
 		def1.setMatchTypeInternal(MatchType.FUZZY);
 		def1.setFields("field_fuzzy");
 
 		FieldDefinition def2 = new FieldDefinition();
 		def2.setFieldName("field_match_type_DONT_USE");
-		def2.setDataType("\"string\"");
+		def2.setDataType("string");
 		def2.setMatchTypeInternal(MatchType.DONT_USE);
 		def2.setFields("field_match_type_DONT_USE");
 
 		FieldDefinition def3 = new FieldDefinition();
 		def3.setFieldName("field_str_DONTspaceUSE");
-		def3.setDataType("\"string\"");
+		def3.setDataType("string");
 		def3.setMatchTypeInternal(MatchType.getMatchType("DONT_USE"));
 		def3.setFields("field_str_DONTspaceUSE");
 
@@ -113,9 +113,9 @@ public class TestDSUtil extends ZinggSparkTester{
 			e.printStackTrace();
 		}
 		StructType schema = DataTypes.createStructType(new StructField[] { 
-			DataTypes.createStructField(def1.getFieldName(), DataType.fromJson(def1.getDataType()), false), 
-			DataTypes.createStructField(def2.getFieldName(), DataType.fromJson(def2.getDataType()), false),
-			DataTypes.createStructField(def3.getFieldName(), DataType.fromJson(def3.getDataType()), false),
+			DataTypes.createStructField(def1.getFieldName(), DataType.fromDDL(def1.getDataType()), false), 
+			DataTypes.createStructField(def2.getFieldName(), DataType.fromDDL(def2.getDataType()), false),
+			DataTypes.createStructField(def3.getFieldName(), DataType.fromDDL(def3.getDataType()), false),
 			DataTypes.createStructField(ColName.SOURCE_COL, DataTypes.StringType, false) 
 		});
 		List<Row> list = Arrays.asList(RowFactory.create("1", "first", "one", "Junit"), RowFactory.create("2", "second", "two", "Junit"), 
