@@ -1,29 +1,18 @@
 package zingg.common.core.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.Arguments;
-import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZFrame;
-import zingg.common.client.util.ColName;
+import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
 //import zingg.common.client.pipe.InMemoryPipe;
 import zingg.common.client.pipe.Pipe;
-import scala.Option;
-import scala.collection.JavaConverters;
-import scala.collection.Seq;
-
-import zingg.common.core.util.PipeUtilBase;
+import zingg.common.client.util.ColName;
 
 //import com.datastax.spark.connector.cql.*;
 //import org.elasticsearch.spark.sql.api.java.JavaEsSparkSQL;
@@ -134,6 +123,11 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 
 	public ZFrame<D,R,C> readInternal(boolean addLineNo,
 			boolean addSource, Pipe<D,R,C>... pipes) throws ZinggClientException {
+		return readInternal(false, addLineNo,addSource, pipes);
+	}
+
+	public ZFrame<D,R,C> readInternal(boolean addExtraCol, boolean addLineNo,
+			boolean addSource, Pipe<D,R,C>... pipes) throws ZinggClientException {
 		ZFrame<D,R,C> input = null;
 
 		for (Pipe p : pipes) {
@@ -141,7 +135,11 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 				input = readInternal(p, addSource);
 				LOG.debug("input size is " + input.count());				
 			} else {
+				if(!addExtraCol) {
 					input = input.union(readInternal(p, addSource));
+				} else {
+					input = input.unionByName(readInternal(p, addSource),true);
+				}
 			}
 		}
 		// we will probably need to create row number as string with pipename/id as
@@ -150,9 +148,7 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 			input = addLineNo(input); //new SparkFrame(new SparkDSUtil(getSession()).addRowNumber(input).df());
 		// we need to transform the input here by using stop words
 		return input;
-	}
-
-	
+	}	
 
 	public ZFrame<D,R,C> read(boolean addLineNo, boolean addSource, Pipe<D,R,C>... pipes) throws ZinggClientException {
 		ZFrame<D,R,C> rows = readInternal(addLineNo, addSource, pipes);
@@ -178,12 +174,17 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 
 	public  ZFrame<D,R,C> read(boolean addLineNo, int numPartitions,
 			boolean addSource, Pipe<D,R,C>... pipes) throws ZinggClientException {
-		ZFrame<D,R,C> rows = readInternal(addLineNo, addSource, pipes);
+		return read(false, addLineNo, numPartitions, addSource, pipes);
+	}
+
+	public  ZFrame<D,R,C> read(boolean addExtraCol, boolean addLineNo, int numPartitions,
+			boolean addSource, Pipe<D,R,C>... pipes) throws ZinggClientException {
+		ZFrame<D,R,C> rows = readInternal(addExtraCol, addLineNo, addSource, pipes);
 		rows = rows.repartition(numPartitions);
 		rows = rows.cache();
 		return rows;
 	}
-
+	
 	public  void write(ZFrame<D,R,C> toWriteOrig, Arguments args, 
 		Pipe<D,R,C>... pipes) throws ZinggClientException {
 		try {
