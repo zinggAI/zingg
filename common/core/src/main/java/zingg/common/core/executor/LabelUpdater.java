@@ -15,17 +15,18 @@ import zingg.common.core.util.LabelMatchType;
 
 public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	private static final long serialVersionUID = 1L;
-	protected static String name = "zingg.LabelUpdater";
+	protected static String name = "zingg.common.core.executor.LabelUpdater";
 	public static final Log LOG = LogFactory.getLog(LabelUpdater.class);
 
 	public LabelUpdater() {
 		setZinggOptions(ZinggOptions.UPDATE_LABEL);
-		setTrainingHelper(new TrainingHelper<S,D,R,C>());
 	}
 
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Reading inputs for updateLabelling phase ...");
+			setTrainingDataModel(new TrainingDataModel<S,D,R,C,T>(getContext(), getZinggOptions(), getClientOptions()));
+			setLabelDataViewHelper(new LabelDataViewHelper<S,D,R,C,T>(getContext(), getZinggOptions(), getClientOptions()));
 			ZFrame<D,R,C> markedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
 			processRecordsCli(markedRecords);
 			LOG.info("Finished updataLabelling phase");
@@ -39,8 +40,14 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 		LOG.info("Processing Records for CLI updateLabelling");
 
 		if (lines != null && lines.count() > 0) {
-			getTrainingHelper().setMarkedRecordsStat(lines);
-			getTrainingHelper().printMarkedRecordsStat();
+			getTrainingDataModel().setMarkedRecordsStat(lines);
+			getLabelDataViewHelper().printMarkedRecordsStat(
+					getTrainingDataModel().getPositivePairsCount(),
+					getTrainingDataModel().getNegativePairsCount(),
+					getTrainingDataModel().getNotSurePairsCount(),
+					getTrainingDataModel().getTotalCount()
+					);
+
 
 			List<C> displayCols = getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
 			try {
@@ -69,9 +76,15 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 					String matchType = LabelMatchType.get(matchFlag).msg;
 					postMsg = String.format("\tThe above pair is labeled as %s\n", matchType);
 					selectedOption = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), preMsg, postMsg);
-					getTrainingHelper().updateLabellerStat(selectedOption, +1);
-					getTrainingHelper().updateLabellerStat(matchFlag, -1);
-					getTrainingHelper().printMarkedRecordsStat();
+					getTrainingDataModel().updateLabellerStat(selectedOption, +1);
+					getTrainingDataModel().updateLabellerStat(matchFlag, -1);
+					getLabelDataViewHelper().printMarkedRecordsStat(
+							getTrainingDataModel().getPositivePairsCount(),
+							getTrainingDataModel().getNegativePairsCount(),
+							getTrainingDataModel().getNotSurePairsCount(),
+							getTrainingDataModel().getTotalCount()
+							);
+
 					if (selectedOption == 9) {
 						LOG.info("User has quit in the middle. Updating the records.");
 						break;
@@ -82,13 +95,13 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 						updatedRecords = updatedRecords
 								.filter(updatedRecords.notEqual(ColName.CLUSTER_COLUMN,cluster_id));
 					}
-					updatedRecords = getTrainingHelper().updateRecords(selectedOption, currentPair, updatedRecords);
+					updatedRecords = getTrainingDataModel().updateRecords(selectedOption, currentPair, updatedRecords);
 				} while (selectedOption != 9);
 
 				if (updatedRecords != null) {
 					updatedRecords = updatedRecords.union(recordsToUpdate);
 				}
-				getTrainingHelper().writeLabelledOutput(updatedRecords,args,getOutputPipe());
+				getTrainingDataModel().writeLabelledOutput(updatedRecords,args,getOutputPipe());
 				sc.close();
 				LOG.info("Processing finished.");
 				return updatedRecords;

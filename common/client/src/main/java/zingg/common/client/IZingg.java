@@ -38,6 +38,8 @@ public interface IZingg<S,D,R,C> {
 
 	public void setSession(S session);
 	
-	public ITrainingHelper<S, D, R, C> getTrainingHelper() throws UnsupportedOperationException;
-
+	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException;
+	
+	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException;
+	
 }

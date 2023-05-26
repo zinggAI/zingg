@@ -284,8 +284,13 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		return zingg.getUnmarkedRecords();
 	}
 
-    public ITrainingHelper<S, D, R, C> getTrainingHelper() throws UnsupportedOperationException {
-    	return zingg.getTrainingHelper();
+    public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException {
+    	return zingg.getTrainingDataModel();
     }    
 
+    public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException {
+    	return zingg.getLabelDataViewHelper();
+    }    
+    
+    
 }

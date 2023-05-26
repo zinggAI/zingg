@@ -7,7 +7,8 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ClientOptions;
-import zingg.common.client.ITrainingHelper;
+import zingg.common.client.ILabelDataViewHelper;
+import zingg.common.client.ITrainingDataModel;
 import zingg.common.client.IZingg;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
@@ -206,9 +207,14 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
         return context.getBlockingTreeUtil();
     }
     
-    @Override
-    public ITrainingHelper<S, D, R, C> getTrainingHelper() throws UnsupportedOperationException {
+    @Override   
+    public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException {
     	throw new UnsupportedOperationException("not implement in "+this.getClass());
     }    
-	  
+    
+    @Override  
+    public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException {
+    	throw new UnsupportedOperationException("not implement in "+this.getClass());
+    }
+    
  }

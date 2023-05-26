@@ -6,7 +6,8 @@ import java.util.Scanner;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.ITrainingHelper;
+import zingg.common.client.ILabelDataViewHelper;
+import zingg.common.client.ITrainingDataModel;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
@@ -15,23 +16,25 @@ import zingg.common.client.util.ColName;
 public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
 	private static final long serialVersionUID = 1L;
-	protected static String name = "zingg.Labeller";
+	protected static String name = "zingg.common.core.executor.Labeller";
 	public static final Log LOG = LogFactory.getLog(Labeller.class);
-	protected ITrainingHelper<S, D, R, C> trainingHelper;
-
+	protected ITrainingDataModel<S, D, R, C> trainingDataModel;
+	protected ILabelDataViewHelper<S, D, R, C> labelDataViewHelper;
+	
 	public Labeller() {
 		setZinggOptions(ZinggOptions.LABEL);
-		setTrainingHelper(new TrainingHelper<S,D,R,C>());
 	}
 
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Reading inputs for labelling phase ...");
-			getTrainingHelper().setMarkedRecordsStat(getMarkedRecords());
+			setTrainingDataModel(new TrainingDataModel<S,D,R,C,T>(getContext(), getZinggOptions(), getClientOptions()));
+			setLabelDataViewHelper(new LabelDataViewHelper<S,D,R,C,T>(getContext(), getZinggOptions(), getClientOptions()));
+			getTrainingDataModel().setMarkedRecordsStat(getMarkedRecords());
 			ZFrame<D,R,C>  unmarkedRecords = getUnmarkedRecords();
 			ZFrame<D,R,C>  updatedLabelledRecords = processRecordsCli(unmarkedRecords);
 			if (updatedLabelledRecords != null) {
-				getTrainingHelper().writeLabelledOutput(updatedLabelledRecords,args);
+				getTrainingDataModel().writeLabelledOutput(updatedLabelledRecords,args);
 			}
 			LOG.info("Finished labelling phase");
 		} catch (Exception e) {
@@ -56,7 +59,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 			if (markedRecords != null ) {
 				unmarkedRecords = unmarkedRecords.join(markedRecords,ColName.CLUSTER_COLUMN, false,
 						"left_anti");
-				getTrainingHelper().setMarkedRecordsStat(markedRecords);
+				getTrainingDataModel().setMarkedRecordsStat(markedRecords);
 			} 
 		} catch (Exception e) {
 			LOG.warn("No unmarked record for labelling");
@@ -70,16 +73,21 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 	public ZFrame<D,R,C> processRecordsCli(ZFrame<D,R,C>  lines) throws ZinggClientException {
 		LOG.info("Processing Records for CLI Labelling");
 		if (lines != null && lines.count() > 0) {
-			getTrainingHelper().printMarkedRecordsStat();
+			getLabelDataViewHelper().printMarkedRecordsStat(
+					getTrainingDataModel().getPositivePairsCount(),
+					getTrainingDataModel().getNegativePairsCount(),
+					getTrainingDataModel().getNotSurePairsCount(),
+					getTrainingDataModel().getTotalCount()
+					);
 
 			lines = lines.cache();
-			List<C> displayCols = getTrainingHelper().getDisplayColumns(lines, args);
+			List<C> displayCols = getLabelDataViewHelper().getDisplayColumns(lines, args);
 			//have to introduce as snowframe can not handle row.getAs with column
 			//name and row and lines are out of order for the code to work properly
 			//snow getAsString expects row to have same struc as dataframe which is 
 			//not happening
-			ZFrame<D,R,C> clusterIdZFrame = getTrainingHelper().getClusterIdsFrame(lines);
-			List<R>  clusterIDs = getTrainingHelper().getClusterIds(clusterIdZFrame);
+			ZFrame<D,R,C> clusterIdZFrame = getLabelDataViewHelper().getClusterIdsFrame(lines);
+			List<R>  clusterIDs = getLabelDataViewHelper().getClusterIds(clusterIdZFrame);
 			try {
 				double score;
 				double prediction;
@@ -89,23 +97,28 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 				int totalPairs = clusterIDs.size();
 
 				for (int index = 0; index < totalPairs; index++) {
-					ZFrame<D,R,C>  currentPair = getTrainingHelper().getCurrentPair(lines, index, clusterIDs, clusterIdZFrame);
+					ZFrame<D,R,C>  currentPair = getLabelDataViewHelper().getCurrentPair(lines, index, clusterIDs, clusterIdZFrame);
 
-					score = getTrainingHelper().getScore(currentPair);
-					prediction = getTrainingHelper().getPrediction(currentPair);
+					score = getLabelDataViewHelper().getScore(currentPair);
+					prediction = getLabelDataViewHelper().getPrediction(currentPair);
 
-					msg1 = getTrainingHelper().getMsg1(index, totalPairs);
-					msg2 = getTrainingHelper().getMsg2(prediction, score);
+					msg1 = getLabelDataViewHelper().getMsg1(index, totalPairs);
+					msg2 = getLabelDataViewHelper().getMsg2(prediction, score);
 					//String msgHeader = msg1 + msg2;
 
 					selected_option = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), msg1, msg2);
-					getTrainingHelper().updateLabellerStat(selected_option, 1);
-					getTrainingHelper().printMarkedRecordsStat();
+					getTrainingDataModel().updateLabellerStat(selected_option, 1);
+					getLabelDataViewHelper().printMarkedRecordsStat(
+							getTrainingDataModel().getPositivePairsCount(),
+							getTrainingDataModel().getNegativePairsCount(),
+							getTrainingDataModel().getNotSurePairsCount(),
+							getTrainingDataModel().getTotalCount()
+							);
 					if (selected_option == 9) {
 						LOG.info("User has quit in the middle. Updating the records.");
 						break;
 					}
-					updatedRecords = getTrainingHelper().updateRecords(selected_option, currentPair, updatedRecords);
+					updatedRecords = getTrainingDataModel().updateRecords(selected_option, currentPair, updatedRecords);
 				}
 				LOG.warn("Processing finished.");
 				return updatedRecords;
@@ -124,7 +137,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
 	
 	protected int displayRecordsAndGetUserInput(ZFrame<D,R,C> records, String preMessage, String postMessage) {
-		getTrainingHelper().displayRecords(records, preMessage, postMessage);
+		getLabelDataViewHelper().displayRecords(records, preMessage, postMessage);
 		int selection = readCliInput();
 		return selection;
 	}
@@ -144,22 +157,23 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 		return selection;
 	}
 	
-    @Override
-    public ITrainingHelper<S, D, R, C> getTrainingHelper() throws UnsupportedOperationException {
-		if (((TrainingHelper<S, D, R, C>) trainingHelper).getDSUtil()==null) {
-			((TrainingHelper<S, D, R, C>) trainingHelper).setDSUtil(getDSUtil());
-		}
-		if (((TrainingHelper<S, D, R, C>) trainingHelper).getPipeUtil()==null) {
-			((TrainingHelper<S,D,R,C>)trainingHelper).setPipeUtil(getPipeUtil());
-		}
-    	return trainingHelper;
+	@Override
+	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() {
+    	return trainingDataModel;
     }
 
-	public void setTrainingHelper(ITrainingHelper<S, D, R, C> trainingHelper) {
-		this.trainingHelper = trainingHelper;
-	}    
-    
-    
+	public void setTrainingDataModel(ITrainingDataModel<S, D, R, C> trainingDataModel) {
+		this.trainingDataModel = trainingDataModel;
+	}
+
+	@Override
+	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() {
+    	return labelDataViewHelper;
+    }
+
+	public void setLabelDataViewHelper(ILabelDataViewHelper<S, D, R, C> labelDataViewHelper) {
+		this.labelDataViewHelper = labelDataViewHelper;
+	}
 
 }
 
