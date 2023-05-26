@@ -1,7 +1,5 @@
 package zingg.common.client;
 
-import java.util.Arrays;
-
 import zingg.common.client.util.Util;
 
 public enum ZinggOptions {
@@ -18,7 +16,8 @@ public enum ZinggOptions {
     FIND_AND_LABEL("findAndLabel"),
     ASSESS_MODEL("assessModel"),
     PEEK_MODEL("peekModel"),
-    EXPORT_MODEL("exportModel");
+    EXPORT_MODEL("exportModel"),
+	RESOLVE("resolve");
 
     private String value;
 

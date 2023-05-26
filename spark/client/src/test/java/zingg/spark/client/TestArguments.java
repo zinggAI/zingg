@@ -25,13 +25,13 @@ public class TestArguments {
 			try {
 				FieldDefinition fname = new FieldDefinition();
 				fname.setFieldName("fname");
-				fname.setDataType("\"string\"");
+				fname.setDataType("string");
 				fname.setMatchType(Arrays.asList(MatchType.EXACT, MatchType.FUZZY, MatchType.PINCODE));
 				//fname.setMatchType(Arrays.asList(MatchType.EXACT));
 				fname.setFields("fname");
 				FieldDefinition lname = new FieldDefinition();
 				lname.setFieldName("lname");
-				lname.setDataType("\"string\"");
+				lname.setDataType("string");
 				lname.setMatchType(Arrays.asList(MatchType.FUZZY));
 				lname.setFields("lname");
 				args.setFieldDefinition(Arrays.asList(fname, lname));

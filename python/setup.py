@@ -172,7 +172,7 @@ try:
             },
         include_package_data=True,
         scripts=scripts,
-        license='http://www.apache.org/licenses/LICENSE-2.0',
+        license='https://github.com/zinggAI/zingg/blob/main/LICENSE',
         install_requires=['py4j==0.10.9'],
         extras_require={
             'zingg': ['pyspark>=3.1.2']

@@ -44,7 +44,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 	public Tree<Canopy<R>> createBlockingTree(ZFrame<D,R,C> testData,  
 			ZFrame<D,R,C> positives, double sampleFraction, long blockSize,
             Arguments args,
-			ListMap<T, HashFunction<D,R,C,T>> hashFunctions) throws Exception {
+			ListMap<T, HashFunction<D,R,C,T>> hashFunctions) throws Exception, ZinggClientException {
 		ZFrame<D,R,C> sample = testData.sample(false, sampleFraction);
 		sample = sample.cache();
 		long totalCount = sample.count();
@@ -82,7 +82,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 	
 	public  Tree<Canopy<R>> createBlockingTreeFromSample(ZFrame<D,R,C> testData,  
 			ZFrame<D,R,C> positives, double sampleFraction, long blockSize, Arguments args, 
-            ListMap hashFunctions) throws Exception {
+            ListMap hashFunctions) throws Exception, ZinggClientException {
 		ZFrame<D,R,C> sample = testData.sample(false, sampleFraction); 
 		return createBlockingTree(sample, positives, sampleFraction, blockSize, args, hashFunctions);
 	}

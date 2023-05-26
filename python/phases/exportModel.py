@@ -32,7 +32,7 @@ def main():
 
 def export_data(labelledData, location):
 
-    baseCols = ['z_cluster', 'z_zid', 'z_prediction', 'z_score', 'z_source', 'z_isMatch']
+    baseCols = ['z_cluster', 'z_zid', 'z_prediction', 'z_score', 'z_zsource', 'z_isMatch']
     sourceDataColumns =  [c for c in labelledData.columns if c not in  baseCols]
     additionalTrainingColumns = ['z_cluster','z_isMatch']
     trainingSampleColumns = [*additionalTrainingColumns, *sourceDataColumns]
