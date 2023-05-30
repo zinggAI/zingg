@@ -61,7 +61,7 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 				do {
 					System.out.print("\n\tPlease enter the cluster id (or 9 to exit): ");
 					String cluster_id = sc.next();
-					if (cluster_id.equals("9")) {
+					if (cluster_id.equals(QUIT_LABELING.toString())) {
 						LOG.info("User has exit in the middle. Updating the records.");
 						break;
 					}
@@ -85,7 +85,7 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 							getTrainingDataModel().getTotalCount()
 							);
 
-					if (selectedOption == 9) {
+					if (selectedOption == QUIT_LABELING) {
 						LOG.info("User has quit in the middle. Updating the records.");
 						break;
 					}
@@ -96,7 +96,7 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 								.filter(updatedRecords.notEqual(ColName.CLUSTER_COLUMN,cluster_id));
 					}
 					updatedRecords = getTrainingDataModel().updateRecords(selectedOption, currentPair, updatedRecords);
-				} while (selectedOption != 9);
+				} while (selectedOption != QUIT_LABELING);
 
 				if (updatedRecords != null) {
 					updatedRecords = updatedRecords.union(recordsToUpdate);

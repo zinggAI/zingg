@@ -15,6 +15,7 @@ import zingg.common.client.util.ColName;
 
 public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
+	public static final Integer QUIT_LABELING = 9;
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.common.core.executor.Labeller";
 	public static final Log LOG = LogFactory.getLog(Labeller.class);
@@ -90,7 +91,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 				double score;
 				double prediction;
 				ZFrame<D,R,C>  updatedRecords = null;
-				int selected_option = -1;
+				int selectedOption = -1;
 				String msg1, msg2;
 				int totalPairs = clusterIDs.size();
 
@@ -104,19 +105,19 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 					msg2 = getLabelDataViewHelper().getMsg2(prediction, score);
 					//String msgHeader = msg1 + msg2;
 
-					selected_option = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), msg1, msg2);
-					getTrainingDataModel().updateLabellerStat(selected_option, 1);
+					selectedOption = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), msg1, msg2);
+					getTrainingDataModel().updateLabellerStat(selectedOption, 1);
 					getLabelDataViewHelper().printMarkedRecordsStat(
 							getTrainingDataModel().getPositivePairsCount(),
 							getTrainingDataModel().getNegativePairsCount(),
 							getTrainingDataModel().getNotSurePairsCount(),
 							getTrainingDataModel().getTotalCount()
 							);
-					if (selected_option == 9) {
+					if (selectedOption == QUIT_LABELING) {
 						LOG.info("User has quit in the middle. Updating the records.");
 						break;
 					}
-					updatedRecords = getTrainingDataModel().updateRecords(selected_option, currentPair, updatedRecords);
+					updatedRecords = getTrainingDataModel().updateRecords(selectedOption, currentPair, updatedRecords);
 				}
 				LOG.warn("Processing finished.");
 				return updatedRecords;
