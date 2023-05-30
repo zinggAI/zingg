@@ -16,6 +16,7 @@ import zingg.common.client.util.ColName;
 public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
 	public static final Integer QUIT_LABELING = 9;
+	public static final Integer INCREMENT = 1;
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.common.core.executor.Labeller";
 	public static final Log LOG = LogFactory.getLog(Labeller.class);
@@ -106,7 +107,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 					//String msgHeader = msg1 + msg2;
 
 					selectedOption = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), msg1, msg2);
-					getTrainingDataModel().updateLabellerStat(selectedOption, 1);
+					getTrainingDataModel().updateLabellerStat(selectedOption, INCREMENT);
 					getLabelDataViewHelper().printMarkedRecordsStat(
 							getTrainingDataModel().getPositivePairsCount(),
 							getTrainingDataModel().getNegativePairsCount(),

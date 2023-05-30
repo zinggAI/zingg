@@ -76,8 +76,8 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 					String matchType = LabelMatchType.get(matchFlag).msg;
 					postMsg = String.format("\tThe above pair is labeled as %s\n", matchType);
 					selectedOption = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), preMsg, postMsg);
-					getTrainingDataModel().updateLabellerStat(selectedOption, +1);
-					getTrainingDataModel().updateLabellerStat(matchFlag, -1);
+					getTrainingDataModel().updateLabellerStat(selectedOption, INCREMENT);
+					getTrainingDataModel().updateLabellerStat(matchFlag, -1*INCREMENT);
 					getLabelDataViewHelper().printMarkedRecordsStat(
 							getTrainingDataModel().getPositivePairsCount(),
 							getTrainingDataModel().getNegativePairsCount(),
