@@ -76,7 +76,7 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 	
 	public void writeLabelledOutput(ZFrame<D,R,C> records, Arguments args, Pipe p) throws ZinggClientException {
 		if (records == null) {
-			LOG.warn("No records to be labelled.");
+			LOG.warn("No labelled records");
 			return;
 		}
 		getPipeUtil().write(records, args,p);
