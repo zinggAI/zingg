@@ -169,7 +169,7 @@ class Zingg:
                 msg1 = labelDataViewHelper.getMsg1(index, totalPairs)
                 msg2 = labelDataViewHelper.getMsg2(prediction, score)
 
-                selected_option = labelDataViewHelper.displayRecords(trainingHelper.getDSUtil().select(currentPair, displayCols), msg1, msg2)
+                selected_option = labelDataViewHelper.displayRecords(labelDataViewHelper.getDSUtil().select(currentPair, displayCols), msg1, msg2)
                 selected_option = input("Enter choice: ")
                 #TODO if user does not input out of 0,1,2,9
                 trainingDataModel.updateLabellerStat(int(selected_option), 1)
