@@ -77,6 +77,7 @@ def getGateway():
 
 ColName = getJVM().zingg.common.client.util.ColName
 MatchType = getJVM().zingg.common.client.MatchType
+ClientOptions = getJVM().zingg.common.client.ClientOptions
 ZinggOptions = getJVM().zingg.common.client.ZinggOptions
 
 def getDfFromDs(data):
@@ -112,8 +113,9 @@ class Zingg:
     """
 
     def __init__(self, args, options):
+        self.inpArgs = args
+        self.inpOptions = options
         self.client = getJVM().zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions())
-
        
     def init(self):
         """ Method to initialize zingg client by reading internal configurations and functions """
@@ -127,24 +129,24 @@ class Zingg:
         """ Method to run both init and execute methods consecutively """
         self.client.init()
         options = self.client.getOptions()
-        inpPhase = options.get(options.PHASE)
+        inpPhase = options.get(ClientOptions.PHASE).getValue()
         if (inpPhase==ZinggOptions.LABEL.getValue()):
-            executeLabel()
+            self.executeLabel()
         elif (inpPhase==ZinggOptions.UPDATE_LABEL.getValue()):
-            executeLabelUpdate()
+            self.executeLabelUpdate()
         else:
             self.client.execute()
 
     def executeLabel(self):
         """ Method to run label phase """
-        self.client.getTrainingDataModel().setMarkedRecordsStat(zingg.getMarkedRecords())
-        unmarkedRecords = zingg.getUnmarkedRecords()
-        updatedRecords = zingg.processRecordsCli(unmarkedRecords,args)
-        zingg.writeLabelledOutput(updatedRecords,args)
+        self.client.getTrainingDataModel().setMarkedRecordsStat(self.getMarkedRecords())
+        unmarkedRecords = self.getUnmarkedRecords()
+        updatedRecords = self.processRecordsCli(unmarkedRecords,self.inpArgs)
+        self.writeLabelledOutput(updatedRecords,self.inpArgs)
 
     def executeLabelUpdate(self):
         """ Method to run label update phase """
-        zingg.processRecordsCliLabelUpdate(zingg.getMarkedRecords())
+        self.processRecordsCliLabelUpdate(self.getMarkedRecords())
 
     def getMarkedRecords(self):
         """ Method to get marked record dataset from the inputpipe
