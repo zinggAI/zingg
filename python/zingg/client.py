@@ -190,7 +190,9 @@ class Zingg:
 
                 selected_option = labelDataViewHelper.displayRecords(labelDataViewHelper.getDSUtil().select(currentPair, displayCols), msg1, msg2)
                 selected_option = input("Enter choice: ")
-                #TODO if user does not input out of 0,1,2,9
+                while int(selected_option) not in [0,1,2,9]:
+                    print('Please enter valid option')
+                    selected_option = input("Enter choice: ")
                 trainingDataModel.updateLabellerStat(int(selected_option), 1)
                 labelDataViewHelper.printMarkedRecordsStat(trainingDataModel.getPositivePairsCount(),trainingDataModel.getNegativePairsCount(),trainingDataModel.getNotSurePairsCount(),trainingDataModel.getTotalCount())
                 if int(selected_option) == 9:
