@@ -128,12 +128,16 @@ class Zingg:
     def initAndExecute(self):
         """ Method to run both init and execute methods consecutively """
         self.client.init()
-        options = self.client.getOptions()
-        inpPhase = options.get(ClientOptions.PHASE).getValue()
-        if (inpPhase==ZinggOptions.LABEL.getValue()):
-            self.executeLabel()
-        elif (inpPhase==ZinggOptions.UPDATE_LABEL.getValue()):
-            self.executeLabelUpdate()
+        DATA_BRICKS_CONNECT = os.getenv('DATA_BRICKS_CONNECT')
+        if DATA_BRICKS_CONNECT=='Y' or DATA_BRICKS_CONNECT=='y':
+            options = self.client.getOptions()
+            inpPhase = options.get(ClientOptions.PHASE).getValue()
+            if (inpPhase==ZinggOptions.LABEL.getValue()):
+                self.executeLabel()
+            elif (inpPhase==ZinggOptions.UPDATE_LABEL.getValue()):
+                self.executeLabelUpdate()
+            else:
+                self.client.execute()
         else:
             self.client.execute()
 
@@ -172,13 +176,13 @@ class Zingg:
         """
         trainingDataModel = self.client.getTrainingDataModel()
         labelDataViewHelper = self.client.getLabelDataViewHelper()
+
         if unmarkedRecords is not None and unmarkedRecords.count() > 0:
             labelDataViewHelper.printMarkedRecordsStat(trainingDataModel.getPositivePairsCount(),trainingDataModel.getNegativePairsCount(),trainingDataModel.getNotSurePairsCount(),trainingDataModel.getTotalCount())
             unmarkedRecords = unmarkedRecords.cache()
             displayCols = labelDataViewHelper.getDisplayColumns(unmarkedRecords, args.getArgs())
             clusterIdZFrame = labelDataViewHelper.getClusterIdsFrame(unmarkedRecords)
             clusterIDs = labelDataViewHelper.getClusterIds(clusterIdZFrame)
-            selected_option = -1
             totalPairs = clusterIDs.size()
             updatedRecords = None
             for index in range(totalPairs):
@@ -189,19 +193,17 @@ class Zingg:
 
                 msg1 = labelDataViewHelper.getMsg1(index, totalPairs)
                 msg2 = labelDataViewHelper.getMsg2(prediction, score)
-
-                selected_option = labelDataViewHelper.displayRecords(labelDataViewHelper.getDSUtil().select(currentPair, displayCols), msg1, msg2)
-                selected_option = input("Enter choice: ")
+                labelDataViewHelper.displayRecords(labelDataViewHelper.getDSUtil().select(currentPair, displayCols), msg1, msg2)
+                selected_option = input()
                 while int(selected_option) not in [0,1,2,9]:
                     print('Please enter valid option')
                     selected_option = input("Enter choice: ")
-                trainingDataModel.updateLabellerStat(int(selected_option), 1)
-                labelDataViewHelper.printMarkedRecordsStat(trainingDataModel.getPositivePairsCount(),trainingDataModel.getNegativePairsCount(),trainingDataModel.getNotSurePairsCount(),trainingDataModel.getTotalCount())
                 if int(selected_option) == 9:
                     print("User has quit in the middle. Updating the records.")
                     break               
-                updatedRecords = trainingDataModel.updateRecords(int(selected_option), currentPair, updatedRecords)
-            
+                trainingDataModel.updateLabellerStat(int(selected_option), 1)
+                labelDataViewHelper.printMarkedRecordsStat(trainingDataModel.getPositivePairsCount(),trainingDataModel.getNegativePairsCount(),trainingDataModel.getNotSurePairsCount(),trainingDataModel.getTotalCount())
+                updatedRecords = trainingDataModel.updateRecords(int(selected_option), currentPair, updatedRecords)            
             print("Processing finished.")
             return updatedRecords
         else:
