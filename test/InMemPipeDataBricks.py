@@ -48,17 +48,5 @@ options = ClientOptions([ClientOptions.PHASE,inpPhase])
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
 
-if (inpPhase!="label"):
-    zingg.initAndExecute()
-else:
-    print("label phase")
-    zingg.init()
-    unmarkedRecords = zingg.getUnmarkedRecords()
-    unmarkedRecords.show()
-    print(unmarkedRecords.count())
-    updatedRecords = zingg.processRecordsCli(unmarkedRecords,args)
-    print("updated records")
-    if updatedRecords is not None:
-        updatedRecords.show()
-        zingg.writeLabelledOutput(updatedRecords,args)
+zingg.initAndExecute()
 

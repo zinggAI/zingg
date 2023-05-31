@@ -77,6 +77,7 @@ def getGateway():
 
 ColName = getJVM().zingg.common.client.util.ColName
 MatchType = getJVM().zingg.common.client.MatchType
+ZinggOptions = getJVM().zingg.common.client.ZinggOptions
 
 def getDfFromDs(data):
     """ Method to convert spark dataset to dataframe
@@ -125,7 +126,25 @@ class Zingg:
     def initAndExecute(self):
         """ Method to run both init and execute methods consecutively """
         self.client.init()
-        self.client.execute()
+        options = self.client.getOptions()
+        inpPhase = options.get(options.PHASE)
+        if (inpPhase==ZinggOptions.LABEL.getValue()):
+            executeLabel()
+        elif (inpPhase==ZinggOptions.UPDATE_LABEL.getValue()):
+            executeLabelUpdate()
+        else:
+            self.client.execute()
+
+    def executeLabel(self):
+        """ Method to run label phase """
+        self.client.getTrainingDataModel().setMarkedRecordsStat(zingg.getMarkedRecords())
+        unmarkedRecords = zingg.getUnmarkedRecords()
+        updatedRecords = zingg.processRecordsCli(unmarkedRecords,args)
+        zingg.writeLabelledOutput(updatedRecords,args)
+
+    def executeLabelUpdate(self):
+        """ Method to run label update phase """
+        zingg.processRecordsCliLabelUpdate(zingg.getMarkedRecords())
 
     def getMarkedRecords(self):
         """ Method to get marked record dataset from the inputpipe
@@ -184,12 +203,66 @@ class Zingg:
         else:
             print("It seems there are no unmarked records at this moment. Please run findTrainingData job to build some pairs to be labelled and then run this labeler.")
             return None
-        
+    
+    def processRecordsCliLabelUpdate(self,lines):
+        trainingDataModel = self.client.getTrainingDataModel()
+        labelDataViewHelper = self.client.getLabelDataViewHelper()
+        if (lines is not None and lines.count() > 0):
+            trainingDataModel.setMarkedRecordsStat(lines)
+            labelDataViewHelper.printMarkedRecordsStat(trainingDataModel.getPositivePairsCount(),trainingDataModel.getNegativePairsCount(),trainingDataModel.getNotSurePairsCount(),trainingDataModel.getTotalCount())
+            displayCols = labelDataViewHelper.getDSUtil().getFieldDefColumns(lines, args.getArgs(), false, args.getArgs().getShowConcise())
+            updatedRecords = null
+            recordsToUpdate = lines
+            selectedOption = -1
+
+            while (str(selectedOption) != '9'):
+                cluster_id = input("\n\tPlease enter the cluster id (or 9 to exit): ")
+                if str(cluster_id) == '9':
+                    print("User has exit in the middle. Updating the records.")
+                    break
+                currentPair = lines.filter(lines.equalTo(ColName.CLUSTER_COLUMN, cluster_id))
+                if currentPair.isEmpty():
+                    print("\tInvalid cluster id. Enter '9' to exit")
+                    continue
+
+                matchFlag = currentPair.getAsInt(currentPair.head(),ColName.MATCH_FLAG_COL)
+                preMsg = "\n\tThe record pairs belonging to the input cluster id "+cluster_id+" are:"
+                matchType = LabelMatchType.get(matchFlag).msg
+                postMsg = "\tThe above pair is labeled as "+matchType+"\n"
+                labelDataViewHelper.displayRecords(labelDataViewHelper.getDSUtil().select(currentPair, displayCols), preMsg, postMsg)
+                selectedOption = input()
+                trainingDataModel.updateLabellerStat(selectedOption, 1)
+                trainingDataModel.updateLabellerStat(matchFlag, -1)
+                labelDataViewHelper.printMarkedRecordsStat(trainingDataModel.getPositivePairsCount(),trainingDataModel.getNegativePairsCount(),trainingDataModel.getNotSurePairsCount(),trainingDataModel.getTotalCount())
+
+                if (str(selectedOption) == '9'):
+                    print("User has quit in the middle. Updating the records.")
+                    break
+
+                recordsToUpdate = recordsToUpdate.filter(recordsToUpdate.notEqual(ColName.CLUSTER_COLUMN,cluster_id))
+
+                if (updatedRecords != null):
+                    updatedRecords = updatedRecords.filter(updatedRecords.notEqual(ColName.CLUSTER_COLUMN,cluster_id))
+
+                updatedRecords = trainingDataModel.updateRecords(selectedOption, currentPair, updatedRecords)
+
+            if updatedRecords is not None:
+                updatedRecords = updatedRecords.union(recordsToUpdate)
+            
+            trainingDataModel.writeLabelledOutput(updatedRecords,args,getOutputPipe())
+            print("Processing finished.")
+            return updatedRecords
+        else:
+            print("There is no marked record for updating. Please run findTrainingData/label jobs to generate training data.")
+            return None
+
+
     def writeLabelledOutput(self,updatedRecords,args):
         """ Method to write updated records after user input
         """
         trainingDataModel = self.client.getTrainingDataModel()
-        trainingDataModel.writeLabelledOutput(updatedRecords,args.getArgs())
+        if updatedRecords is not None:
+            trainingDataModel.writeLabelledOutput(updatedRecords,args.getArgs())
 
     def writeLabelledOutputFromPandas(self,candidate_pairs_pd,args):
         """ Method to write updated records (as pandas df) after user input
