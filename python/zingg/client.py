@@ -79,6 +79,8 @@ ColName = getJVM().zingg.common.client.util.ColName
 MatchType = getJVM().zingg.common.client.MatchType
 ClientOptions = getJVM().zingg.common.client.ClientOptions
 ZinggOptions = getJVM().zingg.common.client.ZinggOptions
+LabelMatchType = getJVM().zingg.common.core.util.LabelMatchType
+UpdateLabelMode = 'Overwrite'
 
 def getDfFromDs(data):
     """ Method to convert spark dataset to dataframe
@@ -150,7 +152,7 @@ class Zingg:
 
     def executeLabelUpdate(self):
         """ Method to run label update phase """
-        self.processRecordsCliLabelUpdate(self.getMarkedRecords())
+        self.processRecordsCliLabelUpdate(self.getMarkedRecords(),self.inpArgs)
 
     def getMarkedRecords(self):
         """ Method to get marked record dataset from the inputpipe
@@ -210,14 +212,14 @@ class Zingg:
             print("It seems there are no unmarked records at this moment. Please run findTrainingData job to build some pairs to be labelled and then run this labeler.")
             return None
     
-    def processRecordsCliLabelUpdate(self,lines):
+    def processRecordsCliLabelUpdate(self,lines,args):
         trainingDataModel = self.client.getTrainingDataModel()
         labelDataViewHelper = self.client.getLabelDataViewHelper()
         if (lines is not None and lines.count() > 0):
             trainingDataModel.setMarkedRecordsStat(lines)
             labelDataViewHelper.printMarkedRecordsStat(trainingDataModel.getPositivePairsCount(),trainingDataModel.getNegativePairsCount(),trainingDataModel.getNotSurePairsCount(),trainingDataModel.getTotalCount())
-            displayCols = labelDataViewHelper.getDSUtil().getFieldDefColumns(lines, args.getArgs(), false, args.getArgs().getShowConcise())
-            updatedRecords = null
+            displayCols = labelDataViewHelper.getDSUtil().getFieldDefColumns(lines, args.getArgs(), False, args.getArgs().getShowConcise())
+            updatedRecords = None
             recordsToUpdate = lines
             selectedOption = -1
 
@@ -233,11 +235,10 @@ class Zingg:
 
                 matchFlag = currentPair.getAsInt(currentPair.head(),ColName.MATCH_FLAG_COL)
                 preMsg = "\n\tThe record pairs belonging to the input cluster id "+cluster_id+" are:"
-                matchType = LabelMatchType.get(matchFlag).msg
-                postMsg = "\tThe above pair is labeled as "+matchType+"\n"
+                postMsg = "\tThe above pair is labeled as "+str(matchFlag)+"\n"
                 labelDataViewHelper.displayRecords(labelDataViewHelper.getDSUtil().select(currentPair, displayCols), preMsg, postMsg)
                 selectedOption = input()
-                trainingDataModel.updateLabellerStat(selectedOption, 1)
+                trainingDataModel.updateLabellerStat(int(selectedOption), 1)
                 trainingDataModel.updateLabellerStat(matchFlag, -1)
                 labelDataViewHelper.printMarkedRecordsStat(trainingDataModel.getPositivePairsCount(),trainingDataModel.getNegativePairsCount(),trainingDataModel.getNotSurePairsCount(),trainingDataModel.getTotalCount())
 
@@ -247,15 +248,18 @@ class Zingg:
 
                 recordsToUpdate = recordsToUpdate.filter(recordsToUpdate.notEqual(ColName.CLUSTER_COLUMN,cluster_id))
 
-                if (updatedRecords != null):
+                if (updatedRecords is not None):
                     updatedRecords = updatedRecords.filter(updatedRecords.notEqual(ColName.CLUSTER_COLUMN,cluster_id))
 
-                updatedRecords = trainingDataModel.updateRecords(selectedOption, currentPair, updatedRecords)
+                updatedRecords = trainingDataModel.updateRecords(int(selectedOption), currentPair, updatedRecords)
 
             if updatedRecords is not None:
                 updatedRecords = updatedRecords.union(recordsToUpdate)
-            
-            trainingDataModel.writeLabelledOutput(updatedRecords,args,getOutputPipe())
+
+            outPipe = trainingDataModel.getOutputPipe(args.getArgs())
+            outPipe.setMode(UpdateLabelMode)
+
+            trainingDataModel.writeLabelledOutput(updatedRecords,args.getArgs(),outPipe)
             print("Processing finished.")
             return updatedRecords
         else:

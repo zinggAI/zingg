@@ -82,7 +82,7 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 		getPipeUtil().write(records, args,p);
 	}
 	
-	protected Pipe getOutputPipe(Arguments args) {
+	public Pipe getOutputPipe(Arguments args) {
 		return getPipeUtil().getTrainingDataMarkedPipe(args);
 	}
 	
