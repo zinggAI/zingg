@@ -20,6 +20,7 @@ LOG = logging.getLogger("zingg")
 _spark_ctxt = None
 _sqlContext = None
 _spark = None
+_zingg_jar = 'zingg-0.3.5-SNAPSHOT.jar'
 
 def initSparkClient():
     global _spark_ctxt
@@ -34,7 +35,7 @@ def initDataBricksConectClient():
     global _spark_ctxt
     global _sqlContext
     global _spark    
-    jar_path = os.getenv('ZINGG_HOME')+'/zingg-0.3.5-SNAPSHOT.jar'
+    jar_path = os.getenv('ZINGG_HOME')+'/'+_zingg_jar
     _spark = SparkSession.builder.config('spark.jars', jar_path).getOrCreate()
     _spark_ctxt = _spark.sparkContext
     _sqlContext = SQLContext(_spark_ctxt)
@@ -148,34 +149,35 @@ class Zingg:
         :return: spark dataset containing updated records
         :rtype: Dataset<Row> 
         """
-        trainingHelper = self.client.getTrainingHelper()
+        trainingDataModel = self.client.getTrainingDataModel()
+        labelDataViewHelper = self.client.getLabelDataViewHelper()
         if unmarkedRecords is not None and unmarkedRecords.count() > 0:
-            trainingHelper.printMarkedRecordsStat()
+            labelDataViewHelper.printMarkedRecordsStat(trainingDataModel.getPositivePairsCount(),trainingDataModel.getNegativePairsCount(),trainingDataModel.getNotSurePairsCount(),trainingDataModel.getTotalCount())
             unmarkedRecords = unmarkedRecords.cache()
-            displayCols = trainingHelper.getDisplayColumns(unmarkedRecords, args.getArgs())
-            clusterIdZFrame = trainingHelper.getClusterIdsFrame(unmarkedRecords)
-            clusterIDs = trainingHelper.getClusterIds(clusterIdZFrame)
+            displayCols = labelDataViewHelper.getDisplayColumns(unmarkedRecords, args.getArgs())
+            clusterIdZFrame = labelDataViewHelper.getClusterIdsFrame(unmarkedRecords)
+            clusterIDs = labelDataViewHelper.getClusterIds(clusterIdZFrame)
             selected_option = -1
             totalPairs = clusterIDs.size()
             updatedRecords = None
             for index in range(totalPairs):
-                currentPair = trainingHelper.getCurrentPair(unmarkedRecords, index, clusterIDs, clusterIdZFrame)
+                currentPair = labelDataViewHelper.getCurrentPair(unmarkedRecords, index, clusterIDs, clusterIdZFrame)
 
-                score = trainingHelper.getScore(currentPair)
-                prediction = trainingHelper.getPrediction(currentPair)
+                score = labelDataViewHelper.getScore(currentPair)
+                prediction = labelDataViewHelper.getPrediction(currentPair)
 
-                msg1 = trainingHelper.getMsg1(index, totalPairs)
-                msg2 = trainingHelper.getMsg2(prediction, score)
+                msg1 = labelDataViewHelper.getMsg1(index, totalPairs)
+                msg2 = labelDataViewHelper.getMsg2(prediction, score)
 
-                selected_option = trainingHelper.displayRecords(trainingHelper.getDSUtil().select(currentPair, displayCols), msg1, msg2)
+                selected_option = labelDataViewHelper.displayRecords(trainingHelper.getDSUtil().select(currentPair, displayCols), msg1, msg2)
                 selected_option = input("Enter choice: ")
                 #TODO if user does not input out of 0,1,2,9
-                trainingHelper.updateLabellerStat(int(selected_option), 1)
-                trainingHelper.printMarkedRecordsStat()
+                trainingDataModel.updateLabellerStat(int(selected_option), 1)
+                labelDataViewHelper.printMarkedRecordsStat(trainingDataModel.getPositivePairsCount(),trainingDataModel.getNegativePairsCount(),trainingDataModel.getNotSurePairsCount(),trainingDataModel.getTotalCount())
                 if int(selected_option) == 9:
                     print("User has quit in the middle. Updating the records.")
                     break               
-                updatedRecords = trainingHelper.updateRecords(int(selected_option), currentPair, updatedRecords)
+                updatedRecords = trainingDataModel.updateRecords(int(selected_option), currentPair, updatedRecords)
             
             print("Processing finished.")
             return updatedRecords
@@ -186,8 +188,8 @@ class Zingg:
     def writeLabelledOutput(self,updatedRecords,args):
         """ Method to write updated records after user input
         """
-        trainingHelper = self.client.getTrainingHelper()
-        trainingHelper.writeLabelledOutput(updatedRecords,args.getArgs())
+        trainingDataModel = self.client.getTrainingDataModel()
+        trainingDataModel.writeLabelledOutput(updatedRecords,args.getArgs())
 
     def writeLabelledOutputFromPandas(self,candidate_pairs_pd,args):
         """ Method to write updated records (as pandas df) after user input
