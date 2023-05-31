@@ -30,8 +30,6 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Reading inputs for labelling phase ...");
-			setTrainingDataModel(new TrainingDataModel<S,D,R,C,T>(getContext(), getZinggOptions(), getClientOptions()));
-			setLabelDataViewHelper(new LabelDataViewHelper<S,D,R,C,T>(getContext(), getZinggOptions(), getClientOptions()));
 			getTrainingDataModel().setMarkedRecordsStat(getMarkedRecords());
 			ZFrame<D,R,C>  unmarkedRecords = getUnmarkedRecords();
 			ZFrame<D,R,C>  updatedLabelledRecords = processRecordsCli(unmarkedRecords);
@@ -158,8 +156,11 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 	}
 	
 	@Override
-	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() {
-    	return trainingDataModel;
+	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() {	
+		if (trainingDataModel==null) {
+			this.trainingDataModel = new TrainingDataModel<S, D, R, C, T>(getContext(), getZinggOptions(), getClientOptions());
+		}
+		return trainingDataModel;
     }
 
 	public void setTrainingDataModel(ITrainingDataModel<S, D, R, C> trainingDataModel) {
@@ -168,6 +169,9 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
 	@Override
 	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() {
+		if(labelDataViewHelper==null) {
+			labelDataViewHelper = new LabelDataViewHelper<S,D,R,C,T>(getContext(), getZinggOptions(), getClientOptions());
+		}
     	return labelDataViewHelper;
     }
 
