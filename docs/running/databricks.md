@@ -9,13 +9,19 @@ nav_order: 6
 1. Configure databricks connect 11.3 and create correspoding workspace/cluster
 https://docs.databricks.com/dev-tools/databricks-connect-legacy.html
 
+Ensure to run databricks-connect configure
+
 2. Set env variable ZINGG_HOME to the path where latest zingg release jar is e.g. location of zingg-0.3.5-SNAPSHOT.jar
 
 4. Set env variable DATA_BRICKS_CONNECT to Y
 
 5. pip install zingg
 
-6. Now run zingg using the shell script with --run option, SPARK session would be made remotely to data bricks and job would run on your databricks environment
+6. Now run zingg using the shell script with -run-databricks option, SPARK session would be made remotely to data bricks and job would run on your databricks environment
+e.g. ./scripts/zingg.sh --run-databricks test/InMemPipeDataBricks.py
+
+More details on how command line works:
+
 https://docs.zingg.ai/zingg/stepbystep/zingg-command-line
 
 # Running on Databricks
