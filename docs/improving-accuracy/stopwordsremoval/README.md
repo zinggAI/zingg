@@ -6,7 +6,7 @@ In order to remove stopwords from a field, configure&#x20;
 
 The stopwords can be recommended by Zingg by invoking
 
-`./scripts/zingg.sh --phase recommend --conf <conf.json> --columns <list of columns to generate stop word recommendations>`&#x20;
+`./scripts/zingg.sh --phase recommend --conf <conf.json> --column <column>`&#x20;
 
 By default, Zingg extracts 10% of the high-frequency unique words from a dataset. If the user wants a different selection, they should set up the following property in the config file:
 
@@ -22,7 +22,7 @@ Once you have verified the above stop words, you can configure them in the JSON 
    		"fieldName" : "fname",
    		"matchType" : "fuzzy",
    		"fields" : "fname",
-   		"dataType": "\"string\"",
+   		"dataType": "string",
    		"stopWords": "models/100/stopWords/fname.csv"
    	},
 ```

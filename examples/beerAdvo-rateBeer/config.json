@@ -4,31 +4,31 @@
 			"fieldName" : "id",
 			"matchType" : "DONT_USE",
 			"fields" : "id",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "Beer_Name",
 			"matchType" : "fuzzy",
 			"fields" : "Beer_Name",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "Brew_Factory_Name",
 			"matchType" : "fuzzy",
 			"fields" : "Brew_Factory_Name",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "Style",
 			"matchType": "fuzzy",
 			"fields" : "Style",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "ABV",
 			"matchType": "fuzzy",
 			"fields" : "ABV",
-			"dataType": "\"double\"" 
+			"dataType": "double" 
 		}],
 		"output" : [{
 			"name":"output", 
@@ -47,16 +47,7 @@
 				"delimiter": ",",
 				"header":true					
 			},
-			"schema":
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
-					{\"name\":\"Beer_Name\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"Brew_Factory_Name\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"Style\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"ABV\", \"type\":\"double\", \"nullable\":true}
-				]
-			}"
+			"schema": "id string, Beer_Name string, Brew_Factory_Name string, Style string, ABV double"
 		},
 		{
 			"name":"rateBeer", 
@@ -66,16 +57,7 @@
 				"delimiter": ",",
 				"header":true					
 			},
-			"schema": 
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
-					{\"name\":\"Beer_Name\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"Brew_Factory_Name\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"Style\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"ABV\", \"type\":\"double\", \"nullable\":true}
-				]
-			}"
+			"schema": "id string, Beer_Name string, Brew_Factory_Name string, Style string, ABV double"
 		}
 		],
 		"labelDataSampleSize" : 0.4,

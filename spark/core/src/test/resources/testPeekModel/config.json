@@ -4,67 +4,67 @@
 			"fieldName" : "id",
 			"matchType" : "dont_use",
 			"fields" : "fname",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "fname",
 			"matchType" : "fuzzy",
 			"fields" : "fname",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "lname",
 			"matchType" : "fuzzy",
 			"fields" : "lname",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "stNo",
 			"matchType": "exact",
 			"fields" : "stNo",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "add1",
 			"matchType": "fuzzy",
 			"fields" : "add1",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "add2",
 			"matchType": "fuzzy",
 			"fields" : "add2",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "city",
 			"matchType": "fuzzy",
 			"fields" : "city",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "areacode",
 			"matchType": "exact",
 			"fields" : "areacode",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "state",
 			"matchType": "exact",
 			"fields" : "state",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "dob",
 			"matchType": "exact",
 			"fields" : "dob",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "ssn",
 			"matchType": "exact",
 			"fields" : "ssn",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		}
 		],
 		"output" : [{
@@ -84,22 +84,7 @@
 				"delimiter": ",",
 				"header":false					
 			},
-			"schema": 
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
-					{\"name\":\"fname\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"lname\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"stNo\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"add1\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"add2\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"city\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"areacode\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"state\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"dob\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"ssn\",\"type\":\"string\",\"nullable\":true}
-				]
-			}"
+			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn string"
 		}],
 		"labelDataSampleSize" : 0.5,
 		"numPartitions":4,

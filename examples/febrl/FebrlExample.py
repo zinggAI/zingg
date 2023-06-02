@@ -37,7 +37,7 @@ outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
 
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"label"])
+options = ClientOptions([ClientOptions.PHASE,"match"])
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)

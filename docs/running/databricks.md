@@ -4,6 +4,26 @@ parent: Running Zingg on Cloud
 nav_order: 6
 ---
 
+# Running using Databricks Connect
+
+1. Configure databricks connect 11.3 and create correspoding workspace/cluster
+https://docs.databricks.com/dev-tools/databricks-connect-legacy.html
+
+Ensure to run databricks-connect configure
+
+2. Set env variable ZINGG_HOME to the path where latest zingg release jar is e.g. location of zingg-0.3.5-SNAPSHOT.jar
+
+4. Set env variable DATA_BRICKS_CONNECT to Y
+
+5. pip install zingg
+
+6. Now run zingg using the shell script with -run-databricks option, SPARK session would be made remotely to data bricks and job would run on your databricks environment
+e.g. ./scripts/zingg.sh --run-databricks test/InMemPipeDataBricks.py
+
+More details on how command line works:
+
+https://docs.zingg.ai/zingg/stepbystep/zingg-command-line
+
 # Running on Databricks
 
 The cloud environment does not have the system console for the labeler to work. Zingg is run as a Spark Submit Job along with a python notebook-based labeler specially created to run within the Databricks cloud.
@@ -58,55 +78,55 @@ The config file for Databricks needs modifications to accept dbfs locations. Her
 			"fieldName" : "fname",
 			"matchType" : "email",
 			"fields" : "fname",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "lname",
 			"matchType" : "fuzzy",
 			"fields" : "lname",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "stNo",
 			"matchType": "fuzzy",
 			"fields" : "stNo",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "add1",
 			"matchType": "fuzzy",
 			"fields" : "add1",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "add2",
 			"matchType": "fuzzy",
 			"fields" : "add2",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "city",
 			"matchType": "fuzzy",
 			"fields" : "city",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "state",
 			"matchType": "fuzzy",
 			"fields" : "state",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "dob",
 			"matchType": "fuzzy",
 			"fields" : "dob",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "ssn",
 			"matchType": "fuzzy",
 			"fields" : "ssn",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		}
 		],
 		"output" : [{
@@ -127,18 +147,18 @@ The config file for Databricks needs modifications to accept dbfs locations. Her
 				"header":false					
 			},
 			"schema": 
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					{\"name\":\"id\", \"type\":\"string\", \"nullable\":false}, 
-					{\"name\":\"fname\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"lname\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"stNo\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"add1\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"add2\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"city\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"state\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"dob\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"ssn\",\"type\":\"string\",\"nullable\":true}
+				"{type : struct,
+				fields : [ 
+					{name:id, type:string, nullable:false}, 
+					{name:fname, type:string, nullable:true},
+					{name:lname,type:string,nullable:true} ,
+					{name:stNo, type:string, nullable:true}, 
+					{name:add1, type:string, nullable:true},
+					{name:add2,type:string,nullable:true} ,
+					{name:city, type:string, nullable:true}, 
+					{name:state, type:string, nullable:true},
+					{name:dob,type:string,nullable:true} ,
+					{name:ssn,type:string,nullable:true}
 				]
 			}"
 		}],

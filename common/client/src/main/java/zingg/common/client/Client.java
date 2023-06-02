@@ -15,6 +15,7 @@ import zingg.common.client.util.EmailBody;
  *
  */
 public abstract class Client<S,D,R,C,T> implements Serializable {
+	private static final long serialVersionUID = 1L;
 	protected Arguments arguments;
 	protected IZingg<S,D,R,C> zingg;
 	protected ClientOptions options;
@@ -116,7 +117,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 	
 	public void printBanner() {
-		String versionStr = "0.3.4";
+		String versionStr = "0.3.5";
 		LOG.info("");
 		LOG.info("********************************************************");
 		LOG.info("*                    Zingg AI                          *");
@@ -283,4 +284,13 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		return zingg.getUnmarkedRecords();
 	}
 
+    public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException {
+    	return zingg.getTrainingDataModel();
+    }    
+
+    public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException {
+    	return zingg.getLabelDataViewHelper();
+    }    
+    
+    
 }

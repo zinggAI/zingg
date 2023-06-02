@@ -4,31 +4,31 @@
 			"fieldName" : "recid",
 			"matchType" : "dont_use",
 			"fields" : "recid",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "givenname",
 			"matchType" : "fuzzy",
 			"fields" : "givenname",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "surname",
 			"matchType": "exact",
 			"fields" : "surname",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "suburb",
 			"matchType": "fuzzy",
 			"fields" : "suburb",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "postcode",
 			"matchType": "exact",
 			"fields" : "postcode",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		}
 		],
 		"output" : [{
@@ -48,16 +48,7 @@
 				"delimiter": ",",
 				"header":false					
 			},
-			"schema": 
-				"{\"type\" : \"struct\",
-				\"fields\" : [ 
-					{\"name\":\"recid\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"givenname\",\"type\":\"string\",\"nullable\":true} ,
-					{\"name\":\"surname\", \"type\":\"string\", \"nullable\":true}, 
-					{\"name\":\"suburb\", \"type\":\"string\", \"nullable\":true},
-					{\"name\":\"postcode\",\"type\":\"string\",\"nullable\":true} 
-				]
-			}"
+			"schema": "recid string, givenname string, surname string, suburb string, postcode string"
 		}],
 		"labelDataSampleSize" : 0.1,
 		"numPartitions":4000,

@@ -40,7 +40,7 @@ class Accuracy_recordCount(TestCase):
 		client = Zingg(args, options)
 		client.initAndExecute()
 		pMarkedDF = getPandasDfFromDs(client.getMarkedRecords())
-		labelledData = spark.createDataFrame(pMarkedDF)
+		labelledData = getSparkSession().createDataFrame(pMarkedDF)
 
 		total_marked = pMarkedDF.shape[0]
 

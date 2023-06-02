@@ -47,6 +47,7 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> dropDuplicates(String[] c);
 
     public ZFrame<D, R, C> drop(String c);
+    public ZFrame<D, R, C> drop(C c);
     public ZFrame<D, R, C> drop(String... c);
     public ZFrame<D, R, C> except(ZFrame<D, R, C> c);
     

@@ -33,6 +33,8 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 public class FieldDefinition implements 
 		Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	public static final Log LOG = LogFactory.getLog(FieldDefinition.class);
 	
 	@JsonDeserialize(using = MatchTypeDeserializer.class)

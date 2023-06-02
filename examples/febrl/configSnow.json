@@ -4,61 +4,61 @@
 			"fieldName" : "FNAME",
 			"matchType" : "fuzzy",
 			"fields" : "FNAME",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "LNAME",
 			"matchType" : "fuzzy",
 			"fields" : "LNAME",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "STREETNUMBER",
 			"matchType": "exact",
 			"fields" : "STREETNUMBER",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "STREET",
 			"matchType": "fuzzy",
 			"fields" : "STREET",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "ADDRESS",
 			"matchType": "fuzzy",
 			"fields" : "ADDRESS",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "LOCALITY",
 			"matchType": "fuzzy",
 			"fields" : "LOCALITY",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "AREACODE",
 			"matchType": "exact",
 			"fields" : "AREACODE",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "STATE",
 			"matchType": "fuzzy",
 			"fields" : "STATE",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "DATEOFBIRTH",
 			"matchType": "fuzzy",
 			"fields" : "DATEOFBIRTH",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		},
 		{
 			"fieldName" : "SSN",
 			"matchType": "dont_use",
 			"fields" : "SSN",
-			"dataType": "\"string\"" 
+			"dataType": "string" 
 		}],
 		"output" : [{
 			"name":"unifiedCustomers", 

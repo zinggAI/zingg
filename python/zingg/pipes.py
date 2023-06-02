@@ -10,9 +10,9 @@ from zingg.client import *
 
 LOG = logging.getLogger("zingg.pipes")
 
-JPipe = jvm.zingg.spark.client.pipe.SparkPipe
-FilePipe = jvm.zingg.common.client.pipe.FilePipe
-JStructType = jvm.org.apache.spark.sql.types.StructType
+JPipe = getJVM().zingg.spark.client.pipe.SparkPipe
+FilePipe = getJVM().zingg.common.client.pipe.FilePipe
+JStructType = getJVM().org.apache.spark.sql.types.StructType
 
 class Pipe:
     """ Pipe class for working with different data-pipelines. Actual pipe def in the args. One pipe can be used at multiple places with different tables, locations, queries, etc
@@ -24,7 +24,7 @@ class Pipe:
     """
 
     def __init__(self, name, format):
-        self.pipe = jvm.zingg.spark.client.pipe.SparkPipe()
+        self.pipe = getJVM().zingg.spark.client.pipe.SparkPipe()
         self.pipe.setName(name)
         self.pipe.setFormat(format)
 
@@ -79,8 +79,8 @@ class CsvPipe(Pipe):
             Pipe.addProperty(self, FilePipe.LOCATION, location)
             if(schema != None):
                 #df = spark.read.format(JPipe.FORMAT_CSV).schema(schema).load(location)
-                s = JStructType.fromDDL(schema)
-                Pipe.setSchema(self, s.json())
+                #s = JStructType.fromDDL(schema)
+                Pipe.setSchema(self, schema)
                 print("set schema ")
     
     def setDelimiter(self, delimiter):
@@ -254,9 +254,9 @@ class InMemoryPipe(Pipe):
         if (isinstance(df, pd.DataFrame)):
             print('schema of pandas df is ' , Pipe.getPipe(self).getSchema())
             if (Pipe.getPipe(self).getSchema() is not None):
-                ds = spark.createDataFrame(df, schema=Pipe.getPipe(self).getSchema())
+                ds = getSparkSession().createDataFrame(df, schema=Pipe.getPipe(self).getSchema())
             else:
-                ds = spark.createDataFrame(df)
+                ds = getSparkSession().createDataFrame(df)
             
             Pipe.getPipe(self).setDataset(ds._jdf)
         elif (isinstance(df, DataFrame)):
