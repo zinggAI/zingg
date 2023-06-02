@@ -18,6 +18,8 @@ import zingg.common.client.*;
  */
 public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column, DataType>  implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	public SparkClient(Arguments args, ClientOptions options) throws ZinggClientException {
 		super(args, options);
 		

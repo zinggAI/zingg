@@ -37,5 +37,9 @@ public interface IZingg<S,D,R,C> {
 	public ClientOptions getClientOptions(); 
 
 	public void setSession(S session);
-
+	
+	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException;
+	
+	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException;
+	
 }

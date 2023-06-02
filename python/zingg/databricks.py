@@ -15,7 +15,6 @@ import sys
 ##check header is passed
 
 
-
 job_spec_template = {
     
      "email_notifications": {
@@ -104,9 +103,9 @@ class ZinggWithDatabricks(Zingg):
         print('cliArgs are ' + '||'.join(cliArgs[1:]))
         #remote is an option we set and send to job on databricks so that it can work as normal job there
         if (self.phase == 'label'):
-           self.client = jvm.zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions())
+           self.client = getJVM().zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions())
         else:
-            self.client = jvm.zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions(), spark._jsparkSession)
+            self.client = getJVM().zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions(), getSparkSession()._jsparkSession)
         try:
             self.isRemote = options.getClientOptions().getOptionValue(ClientOptions.REMOTE)
         except:
@@ -195,7 +194,7 @@ class DbfsHelper:
 
 class JobsHelper:
 
-     """ This class runs Databricks Zingg jobs using the Databricks REST API from user machine. 
+    """ This class runs Databricks Zingg jobs using the Databricks REST API from user machine. 
 
     """
     
@@ -270,15 +269,9 @@ class DatabricksJobsHelper(JobsHelper):
     """
     def __init__(self):
         self.api_client = ApiClient(
-            host = 'https://' + spark.sparkContext.getConf().get('spark.databricks.workspaceUrl'),
-            token = get_dbutils(spark).notebook.entry_point.getDbutils().notebook().getContext().apiToken().getOrElse(None)
+            host = 'https://' + getSparkContext().getConf().get('spark.databricks.workspaceUrl'),
+            token = get_dbutils(getSparkSession()).notebook.entry_point.getDbutils().notebook().getContext().apiToken().getOrElse(None)
         )
         self.jobs_api=JobsApi(self.api_client)
         self.runs_api=RunsApi(self.api_client)        
-
-
-
-
-
-
 
