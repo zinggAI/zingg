@@ -11,7 +11,7 @@ https://docs.databricks.com/dev-tools/databricks-connect-legacy.html
 
 Ensure to run databricks-connect configure
 
-2. Set env variable ZINGG_HOME to the path where latest zingg release jar is e.g. location of zingg-0.3.5-SNAPSHOT.jar
+2. Set env variable ZINGG_HOME to the path where latest zingg release jar is e.g. location of zingg-0.4.0-SNAPSHOT.jar
 
 4. Set env variable DATA_BRICKS_CONNECT to Y
 
