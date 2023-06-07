@@ -249,7 +249,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		*/
 		allScores = allScores.repartition(args.getNumPartitions(), allScores.col(ColName.ID_COL));
 		
-		return allScores.groupByMinMax(allScores.col(ColName.ID_COL));			
+		return allScores.groupByMinMaxScore(allScores.col(ColName.ID_COL));			
 	}
 
 	protected ZFrame<D,R,C>getDupesActualForGraph(ZFrame<D,R,C>dupes) {
