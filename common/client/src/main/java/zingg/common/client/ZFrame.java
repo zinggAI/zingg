@@ -4,6 +4,8 @@ import java.util.List;
 
 //Dataset, Row, column
 public interface ZFrame<D, R, C> {
+	
+	public static final String RIGHT_JOIN = "right";
     
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
@@ -27,6 +29,8 @@ public interface ZFrame<D, R, C> {
     
 
     public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, String joinColumn1, String joinColumn2);
+    
+    public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, String joinColumn1, String joinColumn2, String jointype);
 
     public ZFrame<D, R, C> joinRight(ZFrame<D, R, C> lines1, String joinColumn);
 
@@ -53,7 +57,7 @@ public interface ZFrame<D, R, C> {
     
     public double aggSum(String colName);
 
-    public ZFrame<D, R, C> groupByMinMax(C c);
+    public ZFrame<D, R, C> groupByMinMaxScore(C c);
     
     public ZFrame<D, R, C> groupByCount(String colName, String countColName);
 

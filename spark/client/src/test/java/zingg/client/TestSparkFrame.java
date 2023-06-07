@@ -16,8 +16,9 @@ import org.junit.jupiter.api.Test;
 
 import scala.collection.JavaConverters;
 import zingg.common.client.ZFrame;
+import zingg.common.client.util.ColName;
 import zingg.spark.client.SparkFrame;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestSparkFrame extends TestSparkFrameBase {
 	public static final Log LOG = LogFactory.getLog(TestSparkFrame.class);
 
@@ -244,4 +245,45 @@ public class TestSparkFrame extends TestSparkFrameBase {
 		ZFrame<Dataset<Row>,Row,Column> sf2 = sf.withColumn(newCol, col(oldCol));
   		assertTrueCheckingExceptOutput(sf2, df.withColumn(newCol, col(oldCol)), "SparkFrame.withColumn(c, Column) output is not as expected");
 	}
+	
+	
+	@Test
+	public void testGroupByMinMax(){
+		SparkFrame zScoreDF = getZScoreDF();
+		ZFrame<Dataset<Row>, Row, Column> groupByDF = zScoreDF.groupByMinMaxScore(zScoreDF.col(ColName.ID_COL));
+		
+		Dataset<Row> assertionDF = groupByDF.df();
+		List<Row>  assertionRows = assertionDF.collectAsList();
+		for (Row row : assertionRows) {
+			if(row.getInt(0)==1) {
+				assertEquals(1001,row.getInt(1));
+				assertEquals(2002,row.getInt(2));
+			}
+		}		
+    }
+
+	@Test
+	public void testGroupByMinMax2(){
+		SparkFrame zScoreDF = getZScoreDF();
+		ZFrame<Dataset<Row>, Row, Column> groupByDF = zScoreDF.groupByMinMaxScore(zScoreDF.col(ColName.CLUSTER_COLUMN));
+		
+		Dataset<Row> assertionDF = groupByDF.df();
+		List<Row>  assertionRows = assertionDF.collectAsList();
+		for (Row row : assertionRows) {
+			if(row.getInt(0)==100) {
+				assertEquals(900,row.getInt(1));
+				assertEquals(9002,row.getInt(2));
+			}
+		}		
+    }
+	
+	@Test
+	public void testRightJoinMultiCol(){
+		ZFrame<Dataset<Row>, Row, Column> inpData = getInputData();
+		ZFrame<Dataset<Row>, Row, Column> clusterData = getClusterData();
+		ZFrame<Dataset<Row>, Row, Column> joinedData = clusterData.join(inpData,ColName.ID_COL,ColName.SOURCE_COL,ZFrame.RIGHT_JOIN);
+		assertEquals(10,joinedData.count());
+   }
+	
+	
 }

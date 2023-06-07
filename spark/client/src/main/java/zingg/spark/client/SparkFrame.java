@@ -95,8 +95,13 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
             df.col(joinColumn1).equalTo(lines1.df().col(joinColumn1)).and(df.col(joinColumn2).equalTo(lines1.df().col(joinColumn2)))));
     }
 
+    public ZFrame<Dataset<Row>, Row, Column> join(ZFrame<Dataset<Row>, Row, Column> lines1, String joinColumn1, String joinColumn2, String joinType){
+        return new SparkFrame(df.join(lines1.df(), 
+            df.col(joinColumn1).equalTo(lines1.df().col(joinColumn1)).and(df.col(joinColumn2).equalTo(lines1.df().col(joinColumn2))), joinType));
+    }
+    
     public ZFrame<Dataset<Row>, Row, Column> joinRight(ZFrame<Dataset<Row>, Row, Column> lines1, String joinColumn) {
-        return join(lines1, joinColumn, false, "right");
+        return join(lines1, joinColumn, false, ZFrame.RIGHT_JOIN);
     }
 
     public ZFrame<Dataset<Row>, Row, Column> join(ZFrame<Dataset<Row>, Row, Column> lines1, String joinColumn, boolean addPrefixToCol, String joinType) {
@@ -145,8 +150,8 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     	return df.agg(functions.sum(colName).cast("double")).collectAsList().get(0).getDouble(0);
     }
 
-    public ZFrame<Dataset<Row>, Row, Column> groupByMinMax(Column c) {
-        return new SparkFrame(df.groupBy(df.col(ColName.ID_COL)).agg(
+    public ZFrame<Dataset<Row>, Row, Column> groupByMinMaxScore(Column c) {
+        return new SparkFrame(df.groupBy(c).agg(
 			functions.min(ColName.SCORE_COL).as(ColName.SCORE_MIN_COL),
 			functions.max(ColName.SCORE_COL).as(ColName.SCORE_MAX_COL)));
     }
