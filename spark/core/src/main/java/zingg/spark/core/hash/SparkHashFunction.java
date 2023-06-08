@@ -1,5 +1,9 @@
 package zingg.spark.core.hash;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
@@ -62,5 +66,20 @@ public abstract class SparkHashFunction<T1, R> extends HashFunction<Dataset<Row>
     public Object apply(Dataset<Row> df, Row r, String column) {
         throw new UnsupportedOperationException("not supported for Spark");
     }
+
+    @Override
+    public void writeCustomObject(ObjectOutputStream out) throws IOException {
+        out.writeObject(getBaseHash());
+        out.writeObject(getDataType());
+        out.writeObject(getReturnType());
+    }
+    
+    @Override
+	public void readCustomObject(ObjectInputStream ois) throws IOException, ClassNotFoundException{
+        setBaseHash((BaseHash) ois.readObject());
+        setDataType((DataType)ois.readObject());
+        setReturnType((DataType)ois.readObject());
+    }
+		
 
 }
