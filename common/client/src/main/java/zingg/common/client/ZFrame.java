@@ -137,4 +137,6 @@ public interface ZFrame<D, R, C> {
     
     public FieldData[] fields();
     
+    public Object getMaxVal(String colName);
+        
 }

@@ -246,6 +246,11 @@ public class TestSparkFrame extends TestSparkFrameBase {
   		assertTrueCheckingExceptOutput(sf2, df.withColumn(newCol, col(oldCol)), "SparkFrame.withColumn(c, Column) output is not as expected");
 	}
 	
+	@Test
+	public void testGetMaxVal(){
+		SparkFrame zScoreDF = getZScoreDF();
+		assertEquals(400,zScoreDF.getMaxVal(ColName.CLUSTER_COLUMN));
+    }		
 	
 	@Test
 	public void testGroupByMinMax(){
