@@ -29,9 +29,14 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     }
 
 	protected  ZFrame<D,R,C>  getTestData() throws ZinggClientException{
-		 ZFrame<D,R,C>  data = getPipeUtil().read(true, args.getNumPartitions(), true, args.getData());
+		 ZFrame<D,R,C>  data = getPipeUtil().read(true, true, args.getNumPartitions(), true, args.getData());
 		return data;
 	}
+
+	protected ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
+		return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
+	}
+
 
 	protected  ZFrame<D,R,C>  getBlocked( ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
 		LOG.debug("Blocking model file location is " + args.getBlockFile());
@@ -81,11 +86,12 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return blocked.select(ColName.ID_COL, ColName.HASH_COL);
 	}
 
+	@Override
     public void execute() throws ZinggClientException {
         try {
 			// read input, filter, remove self joins
 			ZFrame<D,R,C>  testDataOriginal = getTestData();
-			testDataOriginal =  getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
+			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal);
 			ZFrame<D,R,C>  testData = getStopWords().preprocessForStopWords(testDataOriginal);
 			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);

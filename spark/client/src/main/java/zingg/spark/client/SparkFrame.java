@@ -348,5 +348,11 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 		}
 		return fieldDataArr;
     }
-
+    
+	@Override
+    public Object getMaxVal(String colName) {
+    	Row r =  df.agg(functions.max(colName)).head();
+    	return r.get(0);
+    }
+	    
 }
