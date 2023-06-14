@@ -6,7 +6,8 @@ import java.util.List;
 public interface ZFrame<D, R, C> {
 	
 	public static final String RIGHT_JOIN = "right";
-    
+	public static final String LEFT_JOIN = "left";
+	
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
     public String[] columns();
@@ -138,5 +139,12 @@ public interface ZFrame<D, R, C> {
     public FieldData[] fields();
     
     public Object getMaxVal(String colName);
+    
+	public ZFrame<D, R, C> filterInCond(String colName,ZFrame<D, R, C> innerDF, String innerDFCol);
+    
+	public ZFrame<D, R, C> filterNotNullCond(String colName);
+	
+	public ZFrame<D, R, C> filterNullCond(String colName);
+    
         
 }

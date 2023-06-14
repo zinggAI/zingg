@@ -354,5 +354,21 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     	Row r =  df.agg(functions.max(colName)).head();
     	return r.get(0);
     }
-	    
+	
+	@Override    
+	public ZFrame<Dataset<Row>, Row, Column> filterInCond(String colName,ZFrame<Dataset<Row>, Row, Column> innerDF, String innerDFCol) {
+		ZFrame<Dataset<Row>, Row, Column> innerDF2 = innerDF.select(innerDF.col(innerDFCol).alias(colName));
+		return this.joinOnCol(innerDF2, colName);
+	}
+	
+	@Override
+	public ZFrame<Dataset<Row>, Row, Column> filterNotNullCond(String colName) {
+		return this.filter(df.col(colName).isNotNull());
+	}
+	
+	@Override
+	public ZFrame<Dataset<Row>, Row, Column> filterNullCond(String colName) {
+		return this.filter(df.col(colName).isNull());
+	}	
+	
 }
