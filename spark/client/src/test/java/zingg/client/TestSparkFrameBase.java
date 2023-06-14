@@ -185,6 +185,23 @@ public class TestSparkFrameBase {
 		return df;
 	}	
 	
+	protected SparkFrame getClusterDataWithNull() {
+		Row[] rows = { 
+				RowFactory.create( 1,100,1001,"b"),
+				RowFactory.create( 2,100,1002,"a"),
+				RowFactory.create( 3,100,2001,null),
+				RowFactory.create( 4,900,2002,"c"),
+				RowFactory.create( 5,111,9002,null)
+		};
+		StructType schema = new StructType(new StructField[] {
+				new StructField(ColName.COL_PREFIX+ ColName.ID_COL, DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField(ColName.CLUSTER_COLUMN, DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField(ColName.SCORE_COL, DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField(ColName.SOURCE_COL, DataTypes.StringType, true, Metadata.empty())});
+		SparkFrame df = new SparkFrame(spark.createDataFrame(Arrays.asList(rows), schema));
+		return df;
+	}	
+	
 	protected void assertTrueCheckingExceptOutput(ZFrame<Dataset<Row>, Row, Column> sf1, ZFrame<Dataset<Row>, Row, Column> sf2, String message) {
 		assertTrue(sf1.except(sf2).isEmpty(), message);
 	}

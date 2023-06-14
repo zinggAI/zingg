@@ -290,5 +290,27 @@ public class TestSparkFrame extends TestSparkFrameBase {
 		assertEquals(10,joinedData.count());
    }
 	
+	@Test
+	public void testFilterInCond(){
+		SparkFrame inpData = getInputData();
+		SparkFrame clusterData = getClusterDataWithNull();
+		ZFrame<Dataset<Row>, Row, Column> filteredData = inpData.filterInCond(ColName.ID_COL, clusterData, ColName.COL_PREFIX+ ColName.ID_COL);
+		assertEquals(5,filteredData.count());
+   }
+
+	@Test
+	public void testFilterNotNullCond(){
+		SparkFrame clusterData = getClusterDataWithNull();
+		ZFrame<Dataset<Row>, Row, Column> filteredData = clusterData.filterNotNullCond(ColName.SOURCE_COL);
+		assertEquals(3,filteredData.count());
+   }
+
+	@Test
+	public void testFilterNullCond(){
+		SparkFrame clusterData = getClusterDataWithNull();
+		ZFrame<Dataset<Row>, Row, Column> filteredData = clusterData.filterNullCond(ColName.SOURCE_COL);
+		assertEquals(2,filteredData.count());
+   }
+	
 	
 }

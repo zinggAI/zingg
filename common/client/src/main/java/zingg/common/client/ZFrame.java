@@ -138,5 +138,12 @@ public interface ZFrame<D, R, C> {
     public FieldData[] fields();
     
     public Object getMaxVal(String colName);
+    
+	public ZFrame<D, R, C> filterInCond(String colName,ZFrame<D, R, C> innerDF, String innerDFCol);
+    
+	public ZFrame<D, R, C> filterNotNullCond(String colName);
+	
+	public ZFrame<D, R, C> filterNullCond(String colName);
+    
         
 }
