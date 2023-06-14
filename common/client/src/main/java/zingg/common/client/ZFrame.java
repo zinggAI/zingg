@@ -6,7 +6,8 @@ import java.util.List;
 public interface ZFrame<D, R, C> {
 	
 	public static final String RIGHT_JOIN = "right";
-    
+	public static final String LEFT_JOIN = "left";
+	
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
     public String[] columns();
