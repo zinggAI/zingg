@@ -17,13 +17,10 @@ public class DateSimilarityFunction extends SimFunction<Date> {
 
 	@Override
 	public Double call(Date first, Date second) {
+		if (first == null || second == null) return 1d;
 		double diff = Math.abs(first.getTime() - second.getTime())/(24*60*60*1000);
 		return diff;
-	}
-
-
-	
-	
+	}	
 
 }
 
