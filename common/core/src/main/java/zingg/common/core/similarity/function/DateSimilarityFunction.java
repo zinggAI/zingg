@@ -12,18 +12,19 @@ public class DateSimilarityFunction extends SimFunction<Date> {
 
 	public DateSimilarityFunction() {
 		super("DateSimilarityFunction");
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public Double call(Date first, Date second) {
-		double diff = Math.abs(first.getTime() - second.getTime())/(24*60*60*1000);
+		if (first == null || second == null) return 1d;
+		long timeDiffInMillis = first.getTime() - second.getTime();
+		//added 1 to avoid 0 division
+		long timeAddinMillis = 1+first.getTime() + second.getTime();
+		//we want similarity, hence we subtract from 1 so that closer values have higher score
+		// similar to DoubleSimilarityFunction
+		double diff = 1-Math.abs(timeDiffInMillis/(1.0*timeAddinMillis));
 		return diff;
-	}
-
-
-	
-	
+	}	
 
 }
 
