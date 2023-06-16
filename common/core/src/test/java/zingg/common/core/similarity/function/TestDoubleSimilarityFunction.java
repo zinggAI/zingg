@@ -1,12 +1,17 @@
 package zingg.common.core.similarity.function;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
 
+import java.net.URISyntaxException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class TestDoubleSimilarityFunction {
-	
-	
+
+
+	public TestDoubleSimilarityFunction() throws URISyntaxException {
+	}
+
 	@Test
 	public void testFirstNumsimFn() {
 		DoubleSimilarityFunction simFn = new DoubleSimilarityFunction();
@@ -66,5 +71,4 @@ public class TestDoubleSimilarityFunction {
 		assertEquals(0.3d, simFn.call(1.0, 8d), 0.01d);
 	}
 
-	
 }

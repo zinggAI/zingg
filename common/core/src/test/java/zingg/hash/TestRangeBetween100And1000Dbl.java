@@ -60,5 +60,14 @@ public class TestRangeBetween100And1000Dbl {
 	    RangeDbl value = getInstance();
 		assertEquals(0, value.call(null));
 	}
-
+	@Test
+	public void testRangeForUpperLimit() {
+		RangeDbl value = getInstance();
+		assertEquals(1000, value.getUpperLimit()); 
+	}
+	@Test
+	public void testRangeForLowerLimit() {
+		RangeDbl value = getInstance();
+		assertEquals(100, value.getLowerLimit()); 
+	}
 }

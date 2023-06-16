@@ -20,6 +20,11 @@ public class TestLastWord {
         assertEquals("gupta", value.call("gupta"));
     }
 	
+    @Test
+    public void testLastWord3() {
+        LastWord value = getInstance();
+        assertEquals(null, value.call(null));
+    }
 	
     private LastWord getInstance() {
         return new LastWord();
