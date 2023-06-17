@@ -16,11 +16,11 @@ public class First3CharsBox extends BaseHash<String,Integer>{
 					return 1;
 				} else if (sub.compareTo("ezz") >= 0 && sub.compareTo("izz") < 0) {
 					return 2;
-				} else if (sub.compareTo("izz") >= 0 && sub.compareTo("mzz") <= 0) {
+				} else if (sub.compareTo("izz") >= 0 && sub.compareTo("mzz") < 0) {
 					return 3;
-				} else if (sub.compareTo("mzz") >= 0 && sub.compareTo("qzz") <= 0) {
+				} else if (sub.compareTo("mzz") >= 0 && sub.compareTo("qzz") < 0) {
 					return 4;
-				} else if (sub.compareTo("qzz") >= 0 && sub.compareTo("uzz") <= 0) {
+				} else if (sub.compareTo("qzz") >= 0 && sub.compareTo("uzz") < 0) {
 					return 5;
 				} else if (sub.compareTo("uzz") >= 0) {
 					return 6;
