@@ -57,7 +57,9 @@ _**Note :-**_  If you have already set up **JAVA\_HOME** and **SPARK\_HOME** in 
 
 _**Step 6 :  Compile the Zingg Repository**_
 
-* Run the following to Compile the Zingg Repository - **mvn clean compile package -Dspark=sparkVer**
+* Run the following to Compile the Zingg Repository -
+        **mvn initialize**  
+        **mvn clean compile package -Dspark=sparkVer**
 
 ****
 
