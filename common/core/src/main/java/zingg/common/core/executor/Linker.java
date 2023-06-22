@@ -21,6 +21,8 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	}
 
 	protected ZFrame<D,R,C> getBlocks(ZFrame<D,R,C> blocked, ZFrame<D,R,C> bAll) throws Exception{
+		// THIS LOG IS NEEDED FOR PLAN CALCULATION USING COUNT, DO NOT REMOVE
+		LOG.info("in getBlocks, blocked count is " + blocked.count());
 		return getDSUtil().joinWithItselfSourceSensitive(blocked, ColName.HASH_COL, args).cache();
 	}
 
