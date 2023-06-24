@@ -223,7 +223,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public void init() throws ZinggClientException {
-		zingg.init(getArguments(), "");
+		zingg.init(getArguments(), options.get(ClientOptions.LICENSE).value.trim());
 		if (session != null) zingg.setSession(session);
 		zingg.setClientOptions(options);
 	}
