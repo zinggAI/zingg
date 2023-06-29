@@ -5,7 +5,6 @@ import java.io.Serializable;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Arguments;
@@ -21,7 +20,7 @@ import zingg.common.client.license.IZinggLicense;
  * @author sgoyal
  *
  */
-public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column, DataType>  implements Serializable {
+public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column, DataType>  implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -30,7 +29,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 		
 	}
 
-	public SparkClient(Arguments args, ClientOptions options, SparkSession s) throws ZinggClientException {
+	public SparkClient(Arguments args, ClientOptions options, ZSparkSession s) throws ZinggClientException {
 		super(args, options, s);
 	}
 
@@ -52,7 +51,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 	
 
 	@Override
-	public Client<SparkSession, Dataset<Row>, Row, Column, DataType> getClient(Arguments args, 
+	public Client<ZSparkSession, Dataset<Row>, Row, Column, DataType> getClient(Arguments args, 
 		ClientOptions options) throws ZinggClientException {
 		// TODO Auto-generated method stub
 		SparkClient client = null;

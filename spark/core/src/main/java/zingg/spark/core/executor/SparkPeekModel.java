@@ -6,11 +6,9 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.deploy.PythonRunner;
-
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Arguments;
@@ -19,8 +17,9 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.executor.ZinggBase;
+import zingg.spark.client.ZSparkSession;
 
-public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, Column, DataType>{
+public class SparkPeekModel extends ZinggBase<ZSparkSession, Dataset<Row>, Row, Column, DataType>{
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.spark.core.executor.SparkPeekModel";

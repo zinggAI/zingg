@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.IZingg;
+import zingg.spark.client.ZSparkSession;
 import zingg.spark.core.util.SparkBlockingTreeUtil;
 import zingg.spark.core.util.SparkDSUtil;
 import zingg.spark.core.util.SparkGraphUtil;
@@ -50,15 +51,16 @@ public class ZinggSparkTester {
 			args = new Arguments();
 			zsCTX = new ZinggSparkContext();
 			zsCTX.ctx = ctx;
-			zsCTX.spark = spark;
+			ZSparkSession zSession = new ZSparkSession(spark, null);
+			zsCTX.zSession = zSession;
 			
             ctx.setCheckpointDir("/tmp/checkpoint");	
-            zsCTX.setPipeUtil(new SparkPipeUtil(spark));
-            zsCTX.setDSUtil(new SparkDSUtil(spark));
-            zsCTX.setHashUtil(new SparkHashUtil(spark));
+            zsCTX.setPipeUtil(new SparkPipeUtil(zSession));
+            zsCTX.setDSUtil(new SparkDSUtil(zSession));
+            zsCTX.setHashUtil(new SparkHashUtil(zSession));
             zsCTX.setGraphUtil(new SparkGraphUtil());
-            zsCTX.setModelUtil(new SparkModelUtil(spark));
-            zsCTX.setBlockingTreeUtil(new SparkBlockingTreeUtil(spark, zsCTX.getPipeUtil()));
+            zsCTX.setModelUtil(new SparkModelUtil(zSession));
+            zsCTX.setBlockingTreeUtil(new SparkBlockingTreeUtil(zSession, zsCTX.getPipeUtil()));
 			
     	} catch (Throwable e) {
     		if (LOG.isDebugEnabled())
