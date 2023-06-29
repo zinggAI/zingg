@@ -229,7 +229,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		zingg.setClientOptions(options);
 	}
 
-	protected abstract IZinggLicense getLicense(String license);
+	protected abstract IZinggLicense getLicense(String license)  throws ZinggClientException ;
 	
 	/**
 	 * Stop the Spark job running context

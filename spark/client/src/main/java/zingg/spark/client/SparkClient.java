@@ -72,7 +72,7 @@ public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column
 	}
 
 	@Override
-	protected IZinggLicense getLicense(String license) {
+	protected IZinggLicense getLicense(String license) throws ZinggClientException {
 		return null;
 	}
 	
