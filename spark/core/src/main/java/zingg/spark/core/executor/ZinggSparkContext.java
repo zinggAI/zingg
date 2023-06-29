@@ -90,7 +90,7 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
 				if (ctx != null) {
 					ctx.stop();
 				}
-				if (zSession.getSession() != null) {
+				if (zSession!=null && zSession.getSession() != null) {
 					zSession.getSession().stop();
 				}
 				ctx = null;
