@@ -11,6 +11,7 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
+import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.documenter.DataDocumenter;
 import zingg.common.core.documenter.ModelDocumenter;
 import zingg.common.core.executor.Documenter;
@@ -30,7 +31,7 @@ public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row,
 	}
 
 	@Override
-	public void init(Arguments args, String license)  throws ZinggClientException {
+	public void init(Arguments args, IZinggLicense license)  throws ZinggClientException {
 		super.init(args, license);
 		getContext().init(license);
 	}

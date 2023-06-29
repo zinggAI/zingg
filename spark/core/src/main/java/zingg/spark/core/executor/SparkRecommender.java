@@ -11,7 +11,7 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
-
+import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.executor.Recommender;
 import zingg.common.core.recommender.StopWordsRecommender;
 import zingg.spark.core.recommender.SparkStopWordsRecommender;
@@ -33,7 +33,7 @@ public class SparkRecommender extends Recommender<SparkSession, Dataset<Row>, Ro
 	}
 
     @Override
-    public void init(Arguments args, String license)  throws ZinggClientException {
+    public void init(Arguments args, IZinggLicense license)  throws ZinggClientException {
         super.init(args, license);
         getContext().init(license);
     }	

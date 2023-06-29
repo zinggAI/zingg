@@ -1,14 +1,19 @@
 package zingg.spark.client;
 
 import java.io.Serializable;
-import org.apache.spark.api.java.JavaSparkContext;
+
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.common.client.*;
+import zingg.common.client.Arguments;
+import zingg.common.client.Client;
+import zingg.common.client.ClientOptions;
+import zingg.common.client.IZinggFactory;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.license.IZinggLicense;
 
 /**
  * This is the main point of interface with the Zingg matching product.
@@ -67,5 +72,10 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 		client.mainMethod(args);
 	}
 
+	@Override
+	protected IZinggLicense getLicense(String license) {
+		return null;
+	}
+	
 	
 }

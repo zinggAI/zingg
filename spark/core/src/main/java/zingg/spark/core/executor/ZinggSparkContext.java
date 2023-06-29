@@ -11,6 +11,7 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.IZingg;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.Context;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.DSUtil;
@@ -57,7 +58,7 @@ public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Ro
 
 
     @Override
-    public void init(String license)
+    public void init(IZinggLicense license)
         throws ZinggClientException {
         try{
             if (spark == null) {

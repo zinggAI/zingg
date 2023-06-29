@@ -11,6 +11,7 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
+import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.executor.Linker;
 import zingg.common.core.model.Model;
 import zingg.common.core.preprocess.StopWordsRemover;
@@ -19,6 +20,7 @@ import zingg.spark.core.preprocess.SparkStopWordsRemover;
 
 public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
+	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkLinker";
 	public static final Log LOG = LogFactory.getLog(SparkLinker.class);
 
@@ -28,7 +30,7 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
 	}
 
     @Override
-    public void init(Arguments args, String license)  throws ZinggClientException {
+    public void init(Arguments args, IZinggLicense license)  throws ZinggClientException {
         super.init(args, license);
         getContext().init(license);
     }
