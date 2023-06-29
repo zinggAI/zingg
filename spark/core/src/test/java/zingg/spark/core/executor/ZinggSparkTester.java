@@ -32,6 +32,7 @@ public class ZinggSparkTester {
     public static JavaSparkContext ctx;
     public static SparkSession spark;
     public static ZinggSparkContext zsCTX;
+    public static ZSparkSession zSession;
 
     public static final Log LOG = LogFactory.getLog(ZinggSparkTester.class);
 
@@ -51,7 +52,7 @@ public class ZinggSparkTester {
 			args = new Arguments();
 			zsCTX = new ZinggSparkContext();
 			zsCTX.ctx = ctx;
-			ZSparkSession zSession = new ZSparkSession(spark, null);
+			zSession = new ZSparkSession(spark, null);
 			zsCTX.zSession = zSession;
 			
             ctx.setCheckpointDir("/tmp/checkpoint");	
