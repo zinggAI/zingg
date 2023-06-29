@@ -5,19 +5,21 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
+import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.executor.TrainMatcher;
 import zingg.common.core.model.Model;
 import zingg.common.core.preprocess.StopWordsRemover;
+import zingg.spark.client.ZSparkSession;
 import zingg.spark.core.preprocess.SparkStopWordsRemover;
  
-public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkTrainMatcher extends TrainMatcher<ZSparkSession, Dataset<Row>, Row, Column,DataType> {
 
+	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkTrainMatcher";
 	public static final Log LOG = LogFactory.getLog(SparkTrainMatcher.class);
 
@@ -28,7 +30,7 @@ public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, 
 	}
 
     @Override
-    public void init(Arguments args, String license)  throws ZinggClientException {
+    public void init(Arguments args, IZinggLicense license)  throws ZinggClientException {
         super.init(args, license);
         getContext().init(license);
     }
@@ -42,7 +44,7 @@ public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, 
 	}
 
 	@Override
-	protected StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
+	protected StopWordsRemover<ZSparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
 		return new SparkStopWordsRemover(getContext(),getArgs());
 	}
 	

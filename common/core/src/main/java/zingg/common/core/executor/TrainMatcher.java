@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
+import zingg.common.client.license.IZinggLicense;
 
 public abstract class TrainMatcher<S,D,R,C,T> extends Matcher<S,D,R,C,T>{
 
@@ -18,7 +19,7 @@ public abstract class TrainMatcher<S,D,R,C,T> extends Matcher<S,D,R,C,T>{
     }
 
 	@Override
-	public void init(Arguments args, String license)
+	public void init(Arguments args, IZinggLicense license)
         throws ZinggClientException {
 			trainer.init(args, license);
 			super.init(args, license);			

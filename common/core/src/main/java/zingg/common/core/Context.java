@@ -3,6 +3,7 @@ package zingg.common.core;
 import java.io.Serializable;
 
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.DSUtil;
 import zingg.common.core.util.GraphUtil;
@@ -29,7 +30,7 @@ public interface Context <S,D, R, C,T> extends Serializable {
     public PipeUtilBase<S,D,R,C> getPipeUtil();
     public BlockingTreeUtil<S, D,R,C,T> getBlockingTreeUtil() ;
 
-    public void init(String license)
+    public void init(IZinggLicense license)
         throws ZinggClientException;
     
     public void cleanup();
