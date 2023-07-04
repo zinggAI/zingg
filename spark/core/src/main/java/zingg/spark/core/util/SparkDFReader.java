@@ -1,26 +1,25 @@
 package zingg.spark.core.util;
 
-import zingg.common.core.util.DFReader;
-import org.apache.spark.sql.Row;
 import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.DataFrameReader;
-import org.apache.spark.sql.DataFrameWriter;
-import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.StructType;
 
-import zingg.spark.client.SparkFrame;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.util.DFReader;
+import zingg.spark.client.SparkFrame;
+import zingg.spark.client.ZSparkSession;
 
 public class SparkDFReader implements DFReader<Dataset<Row>, Row, Column> {
     
-    private SparkSession session;
+    private ZSparkSession session;
     private DataFrameReader reader;
 
-    public SparkDFReader(SparkSession s) {
+    public SparkDFReader(ZSparkSession s) {
         this.session = s;
-        this.reader = s.read();
+        this.reader = s.getSession().read();
     }
 
     public DFReader<Dataset<Row>, Row, Column> getReader() {

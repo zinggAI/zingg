@@ -3,26 +3,16 @@ package zingg.spark.core.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.spark.api.java.JavaPairRDD;
-import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.function.Function;
-import org.apache.spark.graphx.Edge;
-import org.apache.spark.graphx.Graph;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.functions;
-import org.apache.spark.storage.StorageLevel;
 import org.graphframes.GraphFrame;
-import org.graphframes.lib.AggregateMessages;
 
-import zingg.spark.client.SparkFrame;
+import scala.collection.JavaConverters;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
-import scala.collection.JavaConverters;
-import scala.reflect.ClassTag;
-import zingg.scala.DFUtil;
 import zingg.common.core.util.GraphUtil;
+import zingg.spark.client.SparkFrame;
 
 public class SparkGraphUtil implements GraphUtil<Dataset<Row>, Row, Column> {
 

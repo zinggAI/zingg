@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.spark.sql.Column;
@@ -42,8 +40,8 @@ public class TestBlock  extends ZinggSparkTester {
 		Arguments args = getArguments();
 
 		// form tree
-		SparkBlockingTreeUtil blockingTreeUtil = new SparkBlockingTreeUtil(spark, zsCTX.getPipeUtil());
-		SparkHashUtil hashUtil = new SparkHashUtil(spark);
+		SparkBlockingTreeUtil blockingTreeUtil = new SparkBlockingTreeUtil(zSession, zsCTX.getPipeUtil());
+		SparkHashUtil hashUtil = new SparkHashUtil(zSession);
 
 		Tree<Canopy<Row>> blockingTree = blockingTreeUtil.createBlockingTreeFromSample(testData, posDf, 0.5, -1,
 				args, hashUtil.getHashFunctionList());

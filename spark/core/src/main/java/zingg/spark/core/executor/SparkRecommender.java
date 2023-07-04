@@ -5,15 +5,15 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
-
+import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.executor.Recommender;
 import zingg.common.core.recommender.StopWordsRecommender;
+import zingg.spark.client.ZSparkSession;
 import zingg.spark.core.recommender.SparkStopWordsRecommender;
 
 
@@ -21,7 +21,7 @@ import zingg.spark.core.recommender.SparkStopWordsRecommender;
  * Spark specific implementation of Recommender
  *
  */
-public class SparkRecommender extends Recommender<SparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkRecommender extends Recommender<ZSparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkRecommender";
@@ -33,14 +33,14 @@ public class SparkRecommender extends Recommender<SparkSession, Dataset<Row>, Ro
 	}
 
     @Override
-    public void init(Arguments args, String license)  throws ZinggClientException {
+    public void init(Arguments args, IZinggLicense license)  throws ZinggClientException {
         super.init(args, license);
         getContext().init(license);
     }	
 
     @Override
-    public StopWordsRecommender<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWordsRecommender() {
-    	StopWordsRecommender<SparkSession, Dataset<Row>, Row, Column, DataType> stopWordsRecommender = new SparkStopWordsRecommender(getContext(),args);    	
+    public StopWordsRecommender<ZSparkSession, Dataset<Row>, Row, Column, DataType> getStopWordsRecommender() {
+    	StopWordsRecommender<ZSparkSession, Dataset<Row>, Row, Column, DataType> stopWordsRecommender = new SparkStopWordsRecommender(getContext(),args);    	
     	return stopWordsRecommender;
     }
 	
