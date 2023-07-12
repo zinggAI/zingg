@@ -80,10 +80,11 @@ public abstract class HashFunction<D,R,C,T> implements Serializable{
 
 		public abstract Object apply(D df, R r, String column); // added for SnowFrame getAsString method
 
+		/* 
 		public abstract void writeCustomObject(ObjectOutputStream out) throws IOException;
 		public abstract void readCustomObject(ObjectInputStream ois) throws ClassNotFoundException, IOException;
 		
-
+		
 		private void writeObject(ObjectOutputStream out) throws IOException{
 			out.writeUTF(name);
 			out.writeBoolean(isUdf);
@@ -98,6 +99,7 @@ public abstract class HashFunction<D,R,C,T> implements Serializable{
 				setUdf(ois.readBoolean());
 				readCustomObject(ois);
 			}
+			*/
 	
 }
 

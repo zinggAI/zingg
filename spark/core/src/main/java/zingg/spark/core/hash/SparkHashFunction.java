@@ -67,6 +67,7 @@ public abstract class SparkHashFunction<T1, R> extends HashFunction<Dataset<Row>
         throw new UnsupportedOperationException("not supported for Spark");
     }
 
+    /* 
     @Override
     public void writeCustomObject(ObjectOutputStream out) throws IOException {
         out.writeObject(getBaseHash());
@@ -79,7 +80,7 @@ public abstract class SparkHashFunction<T1, R> extends HashFunction<Dataset<Row>
         setBaseHash((BaseHash) ois.readObject());
         setDataType((DataType)ois.readObject());
         setReturnType((DataType)ois.readObject());
-    }
+    }*/
 		
 
 }
