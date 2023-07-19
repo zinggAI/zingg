@@ -111,6 +111,7 @@ public class Arguments implements Serializable {
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
 	String column;
+	String obviousDupeString;
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
 	private static final String ESC = "\\";
@@ -676,6 +677,14 @@ public class Arguments implements Serializable {
 		this.column = column;
 	}
 	
+	public String getObviousDupeString() {
+		return obviousDupeString;
+	}
+
+	public void setObviousDupeString(String obviousDupeString) {
+		this.obviousDupeString = obviousDupeString;
+	}
+
 	public long getBlockSize() {
 		return blockSize;
 	}
