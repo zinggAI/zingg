@@ -125,6 +125,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			//get obvious dupes
 			ZFrame<D, R, C> obvDupePairs = getObvDupePairs(blocked);
 			if (obvDupePairs != null) {
+				LOG.info("obvDupePairs count " + obvDupePairs.count());
 				blocks = removeObvDupesFromBlocks(blocks);
 			}
 			
@@ -170,11 +171,13 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	protected ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks) {
+		LOG.info("blocks count before removing obvDupePairs " + blocks.count());
 		C reverseOBVDupeDFFilter = blocks.getReverseObviousDupesFilter(args.getObviousDupeCondition());
 		if (reverseOBVDupeDFFilter != null) {
 			// remove dupes as already considered in obvDupePairs
 			blocks = blocks.filter(reverseOBVDupeDFFilter);				
 		} 
+		LOG.info("blocks count after removing obvDupePairs " + blocks.count());
 		return blocks;
 	}
 
