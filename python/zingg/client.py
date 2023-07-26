@@ -475,6 +475,17 @@ class Arguments:
     def getModelId(self):
         return self.args.getModelId()
 
+    def setObviousDupeCondition(self, obviousDupeCondition):
+        """ Method to set the obviousDupeCondition used for matching
+
+        :param id: obviousDupeCondition value 
+        :type id: String
+        """
+        self.args.setObviousDupeCondition(obviousDupeCondition)
+    
+    def getObviousDupeCondition(self):
+        return self.args.getObviousDupeCondition()
+
     def setZinggDir(self, f):
         """ Method to set the location for Zingg to save its internal computations and models. Please set it to a place where the program has to write access.
 
