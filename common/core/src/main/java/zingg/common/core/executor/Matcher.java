@@ -212,17 +212,22 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			
 			dupesActual = dupesActual.cache();
 			System.out.println("dupes ------------");
-			dupesActual.show();
+			if (LOG.isDebugEnabled()) {
+				dupesActual.show();
+			}
 			ZFrame<D,R,C>graph = getGraphUtil().buildGraph(blocked, dupesActual).cache();
 			//graph.toJavaRDD().saveAsTextFile("/tmp/zgraph");
 			System.out.println("graph ------------");
-			graph.show();
+			if (LOG.isDebugEnabled()) {
+				graph.show();
+			}
 			//write score
 			ZFrame<D,R,C>score = getMinMaxScores(dupesActual, graph).cache();
 			//score.toJavaRDD().coalesce(1).saveAsTextFile("/tmp/zallscoresAvg");
 			graph = graph.repartition(args.getNumPartitions(), graph.col(ColName.ID_COL)).cache();
-			
-			score.show();
+			if (LOG.isDebugEnabled()) {
+				score.show();
+			}
 			ZFrame<D,R,C>graphWithScores = getDSUtil().joinZColFirst(
 				score, graph, ColName.ID_COL, false).cache();
 				//graphWithScores.toJavaRDD().saveAsTextFile("/tmp/zgraphWScores");

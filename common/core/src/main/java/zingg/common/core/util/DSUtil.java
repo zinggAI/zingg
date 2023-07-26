@@ -57,8 +57,10 @@ public abstract class DSUtil<S, D, R, C> {
 		}
 		if (filter) {
 			pairs = pairs.filter(pairs.gt(ColName.ID_COL));	
-		}	
-		pairs.show(true);
+		}
+		if (LOG.isDebugEnabled()) {	
+			pairs.show(true);
+		}
 		return pairs;
 	}
 

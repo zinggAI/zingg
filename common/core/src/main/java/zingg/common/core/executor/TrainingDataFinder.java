@@ -83,11 +83,15 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				
 				blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
 				System.out.println("blocked");
-				blocked.show(true);
+				if (LOG.isDebugEnabled()) {
+					blocked.show(true);
+				}
 				ZFrame<D,R,C> blocks = getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
 				blocks = blocks.cache();	
 				System.out.println("blocks");
-				blocks.show();
+				if (LOG.isDebugEnabled()) {
+					blocks.show();
+				}
 				//TODO HASH Partition
 				if (negPairs!= null) negPairs = negPairs.cache();
 					//train classifier and predict the blocked values from classifier
@@ -129,7 +133,9 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
     }
 
 	public void writeUncertain(ZFrame<D,R,C> dupesActual, ZFrame<D,R,C> sampleOrginal) throws ZinggClientException {
-		dupesActual.show(40);
+		if (LOG.isDebugEnabled()) {
+			dupesActual.show(40);
+		}
 		//input dupes are pairs
 		dupesActual = getDSUtil().addClusterRowNumber(dupesActual);
 		dupesActual = getDSUtil().addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN );	
