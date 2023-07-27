@@ -2,11 +2,19 @@ package zingg.common.client;
 
 import java.util.List;
 
+
 //Dataset, Row, column
 public interface ZFrame<D, R, C> {
 	
 	public static final String RIGHT_JOIN = "right";
 	public static final String LEFT_JOIN = "left";
+	
+	public static final String COL_COUNT = "count";
+	public static final String COL_VALUE = "VALUE";
+	
+	public static final String orSeperator = "\\|";	
+	public static final String andSeperator = "\\&";	
+
 	
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
@@ -28,6 +36,7 @@ public interface ZFrame<D, R, C> {
     /**doesnt dupe the join col */
     public ZFrame<D, R, C> joinOnCol(ZFrame<D, R, C> lines1, String joinColumn);
     
+    public ZFrame<D, R, C> joinOnCol(ZFrame<D, R, C> lines1, C joinColumn);
 
     public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, String joinColumn1, String joinColumn2);
     
@@ -145,6 +154,13 @@ public interface ZFrame<D, R, C> {
 	public ZFrame<D, R, C> filterNotNullCond(String colName);
 	
 	public ZFrame<D, R, C> filterNullCond(String colName);
+	
+	public C getObviousDupesFilter(String obviousDupeString);
     
-        
+	public C getObviousDupesFilter(ZFrame<D, R, C> dfToJoin, String obviousDupeString);
+	
+	public C getReverseObviousDupesFilter(String obviousDupeString);
+	
+	public C getReverseObviousDupesFilter(ZFrame<D, R, C> dfToJoin, String obviousDupeString);
+	
 }
