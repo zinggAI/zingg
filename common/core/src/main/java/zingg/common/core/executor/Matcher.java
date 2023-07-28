@@ -189,7 +189,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			return null;
 		}
 		
-		ZFrame<D, R, C> obvDupePairs = blocked.joinOnCol(prefixedColsDF, obvDupeDFFilter);
+		ZFrame<D, R, C> obvDupePairs = blocked.joinOnCol(prefixedColsDF, obvDupeDFFilter).cache();
 		obvDupePairs = obvDupePairs.filter(obvDupePairs.gt(ColName.ID_COL));
 		obvDupePairs = massageAllEquals(obvDupePairs);
 		
