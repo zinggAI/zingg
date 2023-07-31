@@ -94,21 +94,33 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal);
 			ZFrame<D,R,C>  testData = getStopWords().preprocessForStopWords(testDataOriginal);
 			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
+			//testData = dropDuplicates(testData);
 			long count = testData.count();
 			LOG.info("Read " + count);
 			Analytics.track(Metric.DATA_COUNT, count, args.getCollectMetrics());
 
 			ZFrame<D,R,C>blocked = getBlocked(testData);
 			LOG.info("Blocked ");
+			/*blocked = blocked.cache();
+			blocked.withColumn("partition_id", functions.spark_partition_id())
+				.groupBy("partition_id").agg(functions.count("z_zid")).as("zid").orderBy("partition_id").toJavaRDD().saveAsTextFile("/tmp/zblockedParts");
+				*/
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Num distinct hashes " + blocked.select(ColName.HASH_COL).distinct().count());
 				blocked.show();
 			}
+				//LOG.warn("Num distinct hashes " + blocked.agg(functions.approx_count_distinct(ColName.HASH_COL)).count());
 			
 			ZFrame<D,R,C>blocks = getBlocks(selectColsFromBlocked(blocked), testData);
+			//blocks.explain();
+			//LOG.info("Blocks " + blocks.count());
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("block size" + blocks.count());
 			}
+			//blocks.toJavaRDD().saveAsTextFile("/tmp/zblocks");
+			//check if all fields equal			
+			//ZFrame<D,R,C>allEqual =  getDSUtil().allFieldsEqual(blocks, args);
+			//allEqual = allEqual.cache();
 
 			//get obvious dupes
 			ZFrame<D, R, C> obvDupePairs = getObvDupePairs(blocked);
@@ -122,13 +134,35 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			
 			//send remaining to model 
 			Model model = getModel();
-			ZFrame<D,R,C>dupes = model.predict(blocks);
+			
+			//blocks.cache().withColumn("partition_id", functions.spark_partition_id())
+			//	.groupBy("partition_id").agg(functions.count("z_id")).ias("zid").orderBy("partition_id").;
+			/*
+			ZFrame<D,R,C>blocksRe = blocks.repartition(args.getNumPartitions());
+			blocksRe = blocksRe.cache();
+			blocksRe.withColumn("partition_id", functions.spark_partition_id())
+				.groupBy("partition_id").agg(functions.count("z_zid")).as("zid").orderBy("partition_id").toJavaRDD().saveAsTextFile("/tmp/zblocksPart");
+			*/
+			
+			ZFrame<D,R,C>dupes = model.predict(blocks); 
+			
+			//.exceptAll(allEqual));	
+			
+			//allEqual = massageAllEquals(allEqual);
 					
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Found dupes " + dupes.count());	
 			}
+			//dupes = dupes.cache();			
+			
+			//allEqual = allEqual.cache();
+			//writeOutput(blocked, dupes.union(allEqual).cache());		
+			
 			ZFrame<D,R,C>dupesActual = getDupesActualForGraph(dupes);
-			dupesActual = addObvDupes(obvDupePairs, dupesActual);
+			dupesActual = addObvDupes(obvDupePairs, dupesActual);	
+			
+			//dupesActual.explain();
+			//dupesActual.toJavaRDD().saveAsTextFile("/tmp/zdupes");
 			
 			writeOutput(testDataOriginal, dupesActual);		
 			
@@ -138,7 +172,6 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			throw new ZinggClientException(e.getMessage());
 		}
     }
-
 	protected ZFrame<D, R, C> addObvDupes(ZFrame<D, R, C> obvDupePairs, ZFrame<D, R, C> dupesActual) {
 		if (obvDupePairs != null) {
 			// ensure same columns in both
