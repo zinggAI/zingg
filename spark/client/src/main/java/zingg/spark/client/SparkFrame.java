@@ -174,6 +174,11 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.union(other.df()));
     }
 
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> unionAll(ZFrame<Dataset<Row>, Row, Column> other) {
+        return new SparkFrame(df.unionAll(other.df()));
+    }
+    
     public ZFrame<Dataset<Row>, Row, Column> unionByName(ZFrame<Dataset<Row>, Row, Column> other, boolean flag) {
         return new SparkFrame(df.unionByName(other.df(), flag));
     }
@@ -197,9 +202,15 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.repartition(nul, c));
     }
 
+    @Override
     public Column gt(String c) {
-		return df.col(c).gt(df.col(ColName.COL_PREFIX + c));
+		return gt(this,c);
 	}
+    
+    @Override
+    public Column gt(ZFrame<Dataset<Row>, Row, Column> other, String c) {
+		return df.col(c).gt(other.col(ColName.COL_PREFIX + c));
+	}    
     
     @Override
     public Column gt(String c, double val) {
@@ -383,8 +394,8 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 	 * @param obviousDupeString
 	 * @return
 	 */
-	public Column getObviousDupesFilter(String obviousDupeString) {
-		return getObviousDupesFilter(this,obviousDupeString);
+	public Column getObviousDupesFilter(String obviousDupeString, Column extraAndCond) {
+		return getObviousDupesFilter(this,obviousDupeString,extraAndCond);
 	}
 	
 	/**
@@ -395,7 +406,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 	 * @return
 	 */
 	@Override
-	public Column getObviousDupesFilter(ZFrame<Dataset<Row>, Row, Column> dfToJoin, String obviousDupeString) {
+	public Column getObviousDupesFilter(ZFrame<Dataset<Row>, Row, Column> dfToJoin, String obviousDupeString, Column extraAndCond) {
 		
 		if (dfToJoin==null || obviousDupeString == null || obviousDupeString.trim().isEmpty()) {
 			return null;
@@ -456,6 +467,15 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 			}
 
 		}
+		
+		if (extraAndCond != null) {
+			if (filterExpr != null) {
+				filterExpr = filterExpr.and(extraAndCond);
+			} else {
+				filterExpr = extraAndCond;
+			}
+		}
+		
 		return filterExpr;
 	}
 		
@@ -467,8 +487,8 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 	 * @return
 	 */
 	@Override
-	public Column getReverseObviousDupesFilter(String obviousDupeString) {
-		return getReverseObviousDupesFilter(this,obviousDupeString);
+	public Column getReverseObviousDupesFilter(String obviousDupeString, Column extraAndCond) {
+		return getReverseObviousDupesFilter(this,obviousDupeString,extraAndCond);
 	}
 		
 	/**
@@ -479,8 +499,8 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 	 * @return
 	 */
 	@Override
-	public Column getReverseObviousDupesFilter(ZFrame<Dataset<Row>, Row, Column> dfToJoin, String obviousDupeString) {
-		return functions.not(getObviousDupesFilter(dfToJoin,obviousDupeString));
+	public Column getReverseObviousDupesFilter(ZFrame<Dataset<Row>, Row, Column> dfToJoin, String obviousDupeString, Column extraAndCond) {
+		return functions.not(getObviousDupesFilter(dfToJoin,obviousDupeString,extraAndCond));
 	}
 	
 }

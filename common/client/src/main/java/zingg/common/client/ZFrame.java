@@ -72,6 +72,8 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> groupByCount(String colName, String countColName);
 
     public ZFrame<D, R, C> union(ZFrame<D, R, C> other);
+    
+    public ZFrame<D, R, C> unionAll(ZFrame<D, R, C> other);
 
     public ZFrame<D, R, C> unionByName(ZFrame<D, R, C> other, boolean flag);
 
@@ -91,6 +93,8 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> coalesce(int num);
 
     public C gt(String c);
+    
+    public C gt(ZFrame<D, R, C> other, String c);    
 
     public C gt(String c, double val);
     
@@ -155,12 +159,12 @@ public interface ZFrame<D, R, C> {
 	
 	public ZFrame<D, R, C> filterNullCond(String colName);
 	
-	public C getObviousDupesFilter(String obviousDupeString);
+	public C getObviousDupesFilter(String obviousDupeString, C extraAndCond);
     
-	public C getObviousDupesFilter(ZFrame<D, R, C> dfToJoin, String obviousDupeString);
+	public C getObviousDupesFilter(ZFrame<D, R, C> dfToJoin, String obviousDupeString, C extraAndCond);
 	
-	public C getReverseObviousDupesFilter(String obviousDupeString);
+	public C getReverseObviousDupesFilter(String obviousDupeString, C extraAndCond);
 	
-	public C getReverseObviousDupesFilter(ZFrame<D, R, C> dfToJoin, String obviousDupeString);
+	public C getReverseObviousDupesFilter(ZFrame<D, R, C> dfToJoin, String obviousDupeString, C extraAndCond);
 	
 }
