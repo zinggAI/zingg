@@ -113,18 +113,22 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			//get obvious dupes
 			ZFrame<D, R, C> obvDupePairs = getObvDupePairs(blocked);
 			if (obvDupePairs != null) {
-				LOG.info("obvDupePairs count " + obvDupePairs.count());
-				blocks = removeObvDupesFromBlocks(blocks);
+				long obvDupeCount = obvDupePairs.count();
+				LOG.info("obvDupePairs count " + obvDupeCount);
+				if (obvDupeCount > 0) {
+					blocks = removeObvDupesFromBlocks(blocks);
+				}
 			}
 			
 			//send remaining to model 
 			Model model = getModel();
-			ZFrame<D,R,C>dupes = model.predict(blocks); //.exceptAll(allEqual));	
-			dupes = addObvDupes(obvDupePairs, dupes);			
+			ZFrame<D,R,C>dupes = model.predict(blocks);
+					
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Found dupes " + dupes.count());	
 			}
 			ZFrame<D,R,C>dupesActual = getDupesActualForGraph(dupes);
+			dupesActual = addObvDupes(obvDupePairs, dupesActual);
 			
 			writeOutput(testDataOriginal, dupesActual);		
 			
@@ -135,17 +139,18 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		}
     }
 
-	protected ZFrame<D, R, C> addObvDupes(ZFrame<D, R, C> obvDupePairs, ZFrame<D, R, C> dupes) {
+	protected ZFrame<D, R, C> addObvDupes(ZFrame<D, R, C> obvDupePairs, ZFrame<D, R, C> dupesActual) {
 		if (obvDupePairs != null) {
-			// unionByName as positions may differ
-			dupes = dupes.unionByName(obvDupePairs, false);
+			// ensure same columns in both
+			obvDupePairs = selectColsFromDupes(obvDupePairs);
+			dupesActual = dupesActual.unionAll(obvDupePairs);
 		}
-		return dupes;
+		return dupesActual;
 	}
 
 	protected ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks) {
 		LOG.info("blocks count before removing obvDupePairs " + blocks.count());
-		C reverseOBVDupeDFFilter = blocks.getReverseObviousDupesFilter(args.getObviousDupeCondition());
+		C reverseOBVDupeDFFilter = blocks.getReverseObviousDupesFilter(args.getObviousDupeCondition(),null);
 		if (reverseOBVDupeDFFilter != null) {
 			// remove dupes as already considered in obvDupePairs
 			blocks = blocks.filter(reverseOBVDupeDFFilter);				
@@ -153,20 +158,43 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		LOG.info("blocks count after removing obvDupePairs " + blocks.count());
 		return blocks;
 	}
-
+	
 	protected ZFrame<D,R,C> getObvDupePairs(ZFrame<D,R,C> blocked) {
 		
-		ZFrame<D,R,C> prefixedColsDF = getDSUtil().getPrefixedColumnsDS(blocked);		
-		C obvDupeDFFilter = blocked.getObviousDupesFilter(prefixedColsDF,args.getObviousDupeCondition());
-		if (obvDupeDFFilter == null) {
+		String obviousDupeString = args.getObviousDupeCondition();
+		
+		if (obviousDupeString == null || obviousDupeString.trim().isEmpty()) {
 			return null;
 		}
+
+		ZFrame<D,R,C> prefixBlocked = getDSUtil().getPrefixedColumnsDS(blocked);		
+		C gtCond = blocked.gt(prefixBlocked,ColName.ID_COL);
 		
-		ZFrame<D, R, C> obvDupePairs = blocked.joinOnCol(prefixedColsDF, obvDupeDFFilter).cache();
-		obvDupePairs = obvDupePairs.filter(obvDupePairs.gt(ColName.ID_COL));
-		obvDupePairs = massageAllEquals(obvDupePairs);
+		ZFrame<D,R,C> onlyIds = null;
 		
-		return obvDupePairs;
+		// split on || (orSeperator)
+		String[] obvDupeORConditions = obviousDupeString.trim().split(ZFrame.orSeperator);		
+		// loop thru the values and build a filter condition		
+		for (int i = 0; i < obvDupeORConditions.length; i++) {		
+			
+			C obvDupeDFFilter = blocked.getObviousDupesFilter(prefixBlocked,obvDupeORConditions[i],gtCond);
+			ZFrame<D,R,C> onlyIdsTemp =  blocked
+					.joinOnCol(prefixBlocked, obvDupeDFFilter).select(ColName.ID_COL, ColName.COL_PREFIX + ColName.ID_COL);
+			
+			if(onlyIds==null) {
+				onlyIds = onlyIdsTemp;
+			} else {
+				onlyIds = onlyIds.unionAll(onlyIdsTemp);
+			}
+			
+		}
+		
+		// remove duplicate pairs
+		onlyIds = onlyIds.distinct();		
+		onlyIds = massageAllEquals(onlyIds);
+		onlyIds = onlyIds.cache();
+		
+		return onlyIds;
 	}
 	
 	public void writeOutput( ZFrame<D,R,C>  blocked,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException {
