@@ -309,7 +309,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	protected ZFrame<D,R,C>getDupesActualForGraph(ZFrame<D,R,C>dupes) {
-		ZFrame<D,R,C> dupesActual = selectColsFromDupes(dupes);
+		dupes = selectColsFromDupes(dupes);
 		LOG.debug("dupes al");
 		if (LOG.isDebugEnabled()) dupes.show();
 		return dupes.filter(dupes.equalTo(ColName.PREDICTION_COL,ColValues.IS_MATCH_PREDICTION));
