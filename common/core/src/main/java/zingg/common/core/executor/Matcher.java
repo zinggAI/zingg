@@ -29,9 +29,14 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     }
 
 	protected  ZFrame<D,R,C>  getTestData() throws ZinggClientException{
-		 ZFrame<D,R,C>  data = getPipeUtil().read(true, args.getNumPartitions(), true, args.getData());
+		 ZFrame<D,R,C>  data = getPipeUtil().read(true, true, args.getNumPartitions(), true, args.getData());
 		return data;
 	}
+
+	protected ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
+		return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
+	}
+
 
 	protected  ZFrame<D,R,C>  getBlocked( ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
 		LOG.debug("Blocking model file location is " + args.getBlockFile());
@@ -81,12 +86,12 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return blocked.select(ColName.ID_COL, ColName.HASH_COL);
 	}
 
+	@Override
     public void execute() throws ZinggClientException {
         try {
 			// read input, filter, remove self joins
 			ZFrame<D,R,C>  testDataOriginal = getTestData();
-			LOG.debug("testDataOriginal schema is " +testDataOriginal.showSchema());
-			testDataOriginal =  getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
+			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal);
 			ZFrame<D,R,C>  testData = getStopWords().preprocessForStopWords(testDataOriginal);
 			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
@@ -105,6 +110,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 				blocked.show();
 			}
 				//LOG.warn("Num distinct hashes " + blocked.agg(functions.approx_count_distinct(ColName.HASH_COL)).count());
+			
 			ZFrame<D,R,C>blocks = getBlocks(selectColsFromBlocked(blocked), testData);
 			//blocks.explain();
 			//LOG.info("Blocks " + blocks.count());
@@ -115,8 +121,20 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			//check if all fields equal			
 			//ZFrame<D,R,C>allEqual =  getDSUtil().allFieldsEqual(blocks, args);
 			//allEqual = allEqual.cache();
+
+			//get obvious dupes
+			ZFrame<D, R, C> obvDupePairs = getObvDupePairs(blocked);
+			if (obvDupePairs != null) {
+				long obvDupeCount = obvDupePairs.count();
+				LOG.info("obvDupePairs count " + obvDupeCount);
+				if (obvDupeCount > 0) {
+					blocks = removeObvDupesFromBlocks(blocks);
+				}
+			}
+			
 			//send remaining to model 
 			Model model = getModel();
+			
 			//blocks.cache().withColumn("partition_id", functions.spark_partition_id())
 			//	.groupBy("partition_id").agg(functions.count("z_id")).ias("zid").orderBy("partition_id").;
 			/*
@@ -125,8 +143,13 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			blocksRe.withColumn("partition_id", functions.spark_partition_id())
 				.groupBy("partition_id").agg(functions.count("z_zid")).as("zid").orderBy("partition_id").toJavaRDD().saveAsTextFile("/tmp/zblocksPart");
 			*/
-			ZFrame<D,R,C>dupes = model.predict(blocks); //.exceptAll(allEqual));	
+			
+			ZFrame<D,R,C>dupes = model.predict(blocks); 
+			
+			//.exceptAll(allEqual));	
+			
 			//allEqual = massageAllEquals(allEqual);
+					
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Found dupes " + dupes.count());	
 			}
@@ -134,7 +157,10 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			
 			//allEqual = allEqual.cache();
 			//writeOutput(blocked, dupes.union(allEqual).cache());		
+			
 			ZFrame<D,R,C>dupesActual = getDupesActualForGraph(dupes);
+			dupesActual = addObvDupes(obvDupePairs, dupesActual);	
+			
 			//dupesActual.explain();
 			//dupesActual.toJavaRDD().saveAsTextFile("/tmp/zdupes");
 			
@@ -146,7 +172,64 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			throw new ZinggClientException(e.getMessage());
 		}
     }
+	protected ZFrame<D, R, C> addObvDupes(ZFrame<D, R, C> obvDupePairs, ZFrame<D, R, C> dupesActual) {
+		if (obvDupePairs != null) {
+			// ensure same columns in both
+			obvDupePairs = selectColsFromDupes(obvDupePairs);
+			dupesActual = dupesActual.unionAll(obvDupePairs);
+		}
+		return dupesActual;
+	}
 
+	protected ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks) {
+		LOG.info("blocks count before removing obvDupePairs " + blocks.count());
+		C reverseOBVDupeDFFilter = blocks.getReverseObviousDupesFilter(args.getObviousDupeCondition(),null);
+		if (reverseOBVDupeDFFilter != null) {
+			// remove dupes as already considered in obvDupePairs
+			blocks = blocks.filter(reverseOBVDupeDFFilter);				
+		} 
+		LOG.info("blocks count after removing obvDupePairs " + blocks.count());
+		return blocks;
+	}
+	
+	protected ZFrame<D,R,C> getObvDupePairs(ZFrame<D,R,C> blocked) {
+		
+		String obviousDupeString = args.getObviousDupeCondition();
+		
+		if (obviousDupeString == null || obviousDupeString.trim().isEmpty()) {
+			return null;
+		}
+
+		ZFrame<D,R,C> prefixBlocked = getDSUtil().getPrefixedColumnsDS(blocked);		
+		C gtCond = blocked.gt(prefixBlocked,ColName.ID_COL);
+		
+		ZFrame<D,R,C> onlyIds = null;
+		
+		// split on || (orSeperator)
+		String[] obvDupeORConditions = obviousDupeString.trim().split(ZFrame.orSeperator);		
+		// loop thru the values and build a filter condition		
+		for (int i = 0; i < obvDupeORConditions.length; i++) {		
+			
+			C obvDupeDFFilter = blocked.getObviousDupesFilter(prefixBlocked,obvDupeORConditions[i],gtCond);
+			ZFrame<D,R,C> onlyIdsTemp =  blocked
+					.joinOnCol(prefixBlocked, obvDupeDFFilter).select(ColName.ID_COL, ColName.COL_PREFIX + ColName.ID_COL);
+			
+			if(onlyIds==null) {
+				onlyIds = onlyIdsTemp;
+			} else {
+				onlyIds = onlyIds.unionAll(onlyIdsTemp);
+			}
+			
+		}
+		
+		// remove duplicate pairs
+		onlyIds = onlyIds.distinct();		
+		onlyIds = massageAllEquals(onlyIds);
+		onlyIds = onlyIds.cache();
+		
+		return onlyIds;
+	}
+	
 	public void writeOutput( ZFrame<D,R,C>  blocked,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException {
 		try{
 		//input dupes are pairs
@@ -163,17 +246,22 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			
 			dupesActual = dupesActual.cache();
 			System.out.println("dupes ------------");
-			dupesActual.show();
+			if (LOG.isDebugEnabled()) {
+				dupesActual.show();
+			}
 			ZFrame<D,R,C>graph = getGraphUtil().buildGraph(blocked, dupesActual).cache();
 			//graph.toJavaRDD().saveAsTextFile("/tmp/zgraph");
 			System.out.println("graph ------------");
-			graph.show();
+			if (LOG.isDebugEnabled()) {
+				graph.show();
+			}
 			//write score
 			ZFrame<D,R,C>score = getMinMaxScores(dupesActual, graph).cache();
 			//score.toJavaRDD().coalesce(1).saveAsTextFile("/tmp/zallscoresAvg");
 			graph = graph.repartition(args.getNumPartitions(), graph.col(ColName.ID_COL)).cache();
-			
-			score.show();
+			if (LOG.isDebugEnabled()) {
+				score.show();
+			}
 			ZFrame<D,R,C>graphWithScores = getDSUtil().joinZColFirst(
 				score, graph, ColName.ID_COL, false).cache();
 				//graphWithScores.toJavaRDD().saveAsTextFile("/tmp/zgraphWScores");
@@ -250,11 +338,11 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		*/
 		allScores = allScores.repartition(args.getNumPartitions(), allScores.col(ColName.ID_COL));
 		
-		return allScores.groupByMinMax(allScores.col(ColName.ID_COL));			
+		return allScores.groupByMinMaxScore(allScores.col(ColName.ID_COL));			
 	}
 
 	protected ZFrame<D,R,C>getDupesActualForGraph(ZFrame<D,R,C>dupes) {
-		ZFrame<D,R,C> dupesActual = selectColsFromDupes(dupes);
+		dupes = selectColsFromDupes(dupes);
 		LOG.debug("dupes al");
 		if (LOG.isDebugEnabled()) dupes.show();
 		return dupes.filter(dupes.equalTo(ColName.PREDICTION_COL,ColValues.IS_MATCH_PREDICTION));

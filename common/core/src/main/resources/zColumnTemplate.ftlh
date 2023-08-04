@@ -32,8 +32,8 @@
       <p>"z_score - the probability of a pair of records matching. The higher the score, the more likely they are a match."</p>
     <#elseif title == "z_isMatch">
       <p>z_isMatch - this is the label provided by the user.</p>
-    <#elseif title == "z_source">
-      <p>z_source - the source of data as set in the name property of the data in the Zingg configuration file.</p>
+    <#elseif title == "z_zsource">
+      <p>z_zsource - the source of data as set in the name property of the data in the Zingg configuration file.</p>
     <#else>
       <p>${title} - this field is internally used by Zingg.</p>
     </#if>

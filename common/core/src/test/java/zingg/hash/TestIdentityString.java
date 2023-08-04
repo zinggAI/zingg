@@ -13,6 +13,11 @@ public class TestIdentityString {
 	    IdentityString value = getInstance();
 		assertEquals("unhappy", value.call(" UnHappy "));
 	}
+    @Test
+	public void testIdentityString2() {
+		IdentityString value = getInstance();
+		assertEquals(null, value.call(null));
+	}
 
     private IdentityString getInstance() {
         return new IdentityString();

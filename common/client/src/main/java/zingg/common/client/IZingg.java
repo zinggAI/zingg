@@ -1,8 +1,10 @@
 package zingg.common.client;
 
+import zingg.common.client.license.IZinggLicense;
+
 public interface IZingg<S,D,R,C> {
 
-	public void init(Arguments args, String license)
+	public void init(Arguments args, IZinggLicense license)
 			throws ZinggClientException;
 
 	public void execute() throws ZinggClientException;
@@ -37,5 +39,9 @@ public interface IZingg<S,D,R,C> {
 	public ClientOptions getClientOptions(); 
 
 	public void setSession(S session);
-
+	
+	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException;
+	
+	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException;
+	
 }

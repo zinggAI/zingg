@@ -92,6 +92,7 @@ import org.apache.commons.logging.LogFactory;
 @JsonInclude(Include.NON_NULL)
 public class Arguments implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	// creates DriverArgs and invokes the main object
 	Pipe[] output; 
 	Pipe[] data;	
@@ -110,6 +111,7 @@ public class Arguments implements Serializable {
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
 	String column;
+	String obviousDupeCondition;
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
 	private static final String ESC = "\\";
@@ -675,6 +677,14 @@ public class Arguments implements Serializable {
 		this.column = column;
 	}
 	
+	public String getObviousDupeCondition() {
+		return obviousDupeCondition;
+	}
+
+	public void setObviousDupeCondition(String obviousDupeCondition) {
+		this.obviousDupeCondition = obviousDupeCondition;
+	}
+
 	public long getBlockSize() {
 		return blockSize;
 	}

@@ -18,7 +18,7 @@ import zingg.common.client.util.ColName;
 public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 
 	public Dataset<Row> df;
-
+	
     public SparkFrame(Dataset<Row> df) {
         this.df = df;
     }
@@ -90,13 +90,22 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.join(lines1.df(), joinColumn));
     }
 
+    public ZFrame<Dataset<Row>, Row, Column> joinOnCol(ZFrame<Dataset<Row>, Row, Column> lines1, Column joinColumn){
+        return new SparkFrame(df.join(lines1.df(), joinColumn));
+    }
+    
     public ZFrame<Dataset<Row>, Row, Column> join(ZFrame<Dataset<Row>, Row, Column> lines1, String joinColumn1, String joinColumn2){
         return new SparkFrame(df.join(lines1.df(), 
             df.col(joinColumn1).equalTo(lines1.df().col(joinColumn1)).and(df.col(joinColumn2).equalTo(lines1.df().col(joinColumn2)))));
     }
 
+    public ZFrame<Dataset<Row>, Row, Column> join(ZFrame<Dataset<Row>, Row, Column> lines1, String joinColumn1, String joinColumn2, String joinType){
+        return new SparkFrame(df.join(lines1.df(), 
+            df.col(joinColumn1).equalTo(lines1.df().col(joinColumn1)).and(df.col(joinColumn2).equalTo(lines1.df().col(joinColumn2))), joinType));
+    }
+    
     public ZFrame<Dataset<Row>, Row, Column> joinRight(ZFrame<Dataset<Row>, Row, Column> lines1, String joinColumn) {
-        return join(lines1, joinColumn, false, "right");
+        return join(lines1, joinColumn, false, ZFrame.RIGHT_JOIN);
     }
 
     public ZFrame<Dataset<Row>, Row, Column> join(ZFrame<Dataset<Row>, Row, Column> lines1, String joinColumn, boolean addPrefixToCol, String joinType) {
@@ -130,7 +139,12 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     public ZFrame<Dataset<Row>, Row, Column> drop(String c) {
         return new SparkFrame(df.drop(c));
     }
-
+    
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> drop(Column c) {
+        return new SparkFrame(df.drop(c));
+    }
+    
     public ZFrame<Dataset<Row>, Row, Column> except(ZFrame<Dataset<Row>, Row, Column> c) {
         return new SparkFrame(df.except(c.df()));
     }
@@ -140,15 +154,15 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     	return df.agg(functions.sum(colName).cast("double")).collectAsList().get(0).getDouble(0);
     }
 
-    public ZFrame<Dataset<Row>, Row, Column> groupByMinMax(Column c) {
-        return new SparkFrame(df.groupBy(df.col(ColName.ID_COL)).agg(
+    public ZFrame<Dataset<Row>, Row, Column> groupByMinMaxScore(Column c) {
+        return new SparkFrame(df.groupBy(c).agg(
 			functions.min(ColName.SCORE_COL).as(ColName.SCORE_MIN_COL),
 			functions.max(ColName.SCORE_COL).as(ColName.SCORE_MAX_COL)));
     }
 
     @Override
     public ZFrame<Dataset<Row>, Row, Column> groupByCount(String colName, String countColName){
-    	return new SparkFrame(df.groupBy(colName).count().withColumnRenamed("count",countColName));
+    	return new SparkFrame(df.groupBy(colName).count().withColumnRenamed(COL_COUNT,countColName));
     }
     
     public ZFrame<Dataset<Row>, Row, Column> dropDuplicates(String[] c) {
@@ -160,6 +174,11 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.union(other.df()));
     }
 
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> unionAll(ZFrame<Dataset<Row>, Row, Column> other) {
+        return new SparkFrame(df.unionAll(other.df()));
+    }
+    
     public ZFrame<Dataset<Row>, Row, Column> unionByName(ZFrame<Dataset<Row>, Row, Column> other, boolean flag) {
         return new SparkFrame(df.unionByName(other.df(), flag));
     }
@@ -183,9 +202,15 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.repartition(nul, c));
     }
 
+    @Override
     public Column gt(String c) {
-		return df.col(c).gt(df.col(ColName.COL_PREFIX + c));
+		return gt(this,c);
 	}
+    
+    @Override
+    public Column gt(ZFrame<Dataset<Row>, Row, Column> other, String c) {
+		return df.col(c).gt(other.col(ColName.COL_PREFIX + c));
+	}    
     
     @Override
     public Column gt(String c, double val) {
@@ -338,5 +363,144 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 		}
 		return fieldDataArr;
     }
+    
+	@Override
+    public Object getMaxVal(String colName) {
+    	Row r =  df.agg(functions.max(colName)).head();
+    	return r.get(0);
+    }
+	
+	@Override    
+	public ZFrame<Dataset<Row>, Row, Column> filterInCond(String colName,ZFrame<Dataset<Row>, Row, Column> innerDF, String innerDFCol) {
+		ZFrame<Dataset<Row>, Row, Column> innerDF2 = innerDF.select(innerDF.col(innerDFCol).alias(colName));
+		return this.joinOnCol(innerDF2, colName);
+	}
+	
+	@Override
+	public ZFrame<Dataset<Row>, Row, Column> filterNotNullCond(String colName) {
+		return this.filter(df.col(colName).isNotNull());
+	}
+	
+	@Override
+	public ZFrame<Dataset<Row>, Row, Column> filterNullCond(String colName) {
+		return this.filter(df.col(colName).isNull());
+	}	
+	
+	
+	/**
+	 * 
+	 * obviousDupeString format col1 & col2 | col3 | col4 & col5
+	 * 
+	 * @param obviousDupeString
+	 * @return
+	 */
+	public Column getObviousDupesFilter(String obviousDupeString, Column extraAndCond) {
+		return getObviousDupesFilter(this,obviousDupeString,extraAndCond);
+	}
+	
+	/**
+	 * 
+	 * obviousDupeString format col1 & col2 | col3 | col4 & col5
+	 * 
+	 * @param obviousDupeString
+	 * @return
+	 */
+	@Override
+	public Column getObviousDupesFilter(ZFrame<Dataset<Row>, Row, Column> dfToJoin, String obviousDupeString, Column extraAndCond) {
+		
+		if (dfToJoin==null || obviousDupeString == null || obviousDupeString.trim().isEmpty()) {
+			return null;
+		}
+		
+		// split on || (orSeperator)
+		String[] obvDupeORConditions = new String[] {};
+		
+		obvDupeORConditions = obviousDupeString.trim().split(orSeperator);
 
+		// loop thru the values and build a filter condition
+		Column filterExpr = null;
+		
+		for (int i = 0; i < obvDupeORConditions.length; i++) {
+			
+			// parse on &(andSeperator) for obvDupeCond[i] and form a column filter
+			// expression [keep adding to filterExpr]
+			// if number of columns in and condition = 1 => something like uid or ssn =>
+			// direct match if equal
+			Column andCond = null;
+			String orCondStr = obvDupeORConditions[i];
+			
+			if (orCondStr != null && !orCondStr.isEmpty()) {
+
+				String[] andConditions = orCondStr.trim().split(andSeperator);
+
+				if (andConditions != null) {
+					for (int j = 0; j < andConditions.length; j++) {
+
+						String andCondStr = andConditions[j];
+
+						if (andCondStr != null && !andCondStr.trim().isEmpty()) {
+
+							String colName = andCondStr.trim();
+							Column column = this.col(colName);
+							Column columnWithPrefix = dfToJoin.col(ColName.COL_PREFIX + colName);
+
+							Column eqCond = column.equalTo(columnWithPrefix).and(column.isNotNull())
+									.and(columnWithPrefix.isNotNull());
+
+							if (andCond != null) {
+								andCond = andCond.and(eqCond);
+							} else {
+								andCond = eqCond;
+							}
+
+						}
+					}
+				}
+			}
+
+			if (andCond != null) {
+				if (filterExpr != null) {
+					filterExpr = filterExpr.or(andCond);
+				} else {
+					filterExpr = andCond;
+				}
+			}
+
+		}
+		
+		if (extraAndCond != null) {
+			if (filterExpr != null) {
+				filterExpr = filterExpr.and(extraAndCond);
+			} else {
+				filterExpr = extraAndCond;
+			}
+		}
+		
+		return filterExpr;
+	}
+		
+	/**
+	 * 
+	 * obviousDupeString format col1 & col2 | col3 | col4 & col5
+	 * 
+	 * @param obviousDupeString
+	 * @return
+	 */
+	@Override
+	public Column getReverseObviousDupesFilter(String obviousDupeString, Column extraAndCond) {
+		return getReverseObviousDupesFilter(this,obviousDupeString,extraAndCond);
+	}
+		
+	/**
+	 * 
+	 * obviousDupeString format col1 & col2 | col3 | col4 & col5
+	 * 
+	 * @param obviousDupeString
+	 * @return
+	 */
+	@Override
+	public Column getReverseObviousDupesFilter(ZFrame<Dataset<Row>, Row, Column> dfToJoin, String obviousDupeString, Column extraAndCond) {
+		return functions.not(getObviousDupesFilter(dfToJoin,obviousDupeString,extraAndCond));
+	}
+	
 }

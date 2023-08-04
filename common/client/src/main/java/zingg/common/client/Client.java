@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.license.IZinggLicense;
 import zingg.common.client.util.Email;
 import zingg.common.client.util.EmailBody;
 
@@ -15,6 +16,7 @@ import zingg.common.client.util.EmailBody;
  *
  */
 public abstract class Client<S,D,R,C,T> implements Serializable {
+	private static final long serialVersionUID = 1L;
 	protected Arguments arguments;
 	protected IZingg<S,D,R,C> zingg;
 	protected ClientOptions options;
@@ -116,7 +118,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 	
 	public void printBanner() {
-		String versionStr = "0.3.5";
+		String versionStr = "0.4.0";
 		LOG.info("");
 		LOG.info("********************************************************");
 		LOG.info("*                    Zingg AI                          *");
@@ -222,11 +224,12 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public void init() throws ZinggClientException {
-		zingg.init(getArguments(), "");
+		zingg.init(getArguments(), getLicense(options.get(ClientOptions.LICENSE).value.trim()));
 		if (session != null) zingg.setSession(session);
 		zingg.setClientOptions(options);
 	}
-	
+
+	protected abstract IZinggLicense getLicense(String license)  throws ZinggClientException ;
 	
 	/**
 	 * Stop the Spark job running context
@@ -283,4 +286,13 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		return zingg.getUnmarkedRecords();
 	}
 
+    public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException {
+    	return zingg.getTrainingDataModel();
+    }    
+
+    public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException {
+    	return zingg.getLabelDataViewHelper();
+    }    
+    
+    
 }

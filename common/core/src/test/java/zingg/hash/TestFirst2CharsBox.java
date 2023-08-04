@@ -25,6 +25,11 @@ public class TestFirst2CharsBox {
         First2CharsBox value = getInstance();
         assertEquals(3, value.call("peacock"));
     }
+    @Test
+    public void testFirst2CharsBox4() {
+        First2CharsBox value = getInstance();
+        assertEquals(0, value.call("a"));
+    }
   
     
     private First2CharsBox getInstance() {

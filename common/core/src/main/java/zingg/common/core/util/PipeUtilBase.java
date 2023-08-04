@@ -14,6 +14,9 @@ public interface PipeUtilBase<S, D, R, C> {
 
 	public  ZFrame<D, R, C> readInternal(boolean addLineNo,
 		boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException;
+	
+	public ZFrame<D,R,C> readInternal(boolean addExtraCol, boolean addLineNo,
+			boolean addSource, Pipe<D,R,C>... pipes) throws ZinggClientException;
 
 	public  ZFrame<D, R, C> read(boolean addLineNo, boolean addSource, Pipe<D, R, C>... pipes) 
 		throws ZinggClientException;
@@ -23,6 +26,8 @@ public interface PipeUtilBase<S, D, R, C> {
 		boolean addSource, Pipe<D, R, C>... pipes)
 		throws ZinggClientException;
 
+	public  ZFrame<D,R,C> read(boolean addExtraCol, boolean addLineNo, int numPartitions,
+			boolean addSource, Pipe<D,R,C>... pipes) throws ZinggClientException;
 
 	public void write(ZFrame<D, R, C> toWriteOrig, Arguments args, Pipe<D, R, C>... pipes)
 		throws ZinggClientException;

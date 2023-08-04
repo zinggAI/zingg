@@ -14,6 +14,12 @@ public class TestLastChars {
 		assertEquals("happy", value.call("unhappy"));
 	}
 
+	@Test
+	public void testLastChars2() {
+		LastChars value = getInstance(3);
+		assertEquals(null,value.call(null));
+	}
+
     private LastChars getInstance(int endIndex) {
         return new LastChars(endIndex);
     }

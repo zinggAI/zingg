@@ -2,9 +2,20 @@ package zingg.common.client;
 
 import java.util.List;
 
+
 //Dataset, Row, column
 public interface ZFrame<D, R, C> {
-    
+	
+	public static final String RIGHT_JOIN = "right";
+	public static final String LEFT_JOIN = "left";
+	
+	public static final String COL_COUNT = "count";
+	public static final String COL_VALUE = "VALUE";
+	
+	public static final String orSeperator = "\\|";	
+	public static final String andSeperator = "\\&";	
+
+	
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
     public String[] columns();
@@ -25,8 +36,11 @@ public interface ZFrame<D, R, C> {
     /**doesnt dupe the join col */
     public ZFrame<D, R, C> joinOnCol(ZFrame<D, R, C> lines1, String joinColumn);
     
+    public ZFrame<D, R, C> joinOnCol(ZFrame<D, R, C> lines1, C joinColumn);
 
     public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, String joinColumn1, String joinColumn2);
+    
+    public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, String joinColumn1, String joinColumn2, String jointype);
 
     public ZFrame<D, R, C> joinRight(ZFrame<D, R, C> lines1, String joinColumn);
 
@@ -47,16 +61,19 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> dropDuplicates(String[] c);
 
     public ZFrame<D, R, C> drop(String c);
+    public ZFrame<D, R, C> drop(C c);
     public ZFrame<D, R, C> drop(String... c);
     public ZFrame<D, R, C> except(ZFrame<D, R, C> c);
     
     public double aggSum(String colName);
 
-    public ZFrame<D, R, C> groupByMinMax(C c);
+    public ZFrame<D, R, C> groupByMinMaxScore(C c);
     
     public ZFrame<D, R, C> groupByCount(String colName, String countColName);
 
     public ZFrame<D, R, C> union(ZFrame<D, R, C> other);
+    
+    public ZFrame<D, R, C> unionAll(ZFrame<D, R, C> other);
 
     public ZFrame<D, R, C> unionByName(ZFrame<D, R, C> other, boolean flag);
 
@@ -76,6 +93,8 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> coalesce(int num);
 
     public C gt(String c);
+    
+    public C gt(ZFrame<D, R, C> other, String c);    
 
     public C gt(String c, double val);
     
@@ -132,4 +151,20 @@ public interface ZFrame<D, R, C> {
     
     public FieldData[] fields();
     
+    public Object getMaxVal(String colName);
+    
+	public ZFrame<D, R, C> filterInCond(String colName,ZFrame<D, R, C> innerDF, String innerDFCol);
+    
+	public ZFrame<D, R, C> filterNotNullCond(String colName);
+	
+	public ZFrame<D, R, C> filterNullCond(String colName);
+	
+	public C getObviousDupesFilter(String obviousDupeString, C extraAndCond);
+    
+	public C getObviousDupesFilter(ZFrame<D, R, C> dfToJoin, String obviousDupeString, C extraAndCond);
+	
+	public C getReverseObviousDupesFilter(String obviousDupeString, C extraAndCond);
+	
+	public C getReverseObviousDupesFilter(ZFrame<D, R, C> dfToJoin, String obviousDupeString, C extraAndCond);
+	
 }

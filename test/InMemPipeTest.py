@@ -41,9 +41,9 @@ schema = StructType([StructField("id", StringType(), True)\
 #gDF=pandas.DataFrame()
 inputPipeAmazon=InMemoryPipe("amz")
 #inputPipeAmazon.setSchema("id string, title string, description string, manufacturer string, price string")
-inputPipeAmazon.setDataset(spark.read.format("csv").schema(schema).load("examples/amazon-google/Amazon.csv"))
+inputPipeAmazon.setDataset(getSparkSession().read.format("csv").schema(schema).load("examples/amazon-google/Amazon.csv"))
 inputPipeGoogle=InMemoryPipe("google")
-inputPipeGoogle.setDataset(spark.read.format("csv").schema(schema).load("examples/amazon-google/GoogleProducts.csv"))
+inputPipeGoogle.setDataset(getSparkSession().read.format("csv").schema(schema).load("examples/amazon-google/GoogleProducts.csv"))
 
 args.setData(inputPipeAmazon,inputPipeGoogle)
 
