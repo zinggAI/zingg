@@ -12,7 +12,10 @@ import zingg.common.core.hash.HashFunction;
 
 public class SparkBlock extends Block<Dataset<Row>, Row, Column, DataType> {
 
-    public SparkBlock(){}
+    private static final long serialVersionUID = 1L;
+
+
+	public SparkBlock(){}
     
 
     public SparkBlock(ZFrame<Dataset<Row>, Row, Column> training, ZFrame<Dataset<Row>, Row, Column> dupes,
