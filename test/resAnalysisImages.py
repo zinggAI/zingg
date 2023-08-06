@@ -1,3 +1,5 @@
+from zingg.client import *
+from zingg.pipes import *
 from pyspark.sql.types import *
 import pandas
 
@@ -7,6 +9,7 @@ import torch
 import pickle
 
 from PIL import Image
+
 
 #read data from parquet
 res_df = getSparkSession().read.parquet('/tmp/resultSmallImages')
