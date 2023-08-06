@@ -75,7 +75,7 @@ def get_image_embedding(path):
 
   if path is not None:
 
-    full_path = '/home/ubuntu/image_data/images/small_partial2/' + path
+    full_path = '/home/ubuntu/image_data/images/small/' + path
 
     # open image and convert to embedding
     try:
@@ -133,11 +133,14 @@ args.setZinggDir("/tmp/modelSmallImages")
 args.setNumPartitions(16)
 args.setLabelDataSampleSize(0.2)
 
+items1 = items.limit(100)
+items2 = items1.limit(10)
+
 inputPipeSmallImages1=InMemoryPipe("smallImages1")
-inputPipeSmallImages1.setDataset(items)
+inputPipeSmallImages1.setDataset(items1)
 
 inputPipeSmallImages2=InMemoryPipe("smallImages2")
-inputPipeSmallImages2.setDataset(items)
+inputPipeSmallImages2.setDataset(items2)
 
 args.setData(inputPipeSmallImages1,inputPipeSmallImages2)
 
