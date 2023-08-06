@@ -20,7 +20,6 @@ res_df.show()
 cluster_df = res_df.groupBy('z_cluster').count()
 cluster_df = cluster_df.filter("count > 1")
 cluster_df = cluster_df.sort(fn.desc('count'))
-cluster_df = cluster_df.select('z_cluster','item_id','brand','item_name','path')
 cluster_df.write.csv('/tmp/res_image_cluster')
 
 #write relavant cols to csv for analysis
