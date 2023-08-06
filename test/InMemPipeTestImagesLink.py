@@ -112,8 +112,6 @@ items = (
     .drop('main_image_id','image_id','bulletpoint','item_keywords','hierarchy')
   )
 
-items.show()
-
 #build the arguments for zingg
 args = Arguments()
 #set field definitions
