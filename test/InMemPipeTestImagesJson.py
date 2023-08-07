@@ -10,7 +10,7 @@ import pickle
 
 from PIL import Image
 
-df = (spark.read.json('/home/ubuntu/image_data/listings/metadata'))
+df = (getSparkSession().read.json('/home/ubuntu/image_data/listings/metadata'))
 
 df = (
   df
@@ -31,7 +31,7 @@ df = (
   )
 
 image_metadata = (
-  spark
+  getSparkSession()
     .read
     .csv(
       path='/home/ubuntu/image_data/images/metadata',

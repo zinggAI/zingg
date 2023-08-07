@@ -112,8 +112,6 @@ items = (
     .drop('main_image_id','image_id','bulletpoint','item_keywords','hierarchy')
   )
 
-items.show()
-
 #build the arguments for zingg
 args = Arguments()
 #set field definitions
@@ -135,17 +133,23 @@ args.setZinggDir("/tmp/modelSmallImages")
 args.setNumPartitions(16)
 args.setLabelDataSampleSize(0.2)
 
-inputPipeSmallImages=InMemoryPipe("smallImages")
-inputPipeSmallImages.setDataset(items)
+items1 = items.limit(100)
+items2 = items1.limit(10)
 
-args.setData(inputPipeSmallImages)
+inputPipeSmallImages1=InMemoryPipe("smallImages1")
+inputPipeSmallImages1.setDataset(items1)
+
+inputPipeSmallImages2=InMemoryPipe("smallImages2")
+inputPipeSmallImages2.setDataset(items2)
+
+args.setData(inputPipeSmallImages1,inputPipeSmallImages2)
 
 #setting outputpipe in 'args'
 outputPipe = Pipe("resultSmallImages", "parquet")
 outputPipe.addProperty("location", "/tmp/resultSmallImages")
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
+options = ClientOptions([ClientOptions.PHASE,"link"])
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
