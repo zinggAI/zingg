@@ -70,13 +70,14 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
             	
             	zSession = new ZSparkSession(spark, license);
             }
-            ctx = JavaSparkContext.fromSparkContext(zSession.getSession().sparkContext());
-            JavaSparkContext.jarOfClass(IZingg.class);
-            LOG.debug("Context " + ctx.toString());
-            //initHashFns();
-            
-            ctx.setCheckpointDir("/tmp/checkpoint");	
-            setUtils();
+            if (ctx==null) {
+				ctx = JavaSparkContext.fromSparkContext(zSession.getSession().sparkContext());
+				JavaSparkContext.jarOfClass(IZingg.class);
+				LOG.debug("Context " + ctx.toString());
+				//initHashFns();
+				ctx.setCheckpointDir("/tmp/checkpoint");
+				setUtils();
+			}
         }
         catch(Throwable e) {
             if (LOG.isDebugEnabled()) e.printStackTrace();
