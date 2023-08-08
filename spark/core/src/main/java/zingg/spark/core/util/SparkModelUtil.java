@@ -43,7 +43,6 @@ public class SparkModelUtil extends ModelUtil<ZSparkSession,DataType,Dataset<Row
         Model<ZSparkSession,DataType,Dataset<Row>, Row, Column> model = getModel(isLabel, args);
         model.load(args.getModel());
         return model;
-
      }
 
     @Override
