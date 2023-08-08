@@ -31,8 +31,12 @@ public class SparkMatcher extends Matcher<ZSparkSession,Dataset<Row>,Row,Column,
 	public static final Log LOG = LogFactory.getLog(SparkMatcher.class);    
 
     public SparkMatcher() {
+        this(new ZinggSparkContext());
+    }
+
+    public SparkMatcher(ZinggSparkContext sparkContext) {
         setZinggOptions(ZinggOptions.MATCH);
-        setContext(new ZinggSparkContext());
+		setContext(sparkContext);
     }
 
     @Override

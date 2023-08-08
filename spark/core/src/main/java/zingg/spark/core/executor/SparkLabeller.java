@@ -26,10 +26,13 @@ public class SparkLabeller extends Labeller<ZSparkSession, Dataset<Row>, Row, Co
 	public static final Log LOG = LogFactory.getLog(SparkLabeller.class);
 
 	public SparkLabeller() {
-		setZinggOptions(ZinggOptions.LABEL);
-		setContext(new ZinggSparkContext());
+		this(new ZinggSparkContext());
 	}
 
+	public SparkLabeller(ZinggSparkContext sparkContext) {
+		setZinggOptions(ZinggOptions.LABEL);
+		setContext(sparkContext);
+	}
 
   @Override
   public void init(Arguments args, IZinggLicense license)  throws ZinggClientException {

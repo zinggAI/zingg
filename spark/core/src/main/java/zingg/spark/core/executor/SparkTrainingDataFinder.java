@@ -23,10 +23,14 @@ public class SparkTrainingDataFinder extends TrainingDataFinder<ZSparkSession, D
 	public static final Log LOG = LogFactory.getLog(SparkTrainingDataFinder.class);
 
 	public SparkTrainingDataFinder() {
-		setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
-		setContext(new ZinggSparkContext());
+		this(new ZinggSparkContext());
 	}
 
+	public SparkTrainingDataFinder(ZinggSparkContext sparkContext) {
+		setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
+		setContext(sparkContext);
+	}
+	
 	@Override
 	public void init(Arguments args, IZinggLicense license)  throws ZinggClientException {
 		super.init(args, license);

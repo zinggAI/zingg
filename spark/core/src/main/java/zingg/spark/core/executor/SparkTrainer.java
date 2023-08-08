@@ -24,10 +24,14 @@ public class SparkTrainer extends Trainer<ZSparkSession, Dataset<Row>, Row, Colu
 	public static final Log LOG = LogFactory.getLog(SparkTrainer.class);
 
 	public SparkTrainer() {
-		setZinggOptions(ZinggOptions.TRAIN);
-		setContext(new ZinggSparkContext());
+		this(new ZinggSparkContext());
 	}
 
+	public SparkTrainer(ZinggSparkContext sparkContext) {
+		setZinggOptions(ZinggOptions.TRAIN);
+		setContext(sparkContext);
+	}
+	
     @Override
     public void init(Arguments args, IZinggLicense license)  throws ZinggClientException {
         super.init(args, license);
