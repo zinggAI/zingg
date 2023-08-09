@@ -262,8 +262,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			if (LOG.isDebugEnabled()) {
 				score.show();
 			}
-			ZFrame<D,R,C>graphWithScores = getDSUtil().joinZColFirst(
-				score, graph, ColName.ID_COL, false).cache();
+			ZFrame<D, R, C> graphWithScores = getGraphWithScores(graph, score);
 				//graphWithScores.toJavaRDD().saveAsTextFile("/tmp/zgraphWScores");
 			graphWithScores = graphWithScores.drop(ColName.HASH_COL);
 			graphWithScores = graphWithScores.drop(ColName.COL_PREFIX + ColName.ID_COL);
@@ -285,6 +284,12 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			e.printStackTrace(); 
 		}
 		
+	}
+
+	protected ZFrame<D, R, C> getGraphWithScores(ZFrame<D, R, C> graph, ZFrame<D, R, C> score) {
+		ZFrame<D,R,C>graphWithScores = getDSUtil().joinZColFirst(
+			score, graph, ColName.ID_COL, false).cache();
+		return graphWithScores;
 	}
 
 	protected ZFrame<D,R,C>getMinMaxScores(ZFrame<D,R,C>dupes, ZFrame<D,R,C>graph) throws Exception {
