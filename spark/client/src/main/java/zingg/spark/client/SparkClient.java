@@ -6,6 +6,7 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.Client;
@@ -33,6 +34,10 @@ public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column
 		super(args, options, s);
 	}
 
+	public SparkClient(Arguments args, ClientOptions options, SparkSession s) throws ZinggClientException {
+		this(args, options, new ZSparkSession(s,null));
+	}
+	
 	public SparkClient() {
 		/*SparkSession session = SparkSession
                 .builder()
