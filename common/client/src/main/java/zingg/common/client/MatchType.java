@@ -18,6 +18,8 @@ public enum MatchType implements Serializable {
 	 * characters matching
 	 */
 	FUZZY("FUZZY"),
+	
+	PHONE("PHONE"),	
 
 	/**
 	 * Fields needing exact matches

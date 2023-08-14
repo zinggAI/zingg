@@ -34,7 +34,10 @@ public class StringFeature extends BaseFeature<String> {
 		if (f.getMatchType().contains(MatchType.FUZZY)) {
 			addSimFunction(new AffineGapSimilarityFunction());
 			addSimFunction(new JaroWinklerFunction());
-		} 		
+		} 	
+		if (f.getMatchType().contains(MatchType.PHONE)) {
+			addSimFunction(new AffineGapSimilarityFunction());
+		} 				
 		if (f.getMatchType().contains(MatchType.TEXT)) {
 			addSimFunction(new JaccSimFunction());			
 		} 
