@@ -1,4 +1,10 @@
 package zingg.common.core.util;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.MatchType;
@@ -9,12 +15,6 @@ import zingg.common.client.util.ColValues;
 import zingg.common.core.feature.Feature;
 import zingg.common.core.feature.FeatureFactory;
 import zingg.common.core.model.Model;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 
 public abstract class ModelUtil<S,T, D,R,C> {
@@ -29,7 +29,7 @@ public abstract class ModelUtil<S,T, D,R,C> {
 		try{
 		LOG.info("Start reading internal configurations and functions");
         if (args.getFieldDefinition() != null) {
-			featurers = new HashMap<FieldDefinition, Feature<T>>();
+			featurers = new LinkedHashMap<FieldDefinition, Feature<T>>();
 			for (FieldDefinition def : args.getFieldDefinition()) {
 				if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
 					Feature fea =  (Feature) getFeatureFactory().get(def.getDataType());
