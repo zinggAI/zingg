@@ -24,14 +24,16 @@ import zingg.common.client.license.IZinggLicense;
 public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column, DataType>  implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	protected static final String zFactoryClassName = "zingg.spark.core.executor.SparkZFactory";
 
 	public SparkClient(Arguments args, ClientOptions options) throws ZinggClientException {
-		super(args, options);
-		
+		super(args, options, zFactoryClassName);
 	}
+		
+	
 
 	public SparkClient(Arguments args, ClientOptions options, ZSparkSession s) throws ZinggClientException {
-		super(args, options, s);
+		super(args, options, s, zFactoryClassName);
 	}
 
 	public SparkClient(Arguments args, ClientOptions options, SparkSession s) throws ZinggClientException {
@@ -45,15 +47,12 @@ public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column
                 .getOrCreate();
 		JavaSparkContext ctx = JavaSparkContext.fromSparkContext(session.sparkContext());
         JavaSparkContext.jarOfClass(IZingg.class);
+		
 		*/
+		super(zFactoryClassName);
 
 	}
 
-	@Override
-	public IZinggFactory getZinggFactory() throws InstantiationException, IllegalAccessException, ClassNotFoundException{
-		return (IZinggFactory) Class.forName("zingg.spark.core.executor.SparkZFactory").newInstance();
-	}
-	
 
 	@Override
 	public Client<ZSparkSession, Dataset<Row>, Row, Column, DataType> getClient(Arguments args, 

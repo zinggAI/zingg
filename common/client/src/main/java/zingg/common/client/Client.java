@@ -24,6 +24,8 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 
 	public static final Log LOG = LogFactory.getLog(Client.class);
 
+	protected String zFactoryClassName;
+
 
 	/**
 	 * Construct a client to Zingg using provided arguments and spark master.
@@ -35,10 +37,14 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	 *             if issue connecting to master
 	 */
 	
-	public Client() {}
+	public Client(String zFactory) {
+		setZFactoryClassName(zFactory);
+	}
 
-	public Client(Arguments args, ClientOptions options) throws ZinggClientException {
+	public Client(Arguments args, ClientOptions options, String zFactory) throws ZinggClientException {
+		setZFactoryClassName(zFactory);
 		this.options = options;
+
 		try {
 			buildAndSetArguments(args, options);
 			printAnalyticsBanner(arguments.getCollectMetrics());
@@ -50,14 +56,28 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 	}
 
-	public Client(Arguments args, ClientOptions options, S s) throws ZinggClientException {
-		this(args, options);
+
+    public String getZFactoryClassName() {
+        return zFactoryClassName;
+    }
+
+    public void setZFactoryClassName(String s) {
+        this.zFactoryClassName = s;
+    }
+
+	public Client(Arguments args, ClientOptions options, S s, String zFactory) throws ZinggClientException {
+		this(args, options, zFactory);
 		this.session = s;
 		LOG.debug("Session passed is " + s);
 		if (session != null) zingg.setSession(session);
 	}
 
-	public abstract IZinggFactory getZinggFactory() throws Exception;//(IZinggFactory) Class.forName("zingg.ZFactory").newInstance();
+
+	public IZinggFactory getZinggFactory() throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+        LOG.debug("z factory is " + getZFactoryClassName());
+		return (IZinggFactory) Class.forName(getZFactoryClassName()).newInstance();
+	}
+	
 	
 
 
