@@ -21,7 +21,7 @@ import zingg.common.client.license.IZinggLicense;
  * @author sgoyal
  *
  */
-public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column, DataType>  implements Serializable {
+public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column, DataType> {
 	
 	private static final long serialVersionUID = 1L;
 	protected static final String zFactoryClassName = "zingg.spark.core.executor.SparkZFactory";

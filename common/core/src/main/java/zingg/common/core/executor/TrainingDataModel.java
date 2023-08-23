@@ -21,9 +21,9 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 	private long positivePairsCount, negativePairsCount, notSurePairsCount;
 	private long totalCount;
 	
-	public TrainingDataModel(Context<S,D,R,C,T> context, ZinggOptions zinggOptions, ClientOptions clientOptions) {
+	public TrainingDataModel(Context<S,D,R,C,T> context, ClientOptions clientOptions) {
 		setContext(context);
-		setZinggOptions(zinggOptions);
+		//setZinggOptions(zinggOptions);
 		setClientOptions(clientOptions);
 		setName(this.getClass().getName());
 	}

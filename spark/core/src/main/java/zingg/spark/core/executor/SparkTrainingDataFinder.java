@@ -27,7 +27,7 @@ public class SparkTrainingDataFinder extends TrainingDataFinder<ZSparkSession, D
 	}
 
 	public SparkTrainingDataFinder(ZinggSparkContext sparkContext) {
-		setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
+		//setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
 		setContext(sparkContext);
 	}
 	

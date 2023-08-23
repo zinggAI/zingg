@@ -11,7 +11,7 @@ public interface IZingg<S,D,R,C> {
 
 	public void cleanup() throws ZinggClientException;
 
-	public ZinggOptions getZinggOptions();	
+	//public ZinggOptions getZinggOptions();	
 
 	public String getName();
 

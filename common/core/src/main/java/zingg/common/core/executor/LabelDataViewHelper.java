@@ -21,9 +21,9 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	private static final long serialVersionUID = 1L;
 	public static final Log LOG = LogFactory.getLog(LabelDataViewHelper.class);
 	
-	public LabelDataViewHelper(Context<S,D,R,C,T> context, ZinggOptions zinggOptions, ClientOptions clientOptions) {
+	public LabelDataViewHelper(Context<S,D,R,C,T> context, ClientOptions clientOptions) {
 		setContext(context);
-		setZinggOptions(zinggOptions);
+		//setZinggOptions(zinggOptions);
 		setClientOptions(clientOptions);
 		setName(this.getClass().getName());
 	}

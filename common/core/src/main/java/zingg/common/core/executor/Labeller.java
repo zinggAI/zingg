@@ -24,7 +24,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 	protected ILabelDataViewHelper<S, D, R, C> labelDataViewHelper;
 	
 	public Labeller() {
-		setZinggOptions(ZinggOptions.LABEL);
+		//setZinggOptions(ZinggOptions.LABEL);
 	}
 
 	public void execute() throws ZinggClientException {
@@ -158,7 +158,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 	@Override
 	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() {	
 		if (trainingDataModel==null) {
-			this.trainingDataModel = new TrainingDataModel<S, D, R, C, T>(getContext(), getZinggOptions(), getClientOptions());
+			this.trainingDataModel = new TrainingDataModel<S, D, R, C, T>(getContext(), getClientOptions());
 		}
 		return trainingDataModel;
     }
@@ -170,7 +170,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 	@Override
 	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() {
 		if(labelDataViewHelper==null) {
-			labelDataViewHelper = new LabelDataViewHelper<S,D,R,C,T>(getContext(), getZinggOptions(), getClientOptions());
+			labelDataViewHelper = new LabelDataViewHelper<S,D,R,C,T>(getContext(), getClientOptions());
 		}
     	return labelDataViewHelper;
     }

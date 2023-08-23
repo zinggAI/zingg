@@ -17,7 +17,7 @@ public abstract class TrainMatcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected Matcher<S,D,R,C,T> matcher;
 	
     public TrainMatcher() {
-        setZinggOptions(ZinggOptions.TRAIN_MATCH);		
+        //setZinggOptions(ZinggOptions.TRAIN_MATCH);		
     }
 
 	@Override

@@ -25,7 +25,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	public static final Log LOG = LogFactory.getLog(Matcher.class);    
 
     public Matcher() {
-        setZinggOptions(ZinggOptions.MATCH);
+        //setZinggOptions(ZinggOptions.MATCH);
     }
 
 	protected  ZFrame<D,R,C>  getTestData() throws ZinggClientException{

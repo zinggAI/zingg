@@ -28,7 +28,7 @@ public class SparkTrainer extends Trainer<ZSparkSession, Dataset<Row>, Row, Colu
 	}
 
 	public SparkTrainer(ZinggSparkContext sparkContext) {
-		setZinggOptions(ZinggOptions.TRAIN);
+		//setZinggOptions(ZinggOptions.TRAIN);
 		setContext(sparkContext);
 	}
 	

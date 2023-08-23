@@ -29,7 +29,7 @@ public class SparkLabelUpdater extends LabelUpdater<ZSparkSession, Dataset<Row>,
 	public static final Log LOG = LogFactory.getLog(SparkLabelUpdater.class);
 
 	public SparkLabelUpdater() {
-		setZinggOptions(ZinggOptions.UPDATE_LABEL);
+		//setZinggOptions(ZinggOptions.UPDATE_LABEL);
 		setContext(new ZinggSparkContext());
 	}
 

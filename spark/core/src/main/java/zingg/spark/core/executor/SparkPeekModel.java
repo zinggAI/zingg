@@ -26,7 +26,7 @@ public class SparkPeekModel extends ZinggBase<ZSparkSession, Dataset<Row>, Row, 
 	public static final Log LOG = LogFactory.getLog(SparkPeekModel.class); 
 	
 	public SparkPeekModel() {
-		setZinggOptions(ZinggOptions.PEEK_MODEL);
+		//setZinggOptions(ZinggOptions.PEEK_MODEL);
 		setContext(new ZinggSparkContext());
 		
 	}

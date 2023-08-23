@@ -13,7 +13,7 @@ public abstract class Recommender<S,D,R,C, T> extends ZinggBase<S,D,R,C,T> {
 	public static final Log LOG = LogFactory.getLog(Recommender.class);
 
 	public Recommender() {
-		setZinggOptions(ZinggOptions.RECOMMEND);
+		//setZinggOptions(ZinggOptions.RECOMMEND);
  	}
 
 	public void execute() throws ZinggClientException {

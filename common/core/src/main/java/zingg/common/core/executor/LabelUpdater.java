@@ -19,7 +19,7 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	public static final Log LOG = LogFactory.getLog(LabelUpdater.class);
 
 	public LabelUpdater() {
-		setZinggOptions(ZinggOptions.UPDATE_LABEL);
+		//setZinggOptions(ZinggOptions.UPDATE_LABEL);
 	}
 
 	public void execute() throws ZinggClientException {

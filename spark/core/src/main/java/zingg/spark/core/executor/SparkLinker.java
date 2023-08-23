@@ -25,7 +25,7 @@ public class SparkLinker extends Linker<ZSparkSession, Dataset<Row>, Row, Column
 	public static final Log LOG = LogFactory.getLog(SparkLinker.class);
 
 	public SparkLinker() {
-		setZinggOptions(ZinggOptions.LINK);
+		//setZinggOptions(ZinggOptions.LINK);
 		setContext(new ZinggSparkContext());
 	}
 
