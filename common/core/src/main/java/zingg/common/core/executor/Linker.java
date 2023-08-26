@@ -20,13 +20,13 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 		//setZinggOptions(ZinggOptions.LINK);
 	}
 
-	protected ZFrame<D,R,C> getBlocks(ZFrame<D,R,C> blocked, ZFrame<D,R,C> bAll) throws Exception{
+	public ZFrame<D,R,C> getBlocks(ZFrame<D,R,C> blocked, ZFrame<D,R,C> bAll) throws Exception{
 		// THIS LOG IS NEEDED FOR PLAN CALCULATION USING COUNT, DO NOT REMOVE
 		LOG.info("in getBlocks, blocked count is " + blocked.count());
 		return getDSUtil().joinWithItselfSourceSensitive(blocked, ColName.HASH_COL, args).cache();
 	}
 
-	protected ZFrame<D,R,C> selectColsFromBlocked(ZFrame<D,R,C> blocked) {
+	public ZFrame<D,R,C> selectColsFromBlocked(ZFrame<D,R,C> blocked) {
 		return blocked;
 	}
 
@@ -53,7 +53,7 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 		}
 	}
 
-	protected ZFrame<D,R,C> getDupesActualForGraph(ZFrame<D,R,C> dupes) {
+	public ZFrame<D,R,C> getDupesActualForGraph(ZFrame<D,R,C> dupes) {
 		ZFrame<D,R,C> dupesActual = dupes
 				.filter(dupes.equalTo(ColName.PREDICTION_COL, ColValues.IS_MATCH_PREDICTION));
 		return dupesActual;

@@ -19,7 +19,7 @@ import zingg.common.core.util.GraphUtil;
 import zingg.common.core.util.HashUtil;
 import zingg.common.core.util.ModelUtil;
 import zingg.common.core.util.PipeUtilBase;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.util.SparkBlockingTreeUtil;
 import zingg.spark.core.util.SparkDSUtil;
 import zingg.spark.core.util.SparkGraphUtil;
@@ -28,18 +28,18 @@ import zingg.spark.core.util.SparkModelUtil;
 import zingg.spark.core.util.SparkPipeUtil;
 
 
-public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, Row,Column,DataType>{
+public class ZinggSparkContext implements Context<SparkSession, Dataset<Row>, Row,Column,DataType>{
 
     
     private static final long serialVersionUID = 1L;
 	protected JavaSparkContext ctx;
-	protected ZSparkSession zSession;
-    protected PipeUtilBase<ZSparkSession, Dataset<Row>, Row, Column> pipeUtil;
-    protected HashUtil<ZSparkSession,Dataset<Row>, Row, Column, DataType> hashUtil;
-    protected DSUtil<ZSparkSession, Dataset<Row>, Row, Column> dsUtil;
+	protected SparkSession zSession;
+    protected PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> pipeUtil;
+    protected HashUtil<SparkSession,Dataset<Row>, Row, Column, DataType> hashUtil;
+    protected DSUtil<SparkSession, Dataset<Row>, Row, Column> dsUtil;
     protected GraphUtil<Dataset<Row>, Row, Column> graphUtil;
-    protected ModelUtil<ZSparkSession, DataType, Dataset<Row>, Row, Column> modelUtil;
-    protected BlockingTreeUtil<ZSparkSession, Dataset<Row>, Row, Column, DataType> blockingTreeUtil;
+    protected ModelUtil<SparkSession, DataType, Dataset<Row>, Row, Column> modelUtil;
+    protected BlockingTreeUtil<SparkSession, Dataset<Row>, Row, Column, DataType> blockingTreeUtil;
 
 	public static final String hashFunctionFile = "hashFunctions.json";
     
@@ -47,11 +47,11 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
     public static final Log LOG = LogFactory.getLog(ZinggSparkContext.class);
 
     
-    public ZSparkSession getSession() {
+    public SparkSession getSession() {
         return zSession;
     }
 
-    public void setSession(ZSparkSession spark) {
+    public void setSession(SparkSession spark) {
         LOG.debug("Session passed to context is " + spark);
         this.zSession = spark;
     }
@@ -62,16 +62,16 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
     public void init(IZinggLicense license)
         throws ZinggClientException {
         try{
-            if (zSession==null || zSession.getSession() == null) {
-            	SparkSession spark = SparkSession
+            if (zSession==null) {
+            	zSession = SparkSession
                     .builder()
                     .appName("Zingg")
                     .getOrCreate();
             	
-            	zSession = new ZSparkSession(spark, license);
+            	//zSession = new SparkSession(spark, license);
             }
             if (ctx==null) {
-				ctx = JavaSparkContext.fromSparkContext(zSession.getSession().sparkContext());
+				ctx = JavaSparkContext.fromSparkContext(zSession.sparkContext());
 				JavaSparkContext.jarOfClass(IZingg.class);
 				LOG.debug("Context " + ctx.toString());
 				//initHashFns();
@@ -91,8 +91,8 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
 				if (ctx != null) {
 					ctx.stop();
 				}
-				if (zSession!=null && zSession.getSession() != null) {
-					zSession.getSession().stop();
+				if (zSession!=null) {
+					zSession.stop();
 				}
 				ctx = null;
 				zSession = null;
@@ -104,7 +104,7 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
     
     @Override
     public void setUtils() {
-        LOG.debug("Session passed to utils is " + zSession.getSession());
+        LOG.debug("Session passed to utils is " + zSession);
         setPipeUtil(new SparkPipeUtil(zSession));
         setDSUtil(new SparkDSUtil(zSession));
         setHashUtil(new SparkHashUtil(zSession));
@@ -127,7 +127,7 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
 
 
     
-    public void setHashUtil(HashUtil<ZSparkSession,Dataset<Row>, Row, Column, DataType> t) {
+    public void setHashUtil(HashUtil<SparkSession,Dataset<Row>, Row, Column, DataType> t) {
         this.hashUtil = t;
     }
 
@@ -137,24 +137,24 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
 
     
     
-    public void setPipeUtil(PipeUtilBase<ZSparkSession, Dataset<Row>, Row, Column> pipeUtil) {
+    public void setPipeUtil(PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> pipeUtil) {
         this.pipeUtil = pipeUtil;        
     }
 
    
-    public void setDSUtil(DSUtil<ZSparkSession, Dataset<Row>, Row, Column> pipeUtil) {
+    public void setDSUtil(DSUtil<SparkSession, Dataset<Row>, Row, Column> pipeUtil) {
        this.dsUtil = pipeUtil;        
     }
 
-    public void setBlockingTreeUtil(BlockingTreeUtil<ZSparkSession,Dataset<Row>, Row, Column, DataType> d) {
+    public void setBlockingTreeUtil(BlockingTreeUtil<SparkSession,Dataset<Row>, Row, Column, DataType> d) {
         this.blockingTreeUtil = d;
     }
 
-    public void setModelUtil(ModelUtil<ZSparkSession, DataType, Dataset<Row>, Row, Column>  t) {
+    public void setModelUtil(ModelUtil<SparkSession, DataType, Dataset<Row>, Row, Column>  t) {
         this.modelUtil = t;
     }
 
-    public ModelUtil<ZSparkSession, DataType, Dataset<Row>, Row, Column>   getModelUtil() {
+    public ModelUtil<SparkSession, DataType, Dataset<Row>, Row, Column>   getModelUtil() {
         return modelUtil;
     }
 
@@ -165,7 +165,7 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
     */
 
     @Override
-    public HashUtil<ZSparkSession,Dataset<Row>, Row, Column, DataType> getHashUtil() {
+    public HashUtil<SparkSession,Dataset<Row>, Row, Column, DataType> getHashUtil() {
         return hashUtil;
     }
 
@@ -175,17 +175,17 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
     }
 
     @Override
-    public DSUtil<ZSparkSession, Dataset<Row>, Row, Column> getDSUtil() {
+    public DSUtil<SparkSession, Dataset<Row>, Row, Column> getDSUtil() {
          return dsUtil;
     }
 
     @Override
-    public PipeUtilBase<ZSparkSession, Dataset<Row>, Row, Column> getPipeUtil() {
+    public PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> getPipeUtil() {
         return pipeUtil;
     }
 
     @Override
-    public BlockingTreeUtil<ZSparkSession, Dataset<Row>, Row, Column, DataType> getBlockingTreeUtil() {
+    public BlockingTreeUtil<SparkSession, Dataset<Row>, Row, Column, DataType> getBlockingTreeUtil() {
         return blockingTreeUtil;
     }
   

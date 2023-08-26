@@ -14,29 +14,29 @@ import zingg.common.core.util.DFReader;
 import zingg.common.core.util.DFWriter;
 import zingg.common.core.util.PipeUtil;
 import zingg.spark.client.SparkFrame;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 
 
 //import com.datastax.spark.connector.cql.*;
 //import org.elasticsearch.spark.sql.api.java.JavaEsSparkSQL;
 //import zingg.scala.DFUtil;
 
-public class SparkPipeUtil extends PipeUtil<ZSparkSession, Dataset<Row>, Row, Column>{
+public class SparkPipeUtil extends PipeUtil<SparkSession, Dataset<Row>, Row, Column>{
 
 	
 	public  final Log LOG = LogFactory.getLog(SparkPipeUtil.class);
 	//private SparkDFReader reader;
 	
-	public SparkPipeUtil(ZSparkSession spark) {
+	public SparkPipeUtil(SparkSession spark) {
 		super(spark);
 		
 	}
 	
-	public ZSparkSession getSession(){
+	public SparkSession getSession(){
 		return this.session;
 	}
 
-	public void setSession(ZSparkSession session){
+	public void setSession(SparkSession session){
 		this.session = session;
 	}
 

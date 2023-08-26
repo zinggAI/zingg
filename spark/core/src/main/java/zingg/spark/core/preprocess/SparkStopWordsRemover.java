@@ -18,9 +18,9 @@ import zingg.common.client.ZFrame;
 import zingg.common.core.Context;
 import zingg.common.core.preprocess.StopWordsRemover;
 import zingg.spark.client.SparkFrame;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 
-public class SparkStopWordsRemover extends StopWordsRemover<ZSparkSession,Dataset<Row>,Row,Column,DataType>  implements Serializable {
+public class SparkStopWordsRemover extends StopWordsRemover<SparkSession,Dataset<Row>,Row,Column,DataType>  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.spark.preprocess.SparkStopWordsRemover";
@@ -28,7 +28,7 @@ public class SparkStopWordsRemover extends StopWordsRemover<ZSparkSession,Datase
 	
 	private String udfName;
 	
-	public SparkStopWordsRemover(Context<ZSparkSession, Dataset<Row>, Row, Column,DataType> context,Arguments args) {
+	public SparkStopWordsRemover(Context<SparkSession, Dataset<Row>, Row, Column,DataType> context,Arguments args) {
 		super(context,args);
 		this.udfName = registerUDF();
 	}
@@ -45,8 +45,8 @@ public class SparkStopWordsRemover extends StopWordsRemover<ZSparkSession,Datase
 		// Each field will have different pattern
 		String udfName = removeStopWordsUDF.getName();
 		// register the UDF
-		ZSparkSession zSession = getContext().getSession();
-		zSession.getSession().udf().register(udfName, removeStopWordsUDF, DataTypes.StringType);
+		SparkSession zSession = getContext().getSession();
+		zSession.udf().register(udfName, removeStopWordsUDF, DataTypes.StringType);
 		return udfName;
 	}
 

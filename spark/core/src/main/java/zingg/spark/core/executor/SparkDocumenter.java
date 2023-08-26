@@ -14,12 +14,12 @@ import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.documenter.DataDocumenter;
 import zingg.common.core.documenter.ModelDocumenter;
 import zingg.common.core.executor.Documenter;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.documenter.SparkDataDocumenter;
 import zingg.spark.core.documenter.SparkModelDocumenter;
 
 
-public class SparkDocumenter extends Documenter<ZSparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkDocumenter";
@@ -37,13 +37,13 @@ public class SparkDocumenter extends Documenter<ZSparkSession, Dataset<Row>, Row
 	}
 	
 	@Override
-	protected ModelDocumenter<ZSparkSession, Dataset<Row>, Row, Column, DataType> getModelDocumenter() {
+	protected ModelDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> getModelDocumenter() {
 		return new SparkModelDocumenter(getContext(),getArgs());
 	}
 
 
 	@Override
-	protected DataDocumenter<ZSparkSession, Dataset<Row>, Row, Column, DataType> getDataDocumenter() {
+	protected DataDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> getDataDocumenter() {
 		return new SparkDataDocumenter(getContext(),getArgs());
 	}
 

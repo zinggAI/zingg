@@ -10,7 +10,7 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.Arguments;
 import zingg.common.core.Context;
 import zingg.common.core.recommender.StopWordsRecommender;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 
 
 /**
@@ -18,13 +18,13 @@ import zingg.spark.client.ZSparkSession;
  * 
  *
  */
-public class SparkStopWordsRecommender extends StopWordsRecommender<ZSparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkStopWordsRecommender extends StopWordsRecommender<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.SparkStopWordsRecommender";
 	public static final Log LOG = LogFactory.getLog(SparkStopWordsRecommender.class);
 
-	public SparkStopWordsRecommender(Context<ZSparkSession, Dataset<Row>, Row, Column,DataType> context,Arguments args) {
+	public SparkStopWordsRecommender(Context<SparkSession, Dataset<Row>, Row, Column,DataType> context,Arguments args) {
 		super(context,args);
 	}
 	

@@ -13,9 +13,9 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.executor.FindAndLabeller;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 
-public class SparkFindAndLabeller extends FindAndLabeller<ZSparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkFindAndLabeller extends FindAndLabeller<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkFindAndLabeller";

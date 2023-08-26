@@ -14,7 +14,7 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
 
 import zingg.common.client.util.ColName;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 
 
 public abstract class SparkBaseTransformer extends Transformer implements HasInputCol, HasOutputCol {
@@ -113,6 +113,6 @@ public abstract class SparkBaseTransformer extends Transformer implements HasInp
     
      
 	 
-    public abstract void register(ZSparkSession spark);
+    public abstract void register(SparkSession spark);
 }
 

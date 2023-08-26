@@ -12,14 +12,14 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.executor.Labeller;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 
 /**
  * Spark specific implementation of Labeller
  * 
  *
  */
-public class SparkLabeller extends Labeller<ZSparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkLabeller";

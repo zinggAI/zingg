@@ -18,7 +18,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.IZingg;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.util.SparkBlockingTreeUtil;
 import zingg.spark.core.util.SparkDSUtil;
 import zingg.spark.core.util.SparkGraphUtil;
@@ -32,7 +32,7 @@ public class ZinggSparkTester {
     public static JavaSparkContext ctx;
     public static SparkSession spark;
     public static ZinggSparkContext zsCTX;
-    public static ZSparkSession zSession;
+    public static SparkSession zSession;
 
     public static final Log LOG = LogFactory.getLog(ZinggSparkTester.class);
 
@@ -52,7 +52,7 @@ public class ZinggSparkTester {
 			args = new Arguments();
 			zsCTX = new ZinggSparkContext();
 			zsCTX.ctx = ctx;
-			zSession = new ZSparkSession(spark, null);
+			zSession = new SparkSession(spark, null);
 			zsCTX.zSession = zSession;
 			
             ctx.setCheckpointDir("/tmp/checkpoint");	

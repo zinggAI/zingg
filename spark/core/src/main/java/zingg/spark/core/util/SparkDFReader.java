@@ -10,16 +10,16 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.util.DFReader;
 import zingg.spark.client.SparkFrame;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 
 public class SparkDFReader implements DFReader<Dataset<Row>, Row, Column> {
     
-    private ZSparkSession session;
+    private SparkSession session;
     private DataFrameReader reader;
 
-    public SparkDFReader(ZSparkSession s) {
+    public SparkDFReader(SparkSession s) {
         this.session = s;
-        this.reader = s.getSession().read();
+        this.reader = s.read();
     }
 
     public DFReader<Dataset<Row>, Row, Column> getReader() {

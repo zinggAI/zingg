@@ -30,11 +30,11 @@ import zingg.common.core.feature.Feature;
 import zingg.common.core.model.Model;
 import zingg.common.core.similarity.function.SimFunction;
 import zingg.spark.client.SparkFrame;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.similarity.SparkSimFunction;
 import zingg.spark.core.similarity.SparkTransformer;
 
-public class SparkModel extends Model<ZSparkSession, DataType, Dataset<Row>, Row, Column>{
+public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row, Column>{
 	
 	public static final Log LOG = LogFactory.getLog(SparkModel.class);
 	public static final Log DbLOG = LogFactory.getLog("WEB");
@@ -171,7 +171,7 @@ public class SparkModel extends Model<ZSparkSession, DataType, Dataset<Row>, Row
 
 
 	@Override
-	public void register(ZSparkSession spark) {
+	public void register(SparkSession spark) {
 		if (featureCreators != null) {
 			for (SparkTransformer bsf: featureCreators) {
 				bsf.register(spark);

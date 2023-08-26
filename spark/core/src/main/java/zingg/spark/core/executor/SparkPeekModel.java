@@ -17,9 +17,9 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.executor.ZinggBase;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 
-public class SparkPeekModel extends ZinggBase<ZSparkSession, Dataset<Row>, Row, Column, DataType>{
+public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, Column, DataType>{
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.spark.core.executor.SparkPeekModel";

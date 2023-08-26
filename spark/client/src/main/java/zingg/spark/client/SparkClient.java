@@ -21,7 +21,7 @@ import zingg.common.client.license.IZinggLicense;
  * @author sgoyal
  *
  */
-public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column, DataType> {
+public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column, DataType> {
 	
 	private static final long serialVersionUID = 1L;
 	protected static final String zFactoryClassName = "zingg.spark.core.executor.SparkZFactory";
@@ -32,13 +32,10 @@ public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column
 		
 	
 
-	public SparkClient(Arguments args, ClientOptions options, ZSparkSession s) throws ZinggClientException {
+	public SparkClient(Arguments args, ClientOptions options, SparkSession s) throws ZinggClientException {
 		super(args, options, s, zFactoryClassName);
 	}
 
-	public SparkClient(Arguments args, ClientOptions options, SparkSession s) throws ZinggClientException {
-		this(args, options, new ZSparkSession(s,null));
-	}
 	
 	public SparkClient() {
 		/*SparkSession session = SparkSession
@@ -55,7 +52,7 @@ public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column
 
 
 	@Override
-	public Client<ZSparkSession, Dataset<Row>, Row, Column, DataType> getClient(Arguments args, 
+	public Client<SparkSession, Dataset<Row>, Row, Column, DataType> getClient(Arguments args, 
 		ClientOptions options) throws ZinggClientException {
 		// TODO Auto-generated method stub
 		SparkClient client = null;

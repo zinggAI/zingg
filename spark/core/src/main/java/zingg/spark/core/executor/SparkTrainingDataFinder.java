@@ -13,10 +13,10 @@ import zingg.common.client.ZinggOptions;
 import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.executor.TrainingDataFinder;
 import zingg.common.core.preprocess.StopWordsRemover;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.preprocess.SparkStopWordsRemover;
 
-public class SparkTrainingDataFinder extends TrainingDataFinder<ZSparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkTrainingDataFinder";
@@ -38,7 +38,7 @@ public class SparkTrainingDataFinder extends TrainingDataFinder<ZSparkSession, D
 	}
 	
 	@Override
-	protected StopWordsRemover<ZSparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
+	protected StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
 		return new SparkStopWordsRemover(getContext(),getArgs());
 	}
 	
