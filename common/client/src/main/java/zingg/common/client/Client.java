@@ -89,7 +89,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		catch(Exception e) {
 			e.printStackTrace();
 			//set default
-			setZingg(zf.get(ZinggOptions.getByValue(ZinggOptions.PEEK_MODEL.getValue())));
+			setZingg(zf.get(ZinggOptions.getByValue(ZinggOptions.PEEK_MODEL.getName())));
 		}
 	}
 

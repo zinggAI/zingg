@@ -86,7 +86,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
 		Analytics.track(Metric.DATA_FORMAT, getPipeUtil().getPipesAsString(args.getData()), collectMetrics);
 		Analytics.track(Metric.OUTPUT_FORMAT, getPipeUtil().getPipesAsString(args.getOutput()), collectMetrics);
 
-		Analytics.postEvent(zinggOptions.getValue(), collectMetrics);
+		Analytics.postEvent(zinggOptions.getName(), collectMetrics);
 	}
 
     public Arguments getArgs() {
