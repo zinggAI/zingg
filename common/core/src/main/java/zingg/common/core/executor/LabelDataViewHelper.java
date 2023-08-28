@@ -23,7 +23,7 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	
 	public LabelDataViewHelper(Context<S,D,R,C,T> context, ClientOptions clientOptions) {
 		setContext(context);
-		//setZinggOptions(zinggOptions);
+		setZinggOptions(zinggOptions);
 		setClientOptions(clientOptions);
 		setName(this.getClass().getName());
 	}
@@ -127,5 +127,7 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException {
 		return this;
 	}
+
+	
 	
 }

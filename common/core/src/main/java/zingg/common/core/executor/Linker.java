@@ -17,7 +17,7 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	public static final Log LOG = LogFactory.getLog(Linker.class);
 
 	public Linker() {
-		//setZinggOptions(ZinggOptions.LINK);
+		setZinggOptions(ZinggOptions.LINK);
 	}
 
 	public ZFrame<D,R,C> getBlocks(ZFrame<D,R,C> blocked, ZFrame<D,R,C> bAll) throws Exception{

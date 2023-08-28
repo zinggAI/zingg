@@ -35,7 +35,7 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
     }
 
     public SparkMatcher(ZinggSparkContext sparkContext) {
-        //setZinggOptions(ZinggOptions.MATCH);
+        setZinggOptions(ZinggOptions.MATCH);
 		setContext(sparkContext);
     }
 

@@ -26,7 +26,7 @@ public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row,
 	public static final Log LOG = LogFactory.getLog(SparkDocumenter.class);
 
 	public SparkDocumenter() {
-		//setZinggOptions(ZinggOptions.GENERATE_DOCS);
+		setZinggOptions(ZinggOptions.GENERATE_DOCS);
 		setContext(new ZinggSparkContext());
 	}
 

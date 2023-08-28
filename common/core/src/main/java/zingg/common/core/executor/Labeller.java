@@ -24,7 +24,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 	protected ILabelDataViewHelper<S, D, R, C> labelDataViewHelper;
 	
 	public Labeller() {
-		//setZinggOptions(ZinggOptions.LABEL);
+		setZinggOptions(ZinggOptions.LABEL);
 	}
 
 	public void execute() throws ZinggClientException {

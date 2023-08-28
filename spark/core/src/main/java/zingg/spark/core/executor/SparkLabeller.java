@@ -30,7 +30,7 @@ public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Col
 	}
 
 	public SparkLabeller(ZinggSparkContext sparkContext) {
-		//setZinggOptions(ZinggOptions.LABEL);
+		setZinggOptions(ZinggOptions.LABEL);
 		setContext(sparkContext);
 	}
 

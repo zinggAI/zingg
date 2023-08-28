@@ -34,7 +34,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
 	
     protected Context<S,D,R,C,T> context;
     protected String name;
-    //protected ZinggOptions zinggOptions;
+    protected ZinggOptions zinggOptions;
     protected long startTime;
     protected ClientOptions clientOptions;
 
@@ -86,7 +86,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
 		Analytics.track(Metric.DATA_FORMAT, getPipeUtil().getPipesAsString(args.getData()), collectMetrics);
 		Analytics.track(Metric.OUTPUT_FORMAT, getPipeUtil().getPipesAsString(args.getOutput()), collectMetrics);
 
-		//Analytics.postEvent(zinggOptions.getValue(), collectMetrics);
+		Analytics.postEvent(zinggOptions.getValue(), collectMetrics);
 	}
 
     public Arguments getArgs() {
@@ -110,10 +110,11 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     public void setName(String name) {
         this.name = name;
     }
-    /*public void setZinggOptions(ZinggOptions zinggOptions) {
+    
+    public void setZinggOptions(ZinggOptions zinggOptions) {
         this.zinggOptions = zinggOptions;
     }
-    */
+    
 
 	public String getName() {
         return name;

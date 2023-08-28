@@ -17,7 +17,7 @@ public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S, D, R, 
 	protected Labeller<S, D, R, C, T> labeller;
 
 	public FindAndLabeller() {
-		//setZinggOptions(ZinggOptions.FIND_AND_LABEL);
+		setZinggOptions(ZinggOptions.FIND_AND_LABEL);
 	}
 
 	@Override

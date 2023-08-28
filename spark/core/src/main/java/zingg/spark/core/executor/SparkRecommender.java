@@ -28,7 +28,7 @@ public class SparkRecommender extends Recommender<SparkSession, Dataset<Row>, Ro
 	public static final Log LOG = LogFactory.getLog(SparkRecommender.class);
 
 	public SparkRecommender() {
-		//setZinggOptions(ZinggOptions.RECOMMEND);
+		setZinggOptions(ZinggOptions.RECOMMEND);
 		setContext(new ZinggSparkContext());
 	}
 
