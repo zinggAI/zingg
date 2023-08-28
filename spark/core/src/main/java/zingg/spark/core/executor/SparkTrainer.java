@@ -10,7 +10,7 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
+
 import zingg.common.core.executor.Trainer;
 import zingg.common.core.preprocess.StopWordsRemover;
 import org.apache.spark.sql.SparkSession;
@@ -33,9 +33,9 @@ public class SparkTrainer extends Trainer<SparkSession, Dataset<Row>, Row, Colum
 	}
 	
     @Override
-    public void init(Arguments args, IZinggLicense license)  throws ZinggClientException {
-        super.init(args, license);
-        getContext().init(license);
+    public void init(Arguments args)  throws ZinggClientException {
+        super.init(args);
+        //getContext().init(license);
     }	
 	
 	@Override

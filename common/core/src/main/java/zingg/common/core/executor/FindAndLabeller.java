@@ -6,7 +6,6 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
 
 public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S, D, R, C, T> {
 	private static final long serialVersionUID = 1L;
@@ -21,10 +20,10 @@ public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S, D, R, 
 	}
 
 	@Override
-	public void init(Arguments args, IZinggLicense license) throws ZinggClientException {
-		finder.init(args, license);
-		labeller.init(args, license);
-		super.init(args, license);
+	public void init(Arguments args) throws ZinggClientException {
+		finder.init(args);
+		labeller.init(args);
+		super.init(args);
 	}
 
 	@Override

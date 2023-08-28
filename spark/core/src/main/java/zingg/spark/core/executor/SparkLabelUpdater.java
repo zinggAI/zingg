@@ -11,7 +11,7 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
+
 import zingg.common.client.pipe.Pipe;
 import zingg.common.core.executor.LabelUpdater;
 import org.apache.spark.sql.SparkSession;
@@ -35,9 +35,9 @@ public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, 
 
 
     @Override
-    public void init(Arguments args, IZinggLicense license)  throws ZinggClientException {
-        super.init(args, license);
-        getContext().init(license);
+    public void init(Arguments args)  throws ZinggClientException {
+        super.init(args);
+        //getContext().init(license);
     }
     	
 	protected Pipe setSaveModeOnPipe(Pipe p) {

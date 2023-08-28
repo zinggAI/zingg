@@ -15,7 +15,7 @@ import zingg.common.client.Arguments;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
+
 import zingg.common.core.executor.ZinggBase;
 import org.apache.spark.sql.SparkSession;
 
@@ -32,9 +32,9 @@ public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, C
 	}
 
 	@Override
-    public void init(Arguments args, IZinggLicense license)
+    public void init(Arguments args)
         throws ZinggClientException {
-		super.init(args, license);
+		super.init(args);
 		getContext().setUtils();
 		//we wil not init here as we wnt py to drive
 		//the spark session etc

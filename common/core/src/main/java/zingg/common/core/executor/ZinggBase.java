@@ -14,7 +14,6 @@ import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.Context;
@@ -63,7 +62,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
 
    
     
-    public void init(Arguments args, IZinggLicense license)
+    public void init(Arguments args)
         throws ZinggClientException {
             startTime = System.currentTimeMillis();
             this.args = args;
