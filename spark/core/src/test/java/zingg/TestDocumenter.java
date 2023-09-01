@@ -12,7 +12,7 @@ public class TestDocumenter extends ZinggSparkTester{
     public void setUp(){
 
         try {
-			args = Arguments.createArgumentsFromJSON(getClass().getResource("/testDocumenter/config.json").getFile());
+			args = argsUtil.createArgumentsFromJSON(getClass().getResource("/testDocumenter/config.json").getFile());
            	//fail("Exception was expected for missing config file");
 		} catch (Throwable e) {
             e.printStackTrace();

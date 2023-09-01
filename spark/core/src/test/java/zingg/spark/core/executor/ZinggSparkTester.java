@@ -17,6 +17,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 import zingg.common.client.Arguments;
+import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IZingg;
 import zingg.spark.client.ZSparkSession;
 import zingg.spark.core.util.SparkBlockingTreeUtil;
@@ -33,7 +34,7 @@ public class ZinggSparkTester {
     public static SparkSession spark;
     public static ZinggSparkContext zsCTX;
     public static ZSparkSession zSession;
-
+    public ArgumentsUtil argsUtil = new ArgumentsUtil();
     public static final Log LOG = LogFactory.getLog(ZinggSparkTester.class);
 
 	protected static final String FIELD_INTEGER = "fieldInteger";
