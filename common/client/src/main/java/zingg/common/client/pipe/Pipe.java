@@ -1,6 +1,7 @@
 package zingg.common.client.pipe;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import zingg.common.client.ZFrame;
 @JsonInclude(Include.NON_NULL)
 public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	
+	private static final long serialVersionUID = 1L;
 	public static final String FORMAT_CSV = "csv";
 	public static final String FORMAT_PARQUET = "parquet";
 	public static final String FORMAT_JSON = "json";
@@ -36,7 +38,7 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 
 	String name;
 	String format;
-	String preprocessors;
+	String[] preprocessors;
 	Map<String, String> props = new HashMap<String, String>();
 	int id;
 	protected ZFrame<D, R, C> dataset;
@@ -102,12 +104,12 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	}
 	
 	
-	public String getPreprocessors() {
+	public String[] getPreprocessors() {
 		return preprocessors;
 	}
 
 
-	public void setPreprocessors(String preprocessors) {
+	public void setPreprocessors(String[] preprocessors) {
 		this.preprocessors = preprocessors;
 	}
 
@@ -132,8 +134,13 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 
 	@Override
 	public String toString() {
+		String preprocessorsStr = null;
+		if (preprocessors!=null) {
+			preprocessorsStr = Arrays.toString(preprocessors);
+		}	
+		
 		return "Pipe [name=" + name + ", format=" + format + ", preprocessors="
-				+ preprocessors + ", props=" + props + "]";
+				+ preprocessorsStr + ", props=" + props + "]";
 	}
 	
 	public String getMode(){
