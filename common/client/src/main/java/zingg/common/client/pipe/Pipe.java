@@ -38,7 +38,7 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 
 	String name;
 	String format;
-	String[] preprocessors;
+	
 	Map<String, String> props = new HashMap<String, String>();
 	int id;
 	protected ZFrame<D, R, C> dataset;
@@ -104,16 +104,6 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	}
 	
 	
-	public String[] getPreprocessors() {
-		return preprocessors;
-	}
-
-
-	public void setPreprocessors(String[] preprocessors) {
-		this.preprocessors = preprocessors;
-	}
-
-
 
 	public int getId() {
 		return id;
@@ -134,13 +124,7 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 
 	@Override
 	public String toString() {
-		String preprocessorsStr = null;
-		if (preprocessors!=null) {
-			preprocessorsStr = Arrays.toString(preprocessors);
-		}	
-		
-		return "Pipe [name=" + name + ", format=" + format + ", preprocessors="
-				+ preprocessorsStr + ", props=" + props + "]";
+		return "Pipe [name=" + name + ", format=" + format + ", props=" + props + "]";
 	}
 	
 	public String getMode(){

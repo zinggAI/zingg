@@ -112,7 +112,7 @@ public class Arguments implements Serializable {
 	long blockSize = 100L;
 	String column;
 	String obviousDupeCondition;
-	
+	String[] preprocessors;
 
 	public void setThreshold(double threshold) {
 		this.threshold = threshold;
@@ -484,6 +484,15 @@ public class Arguments implements Serializable {
 
 	public void setObviousDupeCondition(String obviousDupeCondition) {
 		this.obviousDupeCondition = obviousDupeCondition;
+	}
+	
+	public String[] getPreprocessors() {
+		return preprocessors;
+	}
+
+
+	public void setPreprocessors(String[] preprocessors) {
+		this.preprocessors = preprocessors;
 	}
 
 	public long getBlockSize() {
