@@ -117,6 +117,7 @@ public class TestStopWords extends ZinggSparkTester{
 
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
+			args.setPreprocessors(new String[] {PreprocConstants.STOP_WORDS_PREPROC});
 
  			Dataset<Row> newDataSet = ((SparkFrame)(zsCTX.getPreprocUtil().preprocess(args,new SparkFrame(original)))).df();
  			assertTrue(datasetExpected.except(newDataSet).isEmpty());
@@ -157,6 +158,7 @@ public class TestStopWords extends ZinggSparkTester{
 
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
+			args.setPreprocessors(new String[] {PreprocConstants.STOP_WORDS_PREPROC});
 			
 			System.out.println("testStopWordColumnMissingFromStopWordFile : orginal ");			
 			original.show(200);

@@ -27,3 +27,8 @@ Once you have verified the above stop words, you can configure them in the JSON 
    	},
 ```
 
+```
+Please also configure in the JSON variable **preprocessors** that you want to preprocess your data by removing stop words:
+"preprocessors": ["stopWords"],
+```
+
