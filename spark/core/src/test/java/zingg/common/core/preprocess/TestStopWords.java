@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.MatchType;
+import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.spark.client.SparkFrame;
@@ -71,12 +72,10 @@ public class TestStopWords extends ZinggSparkTester{
 			Arguments stmtArgs = new Arguments();
 			stmtArgs.setFieldDefinition(fdList);
 			
-			StopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,stmtArgs);
-			
-			stopWordsObj.preprocessForStopWords(new SparkFrame(datasetOriginal));
+			StopWordsRemover stopWordsObj = new SparkStopWordsRemover();
 			System.out.println("datasetOriginal.show() : ");
 			datasetOriginal.show();
-			SparkFrame datasetWithoutStopWords = (SparkFrame)stopWordsObj.removeStopWordsFromDF(new SparkFrame(datasetOriginal),"statement",stopWords);
+			SparkFrame datasetWithoutStopWords = (SparkFrame)stopWordsObj.removeStopWordsFromDF(zsCTX.getSession(), new SparkFrame(datasetOriginal),"statement",stopWords);
 			System.out.println("datasetWithoutStopWords.show() : ");
 			datasetWithoutStopWords.show();
 			
@@ -119,9 +118,7 @@ public class TestStopWords extends ZinggSparkTester{
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
 
-			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,args);
-				
- 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocessForStopWords(new SparkFrame(original)))).df();
+ 			Dataset<Row> newDataSet = ((SparkFrame)(zsCTX.getPreprocUtil().preprocess(args,new SparkFrame(original)))).df();
  			assertTrue(datasetExpected.except(newDataSet).isEmpty());
 			assertTrue(newDataSet.except(datasetExpected).isEmpty());
 	}
@@ -161,11 +158,9 @@ public class TestStopWords extends ZinggSparkTester{
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
 			
-			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,args);
-			
 			System.out.println("testStopWordColumnMissingFromStopWordFile : orginal ");			
 			original.show(200);
- 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocessForStopWords(new SparkFrame(original)))).df();
+ 			Dataset<Row> newDataSet = ((SparkFrame)(zsCTX.getPreprocUtil().preprocess(args,new SparkFrame(original)))).df();
  			System.out.println("testStopWordColumnMissingFromStopWordFile : newDataSet ");		
  			newDataSet.show(200);
  			System.out.println("testStopWordColumnMissingFromStopWordFile : datasetExpected ");	

@@ -53,9 +53,4 @@ public class SparkMatcher extends Matcher<ZSparkSession,Dataset<Row>,Row,Column,
 		return model;
 	}
 
-	@Override
-	protected StopWordsRemover<ZSparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
-		return new SparkStopWordsRemover(getContext(),getArgs());
-	}
-	
 }

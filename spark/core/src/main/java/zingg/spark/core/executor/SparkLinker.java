@@ -41,10 +41,5 @@ public class SparkLinker extends Linker<ZSparkSession, Dataset<Row>, Row, Column
 		model.register(getContext().getSession());
 		return model;
 	}
-
-	@Override
-	protected StopWordsRemover<ZSparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
-		return new SparkStopWordsRemover(getContext(),getArgs());
-	}
 	
 }

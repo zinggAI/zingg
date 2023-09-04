@@ -57,12 +57,7 @@ public class ZinggSparkTester {
 			zsCTX.zSession = zSession;
 			
             ctx.setCheckpointDir("/tmp/checkpoint");	
-            zsCTX.setPipeUtil(new SparkPipeUtil(zSession));
-            zsCTX.setDSUtil(new SparkDSUtil(zSession));
-            zsCTX.setHashUtil(new SparkHashUtil(zSession));
-            zsCTX.setGraphUtil(new SparkGraphUtil());
-            zsCTX.setModelUtil(new SparkModelUtil(zSession));
-            zsCTX.setBlockingTreeUtil(new SparkBlockingTreeUtil(zSession, zsCTX.getPipeUtil()));
+            zsCTX.setUtils();
 			
     	} catch (Throwable e) {
     		if (LOG.isDebugEnabled())

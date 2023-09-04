@@ -38,9 +38,4 @@ public class SparkTrainer extends Trainer<ZSparkSession, Dataset<Row>, Row, Colu
         getContext().init(license);
     }	
 	
-	@Override
-	protected StopWordsRemover<ZSparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
-		return new SparkStopWordsRemover(getContext(),getArgs());
-	}
-	
 }

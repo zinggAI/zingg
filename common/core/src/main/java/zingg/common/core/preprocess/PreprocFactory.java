@@ -9,7 +9,7 @@ public abstract class PreprocFactory {
 	/**
 	 * Need to be populated by concrete sub class
 	 */
-    protected HashMap<String, Class> preprocMap;
+    protected HashMap<String, Class<? extends IPreProc>> preprocMap;
 
 
     public IPreProc get(String preproc) throws InstantiationException, IllegalAccessException, ClassNotFoundException {

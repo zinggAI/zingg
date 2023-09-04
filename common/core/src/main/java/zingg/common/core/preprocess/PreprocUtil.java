@@ -24,7 +24,7 @@ public abstract class PreprocUtil<S,D,R,C,T> {
 		this.pipeUtil = pipeUtil;
 	}
 	
-	public ZFrame<D,R,C> preprocess(S session, Arguments args, ZFrame<D,R,C> inpData) throws ZinggClientException{
+	public ZFrame<D,R,C> preprocess(Arguments args, ZFrame<D,R,C> inpData) throws ZinggClientException{
 		
 		// go over all the preprocs and call factory and than preprocess one after the other
 		String[] preprocessors = args.getPreprocessors();
@@ -41,7 +41,7 @@ public abstract class PreprocUtil<S,D,R,C,T> {
 			try {
 				preproc = preprocFactory.get(preprocName);
 				//call preprocess
-				outData = preproc.preprocess(session,args,outData);
+				outData = preproc.preprocess(session,pipeUtil,args,outData);
 			} catch (Exception e) {
 				throw new ZinggClientException("error occurred in preprocessing",e);
 			}

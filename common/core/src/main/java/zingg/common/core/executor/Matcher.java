@@ -92,7 +92,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			// read input, filter, remove self joins
 			ZFrame<D,R,C>  testDataOriginal = getTestData();
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal);
-			ZFrame<D,R,C>  testData = getStopWords().preprocessForStopWords(testDataOriginal);
+			ZFrame<D,R,C>  testData = getPreprocUtil().preprocess(args,testDataOriginal);
 			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
 			long count = testData.count();
@@ -362,7 +362,5 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		ZFrame<D,R,C> dupesActual1 = dupesActual.select(cols); //.cache();
 		return dupesActual1;
 	}
-
-    protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
 	    
 }
