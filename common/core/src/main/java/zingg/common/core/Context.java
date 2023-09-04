@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.license.IZinggLicense;
+import zingg.common.core.preprocess.PreprocUtil;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.DSUtil;
 import zingg.common.core.util.GraphUtil;
@@ -29,6 +30,9 @@ public interface Context <S,D, R, C,T> extends Serializable {
     public DSUtil<S,D,R,C> getDSUtil() ;
     public PipeUtilBase<S,D,R,C> getPipeUtil();
     public BlockingTreeUtil<S, D,R,C,T> getBlockingTreeUtil() ;
+    
+    public PreprocUtil<S,D,R,C,T> getPreprocUtil();
+    public void setPreprocUtil(PreprocUtil<S,D,R,C,T> preprocUtil);
 
     public void init(IZinggLicense license)
         throws ZinggClientException;

@@ -13,6 +13,7 @@ import zingg.common.client.IZingg;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.license.IZinggLicense;
 import zingg.common.core.Context;
+import zingg.common.core.preprocess.PreprocUtil;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.DSUtil;
 import zingg.common.core.util.GraphUtil;
@@ -20,6 +21,7 @@ import zingg.common.core.util.HashUtil;
 import zingg.common.core.util.ModelUtil;
 import zingg.common.core.util.PipeUtilBase;
 import zingg.spark.client.ZSparkSession;
+import zingg.spark.core.preprocess.SparkPreprocUtil;
 import zingg.spark.core.util.SparkBlockingTreeUtil;
 import zingg.spark.core.util.SparkDSUtil;
 import zingg.spark.core.util.SparkGraphUtil;
@@ -40,7 +42,8 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
     protected GraphUtil<Dataset<Row>, Row, Column> graphUtil;
     protected ModelUtil<ZSparkSession, DataType, Dataset<Row>, Row, Column> modelUtil;
     protected BlockingTreeUtil<ZSparkSession, Dataset<Row>, Row, Column, DataType> blockingTreeUtil;
-
+    protected PreprocUtil<ZSparkSession, Dataset<Row>, Row, Column,DataType> preprocUtil;
+    
 	public static final String hashFunctionFile = "hashFunctions.json";
     
 
@@ -111,6 +114,7 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
         setGraphUtil(new SparkGraphUtil());
         setModelUtil(new SparkModelUtil(zSession));
         setBlockingTreeUtil(new SparkBlockingTreeUtil(zSession, getPipeUtil()));
+        setPreprocUtil(new SparkPreprocUtil(zSession, getPipeUtil()));
     }
 
     /** 
@@ -187,6 +191,16 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
     @Override
     public BlockingTreeUtil<ZSparkSession, Dataset<Row>, Row, Column, DataType> getBlockingTreeUtil() {
         return blockingTreeUtil;
+    }
+    
+    @Override
+    public PreprocUtil<ZSparkSession, Dataset<Row>, Row, Column, DataType> getPreprocUtil() {
+    	return preprocUtil;
+    }
+    
+    @Override
+    public void setPreprocUtil(PreprocUtil<ZSparkSession, Dataset<Row>, Row, Column, DataType> preprocUtil) {
+    	this.preprocUtil = preprocUtil;	
     }
   
  }

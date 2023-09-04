@@ -18,6 +18,7 @@ import zingg.common.client.license.IZinggLicense;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.Context;
+import zingg.common.core.preprocess.PreprocUtil;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.DSUtil;
@@ -206,6 +207,10 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
 
     public BlockingTreeUtil<S, D,R,C,T> getBlockingTreeUtil() {
         return context.getBlockingTreeUtil();
+    }
+    
+    public PreprocUtil<S,D,R,C,T> getPreprocUtil() {
+    	return context.getPreprocUtil();
     }
     
     @Override   

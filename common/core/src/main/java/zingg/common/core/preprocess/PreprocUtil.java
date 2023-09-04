@@ -3,8 +3,26 @@ package zingg.common.core.preprocess;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.util.PipeUtilBase;
 
-public class PreprocUtil<S,D,R,C,T> {
+public abstract class PreprocUtil<S,D,R,C,T> {
+	
+	/**
+	 * Need to be populated by concrete sub class
+	 */
+	protected PreprocFactory preprocFactory;
+	
+	protected S session;
+	
+	protected PipeUtilBase<S, D, R, C> pipeUtil;
+
+    public PipeUtilBase<S, D, R, C> getPipeUtil() {
+		return pipeUtil;
+	}
+
+	public void setPipeUtil(PipeUtilBase<S, D, R, C> pipeUtil) {
+		this.pipeUtil = pipeUtil;
+	}
 	
 	public ZFrame<D,R,C> preprocess(S session, Arguments args, ZFrame<D,R,C> inpData) throws ZinggClientException{
 		
@@ -15,7 +33,6 @@ public class PreprocUtil<S,D,R,C,T> {
 			return inpData;
 		}
 		
-		PreprocFactory preprocFactory = new PreprocFactory();
 		ZFrame<D,R,C> outData = inpData;
 		
 		for (String preprocName : preprocessors) {
