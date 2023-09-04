@@ -475,6 +475,20 @@ class Arguments:
     def getModelId(self):
         return self.args.getModelId()
 
+    def setPreprocessors(self, *preprocessors):
+        """ Method to set the preprocessors to be used on input data
+
+        :param preprocessors: input data preprocessors separated by comma e.g. (preprocessor1,preprocessor2,..)
+        :type preprocessors: String[]
+        """
+        preprocessorsArr = getGateway().new_array(getJVM().java.lang.String, len(preprocessors))
+        for idx, preproc in enumerate(preprocessors):
+            preprocessorsArr[idx] = preproc
+        self.args.setPreprocessors(preprocessorsArr)
+    
+    def getPreprocessors(self):
+        return self.args.getPreprocessors()
+
     def setObviousDupeCondition(self, obviousDupeCondition):
         """ Method to set the obviousDupeCondition used for matching
 
@@ -541,7 +555,7 @@ class Arguments:
         :rtype: pointer(Arguments)
         """
         obj = Arguments()
-        obj.args = getJVM().zingg.common.client.Arguments.createArgumentsFromJSON(fileName, phase)
+        obj.args = getJVM().zingg.common.client.ArgumentsUtil().createArgumentsFromJSON(fileName, phase)
         return obj
     
     
@@ -555,12 +569,12 @@ class Arguments:
         :return: The pointer containing address of the this class object
         :rtype: pointer(Arguments)
         """
-        return getJVM().zingg.common.client.Arguments.writeArgumentstoJSONString(self.args)
+        return getJVM().zingg.common.client.ArgumentsUtil().writeArgumentstoJSONString(self.args)
     
     @staticmethod
     def createArgumentsFromJSONString(jsonArgs, phase):
         obj = Arguments()
-        obj.args = getJVM().zingg.common.client.Arguments.createArgumentsFromJSONString(jsonArgs, phase)
+        obj.args = getJVM().zingg.common.client.ArgumentsUtil().createArgumentsFromJSONString(jsonArgs, phase)
         return obj
     
     
