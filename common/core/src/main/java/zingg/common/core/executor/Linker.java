@@ -46,7 +46,7 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 				ZFrame<D,R,C>dupes2 =  getDSUtil().alignLinked(dupesActual, args);
 				dupes2 =  getDSUtil().postprocessLinked(dupes2, sampleOrginal);
 				LOG.debug("uncertain output schema is " + dupes2.showSchema());
-				getPipeUtil().write(dupes2, args, args.getOutput());
+				getPipeUtil().write(dupes2, args.getOutput());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

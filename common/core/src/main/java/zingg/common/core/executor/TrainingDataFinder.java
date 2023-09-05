@@ -144,7 +144,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 		dupes1 = getDSUtil().postprocess(dupes1, sampleOrginal);	
 		ZFrame<D,R,C> dupes2 = dupes1.orderBy(ColName.CLUSTER_COLUMN);
 		//LOG.debug("uncertain output schema is " + dupes2.schema());
-		getPipeUtil().write(dupes2 , args, getUnmarkedLocation());
+		getPipeUtil().write(dupes2 , getUnmarkedLocation());
 		//PipeUtil.write(jdbc, massageForJdbc(dupes2.cache()) , args, ctx);
 	}
 

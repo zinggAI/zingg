@@ -90,7 +90,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 	public void writeBlockingTree(Tree<Canopy<R>> blockingTree, Arguments args) throws Exception, ZinggClientException {
 		byte[] byteArray  = Util.convertObjectIntoByteArray(blockingTree);
         PipeUtilBase<S, D, R, C> pu = getPipeUtil();
-        pu.write(getTreeDF(byteArray), args, pu.getBlockingTreePipe(args));
+        pu.write(getTreeDF(byteArray), pu.getBlockingTreePipe(args));
 	}
 
 	public abstract ZFrame<D, R, C> getTreeDF(byte[] tree) ;

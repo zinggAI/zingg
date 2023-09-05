@@ -185,7 +185,7 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 		return rows;
 	}
 	
-	public  void write(ZFrame<D,R,C> toWriteOrig, Arguments args, 
+	public  void write(ZFrame<D,R,C> toWriteOrig, 
 		Pipe<D,R,C>... pipes) throws ZinggClientException {
 		try {
 			for (Pipe<D,R,C> p: pipes) {

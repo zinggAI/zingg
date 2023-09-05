@@ -93,9 +93,11 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 		columnsAdded.add(ColName.RAW_PREDICTION);	
 	}
 	
-	
-	
 	public void fit(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
+		fitCore(pos, neg);
+	}
+	
+	public void fitCore(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
 		//transform
 		ZFrame<Dataset<Row>,Row,Column> input = transform(pos.union(neg)).coalesce(1).cache();
 		//if (LOG.isDebugEnabled()) input.write().csv("/tmp/input/" + System.currentTimeMillis());
@@ -127,13 +129,28 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 		transformer =  CrossValidatorModel.load(path);
 	}
 	
-	
 	public ZFrame<Dataset<Row>,Row,Column> predict(ZFrame<Dataset<Row>,Row,Column> data) {
 		return predict(data, true);
 	}
 	
 	@Override
 	public ZFrame<Dataset<Row>,Row,Column> predict(ZFrame<Dataset<Row>,Row,Column> data, boolean isDrop) {
+		return dropFeatureCols(predictCore(data), isDrop);
+	}
+
+
+	@Override 
+	public ZFrame<Dataset<Row>,Row,Column> dropFeatureCols(ZFrame<Dataset<Row>,Row,Column> predictWithFeatures, boolean isDrop){
+		if (isDrop) {
+			ZFrame<Dataset<Row>,Row,Column> returnDS = predictWithFeatures.drop(columnsAdded.toArray(new String[columnsAdded.size()]));
+			//LOG.debug("Return schema after dropping additional columns is " + returnDS.schema());
+			return returnDS; //new SparkFrame(returnDS);
+		}
+		return predictWithFeatures;
+	}
+	
+	@Override
+	public ZFrame<Dataset<Row>,Row,Column> predictCore(ZFrame<Dataset<Row>,Row,Column> data) {
 		//create features
 		LOG.info("threshold while predicting is " + lr.getThreshold());
 		//lr.setThreshold(0.95);
@@ -143,11 +160,7 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 		//LOG.debug(predictWithFeatures.schema());
 		predictWithFeatures = vve.transform(predictWithFeatures);
 		//LOG.debug("Original schema is " + predictWithFeatures.schema());
-		if (isDrop) {
-			Dataset<Row> returnDS = predictWithFeatures.drop(columnsAdded.toArray(new String[columnsAdded.size()]));
-			//LOG.debug("Return schema after dropping additional columns is " + returnDS.schema());
-			return new SparkFrame(returnDS);
-		}
+		
 		LOG.debug("Return schema is " + predictWithFeatures.schema());
 		return new SparkFrame(predictWithFeatures);
 		

@@ -193,7 +193,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return blocks;
 	}
 	
-	public ZFrame<D,R,C> getObvDupePairs(ZFrame<D,R,C> blocked) {
+	public ZFrame<D,R,C> getObvDupePairs(ZFrame<D,R,C> blocked) throws ZinggClientException {
 		
 		String obviousDupeString = args.getObviousDupeCondition();
 		
@@ -230,6 +230,10 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		
 		return onlyIds;
 	}
+
+	public ZFrame<D,R,C> getGraph(ZFrame<D,R,C>  blocked,  ZFrame<D,R,C>  dupesActual){
+		return getGraphUtil().buildGraph(blocked, dupesActual).cache();
+	}
 	
 	public void writeOutput( ZFrame<D,R,C>  blocked,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException {
 		try{
@@ -246,13 +250,13 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			*/
 			
 			dupesActual = dupesActual.cache();
-			System.out.println("dupes ------------");
+			
 			if (LOG.isDebugEnabled()) {
 				dupesActual.show();
 			}
-			ZFrame<D,R,C>graph = getGraphUtil().buildGraph(blocked, dupesActual).cache();
+			ZFrame<D,R,C>graph = getGraph(blocked, dupesActual);
 			//graph.toJavaRDD().saveAsTextFile("/tmp/zgraph");
-			System.out.println("graph ------------");
+			
 			if (LOG.isDebugEnabled()) {
 				graph.show();
 			}
@@ -278,7 +282,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			}
 			graphWithScores =  getDSUtil().select(graphWithScores, columns);
 			*/
-			getPipeUtil().write(graphWithScores, args, args.getOutput());
+			getPipeUtil().write(graphWithScores, args.getOutput());
 		}
 		}
 		catch(Exception e) {
@@ -287,7 +291,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		
 	}
 
-	public ZFrame<D, R, C> getGraphWithScores(ZFrame<D, R, C> graph, ZFrame<D, R, C> score) {
+	public ZFrame<D, R, C> getGraphWithScores(ZFrame<D, R, C> graph, ZFrame<D, R, C> score) throws ZinggClientException {
 		ZFrame<D,R,C>graphWithScores = getDSUtil().joinZColFirst(
 			score, graph, ColName.ID_COL, false).cache();
 		return graphWithScores;

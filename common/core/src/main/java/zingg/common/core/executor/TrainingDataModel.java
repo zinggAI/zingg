@@ -79,7 +79,7 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 			LOG.warn("No labelled records");
 			return;
 		}
-		getPipeUtil().write(records, args,p);
+		getPipeUtil().write(records, p);
 	}
 	
 	public Pipe getOutputPipe(Arguments args) {

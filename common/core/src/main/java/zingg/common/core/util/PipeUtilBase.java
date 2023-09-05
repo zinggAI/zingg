@@ -29,7 +29,7 @@ public interface PipeUtilBase<S, D, R, C> {
 	public  ZFrame<D,R,C> read(boolean addExtraCol, boolean addLineNo, int numPartitions,
 			boolean addSource, Pipe<D,R,C>... pipes) throws ZinggClientException;
 
-	public void write(ZFrame<D, R, C> toWriteOrig, Arguments args, Pipe<D, R, C>... pipes)
+	public void write(ZFrame<D, R, C> toWriteOrig, Pipe<D, R, C>... pipes)
 		throws ZinggClientException;
 
 	
