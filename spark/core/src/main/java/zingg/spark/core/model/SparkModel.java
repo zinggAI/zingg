@@ -44,19 +44,19 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 	LogisticRegression lr;
 	Transformer transformer;
 	BinaryClassificationEvaluator binaryClassificationEvaluator;
-	List<String> columnsAdded;
+	
 	VectorValueExtractor vve;
 	
 	public SparkModel(Map<FieldDefinition, Feature<DataType>> f) {
 		featureCreators = new ArrayList<SparkTransformer>();
 		pipelineStage = new ArrayList<PipelineStage> ();
-		columnsAdded = new ArrayList<String> ();
 		int count = 0;
 		for (FieldDefinition fd : f.keySet()) {
 			Feature fea = f.get(fd);
 			List<SimFunction> sfList = fea.getSimFunctions();
 			for (SimFunction sf : sfList) {
-				String outputCol = ColName.SIM_COL + count;
+				
+				String outputCol = getColumnName(fd.fieldName, sf.getName(), count);
 				columnsAdded.add(outputCol);	
 				SparkTransformer st = new SparkTransformer(fd.fieldName, new SparkSimFunction(sf), outputCol);
 				count++;
@@ -97,7 +97,7 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 		fitCore(pos, neg);
 	}
 	
-	public void fitCore(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
+	public ZFrame<Dataset<Row>,Row,Column> fitCore(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
 		//transform
 		ZFrame<Dataset<Row>,Row,Column> input = transform(pos.union(neg)).coalesce(1).cache();
 		//if (LOG.isDebugEnabled()) input.write().csv("/tmp/input/" + System.currentTimeMillis());
@@ -122,6 +122,7 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 		CrossValidatorModel cvModel = cv.fit(input.df());
 		transformer = cvModel;
 		LOG.debug("threshold after fitting is " + lr.getThreshold());
+		return input;
 	}
 	
 	

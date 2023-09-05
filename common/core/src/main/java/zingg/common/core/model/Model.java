@@ -11,11 +11,13 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.ColName;
 
 public abstract class Model<S,T,D,R,C> implements Serializable {
 	
 	public static final Log LOG = LogFactory.getLog(Model.class);
 	private S session;
+	protected List<String> columnsAdded = new ArrayList<String>();
 	
 
 
@@ -32,7 +34,21 @@ public abstract class Model<S,T,D,R,C> implements Serializable {
 	public S getSession(){
 		return session;
 	}
+
+	protected String getColumnName(String fieldName, String fnName, int count) {
+		return ColName.SIM_COL + count;
+	}
 	
+
+	public List<String> getColumnsAdded() {
+		return columnsAdded;
+	}
+
+
+	public void setColumnsAdded(List<String> columnsAdded) {
+		this.columnsAdded = columnsAdded;
+	}
+
 	public static double[] getGrid(double begin, double end, double jump, boolean isMultiple) {
 		List<Double> alphaList = new ArrayList<Double>();
 		if (isMultiple) {
@@ -58,7 +74,7 @@ public abstract class Model<S,T,D,R,C> implements Serializable {
 	
 	public abstract void load(String path);
 
-	public abstract void fitCore(ZFrame<D,R,C> pos, ZFrame<D,R,C> neg);
+	public abstract ZFrame<D,R,C> fitCore(ZFrame<D,R,C> pos, ZFrame<D,R,C> neg);
 
 	public abstract ZFrame<D,R,C> predict(ZFrame<D,R,C> data) throws ZinggClientException;
 	
