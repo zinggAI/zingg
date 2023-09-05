@@ -28,7 +28,6 @@ import org.apache.commons.logging.LogFactory;
 public class Util implements Serializable {
 
 	public static final Log LOG = LogFactory.getLog(Util.class);
-	public static final Log DbLOG = LogFactory.getLog("WEB");
 
 	public static <T> T[] copy(T[] source) {
 		if (source == null)
