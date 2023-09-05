@@ -3,7 +3,7 @@
 		"name":"trainingPos", 
 		"format":"csv", 
 		"props": {
-			"location": "examples/febrl/training.csv",
+			"location": "examples/febrl/training.csv.gz",
 			"delimiter": ",",
 			"header":false,
 			"badRecordsPath":"/tmp/bad"					
@@ -85,7 +85,7 @@
 			"name":"test", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/febrl/test.csv",
+				"location": "examples/febrl/test.csv.gz",
 				"delimiter": ",",
 				"header":false					
 			},
