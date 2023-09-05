@@ -17,7 +17,8 @@ public abstract class Model<S,T,D,R,C> implements Serializable {
 	
 	public static final Log LOG = LogFactory.getLog(Model.class);
 	private S session;
-	protected List<String> columnsAdded = new ArrayList<String>();
+	protected 
+	List<String> columnsAdded = new ArrayList<String>();
 	
 
 
@@ -87,6 +88,13 @@ public abstract class Model<S,T,D,R,C> implements Serializable {
 	
 	public abstract ZFrame<D,R,C> transform(ZFrame<D,R,C> input);
 
-	public abstract ZFrame<D, R,C> dropFeatureCols(ZFrame<D, R,C> f, boolean isDrop);
+	public ZFrame<D, R, C> dropFeatureCols(ZFrame<D, R, C> predictWithFeatures, boolean isDrop){
+		if (isDrop) {
+			ZFrame<D, R, C> returnDS = predictWithFeatures.drop(columnsAdded.toArray(new String[columnsAdded.size()]));
+			//LOG.debug("Return schema after dropping additional columns is " + returnDS.schema());
+			return returnDS; //new SparkFrame(returnDS);
+		}
+		return predictWithFeatures;
+	}
 	
 }

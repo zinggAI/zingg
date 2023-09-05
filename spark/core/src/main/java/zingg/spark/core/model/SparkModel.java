@@ -140,15 +140,7 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 	}
 
 
-	@Override 
-	public ZFrame<Dataset<Row>,Row,Column> dropFeatureCols(ZFrame<Dataset<Row>,Row,Column> predictWithFeatures, boolean isDrop){
-		if (isDrop) {
-			ZFrame<Dataset<Row>,Row,Column> returnDS = predictWithFeatures.drop(columnsAdded.toArray(new String[columnsAdded.size()]));
-			//LOG.debug("Return schema after dropping additional columns is " + returnDS.schema());
-			return returnDS; //new SparkFrame(returnDS);
-		}
-		return predictWithFeatures;
-	}
+	
 	
 	@Override
 	public ZFrame<Dataset<Row>,Row,Column> predictCore(ZFrame<Dataset<Row>,Row,Column> data) {
