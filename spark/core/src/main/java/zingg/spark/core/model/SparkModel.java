@@ -97,7 +97,7 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 		fitCore(pos, neg);
 	}
 	
-	public ZFrame<Dataset<Row>,Row,Column> fitCore(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
+	protected ZFrame<Dataset<Row>,Row,Column> fitCore(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
 		//transform
 		ZFrame<Dataset<Row>,Row,Column> input = transform(pos.union(neg)).coalesce(1).cache();
 		//if (LOG.isDebugEnabled()) input.write().csv("/tmp/input/" + System.currentTimeMillis());
@@ -143,7 +143,7 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 	
 	
 	@Override
-	public ZFrame<Dataset<Row>,Row,Column> predictCore(ZFrame<Dataset<Row>,Row,Column> data) {
+	protected ZFrame<Dataset<Row>,Row,Column> predictCore(ZFrame<Dataset<Row>,Row,Column> data) {
 		//create features
 		LOG.info("threshold while predicting is " + lr.getThreshold());
 		//lr.setThreshold(0.95);

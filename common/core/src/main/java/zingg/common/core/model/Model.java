@@ -16,25 +16,13 @@ import zingg.common.client.util.ColName;
 public abstract class Model<S,T,D,R,C> implements Serializable {
 	
 	public static final Log LOG = LogFactory.getLog(Model.class);
-	private S session;
-	protected 
-	List<String> columnsAdded = new ArrayList<String>();
+	protected List<String> columnsAdded = new ArrayList<String>();
 	
-
-
-	public Model() {
-	}
 	
 	
 	public abstract void register(S spark) ;
 
-	public void setSession(S s){
-		this.session = s;
-	}
-
-	public S getSession(){
-		return session;
-	}
+	
 
 	protected String getColumnName(String fieldName, String fnName, int count) {
 		return ColName.SIM_COL + count;
@@ -75,14 +63,14 @@ public abstract class Model<S,T,D,R,C> implements Serializable {
 	
 	public abstract void load(String path);
 
-	public abstract ZFrame<D,R,C> fitCore(ZFrame<D,R,C> pos, ZFrame<D,R,C> neg);
+	protected abstract ZFrame<D,R,C> fitCore(ZFrame<D,R,C> pos, ZFrame<D,R,C> neg);
 
 	public abstract ZFrame<D,R,C> predict(ZFrame<D,R,C> data) throws ZinggClientException;
 	
 	public abstract ZFrame<D,R,C> predict(ZFrame<D,R,C> data, boolean isDrop) throws ZinggClientException ;
 	
 	//this will do the prediction but not drop the columns
-	public abstract ZFrame<D,R,C> predictCore(ZFrame<D,R,C> data);
+	protected abstract ZFrame<D,R,C> predictCore(ZFrame<D,R,C> data);
 
 	public abstract void save(String path) throws IOException;
 	
