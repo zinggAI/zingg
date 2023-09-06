@@ -22,6 +22,7 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
@@ -47,7 +48,8 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 	
 	VectorValueExtractor vve;
 	
-	public SparkModel(Map<FieldDefinition, Feature<DataType>> f) {
+	public SparkModel(SparkSession s, Map<FieldDefinition, Feature<DataType>> f) {
+		super(s);
 		featureCreators = new ArrayList<SparkTransformer>();
 		pipelineStage = new ArrayList<PipelineStage> ();
 		int count = 0;
@@ -177,13 +179,13 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 
 
 	@Override
-	public void register(SparkSession spark) {
+	public void register() {
 		if (featureCreators != null) {
 			for (SparkTransformer bsf: featureCreators) {
-				bsf.register(spark);
+				bsf.register(session);
 			}
 		}
-		vve.register(spark);
+		vve.register(session);
 		
 	}
 	

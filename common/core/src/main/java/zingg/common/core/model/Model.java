@@ -17,10 +17,22 @@ public abstract class Model<S,T,D,R,C> implements Serializable {
 	
 	public static final Log LOG = LogFactory.getLog(Model.class);
 	protected List<String> columnsAdded = new ArrayList<String>();
+	protected S session;
+
+	public void setSession(S s){
+		this.session = s;
+	}
+
+	public S getSession(){
+		return session;
+	}
+
+	public Model(S s){
+		this.session = s;
+	}
 	
 	
-	
-	public abstract void register(S spark) ;
+	public abstract void register() ;
 
 	
 

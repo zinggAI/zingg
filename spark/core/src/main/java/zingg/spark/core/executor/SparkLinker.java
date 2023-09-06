@@ -38,7 +38,7 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
 	@Override
 	public Model getModel() throws ZinggClientException {
 		Model model = getModelUtil().loadModel(false, args);
-		model.register(getContext().getSession());
+		model.register();
 		return model;
 	}
 

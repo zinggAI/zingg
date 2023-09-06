@@ -23,16 +23,16 @@ public class SparkModelUtil extends ModelUtil<SparkSession,DataType,Dataset<Row>
     
 
     public SparkModelUtil(SparkSession s) {
-        this.session = s;
+        super(s);
     }
 
 	public Model<SparkSession,DataType,Dataset<Row>, Row, Column> getModel(boolean isLabel, Arguments args) throws ZinggClientException{
         Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = null;
         if (isLabel) {
-            model = new SparkLabelModel(getFeaturers(args));
+            model = new SparkLabelModel(session, getFeaturers(args));
         }
         else {
-            model = new SparkModel(getFeaturers(args));            
+            model = new SparkModel(session, getFeaturers(args));            
         }
         return model;
     }
