@@ -74,7 +74,7 @@
 			"name":"test1", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/febrl/test1.csv.gz",
+				"location": "examples/febrl/test1.csv",
 				"delimiter": ",",
 				"header":false					
 			},
@@ -84,7 +84,7 @@
 			"name":"test2", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/febrl/test2.csv.gz",
+				"location": "examples/febrl/test2.csv",
 				"delimiter": ",",
 				"header":false					
 			},
