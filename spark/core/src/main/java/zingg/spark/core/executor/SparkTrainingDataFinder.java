@@ -10,7 +10,7 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
-
+import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.TrainingDataFinder;
 import zingg.common.core.preprocess.StopWordsRemover;
 import org.apache.spark.sql.SparkSession;

@@ -17,6 +17,7 @@ import zingg.common.core.executor.Documenter;
 import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.documenter.SparkDataDocumenter;
 import zingg.spark.core.documenter.SparkModelDocumenter;
+import zingg.spark.core.context.ZinggSparkContext;
 
 
 public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row, Column,DataType> {

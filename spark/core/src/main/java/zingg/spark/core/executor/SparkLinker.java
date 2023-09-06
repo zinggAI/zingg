@@ -16,6 +16,7 @@ import zingg.common.core.model.Model;
 import zingg.common.core.preprocess.StopWordsRemover;
 import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.preprocess.SparkStopWordsRemover;
+import zingg.spark.core.context.ZinggSparkContext;
 
 
 public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,DataType> {

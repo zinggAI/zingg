@@ -14,6 +14,7 @@ import zingg.common.client.ZinggOptions;
 
 import zingg.common.client.pipe.Pipe;
 import zingg.common.core.executor.LabelUpdater;
+import zingg.spark.core.context.ZinggSparkContext;
 import org.apache.spark.sql.SparkSession;
 
 

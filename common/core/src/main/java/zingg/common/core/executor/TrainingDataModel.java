@@ -12,7 +12,7 @@ import zingg.common.client.ZinggOptions;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
-import zingg.common.core.Context;
+import zingg.common.core.context.Context;
 
 public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> implements ITrainingDataModel<S, D, R, C>{
 

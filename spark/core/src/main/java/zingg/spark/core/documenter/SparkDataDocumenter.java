@@ -7,7 +7,7 @@ import org.apache.spark.sql.types.DataType;
 
 import freemarker.template.Version;
 import zingg.common.client.Arguments;
-import zingg.common.core.Context;
+import zingg.common.core.context.Context;
 import zingg.common.core.documenter.DataDocumenter;
 import zingg.common.core.documenter.RowWrapper;
 import org.apache.spark.sql.SparkSession;

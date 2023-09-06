@@ -12,7 +12,7 @@ import zingg.common.client.Arguments;
 import zingg.common.client.FieldData;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.core.Context;
+import zingg.common.core.context.Context;
 
 public abstract class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 	protected static String name = "zingg.DataDocumenter";

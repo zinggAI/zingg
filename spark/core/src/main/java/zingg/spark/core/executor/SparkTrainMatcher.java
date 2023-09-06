@@ -12,6 +12,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 
 import zingg.common.core.executor.TrainMatcher;
+import zingg.spark.core.context.ZinggSparkContext;
 import org.apache.spark.sql.SparkSession;
  
 public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, Row, Column,DataType> {

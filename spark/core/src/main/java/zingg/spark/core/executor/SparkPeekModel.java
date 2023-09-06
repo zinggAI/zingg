@@ -10,6 +10,7 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ClientOptions;
@@ -17,7 +18,8 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 
 import zingg.common.core.executor.ZinggBase;
-import org.apache.spark.sql.SparkSession;
+import zingg.spark.core.context.ZinggSparkContext;
+
 
 public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, Column, DataType>{
 

@@ -7,13 +7,15 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 
 import zingg.common.core.executor.FindAndLabeller;
-import org.apache.spark.sql.SparkSession;
+import zingg.spark.core.context.ZinggSparkContext;
+
 
 public class SparkFindAndLabeller extends FindAndLabeller<SparkSession, Dataset<Row>, Row, Column,DataType> {
 

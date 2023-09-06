@@ -10,7 +10,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
-import zingg.common.core.Context;
+import zingg.common.core.context.Context;
 
 public abstract class StopWordsRecommender<S,D,R,C,T> {
 	private static final String REGEX_WHITESPACE = "\\s+";

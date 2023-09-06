@@ -8,7 +8,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Arguments;
-import zingg.common.core.Context;
+import zingg.common.core.context.Context;
 import zingg.common.core.recommender.StopWordsRecommender;
 import org.apache.spark.sql.SparkSession;
 

@@ -13,7 +13,7 @@ import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
-import zingg.common.core.Context;
+import zingg.common.core.context.Context;
 import zingg.common.core.util.PipeUtilBase;
 
 public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{

@@ -14,6 +14,7 @@ import zingg.common.client.ZinggOptions;
 import zingg.common.core.executor.Recommender;
 import zingg.common.core.recommender.StopWordsRecommender;
 import org.apache.spark.sql.SparkSession;
+import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.recommender.SparkStopWordsRecommender;
 
 

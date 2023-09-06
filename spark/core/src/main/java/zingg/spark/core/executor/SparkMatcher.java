@@ -11,7 +11,7 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
-
+import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.Matcher;
 import zingg.common.core.model.Model;
 import zingg.common.core.preprocess.StopWordsRemover;

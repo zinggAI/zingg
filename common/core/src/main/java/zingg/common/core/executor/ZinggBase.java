@@ -16,7 +16,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
-import zingg.common.core.Context;
+import zingg.common.core.context.Context;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.DSUtil;
