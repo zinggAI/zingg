@@ -231,7 +231,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return onlyIds;
 	}
 
-	public ZFrame<D,R,C> getGraph(ZFrame<D,R,C>  blocked,  ZFrame<D,R,C>  dupesActual){
+	public ZFrame<D,R,C> getGraph(ZFrame<D,R,C>  blocked,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException{
 		return getGraphUtil().buildGraph(blocked, dupesActual).cache();
 	}
 	
