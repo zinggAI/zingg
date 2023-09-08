@@ -5,7 +5,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 
 public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S, D, R, C, T> {
 	private static final long serialVersionUID = 1L;
@@ -16,7 +16,7 @@ public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S, D, R, 
 	protected Labeller<S, D, R, C, T> labeller;
 
 	public FindAndLabeller() {
-		setZinggOptions(ZinggOptions.FIND_AND_LABEL);
+		setZinggOption(ZinggOptions.FIND_AND_LABEL);
 	}
 
 	@Override

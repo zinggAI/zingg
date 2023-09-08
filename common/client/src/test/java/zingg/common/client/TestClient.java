@@ -6,6 +6,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
+import zingg.common.client.options.ZinggOptions;
+
 public class TestClient {
 	public static final Log LOG = LogFactory.getLog(TestClient.class);
 

@@ -9,7 +9,7 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 
 import zingg.common.core.executor.Recommender;
 import zingg.common.core.recommender.StopWordsRecommender;
@@ -29,7 +29,7 @@ public class SparkRecommender extends Recommender<SparkSession, Dataset<Row>, Ro
 	public static final Log LOG = LogFactory.getLog(SparkRecommender.class);
 
 	public SparkRecommender() {
-		setZinggOptions(ZinggOptions.RECOMMEND);
+		setZinggOption(ZinggOptions.RECOMMEND);
 		setContext(new ZinggSparkContext());
 	}
 

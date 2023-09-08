@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.block.Canopy;
@@ -25,7 +25,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	public static final Log LOG = LogFactory.getLog(Matcher.class);    
 
     public Matcher() {
-        setZinggOptions(ZinggOptions.MATCH);
+        setZinggOption(ZinggOptions.MATCH);
     }
 
 	public ZFrame<D,R,C>  getTestData() throws ZinggClientException{

@@ -5,7 +5,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 
@@ -17,7 +17,7 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	public static final Log LOG = LogFactory.getLog(Linker.class);
 
 	public Linker() {
-		setZinggOptions(ZinggOptions.LINK);
+		setZinggOption(ZinggOptions.LINK);
 	}
 
 	public ZFrame<D,R,C> getBlocks(ZFrame<D,R,C> blocked, ZFrame<D,R,C> bAll) throws Exception{

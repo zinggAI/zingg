@@ -9,7 +9,7 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 
 import zingg.common.core.executor.Linker;
 import zingg.common.core.model.Model;
@@ -26,7 +26,7 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
 	public static final Log LOG = LogFactory.getLog(SparkLinker.class);
 
 	public SparkLinker() {
-		setZinggOptions(ZinggOptions.LINK);
+		setZinggOption(ZinggOptions.LINK);
 		setContext(new ZinggSparkContext());
 	}
 

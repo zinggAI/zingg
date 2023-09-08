@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
 import zingg.common.core.util.LabelMatchType;
@@ -19,7 +19,7 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	public static final Log LOG = LogFactory.getLog(LabelUpdater.class);
 
 	public LabelUpdater() {
-		setZinggOptions(ZinggOptions.UPDATE_LABEL);
+		setZinggOption(ZinggOptions.UPDATE_LABEL);
 	}
 
 	public void execute() throws ZinggClientException {

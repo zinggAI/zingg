@@ -9,7 +9,7 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 
 import zingg.common.core.executor.TrainMatcher;
 import zingg.spark.core.context.ZinggSparkContext;
@@ -22,7 +22,7 @@ public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, 
 	public static final Log LOG = LogFactory.getLog(SparkTrainMatcher.class);
 
 	public SparkTrainMatcher() {
-		setZinggOptions(ZinggOptions.TRAIN_MATCH);
+		setZinggOption(ZinggOptions.TRAIN_MATCH);
 		ZinggSparkContext sparkContext = new ZinggSparkContext();
 		setContext(sparkContext);
 		trainer = new SparkTrainer(sparkContext);

@@ -15,7 +15,7 @@ import org.apache.spark.sql.SparkSession;
 import zingg.common.client.Arguments;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 
 import zingg.common.core.executor.ZinggBase;
 import zingg.spark.core.context.ZinggSparkContext;
@@ -28,7 +28,7 @@ public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, C
 	public static final Log LOG = LogFactory.getLog(SparkPeekModel.class); 
 	
 	public SparkPeekModel() {
-		setZinggOptions(ZinggOptions.PEEK_MODEL);
+		setZinggOption(ZinggOptions.PEEK_MODEL);
 		setContext(new ZinggSparkContext());
 		
 	}

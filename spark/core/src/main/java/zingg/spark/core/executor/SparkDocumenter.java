@@ -9,7 +9,7 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 
 import zingg.common.core.documenter.DataDocumenter;
 import zingg.common.core.documenter.ModelDocumenter;
@@ -27,7 +27,7 @@ public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row,
 	public static final Log LOG = LogFactory.getLog(SparkDocumenter.class);
 
 	public SparkDocumenter() {
-		setZinggOptions(ZinggOptions.GENERATE_DOCS);
+		setZinggOption(ZinggOptions.GENERATE_DOCS);
 		setContext(new ZinggSparkContext());
 	}
 

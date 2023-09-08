@@ -9,7 +9,7 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.TrainingDataFinder;
 import zingg.common.core.preprocess.StopWordsRemover;
@@ -27,7 +27,7 @@ public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Da
 	}
 
 	public SparkTrainingDataFinder(ZinggSparkContext sparkContext) {
-		setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
+		setZinggOption(ZinggOptions.FIND_TRAINING_DATA);
 		setContext(sparkContext);
 	}
 	

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.Email;
 import zingg.common.client.util.EmailBody;
 
@@ -91,6 +92,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			setZingg(zf.get(ZinggOptions.getByValue(ZinggOptions.PEEK_MODEL.getName())));
 		}
 	}
+	
 
 	public void setZingg(IZingg<S,D,R,C> zingg) {
 		this.zingg = zingg; 

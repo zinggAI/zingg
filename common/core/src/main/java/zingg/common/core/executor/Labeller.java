@@ -10,7 +10,7 @@ import zingg.common.client.ILabelDataViewHelper;
 import zingg.common.client.ITrainingDataModel;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 
 public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
@@ -24,7 +24,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 	protected ILabelDataViewHelper<S, D, R, C> labelDataViewHelper;
 	
 	public Labeller() {
-		setZinggOptions(ZinggOptions.LABEL);
+		setZinggOption(ZinggOptions.LABEL);
 	}
 
 	public void execute() throws ZinggClientException {

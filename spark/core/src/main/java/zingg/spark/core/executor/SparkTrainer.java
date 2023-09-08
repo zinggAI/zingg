@@ -11,7 +11,7 @@ import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.Trainer;
 import zingg.common.core.preprocess.StopWordsRemover;
@@ -30,7 +30,7 @@ public class SparkTrainer extends Trainer<SparkSession, Dataset<Row>, Row, Colum
 	}
 
 	public SparkTrainer(ZinggSparkContext sparkContext) {
-		setZinggOptions(ZinggOptions.TRAIN);
+		setZinggOption(ZinggOptions.TRAIN);
 		setContext(sparkContext);
 	}
 	

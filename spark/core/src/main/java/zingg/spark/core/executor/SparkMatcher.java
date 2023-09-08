@@ -10,7 +10,7 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.Matcher;
 import zingg.common.core.model.Model;
@@ -35,7 +35,7 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
     }
 
     public SparkMatcher(ZinggSparkContext sparkContext) {
-        setZinggOptions(ZinggOptions.MATCH);
+        setZinggOption(ZinggOptions.MATCH);
 		setContext(sparkContext);
     }
 

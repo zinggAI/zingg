@@ -10,7 +10,7 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 
 import zingg.common.client.pipe.Pipe;
 import zingg.common.core.executor.LabelUpdater;
@@ -30,7 +30,7 @@ public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, 
 	public static final Log LOG = LogFactory.getLog(SparkLabelUpdater.class);
 
 	public SparkLabelUpdater() {
-		setZinggOptions(ZinggOptions.UPDATE_LABEL);
+		setZinggOption(ZinggOptions.UPDATE_LABEL);
 		setContext(new ZinggSparkContext());
 	}
 

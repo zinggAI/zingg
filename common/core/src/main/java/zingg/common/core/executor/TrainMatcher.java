@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 
 public abstract class TrainMatcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
@@ -16,7 +16,7 @@ public abstract class TrainMatcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected Matcher<S,D,R,C,T> matcher;
 	
     public TrainMatcher() {
-        setZinggOptions(ZinggOptions.TRAIN_MATCH);		
+        setZinggOption(ZinggOptions.TRAIN_MATCH);		
     }
 
 	@Override

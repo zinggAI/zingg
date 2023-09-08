@@ -10,7 +10,7 @@ import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.Labeller;
@@ -32,7 +32,7 @@ public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Col
 	}
 
 	public SparkLabeller(ZinggSparkContext sparkContext) {
-		setZinggOptions(ZinggOptions.LABEL);
+		setZinggOption(ZinggOptions.LABEL);
 		setContext(sparkContext);
 	}
 

@@ -5,7 +5,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
@@ -20,7 +20,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 	public static final Log LOG = LogFactory.getLog(TrainingDataFinder.class);    
 
     public TrainingDataFinder() {
-        setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
+        setZinggOption(ZinggOptions.FIND_TRAINING_DATA);
     }
 
 	public ZFrame<D,R,C> getTraining() throws ZinggClientException {

@@ -11,7 +11,7 @@ import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 
 import zingg.common.core.executor.FindAndLabeller;
 import zingg.spark.core.context.ZinggSparkContext;
@@ -24,7 +24,7 @@ public class SparkFindAndLabeller extends FindAndLabeller<SparkSession, Dataset<
 	public static final Log LOG = LogFactory.getLog(SparkFindAndLabeller.class);
 
 	public SparkFindAndLabeller() {
-		setZinggOptions(ZinggOptions.FIND_AND_LABEL);	
+		setZinggOption(ZinggOptions.FIND_AND_LABEL);	
 		ZinggSparkContext sparkContext = new ZinggSparkContext();
 		setContext(sparkContext);
 		finder = new SparkTrainingDataFinder(sparkContext);
