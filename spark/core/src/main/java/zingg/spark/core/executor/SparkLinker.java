@@ -33,7 +33,7 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
     @Override
     public void init(Arguments args)  throws ZinggClientException {
         super.init(args);
-        //getContext().init(license);
+        getContext().init();
     }
 	
 	@Override

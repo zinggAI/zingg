@@ -38,7 +38,7 @@ public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, 
     @Override
     public void init(Arguments args)  throws ZinggClientException {
         super.init(args);
-        //getContext().init(license);
+        getContext().init();
     }
     	
 	protected Pipe setSaveModeOnPipe(Pipe p) {

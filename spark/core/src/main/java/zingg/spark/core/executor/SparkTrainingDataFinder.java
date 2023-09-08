@@ -27,14 +27,14 @@ public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Da
 	}
 
 	public SparkTrainingDataFinder(ZinggSparkContext sparkContext) {
-		setZinggOption(ZinggOptions.FIND_TRAINING_DATA);
+		super();
 		setContext(sparkContext);
 	}
 	
 	@Override
 	public void init(Arguments args)  throws ZinggClientException {
 		super.init(args);
-		//getContext().init(license);
+		getContext().init();
 	}
 	
 	@Override

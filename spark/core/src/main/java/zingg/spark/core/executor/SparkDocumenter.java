@@ -34,7 +34,7 @@ public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row,
 	@Override
 	public void init(Arguments args)  throws ZinggClientException {
 		super.init(args);
-		//getContext().init(license);
+		getContext().init();
 	}
 	
 	@Override

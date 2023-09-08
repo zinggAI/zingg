@@ -22,7 +22,7 @@ public class ZinggOptions {
     public final static ZinggOption PEEK_MODEL = new ZinggOption("peekModel");
     public final static ZinggOption EXPORT_MODEL = new ZinggOption("exportModel");
 
-    public static final Map<String, ZinggOption> allZinggOptions = new HashMap<String, ZinggOption>();
+    public static Map<String, ZinggOption> allZinggOptions;// = new HashMap<String, ZinggOption>();
 
     
 
@@ -30,6 +30,9 @@ public class ZinggOptions {
     }
 
     public static final void put(ZinggOption o) {
+        if (allZinggOptions == null) {
+            allZinggOptions = new HashMap<String, ZinggOption>();
+        }
         allZinggOptions.put(o.getName(), o);
     }
     

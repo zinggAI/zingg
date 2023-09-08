@@ -37,7 +37,7 @@ public class SparkTrainer extends Trainer<SparkSession, Dataset<Row>, Row, Colum
     @Override
     public void init(Arguments args)  throws ZinggClientException {
         super.init(args);
-        //getContext().init(license);
+        getContext().init();
     }	
 	
 	@Override

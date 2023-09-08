@@ -32,7 +32,7 @@ public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, 
     @Override
     public void init(Arguments args)  throws ZinggClientException {
         super.init(args);
-        //getContext().init(license);
+        getContext().init();
     }
         	
 }

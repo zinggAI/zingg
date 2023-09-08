@@ -40,7 +40,7 @@ public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, C
 		getContext().setUtils();
 		//we wil not init here as we wnt py to drive
 		//the spark session etc
-		//getContext().init(license);
+		getContext().init();
     }
 
 	@Override
