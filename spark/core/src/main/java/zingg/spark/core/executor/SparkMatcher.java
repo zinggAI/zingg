@@ -42,7 +42,7 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
     @Override
     public void init(Arguments args)  throws ZinggClientException {
         super.init(args);
-       // getContext().init(license);
+        getContext().init();
     }
 	
 
