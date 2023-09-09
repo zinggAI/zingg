@@ -26,7 +26,7 @@ public class ZinggOptions {
 
     
 
-    private ZinggOptions() {
+    protected ZinggOptions() {
     }
 
     public static final void put(ZinggOption o) {
