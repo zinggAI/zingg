@@ -1,6 +1,5 @@
 import unittest
 from unittest.case import TestCase
-import unittest
 from io import StringIO
 
 
@@ -23,7 +22,8 @@ fieldDefs = [fname, lname, stNo, add1, add2, city, areacode, state, dob, ssn]
 
 args.setFieldDefinition(fieldDefs)
 args.setModelId("100")
-args.setZinggDir("/tmp/models")
+# args.setZinggDir("/tmp/models")
+args.setZinggDir("test/testFebrl")
 args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
 
@@ -45,11 +45,11 @@ class Accuracy_recordCount(TestCase):
 		total_marked = pMarkedDF.shape[0]
 
 		# marked record count test
-		self.assertEqual(total_marked, 84)
+		self.assertEqual(total_marked, 76)
 
 		pMarkedDF.drop(pMarkedDF[pMarkedDF[ColName.PREDICTION_COL] == -1].index, inplace=True)
 		acc = (pMarkedDF[ColName.MATCH_FLAG_COL]== pMarkedDF[ColName.PREDICTION_COL]).mean()
 
 		# accuracy test
-		self.assertGreater(acc, 0.79)
+		self.assertGreater(acc, 0.95)
 
