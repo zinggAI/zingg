@@ -67,7 +67,7 @@
 			"name":"itunes", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/iTunes-amazon/iTunesMusic.csv",
+				"location": "examples/iTunes-amazon/iTunesMusic.csv.gz",
 				"delimiter": ",",
 				"header":true					
 			},
@@ -77,7 +77,7 @@
 			"name":"amazon", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/iTunes-amazon/AmazonMusic.csv",
+				"location": "examples/iTunes-amazon/AmazonMusic.csv.gz",
 				"delimiter": ",",
 				"header":true					
 			},

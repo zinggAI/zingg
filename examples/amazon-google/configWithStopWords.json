@@ -17,7 +17,7 @@
 			"matchType" : "text",
 			"fields" : "description",
 			"dataType": "string" ,
-			"stopWords" : "examples/amazon-google/stopWords.csv"
+			"stopWords" : "examples/amazon-google/stopWords.csv.gz"
 		},
 		{
 			"fieldName" : "manufacturer",
@@ -44,7 +44,7 @@
 			"name":"aws", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/amazon-google/Amazon.csv",
+				"location": "examples/amazon-google/Amazon.csv.gz",
 				"delimiter": ",",
 				"header":true					
 			},
@@ -54,7 +54,7 @@
 			"name":"google", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/amazon-google/GoogleProducts.csv",
+				"location": "examples/amazon-google/GoogleProducts.csv.gz",
 				"delimiter": ",",
 				"header":true					
 			},

@@ -28,8 +28,8 @@ args.setLabelDataSampleSize(0.4)
 #below line should not be required if you are reading from in memory dataset
 #in that case, replace df with input df
 schema = "id string, Song_Name string, Artist_Name string, Album_Name string, Genre string, Price double, CopyRight string, Time string, Released string"
-inputPipeiTunes = CsvPipe("testiTunes", "examples/iTunes-amazon/iTunesMusic.csv", schema)
-inputPipeAmazon = CsvPipe("testAmazon", "examples/iTunes-amazon/AmazonMusic.csv", schema)
+inputPipeiTunes = CsvPipe("testiTunes", "examples/iTunes-amazon/iTunesMusic.csv.gz", schema)
+inputPipeAmazon = CsvPipe("testAmazon", "examples/iTunes-amazon/AmazonMusic.csv.gz", schema)
 
 args.setData(inputPipeiTunes,inputPipeAmazon)
 
