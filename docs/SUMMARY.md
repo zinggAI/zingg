@@ -38,7 +38,7 @@
   * [Linking across datasets](setup/link.md)
 * [Data Sources and Sinks](dataSourcesAndSinks/connectors.md)
   * [Zingg Pipes](dataSourcesAndSinks/pipes.md)
-  * [Databricks](connectors/databricks.md)
+  * [Databricks](dataSourcesAndSinks/databricks.md)
   * [Snowflake](dataSourcesAndSinks/snowflake.md)
   * [JDBC](dataSourcesAndSinks/jdbc.md)
     * [Postgres](connectors/jdbc/postgres.md)
