@@ -43,7 +43,7 @@
   * [JDBC](dataSourcesAndSinks/jdbc.md)
     * [Postgres](connectors/jdbc/postgres.md)
     * [MySQL](connectors/jdbc/mysql.md)
-  * [AWS S3](connectors/amazons3.md)
+  * [AWS S3](dataSourcesAndSinks/amazons3.md)
   * [Cassandra](dataSourcesAndSinks/cassandra.md)
   * [MongoDB](dataSourcesAndSinks/mongodb.md)
   * [Neo4j](dataSourcesAndSinks/neo4j.md)
