@@ -1,9 +1,9 @@
 import unittest
 import sys
 
-from zingg import *
-from zingg.client import *
-from zingg.pipes import *
+#from zingg import *
+#from zingg.client import *
+#from zingg.pipes import *
 
 import subprocess
 from py4j.java_gateway import JavaGateway
@@ -11,12 +11,15 @@ from py4j.protocol import Py4JNetworkError
 from time import sleep
 
 # PY4J_JAVA_PATH = '~/.local/share/py4j/py4j0.10.9.7.jar'
-PY4J_JAVA_PATH = '.'
-
+#PY4J_JAVA_PATH = '.:./py4j/py4j0.10.9.7.jar:./py4j'
+PY4J_JAVA_PATH='.:/Library/Frameworks/Python.framework/Versions/3.10/share/py4j/py4j0.10.9.jar:$ZINGG_HOME/common/client/target/zingg-common-client-0.4.0-SNAPSHOT.jar'
 def start_example_server():
     subprocess.call([
+        "javac", "-cp", PY4J_JAVA_PATH,
+        "TestPy4JGateway.java"])
+    subprocess.call([
         "java", "-Xmx512m", "-cp", PY4J_JAVA_PATH,
-        "ExampleApplication"])
+        "TestPy4JGateway"])
 
 def check_connection(gateway):
     try:
