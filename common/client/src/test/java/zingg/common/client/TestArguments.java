@@ -22,7 +22,7 @@ public class TestArguments {
 	private static final String KEY_MODEL_ID = "modelId";
 
 	public static final Log LOG = LogFactory.getLog(TestArguments.class);
-
+	protected ArgumentsUtil argsUtil = new ArgumentsUtil();
 	@Test
 	public void testSubstituteVariablesWithAllEnvVarSet() {
 		try {
@@ -34,8 +34,8 @@ public class TestArguments {
 			byte[] encoded = Files
 					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = Arguments.substituteVariables(template, env);
-			Arguments args = Arguments.createArgumentsFromJSONString(json, "");
+			String json = argsUtil.substituteVariables(template, env);
+			Arguments args = argsUtil.createArgumentsFromJSONString(json, "");
 
 			assertEquals(args.getData()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
 			assertEquals(args.getData()[0].getFormat(), env.get(KEY_FORMAT));
@@ -56,8 +56,8 @@ public class TestArguments {
 					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = Arguments.substituteVariables(template, env);
-			Arguments args = Arguments.createArgumentsFromJSONString(json, "");
+			String json = argsUtil.substituteVariables(template, env);
+			Arguments args = argsUtil.createArgumentsFromJSONString(json, "");
 			fail("Exception was expected due to missing environment variable");
  		} catch (IOException | ZinggClientException e) {
 			LOG.warn("Expected exception received due to missing environment variable");
@@ -76,8 +76,8 @@ public class TestArguments {
 					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = Arguments.substituteVariables(template, env);
-			Arguments args = Arguments.createArgumentsFromJSONString(json, "");
+			String json = argsUtil.substituteVariables(template, env);
+			Arguments args = argsUtil.createArgumentsFromJSONString(json, "");
 
 			fail("Exception was expected for blank value for an environment variable");
  		} catch (IOException | ZinggClientException e) {
@@ -98,8 +98,8 @@ public class TestArguments {
 					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = Arguments.substituteVariables(template, env);
-			Arguments.createArgumentsFromJSONString(json, "");
+			String json = argsUtil.substituteVariables(template, env);
+			argsUtil.createArgumentsFromJSONString(json, "");
  
 			fail("Exception was expected for invalid value for a Boolean variable");
  		} catch (IOException | ZinggClientException e) {
@@ -119,8 +119,8 @@ public class TestArguments {
 					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = Arguments.substituteVariables(template, env);
-			Arguments args = Arguments.createArgumentsFromJSONString(json, "");
+			String json = argsUtil.substituteVariables(template, env);
+			Arguments args = argsUtil.createArgumentsFromJSONString(json, "");
  
 			assertEquals(args.getOutput()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
 		} catch (IOException | ZinggClientException e) {
@@ -141,8 +141,8 @@ public class TestArguments {
 					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = Arguments.substituteVariables(template, env);
-			Arguments.createArgumentsFromJSONString(json, "");
+			String json = argsUtil.substituteVariables(template, env);
+			argsUtil.createArgumentsFromJSONString(json, "");
 
 			fail("Exception was expected for invalid value for a Numeric variable");
 		} catch (IOException | ZinggClientException e) {
@@ -163,8 +163,8 @@ public class TestArguments {
 					Paths.get(getClass().getResource("../../../testArguments/testNumericWithinQuotesTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = Arguments.substituteVariables(template, env);
-			Arguments args = Arguments.createArgumentsFromJSONString(json, "");
+			String json = argsUtil.substituteVariables(template, env);
+			Arguments args = argsUtil.createArgumentsFromJSONString(json, "");
 
 			//Numeric within quotes are allowed
 			assertEquals(args.getModelId(), env.get(KEY_MODEL_ID));
@@ -186,8 +186,8 @@ public class TestArguments {
 					Paths.get(getClass().getResource("../../../testArguments/testMalformedConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = Arguments.substituteVariables(template, env);
-			Arguments args = Arguments.createArgumentsFromJSONString(json, "");
+			String json = argsUtil.substituteVariables(template, env);
+			Arguments args = argsUtil.createArgumentsFromJSONString(json, "");
 
 			fail("Exception was expected for malformed variable in json");
 		} catch (IOException | ZinggClientException e) {
@@ -199,7 +199,7 @@ public class TestArguments {
 	public void testInvalidFilePath() {
 		String filePath = "../dummyFilename";
 		try {
-			Arguments.createArgumentsFromJSONTemplate(filePath, "");
+			argsUtil.createArgumentsFromJSONTemplate(filePath, "");
 			fail("Exception was expected for invalid filepath or name");
 		} catch (ZinggClientException e) {
 			LOG.warn("Expected exception received: NoSuchFileException");
@@ -210,7 +210,7 @@ public class TestArguments {
 	public void testMatchTypeMultiple() {
 			Arguments args;
             try {
-                args = Arguments.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile(), "test");
+                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile(), "test");
 				List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
 				assertEquals(2, fNameMatchType.size());
 				assertEquals(MatchType.FUZZY, fNameMatchType.get(0));
@@ -229,7 +229,7 @@ public class TestArguments {
 	public void testMatchTypeWrong() {
 			Arguments args;
             try {
-                args = Arguments.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
+                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
 				//List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
 				fail("config had error, should have flagged");
 				

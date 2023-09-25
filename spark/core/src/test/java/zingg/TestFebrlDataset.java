@@ -31,7 +31,7 @@ public class TestFebrlDataset extends ZinggSparkTester{
     public void setUp() throws Exception, ZinggClientException{
 		String configFilePath = getClass().getResource("../testFebrl/config.json").getFile();
 		System.out.println("configFilePath "+configFilePath);
-		args = Arguments.createArgumentsFromJSON(configFilePath);
+		args = argsUtil.createArgumentsFromJSON(configFilePath);
 		String modelPath = getClass().getResource("../testFebrl/models").getPath();
 		System.out.println("modelPath "+modelPath);
 		args.setZinggDir(modelPath);

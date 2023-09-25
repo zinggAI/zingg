@@ -32,7 +32,7 @@ public class TestModelDocumenter extends ZinggSparkTester {
 
 		try {
 			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
-			docArguments = Arguments.createArgumentsFromJSON(configPath);
+			docArguments = argsUtil.createArgumentsFromJSON(configPath);
 			String zinggDirPath = getClass().getResource("../../../../"+docArguments.getZinggDir()).getFile();
 			docArguments.setZinggDir(zinggDirPath);
 		} catch (Throwable e) {
