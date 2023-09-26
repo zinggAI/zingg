@@ -52,7 +52,7 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 		return reader;
 	}
 
-	private  ZFrame<D,R,C> read(DFReader<D,R,C> reader, Pipe<D,R,C> p, boolean addSource) throws ZinggClientException{
+	protected  ZFrame<D,R,C> read(DFReader<D,R,C> reader, Pipe<D,R,C> p, boolean addSource) throws ZinggClientException{
 		ZFrame<D,R,C> input = null;
 		LOG.warn("Reading " + p);
 		try {
