@@ -277,13 +277,17 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			}
 			graphWithScores =  getDSUtil().select(graphWithScores, columns);
 			*/
-			getPipeUtil().write(graphWithScores, args, args.getOutput());
+			writeClusters(graphWithScores);
 		}
 		}
 		catch(Exception e) {
 			e.printStackTrace(); 
 		}
 		
+	}
+
+	protected void writeClusters(ZFrame<D, R, C> graphWithScores) throws ZinggClientException {
+		getPipeUtil().write(graphWithScores, args, args.getOutput());
 	}
 
 	protected ZFrame<D, R, C> getGraphWithScores(ZFrame<D, R, C> graph, ZFrame<D, R, C> score) {
