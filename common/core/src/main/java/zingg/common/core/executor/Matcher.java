@@ -238,46 +238,8 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			
 		//all clusters consolidated in one place
 		if (args.getOutput() != null) {
-			//-1 is initial suggestion, 1 is add, 0 is deletion, 2 is unsure
-			/*blocked = blocked.drop(ColName.HASH_COL);
-			blocked = blocked.drop(ColName.SOURCE_COL);
-			blocked = blocked.cache();
-			*/
-			
-			dupesActual = dupesActual.cache();
-			System.out.println("dupes ------------");
-			if (LOG.isDebugEnabled()) {
-				dupesActual.show();
-			}
-			ZFrame<D,R,C>graph = getGraphUtil().buildGraph(blocked, dupesActual).cache();
-			//graph.toJavaRDD().saveAsTextFile("/tmp/zgraph");
-			System.out.println("graph ------------");
-			if (LOG.isDebugEnabled()) {
-				graph.show();
-			}
-			//write score
-			ZFrame<D,R,C>score = getMinMaxScores(dupesActual, graph).cache();
-			//score.toJavaRDD().coalesce(1).saveAsTextFile("/tmp/zallscoresAvg");
-			graph = graph.repartition(args.getNumPartitions(), graph.col(ColName.ID_COL)).cache();
-			if (LOG.isDebugEnabled()) {
-				score.show();
-			}
-			ZFrame<D, R, C> graphWithScores = getGraphWithScores(graph, score);
-				//graphWithScores.toJavaRDD().saveAsTextFile("/tmp/zgraphWScores");
-			graphWithScores = graphWithScores.drop(ColName.HASH_COL);
-			graphWithScores = graphWithScores.drop(ColName.COL_PREFIX + ColName.ID_COL);
-			graphWithScores = graphWithScores.drop(ColName.ID_COL);
-			graphWithScores = graphWithScores.drop(ColName.SOURCE_COL);
-			/*String[] cols = graphWithScores.columns();
-			List<Column> columns = new ArrayList<Column>();
-			//columns.add(graphWithScores.col(ColName.CLUSTER_COLUMN));
-			//go only upto the last col, which is cluster col
-			for (int i=0; i < cols.length - 1; ++i) {
-				columns.add(graphWithScores.col(cols[i]));
-			}
-			graphWithScores =  getDSUtil().select(graphWithScores, columns);
-			*/
-			writeClusters(graphWithScores);
+			ZFrame<D, R, C> graphWithScores = getOutput(blocked, dupesActual);
+			getPipeUtil().write(graphWithScores, args, args.getOutput());
 		}
 		}
 		catch(Exception e) {
@@ -286,8 +248,47 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		
 	}
 
-	protected void writeClusters(ZFrame<D, R, C> graphWithScores) throws ZinggClientException {
-		getPipeUtil().write(graphWithScores, args, args.getOutput());
+	protected ZFrame<D, R, C> getOutput(ZFrame<D, R, C> blocked, ZFrame<D, R, C> dupesActual) throws Exception {
+		//-1 is initial suggestion, 1 is add, 0 is deletion, 2 is unsure
+		/*blocked = blocked.drop(ColName.HASH_COL);
+		blocked = blocked.drop(ColName.SOURCE_COL);
+		blocked = blocked.cache();
+		*/
+		
+		dupesActual = dupesActual.cache();
+		System.out.println("dupes ------------");
+		if (LOG.isDebugEnabled()) {
+			dupesActual.show();
+		}
+		ZFrame<D,R,C>graph = getGraphUtil().buildGraph(blocked, dupesActual).cache();
+		//graph.toJavaRDD().saveAsTextFile("/tmp/zgraph");
+		System.out.println("graph ------------");
+		if (LOG.isDebugEnabled()) {
+			graph.show();
+		}
+		//write score
+		ZFrame<D,R,C>score = getMinMaxScores(dupesActual, graph).cache();
+		//score.toJavaRDD().coalesce(1).saveAsTextFile("/tmp/zallscoresAvg");
+		graph = graph.repartition(args.getNumPartitions(), graph.col(ColName.ID_COL)).cache();
+		if (LOG.isDebugEnabled()) {
+			score.show();
+		}
+		ZFrame<D, R, C> graphWithScores = getGraphWithScores(graph, score);
+			//graphWithScores.toJavaRDD().saveAsTextFile("/tmp/zgraphWScores");
+		graphWithScores = graphWithScores.drop(ColName.HASH_COL);
+		graphWithScores = graphWithScores.drop(ColName.COL_PREFIX + ColName.ID_COL);
+		graphWithScores = graphWithScores.drop(ColName.ID_COL);
+		graphWithScores = graphWithScores.drop(ColName.SOURCE_COL);
+		/*String[] cols = graphWithScores.columns();
+		List<Column> columns = new ArrayList<Column>();
+		//columns.add(graphWithScores.col(ColName.CLUSTER_COLUMN));
+		//go only upto the last col, which is cluster col
+		for (int i=0; i < cols.length - 1; ++i) {
+			columns.add(graphWithScores.col(cols[i]));
+		}
+		graphWithScores =  getDSUtil().select(graphWithScores, columns);
+		*/
+		return graphWithScores;
 	}
 
 	protected ZFrame<D, R, C> getGraphWithScores(ZFrame<D, R, C> graph, ZFrame<D, R, C> score) {
