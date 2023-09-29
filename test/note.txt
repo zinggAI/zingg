@@ -1,0 +1,13 @@
+testInfraOwnGateway.py - unittest file for testing both client.py and pipes.py
+
+To run it:
+
+1. cd test/
+2. pyspark < testInfraOwnGateway.py
+(or)
+2. /opt/spark-3.2.4-bin-hadoop3.2/bin/spark-submit --jars ../common/client/target/zingg-common-client-0.4.0-SNAPSHOT.jar testInfraOwnGateway.py
+
+
+If faced version mismatch issue:
+
+uncomment this ""-source", "1.8", "-target", "1.8"" in compileGatewayEntry function.
