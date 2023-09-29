@@ -3,7 +3,6 @@ title: AWS S3
 parent: Data Sources and Sinks
 ---
 
-# S3
 
 1. Set a bucket e.g. zingg28032023 and a folder inside it e.g. zingg
 
