@@ -100,7 +100,7 @@ public class Arguments implements Serializable {
 	String zinggDir = "/tmp/zingg";
 	
 	Pipe[] trainingSamples;
-	List<FieldDefinition> fieldDefinition;
+	List<? extends FieldDefinition> fieldDefinition;
 	int numPartitions = 10;
 	float labelDataSampleSize = 0.01f;
 	String modelId = "1";
@@ -171,7 +171,7 @@ public class Arguments implements Serializable {
 	 * 
 	 * @return list of field definitions
 	 */
-	public List<FieldDefinition> getFieldDefinition() {
+	public List<? extends FieldDefinition> getFieldDefinition() {
 		return fieldDefinition;
 	}
 
@@ -184,7 +184,7 @@ public class Arguments implements Serializable {
 	 *            list of fields
 	 * @throws ZinggClientException 
 	 */
-	public void setFieldDefinition(List<FieldDefinition> fieldDefinition) throws ZinggClientException {
+	public void setFieldDefinition(List<? extends FieldDefinition> fieldDefinition) throws ZinggClientException {
 		/*if (fieldDefinition == null || fieldDefinition.size() ==0) 
 			throw new ZinggClientException("Missing or incorrect field definitions");
 		*///Collections.sort(fieldDefinition);
