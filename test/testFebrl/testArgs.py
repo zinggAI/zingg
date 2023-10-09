@@ -69,46 +69,61 @@ class ArgumentsTest(TestCase):
 
         self.assertEqual(actual_model_id, expected_model_id)
 
-    # def test_setFieldDefinition(self):
-    #     client = Zingg(args, options)
-    #     client.initAndExecute()
+    def test_setFieldDefinition(self):
+        client = Zingg(args, options)
+        client.initAndExecute()
     
-    #     java_args = client.getArguments()
-    #     java_field_defs = java_args.getFieldDefs()
+        java_args = client.getArguments()
+        java_field_defs = java_args.getFieldDefinition()  
+        print(type(java_field_defs))
+        print(java_field_defs)
     
-    #     self.assertEqual(len(java_field_defs), len(fieldDefs))
+        self.assertEqual(len(java_field_defs), len(fieldDefs))
+        for java_field_def, expected_field_def in zip(java_field_defs, fieldDefs):
+            self.assertEqual(java_field_def.getFieldName(), expected_field_def.getFieldDefinition().getFieldName())
+            self.assertEqual(java_field_def.getDataType(), expected_field_def.getFieldDefinition().getDataType())
     
-    # def test_setDataAndGetArgs(self):
-    #     x = self.gateway.jvm.zingg.spark.client.pipe.SparkPipe()
-    #     print(x.getName())
-    #     pipe1 = Pipe("path_to_data1.csv", "CsvPipe")  
-    #     pipe2 = Pipe("path_to_data2.csv", "CsvPipe")
+    def test_setDataAndGetArgs(self):
+        client = Zingg(args, options)
+        client.initAndExecute()
 
-    #     self.arguments.setData(pipe1, pipe2)
+        java_args = client.getArguments()
+        java_pipes = java_args.getData()
 
-    #     java_args = self.arguments.getArgs()
-    #     java_pipes = java_args.getData()
+        self.assertEqual(len(java_pipes), 1)
 
-    #     self.assertEqual(len(java_pipes), 2)
-
-    #     for python_pipe, java_pipe in zip([pipe1, pipe2], java_pipes):
-    #         self.assertEqual(python_pipe.getName(), java_pipe.getPipe().getName())
-    #         self.assertEqual(python_pipe.getFormat(), java_pipe.getFormat())
+        for python_pipe, java_pipe in zip([inputPipe, outputPipe], java_pipes):
+            self.assertEqual(python_pipe.pipe.getName(), java_pipe.getName())
+            self.assertEqual(python_pipe.pipe.getFormat(), java_pipe.getFormat())
     
-    # def test_setObviousDupeCondition(self):
-    #     client = Zingg(args, options)
-    #     client.initAndExecute()
-    #     expected_condition = "fname"
-    #     args.setObviousDupeCondition(expected_condition)
+    def test_setOutput(self):
+        client = Zingg(args, options)
+        client.initAndExecute()
 
-    #     java_args = client.getArguments()
-    #     actual_condition = java_args.getObviousDupeCondition()
-    #     print("expected_condition:", expected_condition)
-    #     print("actual_condition:", actual_condition)
+        java_args = client.getArguments()
+        java_pipes = java_args.getOutput()
 
-    #     self.assertEqual(actual_condition, expected_condition)
+        self.assertEqual(len(java_pipes), 1)
+
+        for python_pipe, java_pipe in zip([outputPipe], java_pipes):
+            self.assertEqual(python_pipe.pipe.getName(), java_pipe.getName())
+            self.assertEqual(python_pipe.pipe.getFormat(), java_pipe.getFormat())
 
     
+    def test_setObviousDupeCondition(self):
+        client = Zingg(args, options)
+        client.initAndExecute()
+        expected_condition = "fname"
+        args.setObviousDupeCondition(expected_condition)
+
+        java_args = client.getArguments()
+        actual_condition = java_args.getObviousDupeCondition()
+        print("expected_condition:", expected_condition)
+        print("actual_condition:", actual_condition)
+
+        self.assertEqual(actual_condition, expected_condition)
+
+
     def test_setZinggDir(self):
         client = Zingg(args, options)
         client.initAndExecute()
@@ -152,7 +167,7 @@ class ArgumentsTest(TestCase):
         actual_stopWordsCutoff = java_args.getStopWordsCutoff()
         
         self.assertEqual(actual_stopWordsCutoff, stopWordsCutoff)
-    
+
     # def test_createArgumentsFromJSON(self):
     #     # client = Zingg(args, options)
     #     # client.initAndExecute()
