@@ -221,7 +221,11 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 		return df.col(c).equalTo(e);
 	}
 
-	public Column notEqual(String c, String e) {
+	public Column notEqual(String e) {
+		return df.col(e).notEqual(df.col(ColName.COL_PREFIX + e));
+	}
+
+    public Column notEqual(String c, String e) {
 		return df.col(c).notEqual(e);
 	}
 
