@@ -3,7 +3,7 @@ title: Running on Databricks
 parent: Running Zingg on Cloud
 nav_order: 6
 ---
-There are several ways to run Zingg on Databricks. All [file formats and data sources and sinks](https://github.com/zinggAI/zingg/tree/main/docs/dataSourcesAndSinks) are supported within Databricks. 
+There are several ways to run Zingg on Databricks. All [file formats and data sources and sinks](../dataSourcesAndSinks) are supported within Databricks. 
 
 # Running directly within Databricks using the Databricks notebook interface
 This uses the Zingg Python API and an [example notebook is available here](https://github.com/zinggAI/zingg/blob/main/examples/databricks/FebrlExample.ipynb)

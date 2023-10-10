@@ -49,8 +49,8 @@ Pair 1 is getting eliminated above, hence last1char is not a good function.&#x20
 
 So, first1char(firstname) will be chosen. This brings near similar records together - in a way, clusters them to break the cartesian join.
 
-These business-specific blocking functions go into [Hash Functions](https://github.com/zinggAI/zingg/tree/main/common/core/src/main/java/zingg/common/core/hash) and must be added to [HashFunctionRegistry](https://github.com/zinggAI/zingg/blob/main/common/core/src/main/java/zingg/common/core/hash/HashFunctionRegistry.java) and [hash functions config](https://github.com/zinggAI/zingg/blob/main/common/core/src/main/resources/hashFunctions.json).
+These business-specific blocking functions go into [Hash Functions](https://github.com/zinggAI/zingg/tree/main/common/core/src/main/java/zingg/common/core/hash) and must be added to [HashFunctionRegistry](../../common/core/src/main/java/zingg/common/core/hash/HashFunctionRegistry.java) and [hash functions config](../../common/core/src/main/resources/hashFunctions.json).
 
-Also, for similarity, you can define your own measures. Each dataType has predefined features, for example, [String](https://github.com/zinggAI/zingg/blob/main/common/core/src/main/java/zingg/common/core/feature/StringFeature.java) fuzzy type is configured for Affine and Jaro.
+Also, for similarity, you can define your own measures. Each dataType has predefined features, for example, [String](../../common/core/src/main/java/zingg/common/core/feature/StringFeature.java) fuzzy type is configured for Affine and Jaro.
 
 You can define your own [comparisons](https://github.com/zinggAI/zingg/tree/main/common/core/src/main/java/zingg/common/core/similarity/function) and use them.
