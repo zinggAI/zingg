@@ -17,7 +17,8 @@ public enum ZinggOptions {
     ASSESS_MODEL("assessModel"),
     PEEK_MODEL("peekModel"),
     EXPORT_MODEL("exportModel"),
-    RUN_INCREMENTAL("runIncremental");
+    RUN_INCREMENTAL("runIncremental"),
+    CHANGE_MODEL_FIELDS("changeModelFields");
 
     private String value;
 
