@@ -14,7 +14,7 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
     public String[] columns();
-    public ZFrame<D, R, C> select(C... cols);
+    public ZFrame<D, R, C> select(String... string);
     public ZFrame<D, R, C> select(List<C> cols);
     public ZFrame<D, R, C> select(String col, String... cols);
     public ZFrame<D, R, C> select(String col);
