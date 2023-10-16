@@ -17,6 +17,7 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> select(String... string);
     public ZFrame<D, R, C> select(List<C> cols);
     public ZFrame<D, R, C> select(C... col);
+    public ZFrame<D, R, C> select(C col);
     public ZFrame<D, R, C> selectExpr(String... col);
     public ZFrame <D, R, C> distinct();
     public List<R> collectAsList();
@@ -106,15 +107,15 @@ public interface ZFrame<D, R, C> {
     public C equalTo(String c, double e);
     public C concat(C a, C b);
 
-	public C notEqual(String c, int e);
+    public C notEqual(String c, int e);
 
-	public C not(C col);
+    public C not(C col);
 	
-	public C isNotNull(C col);
+    public C isNotNull(C col);
 	
-	public C and(C col1, C col2);
+    public C and(C col1, C col2);
 
-	public C or(C col1, C col2);
+    public C or(C col1, C col2);
 
     public void show(int num);
     public void show();
