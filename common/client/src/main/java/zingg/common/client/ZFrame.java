@@ -16,8 +16,7 @@ public interface ZFrame<D, R, C> {
     public String[] columns();
     public ZFrame<D, R, C> select(String... string);
     public ZFrame<D, R, C> select(List<C> cols);
-    public ZFrame<D, R, C> select(String col, String... cols);
-    public ZFrame<D, R, C> select(String col);
+    public ZFrame<D, R, C> select(C col);
     public ZFrame<D, R, C> selectExpr(String... col);
     public ZFrame <D, R, C> distinct();
     public List<R> collectAsList();

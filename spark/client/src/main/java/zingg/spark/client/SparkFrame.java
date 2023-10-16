@@ -44,14 +44,18 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.select(cols));
     }
 
+    public ZFrame<Dataset<Row>, Row, Column> select(Column col) {
+        return new SparkFrame(df.select(col));
+    }
+
     
     public ZFrame<Dataset<Row>, Row, Column> select(List<Column> cols){
         return new SparkFrame(df.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq()));
     }
     
     
-    public ZFrame<Dataset<Row>, Row, Column> select(String col) {
-        return new SparkFrame(df.select(col));
+    public ZFrame<Dataset<Row>, Row, Column> select(String... col) {
+        return toDF(col);
     }
 
     public ZFrame<Dataset<Row>, Row, Column> selectExpr(String... col) {
