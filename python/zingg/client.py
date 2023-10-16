@@ -754,6 +754,6 @@ def parseArguments(argv):
     mandatoryOptions.add_argument('--conf', required=True,
                         help='JSON configuration with data input output locations and field definitions')
 
-    args, remaining_args = parser.parse_known_args()
+    args, remaining_args = parser.parse_known_args(argv)
     LOG.debug("args: ", args)
     return args
