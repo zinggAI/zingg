@@ -1,6 +1,7 @@
 package zingg.common.core.executor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.Arrays;
 
@@ -29,17 +30,37 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 	
 	@Test
 	public void testGetObvDupePairs() throws ZinggClientException {
-		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeFilter().getObvDupePairs(getInputData());
+		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, null, null, getArgs());
+		ZFrame<Dataset<Row>, Row, Column> pairs = obvDupeFilter.getObvDupePairs(getBlockedDF());
 		assertEquals(1, pairs.count());
 		Row r = pairs.head();
 		assertEquals(23, pairs.getAsInt(r,ColName.ID_COL));
 		assertEquals(3, pairs.getAsInt(r,ColName.COL_PREFIX + ColName.ID_COL));
 	}
 	
-	public ObvDupeFilter getObvDupeFilter() throws ZinggClientException {
-		return new ObvDupeFilter(zsCTX, null, null, getArgs());
+	@Test
+	public void testGetObvDupePairsNull() throws ZinggClientException {
+		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, null, null, new Arguments());
+		ZFrame<Dataset<Row>, Row, Column> pairs = obvDupeFilter.getObvDupePairs(getBlockedDF());
+		assertNull(pairs);
+	}
+
+	@Test
+	public void testRemoveObvDupesFromBlocks() throws ZinggClientException {
+		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, null, null, getArgs());
+		ZFrame<Dataset<Row>, Row, Column> pairs = obvDupeFilter.removeObvDupesFromBlocks(getBlocksDF());
+		assertEquals(1, pairs.count());
+		Row r = pairs.head();
+		assertEquals(11, pairs.getAsInt(r,ColName.ID_COL));
+		assertEquals(19, pairs.getAsInt(r,ColName.COL_PREFIX + ColName.ID_COL));
 	}
 	
+	@Test
+	public void testRemoveObvDupesFromBlocksNull() throws ZinggClientException {
+		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, null, null, new Arguments());
+		ZFrame<Dataset<Row>, Row, Column> pairs = obvDupeFilter.removeObvDupesFromBlocks(getBlocksDF());
+		assertEquals(2, pairs.count());
+	}
 	
 	public Arguments getArgs() throws ZinggClientException {
 		Arguments args = new Arguments();
@@ -85,7 +106,7 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 			
 	}
 	
-	protected SparkFrame getInputData() {
+	protected SparkFrame getBlockedDF() {
 		Row[] rows = { 
 				RowFactory.create(3, "Érik", "Guay", 19830807, -798, "customers"),
 				RowFactory.create(11, "xani", "green", 19390410, 890, "customers"),
@@ -105,6 +126,30 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 		return df;
 	}	
 
+	protected SparkFrame getBlocksDF() {
+		Row[] rows = { 
+				RowFactory.create(3, "Érik", "Guay", 19830807, -798, "customers",23, "Érika", "Charles", 19830807, -798, "customers"),
+				RowFactory.create(11, "xani", "green", 19390410, 890, "customers",19, "x", "g", 19461101, 890, "customers")
+				 
+				};
+		StructType schema = new StructType(
+				new StructField[] { 
+						new StructField(ColName.ID_COL, DataTypes.IntegerType, false, Metadata.empty()),
+						new StructField("fname", DataTypes.StringType, false, Metadata.empty()),
+						new StructField("lname", DataTypes.StringType, false, Metadata.empty()),
+						new StructField("dob", DataTypes.IntegerType, false, Metadata.empty()),
+						new StructField(ColName.HASH_COL, DataTypes.IntegerType, false, Metadata.empty()),
+						new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty()),
+						new StructField(ColName.COL_PREFIX + ColName.ID_COL, DataTypes.IntegerType, false, Metadata.empty()),
+						new StructField(ColName.COL_PREFIX + "fname", DataTypes.StringType, false, Metadata.empty()),
+						new StructField(ColName.COL_PREFIX + "lname", DataTypes.StringType, false, Metadata.empty()),
+						new StructField(ColName.COL_PREFIX + "dob", DataTypes.IntegerType, false, Metadata.empty()),
+						new StructField(ColName.COL_PREFIX + ColName.HASH_COL, DataTypes.IntegerType, false, Metadata.empty()),
+						new StructField(ColName.COL_PREFIX + ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty()) 						
+						});
+		SparkFrame df = new SparkFrame(spark.createDataFrame(Arrays.asList(rows), schema));
+		return df;
+	}	
 	
 	
 }

@@ -98,7 +98,11 @@ public class ObvDupeFilter<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> {
 	public ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks) {
 		
 		LOG.debug("blocks count before removing obvDupePairs " + blocks.count());
-		C reverseOBVDupeDFFilter = blocks.getReverseObviousDupesFilter(getArgs().getObviousDupeCondition(),null);
+		String obviousDupeString = getArgs().getObviousDupeCondition();
+		if (obviousDupeString == null || obviousDupeString.trim().isEmpty()) {
+			return blocks;
+		}
+		C reverseOBVDupeDFFilter = blocks.getReverseObviousDupesFilter(obviousDupeString,null);
 		if (reverseOBVDupeDFFilter != null) {
 			// remove dupes as already considered in obvDupePairs
 			blocks = blocks.filter(reverseOBVDupeDFFilter);				
