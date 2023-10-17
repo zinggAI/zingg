@@ -78,35 +78,11 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	protected abstract Model getModel() throws ZinggClientException;
 
-	protected ZFrame<D,R,C>selectColsFromBlocked(ZFrame<D,R,C>blocked) {
+	protected ZFrame<D,R,C> selectColsFromBlocked(ZFrame<D,R,C>blocked) {
 		return blocked.select(ColName.ID_COL, ColName.HASH_COL);
 	}
 
-	@Override
-    public void execute() throws ZinggClientException {
-        try {
-			// read input, filter, remove self joins
-			ZFrame<D,R,C>  testDataOriginal = getTestData();
-			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal);
-			ZFrame<D,R,C>  testData = getStopWords().preprocessForStopWords(testDataOriginal);
-			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
-			//testData = dropDuplicates(testData);
-			long count = testData.count();
-			LOG.info("Read " + count);
-			Analytics.track(Metric.DATA_COUNT, count, args.getCollectMetrics());
-
-			ZFrame<D,R,C>blocked = getBlocked(testData);
-			LOG.info("Blocked ");
-			/*blocked = blocked.cache();
-			blocked.withColumn("partition_id", functions.spark_partition_id())
-				.groupBy("partition_id").agg(functions.count("z_zid")).as("zid").orderBy("partition_id").toJavaRDD().saveAsTextFile("/tmp/zblockedParts");
-				*/
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("Num distinct hashes " + blocked.select(ColName.HASH_COL).distinct().count());
-				blocked.show();
-			}
-				//LOG.warn("Num distinct hashes " + blocked.agg(functions.approx_count_distinct(ColName.HASH_COL)).count());
-			
+	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
 			ZFrame<D,R,C>blocks = getBlocks(selectColsFromBlocked(blocked), testData);
 			//blocks.explain();
 			//LOG.info("Blocks " + blocks.count());
@@ -150,6 +126,34 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			
 			ZFrame<D,R,C>dupesActual = getDupesActualForGraph(dupes);
 			dupesActual = addObvDupes(obvDupePairs, dupesActual);	
+			return dupesActual;
+	}
+
+	@Override
+    public void execute() throws ZinggClientException {
+        try {
+			// read input, filter, remove self joins
+			ZFrame<D,R,C>  testDataOriginal = getTestData();
+			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal);
+			ZFrame<D,R,C>  testData = getStopWords().preprocessForStopWords(testDataOriginal);
+			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
+			//testData = dropDuplicates(testData);
+			long count = testData.count();
+			LOG.info("Read " + count);
+			Analytics.track(Metric.DATA_COUNT, count, args.getCollectMetrics());
+
+			ZFrame<D,R,C>blocked = getBlocked(testData);
+			LOG.info("Blocked ");
+			/*blocked = blocked.cache();
+			blocked.withColumn("partition_id", functions.spark_partition_id())
+				.groupBy("partition_id").agg(functions.count("z_zid")).as("zid").orderBy("partition_id").toJavaRDD().saveAsTextFile("/tmp/zblockedParts");
+				*/
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("Num distinct hashes " + blocked.select(ColName.HASH_COL).distinct().count());
+				blocked.show();
+			}
+			//LOG.warn("Num distinct hashes " + blocked.agg(functions.approx_count_distinct(ColName.HASH_COL)).count());
+			ZFrame<D,R,C> dupesActual = getActualDupes(blocked, testData);
 			
 			//dupesActual.explain();
 			//dupesActual.toJavaRDD().saveAsTextFile("/tmp/zdupes");
@@ -199,6 +203,8 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		
 	}
 
+	
+
 	protected ZFrame<D, R, C> getOutput(ZFrame<D, R, C> blocked, ZFrame<D, R, C> dupesActual) throws Exception {
 		//-1 is initial suggestion, 1 is add, 0 is deletion, 2 is unsure
 		/*blocked = blocked.drop(ColName.HASH_COL);
@@ -207,15 +213,17 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		*/
 		
 		dupesActual = dupesActual.cache();
-		System.out.println("dupes ------------");
 		if (LOG.isDebugEnabled()) {
+			LOG.debug("dupes ------------");
 			dupesActual.show();
 		}
 		ZFrame<D,R,C>graph = getGraphUtil().buildGraph(blocked, dupesActual).cache();
 		//graph.toJavaRDD().saveAsTextFile("/tmp/zgraph");
-		System.out.println("graph ------------");
+		
 		if (LOG.isDebugEnabled()) {
+			LOG.debug("graph ------------");
 			graph.show();
+
 		}
 		//write score
 		ZFrame<D,R,C>score = getMinMaxScores(dupesActual, graph).cache();
