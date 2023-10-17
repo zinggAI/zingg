@@ -6,24 +6,27 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.Arguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
+import zingg.common.client.license.IZinggLicense;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
+import zingg.common.core.preprocess.StopWordsRemover;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
-import zingg.common.core.preprocess.StopWordsRemover;
 
 public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 
 	protected static String name = "zingg.Matcher";
 	public static final Log LOG = LogFactory.getLog(Matcher.class);    
-
+	protected ObvDupeFilter<S,D,R,C,T> obvDupeFilter;
+	
     public Matcher() {
         setZinggOptions(ZinggOptions.MATCH);
     }
@@ -74,12 +77,6 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return joinH;
 	}
 
-	protected ZFrame<D,R,C>massageAllEquals(ZFrame<D,R,C>allEqual) {
-		allEqual = allEqual.withColumn(ColName.PREDICTION_COL, ColValues.IS_MATCH_PREDICTION);
-		allEqual = allEqual.withColumn(ColName.SCORE_COL, ColValues.FULL_MATCH_SCORE);
-		return allEqual;
-	}
-
 	protected abstract Model getModel() throws ZinggClientException;
 
 	protected ZFrame<D,R,C>selectColsFromBlocked(ZFrame<D,R,C>blocked) {
@@ -123,12 +120,12 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			//allEqual = allEqual.cache();
 
 			//get obvious dupes
-			ZFrame<D, R, C> obvDupePairs = getObvDupePairs(blocked);
+			ZFrame<D, R, C> obvDupePairs = getObvDupeFilter().getObvDupePairs(blocked);
 			if (obvDupePairs != null) {
 				long obvDupeCount = obvDupePairs.count();
-				LOG.info("obvDupePairs count " + obvDupeCount);
+				LOG.debug("obvDupePairs count " + obvDupeCount);
 				if (obvDupeCount > 0) {
-					blocks = removeObvDupesFromBlocks(blocks);
+					blocks = getObvDupeFilter().removeObvDupesFromBlocks(blocks);
 				}
 			}
 			
@@ -181,54 +178,6 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return dupesActual;
 	}
 
-	protected ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks) {
-		LOG.info("blocks count before removing obvDupePairs " + blocks.count());
-		C reverseOBVDupeDFFilter = blocks.getReverseObviousDupesFilter(args.getObviousDupeCondition(),null);
-		if (reverseOBVDupeDFFilter != null) {
-			// remove dupes as already considered in obvDupePairs
-			blocks = blocks.filter(reverseOBVDupeDFFilter);				
-		} 
-		LOG.info("blocks count after removing obvDupePairs " + blocks.count());
-		return blocks;
-	}
-	
-	protected ZFrame<D,R,C> getObvDupePairs(ZFrame<D,R,C> blocked) {
-		
-		String obviousDupeString = args.getObviousDupeCondition();
-		
-		if (obviousDupeString == null || obviousDupeString.trim().isEmpty()) {
-			return null;
-		}
-
-		ZFrame<D,R,C> prefixBlocked = getDSUtil().getPrefixedColumnsDS(blocked);		
-		C gtCond = blocked.gt(prefixBlocked,ColName.ID_COL);
-		
-		ZFrame<D,R,C> onlyIds = null;
-		
-		// split on || (orSeperator)
-		String[] obvDupeORConditions = obviousDupeString.trim().split(ZFrame.orSeperator);		
-		// loop thru the values and build a filter condition		
-		for (int i = 0; i < obvDupeORConditions.length; i++) {		
-			
-			C obvDupeDFFilter = blocked.getObviousDupesFilter(prefixBlocked,obvDupeORConditions[i],gtCond);
-			ZFrame<D,R,C> onlyIdsTemp =  blocked
-					.joinOnCol(prefixBlocked, obvDupeDFFilter).select(ColName.ID_COL, ColName.COL_PREFIX + ColName.ID_COL);
-			
-			if(onlyIds==null) {
-				onlyIds = onlyIdsTemp;
-			} else {
-				onlyIds = onlyIds.unionAll(onlyIdsTemp);
-			}
-			
-		}
-		
-		// remove duplicate pairs
-		onlyIds = onlyIds.distinct();		
-		onlyIds = massageAllEquals(onlyIds);
-		onlyIds = onlyIds.cache();
-		
-		return onlyIds;
-	}
 	
 	public void writeOutput( ZFrame<D,R,C>  blocked,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException {
 		try{
@@ -369,5 +318,16 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
+
+	public ObvDupeFilter<S, D, R, C, T> getObvDupeFilter() {		
+		if (obvDupeFilter==null) {
+			obvDupeFilter = new ObvDupeFilter<S, D, R, C, T>(context, zinggOptions, clientOptions, args);
+		}
+		return obvDupeFilter;
+	}
+
+	public void setObvDupeFilter(ObvDupeFilter<S, D, R, C, T> obvDupeFilter) {
+		this.obvDupeFilter = obvDupeFilter;
+	}
 	    
 }
