@@ -8,7 +8,6 @@ import zingg.common.client.ClientOptions;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.Context;
@@ -37,16 +36,13 @@ public class ObvDupeFilter<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> {
 	 * 
 	 * Output data example (if say DOB is obv dupe condition):
 	 * Z_ZID	Z_Z_ZID	Z_PREDICTION	Z_SCORE
-	 * 23		3		1				1
+	 * 23		3		1.0				1.0
 	 * 
 	 * 
 	 * @param blocked
 	 * @return
 	 */
 	public ZFrame<D, R, C> getObvDupePairs(ZFrame<D, R, C> blocked) {
-		
-		System.out.println("getObvDupePairs input");
-		blocked.show();
 		
 		String obviousDupeString = getArgs().getObviousDupeCondition();
 		
@@ -81,9 +77,6 @@ public class ObvDupeFilter<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> {
 		onlyIds = massageAllEquals(onlyIds);
 		onlyIds = onlyIds.cache();
 
-		System.out.println("getObvDupePairs output");
-		onlyIds.show();
-		
 		return onlyIds;
 	}
 
@@ -104,16 +97,12 @@ public class ObvDupeFilter<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> {
 	 */
 	public ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks) {
 		
-		System.out.println("removeObvDupesFromBlocks input");
-		blocks.show();
 		LOG.debug("blocks count before removing obvDupePairs " + blocks.count());
 		C reverseOBVDupeDFFilter = blocks.getReverseObviousDupesFilter(getArgs().getObviousDupeCondition(),null);
 		if (reverseOBVDupeDFFilter != null) {
 			// remove dupes as already considered in obvDupePairs
 			blocks = blocks.filter(reverseOBVDupeDFFilter);				
 		} 
-		System.out.println("removeObvDupesFromBlocks output");
-		blocks.show();
 		LOG.debug("blocks count after removing obvDupePairs " + blocks.count());
 		return blocks;
 	}
