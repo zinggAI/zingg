@@ -14,6 +14,10 @@ public class ObvDupeFilter<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> {
 	
 	private static final long serialVersionUID = 1L;
 	public static final Log LOG = LogFactory.getLog(ObvDupeFilter.class); 
+
+	public static final String orSeperator = "\\|";	
+	public static final String andSeperator = "\\&";	
+
 	
 	public ObvDupeFilter(Context<S,D,R,C,T> context, Arguments args) {
 		setContext(context);
@@ -52,11 +56,11 @@ public class ObvDupeFilter<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> {
 		ZFrame<D,R,C> onlyIds = null;
 		
 		// split on || (orSeperator)
-		String[] obvDupeORConditions = obviousDupeString.trim().split(ZFrame.orSeperator);		
+		String[] obvDupeORConditions = obviousDupeString.trim().split(orSeperator);		
 		// loop thru the values and build a filter condition		
 		for (int i = 0; i < obvDupeORConditions.length; i++) {		
 			
-			C obvDupeDFFilter = blocked.getObviousDupesFilter(prefixBlocked,obvDupeORConditions[i],gtCond);
+			C obvDupeDFFilter = getObviousDupesFilter(blocked,prefixBlocked,obvDupeORConditions[i],gtCond);
 			ZFrame<D,R,C> onlyIdsTemp =  blocked
 					.joinOnCol(prefixBlocked, obvDupeDFFilter).select(ColName.ID_COL, ColName.COL_PREFIX + ColName.ID_COL);
 			
@@ -98,7 +102,7 @@ public class ObvDupeFilter<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> {
 		if (obviousDupeString == null || obviousDupeString.trim().isEmpty()) {
 			return blocks;
 		}
-		C reverseOBVDupeDFFilter = blocks.getReverseObviousDupesFilter(obviousDupeString,null);
+		C reverseOBVDupeDFFilter = getReverseObviousDupesFilter(blocks,obviousDupeString,null);
 		if (reverseOBVDupeDFFilter != null) {
 			// remove dupes as already considered in obvDupePairs
 			blocks = blocks.filter(reverseOBVDupeDFFilter);				
@@ -113,6 +117,126 @@ public class ObvDupeFilter<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> {
 		return allEqual;
 	}
 	
+	/**
+	 * 
+	 * obviousDupeString format col1 & col2 | col3 | col4 & col5
+	 * 
+	 * @param obviousDupeString
+	 * @return
+	 */
+	public C getObviousDupesFilter(ZFrame<D, R, C> df1, String obviousDupeString, C extraAndCond) {
+		return getObviousDupesFilter(df1,df1,obviousDupeString,extraAndCond);
+	}
+	
+	/**
+	 * 
+	 * obviousDupeString format col1 & col2 | col3 | col4 & col5
+	 * 
+	 * @param obviousDupeString
+	 * @return
+	 */
+	
+	public C getObviousDupesFilter(ZFrame<D, R, C> df1, ZFrame<D, R, C> dfToJoin, String obviousDupeString, C extraAndCond) {
+		
+		if (dfToJoin==null || obviousDupeString == null || obviousDupeString.trim().isEmpty()) {
+			return null;
+		}
+		
+		// split on || (orSeperator)
+		String[] obvDupeORConditions = new String[] {};
+		
+		obvDupeORConditions = obviousDupeString.trim().split(orSeperator);
+
+		// loop thru the values and build a filter condition
+		C filterExpr = null;
+		
+		for (int i = 0; i < obvDupeORConditions.length; i++) {
+			
+			// parse on &(andSeperator) for obvDupeCond[i] and form a column filter
+			// expression [keep adding to filterExpr]
+			// if number of columns in and condition = 1 => something like uid or ssn =>
+			// direct match if equal
+			C andCond = null;
+			String orCondStr = obvDupeORConditions[i];
+			
+			if (orCondStr != null && !orCondStr.isEmpty()) {
+
+				String[] andConditions = orCondStr.trim().split(andSeperator);
+
+				if (andConditions != null) {
+					for (int j = 0; j < andConditions.length; j++) {
+
+						String andCondStr = andConditions[j];
+
+						if (andCondStr != null && !andCondStr.trim().isEmpty()) {
+
+							String colName = andCondStr.trim();
+							C column = df1.col(colName);
+							C columnWithPrefix = dfToJoin.col(ColName.COL_PREFIX + colName);
+
+							C eqCond = df1.and(
+									df1.and(
+											df1.equalTo(column, columnWithPrefix),
+											df1.isNotNull(column)
+											),
+									df1.isNotNull(columnWithPrefix)
+									);
+
+							if (andCond != null) {
+								andCond = df1.and(andCond, eqCond);
+							} else {
+								andCond = eqCond;
+							}
+
+						}
+					}
+				}
+			}
+
+			if (andCond != null) {
+				if (filterExpr != null) {
+					filterExpr = df1.or(filterExpr, andCond);
+				} else {
+					filterExpr = andCond;
+				}
+			}
+
+		}
+		
+		if (extraAndCond != null) {
+			if (filterExpr != null) {
+				filterExpr = df1.and(filterExpr, extraAndCond);
+			} else {
+				filterExpr = extraAndCond;
+			}
+		}
+		
+		return filterExpr;
+	}
+
+	/**
+	 * 
+	 * obviousDupeString format col1 & col2 | col3 | col4 & col5
+	 * 
+	 * @param obviousDupeString
+	 * @return
+	 */
+	
+	public C getReverseObviousDupesFilter(ZFrame<D, R, C> df1,String obviousDupeString, C extraAndCond) {
+		return getReverseObviousDupesFilter(df1,df1,obviousDupeString,extraAndCond);
+	}
+		
+	/**
+	 * 
+	 * obviousDupeString format col1 & col2 | col3 | col4 & col5
+	 * 
+	 * @param obviousDupeString
+	 * @return
+	 */
+	
+	public C getReverseObviousDupesFilter(ZFrame<D, R, C> df1,ZFrame<D,R,C> dfToJoin, String obviousDupeString, C extraAndCond) {
+		return df1.not(getObviousDupesFilter(df1,dfToJoin,obviousDupeString,extraAndCond));
+	}
 	
 	
 	@Override
