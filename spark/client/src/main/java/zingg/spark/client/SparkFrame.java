@@ -221,6 +221,10 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 		return df.col(c).equalTo(e);
 	}
 
+	public Column equalTo(Column column1, Column column2) {
+		return column1.equalTo(column2);
+	}
+			
 	public Column notEqual(String c, String e) {
 		return df.col(c).notEqual(e);
 	}
@@ -236,7 +240,22 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 	public Column notEqual(String c, int e) {
 		return df.col(c).notEqual(e);
 	}
-
+	
+	@Override
+	public Column isNotNull(Column col) {
+		return col.isNotNull();
+	}
+	
+	@Override
+	public Column and(Column col1, Column col2) {
+		return col1.and(col2);
+	}
+	
+	@Override
+	public Column or(Column col1, Column col2) {
+		return col1.or(col2);
+	}
+	
     public ZFrame<Dataset<Row>, Row, Column> sample(boolean withReplacement, float num){
         return new SparkFrame(df.sample(withReplacement, num));
     }
@@ -444,11 +463,16 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 							Column column = this.col(colName);
 							Column columnWithPrefix = dfToJoin.col(ColName.COL_PREFIX + colName);
 
-							Column eqCond = column.equalTo(columnWithPrefix).and(column.isNotNull())
-									.and(columnWithPrefix.isNotNull());
+							Column eqCond = and(
+									and(
+											equalTo(column, columnWithPrefix),
+											isNotNull(column)
+											),
+									isNotNull(columnWithPrefix)
+									);
 
 							if (andCond != null) {
-								andCond = andCond.and(eqCond);
+								andCond = and(andCond, eqCond);
 							} else {
 								andCond = eqCond;
 							}
@@ -460,7 +484,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 
 			if (andCond != null) {
 				if (filterExpr != null) {
-					filterExpr = filterExpr.or(andCond);
+					filterExpr = or(filterExpr, andCond);
 				} else {
 					filterExpr = andCond;
 				}
@@ -470,7 +494,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 		
 		if (extraAndCond != null) {
 			if (filterExpr != null) {
-				filterExpr = filterExpr.and(extraAndCond);
+				filterExpr = and(filterExpr, extraAndCond);
 			} else {
 				filterExpr = extraAndCond;
 			}
@@ -478,7 +502,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 		
 		return filterExpr;
 	}
-		
+
 	/**
 	 * 
 	 * obviousDupeString format col1 & col2 | col3 | col4 & col5
