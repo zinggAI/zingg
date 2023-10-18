@@ -16,9 +16,11 @@ import zingg.common.core.preprocess.StopWordsRemover;
 
 public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
+	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.TrainingDataFinder";
 	public static final Log LOG = LogFactory.getLog(TrainingDataFinder.class);    
-
+	protected ObvDupeFilter<S,D,R,C,T> obvDupeFilter;
+	
     public TrainingDataFinder() {
         setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
     }
@@ -83,13 +85,15 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(sample, tree); 
 				
 				blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
-				System.out.println("blocked");
+				LOG.debug("blocked");
 				if (LOG.isDebugEnabled()) {
 					blocked.show(true);
 				}
 				ZFrame<D,R,C> blocks = getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
+				// remove obv dupe pairs
+				blocks = getObvDupeFilter().removeObvDupesFromBlocks(blocks);
 				blocks = blocks.cache();	
-				System.out.println("blocks");
+				LOG.debug("blocks");
 				if (LOG.isDebugEnabled()) {
 					blocks.show();
 				}
@@ -192,5 +196,17 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 	}
 
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
+    
+	public ObvDupeFilter<S, D, R, C, T> getObvDupeFilter() {		
+		if (obvDupeFilter==null) {
+			obvDupeFilter = new ObvDupeFilter<S, D, R, C, T>(context, args);
+		}
+		return obvDupeFilter;
+	}
+
+	public void setObvDupeFilter(ObvDupeFilter<S, D, R, C, T> obvDupeFilter) {
+		this.obvDupeFilter = obvDupeFilter;
+	}
+	        
 		    
 }
