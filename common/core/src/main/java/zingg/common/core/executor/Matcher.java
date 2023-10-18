@@ -120,12 +120,12 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			//allEqual = allEqual.cache();
 
 			//get obvious dupes
-			ZFrame<D, R, C> obvDupePairs = getObvDupeFilter().getObvDupePairs(blocked);
+			ZFrame<D, R, C> obvDupePairs = getObvDupePairs(blocked);
 			if (obvDupePairs != null) {
 				long obvDupeCount = obvDupePairs.count();
 				LOG.debug("obvDupePairs count " + obvDupeCount);
 				if (obvDupeCount > 0) {
-					blocks = getObvDupeFilter().removeObvDupesFromBlocks(blocks);
+					blocks = removeObvDupesFromBlocks(blocks);
 				}
 			}
 			
@@ -169,6 +169,15 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			throw new ZinggClientException(e.getMessage());
 		}
     }
+
+	protected ZFrame<D, R, C> getObvDupePairs(ZFrame<D, R, C> blocked) {
+		return getObvDupeFilter().getObvDupePairs(blocked);
+	}
+		
+	protected ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks) {
+		return getObvDupeFilter().removeObvDupesFromBlocks(blocks);
+	}
+
 	protected ZFrame<D, R, C> addObvDupes(ZFrame<D, R, C> obvDupePairs, ZFrame<D, R, C> dupesActual) {
 		if (obvDupePairs != null) {
 			// ensure same columns in both
