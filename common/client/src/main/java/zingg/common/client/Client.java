@@ -39,7 +39,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public Client() {}
 
 	public Client(Arguments args, ClientOptions options) throws ZinggClientException {
-		this.options = options;
+		setOptions(options);
 		try {
 			buildAndSetArguments(args, options);
 			printAnalyticsBanner(arguments.getCollectMetrics());
@@ -79,6 +79,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public void buildAndSetArguments(Arguments args, ClientOptions options) {
+		setOptions(options);
 		int jobId = new Long(System.currentTimeMillis()).intValue();
 		if (options.get(options.JOBID)!= null) {
 			LOG.info("Using job id from command line");
@@ -162,6 +163,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		try {
 			for (String a: args) LOG.debug("args " + a);
 			options = new ClientOptions(args);
+			setOptions(options);
 		
 			if (options.has(options.HELP) || options.has(options.HELP1) || options.get(ClientOptions.PHASE) == null) {
 				LOG.warn(options.getHelp());
@@ -225,9 +227,10 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public void init() throws ZinggClientException {
+		zingg.setClientOptions(options);
 		zingg.init(getArguments(), getLicense(options.get(ClientOptions.LICENSE).value.trim()));
 		if (session != null) zingg.setSession(session);
-		zingg.setClientOptions(options);
+		
 	}
 
 	protected abstract IZinggLicense getLicense(String license)  throws ZinggClientException ;

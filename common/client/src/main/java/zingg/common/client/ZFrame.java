@@ -98,6 +98,8 @@ public interface ZFrame<D, R, C> {
 	public C equalTo(C column1, C column2);
 	
 	public C notEqual(String c, String e);
+
+    public C notEqual(String e);
     
     public C equalTo(String c, int e);
     public C equalTo(String c, double e);
