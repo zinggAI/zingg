@@ -30,7 +30,7 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 	
 	@Test
 	public void testGetObvDupePairs() throws ZinggClientException {
-		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, null, null, getArgs());
+		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, getArgs());
 		ZFrame<Dataset<Row>, Row, Column> pairs = obvDupeFilter.getObvDupePairs(getBlockedDF());
 		assertEquals(1, pairs.count());
 		Row r = pairs.head();
@@ -40,14 +40,14 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 	
 	@Test
 	public void testGetObvDupePairsNull() throws ZinggClientException {
-		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, null, null, new Arguments());
+		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, new Arguments());
 		ZFrame<Dataset<Row>, Row, Column> pairs = obvDupeFilter.getObvDupePairs(getBlockedDF());
 		assertNull(pairs);
 	}
 
 	@Test
 	public void testRemoveObvDupesFromBlocks() throws ZinggClientException {
-		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, null, null, getArgs());
+		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, getArgs());
 		ZFrame<Dataset<Row>, Row, Column> pairs = obvDupeFilter.removeObvDupesFromBlocks(getBlocksDF());
 		assertEquals(1, pairs.count());
 		Row r = pairs.head();
@@ -57,7 +57,7 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 	
 	@Test
 	public void testRemoveObvDupesFromBlocksNull() throws ZinggClientException {
-		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, null, null, new Arguments());
+		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, new Arguments());
 		ZFrame<Dataset<Row>, Row, Column> pairs = obvDupeFilter.removeObvDupesFromBlocks(getBlocksDF());
 		assertEquals(2, pairs.count());
 	}

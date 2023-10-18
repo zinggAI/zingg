@@ -4,10 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.Arguments;
-import zingg.common.client.ClientOptions;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.Context;
@@ -17,10 +15,8 @@ public class ObvDupeFilter<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> {
 	private static final long serialVersionUID = 1L;
 	public static final Log LOG = LogFactory.getLog(ObvDupeFilter.class); 
 	
-	public ObvDupeFilter(Context<S,D,R,C,T> context, ZinggOptions zinggOptions, ClientOptions clientOptions, Arguments args) {
+	public ObvDupeFilter(Context<S,D,R,C,T> context, Arguments args) {
 		setContext(context);
-		setZinggOptions(zinggOptions);
-		setClientOptions(clientOptions);
 		setArgs(args);
 		setName(this.getClass().getName());
 	}

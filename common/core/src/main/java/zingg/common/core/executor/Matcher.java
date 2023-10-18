@@ -321,7 +321,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	public ObvDupeFilter<S, D, R, C, T> getObvDupeFilter() {		
 		if (obvDupeFilter==null) {
-			obvDupeFilter = new ObvDupeFilter<S, D, R, C, T>(context, zinggOptions, clientOptions, args);
+			obvDupeFilter = new ObvDupeFilter<S, D, R, C, T>(context, args);
 		}
 		return obvDupeFilter;
 	}
