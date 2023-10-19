@@ -86,7 +86,7 @@ public class TestBlock  extends ZinggSparkTester {
 	}
 
 	private List<FieldDefinition> getFieldDefList() {
-		List<FieldDefinition> fdList = new ArrayList<>(4);
+		List<FieldDefinition> fdList = new ArrayList<FieldDefinition>(4);
 
 		FieldDefinition idFD = new FieldDefinition();
 		idFD.setDataType("integer");
