@@ -111,6 +111,16 @@ public class ObvDupeFilter<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> {
 		return blocks;
 	}
 	
+	public ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks,ZFrame<D, R, C> obvDupePairs) {
+		
+		if(obvDupePairs==null || obvDupePairs.isEmpty()) {
+			return blocks;
+		}
+		
+		return removeObvDupesFromBlocks(blocks);
+		
+	}
+	
 	protected ZFrame<D,R,C>massageAllEquals(ZFrame<D,R,C>allEqual) {
 		allEqual = allEqual.withColumn(ColName.PREDICTION_COL, ColValues.IS_MATCH_PREDICTION);
 		allEqual = allEqual.withColumn(ColName.SCORE_COL, ColValues.FULL_MATCH_SCORE);
