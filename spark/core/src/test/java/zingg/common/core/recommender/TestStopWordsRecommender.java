@@ -30,7 +30,7 @@ public class TestStopWordsRecommender extends ZinggSparkTester {
 
 	StopWordsRecommender recommender = new SparkStopWordsRecommender(zsCTX, args);
 	Dataset<Row> dataset = createDFWithGivenStopWords();
-	List<Row> stopwordRow= new ArrayList<>();
+	List<Row> stopwordRow= new ArrayList<Row>();
 	List<String> stopwordList = new ArrayList<String>();
 	Dataset<Row> stopWords;
 
