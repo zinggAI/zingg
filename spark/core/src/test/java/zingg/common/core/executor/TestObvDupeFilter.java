@@ -58,6 +58,36 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 	}
 	
 	@Test
+	public void testRemoveObvDupesFromBlocks2() throws ZinggClientException {
+		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, getArgs());
+		// obv dupe df is null => don't remove dupes
+		ZFrame<Dataset<Row>, Row, Column> pairs = obvDupeFilter.removeObvDupesFromBlocks(getBlocksDF(), null);
+		assertEquals(2, pairs.count());
+	}
+
+	@Test
+	public void testRemoveObvDupesFromBlocks3() throws ZinggClientException {
+		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, getArgs());
+		// as long as obv dupe df is not empty => remove dupes
+		ZFrame<Dataset<Row>, Row, Column> pairs = obvDupeFilter.removeObvDupesFromBlocks(getBlocksDF(),getBlocksDF());
+		assertEquals(1, pairs.count());
+		Row r = pairs.head();
+		assertEquals(11, pairs.getAsInt(r,ColName.ID_COL));
+		assertEquals(19, pairs.getAsInt(r,ColName.COL_PREFIX + ColName.ID_COL));
+	}
+	
+	@Test
+	public void testRemoveObvDupesFromBlocks4() throws ZinggClientException {
+		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, getArgs());
+		
+		ZFrame<Dataset<Row>, Row, Column> emptyDF = getBlocksDF().filterNullCond(ColName.ID_COL);
+		
+		// obv dupe df is empty => don't remove dupes
+		ZFrame<Dataset<Row>, Row, Column> pairs = obvDupeFilter.removeObvDupesFromBlocks(getBlocksDF(), emptyDF);
+		assertEquals(2, pairs.count());
+	}
+	
+	@Test
 	public void testRemoveObvDupesFromBlocksNull() throws ZinggClientException {
 		ObvDupeFilter obvDupeFilter = new ObvDupeFilter(zsCTX, new Arguments());
 		ZFrame<Dataset<Row>, Row, Column> pairs = obvDupeFilter.removeObvDupesFromBlocks(getBlocksDF());
