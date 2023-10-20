@@ -1,5 +1,6 @@
-package zingg.common.core.executor;
+package zingg.common.core.obviousdupes;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
@@ -8,20 +9,23 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.Arguments;
 import zingg.common.client.ObviousDupes;
 import zingg.common.client.ZFrame;
-import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.Context;
 
-public class ObvDupeFilter<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> {
+public class ObvDupeFilter<S,D,R,C,T> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	public static final Log LOG = LogFactory.getLog(ObvDupeFilter.class); 
 
+    protected Arguments args;	
+    protected Context<S,D,R,C,T> context;
+    protected String name;
+
 	public ObvDupeFilter(Context<S,D,R,C,T> context, Arguments args) {
-		setContext(context);
-		setArgs(args);
-		setName(this.getClass().getName());
+		this.context = context;
+		this.args = args;
+		this.name = this.getClass().getName();
 	}
 
 	/**
@@ -50,7 +54,7 @@ public class ObvDupeFilter<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> {
 			return null;
 		}
 
-		ZFrame<D,R,C> prefixBlocked = getDSUtil().getPrefixedColumnsDS(blocked);		
+		ZFrame<D,R,C> prefixBlocked = getContext().getDSUtil().getPrefixedColumnsDS(blocked);		
 		C gtCond = blocked.gt(prefixBlocked,ColName.ID_COL);
 		
 		ZFrame<D,R,C> onlyIds = null;
@@ -220,11 +224,21 @@ public class ObvDupeFilter<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> {
 	public C getReverseObviousDupesFilter(ZFrame<D, R, C> df1,ZFrame<D,R,C> dfToJoin, ObviousDupes[] obviousDupes, C extraAndCond) {
 		return df1.not(getObviousDupesFilter(df1,dfToJoin,obviousDupes,extraAndCond));
 	}
-	
-	
-	@Override
-	public void execute() throws ZinggClientException {
-		throw new UnsupportedOperationException();		
+
+	public Arguments getArgs() {
+		return args;
+	}
+
+	public void setArgs(Arguments args) {
+		this.args = args;
+	}
+
+	public Context<S, D, R, C, T> getContext() {
+		return context;
+	}
+
+	public void setContext(Context<S, D, R, C, T> context) {
+		this.context = context;
 	}
 
 }
