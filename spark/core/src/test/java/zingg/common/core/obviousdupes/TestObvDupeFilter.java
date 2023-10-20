@@ -1,4 +1,4 @@
-package zingg.common.core.executor;
+package zingg.common.core.obviousdupes;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -26,6 +26,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
 import zingg.common.core.obviousdupes.ObvDupeFilter;
+import zingg.common.core.obviousdupes.ObvDupeFilterHelper;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.client.ZSparkSession;
 import zingg.spark.client.pipe.SparkPipe;
@@ -143,7 +144,7 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 	
 	@Test
 	public void testGetObviousDupesFilter() throws ZinggClientException {	
-		ObvDupeFilter<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeFilter = new ObvDupeFilter<ZSparkSession,Dataset<Row>,Row,Column,DataType>(zsCTX, getArgs());
+		ObvDupeFilterHelper<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeFilter = new ObvDupeFilterHelper<ZSparkSession,Dataset<Row>,Row,Column,DataType>();
 
 		SparkFrame posDF = getPosPairDF();
 				
@@ -157,7 +158,7 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 
 	@Test
 	public void testGetObviousDupesFilterWithExtraCond() throws ZinggClientException {	
-		ObvDupeFilter<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeFilter = new ObvDupeFilter<ZSparkSession,Dataset<Row>,Row,Column,DataType>(zsCTX, getArgs());
+		ObvDupeFilterHelper<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeFilter = new ObvDupeFilterHelper<ZSparkSession,Dataset<Row>,Row,Column,DataType>();
 		SparkFrame posDF = getPosPairDF();
 		Column gtCond = posDF.gt("z_zid");
 		
@@ -173,7 +174,7 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 	
 	@Test
 	public void testGetReverseObviousDupesFilter() throws ZinggClientException {	
-		ObvDupeFilter<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeFilter = new ObvDupeFilter<ZSparkSession,Dataset<Row>,Row,Column,DataType>(zsCTX, getArgs());
+		ObvDupeFilterHelper<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeFilter = new ObvDupeFilterHelper<ZSparkSession,Dataset<Row>,Row,Column,DataType>();
 
 		SparkFrame posDF = getPosPairDF();
 		ObviousDupes[] obvDupe = getObvDupeCond();		
