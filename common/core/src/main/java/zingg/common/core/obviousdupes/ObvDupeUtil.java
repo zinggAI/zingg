@@ -94,6 +94,9 @@ public class ObvDupeUtil<S,D,R,C,T> {
 	 * @return AND condition for particular col passed added to what already is there
 	 */
 	private C getAndCondForCol(ZFrame<D, R, C> df1, ZFrame<D, R, C> dfToJoin, C andCond, String colName) {
+		
+		if (colName==null) return null;
+		
 		C column = df1.col(colName);
 		C columnWithPrefix = dfToJoin.col(ColName.COL_PREFIX + colName);
 
