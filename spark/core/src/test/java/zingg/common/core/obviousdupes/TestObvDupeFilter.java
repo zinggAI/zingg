@@ -25,8 +25,6 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
-import zingg.common.core.obviousdupes.ObvDupeFilter;
-import zingg.common.core.obviousdupes.ObvDupeFilterHelper;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.client.ZSparkSession;
 import zingg.spark.client.pipe.SparkPipe;
@@ -144,11 +142,11 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 	
 	@Test
 	public void testGetObviousDupesFilter() throws ZinggClientException {	
-		ObvDupeFilterHelper<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeFilter = new ObvDupeFilterHelper<ZSparkSession,Dataset<Row>,Row,Column,DataType>();
+		ObvDupeUtil<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeUtil = new ObvDupeUtil<ZSparkSession,Dataset<Row>,Row,Column,DataType>();
 
 		SparkFrame posDF = getPosPairDF();
 				
-		Column filter = obvDupeFilter.getObviousDupesFilter(posDF,getObvDupeCond(),null);
+		Column filter = obvDupeUtil.getObviousDupesFilter(posDF,getObvDupeCond(),null);
 		
 		String expectedCond = "(((((((name = z_name) AND (name IS NOT NULL)) AND (z_name IS NOT NULL)) AND (((event = z_event) AND (event IS NOT NULL)) AND (z_event IS NOT NULL))) AND (((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL))) OR (((dob = z_dob) AND (dob IS NOT NULL)) AND (z_dob IS NOT NULL))) OR ((((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL)) AND (((year = z_year) AND (year IS NOT NULL)) AND (z_year IS NOT NULL))))";
 		
@@ -158,11 +156,11 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 
 	@Test
 	public void testGetObviousDupesFilterWithExtraCond() throws ZinggClientException {	
-		ObvDupeFilterHelper<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeFilter = new ObvDupeFilterHelper<ZSparkSession,Dataset<Row>,Row,Column,DataType>();
+		ObvDupeUtil<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeUtil = new ObvDupeUtil<ZSparkSession,Dataset<Row>,Row,Column,DataType>();
 		SparkFrame posDF = getPosPairDF();
 		Column gtCond = posDF.gt("z_zid");
 		
-		Column filter = obvDupeFilter.getObviousDupesFilter(posDF,getObvDupeCond(),gtCond);
+		Column filter = obvDupeUtil.getObviousDupesFilter(posDF,getObvDupeCond(),gtCond);
 		
 		System.out.println(filter.toString());
 		
@@ -174,13 +172,13 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 	
 	@Test
 	public void testGetReverseObviousDupesFilter() throws ZinggClientException {	
-		ObvDupeFilterHelper<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeFilter = new ObvDupeFilterHelper<ZSparkSession,Dataset<Row>,Row,Column,DataType>();
+		ObvDupeUtil<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeUtil = new ObvDupeUtil<ZSparkSession,Dataset<Row>,Row,Column,DataType>();
 
 		SparkFrame posDF = getPosPairDF();
 		ObviousDupes[] obvDupe = getObvDupeCond();		
 				
 				
-		Column filter = obvDupeFilter.getReverseObviousDupesFilter(posDF,obvDupe,null);
+		Column filter = obvDupeUtil.getReverseObviousDupesFilter(posDF,obvDupe,null);
 		
 		String expectedCond = "(NOT (((((((name = z_name) AND (name IS NOT NULL)) AND (z_name IS NOT NULL)) AND (((event = z_event) AND (event IS NOT NULL)) AND (z_event IS NOT NULL))) AND (((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL))) OR (((dob = z_dob) AND (dob IS NOT NULL)) AND (z_dob IS NOT NULL))) OR ((((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL)) AND (((year = z_year) AND (year IS NOT NULL)) AND (z_year IS NOT NULL)))))";
 		

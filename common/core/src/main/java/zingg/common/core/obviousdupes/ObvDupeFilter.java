@@ -19,13 +19,13 @@ public class ObvDupeFilter<S,D,R,C,T> implements Serializable {
     protected Arguments args;	
     protected Context<S,D,R,C,T> context;
     protected String name;
-    protected ObvDupeFilterHelper<S,D,R,C,T> obvDupeFilterHelper;
+    protected ObvDupeUtil<S,D,R,C,T> obvDupeUtil;
 
 	public ObvDupeFilter(Context<S,D,R,C,T> context, Arguments args) {
 		this.context = context;
 		this.args = args;
 		this.name = this.getClass().getName();
-		this.obvDupeFilterHelper = new ObvDupeFilterHelper<S,D,R,C,T>();
+		this.obvDupeUtil = new ObvDupeUtil<S,D,R,C,T>();
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class ObvDupeFilter<S,D,R,C,T> implements Serializable {
 		// loop thru the values and build a filter condition		
 		for (int i = 0; i < obviousDupes.length; i++) {		
 			
-			C obvDupeDFFilter = obvDupeFilterHelper.getObviousDupesFilter(blocked,prefixBlocked,new ObviousDupes[] {obviousDupes[i]},gtCond);
+			C obvDupeDFFilter = obvDupeUtil.getObviousDupesFilter(blocked,prefixBlocked,new ObviousDupes[] {obviousDupes[i]},gtCond);
 			ZFrame<D,R,C> onlyIdsTemp =  blocked
 					.joinOnCol(prefixBlocked, obvDupeDFFilter).select(ColName.ID_COL, ColName.COL_PREFIX + ColName.ID_COL);
 			
@@ -76,7 +76,7 @@ public class ObvDupeFilter<S,D,R,C,T> implements Serializable {
 		
 		// remove duplicate pairs
 		onlyIds = onlyIds.distinct();		
-		onlyIds = obvDupeFilterHelper.massageObvDupes(onlyIds);
+		onlyIds = obvDupeUtil.massageObvDupes(onlyIds);
 		onlyIds = onlyIds.cache();
 
 		return onlyIds;
@@ -104,7 +104,7 @@ public class ObvDupeFilter<S,D,R,C,T> implements Serializable {
 		if (obviousDupes == null || obviousDupes.length == 0) {
 			return blocks;
 		}
-		C reverseOBVDupeDFFilter = obvDupeFilterHelper.getReverseObviousDupesFilter(blocks,obviousDupes,null);
+		C reverseOBVDupeDFFilter = obvDupeUtil.getReverseObviousDupesFilter(blocks,obviousDupes,null);
 		if (reverseOBVDupeDFFilter != null) {
 			// remove dupes as already considered in obvDupePairs
 			blocks = blocks.filter(reverseOBVDupeDFFilter);				

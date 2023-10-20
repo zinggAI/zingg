@@ -7,9 +7,9 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 
-public class ObvDupeFilterHelper<S,D,R,C,T> {
+public class ObvDupeUtil<S,D,R,C,T> {
 	
-	public ObvDupeFilterHelper() {
+	public ObvDupeUtil() {
 	
 	}
 
