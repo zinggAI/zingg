@@ -87,7 +87,28 @@
 			"schema": "recId string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string" 
 			}
 		],
-		"obviousDupeCondition"	: "FNAME & STNO & ADD1",
+		"obviousDupes":[
+			{
+			   "matchCondition":[
+				  {
+					 "fieldName":"fname"
+				  },
+				  {
+					 "fieldName":"stNo"
+				  },
+				  {
+					 "fieldName":"add1"
+				  }
+			   ]
+			},
+			{
+			   "matchCondition":[
+				  {
+					"fieldName":"recId"
+				  }
+			   ]
+			}
+		 ],
 		"labelDataSampleSize" : 0.5,
 		"numPartitions":4,
 		"modelId": 100,

@@ -111,7 +111,7 @@ public class Arguments implements Serializable {
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
 	String column;
-	String obviousDupeCondition;
+	ObviousDupes[] obviousDupes;
 	
 
 	public void setThreshold(double threshold) {
@@ -478,12 +478,12 @@ public class Arguments implements Serializable {
 		this.column = column;
 	}
 	
-	public String getObviousDupeCondition() {
-		return obviousDupeCondition;
+	public ObviousDupes[] getObviousDupes() {
+		return obviousDupes;
 	}
 
-	public void setObviousDupeCondition(String obviousDupeCondition) {
-		this.obviousDupeCondition = obviousDupeCondition;
+	public void setObviousDupes(ObviousDupes[] obviousDupes) {
+		this.obviousDupes = obviousDupes;
 	}
 
 	public long getBlockSize() {

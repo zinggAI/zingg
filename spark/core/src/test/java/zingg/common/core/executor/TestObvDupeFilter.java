@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.MatchType;
+import zingg.common.client.ObviousDupes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
@@ -132,7 +134,7 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 			args.setCollectMetrics(true);
 			args.setModelId("500");
 			
-			args.setObviousDupeCondition("dob");
+			args.setObviousDupes(new ObviousDupes[]{getObviousDupes("dob")});
 
 			return args;
 			
@@ -144,7 +146,7 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 
 		SparkFrame posDF = getPosPairDF();
 				
-		Column filter = obvDupeFilter.getObviousDupesFilter(posDF,"name & event & comment | dob | comment & year",null);
+		Column filter = obvDupeFilter.getObviousDupesFilter(posDF,getObvDupeCond(),null);
 		
 		String expectedCond = "(((((((name = z_name) AND (name IS NOT NULL)) AND (z_name IS NOT NULL)) AND (((event = z_event) AND (event IS NOT NULL)) AND (z_event IS NOT NULL))) AND (((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL))) OR (((dob = z_dob) AND (dob IS NOT NULL)) AND (z_dob IS NOT NULL))) OR ((((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL)) AND (((year = z_year) AND (year IS NOT NULL)) AND (z_year IS NOT NULL))))";
 		
@@ -157,8 +159,8 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 		ObvDupeFilter<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeFilter = new ObvDupeFilter<ZSparkSession,Dataset<Row>,Row,Column,DataType>(zsCTX, getArgs());
 		SparkFrame posDF = getPosPairDF();
 		Column gtCond = posDF.gt("z_zid");
-				
-		Column filter = obvDupeFilter.getObviousDupesFilter(posDF,"name & event & comment | dob | comment & year",gtCond);
+		
+		Column filter = obvDupeFilter.getObviousDupesFilter(posDF,getObvDupeCond(),gtCond);
 		
 		System.out.println(filter.toString());
 		
@@ -173,8 +175,10 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 		ObvDupeFilter<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeFilter = new ObvDupeFilter<ZSparkSession,Dataset<Row>,Row,Column,DataType>(zsCTX, getArgs());
 
 		SparkFrame posDF = getPosPairDF();
+		ObviousDupes[] obvDupe = getObvDupeCond();		
 				
-		Column filter = obvDupeFilter.getReverseObviousDupesFilter(posDF,"name & event & comment | dob | comment & year",null);
+				
+		Column filter = obvDupeFilter.getReverseObviousDupesFilter(posDF,obvDupe,null);
 		
 		String expectedCond = "(NOT (((((((name = z_name) AND (name IS NOT NULL)) AND (z_name IS NOT NULL)) AND (((event = z_event) AND (event IS NOT NULL)) AND (z_event IS NOT NULL))) AND (((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL))) OR (((dob = z_dob) AND (dob IS NOT NULL)) AND (z_dob IS NOT NULL))) OR ((((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL)) AND (((year = z_year) AND (year IS NOT NULL)) AND (z_year IS NOT NULL)))))";
 		
@@ -281,6 +285,28 @@ public class TestObvDupeFilter extends ZinggSparkTester {
 			);
 		return schema;
 	}
+	
+	protected ObviousDupes getObviousDupes(String field) {
+		return getObviousDupes(new String[] {field});
+	}
+
+	protected ObviousDupes getObviousDupes(String[] fields) {
+		HashMap<String, String>[]  matchCondition = new HashMap[fields.length];		
+		for (int i = 0; i < fields.length; i++) {
+			matchCondition[i] = new HashMap<String, String>();
+			matchCondition[i].put(ObviousDupes.fieldName,fields[i]);
+		}
+		return new ObviousDupes(matchCondition);
+	}
+	
+	public ObviousDupes[] getObvDupeCond() {
+		ObviousDupes obvDupe1 = getObviousDupes(new String[]{"name","event","comment"});
+		ObviousDupes obvDupe2 = getObviousDupes("dob");
+		ObviousDupes obvDupe3 = getObviousDupes(new String[]{"comment","year"});
+		ObviousDupes[] obvDupe = new ObviousDupes[] {obvDupe1,obvDupe2,obvDupe3};
+		return obvDupe;
+	}
+
 
 }
 
