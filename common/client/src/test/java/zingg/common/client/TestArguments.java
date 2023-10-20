@@ -247,10 +247,13 @@ public class TestArguments {
 	public void testObvDupe() {
 			Arguments args;
             try {
-                args = argsUtil.createArgumentsFromJSON("/Users/vikasgupta/vikas/zingg/issues/zingg-vikas/examples/febrl/configObvDupe.json", "test");
+                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configObvDupe.json").getFile(), "test");
 
-                System.out.println(Arrays.toString(args.getObviousDupes()));
+                ObviousDupes[] obviousDupes = args.getObviousDupes();
+                HashMap<String,String>[]  matchCondition = obviousDupes[0].getMatchCondition();
 				
+                assertEquals("fname", matchCondition[0].get(ObviousDupes.fieldName));
+                
             } catch (Exception | ZinggClientException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
