@@ -76,7 +76,7 @@ public class ObvDupeFilter<S,D,R,C,T> implements Serializable {
 		
 		// remove duplicate pairs
 		onlyIds = onlyIds.distinct();		
-		onlyIds = obvDupeFilterHelper.massageAllEquals(onlyIds);
+		onlyIds = obvDupeFilterHelper.massageObvDupes(onlyIds);
 		onlyIds = onlyIds.cache();
 
 		return onlyIds;
