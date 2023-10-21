@@ -10,22 +10,23 @@ import zingg.common.client.ObviousDupes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.common.core.Context;
+import zingg.common.core.util.DSUtil;
 
-public class ObvDupeFilter<S,D,R,C,T> implements Serializable {
+public class ObvDupeFilter<S,D,R,C> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	public static final Log LOG = LogFactory.getLog(ObvDupeFilter.class); 
 
     protected Arguments args;	
-    protected Context<S,D,R,C,T> context;
+    protected DSUtil<S, D, R, C> dsUtil;
     protected String name;
-    protected ObvDupeUtil<S,D,R,C,T> obvDupeUtil;
+    protected ObvDupeUtil<D,R,C> obvDupeUtil;
 
-	public ObvDupeFilter(Context<S,D,R,C,T> context, Arguments args) {
-		this.context = context;
+	public ObvDupeFilter(DSUtil<S, D, R, C> dsUtil, Arguments args) {
+		this.dsUtil = dsUtil;
 		this.args = args;
 		this.name = this.getClass().getName();
-		this.obvDupeUtil = new ObvDupeUtil<S,D,R,C,T>();
+		this.obvDupeUtil = new ObvDupeUtil<D,R,C>();
 	}
 
 	/**
@@ -54,7 +55,7 @@ public class ObvDupeFilter<S,D,R,C,T> implements Serializable {
 			return null;
 		}
 
-		ZFrame<D,R,C> prefixBlocked = context.getDSUtil().getPrefixedColumnsDS(blocked);		
+		ZFrame<D,R,C> prefixBlocked = dsUtil.getPrefixedColumnsDS(blocked);		
 		C gtCond = blocked.gt(prefixBlocked,ColName.ID_COL);
 		
 		ZFrame<D,R,C> onlyIds = null;

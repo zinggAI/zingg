@@ -20,7 +20,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.TrainingDataFinder";
 	public static final Log LOG = LogFactory.getLog(TrainingDataFinder.class);    
-	protected ObvDupeFilter<S,D,R,C,T> obvDupeFilter;
+	protected ObvDupeFilter<S, D,R,C> obvDupeFilter;
 	
     public TrainingDataFinder() {
         setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
@@ -201,14 +201,14 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
     
-	public ObvDupeFilter<S, D, R, C, T> getObvDupeFilter() {		
+	public ObvDupeFilter<S, D, R, C> getObvDupeFilter() {		
 		if (obvDupeFilter==null) {
-			obvDupeFilter = new ObvDupeFilter<S, D, R, C, T>(context, args);
+			obvDupeFilter = new ObvDupeFilter<S, D, R, C>(context.getDSUtil(), args);
 		}
 		return obvDupeFilter;
 	}
 
-	public void setObvDupeFilter(ObvDupeFilter<S, D, R, C, T> obvDupeFilter) {
+	public void setObvDupeFilter(ObvDupeFilter<S, D, R, C> obvDupeFilter) {
 		this.obvDupeFilter = obvDupeFilter;
 	}
 	        

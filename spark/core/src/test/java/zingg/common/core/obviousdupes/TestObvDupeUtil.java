@@ -9,7 +9,6 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
-import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructField;
@@ -19,15 +18,15 @@ import org.junit.jupiter.api.Test;
 import zingg.common.client.ObviousDupes;
 import zingg.common.client.ZinggClientException;
 import zingg.spark.client.SparkFrame;
-import zingg.spark.client.ZSparkSession;
 import zingg.spark.core.executor.ZinggSparkTester;
 
 public class TestObvDupeUtil extends ZinggSparkTester {
 	
+	ObvDupeUtil<Dataset<Row>,Row,Column> obvDupeUtil = new ObvDupeUtil<Dataset<Row>,Row,Column>();
+	
 	@Test
 	public void testGetObviousDupesFilter() throws ZinggClientException {	
-		ObvDupeUtil<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeUtil = new ObvDupeUtil<ZSparkSession,Dataset<Row>,Row,Column,DataType>();
-
+	
 		SparkFrame posDF = getPosPairDF();
 				
 		Column filter = obvDupeUtil.getObviousDupesFilter(posDF,getObvDupeCond(),null);
@@ -40,7 +39,6 @@ public class TestObvDupeUtil extends ZinggSparkTester {
 
 	@Test
 	public void testGetObviousDupesFilterWithExtraCond() throws ZinggClientException {	
-		ObvDupeUtil<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeUtil = new ObvDupeUtil<ZSparkSession,Dataset<Row>,Row,Column,DataType>();
 		SparkFrame posDF = getPosPairDF();
 		Column gtCond = posDF.gt("z_zid");
 		
@@ -56,7 +54,6 @@ public class TestObvDupeUtil extends ZinggSparkTester {
 	
 	@Test
 	public void testGetReverseObviousDupesFilter() throws ZinggClientException {	
-		ObvDupeUtil<ZSparkSession,Dataset<Row>,Row,Column,DataType> obvDupeUtil = new ObvDupeUtil<ZSparkSession,Dataset<Row>,Row,Column,DataType>();
 
 		SparkFrame posDF = getPosPairDF();
 		ObviousDupes[] obvDupe = getObvDupeCond();		
