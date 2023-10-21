@@ -104,10 +104,8 @@ public class ObviousDupesUtil<S,D,R,C> implements Serializable {
 			return blocks;
 		}
 		C reverseOBVDupeDFFilter = obvDupeFilter.getReverseObviousDupesFilter(blocks,obviousDupes,null);
-		if (reverseOBVDupeDFFilter != null) {
-			// remove dupes as already considered in obvDupePairs
-			blocks = blocks.filter(reverseOBVDupeDFFilter);				
-		} 
+		// remove dupes as already considered in obvDupePairs
+		blocks = blocks.filter(reverseOBVDupeDFFilter);				
 		LOG.debug("blocks count after removing obvDupePairs " + blocks.count());
 		return blocks;
 	}
