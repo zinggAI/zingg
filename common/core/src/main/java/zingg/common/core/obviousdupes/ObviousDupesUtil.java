@@ -12,21 +12,19 @@ import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.util.DSUtil;
 
-public class ObvDupeFilter<S,D,R,C> implements Serializable {
+public class ObviousDupesUtil<S,D,R,C> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	public static final Log LOG = LogFactory.getLog(ObvDupeFilter.class); 
+	public static final Log LOG = LogFactory.getLog(ObviousDupesUtil.class); 
 
     protected Arguments args;	
     protected DSUtil<S, D, R, C> dsUtil;
-    protected String name;
-    protected ObvDupeUtil<D,R,C> obvDupeUtil;
+    protected ObviousDupesFilter<D,R,C> obvDupeFilter;
 
-	public ObvDupeFilter(DSUtil<S, D, R, C> dsUtil, Arguments args) {
+	public ObviousDupesUtil(DSUtil<S, D, R, C> dsUtil, Arguments args) {
 		this.dsUtil = dsUtil;
 		this.args = args;
-		this.name = this.getClass().getName();
-		this.obvDupeUtil = new ObvDupeUtil<D,R,C>();
+		this.obvDupeFilter = new ObviousDupesFilter<D,R,C>();
 	}
 
 	/**
@@ -63,7 +61,7 @@ public class ObvDupeFilter<S,D,R,C> implements Serializable {
 		// loop thru the values and build a filter condition		
 		for (int i = 0; i < obviousDupes.length; i++) {		
 			
-			C obvDupeDFFilter = obvDupeUtil.getObviousDupesFilter(blocked,prefixBlocked,new ObviousDupes[] {obviousDupes[i]},gtCond);
+			C obvDupeDFFilter = obvDupeFilter.getObviousDupesFilter(blocked,prefixBlocked,new ObviousDupes[] {obviousDupes[i]},gtCond);
 			ZFrame<D,R,C> onlyIdsTemp =  blocked
 					.joinOnCol(prefixBlocked, obvDupeDFFilter).select(ColName.ID_COL, ColName.COL_PREFIX + ColName.ID_COL);
 			
@@ -105,7 +103,7 @@ public class ObvDupeFilter<S,D,R,C> implements Serializable {
 		if (obviousDupes == null || obviousDupes.length == 0) {
 			return blocks;
 		}
-		C reverseOBVDupeDFFilter = obvDupeUtil.getReverseObviousDupesFilter(blocks,obviousDupes,null);
+		C reverseOBVDupeDFFilter = obvDupeFilter.getReverseObviousDupesFilter(blocks,obviousDupes,null);
 		if (reverseOBVDupeDFFilter != null) {
 			// remove dupes as already considered in obvDupePairs
 			blocks = blocks.filter(reverseOBVDupeDFFilter);				

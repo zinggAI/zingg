@@ -20,16 +20,16 @@ import zingg.common.client.ZinggClientException;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.executor.ZinggSparkTester;
 
-public class TestObvDupeUtil extends ZinggSparkTester {
+public class TestObviousDupesFilter extends ZinggSparkTester {
 	
-	ObvDupeUtil<Dataset<Row>,Row,Column> obvDupeUtil = new ObvDupeUtil<Dataset<Row>,Row,Column>();
+	ObviousDupesFilter<Dataset<Row>,Row,Column> obvDupeFilter = new ObviousDupesFilter<Dataset<Row>,Row,Column>();
 	
 	@Test
 	public void testGetObviousDupesFilter() throws ZinggClientException {	
 	
 		SparkFrame posDF = getPosPairDF();
 				
-		Column filter = obvDupeUtil.getObviousDupesFilter(posDF,getObvDupeCond(),null);
+		Column filter = obvDupeFilter.getObviousDupesFilter(posDF,getObvDupeCond(),null);
 		
 		String expectedCond = "(((((((name = z_name) AND (name IS NOT NULL)) AND (z_name IS NOT NULL)) AND (((event = z_event) AND (event IS NOT NULL)) AND (z_event IS NOT NULL))) AND (((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL))) OR (((dob = z_dob) AND (dob IS NOT NULL)) AND (z_dob IS NOT NULL))) OR ((((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL)) AND (((year = z_year) AND (year IS NOT NULL)) AND (z_year IS NOT NULL))))";
 		
@@ -42,7 +42,7 @@ public class TestObvDupeUtil extends ZinggSparkTester {
 		SparkFrame posDF = getPosPairDF();
 		Column gtCond = posDF.gt("z_zid");
 		
-		Column filter = obvDupeUtil.getObviousDupesFilter(posDF,getObvDupeCond(),gtCond);
+		Column filter = obvDupeFilter.getObviousDupesFilter(posDF,getObvDupeCond(),gtCond);
 		
 		System.out.println(filter.toString());
 		
@@ -59,7 +59,7 @@ public class TestObvDupeUtil extends ZinggSparkTester {
 		ObviousDupes[] obvDupe = getObvDupeCond();		
 				
 				
-		Column filter = obvDupeUtil.getReverseObviousDupesFilter(posDF,obvDupe,null);
+		Column filter = obvDupeFilter.getReverseObviousDupesFilter(posDF,obvDupe,null);
 		
 		String expectedCond = "(NOT (((((((name = z_name) AND (name IS NOT NULL)) AND (z_name IS NOT NULL)) AND (((event = z_event) AND (event IS NOT NULL)) AND (z_event IS NOT NULL))) AND (((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL))) OR (((dob = z_dob) AND (dob IS NOT NULL)) AND (z_dob IS NOT NULL))) OR ((((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL)) AND (((year = z_year) AND (year IS NOT NULL)) AND (z_year IS NOT NULL)))))";
 		

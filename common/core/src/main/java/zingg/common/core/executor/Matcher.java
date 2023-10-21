@@ -14,7 +14,7 @@ import zingg.common.client.util.ColValues;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
-import zingg.common.core.obviousdupes.ObvDupeFilter;
+import zingg.common.core.obviousdupes.ObviousDupesUtil;
 import zingg.common.core.preprocess.StopWordsRemover;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
@@ -24,7 +24,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.Matcher";
 	public static final Log LOG = LogFactory.getLog(Matcher.class);    
-	protected ObvDupeFilter<S, D,R,C> obvDupeFilter;
+	protected ObviousDupesUtil<S, D,R,C> obvDupeUtil;
 	
     public Matcher() {
         setZinggOptions(ZinggOptions.MATCH);
@@ -164,11 +164,11 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     }
 
 	protected ZFrame<D, R, C> getObvDupePairs(ZFrame<D, R, C> blocked) {
-		return getObvDupeFilter().getObvDupePairs(blocked);
+		return getObvDupeUtil().getObvDupePairs(blocked);
 	}
 		
 	protected ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks,ZFrame<D, R, C> obvDupePairs) {
-		return getObvDupeFilter().removeObvDupesFromBlocks(blocks,obvDupePairs);
+		return getObvDupeUtil().removeObvDupesFromBlocks(blocks,obvDupePairs);
 	}
 
 	protected ZFrame<D, R, C> addObvDupes(ZFrame<D, R, C> obvDupePairs, ZFrame<D, R, C> dupesActual) {
@@ -321,15 +321,15 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
 
-	public ObvDupeFilter<S, D, R, C> getObvDupeFilter() {		
-		if (obvDupeFilter==null) {
-			obvDupeFilter = new ObvDupeFilter<S, D, R, C>(context.getDSUtil(), args);
+	public ObviousDupesUtil<S, D, R, C> getObvDupeUtil() {		
+		if (obvDupeUtil==null) {
+			obvDupeUtil = new ObviousDupesUtil<S, D, R, C>(context.getDSUtil(), args);
 		}
-		return obvDupeFilter;
+		return obvDupeUtil;
 	}
 
-	public void setObvDupeFilter(ObvDupeFilter<S, D, R, C> obvDupeFilter) {
-		this.obvDupeFilter = obvDupeFilter;
+	public void setObvDupeUtil(ObviousDupesUtil<S, D, R, C> obvDupeUtil) {
+		this.obvDupeUtil = obvDupeUtil;
 	}
 	    
 }

@@ -5,11 +5,10 @@ import java.util.HashMap;
 import zingg.common.client.ObviousDupes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
-import zingg.common.client.util.ColValues;
 
-public class ObvDupeUtil<D,R,C> {
+public class ObviousDupesFilter<D,R,C> {
 	
-	public ObvDupeUtil() {
+	public ObviousDupesFilter() {
 	
 	}
 
