@@ -176,15 +176,4 @@ public class ObvDupeUtil<D,R,C> {
 		return df1.not(getObviousDupesFilter(df1,dfToJoin,obviousDupes,extraAndCond));
 	}
 	
-	/**
-	 * Add prediction and score cols
-	 * @param obvDupes
-	 * @return
-	 */
-	public ZFrame<D,R,C> massageObvDupes(ZFrame<D,R,C> obvDupes) {
-		obvDupes = obvDupes.withColumn(ColName.PREDICTION_COL, ColValues.IS_MATCH_PREDICTION);
-		obvDupes = obvDupes.withColumn(ColName.SCORE_COL, ColValues.FULL_MATCH_SCORE);
-		return obvDupes;
-	}
-	
 }

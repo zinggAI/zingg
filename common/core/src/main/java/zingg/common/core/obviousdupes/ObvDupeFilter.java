@@ -9,7 +9,7 @@ import zingg.common.client.Arguments;
 import zingg.common.client.ObviousDupes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
-import zingg.common.core.Context;
+import zingg.common.client.util.ColValues;
 import zingg.common.core.util.DSUtil;
 
 public class ObvDupeFilter<S,D,R,C> implements Serializable {
@@ -77,7 +77,7 @@ public class ObvDupeFilter<S,D,R,C> implements Serializable {
 		
 		// remove duplicate pairs
 		onlyIds = onlyIds.distinct();		
-		onlyIds = obvDupeUtil.massageObvDupes(onlyIds);
+		onlyIds = massageObvDupes(onlyIds);
 		onlyIds = onlyIds.cache();
 
 		return onlyIds;
@@ -122,6 +122,17 @@ public class ObvDupeFilter<S,D,R,C> implements Serializable {
 		
 		return removeObvDupesFromBlocks(blocks);
 		
+	}
+	
+	/**
+	 * Add prediction and score cols
+	 * @param obvDupes
+	 * @return
+	 */
+	public ZFrame<D,R,C> massageObvDupes(ZFrame<D,R,C> obvDupes) {
+		obvDupes = obvDupes.withColumn(ColName.PREDICTION_COL, ColValues.IS_MATCH_PREDICTION);
+		obvDupes = obvDupes.withColumn(ColName.SCORE_COL, ColValues.FULL_MATCH_SCORE);
+		return obvDupes;
 	}
 	
 }
