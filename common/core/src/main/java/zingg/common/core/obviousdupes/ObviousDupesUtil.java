@@ -58,7 +58,18 @@ public class ObviousDupesUtil<S,D,R,C> implements Serializable {
 		
 		ZFrame<D,R,C> onlyIds = null;
 		
-		// loop thru the values and build a filter condition		
+		// loop thru the values and build a filter condition
+			// instead of using one big condition with AND , OR
+			// we are breaking it down and than doing UNION / DISTINCT in end
+			// this is being done due to performance issues
+			// please do not condense it into one big condition with and / or
+			// ((col(ssn).eq(col(z_ssn)).or(col(dob).eq(z_col(dob)) => does not work due to performance
+			// as we are doing a kind of cartesian join across all data in table to find obv dupe
+			// in reverse i.e. in blocks it works as the data to be compared is within the row
+			// but here in blocked we don't use hash and we have to search across the table
+			// col(ssn).eq(col(z_ssn)) separately
+			// col(dob).eq(z_col(dob) separately
+			// union / distinct in end works
 		for (int i = 0; i < obviousDupes.length; i++) {		
 			
 			C obvDupeDFFilter = obvDupeFilter.getObviousDupesFilter(blocked,prefixBlocked,new ObviousDupes[] {obviousDupes[i]},gtCond);
