@@ -221,11 +221,15 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 		return df.col(c).equalTo(e);
 	}
 
+	public Column equalTo(Column column1, Column column2) {
+		return column1.equalTo(column2);
+	}
+			
 	public Column notEqual(String e) {
 		return df.col(e).notEqual(df.col(ColName.COL_PREFIX + e));
 	}
 
-    public Column notEqual(String c, String e) {
+	public Column notEqual(String c, String e) {
 		return df.col(c).notEqual(e);
 	}
 
@@ -240,7 +244,27 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 	public Column notEqual(String c, int e) {
 		return df.col(c).notEqual(e);
 	}
-
+	
+	@Override
+	public Column not(Column col) {
+		return functions.not(col);
+	}	
+	
+	@Override
+	public Column isNotNull(Column col) {
+		return col.isNotNull();
+	}
+	
+	@Override
+	public Column and(Column col1, Column col2) {
+		return col1.and(col2);
+	}
+	
+	@Override
+	public Column or(Column col1, Column col2) {
+		return col1.or(col2);
+	}
+	
     public ZFrame<Dataset<Row>, Row, Column> sample(boolean withReplacement, float num){
         return new SparkFrame(df.sample(withReplacement, num));
     }
@@ -389,122 +413,5 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 	public ZFrame<Dataset<Row>, Row, Column> filterNullCond(String colName) {
 		return this.filter(df.col(colName).isNull());
 	}	
-	
-	
-	/**
-	 * 
-	 * obviousDupeString format col1 & col2 | col3 | col4 & col5
-	 * 
-	 * @param obviousDupeString
-	 * @return
-	 */
-	public Column getObviousDupesFilter(String obviousDupeString, Column extraAndCond) {
-		return getObviousDupesFilter(this,obviousDupeString,extraAndCond);
-	}
-	
-	/**
-	 * 
-	 * obviousDupeString format col1 & col2 | col3 | col4 & col5
-	 * 
-	 * @param obviousDupeString
-	 * @return
-	 */
-	@Override
-	public Column getObviousDupesFilter(ZFrame<Dataset<Row>, Row, Column> dfToJoin, String obviousDupeString, Column extraAndCond) {
 		
-		if (dfToJoin==null || obviousDupeString == null || obviousDupeString.trim().isEmpty()) {
-			return null;
-		}
-		
-		// split on || (orSeperator)
-		String[] obvDupeORConditions = new String[] {};
-		
-		obvDupeORConditions = obviousDupeString.trim().split(orSeperator);
-
-		// loop thru the values and build a filter condition
-		Column filterExpr = null;
-		
-		for (int i = 0; i < obvDupeORConditions.length; i++) {
-			
-			// parse on &(andSeperator) for obvDupeCond[i] and form a column filter
-			// expression [keep adding to filterExpr]
-			// if number of columns in and condition = 1 => something like uid or ssn =>
-			// direct match if equal
-			Column andCond = null;
-			String orCondStr = obvDupeORConditions[i];
-			
-			if (orCondStr != null && !orCondStr.isEmpty()) {
-
-				String[] andConditions = orCondStr.trim().split(andSeperator);
-
-				if (andConditions != null) {
-					for (int j = 0; j < andConditions.length; j++) {
-
-						String andCondStr = andConditions[j];
-
-						if (andCondStr != null && !andCondStr.trim().isEmpty()) {
-
-							String colName = andCondStr.trim();
-							Column column = this.col(colName);
-							Column columnWithPrefix = dfToJoin.col(ColName.COL_PREFIX + colName);
-
-							Column eqCond = column.equalTo(columnWithPrefix).and(column.isNotNull())
-									.and(columnWithPrefix.isNotNull());
-
-							if (andCond != null) {
-								andCond = andCond.and(eqCond);
-							} else {
-								andCond = eqCond;
-							}
-
-						}
-					}
-				}
-			}
-
-			if (andCond != null) {
-				if (filterExpr != null) {
-					filterExpr = filterExpr.or(andCond);
-				} else {
-					filterExpr = andCond;
-				}
-			}
-
-		}
-		
-		if (extraAndCond != null) {
-			if (filterExpr != null) {
-				filterExpr = filterExpr.and(extraAndCond);
-			} else {
-				filterExpr = extraAndCond;
-			}
-		}
-		
-		return filterExpr;
-	}
-		
-	/**
-	 * 
-	 * obviousDupeString format col1 & col2 | col3 | col4 & col5
-	 * 
-	 * @param obviousDupeString
-	 * @return
-	 */
-	@Override
-	public Column getReverseObviousDupesFilter(String obviousDupeString, Column extraAndCond) {
-		return getReverseObviousDupesFilter(this,obviousDupeString,extraAndCond);
-	}
-		
-	/**
-	 * 
-	 * obviousDupeString format col1 & col2 | col3 | col4 & col5
-	 * 
-	 * @param obviousDupeString
-	 * @return
-	 */
-	@Override
-	public Column getReverseObviousDupesFilter(ZFrame<Dataset<Row>, Row, Column> dfToJoin, String obviousDupeString, Column extraAndCond) {
-		return functions.not(getObviousDupesFilter(dfToJoin,obviousDupeString,extraAndCond));
-	}
-	
 }

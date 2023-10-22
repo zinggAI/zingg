@@ -320,48 +320,6 @@ public class TestSparkFrame extends TestSparkFrameBase {
    }
 	
 	
-	@Test
-	public void testGetObviousDupesFilter() throws ZinggClientException {	
-
-		SparkFrame posDF = getPosPairDF();
-				
-		Column filter = posDF.getObviousDupesFilter("name & event & comment | dob | comment & year",null);
-		
-		String expectedCond = "(((((((name = z_name) AND (name IS NOT NULL)) AND (z_name IS NOT NULL)) AND (((event = z_event) AND (event IS NOT NULL)) AND (z_event IS NOT NULL))) AND (((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL))) OR (((dob = z_dob) AND (dob IS NOT NULL)) AND (z_dob IS NOT NULL))) OR ((((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL)) AND (((year = z_year) AND (year IS NOT NULL)) AND (z_year IS NOT NULL))))";
-		
-		assertEquals(expectedCond,filter.toString());
-		
-	}
-
-	@Test
-	public void testGetObviousDupesFilterWithExtraCond() throws ZinggClientException {	
-
-		SparkFrame posDF = getPosPairDF();
-		Column gtCond = posDF.gt("z_zid");
-				
-		Column filter = posDF.getObviousDupesFilter("name & event & comment | dob | comment & year",gtCond);
-		
-		System.out.println(filter.toString());
-		
-		String expectedCond = "((((((((name = z_name) AND (name IS NOT NULL)) AND (z_name IS NOT NULL)) AND (((event = z_event) AND (event IS NOT NULL)) AND (z_event IS NOT NULL))) AND (((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL))) OR (((dob = z_dob) AND (dob IS NOT NULL)) AND (z_dob IS NOT NULL))) OR ((((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL)) AND (((year = z_year) AND (year IS NOT NULL)) AND (z_year IS NOT NULL)))) AND (z_zid > z_z_zid))";
-		
-		assertEquals(expectedCond,filter.toString());
-		
-	}
-	
-	@Test
-	public void testGetReverseObviousDupesFilter() throws ZinggClientException {	
-
-		SparkFrame posDF = getPosPairDF();
-				
-		Column filter = posDF.getReverseObviousDupesFilter("name & event & comment | dob | comment & year",null);
-		
-		String expectedCond = "(NOT (((((((name = z_name) AND (name IS NOT NULL)) AND (z_name IS NOT NULL)) AND (((event = z_event) AND (event IS NOT NULL)) AND (z_event IS NOT NULL))) AND (((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL))) OR (((dob = z_dob) AND (dob IS NOT NULL)) AND (z_dob IS NOT NULL))) OR ((((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL)) AND (((year = z_year) AND (year IS NOT NULL)) AND (z_year IS NOT NULL)))))";
-		
-		assertEquals(expectedCond,filter.toString());
-		
-	}
-	
 	private SparkFrame getPosPairDF() {
 		Row[] posData = getPosPairRows();	
 		StructType schema = getPairSchema();
