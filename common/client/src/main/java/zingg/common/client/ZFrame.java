@@ -2,7 +2,6 @@ package zingg.common.client;
 
 import java.util.List;
 
-
 //Dataset, Row, column
 public interface ZFrame<D, R, C> {
 	
@@ -11,11 +10,7 @@ public interface ZFrame<D, R, C> {
 	
 	public static final String COL_COUNT = "count";
 	public static final String COL_VALUE = "VALUE";
-	
-	public static final String orSeperator = "\\|";	
-	public static final String andSeperator = "\\&";	
-
-	
+		
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
     public String[] columns();
@@ -99,7 +94,9 @@ public interface ZFrame<D, R, C> {
     public C gt(String c, double val);
     
 	public C equalTo(String c, String e);
-
+	
+	public C equalTo(C column1, C column2);
+	
 	public C notEqual(String c, String e);
 
     public C notEqual(String e);
@@ -110,6 +107,13 @@ public interface ZFrame<D, R, C> {
 
 	public C notEqual(String c, int e);
 
+	public C not(C col);
+	
+	public C isNotNull(C col);
+	
+	public C and(C col1, C col2);
+
+	public C or(C col1, C col2);
 
     public void show(int num);
     public void show();
@@ -160,13 +164,5 @@ public interface ZFrame<D, R, C> {
 	public ZFrame<D, R, C> filterNotNullCond(String colName);
 	
 	public ZFrame<D, R, C> filterNullCond(String colName);
-	
-	public C getObviousDupesFilter(String obviousDupeString, C extraAndCond);
-    
-	public C getObviousDupesFilter(ZFrame<D, R, C> dfToJoin, String obviousDupeString, C extraAndCond);
-	
-	public C getReverseObviousDupesFilter(String obviousDupeString, C extraAndCond);
-	
-	public C getReverseObviousDupesFilter(ZFrame<D, R, C> dfToJoin, String obviousDupeString, C extraAndCond);
-	
+
 }

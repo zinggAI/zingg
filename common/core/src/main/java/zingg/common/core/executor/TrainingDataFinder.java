@@ -12,13 +12,16 @@ import zingg.common.client.util.ColValues;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
+import zingg.common.core.obviousdupes.ObviousDupesUtil;
 import zingg.common.core.preprocess.StopWordsRemover;
 
 public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
+	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.TrainingDataFinder";
 	public static final Log LOG = LogFactory.getLog(TrainingDataFinder.class);    
-
+	protected ObviousDupesUtil<S,D,R,C> obvDupeUtil;
+	
     public TrainingDataFinder() {
         setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
     }
@@ -83,13 +86,18 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(sample, tree); 
 				
 				blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
-				System.out.println("blocked");
+				LOG.debug("blocked");
 				if (LOG.isDebugEnabled()) {
 					blocked.show(true);
 				}
 				ZFrame<D,R,C> blocks = getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
+				// remove obv dupe pairs
+				blocks = getObvDupeUtil().removeObvDupesFromBlocks(blocks);
+				if (blocks.isEmpty()) {
+					LOG.warn("unable to find any pairs as all pairs sampled are part of the obvious duplicate condition");
+				}
 				blocks = blocks.cache();	
-				System.out.println("blocks");
+				LOG.debug("blocks");
 				if (LOG.isDebugEnabled()) {
 					blocks.show();
 				}
@@ -192,5 +200,16 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 	}
 
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
+    
+	public ObviousDupesUtil<S, D, R, C> getObvDupeUtil() {		
+		if (obvDupeUtil==null) {
+			obvDupeUtil = new ObviousDupesUtil<S, D, R, C>(context.getDSUtil(), args);
+		}
+		return obvDupeUtil;
+	}
+
+	public void setObvDupeUtil(ObviousDupesUtil<S, D, R, C> obvDupeUtil) {
+		this.obvDupeUtil = obvDupeUtil;
+	}
 		    
 }

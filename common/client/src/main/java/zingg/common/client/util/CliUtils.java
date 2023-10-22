@@ -49,7 +49,7 @@ public class CliUtils {
 	}
 
 	private static List<String[]> prepareColumnTexts(List<String[]> table, int maxColumnWidth) {
-		List<String[]> finalTableList = new ArrayList<>();
+		List<String[]> finalTableList = new ArrayList<String[]>();
 
 		for (String[] row : table) {
 			// If any cell data is more than max width, then it will need extra row.
@@ -129,7 +129,7 @@ public class CliUtils {
 		 * 
 		 * Map columnLengths is <column_number, column_length>
 		 */
-		Map<Integer, Integer> columnLengths = new HashMap<>();
+		Map<Integer, Integer> columnLengths = new HashMap<Integer, Integer>();
 		for (String[] row: table) {
 			int i = 0;
 			for (String col : row) {
@@ -187,7 +187,7 @@ public class CliUtils {
 		/*
 		 * Create new table array with wrapped rows
 		 */
-		ArrayList<String[]> tableList = new ArrayList<>(Arrays.asList(table)); // Input
+		ArrayList<String[]> tableList = new ArrayList<String[]>(Arrays.asList(table)); // Input
 		formatIntoTable(tableList);
 	}
 }

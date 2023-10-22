@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -240,5 +241,26 @@ public class TestArguments {
 			
 		
 	}
+	
+	
+	@Test
+	public void testObvDupe() {
+			Arguments args;
+            try {
+                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configObvDupe.json").getFile(), "test");
+
+                ObviousDupes[] obviousDupes = args.getObviousDupes();
+                HashMap<String,String>[]  matchCondition = obviousDupes[0].getMatchCondition();
+				
+                assertEquals("fname", matchCondition[0].get(ObviousDupes.fieldName));
+                
+            } catch (Exception | ZinggClientException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+				fail("Could not read config");
+            }
+		
+	}
+	
 	
 }

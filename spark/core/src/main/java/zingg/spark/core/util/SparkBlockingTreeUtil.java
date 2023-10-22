@@ -60,7 +60,7 @@ public class SparkBlockingTreeUtil extends BlockingTreeUtil<ZSparkSession, Datas
 @Override 
 public ZFrame<Dataset<Row>, Row, Column> getTreeDF(byte[] blockingTree){
         StructType schema = DataTypes.createStructType(new StructField[] { DataTypes.createStructField("BlockingTree", DataTypes.BinaryType, false) });
-        List<Row> objList = new ArrayList<>();
+        List<Row> objList = new ArrayList<Row>();
         objList.add(RowFactory.create(blockingTree));
         Dataset<Row> df = spark.getSession().sqlContext().createDataFrame(objList, schema).toDF().coalesce(1);
         return new SparkFrame(df);
