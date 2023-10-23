@@ -92,7 +92,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				}
 				ZFrame<D,R,C> blocks = getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
 				// remove obv dupe pairs
-				blocks = getObvDupeUtil().removeObvDupesFromBlocks(blocks);
+				blocks = getObvDupeUtil().removeDeterministicMatchingFromBlocks(blocks);
 				if (blocks.isEmpty()) {
 					LOG.warn("unable to find any pairs as all pairs sampled are part of the obvious duplicate condition");
 				}

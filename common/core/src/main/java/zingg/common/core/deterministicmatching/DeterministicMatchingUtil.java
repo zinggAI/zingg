@@ -86,7 +86,7 @@ public class DeterministicMatchingUtil<S,D,R,C> implements Serializable {
 		
 		// remove duplicate pairs
 		onlyIds = onlyIds.distinct();		
-		onlyIds = massageObvDupes(onlyIds);
+		onlyIds = massageDeterministicMatching(onlyIds);
 		onlyIds = onlyIds.cache();
 
 		return onlyIds;
@@ -107,7 +107,7 @@ public class DeterministicMatchingUtil<S,D,R,C> implements Serializable {
 	 * @param blocked
 	 * @return
 	 */
-	public ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks) {
+	public ZFrame<D, R, C> removeDeterministicMatchingFromBlocks(ZFrame<D, R, C> blocks) {
 		
 		LOG.debug("blocks count before removing obvDupePairs " + blocks.count());
 		DeterministicMatching[] deterministicMatching = args.getDeterministicMatching();
@@ -121,25 +121,25 @@ public class DeterministicMatchingUtil<S,D,R,C> implements Serializable {
 		return blocks;
 	}
 	
-	public ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks,ZFrame<D, R, C> obvDupePairs) {
+	public ZFrame<D, R, C> removeDeterministicMatchingFromBlocks(ZFrame<D, R, C> blocks,ZFrame<D, R, C> obvDupePairs) {
 		
 		if(obvDupePairs==null || obvDupePairs.isEmpty()) {
 			return blocks;
 		}
 		
-		return removeObvDupesFromBlocks(blocks);
+		return removeDeterministicMatchingFromBlocks(blocks);
 		
 	}
 	
 	/**
 	 * Add prediction and score cols
-	 * @param obvDupes
+	 * @param deterministicMatching
 	 * @return
 	 */
-	public ZFrame<D,R,C> massageObvDupes(ZFrame<D,R,C> obvDupes) {
-		obvDupes = obvDupes.withColumn(ColName.PREDICTION_COL, ColValues.IS_MATCH_PREDICTION);
-		obvDupes = obvDupes.withColumn(ColName.SCORE_COL, ColValues.FULL_MATCH_SCORE);
-		return obvDupes;
+	public ZFrame<D,R,C> massageDeterministicMatching(ZFrame<D,R,C> deterministicMatching) {
+		deterministicMatching = deterministicMatching.withColumn(ColName.PREDICTION_COL, ColValues.IS_MATCH_PREDICTION);
+		deterministicMatching = deterministicMatching.withColumn(ColName.SCORE_COL, ColValues.FULL_MATCH_SCORE);
+		return deterministicMatching;
 	}
 	
 }

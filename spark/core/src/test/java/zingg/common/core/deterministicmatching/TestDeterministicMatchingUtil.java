@@ -47,8 +47,8 @@ public class TestDeterministicMatchingUtil extends ZinggSparkTester {
 	}
 
 	@Test
-	public void testRemoveObvDupesFromBlocks() throws ZinggClientException {
-		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtil().removeObvDupesFromBlocks(getBlocksDF());
+	public void testRemoveDeterministicMatchingFromBlocks() throws ZinggClientException {
+		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtil().removeDeterministicMatchingFromBlocks(getBlocksDF());
 		assertEquals(1, pairs.count());
 		Row r = pairs.head();
 		assertEquals(11, pairs.getAsInt(r,ColName.ID_COL));
@@ -56,16 +56,16 @@ public class TestDeterministicMatchingUtil extends ZinggSparkTester {
 	}
 	
 	@Test
-	public void testRemoveObvDupesFromBlocks2() throws ZinggClientException {
+	public void testRemoveDeterministicMatchingFromBlocks2() throws ZinggClientException {
 		// obv dupe df is null => don't remove dupes
-		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtil().removeObvDupesFromBlocks(getBlocksDF(), null);
+		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtil().removeDeterministicMatchingFromBlocks(getBlocksDF(), null);
 		assertEquals(2, pairs.count());
 	}
 
 	@Test
-	public void testRemoveObvDupesFromBlocks3() throws ZinggClientException {
+	public void testRemoveDeterministicMatchingFromBlocks3() throws ZinggClientException {
 		// as long as obv dupe df is not empty => remove dupes
-		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtil().removeObvDupesFromBlocks(getBlocksDF(),getBlocksDF());
+		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtil().removeDeterministicMatchingFromBlocks(getBlocksDF(),getBlocksDF());
 		assertEquals(1, pairs.count());
 		Row r = pairs.head();
 		assertEquals(11, pairs.getAsInt(r,ColName.ID_COL));
@@ -73,17 +73,17 @@ public class TestDeterministicMatchingUtil extends ZinggSparkTester {
 	}
 	
 	@Test
-	public void testRemoveObvDupesFromBlocks4() throws ZinggClientException {
+	public void testRemoveDeterministicMatchingFromBlocks4() throws ZinggClientException {
 		ZFrame<Dataset<Row>, Row, Column> emptyDF = getBlocksDF().filterNullCond(ColName.ID_COL);
 		
 		// obv dupe df is empty => don't remove dupes
-		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtil().removeObvDupesFromBlocks(getBlocksDF(), emptyDF);
+		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtil().removeDeterministicMatchingFromBlocks(getBlocksDF(), emptyDF);
 		assertEquals(2, pairs.count());
 	}
 	
 	@Test
-	public void testRemoveObvDupesFromBlocksNull() throws ZinggClientException {
-		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtilEmptyArgs().removeObvDupesFromBlocks(getBlocksDF());
+	public void testRemoveDeterministicMatchingFromBlocksNull() throws ZinggClientException {
+		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtilEmptyArgs().removeDeterministicMatchingFromBlocks(getBlocksDF());
 		assertEquals(2, pairs.count());
 	}
 	

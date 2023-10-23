@@ -120,7 +120,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 			//get obvious dupes
 			ZFrame<D, R, C> obvDupePairs = getObvDupePairs(blocked);
-			blocks = removeObvDupesFromBlocks(blocks,obvDupePairs);
+			blocks = removeDeterministicMatchingFromBlocks(blocks,obvDupePairs);
 			
 			//send remaining to model 
 			Model model = getModel();
@@ -149,7 +149,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			//writeOutput(blocked, dupes.union(allEqual).cache());		
 			
 			ZFrame<D,R,C>dupesActual = getDupesActualForGraph(dupes);
-			dupesActual = addObvDupes(obvDupePairs, dupesActual);	
+			dupesActual = addDeterministicMatching(obvDupePairs, dupesActual);	
 			
 			//dupesActual.explain();
 			//dupesActual.toJavaRDD().saveAsTextFile("/tmp/zdupes");
@@ -167,11 +167,11 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return getObvDupeUtil().getObvDupePairs(blocked);
 	}
 		
-	protected ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks,ZFrame<D, R, C> obvDupePairs) {
-		return getObvDupeUtil().removeObvDupesFromBlocks(blocks,obvDupePairs);
+	protected ZFrame<D, R, C> removeDeterministicMatchingFromBlocks(ZFrame<D, R, C> blocks,ZFrame<D, R, C> obvDupePairs) {
+		return getObvDupeUtil().removeDeterministicMatchingFromBlocks(blocks,obvDupePairs);
 	}
 
-	protected ZFrame<D, R, C> addObvDupes(ZFrame<D, R, C> obvDupePairs, ZFrame<D, R, C> dupesActual) {
+	protected ZFrame<D, R, C> addDeterministicMatching(ZFrame<D, R, C> obvDupePairs, ZFrame<D, R, C> dupesActual) {
 		if (obvDupePairs != null) {
 			// ensure same columns in both
 			obvDupePairs = selectColsFromDupes(obvDupePairs);
