@@ -249,10 +249,10 @@ public class TestArguments {
             try {
                 args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configObvDupe.json").getFile(), "test");
 
-                ObviousDupes[] obviousDupes = args.getObviousDupes();
-                HashMap<String,String>[]  matchCondition = obviousDupes[0].getMatchCondition();
+                DeterministicMatching[] DeterministicMatching = args.getDeterministicMatching();
+                HashMap<String,String>[]  matchCondition = DeterministicMatching[0].getMatchCondition();
 				
-                assertEquals("fname", matchCondition[0].get(ObviousDupes.fieldName));
+                assertEquals("fname", matchCondition[0].get(DeterministicMatching.fieldName));
                 
             } catch (Exception | ZinggClientException e) {
                 // TODO Auto-generated catch block

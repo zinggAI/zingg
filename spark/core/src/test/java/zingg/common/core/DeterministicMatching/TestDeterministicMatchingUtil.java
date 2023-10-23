@@ -1,4 +1,4 @@
-package zingg.common.core.obviousdupes;
+package zingg.common.core.DeterministicMatching;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.MatchType;
-import zingg.common.client.ObviousDupes;
+import zingg.common.client.DeterministicMatching;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
@@ -29,7 +29,7 @@ import zingg.spark.client.ZSparkSession;
 import zingg.spark.client.pipe.SparkPipe;
 import zingg.spark.core.executor.ZinggSparkTester;
 
-public class TestObviousDupesUtil extends ZinggSparkTester {
+public class TestDeterministicMatchingUtil extends ZinggSparkTester {
 	
 	@Test
 	public void testGetObvDupePairs() throws ZinggClientException {
@@ -125,7 +125,7 @@ public class TestObviousDupesUtil extends ZinggSparkTester {
 			args.setCollectMetrics(true);
 			args.setModelId("500");
 			
-			args.setObviousDupes(new ObviousDupes[]{getObviousDupes("dob")});
+			args.setDeterministicMatching(new DeterministicMatching[]{getDeterministicMatching("dob")});
 
 			return args;
 			
@@ -177,25 +177,25 @@ public class TestObviousDupesUtil extends ZinggSparkTester {
 		return df;
 	}	
 	
-	private ObviousDupes getObviousDupes(String field) {
-		return getObviousDupes(new String[] {field});
+	private DeterministicMatching getDeterministicMatching(String field) {
+		return getDeterministicMatching(new String[] {field});
 	}
 
-	private ObviousDupes getObviousDupes(String[] fields) {
+	private DeterministicMatching getDeterministicMatching(String[] fields) {
 		HashMap<String, String>[]  matchCondition = new HashMap[fields.length];		
 		for (int i = 0; i < fields.length; i++) {
 			matchCondition[i] = new HashMap<String, String>();
-			matchCondition[i].put(ObviousDupes.fieldName,fields[i]);
+			matchCondition[i].put(DeterministicMatching.fieldName,fields[i]);
 		}
-		return new ObviousDupes(matchCondition);
+		return new DeterministicMatching(matchCondition);
 	}
 
-	protected ObviousDupesUtil<ZSparkSession, Dataset<Row>, Row, Column> getObvDupeUtil() throws ZinggClientException {
-		return new ObviousDupesUtil<ZSparkSession, Dataset<Row>, Row, Column>(zsCTX.getDSUtil(), getArgs());
+	protected DeterministicMatchingUtil<ZSparkSession, Dataset<Row>, Row, Column> getObvDupeUtil() throws ZinggClientException {
+		return new DeterministicMatchingUtil<ZSparkSession, Dataset<Row>, Row, Column>(zsCTX.getDSUtil(), getArgs());
 	}
 	
-	protected ObviousDupesUtil<ZSparkSession, Dataset<Row>, Row, Column> getObvDupeUtilEmptyArgs() {
-		return new ObviousDupesUtil<ZSparkSession, Dataset<Row>, Row, Column>(zsCTX.getDSUtil(), new Arguments());
+	protected DeterministicMatchingUtil<ZSparkSession, Dataset<Row>, Row, Column> getObvDupeUtilEmptyArgs() {
+		return new DeterministicMatchingUtil<ZSparkSession, Dataset<Row>, Row, Column>(zsCTX.getDSUtil(), new Arguments());
 	}
 
 

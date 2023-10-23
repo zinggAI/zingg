@@ -7,18 +7,18 @@ import java.util.HashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class ObviousDupes implements Serializable {
+public class DeterministicMatching implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	public static final Log LOG = LogFactory.getLog(ObviousDupes.class);
+	public static final Log LOG = LogFactory.getLog(DeterministicMatching.class);
 	
 	public static final String fieldName = "fieldName";
 	
-	public ObviousDupes() {
+	public DeterministicMatching() {
 		
 	}
 	
-	public ObviousDupes(HashMap<String, String>[] matchCondition) {
+	public DeterministicMatching(HashMap<String, String>[] matchCondition) {
 		this.matchCondition = matchCondition;
 	}
 

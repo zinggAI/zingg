@@ -14,7 +14,7 @@ import zingg.common.client.util.ColValues;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
-import zingg.common.core.obviousdupes.ObviousDupesUtil;
+import zingg.common.core.DeterministicMatching.DeterministicMatchingUtil;
 import zingg.common.core.preprocess.StopWordsRemover;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
@@ -24,7 +24,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.Matcher";
 	public static final Log LOG = LogFactory.getLog(Matcher.class);    
-	protected ObviousDupesUtil<S, D,R,C> obvDupeUtil;
+	protected DeterministicMatchingUtil<S, D,R,C> obvDupeUtil;
 	
     public Matcher() {
         setZinggOptions(ZinggOptions.MATCH);
@@ -321,14 +321,14 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
 
-	public ObviousDupesUtil<S, D, R, C> getObvDupeUtil() {		
+	public DeterministicMatchingUtil<S, D, R, C> getObvDupeUtil() {		
 		if (obvDupeUtil==null) {
-			obvDupeUtil = new ObviousDupesUtil<S, D, R, C>(context.getDSUtil(), args);
+			obvDupeUtil = new DeterministicMatchingUtil<S, D, R, C>(context.getDSUtil(), args);
 		}
 		return obvDupeUtil;
 	}
 
-	public void setObvDupeUtil(ObviousDupesUtil<S, D, R, C> obvDupeUtil) {
+	public void setObvDupeUtil(DeterministicMatchingUtil<S, D, R, C> obvDupeUtil) {
 		this.obvDupeUtil = obvDupeUtil;
 	}
 	    

@@ -1,4 +1,4 @@
-package zingg.common.core.obviousdupes;
+package zingg.common.core.DeterministicMatching;
 
 import java.io.Serializable;
 
@@ -6,25 +6,25 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.Arguments;
-import zingg.common.client.ObviousDupes;
+import zingg.common.client.DeterministicMatching;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.util.DSUtil;
 
-public class ObviousDupesUtil<S,D,R,C> implements Serializable {
+public class DeterministicMatchingUtil<S,D,R,C> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	public static final Log LOG = LogFactory.getLog(ObviousDupesUtil.class); 
+	public static final Log LOG = LogFactory.getLog(DeterministicMatchingUtil.class); 
 
     protected Arguments args;	
     protected DSUtil<S, D, R, C> dsUtil;
-    protected ObviousDupesFilter<D,R,C> obvDupeFilter;
+    protected DeterministicMatchingFilter<D,R,C> obvDupeFilter;
 
-	public ObviousDupesUtil(DSUtil<S, D, R, C> dsUtil, Arguments args) {
+	public DeterministicMatchingUtil(DSUtil<S, D, R, C> dsUtil, Arguments args) {
 		this.dsUtil = dsUtil;
 		this.args = args;
-		this.obvDupeFilter = new ObviousDupesFilter<D,R,C>();
+		this.obvDupeFilter = new DeterministicMatchingFilter<D,R,C>();
 	}
 
 	/**
@@ -46,10 +46,10 @@ public class ObviousDupesUtil<S,D,R,C> implements Serializable {
 	 */
 	public ZFrame<D, R, C> getObvDupePairs(ZFrame<D, R, C> blocked) {
 		
-		ObviousDupes[] obviousDupes = args.getObviousDupes();
+		DeterministicMatching[] DeterministicMatching = args.getDeterministicMatching();
 		
 		// no condition specified
-		if (obviousDupes == null || obviousDupes.length==0) {
+		if (DeterministicMatching == null || DeterministicMatching.length==0) {
 			return null;
 		}
 
@@ -70,9 +70,9 @@ public class ObviousDupesUtil<S,D,R,C> implements Serializable {
 			// col(ssn).eq(col(z_ssn)) separately
 			// col(dob).eq(z_col(dob) separately
 			// union / distinct in end works
-		for (int i = 0; i < obviousDupes.length; i++) {		
+		for (int i = 0; i < DeterministicMatching.length; i++) {		
 			
-			C obvDupeDFFilter = obvDupeFilter.getObviousDupesFilter(blocked,prefixBlocked,new ObviousDupes[] {obviousDupes[i]},gtCond);
+			C obvDupeDFFilter = obvDupeFilter.getDeterministicMatchingFilter(blocked,prefixBlocked,new DeterministicMatching[] {DeterministicMatching[i]},gtCond);
 			ZFrame<D,R,C> onlyIdsTemp =  blocked
 					.joinOnCol(prefixBlocked, obvDupeDFFilter).select(ColName.ID_COL, ColName.COL_PREFIX + ColName.ID_COL);
 			
@@ -110,11 +110,11 @@ public class ObviousDupesUtil<S,D,R,C> implements Serializable {
 	public ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks) {
 		
 		LOG.debug("blocks count before removing obvDupePairs " + blocks.count());
-		ObviousDupes[] obviousDupes = args.getObviousDupes();
-		if (obviousDupes == null || obviousDupes.length == 0) {
+		DeterministicMatching[] DeterministicMatching = args.getDeterministicMatching();
+		if (DeterministicMatching == null || DeterministicMatching.length == 0) {
 			return blocks;
 		}
-		C reverseOBVDupeDFFilter = obvDupeFilter.getReverseObviousDupesFilter(blocks,obviousDupes,null);
+		C reverseOBVDupeDFFilter = obvDupeFilter.getReverseDeterministicMatchingFilter(blocks,DeterministicMatching,null);
 		// remove dupes as already considered in obvDupePairs
 		blocks = blocks.filter(reverseOBVDupeDFFilter);				
 		LOG.debug("blocks count after removing obvDupePairs " + blocks.count());

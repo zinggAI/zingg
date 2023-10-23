@@ -1,4 +1,4 @@
-package zingg.common.core.obviousdupes;
+package zingg.common.core.DeterministicMatching;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,21 +15,21 @@ import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
-import zingg.common.client.ObviousDupes;
+import zingg.common.client.DeterministicMatching;
 import zingg.common.client.ZinggClientException;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.executor.ZinggSparkTester;
 
-public class TestObviousDupesFilter extends ZinggSparkTester {
+public class TestDeterministicMatchingFilter extends ZinggSparkTester {
 	
-	ObviousDupesFilter<Dataset<Row>,Row,Column> obvDupeFilter = new ObviousDupesFilter<Dataset<Row>,Row,Column>();
+	DeterministicMatchingFilter<Dataset<Row>,Row,Column> obvDupeFilter = new DeterministicMatchingFilter<Dataset<Row>,Row,Column>();
 	
 	@Test
-	public void testGetObviousDupesFilter() throws ZinggClientException {	
+	public void testGetDeterministicMatchingFilter() throws ZinggClientException {	
 	
 		SparkFrame posDF = getPosPairDF();
 				
-		Column filter = obvDupeFilter.getObviousDupesFilter(posDF,getObvDupeCond(),null);
+		Column filter = obvDupeFilter.getDeterministicMatchingFilter(posDF,getObvDupeCond(),null);
 		
 		String expectedCond = "(((((((name = z_name) AND (name IS NOT NULL)) AND (z_name IS NOT NULL)) AND (((event = z_event) AND (event IS NOT NULL)) AND (z_event IS NOT NULL))) AND (((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL))) OR (((dob = z_dob) AND (dob IS NOT NULL)) AND (z_dob IS NOT NULL))) OR ((((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL)) AND (((year = z_year) AND (year IS NOT NULL)) AND (z_year IS NOT NULL))))";
 		
@@ -38,11 +38,11 @@ public class TestObviousDupesFilter extends ZinggSparkTester {
 	}
 
 	@Test
-	public void testGetObviousDupesFilterWithExtraCond() throws ZinggClientException {	
+	public void testGetDeterministicMatchingFilterWithExtraCond() throws ZinggClientException {	
 		SparkFrame posDF = getPosPairDF();
 		Column gtCond = posDF.gt("z_zid");
 		
-		Column filter = obvDupeFilter.getObviousDupesFilter(posDF,getObvDupeCond(),gtCond);
+		Column filter = obvDupeFilter.getDeterministicMatchingFilter(posDF,getObvDupeCond(),gtCond);
 		
 		System.out.println(filter.toString());
 		
@@ -53,13 +53,13 @@ public class TestObviousDupesFilter extends ZinggSparkTester {
 	}
 	
 	@Test
-	public void testGetReverseObviousDupesFilter() throws ZinggClientException {	
+	public void testGetReverseDeterministicMatchingFilter() throws ZinggClientException {	
 
 		SparkFrame posDF = getPosPairDF();
-		ObviousDupes[] obvDupe = getObvDupeCond();		
+		DeterministicMatching[] obvDupe = getObvDupeCond();		
 				
 				
-		Column filter = obvDupeFilter.getReverseObviousDupesFilter(posDF,obvDupe,null);
+		Column filter = obvDupeFilter.getReverseDeterministicMatchingFilter(posDF,obvDupe,null);
 		
 		String expectedCond = "(NOT (((((((name = z_name) AND (name IS NOT NULL)) AND (z_name IS NOT NULL)) AND (((event = z_event) AND (event IS NOT NULL)) AND (z_event IS NOT NULL))) AND (((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL))) OR (((dob = z_dob) AND (dob IS NOT NULL)) AND (z_dob IS NOT NULL))) OR ((((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL)) AND (((year = z_year) AND (year IS NOT NULL)) AND (z_year IS NOT NULL)))))";
 		
@@ -120,24 +120,24 @@ public class TestObviousDupesFilter extends ZinggSparkTester {
 		return schema;
 	}
 	
-	protected ObviousDupes getObviousDupes(String field) {
-		return getObviousDupes(new String[] {field});
+	protected DeterministicMatching getDeterministicMatching(String field) {
+		return getDeterministicMatching(new String[] {field});
 	}
 
-	protected ObviousDupes getObviousDupes(String[] fields) {
+	protected DeterministicMatching getDeterministicMatching(String[] fields) {
 		HashMap<String, String>[]  matchCondition = new HashMap[fields.length];		
 		for (int i = 0; i < fields.length; i++) {
 			matchCondition[i] = new HashMap<String, String>();
-			matchCondition[i].put(ObviousDupes.fieldName,fields[i]);
+			matchCondition[i].put(DeterministicMatching.fieldName,fields[i]);
 		}
-		return new ObviousDupes(matchCondition);
+		return new DeterministicMatching(matchCondition);
 	}
 	
-	public ObviousDupes[] getObvDupeCond() {
-		ObviousDupes obvDupe1 = getObviousDupes(new String[]{"name","event","comment"});
-		ObviousDupes obvDupe2 = getObviousDupes("dob");
-		ObviousDupes obvDupe3 = getObviousDupes(new String[]{"comment","year"});
-		ObviousDupes[] obvDupe = new ObviousDupes[] {obvDupe1,obvDupe2,obvDupe3};
+	public DeterministicMatching[] getObvDupeCond() {
+		DeterministicMatching obvDupe1 = getDeterministicMatching(new String[]{"name","event","comment"});
+		DeterministicMatching obvDupe2 = getDeterministicMatching("dob");
+		DeterministicMatching obvDupe3 = getDeterministicMatching(new String[]{"comment","year"});
+		DeterministicMatching[] obvDupe = new DeterministicMatching[] {obvDupe1,obvDupe2,obvDupe3};
 		return obvDupe;
 	}
 
