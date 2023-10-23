@@ -1,4 +1,4 @@
-package zingg.common.core.DeterministicMatching;
+package zingg.common.core.deterministicmatching;
 
 import java.util.HashMap;
 
@@ -13,33 +13,33 @@ public class DeterministicMatchingFilter<D,R,C> {
 	}
 
 	/**
-	 * Returns a Column filter for the DF given the DeterministicMatching condition
+	 * Returns a Column filter for the DF given the deterministicMatching condition
 	 * 
 	 * @param df1 :DF containing the self joined data e.g. fname, z_fname
-	 * @param DeterministicMatching obvious dupe conditions. Those in one MatchCondition are "AND" condition, will "OR" with other MatchCondition
+	 * @param deterministicMatching obvious dupe conditions. Those in one MatchCondition are "AND" condition, will "OR" with other MatchCondition
 	 * @param extraAndCond Any extra condition to be applied e.g. z_zid > z_z_id
 	 * @return
 	 */
-	public C getDeterministicMatchingFilter(ZFrame<D, R, C> df1, DeterministicMatching[] DeterministicMatching, C extraAndCond) {
-		return getDeterministicMatchingFilter(df1,df1,DeterministicMatching,extraAndCond);
+	public C getDeterministicMatchingFilter(ZFrame<D, R, C> df1, DeterministicMatching[] deterministicMatching, C extraAndCond) {
+		return getDeterministicMatchingFilter(df1,df1,deterministicMatching,extraAndCond);
 	}
 	/**
-	 * Returns a Column filter for the DFs given the DeterministicMatching condition
+	 * Returns a Column filter for the DFs given the deterministicMatching condition
 	 * 
 	 * @param df1 : 1st DF to join
 	 * @param dfToJoin : 2nd DF to join with (the one having cols with z_ as prefix)
-	 * @param DeterministicMatching obvious dupe conditions. Those in one MatchCondition are "AND" condition, will "OR" with other MatchCondition
+	 * @param deterministicMatching obvious dupe conditions. Those in one MatchCondition are "AND" condition, will "OR" with other MatchCondition
 	 * @param extraAndCond Any extra condition to be applied e.g. z_zid > z_z_id
-	 * @return Column filter for the DFs given the DeterministicMatching condition
+	 * @return Column filter for the DFs given the deterministicMatching condition
 	 */	
-	public C getDeterministicMatchingFilter(ZFrame<D, R, C> df1, ZFrame<D, R, C> dfToJoin, DeterministicMatching[] DeterministicMatching, C extraAndCond) {
+	public C getDeterministicMatchingFilter(ZFrame<D, R, C> df1, ZFrame<D, R, C> dfToJoin, DeterministicMatching[] deterministicMatching, C extraAndCond) {
 		
-		if (dfToJoin==null || DeterministicMatching == null) {
+		if (dfToJoin==null || deterministicMatching == null) {
 			return null;
 		}
 		
 		
-		C filterExpr = getFilterExpr(df1, dfToJoin, DeterministicMatching);
+		C filterExpr = getFilterExpr(df1, dfToJoin, deterministicMatching);
 		
 		filterExpr = addExtraAndCond(df1, extraAndCond, filterExpr);
 		
@@ -50,15 +50,15 @@ public class DeterministicMatchingFilter<D,R,C> {
 	 * loop thru the values and build a filter condition
 	 * @param df1 : 1st DF to join
 	 * @param dfToJoin : 2nd DF to join with (the one having cols with z_ as prefix)
-	 * @param DeterministicMatching obvious dupe conditions. Those in one MatchCondition are "AND" condition, will "OR" with other MatchCondition
-	 * @return Column filter for the DFs given the DeterministicMatching condition
+	 * @param deterministicMatching obvious dupe conditions. Those in one MatchCondition are "AND" condition, will "OR" with other MatchCondition
+	 * @return Column filter for the DFs given the deterministicMatching condition
 	 */
-	private C getFilterExpr(ZFrame<D, R, C> df1, ZFrame<D, R, C> dfToJoin, DeterministicMatching[] DeterministicMatching) {
+	private C getFilterExpr(ZFrame<D, R, C> df1, ZFrame<D, R, C> dfToJoin, DeterministicMatching[] deterministicMatching) {
 		C filterExpr = null;
 		
-		for (int i = 0; i < DeterministicMatching.length; i++) {
+		for (int i = 0; i < deterministicMatching.length; i++) {
 			
-			C andCond = getAndCondition(df1, dfToJoin, DeterministicMatching[i].getMatchCondition());
+			C andCond = getAndCondition(df1, dfToJoin, deterministicMatching[i].getMatchCondition());
 
 			filterExpr = addOrCond(df1, filterExpr, andCond);
 
@@ -155,24 +155,24 @@ public class DeterministicMatchingFilter<D,R,C> {
 	/**
 	 * Used to filter out obv dupes by forming a NOT over obv dupe filter condition
 	 * @param df1
-	 * @param DeterministicMatching
+	 * @param deterministicMatching
 	 * @param extraAndCond
 	 * @return
 	 */
-	public C getReverseDeterministicMatchingFilter(ZFrame<D, R, C> df1,DeterministicMatching[] DeterministicMatching, C extraAndCond) {
-		return getReverseDeterministicMatchingFilter(df1,df1,DeterministicMatching,extraAndCond);
+	public C getReverseDeterministicMatchingFilter(ZFrame<D, R, C> df1,DeterministicMatching[] deterministicMatching, C extraAndCond) {
+		return getReverseDeterministicMatchingFilter(df1,df1,deterministicMatching,extraAndCond);
 	}
 		
 	/**
 	 * Used to filter out obv dupes by forming a NOT over obv dupe filter condition
 	 * @param df1
 	 * @param dfToJoin
-	 * @param DeterministicMatching
+	 * @param deterministicMatching
 	 * @param extraAndCond
 	 * @return
 	 */
-	public C getReverseDeterministicMatchingFilter(ZFrame<D, R, C> df1,ZFrame<D,R,C> dfToJoin, DeterministicMatching[] DeterministicMatching, C extraAndCond) {
-		return df1.not(getDeterministicMatchingFilter(df1,dfToJoin,DeterministicMatching,extraAndCond));
+	public C getReverseDeterministicMatchingFilter(ZFrame<D, R, C> df1,ZFrame<D,R,C> dfToJoin, DeterministicMatching[] deterministicMatching, C extraAndCond) {
+		return df1.not(getDeterministicMatchingFilter(df1,dfToJoin,deterministicMatching,extraAndCond));
 	}
 	
 }

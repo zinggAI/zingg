@@ -249,8 +249,8 @@ public class TestArguments {
             try {
                 args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configObvDupe.json").getFile(), "test");
 
-                DeterministicMatching[] DeterministicMatching = args.getDeterministicMatching();
-                HashMap<String,String>[]  matchCondition = DeterministicMatching[0].getMatchCondition();
+                DeterministicMatching[] deterministicMatching = args.getDeterministicMatching();
+                HashMap<String,String>[]  matchCondition = deterministicMatching[0].getMatchCondition();
 				
                 assertEquals("fname", matchCondition[0].get(DeterministicMatching.fieldName));
                 

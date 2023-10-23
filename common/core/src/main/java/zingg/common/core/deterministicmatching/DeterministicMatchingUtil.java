@@ -1,4 +1,4 @@
-package zingg.common.core.DeterministicMatching;
+package zingg.common.core.deterministicMatching;
 
 import java.io.Serializable;
 
@@ -46,10 +46,10 @@ public class DeterministicMatchingUtil<S,D,R,C> implements Serializable {
 	 */
 	public ZFrame<D, R, C> getObvDupePairs(ZFrame<D, R, C> blocked) {
 		
-		DeterministicMatching[] DeterministicMatching = args.getDeterministicMatching();
+		DeterministicMatching[] deterministicMatching = args.getDeterministicMatching();
 		
 		// no condition specified
-		if (DeterministicMatching == null || DeterministicMatching.length==0) {
+		if (deterministicMatching == null || deterministicMatching.length==0) {
 			return null;
 		}
 
@@ -70,9 +70,9 @@ public class DeterministicMatchingUtil<S,D,R,C> implements Serializable {
 			// col(ssn).eq(col(z_ssn)) separately
 			// col(dob).eq(z_col(dob) separately
 			// union / distinct in end works
-		for (int i = 0; i < DeterministicMatching.length; i++) {		
+		for (int i = 0; i < deterministicMatching.length; i++) {		
 			
-			C obvDupeDFFilter = obvDupeFilter.getDeterministicMatchingFilter(blocked,prefixBlocked,new DeterministicMatching[] {DeterministicMatching[i]},gtCond);
+			C obvDupeDFFilter = obvDupeFilter.getDeterministicMatchingFilter(blocked,prefixBlocked,new DeterministicMatching[] {deterministicMatching[i]},gtCond);
 			ZFrame<D,R,C> onlyIdsTemp =  blocked
 					.joinOnCol(prefixBlocked, obvDupeDFFilter).select(ColName.ID_COL, ColName.COL_PREFIX + ColName.ID_COL);
 			
@@ -110,11 +110,11 @@ public class DeterministicMatchingUtil<S,D,R,C> implements Serializable {
 	public ZFrame<D, R, C> removeObvDupesFromBlocks(ZFrame<D, R, C> blocks) {
 		
 		LOG.debug("blocks count before removing obvDupePairs " + blocks.count());
-		DeterministicMatching[] DeterministicMatching = args.getDeterministicMatching();
-		if (DeterministicMatching == null || DeterministicMatching.length == 0) {
+		DeterministicMatching[] deterministicMatching = args.getDeterministicMatching();
+		if (deterministicMatching == null || deterministicMatching.length == 0) {
 			return blocks;
 		}
-		C reverseOBVDupeDFFilter = obvDupeFilter.getReverseDeterministicMatchingFilter(blocks,DeterministicMatching,null);
+		C reverseOBVDupeDFFilter = obvDupeFilter.getReverseDeterministicMatchingFilter(blocks,deterministicMatching,null);
 		// remove dupes as already considered in obvDupePairs
 		blocks = blocks.filter(reverseOBVDupeDFFilter);				
 		LOG.debug("blocks count after removing obvDupePairs " + blocks.count());

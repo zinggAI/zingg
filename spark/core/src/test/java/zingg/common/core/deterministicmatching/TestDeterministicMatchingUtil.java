@@ -1,4 +1,4 @@
-package zingg.common.core.DeterministicMatching;
+package zingg.common.core.deterministicmatching;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
