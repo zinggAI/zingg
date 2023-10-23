@@ -247,7 +247,7 @@ public class TestArguments {
 	public void testObvDupe() {
 			Arguments args;
             try {
-                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configObvDupe.json").getFile(), "test");
+                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configDeterministicMatching.json").getFile(), "test");
 
                 DeterministicMatching[] deterministicMatching = args.getDeterministicMatching();
                 HashMap<String,String>[]  matchCondition = deterministicMatching[0].getMatchCondition();
