@@ -1,4 +1,4 @@
-package zingg.common.core.deterministicMatching;
+package zingg.common.core.deterministicmatching;
 
 import java.io.Serializable;
 
