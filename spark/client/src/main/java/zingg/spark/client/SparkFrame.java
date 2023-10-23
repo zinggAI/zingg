@@ -417,5 +417,11 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 	public ZFrame<Dataset<Row>, Row, Column> filterNullCond(String colName) {
 		return this.filter(df.col(colName).isNull());
 	}	
-		
+	
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> join(ZFrame<Dataset<Row>, Row, Column> lines1, Column joinColumn,
+            String joinType) {
+       return new SparkFrame(df.join(lines1.df(), joinColumn, joinType));
+    }
+	
 }
