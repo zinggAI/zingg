@@ -368,6 +368,19 @@ class ZinggWithSpark(Zingg):
         self.client = getJVM().zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions(), getSparkSession()._jsparkSession)
 
 
+class DeterministicMatching:
+    def __init__(self, match_condition=None):
+        self.match_condition = match_condition if match_condition else []
+
+    def get_match_condition(self):
+        return self.match_condition
+
+    def set_match_condition(self, match_condition):
+        self.match_condition = match_condition
+
+    def __str__(self):
+        return str(self.match_condition)
+
 class Arguments:
     """ This class helps supply match arguments to Zingg. There are 3 basic steps in any match process.
 
@@ -475,16 +488,16 @@ class Arguments:
     def getModelId(self):
         return self.args.getModelId()
 
-    def setDeterministicMatchingCondition(self, obviousDupeCondition):
-        """ Method to set the obviousDupeCondition used for matching
+    def setDeterministicMatchingCondition(self, deterministicMatchingCondition):
+        """ Method to set the DeterministicMatchingCondition used for matching
 
-        :param id: obviousDupeCondition value 
-        :type id: String
+        :param deterministicMatchingCondition: deterministicMatching object
+        :type deterministicMatchingCondition: DeterministicMatching
         """
-        self.args.setDeterministicMatchingCondition(obviousDupeCondition)
+        self.args.setDeterministicMatchingCondition(deterministicMatchingCondition)
     
-    def getObviousDupeCondition(self):
-        return self.args.getObviousDupeCondition()
+    def getDeterministicMatchingCondition(self):
+        return self.args.getDeterministicMatchingCondition()
 
     def setZinggDir(self, f):
         """ Method to set the location for Zingg to save its internal computations and models. Please set it to a place where the program has to write access.
@@ -568,7 +581,6 @@ class Arguments:
         argsString = self.writeArgumentsToJSONString()
         return self.createArgumentsFromJSONString(argsString, phase)
 
-   
     
 
 
