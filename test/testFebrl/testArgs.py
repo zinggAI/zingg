@@ -124,14 +124,14 @@ class ArgumentsTest(TestCase):
             self.assertEqual(python_pipe.pipe.getName(), java_pipe.getName())
             self.assertEqual(python_pipe.pipe.getFormat(), java_pipe.getFormat())
     
-    def test_setObviousDupeCondition(self):
+    def test_setDeterministicMatchingCondition(self):
         client = Zingg(args, options)
         client.initAndExecute()
         expected_condition = "fname"
-        args.setObviousDupeCondition(expected_condition)
+        args.setDeterministicMatchingCondition(expected_condition)
 
         java_args = client.getArguments()
-        actual_condition = java_args.getObviousDupeCondition()
+        actual_condition = java_args.getDeterministicMatchingCondition()
         print("expected_condition:", expected_condition)
         print("actual_condition:", actual_condition)
 

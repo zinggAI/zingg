@@ -475,13 +475,13 @@ class Arguments:
     def getModelId(self):
         return self.args.getModelId()
 
-    def setObviousDupeCondition(self, obviousDupeCondition):
+    def setDeterministicMatchingCondition(self, obviousDupeCondition):
         """ Method to set the obviousDupeCondition used for matching
 
         :param id: obviousDupeCondition value 
         :type id: String
         """
-        self.args.setObviousDupeCondition(obviousDupeCondition)
+        self.args.setDeterministicMatchingCondition(obviousDupeCondition)
     
     def getObviousDupeCondition(self):
         return self.args.getObviousDupeCondition()
