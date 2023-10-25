@@ -14,10 +14,9 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
     public String[] columns();
-    public ZFrame<D, R, C> select(C... cols);
+    public ZFrame<D, R, C> select(String... string);
     public ZFrame<D, R, C> select(List<C> cols);
-    public ZFrame<D, R, C> select(String col, String... cols);
-    public ZFrame<D, R, C> select(String col);
+    public ZFrame<D, R, C> select(C... col);
     public ZFrame<D, R, C> selectExpr(String... col);
     public ZFrame <D, R, C> distinct();
     public List<R> collectAsList();
@@ -32,6 +31,8 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> joinOnCol(ZFrame<D, R, C> lines1, String joinColumn);
     
     public ZFrame<D, R, C> joinOnCol(ZFrame<D, R, C> lines1, C joinColumn);
+
+    public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, C joinColumn, String joinType);
 
     public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, String joinColumn1, String joinColumn2);
     

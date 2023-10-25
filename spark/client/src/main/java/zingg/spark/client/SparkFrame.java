@@ -44,14 +44,18 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.select(cols));
     }
 
+    public ZFrame<Dataset<Row>, Row, Column> select(Column col) {
+        return new SparkFrame(df.select(col));
+    }
+
     
     public ZFrame<Dataset<Row>, Row, Column> select(List<Column> cols){
         return new SparkFrame(df.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq()));
     }
     
     
-    public ZFrame<Dataset<Row>, Row, Column> select(String col) {
-        return new SparkFrame(df.select(col));
+    public ZFrame<Dataset<Row>, Row, Column> select(String... col) {
+        return toDF(col);
     }
 
     public ZFrame<Dataset<Row>, Row, Column> selectExpr(String... col) {
@@ -413,5 +417,11 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 	public ZFrame<Dataset<Row>, Row, Column> filterNullCond(String colName) {
 		return this.filter(df.col(colName).isNull());
 	}	
-		
+	
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> join(ZFrame<Dataset<Row>, Row, Column> lines1, Column joinColumn,
+            String joinType) {
+       return new SparkFrame(df.join(lines1.df(), joinColumn, joinType));
+    }
+	
 }
