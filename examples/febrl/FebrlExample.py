@@ -33,7 +33,30 @@ inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
 args.setData(inputPipe)
 
 #setting outputpipe in 'args'
-outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
+outputPipe = CsvPipe("resultFebrlDetMat", "/tmp/febrlOutputDetMat")
+
+matching_conditions = [
+    {
+        "matchCondition": [
+            {"fieldName": "fname"},
+            {"fieldName": "stNo"},
+            {"fieldName": "add1"}
+        ]
+    },
+    {
+        "matchCondition": [
+            {"fieldName": "recId"}
+        ]
+    }
+]
+
+expected_condition = DeterministicMatching(match_condition=matching_conditions)
+# print("expected_condition:", expected_condition)
+# print(type(expected_condition))
+args.setDeterministicMatchingCondition(expected_condition)
+
+actual_condition = args.getDeterministicMatchingCondition()
+# print("actual_condition:", actual_condition)
 
 args.setOutput(outputPipe)
 
