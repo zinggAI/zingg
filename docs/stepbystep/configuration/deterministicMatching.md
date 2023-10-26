@@ -36,8 +36,8 @@ description: >-
     }
 ]"
 
-| => OR condition between matchconditions
-& => AND condition between fieldNames
+OR condition between 2 matchConditions
+AND condition between fieldNames of same matchCondition
 
 * The two records in above example will be considered an exact match if:
 
