@@ -33,22 +33,22 @@ inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
 args.setData(inputPipe)
 
 #setting outputpipe in 'args'
-outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
+outputPipe = CsvPipe("resultFebrlDetMat", "/tmp/febrlOutputDetMat")
 
 expected_condition = DeterministicMatching(match_condition=[{"fieldName": "fname"}])
-print("expected_condition:", expected_condition)
-print(type(expected_condition))
+# print("expected_condition:", expected_condition)
+# print(type(expected_condition))
 args.setDeterministicMatchingCondition(expected_condition)
 
 actual_condition = args.getDeterministicMatchingCondition()
 
-print("actual_condition:", actual_condition)
+# print("actual_condition:", actual_condition)
 
 
-# args.setOutput(outputPipe)
+args.setOutput(outputPipe)
 
-# options = ClientOptions([ClientOptions.PHASE,"match"])
+options = ClientOptions([ClientOptions.PHASE,"match"])
 
-# #Zingg execution for the given phase
-# zingg = Zingg(args, options)
-# zingg.initAndExecute()
+#Zingg execution for the given phase
+zingg = Zingg(args, options)
+zingg.initAndExecute()
