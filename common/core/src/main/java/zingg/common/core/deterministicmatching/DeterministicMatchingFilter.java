@@ -16,7 +16,7 @@ public class DeterministicMatchingFilter<D,R,C> {
 	 * Returns a Column filter for the DF given the deterministicMatching condition
 	 * 
 	 * @param df1 :DF containing the self joined data e.g. fname, z_fname
-	 * @param deterministicMatching obvious dupe conditions. Those in one MatchCondition are "AND" condition, will "OR" with other MatchCondition
+	 * @param deterministicMatching deterministic matching conditions. Those in one MatchCondition are "AND" condition, will "OR" with other MatchCondition
 	 * @param extraAndCond Any extra condition to be applied e.g. z_zid > z_z_id
 	 * @return
 	 */
@@ -28,7 +28,7 @@ public class DeterministicMatchingFilter<D,R,C> {
 	 * 
 	 * @param df1 : 1st DF to join
 	 * @param dfToJoin : 2nd DF to join with (the one having cols with z_ as prefix)
-	 * @param deterministicMatching obvious dupe conditions. Those in one MatchCondition are "AND" condition, will "OR" with other MatchCondition
+	 * @param deterministicMatching deterministic matching conditions. Those in one MatchCondition are "AND" condition, will "OR" with other MatchCondition
 	 * @param extraAndCond Any extra condition to be applied e.g. z_zid > z_z_id
 	 * @return Column filter for the DFs given the deterministicMatching condition
 	 */	
@@ -50,7 +50,7 @@ public class DeterministicMatchingFilter<D,R,C> {
 	 * loop thru the values and build a filter condition
 	 * @param df1 : 1st DF to join
 	 * @param dfToJoin : 2nd DF to join with (the one having cols with z_ as prefix)
-	 * @param deterministicMatching obvious dupe conditions. Those in one MatchCondition are "AND" condition, will "OR" with other MatchCondition
+	 * @param deterministicMatching deterministic matching conditions. Those in one MatchCondition are "AND" condition, will "OR" with other MatchCondition
 	 * @return Column filter for the DFs given the deterministicMatching condition
 	 */
 	private C getFilterExpr(ZFrame<D, R, C> df1, ZFrame<D, R, C> dfToJoin, DeterministicMatching[] deterministicMatching) {
@@ -153,7 +153,7 @@ public class DeterministicMatchingFilter<D,R,C> {
 	}
 
 	/**
-	 * Used to filter out obv dupes by forming a NOT over obv dupe filter condition
+	 * Used to filter out deterministic matchings by forming a NOT over deterministic matching filter condition
 	 * @param df1
 	 * @param deterministicMatching
 	 * @param extraAndCond
@@ -164,7 +164,7 @@ public class DeterministicMatchingFilter<D,R,C> {
 	}
 		
 	/**
-	 * Used to filter out obv dupes by forming a NOT over obv dupe filter condition
+	 * Used to filter out deterministic matchings by forming a NOT over deterministic matching filter condition
 	 * @param df1
 	 * @param dfToJoin
 	 * @param deterministicMatching

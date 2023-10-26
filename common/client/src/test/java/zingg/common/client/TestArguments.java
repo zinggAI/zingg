@@ -244,7 +244,7 @@ public class TestArguments {
 	
 	
 	@Test
-	public void testObvDupe() {
+	public void testDeterministicMatching() {
 			Arguments args;
             try {
                 args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configDeterministicMatching.json").getFile(), "test");

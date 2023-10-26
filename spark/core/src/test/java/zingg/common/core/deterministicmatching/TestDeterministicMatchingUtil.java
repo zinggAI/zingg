@@ -32,8 +32,8 @@ import zingg.spark.core.executor.ZinggSparkTester;
 public class TestDeterministicMatchingUtil extends ZinggSparkTester {
 	
 	@Test
-	public void testGetObvDupePairs() throws ZinggClientException {
-		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtil().getObvDupePairs(getBlockedDF());
+	public void testGetDeterministicMatchingPairs() throws ZinggClientException {
+		ZFrame<Dataset<Row>, Row, Column> pairs = getDeterministicMatchingUtil().getDeterministicMatchingPairs(getBlockedDF());
 		assertEquals(1, pairs.count());
 		Row r = pairs.head();
 		assertEquals(23, pairs.getAsInt(r,ColName.ID_COL));
@@ -41,14 +41,14 @@ public class TestDeterministicMatchingUtil extends ZinggSparkTester {
 	}
 
 	@Test
-	public void testGetObvDupePairsNull() throws ZinggClientException {
-		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtilEmptyArgs().getObvDupePairs(getBlockedDF());
+	public void testGetDeterministicMatchingPairsNull() throws ZinggClientException {
+		ZFrame<Dataset<Row>, Row, Column> pairs = getDeterministicMatchingUtilEmptyArgs().getDeterministicMatchingPairs(getBlockedDF());
 		assertNull(pairs);
 	}
 
 	@Test
 	public void testRemoveDeterministicMatchingFromBlocks() throws ZinggClientException {
-		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtil().removeDeterministicMatchingFromBlocks(getBlocksDF());
+		ZFrame<Dataset<Row>, Row, Column> pairs = getDeterministicMatchingUtil().removeDeterministicMatchingFromBlocks(getBlocksDF());
 		assertEquals(1, pairs.count());
 		Row r = pairs.head();
 		assertEquals(11, pairs.getAsInt(r,ColName.ID_COL));
@@ -57,15 +57,15 @@ public class TestDeterministicMatchingUtil extends ZinggSparkTester {
 	
 	@Test
 	public void testRemoveDeterministicMatchingFromBlocks2() throws ZinggClientException {
-		// obv dupe df is null => don't remove dupes
-		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtil().removeDeterministicMatchingFromBlocks(getBlocksDF(), null);
+		// deterministic matching df is null => don't remove dupes
+		ZFrame<Dataset<Row>, Row, Column> pairs = getDeterministicMatchingUtil().removeDeterministicMatchingFromBlocks(getBlocksDF(), null);
 		assertEquals(2, pairs.count());
 	}
 
 	@Test
 	public void testRemoveDeterministicMatchingFromBlocks3() throws ZinggClientException {
-		// as long as obv dupe df is not empty => remove dupes
-		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtil().removeDeterministicMatchingFromBlocks(getBlocksDF(),getBlocksDF());
+		// as long as deterministic matching df is not empty => remove dupes
+		ZFrame<Dataset<Row>, Row, Column> pairs = getDeterministicMatchingUtil().removeDeterministicMatchingFromBlocks(getBlocksDF(),getBlocksDF());
 		assertEquals(1, pairs.count());
 		Row r = pairs.head();
 		assertEquals(11, pairs.getAsInt(r,ColName.ID_COL));
@@ -76,14 +76,14 @@ public class TestDeterministicMatchingUtil extends ZinggSparkTester {
 	public void testRemoveDeterministicMatchingFromBlocks4() throws ZinggClientException {
 		ZFrame<Dataset<Row>, Row, Column> emptyDF = getBlocksDF().filterNullCond(ColName.ID_COL);
 		
-		// obv dupe df is empty => don't remove dupes
-		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtil().removeDeterministicMatchingFromBlocks(getBlocksDF(), emptyDF);
+		// deterministic matching df is empty => don't remove dupes
+		ZFrame<Dataset<Row>, Row, Column> pairs = getDeterministicMatchingUtil().removeDeterministicMatchingFromBlocks(getBlocksDF(), emptyDF);
 		assertEquals(2, pairs.count());
 	}
 	
 	@Test
 	public void testRemoveDeterministicMatchingFromBlocksNull() throws ZinggClientException {
-		ZFrame<Dataset<Row>, Row, Column> pairs = getObvDupeUtilEmptyArgs().removeDeterministicMatchingFromBlocks(getBlocksDF());
+		ZFrame<Dataset<Row>, Row, Column> pairs = getDeterministicMatchingUtilEmptyArgs().removeDeterministicMatchingFromBlocks(getBlocksDF());
 		assertEquals(2, pairs.count());
 	}
 	
@@ -190,11 +190,11 @@ public class TestDeterministicMatchingUtil extends ZinggSparkTester {
 		return new DeterministicMatching(matchCondition);
 	}
 
-	protected DeterministicMatchingUtil<ZSparkSession, Dataset<Row>, Row, Column> getObvDupeUtil() throws ZinggClientException {
+	protected DeterministicMatchingUtil<ZSparkSession, Dataset<Row>, Row, Column> getDeterministicMatchingUtil() throws ZinggClientException {
 		return new DeterministicMatchingUtil<ZSparkSession, Dataset<Row>, Row, Column>(zsCTX.getDSUtil(), getArgs());
 	}
 	
-	protected DeterministicMatchingUtil<ZSparkSession, Dataset<Row>, Row, Column> getObvDupeUtilEmptyArgs() {
+	protected DeterministicMatchingUtil<ZSparkSession, Dataset<Row>, Row, Column> getDeterministicMatchingUtilEmptyArgs() {
 		return new DeterministicMatchingUtil<ZSparkSession, Dataset<Row>, Row, Column>(zsCTX.getDSUtil(), new Arguments());
 	}
 

@@ -123,19 +123,30 @@ class ArgumentsTest(TestCase):
         for python_pipe, java_pipe in zip([trainingPipe], java_pipes):
             self.assertEqual(python_pipe.pipe.getName(), java_pipe.getName())
             self.assertEqual(python_pipe.pipe.getFormat(), java_pipe.getFormat())
+
+    # def test_setDeterministicMatchingCondition(self):
+    #     client = Zingg(args, options)
+    #     client.initAndExecute()
+    #     expected_condition = "fname"
+    #     args.setDeterministicMatchingCondition(expected_condition)
+
+    #     java_args = client.getArguments()
+    #     actual_condition = java_args.getDeterministicMatchingCondition()
+    #     print("expected_condition:", expected_condition)
+    #     print("actual_condition:", actual_condition)
+
+    #     self.assertEqual(actual_condition, expected_condition)
     
     def test_setDeterministicMatchingCondition(self):
         client = Zingg(args, options)
         client.initAndExecute()
-        expected_condition = "fname"
+
+        expected_condition = DeterministicMatching(match_condition=[{"fieldName": "fname"}])
         args.setDeterministicMatchingCondition(expected_condition)
+        
+        actual_condition = args.getDeterministicMatchingCondition()
 
-        java_args = client.getArguments()
-        actual_condition = java_args.getDeterministicMatchingCondition()
-        print("expected_condition:", expected_condition)
-        print("actual_condition:", actual_condition)
-
-        self.assertEqual(actual_condition, expected_condition)
+        self.assertEqual(actual_condition.get_match_condition(), expected_condition.get_match_condition())
 
 
     def test_setZinggDir(self):

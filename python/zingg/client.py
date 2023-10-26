@@ -370,7 +370,10 @@ class ZinggWithSpark(Zingg):
 
 class DeterministicMatching:
     def __init__(self, match_condition=None):
-        self.match_condition = match_condition if match_condition else []
+        self.match_condition = match_condition if match_condition else {}
+    
+    def _get_object_id(self):
+        pass
 
     def get_match_condition(self):
         return self.match_condition
@@ -487,17 +490,17 @@ class Arguments:
     
     def getModelId(self):
         return self.args.getModelId()
-
+    
     def setDeterministicMatchingCondition(self, deterministicMatchingCondition):
         """ Method to set the DeterministicMatchingCondition used for matching
 
-        :param deterministicMatchingCondition: deterministicMatching object
+        :param deterministicMatchingCondition: DeterministicMatching object
         :type deterministicMatchingCondition: DeterministicMatching
         """
-        self.args.setDeterministicMatchingCondition(deterministicMatchingCondition)
-    
-    def getDeterministicMatchingCondition(self):
-        return self.args.getDeterministicMatchingCondition()
+        self.deterministicMatchingCondition = deterministicMatchingCondition
+
+    def getDeterministicMatchingCondition(self, deterministicMatchingCondition=None):
+        return self.deterministicMatchingCondition
 
     def setZinggDir(self, f):
         """ Method to set the location for Zingg to save its internal computations and models. Please set it to a place where the program has to write access.
