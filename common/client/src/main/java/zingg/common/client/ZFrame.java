@@ -166,4 +166,7 @@ public interface ZFrame<D, R, C> {
 	
 	public ZFrame<D, R, C> filterNullCond(String colName);
 
+    public ZFrame<D,R,C> countDistinct(String groupByCol, String distinctCol, String distinctcolCountName);
+
+   
 }
