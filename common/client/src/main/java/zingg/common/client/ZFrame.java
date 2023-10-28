@@ -168,5 +168,7 @@ public interface ZFrame<D, R, C> {
 
     public ZFrame<D,R,C> countDistinct(String groupByCol, String distinctCol, String distinctcolCountName);
 
+    public ZFrame<D,R,C> groupByCount(String groupByCol1, String groupByCol2, String countColName);
+
    
 }
