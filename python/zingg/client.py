@@ -502,17 +502,6 @@ class Arguments:
     def getModelId(self):
         return self.args.getModelId()
     
-    # def setObviousDupeCondition(self, obviousDupeCondition):
-    #     """ Method to set the obviousDupeCondition used for matching
-
-    #     :param id: obviousDupeCondition value 
-    #     :type id: String
-    #     """
-    #     self.args.setObviousDupeCondition(obviousDupeCondition)
-    
-    # def getObviousDupeCondition(self):
-    #     return self.args.getObviousDupeCondition()
-    
     def setDeterministicMatchingCondition(self, deterministicMatchingCondition):
         """ Method to set the DeterministicMatchingCondition used for matching
 
@@ -527,6 +516,19 @@ class Arguments:
         # return self.deterministicMatchingCondition
         print("got from getdetmatcondition: ", self.args.getDeterministicMatching())
         return self.args.getDeterministicMatching()
+    
+    # def setObviousDupeCondition(self, obviousDupeCondition):
+    #     """ Method to set the obviousDupeCondition used for matching
+
+    #     :param id: obviousDupeCondition value 
+    #     :type id: String
+    #     """
+    #     self.args.setObviousDupeCondition(obviousDupeCondition)
+    
+    # def getObviousDupeCondition(self):
+    #     return self.args.getObviousDupeCondition()
+    
+
 
     def setZinggDir(self, f):
         """ Method to set the location for Zingg to save its internal computations and models. Please set it to a place where the program has to write access.

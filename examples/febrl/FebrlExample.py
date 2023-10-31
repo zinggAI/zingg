@@ -36,6 +36,7 @@ outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput2")
 dm = DeterministicMatching()
 condition = ["ssn"]
 # dm.set_match_condition(["fname", "stNo", "add1"])
+
 dm.set_match_condition(condition)
 
 print("expected_condition:", dm)
