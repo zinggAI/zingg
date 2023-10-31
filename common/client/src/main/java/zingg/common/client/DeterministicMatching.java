@@ -30,6 +30,15 @@ public class DeterministicMatching implements Serializable {
 
 	public void setMatchCondition(HashMap<String, String>[] matchCondition) {
 		this.matchCondition = matchCondition;
+		System.out.println("Match condition set to: " + Arrays.toString(this.matchCondition));
+	}
+
+	public void setMatchCondition(String[] fieldArray) {
+		this.matchCondition = new HashMap[fieldArray.length];
+		for (int i = 0; i < fieldArray.length; i++) {
+			this.matchCondition[i] = new HashMap<String, String>();
+			this.matchCondition[i].put(fieldName, fieldArray[i]);
+		}
 	}
 	
 	@Override

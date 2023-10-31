@@ -27,40 +27,27 @@ args.setLabelDataSampleSize(0.5)
 #reading dataset into inputPipe and settint it up in 'args'
 #below line should not be required if you are reading from in memory dataset
 #in that case, replace df with input df
-schema = "recId string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string"
+schema = "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string"
 inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
-
 args.setData(inputPipe)
 
-#setting outputpipe in 'args'
-outputPipe = CsvPipe("resultFebrlDetMat", "/tmp/febrlOutputDetMat")
+outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput2")
 
-matching_conditions = [
-    {
-        "matchCondition": [
-            {"fieldName": "fname"},
-            {"fieldName": "stNo"},
-            {"fieldName": "add1"}
-        ]
-    },
-    {
-        "matchCondition": [
-            {"fieldName": "ssn"}
-        ]
-    }
-]
+dm = DeterministicMatching()
+condition = ["ssn"]
+# dm.set_match_condition(["fname", "stNo", "add1"])
+dm.set_match_condition(condition)
 
-expected_condition = DeterministicMatching(match_condition=matching_conditions)
-# print("expected_condition:", expected_condition)
-# print(type(expected_condition))
-args.setDeterministicMatchingCondition(expected_condition)
+print("expected_condition:", dm)
+print(type(dm))
 
+args.setDeterministicMatchingCondition(dm)
 actual_condition = args.getDeterministicMatchingCondition()
-# print("actual_condition:", actual_condition)
+print("actual_condition:", actual_condition)
 
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"match"])
+options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)

@@ -378,8 +378,19 @@ class DeterministicMatching:
     def get_match_condition(self):
         return self.match_condition
 
-    def set_match_condition(self, match_condition):
-        self.match_condition = match_condition
+    # def set_match_condition(self, match_condition):
+    #     self.match_condition = match_condition
+    #     print("match condition set in python class: ", self.match_condition)
+    
+    def set_match_condition(self, *args):
+        if len(args) == 1 and isinstance(args[0], list):
+            self.match_condition = args[0]
+        elif all(isinstance(item, str) for item in args):
+            self.match_condition = [{'fieldName': item} for item in args]
+        else:
+            raise ValueError("Invalid argument types for set_match_condition")
+
+        print("Match condition set in Python class:", self.match_condition)
 
     def __str__(self):
         return str(self.match_condition)
@@ -491,16 +502,31 @@ class Arguments:
     def getModelId(self):
         return self.args.getModelId()
     
+    # def setObviousDupeCondition(self, obviousDupeCondition):
+    #     """ Method to set the obviousDupeCondition used for matching
+
+    #     :param id: obviousDupeCondition value 
+    #     :type id: String
+    #     """
+    #     self.args.setObviousDupeCondition(obviousDupeCondition)
+    
+    # def getObviousDupeCondition(self):
+    #     return self.args.getObviousDupeCondition()
+    
     def setDeterministicMatchingCondition(self, deterministicMatchingCondition):
         """ Method to set the DeterministicMatchingCondition used for matching
 
         :param deterministicMatchingCondition: DeterministicMatching object
         :type deterministicMatchingCondition: DeterministicMatching
         """
-        self.deterministicMatchingCondition = deterministicMatchingCondition
+        # self.deterministicMatchingCondition = deterministicMatchingCondition
+        print("inside setDeterministicMatchingcondition: ", deterministicMatchingCondition)
+        self.args.setDeterministicMatching(deterministicMatchingCondition)
 
-    def getDeterministicMatchingCondition(self, deterministicMatchingCondition=None):
-        return self.deterministicMatchingCondition
+    def getDeterministicMatchingCondition(self):
+        # return self.deterministicMatchingCondition
+        print("got from getdetmatcondition: ", self.args.getDeterministicMatching())
+        return self.args.getDeterministicMatching()
 
     def setZinggDir(self, f):
         """ Method to set the location for Zingg to save its internal computations and models. Please set it to a place where the program has to write access.
