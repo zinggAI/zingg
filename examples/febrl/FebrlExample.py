@@ -29,15 +29,27 @@ args.setLabelDataSampleSize(0.5)
 #in that case, replace df with input df
 schema = "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string"
 inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
-
 args.setData(inputPipe)
-
-#setting outputpipe in 'args'
 outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
+
+
+# fieldArray = ["fname", "stNo", "add1"]
+fieldArray = ["ssn"]
+
+dm = DeterministicMatching()
+dm.set_match_condition(fieldArray)
+print("expected_condition:", dm)
+# print(type(dm))
+# args.setDeterministicMatchingCondition(dm)
+
+args.setDeterministicMatchingCondition(fieldArray)
+
+actual_condition = args.getDeterministicMatchingCondition()
+print("actual_condition:", actual_condition)
 
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"match"])
+options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)

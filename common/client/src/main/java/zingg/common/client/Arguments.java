@@ -111,7 +111,7 @@ public class Arguments implements Serializable {
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
 	String column;
-	ObviousDupes[] obviousDupes;
+	DeterministicMatching[] deterministicMatching;
 	
 
 	public void setThreshold(double threshold) {
@@ -478,12 +478,12 @@ public class Arguments implements Serializable {
 		this.column = column;
 	}
 	
-	public ObviousDupes[] getObviousDupes() {
-		return obviousDupes;
+	public DeterministicMatching[] getDeterministicMatching() {
+		return deterministicMatching;
 	}
 
-	public void setObviousDupes(ObviousDupes[] obviousDupes) {
-		this.obviousDupes = obviousDupes;
+	public void setDeterministicMatching(DeterministicMatching[] deterministicMatching) {
+		this.deterministicMatching = deterministicMatching;
 	}
 
 	public long getBlockSize() {
