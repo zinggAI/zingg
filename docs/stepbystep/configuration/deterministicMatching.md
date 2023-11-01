@@ -15,10 +15,29 @@ description: >-
 
 * In the config.json file put the json element like this:
 
-"obviousDupeCondition"	: "field1 & field2 | field3 | field4 & field5 & field6"
+"deterministicMatchingCondition"	: "[
+    {
+        "matchCondition": [
+            {"fieldName": "field1"},
+            {"fieldName": "field2"}
+        ]
+    },
+    {
+        "matchCondition": [
+            {"fieldName": "field3"}
+        ]
+    },
+    {
+        "matchCondition": [
+            {"fieldName": "field4"},
+            {"fieldName": "field5"},
+            {"fieldName": "field6"}
+        ]
+    }
+]"
 
-| => OR condition
-& => AND condition
+OR condition between 2 matchConditions
+AND condition between fieldNames of same matchCondition
 
 * The two records in above example will be considered an exact match if:
 
