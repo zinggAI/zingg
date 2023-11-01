@@ -1,4 +1,4 @@
-package zingg.common.core.obviousdupes;
+package zingg.common.core.deterministicmatching;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,21 +15,21 @@ import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
-import zingg.common.client.ObviousDupes;
+import zingg.common.client.DeterministicMatching;
 import zingg.common.client.ZinggClientException;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.executor.ZinggSparkTester;
 
-public class TestObviousDupesFilter extends ZinggSparkTester {
+public class TestDeterministicMatchingFilter extends ZinggSparkTester {
 	
-	ObviousDupesFilter<Dataset<Row>,Row,Column> obvDupeFilter = new ObviousDupesFilter<Dataset<Row>,Row,Column>();
+	DeterministicMatchingFilter<Dataset<Row>,Row,Column> deterministicMatchingFilter = new DeterministicMatchingFilter<Dataset<Row>,Row,Column>();
 	
 	@Test
-	public void testGetObviousDupesFilter() throws ZinggClientException {	
+	public void testGetDeterministicMatchingFilter() throws ZinggClientException {	
 	
 		SparkFrame posDF = getPosPairDF();
 				
-		Column filter = obvDupeFilter.getObviousDupesFilter(posDF,getObvDupeCond(),null);
+		Column filter = deterministicMatchingFilter.getDeterministicMatchingFilter(posDF,getDeterministicMatchingCond(),null);
 		
 		String expectedCond = "(((((((name = z_name) AND (name IS NOT NULL)) AND (z_name IS NOT NULL)) AND (((event = z_event) AND (event IS NOT NULL)) AND (z_event IS NOT NULL))) AND (((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL))) OR (((dob = z_dob) AND (dob IS NOT NULL)) AND (z_dob IS NOT NULL))) OR ((((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL)) AND (((year = z_year) AND (year IS NOT NULL)) AND (z_year IS NOT NULL))))";
 		
@@ -38,11 +38,11 @@ public class TestObviousDupesFilter extends ZinggSparkTester {
 	}
 
 	@Test
-	public void testGetObviousDupesFilterWithExtraCond() throws ZinggClientException {	
+	public void testGetDeterministicMatchingFilterWithExtraCond() throws ZinggClientException {	
 		SparkFrame posDF = getPosPairDF();
 		Column gtCond = posDF.gt("z_zid");
 		
-		Column filter = obvDupeFilter.getObviousDupesFilter(posDF,getObvDupeCond(),gtCond);
+		Column filter = deterministicMatchingFilter.getDeterministicMatchingFilter(posDF,getDeterministicMatchingCond(),gtCond);
 		
 		System.out.println(filter.toString());
 		
@@ -53,13 +53,13 @@ public class TestObviousDupesFilter extends ZinggSparkTester {
 	}
 	
 	@Test
-	public void testGetReverseObviousDupesFilter() throws ZinggClientException {	
+	public void testGetReverseDeterministicMatchingFilter() throws ZinggClientException {	
 
 		SparkFrame posDF = getPosPairDF();
-		ObviousDupes[] obvDupe = getObvDupeCond();		
+		DeterministicMatching[] deterministicMatching = getDeterministicMatchingCond();		
 				
 				
-		Column filter = obvDupeFilter.getReverseObviousDupesFilter(posDF,obvDupe,null);
+		Column filter = deterministicMatchingFilter.getReverseDeterministicMatchingFilter(posDF,deterministicMatching,null);
 		
 		String expectedCond = "(NOT (((((((name = z_name) AND (name IS NOT NULL)) AND (z_name IS NOT NULL)) AND (((event = z_event) AND (event IS NOT NULL)) AND (z_event IS NOT NULL))) AND (((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL))) OR (((dob = z_dob) AND (dob IS NOT NULL)) AND (z_dob IS NOT NULL))) OR ((((comment = z_comment) AND (comment IS NOT NULL)) AND (z_comment IS NOT NULL)) AND (((year = z_year) AND (year IS NOT NULL)) AND (z_year IS NOT NULL)))))";
 		
@@ -90,10 +90,10 @@ public class TestObviousDupesFilter extends ZinggSparkTester {
 				RowFactory.create( row_id++, "1675683807452:31",  "nicole","event1","comment1", 1992,  new Integer(100),   1, row_id++, "1675683807452:31",    "nicol","event11","comment11"    , 1992, new Integer(101),1),
 				RowFactory.create( row_id++, "1675683807452:32", "vkas","event2","comment2",1993,     new Integer(200),1, row_id++, "1675683807452:32", "vikas","event12","comment21"      ,1992, new Integer(201),1  ),
 				RowFactory.create(row_id++, "1675683807452:33",  "agrawaal","event3","comment3",1994,    new Integer(300),1, row_id++, "1675683807452:33", "agarwal","event13","comment31"    ,1992,      new Integer(301),1 ),
-				RowFactory.create( ++row_id, "52",   "nameObvDupe1"     ,"def"    ,"geh"    ,1900,   new Integer(1900), 0,++row_id, "410",   "nameObvDupe1",    "lmn",    "opq",       2001,       new Integer(1900), 0),
-				RowFactory.create( ++row_id, "53",   "nameObvDupe2"     ,"eventObvDupe2"    ,"commentObvDupe2"    ,1900,   new Integer(1900), 0,++row_id, "54",   "nameObvDupe2",    "eventObvDupe2",    "commentObvDupe2",       2001,       new Integer(1901), 0),
-				RowFactory.create( ++row_id, "53",   "nameObvDupe3"     ,"eventObvDupe3"    ,"commentObvDupe3"    ,1900,   new Integer(1901), 0,++row_id, "54",   "nameObvDupe3",    "eventObvDupe3",    "commentObvDupe3",       2001,       new Integer(1901), 0),
-				RowFactory.create( ++row_id, "53",   "nameObvDupe3"     ,"eventObvDupe3"    ,"commentObvDupe3"    ,1900,   new Integer(1901), 0,++row_id, "54",   null,    "eventObvDupe3",    "commentObvDupe3",       2001,       new Integer(1901), 0)
+				RowFactory.create( ++row_id, "52",   "nameDeterministicMatching1"     ,"def"    ,"geh"    ,1900,   new Integer(1900), 0,++row_id, "410",   "nameDeterministicMatching1",    "lmn",    "opq",       2001,       new Integer(1900), 0),
+				RowFactory.create( ++row_id, "53",   "nameDeterministicMatching2"     ,"eventDeterministicMatching2"    ,"commentDeterministicMatching2"    ,1900,   new Integer(1900), 0,++row_id, "54",   "nameDeterministicMatching2",    "eventDeterministicMatching2",    "commentDeterministicMatching2",       2001,       new Integer(1901), 0),
+				RowFactory.create( ++row_id, "53",   "nameDeterministicMatching3"     ,"eventDeterministicMatching3"    ,"commentDeterministicMatching3"    ,1900,   new Integer(1901), 0,++row_id, "54",   "nameDeterministicMatching3",    "eventDeterministicMatching3",    "commentDeterministicMatching3",       2001,       new Integer(1901), 0),
+				RowFactory.create( ++row_id, "53",   "nameDeterministicMatching3"     ,"eventDeterministicMatching3"    ,"commentDeterministicMatching3"    ,1900,   new Integer(1901), 0,++row_id, "54",   null,    "eventDeterministicMatching3",    "commentDeterministicMatching3",       2001,       new Integer(1901), 0)
 		};
 		return posData;
 	}
@@ -120,25 +120,25 @@ public class TestObviousDupesFilter extends ZinggSparkTester {
 		return schema;
 	}
 	
-	protected ObviousDupes getObviousDupes(String field) {
-		return getObviousDupes(new String[] {field});
+	protected DeterministicMatching getDeterministicMatching(String field) {
+		return getDeterministicMatching(new String[] {field});
 	}
 
-	protected ObviousDupes getObviousDupes(String[] fields) {
+	protected DeterministicMatching getDeterministicMatching(String[] fields) {
 		HashMap<String, String>[]  matchCondition = new HashMap[fields.length];		
 		for (int i = 0; i < fields.length; i++) {
 			matchCondition[i] = new HashMap<String, String>();
-			matchCondition[i].put(ObviousDupes.fieldName,fields[i]);
+			matchCondition[i].put(DeterministicMatching.fieldName,fields[i]);
 		}
-		return new ObviousDupes(matchCondition);
+		return new DeterministicMatching(matchCondition);
 	}
 	
-	public ObviousDupes[] getObvDupeCond() {
-		ObviousDupes obvDupe1 = getObviousDupes(new String[]{"name","event","comment"});
-		ObviousDupes obvDupe2 = getObviousDupes("dob");
-		ObviousDupes obvDupe3 = getObviousDupes(new String[]{"comment","year"});
-		ObviousDupes[] obvDupe = new ObviousDupes[] {obvDupe1,obvDupe2,obvDupe3};
-		return obvDupe;
+	public DeterministicMatching[] getDeterministicMatchingCond() {
+		DeterministicMatching deterministicMatching1 = getDeterministicMatching(new String[]{"name","event","comment"});
+		DeterministicMatching deterministicMatching2 = getDeterministicMatching("dob");
+		DeterministicMatching deterministicMatching3 = getDeterministicMatching(new String[]{"comment","year"});
+		DeterministicMatching[] deterministicMatching = new DeterministicMatching[] {deterministicMatching1,deterministicMatching2,deterministicMatching3};
+		return deterministicMatching;
 	}
 
 

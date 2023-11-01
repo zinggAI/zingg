@@ -12,7 +12,7 @@ import zingg.common.client.util.ColValues;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
-import zingg.common.core.obviousdupes.ObviousDupesUtil;
+import zingg.common.core.deterministicmatching.DeterministicMatchingUtil;
 import zingg.common.core.preprocess.StopWordsRemover;
 
 public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
@@ -20,7 +20,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.TrainingDataFinder";
 	public static final Log LOG = LogFactory.getLog(TrainingDataFinder.class);    
-	protected ObviousDupesUtil<S,D,R,C> obvDupeUtil;
+	protected DeterministicMatchingUtil<S,D,R,C> deterministicMatchingUtil;
 	
     public TrainingDataFinder() {
         setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
@@ -91,10 +91,10 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 					blocked.show(true);
 				}
 				ZFrame<D,R,C> blocks = getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
-				// remove obv dupe pairs
-				blocks = getObvDupeUtil().removeObvDupesFromBlocks(blocks);
+				// remove deterministic matching pairs
+				blocks = getDeterministicMatchingUtil().removeDeterministicMatchingFromBlocks(blocks);
 				if (blocks.isEmpty()) {
-					LOG.warn("unable to find any pairs as all pairs sampled are part of the obvious duplicate condition");
+					LOG.warn("unable to find any pairs as all pairs sampled are part of the deterministic matching condition");
 				}
 				blocks = blocks.cache();	
 				LOG.debug("blocks");
@@ -201,15 +201,15 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
     
-	public ObviousDupesUtil<S, D, R, C> getObvDupeUtil() {		
-		if (obvDupeUtil==null) {
-			obvDupeUtil = new ObviousDupesUtil<S, D, R, C>(context.getDSUtil(), args);
+	public DeterministicMatchingUtil<S, D, R, C> getDeterministicMatchingUtil() {		
+		if (deterministicMatchingUtil==null) {
+			deterministicMatchingUtil = new DeterministicMatchingUtil<S, D, R, C>(context.getDSUtil(), args);
 		}
-		return obvDupeUtil;
+		return deterministicMatchingUtil;
 	}
 
-	public void setObvDupeUtil(ObviousDupesUtil<S, D, R, C> obvDupeUtil) {
-		this.obvDupeUtil = obvDupeUtil;
+	public void setDeterministicMatchingUtil(DeterministicMatchingUtil<S, D, R, C> deterministicMatchingUtil) {
+		this.deterministicMatchingUtil = deterministicMatchingUtil;
 	}
 		    
 }
