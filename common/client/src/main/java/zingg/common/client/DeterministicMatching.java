@@ -14,15 +14,23 @@ public class DeterministicMatching implements Serializable {
 	
 	public static final String fieldName = "fieldName";
 	
+	HashMap<String,String>[]  matchCondition;
+	
 	public DeterministicMatching() {
 		
-	}
+	}	
 	
 	public DeterministicMatching(HashMap<String, String>[] matchCondition) {
 		this.matchCondition = matchCondition;
 	}
-
-	HashMap<String,String>[]  matchCondition;
+	
+	public DeterministicMatching(String[] fieldNamesArray) {
+		this.matchCondition = new HashMap[fieldNamesArray.length];
+		for (int i = 0; i < fieldNamesArray.length; i++) {
+			this.matchCondition[i] = new HashMap<String, String>();
+			this.matchCondition[i].put(fieldName, fieldNamesArray[i]);
+		}
+	}
 
 	public HashMap<String, String>[] getMatchCondition() {
 		return matchCondition;
@@ -30,17 +38,8 @@ public class DeterministicMatching implements Serializable {
 
 	public void setMatchCondition(HashMap<String, String>[] matchCondition) {
 		this.matchCondition = matchCondition;
-		System.out.println("Match condition set to: " + Arrays.toString(this.matchCondition));
 	}
 
-	public void setMatchCondition(String[] fieldArray) {
-		this.matchCondition = new HashMap[fieldArray.length];
-		for (int i = 0; i < fieldArray.length; i++) {
-			this.matchCondition[i] = new HashMap<String, String>();
-			this.matchCondition[i].put(fieldName, fieldArray[i]);
-		}
-	}
-	
 	@Override
 	public String toString() {
 		return Arrays.toString(matchCondition);

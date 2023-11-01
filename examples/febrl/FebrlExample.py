@@ -32,17 +32,11 @@ inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
 args.setData(inputPipe)
 outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
 
-
 # fieldArray = ["fname", "stNo", "add1"]
-fieldArray = ["ssn"]
+# fieldArray = ["ssn"]
 
-dm = DeterministicMatching()
-dm.set_match_condition(fieldArray)
-print("expected_condition:", dm)
-# print(type(dm))
-# args.setDeterministicMatchingCondition(dm)
-
-args.setDeterministicMatchingCondition(fieldArray)
+dm = DeterministicMatching('ssn')
+args.setDeterministicMatchingCondition(dm)
 
 actual_condition = args.getDeterministicMatchingCondition()
 print("actual_condition:", actual_condition)
