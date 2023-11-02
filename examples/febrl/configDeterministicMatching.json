@@ -102,11 +102,24 @@
 			   ]
 			},
 			{
+				"matchCondition":[
+				   {
+					  "fieldName":"ssn"
+				   }
+				]
+			 }, 
+			{
 			   "matchCondition":[
-				  {
-					"fieldName":"recId"
-				  }
-			   ]
+				{
+					"fieldName":"fname"
+				 },
+				 {
+					"fieldName":"stNo"
+				 },
+				 {
+					"fieldName":"lname"
+				 }
+			  ]
 			}
 		 ],
 		"labelDataSampleSize" : 0.5,
