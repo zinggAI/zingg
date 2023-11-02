@@ -56,7 +56,19 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     
     
     public ZFrame<Dataset<Row>, Row, Column> select(String... col) {
-        return toDF(col);
+ 
+    	if (col==null || col.length==0) return null;
+    	
+    	if (col.length==1) return select(col[0],new String[] {});
+    	
+    	if (col.length>1) {
+    		String[] colPart = new String[col.length-1];
+    		System.arraycopy(col, 1, colPart, 0, col.length-1);   		
+    		return select(col[0],colPart);
+    	}
+    	
+    	return null;
+ 
     }
 
     public ZFrame<Dataset<Row>, Row, Column> selectExpr(String... col) {
