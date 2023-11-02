@@ -368,6 +368,21 @@ class ZinggWithSpark(Zingg):
         self.client = getJVM().zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions(), getSparkSession()._jsparkSession)
 
 
+class DeterministicMatching:
+    def __init__(self,*matchCond):
+        fieldNamesArray = getGateway().new_array(getJVM().java.lang.String, len(matchCond))
+        for idx, fieldName in enumerate(matchCond):
+            fieldNamesArray[idx] = fieldName
+        self.deterministicMatching = getJVM().zingg.common.client.DeterministicMatching(fieldNamesArray)
+
+    def getDeterministicMatching(self):
+        """ Method to getDeterministicMatching
+
+        :return: DeterministicMatching parameter value
+        :rtype: DeterministicMatching
+        """
+        return self.deterministicMatching
+    
 class Arguments:
     """ This class helps supply match arguments to Zingg. There are 3 basic steps in any match process.
 
@@ -475,16 +490,17 @@ class Arguments:
     def getModelId(self):
         return self.args.getModelId()
 
-    def setObviousDupeCondition(self, obviousDupeCondition):
-        """ Method to set the obviousDupeCondition used for matching
+    def setDeterministicMatchingCondition(self, *detMatchConds):
+        """ Method to set the DeterministicMatchingCondition used for matching
 
-        :param id: obviousDupeCondition value 
-        :type id: String
+        :param detMatchConds: DeterministicMatching object
+        :type detMatchConds: DeterministicMatching
         """
-        self.args.setObviousDupeCondition(obviousDupeCondition)
-    
-    def getObviousDupeCondition(self):
-        return self.args.getObviousDupeCondition()
+
+        detMatchCondArr = getGateway().new_array(getJVM().zingg.common.client.DeterministicMatching, len(detMatchConds))
+        for idx, detM in enumerate(detMatchConds):
+            detMatchCondArr[idx] = detM.getDeterministicMatching()
+        self.args.setDeterministicMatching(detMatchCondArr)
 
     def setZinggDir(self, f):
         """ Method to set the location for Zingg to save its internal computations and models. Please set it to a place where the program has to write access.

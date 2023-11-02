@@ -87,7 +87,7 @@
 			"schema": "recId string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string" 
 			}
 		],
-		"obviousDupes":[
+		"deterministicMatching":[
 			{
 			   "matchCondition":[
 				  {
@@ -102,11 +102,24 @@
 			   ]
 			},
 			{
+				"matchCondition":[
+				   {
+					  "fieldName":"ssn"
+				   }
+				]
+			 }, 
+			{
 			   "matchCondition":[
-				  {
-					"fieldName":"recId"
-				  }
-			   ]
+				{
+					"fieldName":"fname"
+				 },
+				 {
+					"fieldName":"stNo"
+				 },
+				 {
+					"fieldName":"lname"
+				 }
+			  ]
 			}
 		 ],
 		"labelDataSampleSize" : 0.5,

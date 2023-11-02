@@ -124,20 +124,6 @@ class ArgumentsTest(TestCase):
             self.assertEqual(python_pipe.pipe.getName(), java_pipe.getName())
             self.assertEqual(python_pipe.pipe.getFormat(), java_pipe.getFormat())
     
-    def test_setObviousDupeCondition(self):
-        client = Zingg(args, options)
-        client.initAndExecute()
-        expected_condition = "fname"
-        args.setObviousDupeCondition(expected_condition)
-
-        java_args = client.getArguments()
-        actual_condition = java_args.getObviousDupeCondition()
-        print("expected_condition:", expected_condition)
-        print("actual_condition:", actual_condition)
-
-        self.assertEqual(actual_condition, expected_condition)
-
-
     def test_setZinggDir(self):
         client = Zingg(args, options)
         client.initAndExecute()

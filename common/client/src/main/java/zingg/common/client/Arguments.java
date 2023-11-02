@@ -1,16 +1,12 @@
 package zingg.common.client;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -18,15 +14,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.module.scala.DefaultScalaModule;
 
 import zingg.common.client.pipe.Pipe;
-
-import com.fasterxml.jackson.core.json.JsonWriteFeature;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 
 /**
@@ -111,7 +100,7 @@ public class Arguments implements Serializable {
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
 	String column;
-	ObviousDupes[] obviousDupes;
+	DeterministicMatching[] deterministicMatching;
 	
 
 	public void setThreshold(double threshold) {
@@ -478,12 +467,12 @@ public class Arguments implements Serializable {
 		this.column = column;
 	}
 	
-	public ObviousDupes[] getObviousDupes() {
-		return obviousDupes;
+	public DeterministicMatching[] getDeterministicMatching() {
+		return deterministicMatching;
 	}
 
-	public void setObviousDupes(ObviousDupes[] obviousDupes) {
-		this.obviousDupes = obviousDupes;
+	public void setDeterministicMatching(DeterministicMatching[] deterministicMatching) {
+		this.deterministicMatching = deterministicMatching;
 	}
 
 	public long getBlockSize() {

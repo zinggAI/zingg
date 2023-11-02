@@ -56,7 +56,7 @@ public class TestSparkFrame extends TestSparkFrameBase {
 	@Test
 	public void testSelectWithSingleColumnName() {
 		Dataset<Row> df = createSampleDataset();
-		SparkFrame sf = new SparkFrame(df);
+		ZFrame<Dataset<Row>, Row, Column>  sf = new SparkFrame(df);
 		String colName = "recid";
 		ZFrame<Dataset<Row>, Row, Column> sf2 = sf.select(colName);
 		SparkFrame sf3 = new SparkFrame(df.select(colName));
@@ -87,7 +87,7 @@ public class TestSparkFrame extends TestSparkFrameBase {
 	@Test
 	public void testSelectWithMultipleColumnNamesAsString() {
 		Dataset<Row> df = createSampleDataset();
-		SparkFrame sf = new SparkFrame(df);
+		ZFrame<Dataset<Row>, Row, Column>  sf = new SparkFrame(df);
 		ZFrame<Dataset<Row>, Row, Column> sf2 = sf.select("recid",  "surname",  "postcode");
 		SparkFrame sf3 = new SparkFrame(df.select("recid",  "surname",  "postcode"));
 		assertTrueCheckingExceptOutput(sf2, sf3, "SparkFrame.select(str1, str2, ...) value does not match with standard select output");

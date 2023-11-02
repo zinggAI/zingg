@@ -7,22 +7,30 @@ import java.util.HashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class ObviousDupes implements Serializable {
+public class DeterministicMatching implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	public static final Log LOG = LogFactory.getLog(ObviousDupes.class);
+	public static final Log LOG = LogFactory.getLog(DeterministicMatching.class);
 	
 	public static final String fieldName = "fieldName";
 	
-	public ObviousDupes() {
-		
-	}
+	HashMap<String,String>[]  matchCondition;
 	
-	public ObviousDupes(HashMap<String, String>[] matchCondition) {
+	public DeterministicMatching() {
+		
+	}	
+	
+	public DeterministicMatching(HashMap<String, String>[] matchCondition) {
 		this.matchCondition = matchCondition;
 	}
-
-	HashMap<String,String>[]  matchCondition;
+	
+	public DeterministicMatching(String[] fieldNamesArray) {
+		this.matchCondition = new HashMap[fieldNamesArray.length];
+		for (int i = 0; i < fieldNamesArray.length; i++) {
+			this.matchCondition[i] = new HashMap<String, String>();
+			this.matchCondition[i].put(fieldName, fieldNamesArray[i]);
+		}
+	}
 
 	public HashMap<String, String>[] getMatchCondition() {
 		return matchCondition;
@@ -31,7 +39,7 @@ public class ObviousDupes implements Serializable {
 	public void setMatchCondition(HashMap<String, String>[] matchCondition) {
 		this.matchCondition = matchCondition;
 	}
-	
+
 	@Override
 	public String toString() {
 		return Arrays.toString(matchCondition);
