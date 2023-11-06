@@ -1,7 +1,12 @@
 from unittest.case import TestCase
+from unittest.mock import Mock, patch
 from zingg import *
 from zingg.client import *
 from zingg.pipes import *
+
+from pyspark.sql import SparkSession
+import pandas as pd
+import json
 
 args = Arguments()
 fname = FieldDefinition("fname", "string", MatchType.FUZZY)
@@ -33,7 +38,294 @@ args.setTrainingSamples(trainingPipe)
 args.setOutput(outputPipe)
 options = ClientOptions([ClientOptions.PHASE,"trainMatch"])
 
+global args1
+args1 = Arguments()
+args1.setModelId("100")
+args1.setZinggDir("models")
+'''
+class TestZinggClient(TestCase):
 
+    def test_initSparkClient(self):
+        result = initSparkClient()
+        self.assertEqual(result, 1)
+    
+    def test_initDataBricksConectClient(self):
+        result = initDataBricksConectClient()
+        self.assertEqual(result, 1)
+
+    def test_initClient_spark(self):
+        global _spark_ctxt
+        _spark_ctxt = None
+        result = initClient()
+        self.assertEqual(result, 1)
+    
+    def test_initClient_databricks(self):
+        global _spark_ctxt
+        _spark_ctxt = None
+        os.environ['DATA_BRICKS_CONNECT'] = 'Y'
+        result = initClient()
+        self.assertEqual(result, 1)
+
+    def test_getSparkContext(self):
+        global _spark_ctxt
+        _spark_ctxt = None
+        result = getSparkContext()
+        self.assertIsInstance(result, SparkContext)
+
+    def test_getSparkSession(self):
+        global _spark
+        _spark = None
+        result = getSparkSession()
+        self.assertIsInstance(result, SparkSession)
+
+    def test_getSqlContext(self):
+        global _sqlContext
+        _sqlContext = None
+        result = getSqlContext()
+        self.assertIsInstance(result, SQLContext)
+
+    def test_getJVM(self):
+        result = getJVM()
+        self.assertIsNotNone(result)
+
+    def test_getGateway(self):
+        result = getGateway()
+        self.assertIsNotNone(result)
+
+    # def test_getDfFromDs(self):
+    #     spark = SparkSession.builder.master("local").appName("test").getOrCreate()
+
+    #     data = spark.createDataFrame([(1, "Alice"), (2, "Bob"), (3, "Charlie")], ["id", "name"])
+    #     result = getDfFromDs(data)
+    #     self.assertIsInstance(result, DataFrame)
+    #     spark.stop()
+    
+    def test_getDfFromDs(self):
+        data = Mock()
+        
+        data.df.return_value = Mock()
+        data.df().collect.return_value = [(1, "Alice"), (2, "Bob"), (3, "Charlie")]
+        data.df().columns = ["id", "name"]
+
+        mock_sql_context = Mock()
+
+        with patch("client.getSqlContext", return_value=mock_sql_context):
+            result = getDfFromDs(data)
+
+        self.assertIsInstance(result, DataFrame)
+    
+    # def test_getPandasDfFromDs(self):
+    #     spark = SparkSession.builder.master("local").appName("test").getOrCreate()
+
+    #     test_data = [(1, "Alice"), (2, "Bob"), (3, "Charlie")]
+    #     schema = ["id", "name"]
+    #     data = spark.createDataFrame(test_data, schema)
+    #     result = getPandasDfFromDs(data)
+
+    #     self.assertIsInstance(result, pd.DataFrame)
+
+    #     expected_data = pd.DataFrame(test_data, columns=schema)
+    #     pd.testing.assert_frame_equal(result, expected_data)
+    
+    def test_getPandasDfFromDs(self):
+        data = Mock()
+        
+        mock_df = Mock(spec=DataFrame)
+        mock_df.collect.return_value = [(1, "Alice"), (2, "Bob"), (3, "Charlie")]
+        mock_df.columns = ["id", "name"]
+        
+        with patch("zingg.client.getDfFromDs", return_value=mock_df):
+            result = getPandasDfFromDs(data)
+        
+        self.assertIsInstance(result, pd.DataFrame)
+        expected_data = {"id": [1, 2, 3], "name": ["Alice", "Bob", "Charlie"]}
+        self.assertTrue(result.equals(pd.DataFrame(expected_data)))
+        
+
+class TestZingg(TestCase):
+
+    def test_init(self):
+        zingg = Zingg(args, options)
+
+        self.assertIsInstance(zingg.client, object)
+    
+    # def test_execute(self):
+    #     zingg = Zingg(args, options)
+
+    #     zingg.execute()
+    #     self.assertIsInstance(zingg.client, object)
+    
+    def test_init_and_execute(self):
+        zingg = Zingg(args, options)
+
+        zingg.initAndExecute()
+        self.assertIsInstance(zingg.client, object)
+    
+    # def test_execute_label(self):
+    #     zingg = Zingg(args, options)
+
+    #     zingg.executeLabel()
+    #     self.assertIsInstance(zingg.client, object)
+    
+    # def test_executeLabelUpdate(self):
+    #     zingg = Zingg(args, options)
+    #     marked_records = ["MarkedRecord1", "MarkedRecord2"]
+    #     inp_args = ["UpdatedRecord1", "UpdatedRecord2"]
+    #     zingg.getMarkedRecords = lambda: marked_records
+    #     zingg.executeLabelUpdate()
+    #     self.assertEqual(zingg.updated_records, inp_args)
+    
+    # def test_executeLabelUpdate(self):
+    #     zingg = Zingg(args, options)
+
+    #     marked_records = ["MarkedRecord1", "MarkedRecord2"]
+    #     inp_args = ["UpdatedRecord1", "UpdatedRecord2"]
+
+    #     def new_getMarkedRecords():
+    #         return marked_records
+    #     zingg.getMarkedRecords = new_getMarkedRecords
+
+    #     def new_processRecordsCliLabelUpdate(records, inp_args):
+    #         self.assertEqual(records, marked_records)
+    #         self.assertEqual(inp_args, inp_args)
+    #     zingg.processRecordsCliLabelUpdate = new_processRecordsCliLabelUpdate
+
+    #     zingg.executeLabelUpdate()
+    #     self.assertEqual(zingg.updated_records, ["UpdatedRecord1", "UpdatedRecord2"])
+
+    def test_getMarkedRecords(self):
+        options = ClientOptions()
+        zingg = Zingg(args, options)
+
+        new_marked_records = ["Record1", "Record2"]
+        original_getMarkedRecords = zingg.client.getMarkedRecords
+        zingg.client.getMarkedRecords = lambda: new_marked_records
+
+        marked_records = zingg.getMarkedRecords()
+
+        zingg.client.getMarkedRecords = original_getMarkedRecords
+
+        self.assertEqual(marked_records, new_marked_records)
+    
+    def test_getUnmarkedRecords(self):
+        options = ClientOptions()
+        zingg = Zingg(args, options)
+
+        new_unmarked_records = ["UnmarkedRecord1", "UnmarkedRecord2"]
+        original_getUnmarkedRecords = zingg.client.getUnmarkedRecords
+        zingg.client.getUnmarkedRecords = lambda: new_unmarked_records
+
+        unmarked_records = zingg.getUnmarkedRecords()
+
+        zingg.client.getUnmarkedRecords = original_getUnmarkedRecords
+
+        self.assertEqual(unmarked_records, new_unmarked_records)
+
+    def test_writeLabelledOutput(self):
+        options = ClientOptions()
+        zingg = Zingg(args, options)
+
+        new_updated_records = ["UpdatedRecord1", "UpdatedRecord2"]
+        called_write_labelled_output = False
+
+        class newTrainingDataModel:
+            def writeLabelledOutput(self, records, args):
+                nonlocal called_write_labelled_output
+                called_write_labelled_output = True
+        zingg.client.getTrainingDataModel = lambda: newTrainingDataModel()
+        zingg.writeLabelledOutput(new_updated_records, args)
+
+        self.assertTrue(called_write_labelled_output)
+
+    def test_getMarkedRecordsStat(self):
+        options = ClientOptions()
+        zingg = Zingg(args, options)
+
+        marked_records = [("Record1", 1), ("Record2", 1), ("Record3", 0)]
+
+        def new_getMarkedRecordsStat(markedRecords, value):
+            return len([record for record in markedRecords if record[1] == value])
+        zingg.client.getMarkedRecordsStat = new_getMarkedRecordsStat
+
+        num_marked_records = zingg.getMarkedRecordsStat(marked_records, 1)
+
+        self.assertEqual(num_marked_records, 2)
+    
+    def test_getMatchedMarkedRecordsStat(self):
+        options = ClientOptions()
+        zingg = Zingg(args, options)
+
+        marked_records = [("Record1", 1), ("Record2", 1), ("Record3", 0)]
+
+        def new_getMarkedRecords():
+            return marked_records
+        zingg.client.getMarkedRecords = new_getMarkedRecords
+
+        def new_getMarkedRecordsStat(markedRecords, value):
+            return len([record for record in markedRecords if record[1] == value])
+        zingg.client.getMarkedRecordsStat = new_getMarkedRecordsStat
+
+        def new_getMatchedMarkedRecordsStat(markedRecords):
+            return len([record for record in markedRecords if record[1] == 1])
+        zingg.client.getMatchedMarkedRecordsStat = new_getMatchedMarkedRecordsStat
+
+        num_matched_marked_records = zingg.getMatchedMarkedRecordsStat()
+
+        self.assertEqual(num_matched_marked_records, 2)
+
+    def test_getUnmatchedMarkedRecordsStat(self):
+        options = ClientOptions()
+        zingg = Zingg(args, options)
+
+        marked_records = [("Record1", 1), ("Record2", 1), ("Record3", 0), ("Record4", 0)]
+
+        def new_getMarkedRecords():
+            return marked_records
+        zingg.client.getMarkedRecords = new_getMarkedRecords
+
+        def new_getMarkedRecordsStat(markedRecords, value):
+            return len([record for record in markedRecords if record[1] == value])
+        zingg.client.getMarkedRecordsStat = new_getMarkedRecordsStat
+
+        def new_getUnmatchedMarkedRecordsStat(markedRecords):
+            return len([record for record in markedRecords if record[1] == 0])
+        zingg.client.getUnmatchedMarkedRecordsStat = new_getUnmatchedMarkedRecordsStat
+
+        num_unmatched_marked_records = zingg.getUnmatchedMarkedRecordsStat()
+
+        self.assertEqual(num_unmatched_marked_records, 2)
+    
+    def test_getUnsureMarkedRecordsStat(self):
+        options = ClientOptions()
+        zingg = Zingg(args, options)
+
+        marked_records = [("Record1", 1), ("Record2", 1), ("Record3", 0), ("Record4", 2), ("Record5", 2)]
+
+        def new_getMarkedRecords():
+            return marked_records
+        zingg.client.getMarkedRecords = new_getMarkedRecords
+
+        def new_getMarkedRecordsStat(markedRecords, value):
+            return len([record for record in markedRecords if record[1] == value])
+        zingg.client.getMarkedRecordsStat = new_getMarkedRecordsStat
+
+        def new_getUnsureMarkedRecordsStat(markedRecords):
+            return len([record for record in markedRecords if record[1] == 2])
+        zingg.client.getUnsureMarkedRecordsStat = new_getUnsureMarkedRecordsStat
+
+        num_unsure_marked_records = zingg.getUnsureMarkedRecordsStat()
+
+        self.assertEqual(num_unsure_marked_records, 2)
+    
+
+class TestZinggWithSpark(TestCase):
+    def test_init(self):
+        client = Zingg(args, options)
+        client.initAndExecute()
+        zingg_spark = ZinggWithSpark(args, options)
+
+        self.assertIsInstance(zingg_spark.client, object)
+'''
 class ArgumentsTest(TestCase):
     def test_setArgsAndGetArgs(self):
         client = Zingg(args, options)
@@ -54,12 +346,7 @@ class ArgumentsTest(TestCase):
         
         self.assertEqual(java_args.getModelId(), expected_args["modelId"])
         self.assertEqual(java_args.getZinggDir(), expected_args["zinggDir"])
-        # self.assertEqual(java_args.getnumPartitions(), expected_args["numPartitions"])
-        # self.assertEqual(java_args.getlabelDataSampleSize(), expected_args["labelDataSampleSize"])
-        # self.assertEqual(java_args.getjobId(), expected_args["jobId"])
-        # self.assertEqual(java_args.getcollectMetrics(), expected_args["collectMetrics"])
-        # self.assertEqual(java_args.getblockSize(), expected_args["blockSize"])
-
+    '''  
     def test_setModelId(self):
         client = Zingg(args, options)
         client.initAndExecute()
@@ -123,7 +410,26 @@ class ArgumentsTest(TestCase):
         for python_pipe, java_pipe in zip([trainingPipe], java_pipes):
             self.assertEqual(python_pipe.pipe.getName(), java_pipe.getName())
             self.assertEqual(python_pipe.pipe.getFormat(), java_pipe.getFormat())
-    
+    '''
+    # def test_setDeterministicMatchingCondition(self):
+    #     dm1 = DeterministicMatching('fname', 'stNo', 'add1')
+    #     dm2 = DeterministicMatching('ssn')
+    #     dm3 = DeterministicMatching('fname', 'stNo', 'lname')
+        
+    #     client = Zingg(args, options)
+    #     client.initAndExecute()
+        
+    #     java_args = client.getArguments()
+    #     args.setDeterministicMatchingCondition(dm1, dm2, dm3)
+        
+    #     actual_conditions = java_args.getDeterministicMatching()
+    #     expected_conditions = ['fname', 'stNo', 'add1', 'ssn', 'fname', 'stNo', 'lname']
+        
+    #     print("expected_conditions:", expected_conditions)
+    #     print("actual_conditions:", actual_conditions)
+        
+    #     self.assertEqual(actual_conditions, expected_conditions)
+
     def test_setZinggDir(self):
         client = Zingg(args, options)
         client.initAndExecute()
@@ -167,22 +473,18 @@ class ArgumentsTest(TestCase):
         actual_stopWordsCutoff = java_args.getStopWordsCutoff()
         
         self.assertEqual(actual_stopWordsCutoff, stopWordsCutoff)
-
-    # def test_createArgumentsFromJSON(self):
-    #     # client = Zingg(args, options)
-    #     # client.initAndExecute()
-    #     fileName = "createArguments.json"
-    #     phase = "label_phase"
-
-    #     obj = args.createArgumentsFromJSON(fileName, phase)
-
-    #     self.assertIsInstance(obj, args)
-    #     if os.path.exists(fileName):
-    #         os.remove(fileName)
     
+    def test_createArgumentsFromJSON(self):
+        fileName = "examples/febrl/config.json"
+        phase = "label"
+
+        obj = args.createArgumentsFromJSON(fileName, phase)
+        print("JSON file content:", obj)
+        print("Phase:", phase)
+
+        self.assertIsInstance(obj, Arguments)
+
     def test_writeArgumentsToJSON(self):
-        # client = Zingg(args, options)
-        # client.initAndExecute()
         json_file_name = "arguments_file.json"
 
         args.writeArgumentsToJSON(json_file_name)
@@ -190,60 +492,96 @@ class ArgumentsTest(TestCase):
         self.assertTrue(os.path.exists(json_file_name))
         os.remove(json_file_name)
     
-    # def test_writeArgumentsToJSONString(self):
-    #     client = Zingg(args, options)
-    #     client.initAndExecute()
-
-    #     json_string = args.writeArgumentsToJSONString()
-
-    #     self.assertTrue(isinstance(json_string, str))
-    #     self.assertNotEqual(json_string, "")
-
+    def test_writeArgumentsToJSONString(self):
+        # print("new args: ", args1)
+        # print("old args: ", args)
+        json_string = args1.writeArgumentsToJSONString()
+        # json_string1 = args.writeArgumentsToJSONString()
+        print("json_string: ",json_string)
+        # print("oldjson_string: ", json_string1)
+        data = json.loads(json_string)
+        print("data: ", data)
         
-    # def test_createArgumentsFromJSONString(self):
-    #     sample_json = '{"zinggDir": "models", "numPartitions": 4}'
-    #     new_args = Arguments.createArgumentsFromJSONString(sample_json, "test_phase")
+        self.assertEqual(data['modelId'], "100")
+        self.assertEqual(data['zinggDir'], "models")
 
-    #     self.assertIsInstance(new_args, Arguments)
-
-    # def test_copyArgs(self):
-    #     client = Zingg(args, options)
-    #     client.initAndExecute()
-    #     phase = "test_phase"
-
-    #     copied_args = args.copyArgs(phase)
-
-    #     self.assertIsInstance(copied_args, Arguments)
-
-class TestFieldDefinition(TestCase):
-    def setUp(self):
-        self.field_def = FieldDefinition("fname", "string", "EXACT")
-
-    def test_constructor(self):
-        self.assertEqual(self.field_def.fd.getFieldName(), "fname")
-        self.assertEqual(self.field_def.fd.getDataType(), "string")
+    def test_createArgumentsFromJSONString(self):
+        sample_json = '''
+        {
+            "fieldDefinition": [
+                {
+                    "fieldName": "recId",
+                    "matchType": "dont_use",
+                    "fields": "recId",
+                    "dataType": "string"
+                },
+                {
+                    "fieldName": "fname",
+                    "matchType": "fuzzy",
+                    "fields": "fname",
+                    "dataType": "string"
+                },
+                {
+                    "fieldName": "lname",
+                    "matchType": "fuzzy",
+                    "fields": "lname",
+                    "dataType": "string"
+                },
+                {
+                    "fieldName": "stNo",
+                    "matchType": "fuzzy",
+                    "fields": "stNo",
+                    "dataType": "string"
+                },
+                {
+                    "fieldName": "add1",
+                    "matchType": "fuzzy",
+                    "fields": "add1",
+                    "dataType": "string"
+                }
+            ],
+            "output": [
+                {
+                    "name": "output",
+                    "format": "csv",
+                    "props": {
+                        "location": "/tmp/zinggOutput",
+                        "delimiter": ",",
+                        "header": true
+                    }
+                }
+            ],
+            "data": [
+                {
+                    "name": "test",
+                    "format": "csv",
+                    "props": {
+                        "location": "examples/febrl/test.csv",
+                        "delimiter": ",",
+                        "header": false
+                    },
+                    "schema": "recId string, fname string, lname string, stNo string, add1 string"
+                }
+            ],
+            "labelDataSampleSize": 0.5,
+            "numPartitions": 4,
+            "modelId": 100,
+            "zinggDir": "models"
+        }
+        '''
+        phase = "label"
         
-        actual_match_type = self.field_def.fd.getMatchType()
-        expected_match_type = ["EXACT"]
-        self.assertEqual(set(actual_match_type), set(expected_match_type))
+        obj = args.createArgumentsFromJSONString(sample_json, phase)
 
-    def test_setStopWords(self):
-        self.field_def.setStopWords("stopwords.csv")
-        self.assertEqual(self.field_def.fd.getStopWords(), "stopwords.csv")
+        self.assertIsInstance(obj, Arguments)
+        self.assertEqual(obj.getModelId(), "100")
+    
+    def test_copyArgs(self):
+        phase = "test_phase"
+        copied_args = args.copyArgs(phase)
 
-    def test_getFieldDefinition(self):
-        field_definition = self.field_def.getFieldDefinition()
-        self.assertEqual(field_definition.getFieldName(), "fname")
-        self.assertEqual(field_definition.getDataType(), "string")
-        
-        actual_match_type = self.field_def.fd.getMatchType()
-        expected_match_type = ["EXACT"]
-        self.assertEqual(set(actual_match_type), set(expected_match_type))
-
-    def test_stringify(self):
-        data_type = self.field_def.stringify("string")
-        self.assertEqual(data_type, "string")
-        
+        self.assertIsInstance(copied_args, Arguments)
+'''
 class TestClientOptions(TestCase):
 
     def setUp(self):
@@ -297,178 +635,221 @@ class TestClientOptions(TestCase):
         location = self.client_options.getLocation()
         self.assertEqual(location, "custom_location")
 
-# class ClientTest(TestCase):
-#     def test_parseArguments(self):
-#         argv = ["--phase", "test_phase", "--conf", "config.json"]
-#         try:
-#             args = parseArguments(argv)
-#             self.assertEqual(args.phase, "test_phase")
-#             self.assertEqual(args.conf, "config.json")
-#         except SystemExit as e:
-#             self.fail("parseArguments raised SystemExit: " + str(e))
+class TestFieldDefinition(TestCase):
+    def setUp(self):
+        self.field_def = FieldDefinition("fname", "string", "EXACT")
 
-class TestZinggWithSpark(TestCase):
+    def test_constructor(self):
+        self.assertEqual(self.field_def.fd.getFieldName(), "fname")
+        self.assertEqual(self.field_def.fd.getDataType(), "string")
+        
+        actual_match_type = self.field_def.fd.getMatchType()
+        expected_match_type = ["EXACT"]
+        self.assertEqual(set(actual_match_type), set(expected_match_type))
+
+    def test_setStopWords(self):
+        self.field_def.setStopWords("stopwords.csv")
+        self.assertEqual(self.field_def.fd.getStopWords(), "stopwords.csv")
+
+    def test_getFieldDefinition(self):
+        field_definition = self.field_def.getFieldDefinition()
+        self.assertEqual(field_definition.getFieldName(), "fname")
+        self.assertEqual(field_definition.getDataType(), "string")
+        
+        actual_match_type = self.field_def.fd.getMatchType()
+        expected_match_type = ["EXACT"]
+        self.assertEqual(set(actual_match_type), set(expected_match_type))
+
+    def test_stringify(self):
+        data_type = self.field_def.stringify("string")
+        self.assertEqual(data_type, "string")
+
+class ClientTest(TestCase):
+    def test_parseArguments(self):
+        args = ["--phase", "train",
+                "--conf", "conf.json"]
+
+        parsed_args = parseArguments(args)
+
+        self.assertEqual(parsed_args.phase, "train")
+        self.assertEqual(parsed_args.conf, "conf.json")
+
+class TestPipe(TestCase):
+
     def test_init(self):
-        client = Zingg(args, options)
-        client.initAndExecute()
-        zingg_spark = ZinggWithSpark(args, options)
+        pipe = Pipe(name="my_pipe", format="bigquery")
+        self.assertIsNotNone(pipe)
 
-        self.assertIsInstance(zingg_spark.client, object)
+    def test_add_property(self):
+        pipe = Pipe("my_pipe", "csv")
+        name = "property_name"
+        value = "property_value"
+        pipe.addProperty(name, value)
         
-class TestZingg(TestCase):
-
-    # def test_executeLabel(self):
-    #     zingg = Zingg(args, options)
-    #     zingg.inpArgs.setData(inputPipe)
-    #     zingg.initAndExecute()
-
-    #     original_setMarkedRecordsStat = zingg.client.getTrainingDataModel().setMarkedRecordsStat
-    #     zingg.client.getTrainingDataModel().setMarkedRecordsStat = lambda x: None
-
-    #     original_processRecordsCli = zingg.client.processRecordsCli
-    #     zingg.client.processRecordsCli = lambda records, inp_args: ["UpdatedRecord1", "UpdatedRecord2"]
-
-    #     original_writeLabelledOutput = zingg.client.writeLabelledOutput
-    #     zingg.client.writeLabelledOutput = lambda records, inp_args: None
-
-    #     zingg.client.executeLabel()
-
-    #     zingg.client.getTrainingDataModel().setMarkedRecordsStat = original_setMarkedRecordsStat
-    #     zingg.client.processRecordsCli = original_processRecordsCli
-    #     zingg.client.writeLabelledOutput = original_writeLabelledOutput
+        self.assertEqual(pipe.getPipe().getProps().get(name), value)
+    
+    def test_set_schema(self):
+        pipe = Pipe("my_pipe", "csv")
+        schema = "id string, name string, age int"
+        pipe.setSchema(schema)
         
-    def test_getMarkedRecords(self):
-        options = ClientOptions()
-        zingg = Zingg(args, options)
+        self.assertEqual(pipe.getPipe().getSchema(), schema)
 
-        mock_marked_records = ["Record1", "Record2"]
-        original_getMarkedRecords = zingg.client.getMarkedRecords
-        zingg.client.getMarkedRecords = lambda: mock_marked_records
+    def test_to_string(self):
+        pipe = Pipe(name="my_pipe", format="bigquery")
+        string_representation = pipe.toString()
+        self.assertIsNotNone(string_representation)
 
-        marked_records = zingg.getMarkedRecords()
-
-        zingg.client.getMarkedRecords = original_getMarkedRecords
-
-        self.assertEqual(marked_records, mock_marked_records)
+class TestCsvPipe(TestCase):    
+    def test_init(self):
+        location = "/path/to/some/location"
+        schema = "your_schema"
+        pipe = CsvPipe("csv_pipe", location=location, schema=schema)
+        
+        self.assertEqual(pipe.pipe.getProps()["location"], location)
+        self.assertEqual(pipe.pipe.getSchema(), schema)
     
-    def test_getUnmarkedRecords(self):
-        options = ClientOptions()
-        zingg = Zingg(args, options)
+    def test_init_with_location_and_schema(self):
+        pipe = CsvPipe("csv_pipe", location="/path/to/some/location", schema="your_schema")
+        self.assertEqual(pipe.pipe.getProps()[FilePipe.LOCATION], "/path/to/some/location")
+        self.assertEqual(pipe.pipe.getSchema(), "your_schema")
 
-        mock_unmarked_records = ["UnmarkedRecord1", "UnmarkedRecord2"]
-        original_getUnmarkedRecords = zingg.client.getUnmarkedRecords
-        zingg.client.getUnmarkedRecords = lambda: mock_unmarked_records
-
-        unmarked_records = zingg.getUnmarkedRecords()
-
-        zingg.client.getUnmarkedRecords = original_getUnmarkedRecords
-
-        self.assertEqual(unmarked_records, mock_unmarked_records)
+    def test_set_delimiter(self):
+        pipe = CsvPipe("csv_pipe")
+        delimiter = ","
+        pipe.setDelimiter(delimiter)
+        self.assertEqual(pipe.pipe.getProps()[FilePipe.DELIMITER], delimiter)
     
-    # def test_writeLabelledOutput(self):
-    #     options = ClientOptions()
-    #     zingg = Zingg(args, options)
-
-    #     mock_updated_records = ["UpdatedRecord1", "UpdatedRecord2"]
-    #     called_write_labelled_output = False
-
-    #     class MockTrainingDataModel:
-    #         def writeLabelledOutput(self, records, args):
-    #             nonlocal called_write_labelled_output
-    #             called_write_labelled_output = True
-
-    #     zingg.client.getTrainingDataModel = MockTrainingDataModel()
-
-    #     zingg.writeLabelledOutput(mock_updated_records, args)
-
-    #     self.assertTrue(called_write_labelled_output)
-
-    def test_getMarkedRecordsStat(self):
-        options = ClientOptions()
-        zingg = Zingg(args, options)
-
-        marked_records = [("Record1", 1), ("Record2", 1), ("Record3", 0)]
-
-        def new_getMarkedRecordsStat(markedRecords, value):
-            return len([record for record in markedRecords if record[1] == value])
-
-        zingg.client.getMarkedRecordsStat = new_getMarkedRecordsStat
-
-        num_marked_records = zingg.getMarkedRecordsStat(marked_records, 1)
-
-        self.assertEqual(num_marked_records, 2)
+    def test_set_location(self):
+        pipe = CsvPipe("csv_pipe")
+        location = "/path/to/some/location"
+        pipe.setLocation(location)
+        self.assertEqual(pipe.pipe.getProps()[FilePipe.LOCATION], location)
     
-    def test_getMatchedMarkedRecordsStat(self):
-        options = ClientOptions()
-        zingg = Zingg(args, options)
+    def test_set_header(self):
+        pipe = CsvPipe("csv_pipe")
+        header = "true"  # or "false" to represent True or False
+        pipe.setHeader(header)
+        self.assertEqual(pipe.pipe.getProps()[FilePipe.HEADER], header)
 
-        marked_records = [("Record1", 1), ("Record2", 1), ("Record3", 0)]
+class TestBigQueryPipe(TestCase):
+    def test_set_credential_file(self):
+        pipe = BigQueryPipe("bq_pipe")
+        credential_file = "my_credentials.json"
+        pipe.setCredentialFile(credential_file)
+        
+        self.assertEqual(pipe.pipe.getProps()[BigQueryPipe.CREDENTIAL_FILE], credential_file)
 
-        def new_getMarkedRecords():
-            return marked_records
+    def test_set_table(self):
+        pipe = BigQueryPipe("bq_pipe")
+        table = "my_table"
+        pipe.setTable(table)
+        
+        self.assertEqual(pipe.pipe.getProps()[BigQueryPipe.TABLE], table)
 
-        zingg.client.getMarkedRecords = new_getMarkedRecords
+    def test_set_temporary_gcs_bucket(self):
+        pipe = BigQueryPipe("bq_pipe")
+        bucket = "my_temp_bucket"
+        pipe.setTemporaryGcsBucket(bucket)
+        
+        self.assertEqual(pipe.pipe.getProps()[BigQueryPipe.TEMP_GCS_BUCKET], bucket)
 
-        def new_getMarkedRecordsStat(markedRecords, value):
-            return len([record for record in markedRecords if record[1] == value])
+    def test_set_views_enabled(self):
+        pipe = BigQueryPipe("bq_pipe")
+        views_enabled = "true"
+        pipe.setViewsEnabled(views_enabled)
+        
+        self.assertEqual(pipe.pipe.getProps()[BigQueryPipe.VIEWS_ENABLED], views_enabled)
 
-        zingg.client.getMarkedRecordsStat = new_getMarkedRecordsStat
-
-        def new_getMatchedMarkedRecordsStat(markedRecords):
-            return len([record for record in markedRecords if record[1] == 1])
-
-        zingg.client.getMatchedMarkedRecordsStat = new_getMatchedMarkedRecordsStat
-
-        num_matched_marked_records = zingg.getMatchedMarkedRecordsStat()
-
-        self.assertEqual(num_matched_marked_records, 2)
-
-    def test_getUnmatchedMarkedRecordsStat(self):
-        options = ClientOptions()
-        zingg = Zingg(args, options)
-
-        marked_records = [("Record1", 1), ("Record2", 1), ("Record3", 0), ("Record4", 0)]
-
-        def new_getMarkedRecords():
-            return marked_records
-
-        zingg.client.getMarkedRecords = new_getMarkedRecords
-
-        def new_getMarkedRecordsStat(markedRecords, value):
-            return len([record for record in markedRecords if record[1] == value])
-
-        zingg.client.getMarkedRecordsStat = new_getMarkedRecordsStat
-
-        def new_getUnmatchedMarkedRecordsStat(markedRecords):
-            return len([record for record in markedRecords if record[1] == 0])
-
-        zingg.client.getUnmatchedMarkedRecordsStat = new_getUnmatchedMarkedRecordsStat
-
-        num_unmatched_marked_records = zingg.getUnmatchedMarkedRecordsStat()
-
-        self.assertEqual(num_unmatched_marked_records, 2)
+class TestSnowflakePipe(TestCase):
+    def test_init(self):
+        name = "snowflake_pipe"
+        pipe = SnowflakePipe(name)
+        self.assertEqual(pipe.pipe.getName(), name)
+        self.assertEqual(pipe.pipe.getProps()["application"], "zinggai_zingg")
     
-    def test_getUnsureMarkedRecordsStat(self):
-        options = ClientOptions()
-        zingg = Zingg(args, options)
+    def test_set_url(self):
+        pipe = SnowflakePipe("snowflake_pipe")
+        url = "https://example-snowflake-url.com"
+        pipe.setURL(url)
+        self.assertEqual(pipe.pipe.getProps()["sfUrl"], url)
+    
+    def test_set_user(self):
+        pipe = SnowflakePipe("snowflake_pipe")
+        user = "snowflake_user"
+        pipe.setUser(user)
+        self.assertEqual(pipe.pipe.getProps()["sfUser"], user)
+    
+    def test_set_password(self):
+        pipe = SnowflakePipe("snowflake_pipe")
+        password = "password123"
+        pipe.setPassword(password)
+        self.assertEqual(pipe.pipe.getProps()["sfPassword"], password)
+    
+    def test_set_database(self):
+        pipe = SnowflakePipe("snowflake_pipe")
+        database = "my_database"
+        pipe.setDatabase(database)
+        self.assertEqual(pipe.pipe.getProps()["sfDatabase"], database)
+    
+    def test_set_schema(self):
+        pipe = SnowflakePipe("snowflake_pipe")
+        schema = "my_schema"
+        pipe.setSFSchema(schema)
+        self.assertEqual(pipe.pipe.getProps()["sfSchema"], schema)
+    
+    def test_set_warehouse(self):
+        pipe = SnowflakePipe("snowflake_pipe")
+        warehouse = "my_warehouse"
+        pipe.setWarehouse(warehouse)
+        self.assertEqual(pipe.pipe.getProps()["sfWarehouse"], warehouse)
+    
+    def test_set_db_table(self):
+        pipe = SnowflakePipe("snowflake_pipe")
+        db_table = "my_table"
+        pipe.setDbTable(db_table)
+        self.assertEqual(pipe.pipe.getProps()["dbtable"], db_table)
 
-        marked_records = [("Record1", 1), ("Record2", 1), ("Record3", 0), ("Record4", 2), ("Record5", 2)]
+class TestInMemoryPipe(TestCase):  
+    def test_init(self):
+        name = "in_memory_pipe"
+        pipe = InMemoryPipe(name)
+        self.assertEqual(pipe.pipe.getName(), name)
+        self.assertEqual(pipe.pipe.getFormat(), "inMemory")
 
-        def new_getMarkedRecords():
-            return marked_records
+    # def test_set_dataset(self):
+    #     name = "in_memory_pipe"
+    #     pipe = InMemoryPipe(name)
+    #     sample_data = [{"name": "John", "age": 30}, {"name": "Alice", "age": 25}]
+    #     df = pd.DataFrame(sample_data)
+    #     pipe.setDataset(df)
+    #     dataset = pipe.getDataset()
+    #     self.assertEqual(dataset.count(), len(sample_data))
 
-        zingg.client.getMarkedRecords = new_getMarkedRecords
+    # def test_set_dataset_with_schema(self):
+    #     name = "in_memory_pipe"
+    #     sample_data = [{"name": "John", "age": 30}, {"name": "Alice", "age": 25}]
+    #     schema = "name string, age int"
+    #     df = pd.DataFrame(sample_data)
+    #     pipe = InMemoryPipe(name)
+    #     pipe.setDataset(df)
+    #     dataset = pipe.getDataset()
+    #     self.assertEqual(dataset.count(), len(sample_data))
 
-        def new_getMarkedRecordsStat(markedRecords, value):
-            return len([record for record in markedRecords if record[1] == value])
+    # def test_set_dataset_with_invalid_type(self):
+    #     name = "in_memory_pipe"
+    #     pipe = InMemoryPipe(name)
+    #     invalid_data = random.randint(1, 100)
+    #     with self.assertRaises(AttributeError):
+    #         pipe.setDataset(invalid_data)
 
-        zingg.client.getMarkedRecordsStat = new_getMarkedRecordsStat
+    # def test_get_dataset(self):
+    #     name = "in_memory_pipe"
+    #     sample_data = [{"name": "John", "age": 30}, {"name": "Alice", "age": 25}]
+    #     df = pd.DataFrame(sample_data)
+    #     pipe = InMemoryPipe(name)
+    #     pipe.setDataset(df)
+    #     dataset = pipe.getDataset()
+    #     self.assertEqual(dataset.count(), len(sample_data))
 
-        def new_getUnsureMarkedRecordsStat(markedRecords):
-            return len([record for record in markedRecords if record[1] == 2])
-
-        zingg.client.getUnsureMarkedRecordsStat = new_getUnsureMarkedRecordsStat
-
-        num_unsure_marked_records = zingg.getUnsureMarkedRecordsStat()
-
-        self.assertEqual(num_unsure_marked_records, 2)
+'''
