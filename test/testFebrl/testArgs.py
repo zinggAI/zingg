@@ -42,7 +42,7 @@ global args1
 args1 = Arguments()
 args1.setModelId("100")
 args1.setZinggDir("models")
-'''
+
 class TestZinggClient(TestCase):
 
     def test_initSparkClient(self):
@@ -325,7 +325,7 @@ class TestZinggWithSpark(TestCase):
         zingg_spark = ZinggWithSpark(args, options)
 
         self.assertIsInstance(zingg_spark.client, object)
-'''
+
 class ArgumentsTest(TestCase):
     def test_setArgsAndGetArgs(self):
         client = Zingg(args, options)
@@ -346,7 +346,7 @@ class ArgumentsTest(TestCase):
         
         self.assertEqual(java_args.getModelId(), expected_args["modelId"])
         self.assertEqual(java_args.getZinggDir(), expected_args["zinggDir"])
-    '''  
+
     def test_setModelId(self):
         client = Zingg(args, options)
         client.initAndExecute()
@@ -410,7 +410,7 @@ class ArgumentsTest(TestCase):
         for python_pipe, java_pipe in zip([trainingPipe], java_pipes):
             self.assertEqual(python_pipe.pipe.getName(), java_pipe.getName())
             self.assertEqual(python_pipe.pipe.getFormat(), java_pipe.getFormat())
-    '''
+            
     # def test_setDeterministicMatchingCondition(self):
     #     dm1 = DeterministicMatching('fname', 'stNo', 'add1')
     #     dm2 = DeterministicMatching('ssn')
@@ -581,7 +581,7 @@ class ArgumentsTest(TestCase):
         copied_args = args.copyArgs(phase)
 
         self.assertIsInstance(copied_args, Arguments)
-'''
+
 class TestClientOptions(TestCase):
 
     def setUp(self):
@@ -851,5 +851,3 @@ class TestInMemoryPipe(TestCase):
     #     pipe.setDataset(df)
     #     dataset = pipe.getDataset()
     #     self.assertEqual(dataset.count(), len(sample_data))
-
-'''
