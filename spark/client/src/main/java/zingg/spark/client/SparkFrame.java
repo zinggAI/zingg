@@ -2,6 +2,7 @@ package zingg.spark.client;
 
 import java.util.List;
 
+import org.apache.spark.internal.config.R;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
@@ -435,5 +436,19 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
             String joinType) {
        return new SparkFrame(df.join(lines1.df(), joinColumn, joinType));
     }
+
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> countDistinct(String groupByCol, String distinctCol, String distinctcolCountName){
+        return new SparkFrame(df.groupBy(groupByCol).agg(functions.count_distinct(df.col(distinctCol)).as(distinctcolCountName)));
+    }
+
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> groupByCount(String groupByCol1, String groupByCol2, String countColName){
+        return new SparkFrame(df.groupBy(groupByCol1, groupByCol2).agg(functions.count(groupByCol1).as(countColName)));
+    }
+
+
+
 	
 }
+	

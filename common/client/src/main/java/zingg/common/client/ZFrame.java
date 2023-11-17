@@ -106,15 +106,15 @@ public interface ZFrame<D, R, C> {
     public C equalTo(String c, double e);
     public C concat(C a, C b);
 
-	public C notEqual(String c, int e);
+    public C notEqual(String c, int e);
 
-	public C not(C col);
+    public C not(C col);
 	
-	public C isNotNull(C col);
+    public C isNotNull(C col);
 	
-	public C and(C col1, C col2);
+    public C and(C col1, C col2);
 
-	public C or(C col1, C col2);
+    public C or(C col1, C col2);
 
     public void show(int num);
     public void show();
@@ -166,4 +166,9 @@ public interface ZFrame<D, R, C> {
 	
 	public ZFrame<D, R, C> filterNullCond(String colName);
 
+    public ZFrame<D,R,C> countDistinct(String groupByCol, String distinctCol, String distinctcolCountName);
+
+    public ZFrame<D,R,C> groupByCount(String groupByCol1, String groupByCol2, String countColName);
+
+   
 }

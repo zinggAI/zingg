@@ -250,10 +250,14 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return graphWithScores;
 	}
 
-	protected ZFrame<D, R, C> getGraphWithScores(ZFrame<D, R, C> graph, ZFrame<D, R, C> score) {
+	protected ZFrame<D, R, C> getGraphWithScoresOrig(ZFrame<D, R, C> graph, ZFrame<D, R, C> score) {
 		ZFrame<D,R,C>graphWithScores = getDSUtil().joinZColFirst(
 			score, graph, ColName.ID_COL, false).cache();
 		return graphWithScores;
+	}
+
+	protected ZFrame<D, R, C> getGraphWithScores(ZFrame<D, R, C> graph, ZFrame<D, R, C> score) {
+		return this.getGraphWithScoresOrig(graph, score);
 	}
 
 	protected ZFrame<D,R,C>getMinMaxScores(ZFrame<D,R,C>dupes, ZFrame<D,R,C>graph) throws Exception {
