@@ -57,7 +57,7 @@ public class TestStopWords extends ZinggSparkTester{
 						RowFactory.create("best luck to zingg")),
 				schema);
 			
-			List<FieldDefinition> fdList = new ArrayList<>(4);
+			List<FieldDefinition> fdList = new ArrayList<FieldDefinition>(4);
 			
 			ArrayList<MatchType> matchTypelistFuzzy = new ArrayList<MatchType>();
 			matchTypelistFuzzy.add(MatchType.FUZZY);
