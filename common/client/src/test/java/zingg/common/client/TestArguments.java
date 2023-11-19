@@ -16,6 +16,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
+import zingg.enterprise.common.client.DeterministicMatching;
+
 public class TestArguments {
 
 	private static final String KEY_HEADER = "header";
@@ -243,24 +245,6 @@ public class TestArguments {
 	}
 	
 	
-	@Test
-	public void testDeterministicMatching() {
-			Arguments args;
-            try {
-                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configDeterministicMatching.json").getFile(), "test");
-
-                DeterministicMatching[] deterministicMatching = args.getDeterministicMatching();
-                HashMap<String,String>[]  matchCondition = deterministicMatching[0].getMatchCondition();
-				
-                assertEquals("fname", matchCondition[0].get(DeterministicMatching.fieldName));
-                
-            } catch (Exception | ZinggClientException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-				fail("Could not read config");
-            }
-		
-	}
 	
 	
 }

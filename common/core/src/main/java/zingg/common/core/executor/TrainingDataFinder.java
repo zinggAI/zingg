@@ -12,7 +12,6 @@ import zingg.common.client.util.ColValues;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
-import zingg.common.core.deterministicmatching.DeterministicMatchingUtil;
 import zingg.common.core.preprocess.StopWordsRemover;
 
 public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
@@ -20,7 +19,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.TrainingDataFinder";
 	public static final Log LOG = LogFactory.getLog(TrainingDataFinder.class);    
-	protected DeterministicMatchingUtil<S,D,R,C> deterministicMatchingUtil;
+	
 	
     public TrainingDataFinder() {
         setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
@@ -90,12 +89,8 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				if (LOG.isDebugEnabled()) {
 					blocked.show(true);
 				}
-				ZFrame<D,R,C> blocks = getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
-				// remove deterministic matching pairs
-				blocks = getDeterministicMatchingUtil().removeDeterministicMatchingFromBlocks(blocks);
-				if (blocks.isEmpty()) {
-					LOG.warn("unable to find any pairs as all pairs sampled are part of the deterministic matching condition");
-				}
+				ZFrame<D,R,C> blocks = getBlocks(blocked); 
+				
 				blocks = blocks.cache();	
 				LOG.debug("blocks");
 				if (LOG.isDebugEnabled()) {
@@ -140,6 +135,10 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				throw new ZinggClientException(e.getMessage());
 			}	
     }
+
+	protected ZFrame<D,R,C> getBlocks(ZFrame<D,R,C> blocked) throws Exception{
+		return getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
+	}
 
 	public void writeUncertain(ZFrame<D,R,C> dupesActual, ZFrame<D,R,C> sampleOrginal) throws ZinggClientException {
 		if (LOG.isDebugEnabled()) {
@@ -201,15 +200,6 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
     
-	public DeterministicMatchingUtil<S, D, R, C> getDeterministicMatchingUtil() {		
-		if (deterministicMatchingUtil==null) {
-			deterministicMatchingUtil = new DeterministicMatchingUtil<S, D, R, C>(context.getDSUtil(), args);
-		}
-		return deterministicMatchingUtil;
-	}
-
-	public void setDeterministicMatchingUtil(DeterministicMatchingUtil<S, D, R, C> deterministicMatchingUtil) {
-		this.deterministicMatchingUtil = deterministicMatchingUtil;
-	}
+	
 		    
 }

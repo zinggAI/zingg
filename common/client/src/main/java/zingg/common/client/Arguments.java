@@ -100,7 +100,7 @@ public class Arguments implements Serializable {
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
 	String column;
-	DeterministicMatching[] deterministicMatching;
+	
 	
 
 	public void setThreshold(double threshold) {
@@ -467,13 +467,7 @@ public class Arguments implements Serializable {
 		this.column = column;
 	}
 	
-	public DeterministicMatching[] getDeterministicMatching() {
-		return deterministicMatching;
-	}
-
-	public void setDeterministicMatching(DeterministicMatching[] deterministicMatching) {
-		this.deterministicMatching = deterministicMatching;
-	}
+	
 
 	public long getBlockSize() {
 		return blockSize;
