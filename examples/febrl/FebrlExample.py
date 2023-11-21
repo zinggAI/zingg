@@ -32,11 +32,6 @@ inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
 args.setData(inputPipe)
 outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
 
-dm1 = DeterministicMatching('fname','stNo','add1')
-dm2 = DeterministicMatching('ssn')
-dm3 = DeterministicMatching('fname','stNo','lname')
-args.setDeterministicMatchingCondition(dm1,dm2,dm3)
-
 args.setOutput(outputPipe)
 
 options = ClientOptions([ClientOptions.PHASE,"match"])
