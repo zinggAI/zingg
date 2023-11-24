@@ -89,16 +89,14 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		ZFrame<D,R,C> dupes = model.predict(blocks); 
 		if (LOG.isDebugEnabled()) {
 				LOG.debug("Found dupes " + dupes.count());	
-			}
-			
-		ZFrame<D,R,C>dupesActual = getDupesActualForGraph(dupes);
-		return dupesActual;
-
+		}
+		return dupes;
 	}
 
 	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
 			ZFrame<D,R,C> blocks = getBlocks(selectColsFromBlocked(blocked), testData);
-			return predictOnBlocks(blocks);
+			ZFrame<D,R,C>dupesActual = getDupesActualForGraph(blocks);
+			return predictOnBlocks(dupesActual);
 	}
 
 	@Override
@@ -271,14 +269,14 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return allScores.groupByMinMaxScore(allScores.col(ColName.ID_COL));			
 	}
 
-	protected ZFrame<D,R,C>getDupesActualForGraph(ZFrame<D,R,C>dupes) {
+	protected ZFrame<D,R,C> getDupesActualForGraph(ZFrame<D,R,C>dupes) {
 		dupes = selectColsFromDupes(dupes);
 		LOG.debug("dupes al");
 		if (LOG.isDebugEnabled()) dupes.show();
 		return dupes.filter(dupes.equalTo(ColName.PREDICTION_COL,ColValues.IS_MATCH_PREDICTION));
 	}
 
-	protected ZFrame<D,R,C>selectColsFromDupes(ZFrame<D,R,C>dupesActual) {
+	protected ZFrame<D,R,C> selectColsFromDupes(ZFrame<D,R,C>dupesActual) {
 		List<C> cols = new ArrayList<C>();
 		cols.add(dupesActual.col(ColName.ID_COL));
 		cols.add(dupesActual.col(ColName.COL_PREFIX + ColName.ID_COL));
