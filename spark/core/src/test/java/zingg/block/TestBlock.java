@@ -17,6 +17,7 @@ import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
+import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
@@ -40,8 +41,8 @@ public class TestBlock  extends ZinggSparkTester {
 		Arguments args = getArguments();
 
 		// form tree
-		SparkBlockingTreeUtil blockingTreeUtil = new SparkBlockingTreeUtil(zSession, zsCTX.getPipeUtil());
-		SparkHashUtil hashUtil = new SparkHashUtil(zSession);
+		SparkBlockingTreeUtil blockingTreeUtil = new SparkBlockingTreeUtil(spark, zsCTX.getPipeUtil());
+		SparkHashUtil hashUtil = new SparkHashUtil(spark);
 
 		Tree<Canopy<Row>> blockingTree = blockingTreeUtil.createBlockingTreeFromSample(testData, posDf, 0.5, -1,
 				args, hashUtil.getHashFunctionList());
@@ -76,7 +77,7 @@ public class TestBlock  extends ZinggSparkTester {
 	private Arguments getArguments() throws ZinggClientException {
 		String configFilePath = getClass().getResource("../../testFebrl/config.json").getFile();
 		
-		Arguments args = Arguments.createArgumentsFromJSON(configFilePath, "trainMatch");
+		Arguments args = argsUtil.createArgumentsFromJSON(configFilePath, "trainMatch");
 
 		List<FieldDefinition> fdList = getFieldDefList();
 

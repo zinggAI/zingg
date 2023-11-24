@@ -2,7 +2,6 @@ package zingg.common.client;
 
 import java.util.List;
 
-
 //Dataset, Row, column
 public interface ZFrame<D, R, C> {
 	
@@ -11,19 +10,13 @@ public interface ZFrame<D, R, C> {
 	
 	public static final String COL_COUNT = "count";
 	public static final String COL_VALUE = "VALUE";
-	
-	public static final String orSeperator = "\\|";	
-	public static final String andSeperator = "\\&";	
-
-	
+		
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
     public String[] columns();
-    public ZFrame<D, R, C> select(C... cols);
+    public ZFrame<D, R, C> select(String... string);
     public ZFrame<D, R, C> select(List<C> cols);
-    public ZFrame<D, R, C> select(String col, String... cols);
-    //public ZFrame<D, R, C> select(String... cols);
-    public ZFrame<D, R, C> select(String col);
+    public ZFrame<D, R, C> select(C... col);
     public ZFrame<D, R, C> selectExpr(String... col);
     public ZFrame <D, R, C> distinct();
     public List<R> collectAsList();
@@ -38,6 +31,8 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> joinOnCol(ZFrame<D, R, C> lines1, String joinColumn);
     
     public ZFrame<D, R, C> joinOnCol(ZFrame<D, R, C> lines1, C joinColumn);
+
+    public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, C joinColumn, String joinType);
 
     public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, String joinColumn1, String joinColumn2);
     
@@ -100,15 +95,26 @@ public interface ZFrame<D, R, C> {
     public C gt(String c, double val);
     
 	public C equalTo(String c, String e);
-
+	
+	public C equalTo(C column1, C column2);
+	
 	public C notEqual(String c, String e);
+
+    public C notEqual(String e);
     
     public C equalTo(String c, int e);
     public C equalTo(String c, double e);
     public C concat(C a, C b);
 
-	public C notEqual(String c, int e);
+    public C notEqual(String c, int e);
 
+    public C not(C col);
+	
+    public C isNotNull(C col);
+	
+    public C and(C col1, C col2);
+
+    public C or(C col1, C col2);
 
     public void show(int num);
     public void show();
@@ -159,13 +165,10 @@ public interface ZFrame<D, R, C> {
 	public ZFrame<D, R, C> filterNotNullCond(String colName);
 	
 	public ZFrame<D, R, C> filterNullCond(String colName);
-	
-	public C getObviousDupesFilter(String obviousDupeString, C extraAndCond);
-    
-	public C getObviousDupesFilter(ZFrame<D, R, C> dfToJoin, String obviousDupeString, C extraAndCond);
-	
-	public C getReverseObviousDupesFilter(String obviousDupeString, C extraAndCond);
-	
-	public C getReverseObviousDupesFilter(ZFrame<D, R, C> dfToJoin, String obviousDupeString, C extraAndCond);
-	
+
+    public ZFrame<D,R,C> countDistinct(String groupByCol, String distinctCol, String distinctcolCountName);
+
+    public ZFrame<D,R,C> groupByCount(String groupByCol1, String groupByCol2, String countColName);
+
+   
 }

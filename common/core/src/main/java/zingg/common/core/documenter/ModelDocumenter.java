@@ -45,8 +45,8 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		try {
 			LOG.info("Model document generation starts");
 
-			markedRecords = getMarkedRecords();
-			unmarkedRecords = getUnmarkedRecords();
+			markedRecords = getMarkedRecords().sortAscending(ColName.CLUSTER_COLUMN);
+			unmarkedRecords = getUnmarkedRecords().sortAscending(ColName.CLUSTER_COLUMN);
 			Map<String, Object> root = populateTemplateData();
 			writeModelDocument(root);
 

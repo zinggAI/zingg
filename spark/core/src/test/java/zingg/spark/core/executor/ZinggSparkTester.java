@@ -17,8 +17,11 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 import zingg.common.client.Arguments;
+import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IZingg;
 import org.apache.spark.sql.SparkSession;
+
+import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.util.SparkBlockingTreeUtil;
 import zingg.spark.core.util.SparkDSUtil;
 import zingg.spark.core.util.SparkGraphUtil;
@@ -32,8 +35,7 @@ public class ZinggSparkTester {
     public static JavaSparkContext ctx;
     public static SparkSession spark;
     public static ZinggSparkContext zsCTX;
-    public static SparkSession zSession;
-
+    public ArgumentsUtil argsUtil = new ArgumentsUtil();
     public static final Log LOG = LogFactory.getLog(ZinggSparkTester.class);
 
 	protected static final String FIELD_INTEGER = "fieldInteger";
@@ -51,17 +53,7 @@ public class ZinggSparkTester {
     		JavaSparkContext.jarOfClass(IZingg.class);    
 			args = new Arguments();
 			zsCTX = new ZinggSparkContext();
-			zsCTX.ctx = ctx;
-			zSession = new SparkSession(spark, null);
-			zsCTX.zSession = zSession;
-			
-            ctx.setCheckpointDir("/tmp/checkpoint");	
-            zsCTX.setPipeUtil(new SparkPipeUtil(zSession));
-            zsCTX.setDSUtil(new SparkDSUtil(zSession));
-            zsCTX.setHashUtil(new SparkHashUtil(zSession));
-            zsCTX.setGraphUtil(new SparkGraphUtil());
-            zsCTX.setModelUtil(new SparkModelUtil(zSession));
-            zsCTX.setBlockingTreeUtil(new SparkBlockingTreeUtil(zSession, zsCTX.getPipeUtil()));
+			zsCTX.init();
 			
     	} catch (Throwable e) {
     		if (LOG.isDebugEnabled())

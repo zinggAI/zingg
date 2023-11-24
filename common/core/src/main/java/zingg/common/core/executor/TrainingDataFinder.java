@@ -16,9 +16,11 @@ import zingg.common.core.preprocess.StopWordsRemover;
 
 public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
+	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.TrainingDataFinder";
 	public static final Log LOG = LogFactory.getLog(TrainingDataFinder.class);    
-
+	
+	
     public TrainingDataFinder() {
         setZinggOption(ZinggOptions.FIND_TRAINING_DATA);
     }
@@ -31,7 +33,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 			try{
 				ZFrame<D,R,C> data = getPipeUtil().read(true, true, args.getData());
 				LOG.warn("Read input data " + data.count());
-				LOG.warn("input data schema is " +data.showSchema());
+				LOG.debug("input data schema is " +data.showSchema());
 				//create 20 pos pairs
 
 				ZFrame<D,R,C> posPairs = null;
@@ -83,11 +85,14 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(sample, tree); 
 				
 				blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
+				LOG.debug("blocked");
 				if (LOG.isDebugEnabled()) {
 					blocked.show(true);
 				}
-				ZFrame<D,R,C> blocks = getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
+				ZFrame<D,R,C> blocks = getBlocks(blocked); 
+				
 				blocks = blocks.cache();	
+				LOG.debug("blocks");
 				if (LOG.isDebugEnabled()) {
 					blocks.show();
 				}
@@ -130,6 +135,10 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				throw new ZinggClientException(e.getMessage());
 			}	
     }
+
+	protected ZFrame<D,R,C> getBlocks(ZFrame<D,R,C> blocked) throws Exception{
+		return getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
+	}
 
 	public void writeUncertain(ZFrame<D,R,C> dupesActual, ZFrame<D,R,C> sampleOrginal) throws ZinggClientException {
 		if (LOG.isDebugEnabled()) {
@@ -190,5 +199,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 	}
 
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
+    
+	
 		    
 }

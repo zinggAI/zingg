@@ -47,7 +47,7 @@ public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		cfg.setWrapUncheckedExceptions(true);
 		cfg.setFallbackOnNullLoopVariable(false);
 		cfg.setObjectWrapper(getRowWrapper(cfg.getIncompatibleImprovements()));
-
+		cfg.setBooleanFormat("c");
 		/* ------------------------------------------------------------------------ */
 		/* You usually do these for MULTIPLE TIMES in the application life-cycle: */
 		return cfg;

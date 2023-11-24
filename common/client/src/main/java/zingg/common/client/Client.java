@@ -18,6 +18,7 @@ import zingg.common.client.util.EmailBody;
 public abstract class Client<S,D,R,C,T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	protected Arguments arguments;
+	protected ArgumentsUtil argsUtil;
 	protected IZingg<S,D,R,C> zingg;
 	protected ClientOptions options;
 	protected S session;
@@ -44,7 +45,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public Client(Arguments args, ClientOptions options, String zFactory) throws ZinggClientException {
 		setZFactoryClassName(zFactory);
 		this.options = options;
-
+    	setOptions(options);
 		try {
 			buildAndSetArguments(args, options);
 			printAnalyticsBanner(arguments.getCollectMetrics());
@@ -99,6 +100,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public void buildAndSetArguments(Arguments args, ClientOptions options) {
+		setOptions(options);
 		int jobId = new Long(System.currentTimeMillis()).intValue();
 		if (options.get(options.JOBID)!= null) {
 			LOG.info("Using job id from command line");
@@ -182,6 +184,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		try {
 			for (String a: args) LOG.debug("args " + a);
 			options = new ClientOptions(args);
+			setOptions(options);
 		
 			if (options.has(options.HELP) || options.has(options.HELP1) || options.get(ClientOptions.PHASE) == null) {
 				LOG.warn(options.getHelp());
@@ -191,13 +194,13 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			ZinggOptions.verifyPhase(phase);
 			Arguments arguments = null;
 			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
-					arguments = Arguments.createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
+					arguments = getArgsUtil().createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
 			}
 			else if (options.get(ClientOptions.CONF).value.endsWith("env")) {
-				arguments = Arguments.createArgumentsFromJSONTemplate(options.get(ClientOptions.CONF).value, phase);
+				arguments = getArgsUtil().createArgumentsFromJSONTemplate(options.get(ClientOptions.CONF).value, phase);
 			}
 			else {
-				arguments = Arguments.createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
+				arguments = getArgsUtil().createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
 
 			client = getClient(arguments, options);
@@ -247,7 +250,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public void init() throws ZinggClientException {
 		zingg.init(getArguments());
 		if (session != null) zingg.setSession(session);
-		zingg.setClientOptions(options);
+		
 	}
 
 	/**
@@ -311,7 +314,13 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 
     public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException {
     	return zingg.getLabelDataViewHelper();
-    }    
-    
+    }
+
+	protected ArgumentsUtil getArgsUtil() {	
+		if (argsUtil==null) {
+			argsUtil = new ArgumentsUtil();
+		}
+		return argsUtil;
+	}    
     
 }

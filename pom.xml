@@ -228,7 +228,46 @@
         				</execution>
     				</executions>
 			</plugin>
-
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.5.2</version>
+					<inherited>false</inherited>
+					<executions>
+						<execution>
+							<id>install-external-ss</id>
+							<phase>initialize</phase>
+							<configuration>
+								<file>${project.basedir}/thirdParty/lib/secondstring.jar</file>
+								<repositoryLayout>default</repositoryLayout>
+								<groupId>com.wcohen.ss</groupId>
+								<artifactId>secondstring</artifactId>
+								<version>2021</version>
+								<packaging>jar</packaging>
+								<generatePom>true</generatePom>
+							</configuration>
+							<goals>
+								<goal>install-file</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>install-external-py4j</id>
+							<phase>initialize</phase>
+							<configuration>
+								<file>${project.basedir}/thirdParty/lib/py4j0.10.9.jar</file>
+								<repositoryLayout>default</repositoryLayout>
+								<groupId>py4j</groupId>
+								<artifactId>py4j</artifactId>
+								<version>0.10.9</version>
+								<packaging>jar</packaging>
+								<generatePom>true</generatePom>
+							</configuration>
+							<goals>
+								<goal>install-file</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 		</plugins>
 		
 	</build>

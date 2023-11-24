@@ -367,7 +367,7 @@ class ZinggWithSpark(Zingg):
     def __init__(self, args, options):
         self.client = getJVM().zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions(), getSparkSession()._jsparkSession)
 
-
+    
 class Arguments:
     """ This class helps supply match arguments to Zingg. There are 3 basic steps in any match process.
 
@@ -475,16 +475,6 @@ class Arguments:
     def getModelId(self):
         return self.args.getModelId()
 
-    def setObviousDupeCondition(self, obviousDupeCondition):
-        """ Method to set the obviousDupeCondition used for matching
-
-        :param id: obviousDupeCondition value 
-        :type id: String
-        """
-        self.args.setObviousDupeCondition(obviousDupeCondition)
-    
-    def getObviousDupeCondition(self):
-        return self.args.getObviousDupeCondition()
 
     def setZinggDir(self, f):
         """ Method to set the location for Zingg to save its internal computations and models. Please set it to a place where the program has to write access.
@@ -518,7 +508,7 @@ class Arguments:
         :param fileName: The CONF parameter value of ClientOption object or file address of json file
         :type fileName: String
         """
-        getJVM().zingg.common.client.Arguments.writeArgumentsToJSON(fileName, self.args)
+        getJVM().zingg.common.client.ArgumentsUtil().writeArgumentsToJSON(fileName, self.args)
 
     def setStopWordsCutoff(self, stopWordsCutoff):
         """ Method to set stopWordsCutoff parameter value
@@ -541,7 +531,7 @@ class Arguments:
         :rtype: pointer(Arguments)
         """
         obj = Arguments()
-        obj.args = getJVM().zingg.common.client.Arguments.createArgumentsFromJSON(fileName, phase)
+        obj.args = getJVM().zingg.common.client.ArgumentsUtil().createArgumentsFromJSON(fileName, phase)
         return obj
     
     
@@ -555,12 +545,12 @@ class Arguments:
         :return: The pointer containing address of the this class object
         :rtype: pointer(Arguments)
         """
-        return getJVM().zingg.common.client.Arguments.writeArgumentstoJSONString(self.args)
+        return getJVM().zingg.common.client.ArgumentsUtil().writeArgumentstoJSONString(self.args)
     
     @staticmethod
     def createArgumentsFromJSONString(jsonArgs, phase):
         obj = Arguments()
-        obj.args = getJVM().zingg.common.client.Arguments.createArgumentsFromJSONString(jsonArgs, phase)
+        obj.args = getJVM().zingg.common.client.ArgumentsUtil().createArgumentsFromJSONString(jsonArgs, phase)
         return obj
     
     
@@ -754,6 +744,6 @@ def parseArguments(argv):
     mandatoryOptions.add_argument('--conf', required=True,
                         help='JSON configuration with data input output locations and field definitions')
 
-    args, remaining_args = parser.parse_known_args()
+    args, remaining_args = parser.parse_known_args(argv)
     LOG.debug("args: ", args)
     return args
