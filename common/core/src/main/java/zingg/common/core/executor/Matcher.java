@@ -95,8 +95,8 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
 			ZFrame<D,R,C> blocks = getBlocks(selectColsFromBlocked(blocked), testData);
-			ZFrame<D,R,C>dupesActual = getDupesActualForGraph(blocks);
-			return predictOnBlocks(dupesActual);
+			ZFrame<D,R,C>dupesActual = predictOnBlocks(blocks); 
+			return getDupesActualForGraph(dupesActual);
 	}
 
 	@Override
