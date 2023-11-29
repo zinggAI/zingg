@@ -1,12 +1,10 @@
 package zingg.common.client;
 
-import java.io.Serializable;
-
 /**
  * To be thrown in case of business scenario which needs graceful handling
  *
  */
-public class ZinggBusinessException extends Exception implements Serializable {
+public class ZinggBusinessException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 	
