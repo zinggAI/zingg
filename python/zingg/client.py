@@ -518,6 +518,15 @@ class Arguments:
         :type stopWordsCutoff: float
         """
         self.args.setStopWordsCutoff(stopWordsCutoff)
+    
+    def setColumn(self, column):
+        """ Method to set stopWordsCutoff parameter value
+        By default, Zingg extracts 10% of the high frequency unique words from a dataset. If user wants different selection, they should set up StopWordsCutoff property
+
+        :param stopWordsCutoff: The stop words cutoff parameter value of ClientOption object or file address of json file
+        :type stopWordsCutoff: float
+        """
+        self.args.setColumn(column)
 
     @staticmethod
     def createArgumentsFromJSON(fileName, phase):
@@ -564,7 +573,7 @@ class Arguments:
 
 class ClientOptions:
     """ Class that contains Client options for Zingg object
-    :param phase: trainMatch, train, match, link, findAndLabel, findTrainingData etc
+    :param phase: trainMatch, train, match, link, findAndLabel, findTrainingData, recommend etc
     :type phase: String
     :param args: Parse a list of Zingg command line options parameter values e.g. "--location" etc. optional argument for initializing this class.
     :type args: List(String) or None
@@ -585,6 +594,8 @@ class ClientOptions:
     """:ZINGG_DIR: location where Zingg saves the model, training data etc"""
     MODEL_ID = getJVM().zingg.common.client.ClientOptions.MODEL_ID
     """:MODEL_ID: ZINGG_DIR/MODEL_ID is used to save the model"""
+    COLUMN = getJVM().zingg.common.client.ClientOptions.COLUMN
+    """:COLUMN: Column whose stop words are to be recommended through Zingg"""
 
     def __init__(self, argsSent=None):
         print(argsSent)
