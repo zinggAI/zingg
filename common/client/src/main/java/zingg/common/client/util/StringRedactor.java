@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class StringRedactor {
 
-    protected String REDACT_PATTERN = "(?i)secret|password|token|access?key|key";
+    protected String REDACT_PATTERN = "(?i)secret|password|token|access?key|key|sfPassword";
     protected String REDACT_VALUE = "********(redacted)";
 
     public String redact(Map<String, String> values){

@@ -55,15 +55,17 @@ public class TestStringRedactor {
 
         Map<String, String> args4 = new HashMap<String, String>();
         args4.put("password", "value");
-        args4.put("xpassword", "new value");
-        String[] expectedVal4 =  new String[] {"password=********(redacted)", "xpassword=new value"};
+        args4.put("Password", "new value");
+        String[] expectedVal4 =  new String[] {"password=********(redacted)", "Password=******"};
         String[] unexpectedVal4 = new String[] {"password=value", "xpassword=***"};
 
         Map<String, String> args5 = new HashMap<String, String>();
         args5.put("token", "keyless");
         args5.put("secret", "value");
-        String[] expectedVal5 = new String[] {"token=********(redacted)", "secret=********(redacted)"};
-        String[] unexpectedVal5 = new String[] {"key=keyless", "password=value"};
+        args5.put("Secret", "value");
+         args5.put("Token", "token");
+        String[] expectedVal5 = new String[] {"token=********(redacted)", "secret=********(redacted)", "Secret=********(redacted)", "Token=********(redacted)"};
+        String[] unexpectedVal5 = new String[] {"key=keyless", "password=value", "Secret=value", "Token=token"};
 
         Map<String, String> args6 = new HashMap<String, String>();
         args6.put("accesskey", "keyless");
@@ -75,6 +77,12 @@ public class TestStringRedactor {
         String[] expectedVal7 = new String[] {"accessKey=********(redacted)"};
         String[] unexpectedVal7 = new String[] {"accessKey=keyless", "password=value"};
 
+        Map<String, String> args8 = new HashMap<String, String>();
+        args8.put("Password", "keyless");
+        args8.put("sfPassword", "keyless");
+        String[] expectedVal8 = new String[] {"Password=********(redacted)", "sfPassword=********(redacted)"};
+        String[] unexpectedVal8 = new String[] {"Password=keyless", "sfPassword=keyless"};
+
         return Stream.of(
             arguments("noRedaction",args1, expectedVal1, unexpectedVal1),
             arguments("singlePasswordRedaction", args2, expectedVal2, unexpectedVal2),
@@ -82,7 +90,8 @@ public class TestStringRedactor {
             arguments("passwordAndXPasswd", args4, expectedVal4, unexpectedVal4),
             arguments("tokenAndSecret",args5, expectedVal5, unexpectedVal5),
             arguments("accesskey", args6, expectedVal6, unexpectedVal6),
-            arguments("accessKeyCaps", args7, expectedVal7, unexpectedVal7)
+            arguments("accessKeyCaps", args7, expectedVal7, unexpectedVal7),
+            arguments("PasswordAndSfPassword", args8, expectedVal8, unexpectedVal8)
         );
 }
     
