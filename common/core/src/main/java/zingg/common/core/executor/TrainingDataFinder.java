@@ -29,9 +29,13 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 		return getDSUtil().getTraining(getPipeUtil(), args);
 	}
 	
+	protected ZFrame<D,R,C> getData() throws ZinggClientException {
+		return getPipeUtil().read(true, true, args.getData());
+	}
+	
 	 public void execute() throws ZinggClientException {
 			try{
-				ZFrame<D,R,C> data = getPipeUtil().read(true, true, args.getData());
+				ZFrame<D,R,C> data = getData();
 				LOG.warn("Read input data " + data.count());
 				LOG.debug("input data schema is " +data.showSchema());
 				//create 20 pos pairs
