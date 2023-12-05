@@ -14,4 +14,4 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
       - name: Build with Maven
-        run: mvn -clean compile package -DskipTests=true
+        run: mvn initialize clean compile package -DskipTests=true
