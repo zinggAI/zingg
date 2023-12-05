@@ -1,6 +1,6 @@
 #!/bin/bash
 #ZINGG_HOME=./assembly/target
-ZINGG_JARS=$ZINGG_HOME/zingg-0.4.0-SNAPSHOT.jar
+ZINGG_JARS=$ZINGG_HOME/zingg-0.4.0.jar
 EMAIL=zingg@zingg.ai
 LICENSE=zinggLicense.txt
 log4j_setting="-Dlog4j.configuration=file:log4j.properties"

@@ -8,7 +8,7 @@ The Zingg command line interface is the way to interact with Zingg to fire label
 
 #### To invoke the command line and pass a JSON configuration :
 
-`./scripts/zingg.sh <optional --properties-file path to zingg.conf> --phase <phase> --conf <path to json>`&#x20;
+`./scripts/zingg.sh <optional --properties-file path to zingg.conf> --phase <phase> --conf <path to json>`
 
 #### To invoke the command line and run python programs :
 

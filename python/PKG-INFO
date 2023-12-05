@@ -12,7 +12,7 @@ Description: ## About Zingg
         [Zingg.AI](https://www.zingg.ai) 
         
         # requirement
-        python 3.6+; spark 3.1.2
+        python 3.6+; spark 3.4.0
         
         # Installation
         
