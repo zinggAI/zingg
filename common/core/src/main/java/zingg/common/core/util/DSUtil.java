@@ -9,6 +9,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
+import zingg.common.core.validator.TrainingValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +105,7 @@ public abstract class DSUtil<S, D, R, C> {
 	*/
 	
     public ZFrame<D, R, C> joinWithItself(ZFrame<D, R, C> lines, String joinColumn, boolean filter) throws Exception {
+		TrainingValidator.validateTrainingData(lines);
 		ZFrame<D, R, C> lines1 = getPrefixedColumnsDS(lines); 
 		return join(lines, lines1, joinColumn, filter);
 	}
