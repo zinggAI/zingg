@@ -7,10 +7,4 @@
 	<version>${zingg.version}</version>
 </parent>
 		<artifactId>thirdParty</artifactId>
-<repositories>
-	<repository>
-		<id>thirdParty</id>
-		<url>file:{project.basedir}/lib</url>
-	</repository>
-</repositories>
 </project>
