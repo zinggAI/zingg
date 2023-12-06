@@ -38,6 +38,7 @@
               <exclude>org.scala-lang:*</exclude>
               <exclude>sonal</exclude>
               <exclude>*:jar:*</exclude>
+              <exclude>org.slf4j:*</exclude>
             </excludes>
           </artifactSet>
         </configuration>
