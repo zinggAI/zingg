@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggBusinessException;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
@@ -13,6 +14,7 @@ import zingg.common.core.model.Model;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
 import zingg.common.core.preprocess.StopWordsRemover;
+import zingg.common.core.validator.TrainingValidator;
 
 public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
@@ -34,7 +36,7 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			positives = tra.filter(tra.equalTo(ColName.MATCH_FLAG_COL,ColValues.MATCH_TYPE_MATCH));
 			negatives = tra.filter(tra.equalTo(ColName.MATCH_FLAG_COL,ColValues.MATCH_TYPE_NOT_A_MATCH));
 			
-			verifyTraining(positives, negatives);
+			verifyTraining(tra, positives, negatives);
 
 				
 			ZFrame<D,R,C> testDataOriginal = getPipeUtil().read(true, args.getNumPartitions(), false, args.getData());
@@ -61,21 +63,22 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		}
     }
 
-	public void verifyTraining(ZFrame<D,R,C> positives, ZFrame<D,R,C> negatives) throws ZinggClientException {
-		if (positives == null) {
-			throw new ZinggClientException("Unable to train as insufficient positive training data found. ");
+	public void verifyTraining(ZFrame<D, R, C> tra, ZFrame<D,R,C> positives, ZFrame<D,R,C> negatives) throws ZinggBusinessException {
+		if (positives.isEmpty()) {
+			LOG.warn("Unable to train as insufficient positive training data found. ");
+			TrainingValidator.validateTrainingData(tra, positives, negatives);
 		}
-		if (negatives == null) {
-			throw new ZinggClientException("Unable to train as insufficient negative training data found. ");
-	
+		if (negatives.isEmpty()) {
+			LOG.warn("Unable to train as insufficient negative training data found. ");
+			TrainingValidator.validateTrainingData(tra, positives, negatives);
 		}
 		long posCount = positives.count();
 		LOG.warn("Training on positive pairs - " + posCount);
 		long negCount = negatives.count();
 		LOG.warn("Training on negative pairs - " + negCount);
 
-		if (posCount < 5 || negCount < 5)  
-			throw new ZinggClientException("Unable to train as insufficient training data found. Training data has " + posCount + " matches and " 
+		if ((posCount < 5 || negCount < 5) ||  (posCount == 5 && negCount == 5))
+			throw new ZinggBusinessException("Unable to train as insufficient training data found. Training data has " + posCount + " matches and " 
 				+ negCount + " non matches. Please run findTrainingData and label till you have sufficient labelled data to build the models");
 
 	}
