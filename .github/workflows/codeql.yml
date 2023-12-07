@@ -13,10 +13,10 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ main ]
+    branches: [ * ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ main ]
+    branches: [ * ]
   schedule:
     - cron: '22 3 * * 5'
 
@@ -50,13 +50,14 @@ jobs:
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
+    - name: build
+      uses: ./build.yml
     - name: Analyze
       uses: github/codeql-action/analyze@v2
    
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 https://git.io/JvXDl
-  java_build:
-    uses: ./.github/workflows/build.yml
+  
   
       
