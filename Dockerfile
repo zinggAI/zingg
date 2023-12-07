@@ -1,5 +1,5 @@
 #FROM docker.io/bitnami/spark:3.1.2
-FROM apache/spark-py:v3.4.0
+FROM apache/spark-py:v3.5.0
 USER 0
 RUN apt-get update && \
 	apt install -y curl vim 
