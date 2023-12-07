@@ -15,16 +15,14 @@ on:
   push:
    
   pull_request:
-    # The branches below must be a subset of the branches above
-   
-  schedule:
-    - cron: '22 3 * * 5'
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
 
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-    needs: java_build
     permissions:
       actions: read
       contents: read
@@ -33,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'java' ]
+        language: [ 'java', 'python' ]
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Learn more about CodeQL language support at https://git.io/codeql-language-support
 
