@@ -32,7 +32,6 @@
 		<profile>
 			<id>spark-3.4</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
 				<property>
 					<name>spark</name>
 					<value>3.4</value>
@@ -49,13 +48,14 @@
 		<profile>
 			<id>spark-3.5</id>
 			<activation>
+				<activeByDefault>true</activeByDefault>
 				<property>
 					<name>spark</name>
 					<value>3.5</value>
 				</property>
 			</activation>
 			<properties>
-				<spark.version>3.1.2</spark.version>
+				<spark.version>3.5.0</spark.version>
 				<scala.version>2.12.10</scala.version>
 				<spark.binary.version>3.5</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
