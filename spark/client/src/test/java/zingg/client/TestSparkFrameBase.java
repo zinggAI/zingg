@@ -20,13 +20,14 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.spark.client.SparkFrame;
 
 public class TestSparkFrameBase {
 
-	public static Arguments args;
+	public static IArguments args;
 	public static JavaSparkContext ctx;
 	public static SparkSession spark;
 

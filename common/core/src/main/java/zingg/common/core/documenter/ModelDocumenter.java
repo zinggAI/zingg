@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
@@ -31,7 +31,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 	protected  ZFrame<D,R,C>  markedRecords;
 	protected  ZFrame<D,R,C>  unmarkedRecords;
 
-	public ModelDocumenter(Context<S,D,R,C,T> context, Arguments args) {
+	public ModelDocumenter(Context<S,D,R,C,T> context, IArguments args) {
 		super(context, args);
 		markedRecords = getDSUtil().emptyDataFrame();
 	}

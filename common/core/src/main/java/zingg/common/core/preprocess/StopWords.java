@@ -3,7 +3,7 @@ package zingg.common.core.preprocess;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
@@ -27,7 +27,7 @@ public class StopWords<S,D,R,C,T> {
 
 	
 
-    public ZFrame<D,R,C> preprocessForStopWords(S session, Arguments args, ZFrame<D,R,C> ds) throws ZinggClientException {
+    public ZFrame<D,R,C> preprocessForStopWords(S session, IArguments args, ZFrame<D,R,C> ds) throws ZinggClientException {
 		/* 
 		List<String> wordList = new ArrayList<String>();
 		for (FieldDefinition def : args.getFieldDefinition()) {
