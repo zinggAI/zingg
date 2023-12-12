@@ -2,7 +2,8 @@ package zingg.common.core.executor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import zingg.common.client.Arguments;
+
+import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 import zingg.common.client.license.IZinggLicense;
@@ -21,7 +22,7 @@ public abstract class TrainMatcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     }
 
 	@Override
-	public void init(Arguments args, IZinggLicense license)
+	public void init(IArguments args, IZinggLicense license)
         throws ZinggClientException {
 			trainer.init(args, license);
 			matcher.init(args, license);

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggClientException;
@@ -17,9 +17,9 @@ public abstract class StopWordsRecommender<S,D,R,C,T> {
 	public static final Log LOG = LogFactory.getLog(StopWordsRecommender.class);
 	protected Context<S,D,R,C,T> context;
 	protected ZFrame<D,R,C> data;
-	public Arguments args;
+	public IArguments args;
 
-	public StopWordsRecommender(Context<S,D,R,C,T> context,Arguments args) {
+	public StopWordsRecommender(Context<S,D,R,C,T> context,IArguments args) {
 		this.context = context;
 		this.args = args;
 	}

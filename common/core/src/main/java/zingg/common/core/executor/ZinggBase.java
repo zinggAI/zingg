@@ -5,8 +5,8 @@ import java.io.Serializable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.ClientOptions;
+import zingg.common.client.IArguments;
 import zingg.common.client.ILabelDataViewHelper;
 import zingg.common.client.ITrainingDataModel;
 import zingg.common.client.IZingg;
@@ -30,7 +30,7 @@ import zingg.common.core.util.PipeUtilBase;
 
 public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S, D, R, C> {
 
-    protected Arguments args;
+    protected IArguments args;
 	
     protected Context<S,D,R,C,T> context;
     protected String name;
@@ -63,7 +63,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
 
    
     
-    public void init(Arguments args, IZinggLicense license)
+    public void init(IArguments args, IZinggLicense license)
         throws ZinggClientException {
             startTime = System.currentTimeMillis();
             this.args = args;
@@ -98,11 +98,11 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
         Analytics.trackEnvProp(Metric.ZINGG_HOME, collectMetrics);
 	}
 
-    public Arguments getArgs() {
+    public IArguments getArgs() {
         return this.args;
     }
 
-    public void setArgs(Arguments args) {
+    public void setArgs(IArguments args) {
         this.args = args;
     }
 
