@@ -1,6 +1,6 @@
 package zingg.common.core.util;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
@@ -29,19 +29,19 @@ public interface PipeUtilBase<S, D, R, C> {
 	public  ZFrame<D,R,C> read(boolean addExtraCol, boolean addLineNo, int numPartitions,
 			boolean addSource, Pipe<D,R,C>... pipes) throws ZinggClientException;
 
-	public void write(ZFrame<D, R, C> toWriteOrig, Arguments args, Pipe<D, R, C>... pipes)
+	public void write(ZFrame<D, R, C> toWriteOrig, IArguments args, Pipe<D, R, C>... pipes)
 		throws ZinggClientException;
 
 	
-	public Pipe<D, R, C> getTrainingDataUnmarkedPipe(Arguments args);
+	public Pipe<D, R, C> getTrainingDataUnmarkedPipe(IArguments args);
 
-	public Pipe<D, R, C> getTrainingDataMarkedPipe(Arguments args);
+	public Pipe<D, R, C> getTrainingDataMarkedPipe(IArguments args);
 	
-	public Pipe<D, R, C> getModelDocumentationPipe(Arguments args);
+	public Pipe<D, R, C> getModelDocumentationPipe(IArguments args);
 	
-	public Pipe<D, R, C> getBlockingTreePipe(Arguments args);
+	public Pipe<D, R, C> getBlockingTreePipe(IArguments args);
 
-	public Pipe<D, R, C> getStopWordsPipe(Arguments args, String string);
+	public Pipe<D, R, C> getStopWordsPipe(IArguments args, String string);
 
 	public String getPipesAsString(Pipe<D,R,C>[] pipes);
 

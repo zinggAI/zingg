@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
+import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
@@ -68,7 +69,7 @@ public class TestStopWords extends ZinggSparkTester{
 			eventFD.setMatchType(matchTypelistFuzzy);
 			fdList.add(eventFD);
 
-			Arguments stmtArgs = new Arguments();
+			IArguments stmtArgs = new Arguments();
 			stmtArgs.setFieldDefinition(fdList);
 			
 			StopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,stmtArgs);

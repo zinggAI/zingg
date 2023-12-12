@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.ClientOptions;
+import zingg.common.client.IArguments;
 import zingg.common.client.ILabelDataViewHelper;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -41,7 +41,7 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 
 	
 	@Override
-	public List<C> getDisplayColumns(ZFrame<D,R,C>  lines, Arguments args) {
+	public List<C> getDisplayColumns(ZFrame<D,R,C>  lines, IArguments args) {
 		return getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
 	}
 

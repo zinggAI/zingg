@@ -17,7 +17,7 @@ import zingg.common.client.util.EmailBody;
  */
 public abstract class Client<S,D,R,C,T> implements Serializable {
 	private static final long serialVersionUID = 1L;
-	protected Arguments arguments;
+	protected IArguments arguments;
 	protected ArgumentsUtil argsUtil;
 	protected IZingg<S,D,R,C> zingg;
 	protected ClientOptions options;
@@ -38,7 +38,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	
 	public Client() {}
 
-	public Client(Arguments args, ClientOptions options) throws ZinggClientException {
+	public Client(IArguments args, ClientOptions options) throws ZinggClientException {
 		setOptions(options);
 		try {
 			buildAndSetArguments(args, options);
@@ -51,7 +51,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 	}
 
-	public Client(Arguments args, ClientOptions options, S s) throws ZinggClientException {
+	public Client(IArguments args, ClientOptions options, S s) throws ZinggClientException {
 		this(args, options);
 		this.session = s;
 		LOG.debug("Session passed is " + s);
@@ -62,7 +62,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	
 
 
-	public void setZingg(Arguments args, ClientOptions options) throws Exception{
+	public void setZingg(IArguments args, ClientOptions options) throws Exception{
 		IZinggFactory zf = getZinggFactory();
 		try{
 			setZingg(zf.get(ZinggOptions.getByValue(options.get(ClientOptions.PHASE).value.trim())));
@@ -78,7 +78,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		this.zingg = zingg; 
 	}
 
-	public void buildAndSetArguments(Arguments args, ClientOptions options) {
+	public void buildAndSetArguments(IArguments args, ClientOptions options) {
 		setOptions(options);
 		int jobId = new Long(System.currentTimeMillis()).intValue();
 		if (options.get(options.JOBID)!= null) {
@@ -154,7 +154,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 	}
 
-	public abstract Client<S,D,R,C,T> getClient(Arguments args, ClientOptions options) throws ZinggClientException;
+	public abstract Client<S,D,R,C,T> getClient(IArguments args, ClientOptions options) throws ZinggClientException;
 	
 	public void mainMethod(String... args) {
 		printBanner();
@@ -171,7 +171,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			}
 			String phase = options.get(ClientOptions.PHASE).value.trim();
 			ZinggOptions.verifyPhase(phase);
-			Arguments arguments = null;
+			IArguments arguments = null;
 			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
 					arguments = getArgsUtil().createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
 			}
@@ -242,7 +242,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		zingg.cleanup();
 	}
 
-	public Arguments getArguments() {
+	public IArguments getArguments() {
 		return arguments;
 	}
 
@@ -254,7 +254,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		zingg.postMetrics();
 	}
 
-	public void setArguments(Arguments args) {
+	public void setArguments(IArguments args) {
 		this.arguments = args;				
 	}
 
