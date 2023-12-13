@@ -45,6 +45,17 @@ public class Analytics {
 		}
 	}
 
+	public static void trackEnvProp(String metricName, boolean collectMetrics) {
+		if (collectMetrics) {
+			try{
+				getMetrics().put(metricName, System.getProperty(metricName));
+			}
+			catch(Exception e){
+				getMetrics().put(metricName, "Exception " + e.getMessage());
+			}
+		}
+	}
+
 	public static void track(String metricName, double metricValue, boolean collectMetrics) {
 		track(metricName, String.valueOf(metricValue), collectMetrics);
 	}
