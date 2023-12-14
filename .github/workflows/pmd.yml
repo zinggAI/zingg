@@ -1,7 +1,11 @@
 name: PMD
 on:
-  workflow_call:
-
+  push:
+   
+  pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
 jobs:
   pmd-analyser-check:
     name: PMD Static Code Analysis
