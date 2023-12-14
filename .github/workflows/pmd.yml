@@ -1,6 +1,4 @@
 name: PMD
-uses: pmd/pmd-github-action@v1.4.1
-
 on:
   workflow_call:
 
