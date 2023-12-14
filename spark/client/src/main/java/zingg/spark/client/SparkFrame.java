@@ -339,21 +339,21 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 
     @Override
     public String getAsString(Row r, String colName) {
-        return (String)r.getAs(colName);
+        return r.getAs(colName);
     }
 
     @Override
     public double getAsDouble(Row r, String colName) {
-        return (double)r.getAs(colName);
+        return r.getAs(colName);
     }
     @Override
     public int getAsInt(Row r, String colName) {
-        return (int)r.getAs(colName);
+        return r.getAs(colName);
     }
 
     @Override
     public long getAsLong(Row r, String colName) {
-        return (long)r.getAs(colName);
+        return r.getAs(colName);
     }
 
     @Override
