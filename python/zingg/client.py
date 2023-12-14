@@ -278,6 +278,8 @@ class Zingg:
         """ Method to write updated records (as pandas df) after user input
         """
         markedRecordsAsDS = (getSparkSession().createDataFrame(candidate_pairs_pd))._jdf
+        # pands df gives z_isMatch as long so needs to be cast
+        markedRecordsAsDS = markedRecordsAsDS.withColumn(ColName.MATCH_FLAG_COL,markedRecordsAsDS.col(ColName.MATCH_FLAG_COL).cast("int"))
         updatedRecords = getJVM().zingg.spark.client.SparkFrame(markedRecordsAsDS)
         self.writeLabelledOutput(updatedRecords,args)
 
