@@ -250,10 +250,14 @@ public abstract class DSUtil<S, D, R, C> {
 	private  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, Arguments args, Pipe<D,R,C> p) {
 		ZFrame<D, R, C> trFile = null;
 		try{
-			trFile = pipeUtil.read(false, false, p); 
-			LOG.warn("Read marked training samples ");
-			trFile = trFile.drop(ColName.PREDICTION_COL);
-			trFile = trFile.drop(ColName.SCORE_COL);				
+			try {
+				trFile = pipeUtil.read(false, false, p); 
+				LOG.warn("Read marked training samples ");
+				trFile = trFile.drop(ColName.PREDICTION_COL);
+				trFile = trFile.drop(ColName.SCORE_COL);
+			} catch (ZinggClientException e) {
+				LOG.warn("No marked data found");
+			}				
 		
 			if (args.getTrainingSamples() != null) {
 				ZFrame<D, R, C> trSamples = pipeUtil.read(true, false, args.getTrainingSamples()); 
