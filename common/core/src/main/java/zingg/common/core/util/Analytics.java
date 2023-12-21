@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,8 +62,16 @@ public class Analytics {
 		track(metricName, String.valueOf(metricValue), collectMetrics);
 	}
 
+	public static void trackDomain(String metricName, boolean collectMetrics){
+		try {
+			track(metricName, InetAddress.getLocalHost().getHostName(), collectMetrics);
+		} catch (UnknownHostException e) {
+			track(metricName, "CouldntGetHost", collectMetrics);
+		}
+	}
+
 	public static void postEvent(String phase, boolean collectMetrics) {
-		if (collectMetrics == false) {
+		if (collectMetrics != false) {
 			return;
 		}
 		ObjectMapper mapper = new ObjectMapper();
@@ -82,7 +92,7 @@ public class Analytics {
 		eventList = mapper.createArrayNode();
 		eventList.add(eventNode);
 		rootNode.set("events", eventList);
-		
+		LOG.warn("event is " + rootNode.toString());
 		Analytics.sendEvents(rootNode.toString());
 	}
 

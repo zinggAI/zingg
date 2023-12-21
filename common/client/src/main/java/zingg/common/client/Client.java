@@ -185,7 +185,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			client = getClient(arguments, options);
 			client.init();
 			client.execute();
-			client.postMetrics();
+			//client.postMetrics();
 			LOG.warn("Zingg processing has completed");				
 		} 
 		catch(ZinggClientException e) {
@@ -213,6 +213,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		finally {
 			try {
 				if (client != null) {
+					//client.postMetrics();
 					client.stop();
 				}
 			}

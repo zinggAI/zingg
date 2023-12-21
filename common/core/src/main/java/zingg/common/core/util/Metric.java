@@ -15,6 +15,8 @@ public class Metric {
     public static final double confidence = 0.95; // default value
     public static final String MODEL_ID = "modelId";
     public static final String IS_PYTHON = "is_python";
+     
+    public static final String IS_CONFIG_JSON = "is_config";
     public static final String ZINGG_VERSION = "zingg_version";
     public static final String DATABRICKS_RUNTIME_VERSION = "DATABRICKS_RUNTIME_VERSION";
     public static final String DB_INSTANCE_TYPE = "DB_INSTANCE_TYPE";
@@ -22,9 +24,10 @@ public class Metric {
     public static final String JAVA_VERSION = "java.version";
     public static final String OS_ARCH = "os.arch";
     public static final String OS_NAME = "os.name";
-    public static final String USER_NAME = "user.name";
-    public static final String USER_HOME = "user.home";
-    public static final String ZINGG_HOME = "ZINGG_HOME";
+    public static final String DOMAIN = "domain";
+    //public static final String USER_NAME = "user.name";
+    //public static final String USER_HOME = "user.home";
+    //public static final String ZINGG_HOME = "ZINGG_HOME";
 
 
 

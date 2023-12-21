@@ -92,10 +92,12 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
         Analytics.trackEnvProp(Metric.JAVA_HOME, collectMetrics); 
         Analytics.trackEnvProp(Metric.JAVA_VERSION, collectMetrics); 
         Analytics.trackEnvProp(Metric.OS_ARCH, collectMetrics); 
-        Analytics.trackEnvProp(Metric. OS_NAME, collectMetrics); 
-        Analytics.trackEnvProp(Metric.USER_NAME, collectMetrics); 
-        Analytics.trackEnvProp(Metric.USER_HOME, collectMetrics); 
-        Analytics.trackEnvProp(Metric.ZINGG_HOME, collectMetrics);
+        Analytics.trackEnvProp(Metric.OS_NAME, collectMetrics); 
+        //Analytics.trackEnvProp(Metric.USER_NAME, collectMetrics); 
+        //Analytics.trackEnvProp(Metric.USER_HOME, collectMetrics); 
+        Analytics.trackDomain(Metric.DOMAIN, collectMetrics);
+        Analytics.track(Metric.ZINGG_VERSION, "0.4.0", collectMetrics);
+        //Analytics.postEvent(zinggOptions.getValue(), collectMetrics);
 	}
 
     public IArguments getArgs() {
