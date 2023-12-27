@@ -173,14 +173,14 @@ public class Arguments implements Serializable, IArguments {
 	
 	@JsonIgnore @Override
 	public List<? extends FieldDefinition> getFieldDefinitionDontUse() {
-		return fieldDefinition.stream()
+		return getFieldDefinition().stream()
 			    .filter(x->x.matchType.contains(MatchType.DONT_USE))
 			    .collect(Collectors.toList());
 	}
 	
 	@JsonIgnore @Override
 	public List<? extends FieldDefinition> getFieldDefinitionToUse() {
-		return fieldDefinition.stream()
+		return getFieldDefinition().stream()
 			    .filter(x->!x.matchType.contains(MatchType.DONT_USE))
 			    .collect(Collectors.toList());
 	}
