@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -45,8 +46,9 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		try {
 			LOG.info("Model document generation starts");
 
-			markedRecords = getMarkedRecords().sortAscending(ColName.CLUSTER_COLUMN);
-			unmarkedRecords = getUnmarkedRecords().sortAscending(ColName.CLUSTER_COLUMN);
+			// drop columns which are don't use if show concise is true
+			markedRecords = filterForConcise(getMarkedRecords().sortAscending(ColName.CLUSTER_COLUMN));
+			unmarkedRecords = filterForConcise(getUnmarkedRecords().sortAscending(ColName.CLUSTER_COLUMN));
 			Map<String, Object> root = populateTemplateData();
 			writeModelDocument(root);
 
@@ -82,8 +84,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 
 		} else {
 			// fields required to generate basic document
-			List<String> columnList = args.getFieldDefinition().stream().map(fd -> fd.getFieldName())
-					.collect(Collectors.toList());
+			List<String> columnList = getColumnList();
 			root.put(TemplateFields.NUM_COLUMNS, columnList.size());
 			root.put(TemplateFields.COLUMNS, columnList.toArray());
 			root.put(TemplateFields.CLUSTERS, Collections.emptyList());
@@ -92,6 +93,31 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		}
 		
 		return root;
+	}
+
+	protected ZFrame<D,R,C> filterForConcise(ZFrame<D,R,C> df) {
+		if (args.getShowConcise()) {
+			List<String> dontUseFields = getFieldNames(
+					(List<? extends FieldDefinition>) args.getFieldDefinitionDontUse());
+			if(!dontUseFields.isEmpty()) {
+				df = df.drop(dontUseFields.toArray(new String[dontUseFields.size()]));
+			}
+		}
+		return df;
+	}
+	
+	protected List<String> getColumnList() {	
+		List<? extends FieldDefinition> fieldList = args.getFieldDefinition();
+		//drop columns which are don't use if show concise is true
+		if (args.getShowConcise()) {
+			fieldList = args.getFieldDefinitionToUse();
+		}	
+		return getFieldNames(fieldList);
+	}
+
+	protected List<String> getFieldNames(List<? extends FieldDefinition> fieldList) {
+		return fieldList.stream().map(fd -> fd.getFieldName())
+				.collect(Collectors.toList());
 	}
 
 	private void putSummaryCounts(Map<String, Object> root) {

@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -227,6 +228,27 @@ public class TestArguments {
 		
 	}
 
+	@Test
+	public void testMatchTypeFilter() {
+			IArguments args;
+            try {
+                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configTestDontUse.json").getFile(), "test");
+
+                List<? extends FieldDefinition> dontUseList = args.getFieldDefinitionDontUse();
+                assertEquals(dontUseList.size(), 3);
+                
+                List<? extends FieldDefinition> matchList = args.getFieldDefinitionToUse();
+                assertEquals(matchList.size(), 4);
+                
+            } catch (Exception | ZinggClientException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+				fail("Could not read config");
+            }
+		
+	}
+	
+	
 	@Test
 	public void testMatchTypeWrong() {
 			IArguments args;

@@ -42,6 +42,10 @@ public interface IArguments {
 	 */
 	List<? extends FieldDefinition> getFieldDefinition();
 
+	public List<? extends FieldDefinition> getFieldDefinitionDontUse();
+	
+	public List<? extends FieldDefinition> getFieldDefinitionToUse();
+	
 	/**
 	 * Set the field definitions consisting of match field indices, types and
 	 * classes

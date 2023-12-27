@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -169,7 +170,21 @@ public class Arguments implements Serializable, IArguments {
 	public List<? extends FieldDefinition> getFieldDefinition() {
 		return fieldDefinition;
 	}
-
+	
+	@JsonIgnore @Override
+	public List<? extends FieldDefinition> getFieldDefinitionDontUse() {
+		return fieldDefinition.stream()
+			    .filter(x->x.matchType.contains(MatchType.DONT_USE))
+			    .collect(Collectors.toList());
+	}
+	
+	@JsonIgnore @Override
+	public List<? extends FieldDefinition> getFieldDefinitionToUse() {
+		return fieldDefinition.stream()
+			    .filter(x->!x.matchType.contains(MatchType.DONT_USE))
+			    .collect(Collectors.toList());
+	}
+	
 	/**
 	 * Set the field definitions consisting of match field indices, types and
 	 * classes
