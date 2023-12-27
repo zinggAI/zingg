@@ -65,7 +65,7 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 	}
 	
 	protected List<String> getWordList(ZFrame<D,R,C> stopWords, String stopWordColumn) {
-		return stopWords.select(stopWordColumn).collectAsListOfStrings();
+		return stopWords.select(stopWordColumn).collectFirstColumn();
 	}
 	
 	/**

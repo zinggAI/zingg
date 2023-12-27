@@ -20,7 +20,7 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> selectExpr(String... col);
     public ZFrame <D, R, C> distinct();
     public List<R> collectAsList();
-    public List<String> collectAsListOfStrings();
+    public List<String> collectFirstColumn();
 
     public ZFrame<D, R, C> toDF(String[] cols);
     public ZFrame<D, R, C> toDF(String col1, String col2);
