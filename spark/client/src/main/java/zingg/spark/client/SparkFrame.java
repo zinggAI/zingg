@@ -87,7 +87,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return df.collectAsList();
     }
 
-    public List<String> collectAsListOfStrings() {
+    public List<String> collectFirstColumn() {
         return df.as(Encoders.STRING()).collectAsList();
     }
     
