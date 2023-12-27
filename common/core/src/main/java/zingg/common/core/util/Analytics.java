@@ -62,43 +62,47 @@ public class Analytics {
 		track(metricName, String.valueOf(metricValue), collectMetrics);
 	}
 
-	public static void trackDomain(String metricName, boolean collectMetrics){
+	public static String getDomain(){
+
 		try {
-			track(metricName, InetAddress.getLocalHost().getHostName(), collectMetrics);
+			return InetAddress.getLocalHost().getHostName();
 		} catch (UnknownHostException e) {
-			track(metricName, "CouldntGetHost", collectMetrics);
+			return "CouldntGetHost";
 		}
+
+	}
+	public static void trackDomain(String metricName, boolean collectMetrics){
+		track(metricName, getDomain(), collectMetrics);
 	}
 
+	
+
 	public static void postEvent(String phase, boolean collectMetrics) {
-		if (collectMetrics != false) {
-			return;
-		}
+		
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode rootNode = mapper.createObjectNode();
 
-		rootNode.put("client_id", "555");
+		rootNode.put("client_id", getDomain());
 
 		ObjectNode eventNode = mapper.createObjectNode();
 		eventNode.put("name", phase);
 
-		ObjectNode paramNode = mapper.createObjectNode();
-		for (Map.Entry<String, String> entry : metrics.entrySet()) {
-			paramNode.put(entry.getKey(), entry.getValue());
-		}
-		eventNode.set("params", paramNode); 
+		if (collectMetrics != false) {
+			ObjectNode paramNode = mapper.createObjectNode();
+			for (Map.Entry<String, String> entry : metrics.entrySet()) {
+				paramNode.put(entry.getKey(), entry.getValue());
+			}
+			eventNode.set("params", paramNode); 
 
-		ArrayNode eventList;
-		eventList = mapper.createArrayNode();
-		eventList.add(eventNode);
-		rootNode.set("events", eventList);
-<<<<<<< Updated upstream
-		LOG.warn("event is " + rootNode.toString());
-=======
+			ArrayNode eventList;
+			eventList = mapper.createArrayNode();
+			eventList.add(eventNode);
+			rootNode.set("events", eventList);
+		}
+		
 		String metricEvent = rootNode.toString();
-		LOG.debug(metricEvent);
->>>>>>> Stashed changes
-		Analytics.sendEvents(rootNode.toString());
+		LOG.warn("event is " + metricEvent);
+		Analytics.sendEvents(metricEvent);
 	}
 
 	private static void sendEvents(String param) {
