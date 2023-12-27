@@ -92,7 +92,12 @@ public class Analytics {
 		eventList = mapper.createArrayNode();
 		eventList.add(eventNode);
 		rootNode.set("events", eventList);
+<<<<<<< Updated upstream
 		LOG.warn("event is " + rootNode.toString());
+=======
+		String metricEvent = rootNode.toString();
+		LOG.debug(metricEvent);
+>>>>>>> Stashed changes
 		Analytics.sendEvents(rootNode.toString());
 	}
 
