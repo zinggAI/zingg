@@ -27,7 +27,6 @@ public class TestArguments {
 	public static final Log LOG = LogFactory.getLog(TestArguments.class);
 	protected ArgumentsUtil argsUtil = new ArgumentsUtil();
 	
-	protected FieldDefUtil fieldDefUtil = new FieldDefUtil();
 	@Test
 	public void testSubstituteVariablesWithAllEnvVarSet() {
 		try {
