@@ -46,8 +46,8 @@ def initClient():
     global _sqlContext
     global _spark    
     if _spark_ctxt is None:
-        DATA_BRICKS_CONNECT = os.getenv('DATA_BRICKS_CONNECT')
-        if DATA_BRICKS_CONNECT=='Y' or DATA_BRICKS_CONNECT=='y':
+        DATABRICKS_CONNECT = os.getenv('DATABRICKS_CONNECT')
+        if DATABRICKS_CONNECT=='Y' or DATABRICKS_CONNECT=='y':
             return initDataBricksConectClient()
         else:
             return initSparkClient()
@@ -130,8 +130,8 @@ class Zingg:
     def initAndExecute(self):
         """ Method to run both init and execute methods consecutively """
         self.client.init()
-        DATA_BRICKS_CONNECT = os.getenv('DATA_BRICKS_CONNECT')
-        if DATA_BRICKS_CONNECT=='Y' or DATA_BRICKS_CONNECT=='y':
+        DATABRICKS_CONNECT = os.getenv('DATABRICKS_CONNECT')
+        if DATABRICKS_CONNECT=='Y' or DATABRICKS_CONNECT=='y':
             options = self.client.getOptions()
             inpPhase = options.get(ClientOptions.PHASE).getValue()
             if (inpPhase==ZinggOptions.LABEL.getValue()):

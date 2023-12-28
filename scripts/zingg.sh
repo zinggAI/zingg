@@ -59,7 +59,7 @@ fi
 if [[ $RUN_PYTHON_DB_CONNECT_PHASE -eq 1 ]]; then
 	unset SPARK_MASTER
 	unset SPARK_HOME
-	export DATA_BRICKS_CONNECT=Y
+	export DATABRICKS_CONNECT=Y
 	python $EXECUTABLE
 else
 	# All the additional options must be added here

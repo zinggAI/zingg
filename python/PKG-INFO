@@ -5,7 +5,7 @@ Summary: Zingg.ai Entity Resolution
 Home-page: www.zingg.ai
 Author: Zingg.AI
 Author-email: sonalgoyal4@gmail.com
-License: UNKNOWN
+License: AGPL
 Description: ## About Zingg
         
         Zingg is an ML based entity resolution framework. The Python Package is used for building training data, training Zingg models and running the matching and linking processes.

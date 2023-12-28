@@ -62,7 +62,7 @@ class TestZinggClient(TestCase):
     def test_initClient_databricks(self):
         global _spark_ctxt
         _spark_ctxt = None
-        os.environ['DATA_BRICKS_CONNECT'] = 'Y'
+        os.environ['DATABRICKS_CONNECT'] = 'Y'
         result = initClient()
         self.assertEqual(result, 1)
 
