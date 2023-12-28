@@ -26,6 +26,8 @@ public class TestArguments {
 
 	public static final Log LOG = LogFactory.getLog(TestArguments.class);
 	protected ArgumentsUtil argsUtil = new ArgumentsUtil();
+	
+	protected FieldDefUtil fieldDefUtil = new FieldDefUtil();
 	@Test
 	public void testSubstituteVariablesWithAllEnvVarSet() {
 		try {
@@ -234,10 +236,10 @@ public class TestArguments {
             try {
                 args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configTestDontUse.json").getFile(), "test");
 
-                List<? extends FieldDefinition> dontUseList = args.getFieldDefinitionDontUse();
+                List<? extends FieldDefinition> dontUseList = fieldDefUtil.getFieldDefinitionDontUse(args.getFieldDefinition());
                 assertEquals(dontUseList.size(), 3);
                 
-                List<? extends FieldDefinition> matchList = args.getFieldDefinitionToUse();
+                List<? extends FieldDefinition> matchList = fieldDefUtil.getFieldDefinitionToUse(args.getFieldDefinition());
                 assertEquals(matchList.size(), 4);
                 
             } catch (Exception | ZinggClientException e) {

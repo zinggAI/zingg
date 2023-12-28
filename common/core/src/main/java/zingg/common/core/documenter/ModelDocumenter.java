@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.FieldDefUtil;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
@@ -31,10 +32,13 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 	protected ModelColDocumenter<S,D,R,C,T> modelColDoc;
 	protected  ZFrame<D,R,C>  markedRecords;
 	protected  ZFrame<D,R,C>  unmarkedRecords;
+	
+	protected FieldDefUtil fieldDefUtil;
 
 	public ModelDocumenter(Context<S,D,R,C,T> context, IArguments args) {
 		super(context, args);
 		markedRecords = getDSUtil().emptyDataFrame();
+		fieldDefUtil = new FieldDefUtil();
 	}
 
 	public void process() throws ZinggClientException {
@@ -98,7 +102,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 	protected ZFrame<D,R,C> filterForConcise(ZFrame<D,R,C> df) {
 		if (args.getShowConcise()) {
 			List<String> dontUseFields = getFieldNames(
-					(List<? extends FieldDefinition>) args.getFieldDefinitionDontUse());
+					(List<? extends FieldDefinition>) fieldDefUtil.getFieldDefinitionDontUse(args.getFieldDefinition()));
 			if(!dontUseFields.isEmpty()) {
 				df = df.drop(dontUseFields.toArray(new String[dontUseFields.size()]));
 			}
@@ -110,7 +114,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		List<? extends FieldDefinition> fieldList = args.getFieldDefinition();
 		//drop columns which are don't use if show concise is true
 		if (args.getShowConcise()) {
-			fieldList = args.getFieldDefinitionToUse();
+			fieldList = fieldDefUtil.getFieldDefinitionToUse(args.getFieldDefinition());
 		}	
 		return getFieldNames(fieldList);
 	}

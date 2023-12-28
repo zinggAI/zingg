@@ -171,20 +171,6 @@ public class Arguments implements Serializable, IArguments {
 		return fieldDefinition;
 	}
 	
-	@JsonIgnore @Override
-	public List<? extends FieldDefinition> getFieldDefinitionDontUse() {
-		return getFieldDefinition().stream()
-			    .filter(x->x.matchType.contains(MatchType.DONT_USE))
-			    .collect(Collectors.toList());
-	}
-	
-	@JsonIgnore @Override
-	public List<? extends FieldDefinition> getFieldDefinitionToUse() {
-		return getFieldDefinition().stream()
-			    .filter(x->!x.matchType.contains(MatchType.DONT_USE))
-			    .collect(Collectors.toList());
-	}
-	
 	/**
 	 * Set the field definitions consisting of match field indices, types and
 	 * classes
