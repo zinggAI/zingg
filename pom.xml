@@ -30,89 +30,41 @@
 	</modules>
 	<profiles>
 		<profile>
-			<id>spark-3.3</id>
+			<id>spark-3.4</id>
+			<activation>
+				<property>
+					<name>spark</name>
+					<value>3.4</value>
+				</property>
+			</activation>
+			<properties>
+				<spark.version>3.4.0</spark.version>
+				<scala.version>2.12.17</scala.version>
+				<spark.binary.version>3.4</spark.binary.version>
+				<scala.binary.version>2.12</scala.binary.version>
+				<graphframes.version>0.8.3-spark3.4-s_2.12</graphframes.version>
+			</properties>
+		</profile>
+		<profile>
+			<id>spark-3.5</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 				<property>
 					<name>spark</name>
-					<value>3.3</value>
+					<value>3.5</value>
 				</property>
 			</activation>
 			<properties>
-				<spark.version>3.3.1</spark.version>
-				<scala.version>2.12.17</scala.version>
-				<spark.binary.version>3.3</spark.binary.version>
-				<scala.binary.version>2.12</scala.binary.version>
-				<graphframes.version>0.8.1-spark3.0-s_2.12</graphframes.version>
-			</properties>
-		</profile>
-		<profile>
-			<id>spark-3.2</id>
-			<activation>
-				<property>
-					<name>spark</name>
-					<value>3.2</value>
-				</property>
-			</activation>
-			<properties>
-				<spark.version>3.2.3</spark.version>
-				<scala.version>2.12.17</scala.version>
-				<spark.binary.version>3.2</spark.binary.version>
-				<scala.binary.version>2.12</scala.binary.version>
-				<graphframes.version>0.8.1-spark3.0-s_2.12</graphframes.version>
-			</properties>
-		</profile>
-		<profile>
-			<id>spark-3.1</id>
-			<activation>
-				<property>
-					<name>spark</name>
-					<value>3.1</value>
-				</property>
-			</activation>
-			<properties>
-				<spark.version>3.1.2</spark.version>
+				<spark.version>3.5.0</spark.version>
 				<scala.version>2.12.10</scala.version>
-				<spark.binary.version>3.1</spark.binary.version>
+				<spark.binary.version>3.5</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
-				<graphframes.version>0.8.1-spark3.0-s_2.12</graphframes.version>
-			</properties>
-		</profile>
-		<profile>
-			<id>spark-3.0</id>
-			<activation>
-				<property>
-					<name>spark</name>
-					<value>3.0</value>
-				</property>
-			</activation>
-			<properties>
-				<spark.version>3.0.3</spark.version>
-				<scala.version>2.12.11</scala.version>
-				<spark.binary.version>3.0</spark.binary.version>
-				<scala.binary.version>2.12</scala.binary.version>
-				<graphframes.version>0.8.1-spark3.0-s_2.12</graphframes.version>
-			</properties>
-		</profile>
-		<profile>
-			<id>spark-2.4</id>
-			<activation>
-				<property>
-					<name>spark</name>
-					<value>2.4</value>
-				</property>
-			</activation>
-			<properties>
-				<spark.version>2.4.8</spark.version>
-				<scala.version>2.11.12</scala.version>
-				<spark.binary.version>2.4</spark.binary.version>
-				<scala.binary.version>2.11</scala.binary.version>
-				<graphframes.version>0.8.1-spark2.4-s_2.11</graphframes.version>
+				<graphframes.version>0.8.3-spark3.5-s_2.12</graphframes.version>
 			</properties>
 		</profile>
 	</profiles>
 	<properties>
-		<zingg.version>0.4.0-SNAPSHOT</zingg.version>
+		<zingg.version>0.4.0</zingg.version>
 		<skipTests>false</skipTests>
 		<failIfNoTests>false</failIfNoTests>
 		<maven.compiler.source>8</maven.compiler.source>
@@ -154,6 +106,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-params</artifactId>
+			<version>5.8.1</version>
+			<scope>test</scope>
+		</dependency>
+  		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.8.4</version>
@@ -206,7 +164,28 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.2</version>
+				<version>3.2.2</version>
+				<configuration>
+					<statelessTestsetReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
+						<disable>false</disable>
+						<version>3.0</version>
+						<usePhrasedFileName>false</usePhrasedFileName>
+						<usePhrasedTestSuiteClassName>true</usePhrasedTestSuiteClassName>
+						<usePhrasedTestCaseClassName>true</usePhrasedTestCaseClassName>
+						<usePhrasedTestCaseMethodName>true</usePhrasedTestCaseMethodName>
+					</statelessTestsetReporter>
+					<consoleOutputReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5ConsoleOutputReporter">
+						<disable>false</disable>
+						<encoding>UTF-8</encoding>
+						<usePhrasedFileName>true</usePhrasedFileName>
+					</consoleOutputReporter>
+					<statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoReporter">
+						<disable>false</disable>
+						<usePhrasedFileName>true</usePhrasedFileName>
+						<usePhrasedClassNameInRunning>true</usePhrasedClassNameInRunning>
+						<usePhrasedClassNameInTestCaseSummary>true</usePhrasedClassNameInTestCaseSummary>
+					</statelessTestsetInfoReporter>
+            	</configuration>
         	</plugin>
 			<plugin>
   					<groupId>org.jacoco</groupId>

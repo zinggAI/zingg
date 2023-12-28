@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,34 +47,62 @@ public class Analytics {
 		}
 	}
 
+	public static void trackEnvProp(String metricName, boolean collectMetrics) {
+		if (collectMetrics) {
+			try{
+				getMetrics().put(metricName, System.getProperty(metricName));
+			}
+			catch(Exception e){
+				getMetrics().put(metricName, "Exception " + e.getMessage());
+			}
+		}
+	}
+
 	public static void track(String metricName, double metricValue, boolean collectMetrics) {
 		track(metricName, String.valueOf(metricValue), collectMetrics);
 	}
 
-	public static void postEvent(String phase, boolean collectMetrics) {
-		if (collectMetrics == false) {
-			return;
+	public static String getDomain(){
+
+		try {
+			return InetAddress.getLocalHost().getHostName();
+		} catch (UnknownHostException e) {
+			return "CouldntGetHost";
 		}
+
+	}
+	public static void trackDomain(String metricName, boolean collectMetrics){
+		track(metricName, getDomain(), collectMetrics);
+	}
+
+	
+
+	public static void postEvent(String phase, boolean collectMetrics) {
+		
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode rootNode = mapper.createObjectNode();
 
-		rootNode.put("client_id", "555");
+		rootNode.put("client_id", getDomain());
 
 		ObjectNode eventNode = mapper.createObjectNode();
 		eventNode.put("name", phase);
 
-		ObjectNode paramNode = mapper.createObjectNode();
-		for (Map.Entry<String, String> entry : metrics.entrySet()) {
-			paramNode.put(entry.getKey(), entry.getValue());
-		}
-		eventNode.set("params", paramNode); 
+		if (collectMetrics != false) {
+			ObjectNode paramNode = mapper.createObjectNode();
+			for (Map.Entry<String, String> entry : metrics.entrySet()) {
+				paramNode.put(entry.getKey(), entry.getValue());
+			}
+			eventNode.set("params", paramNode); 
 
-		ArrayNode eventList;
-		eventList = mapper.createArrayNode();
-		eventList.add(eventNode);
-		rootNode.set("events", eventList);
+			ArrayNode eventList;
+			eventList = mapper.createArrayNode();
+			eventList.add(eventNode);
+			rootNode.set("events", eventList);
+		}
 		
-		Analytics.sendEvents(rootNode.toString());
+		String metricEvent = rootNode.toString();
+		LOG.warn("event is " + metricEvent);
+		Analytics.sendEvents(metricEvent);
 	}
 
 	private static void sendEvents(String param) {

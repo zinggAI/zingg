@@ -53,17 +53,17 @@ _**Step 3 :  Install Apache Spark -**_
 * Download Apache Spark - from the [Apache Spark Official Website](https://spark.apache.org/downloads.html).
 * Install downloaded Apache Spark - on your Ubuntu by following [this tutorial](https://computingforgeeks.com/how-to-install-apache-spark-on-ubuntu-debian/).
 
-* For example for 3.3.2:
+* For example for 3.5.0:
 ```
-wget https://dlcdn.apache.org/spark/spark-3.3.2/spark-3.3.2-bin-hadoop3.tgz
-tar -xvf spark-3.3.2-bin-hadoop3.tgz
-rm -rf spark-3.3.2-bin-hadoop3.tgz
-sudo mv spark-3.3.2-bin-hadoop3 /opt/spark
+wget https://www.apache.org/dyn/closer.lua/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+tar -xvf spark-3.5.0-bin-hadoop3.tgz
+rm -rf spark-3.5.0-bin-hadoop3.tgz
+sudo mv spark-3.5.0-bin-hadoop3 /opt/spark
 ```
 
 Make sure that spark version you have installed is compatible with java you have installed, and Zingg is supporting those versions.
 
-_**Note :-**_ Zingg currently supports only up to spark 3.3 and the corresponding Java version.
+_**Note :-**_ Zingg supports Spark 3.5 and the corresponding Java version.
 
 ****
 
@@ -122,7 +122,7 @@ mvn initialize
 * **mvn clean compile package -Dspark=sparkVer**
 ```
 
-_**Note :-**_	Replace the **sparkVer** with the version of spark you installed, For example, **-Dspark=3.2** and if still facing error, include **-Dmaven.test.skip=true** with the above command.
+_**Note :-**_	Replace the **sparkVer** with the version of spark you installed, For example, **-Dspark=3.5** and if still facing error, include **-Dmaven.test.skip=true** with the above command.
 
 
 _**Note :-**_ substitute 3.3 with profile of the spark version you have installed. This is based on profiles specified in pom.xml

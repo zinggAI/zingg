@@ -213,6 +213,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		finally {
 			try {
 				if (client != null) {
+					//client.postMetrics();
 					client.stop();
 				}
 			}

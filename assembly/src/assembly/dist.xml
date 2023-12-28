@@ -14,7 +14,7 @@
         <include>README*</include>
         <include>LICENSE*</include>
         <include>NOTICE*</include>
-        <include>log4j.properties</include>
+        <include>log4j2.properties</include>
       </includes>
     </fileSet>
     <fileSet>

@@ -20,7 +20,7 @@ LOG = logging.getLogger("zingg")
 _spark_ctxt = None
 _sqlContext = None
 _spark = None
-_zingg_jar = 'zingg-0.4.0-SNAPSHOT.jar'
+_zingg_jar = 'zingg-0.4.0.jar'
 
 def initSparkClient():
     global _spark_ctxt
@@ -46,8 +46,8 @@ def initClient():
     global _sqlContext
     global _spark    
     if _spark_ctxt is None:
-        DATA_BRICKS_CONNECT = os.getenv('DATA_BRICKS_CONNECT')
-        if DATA_BRICKS_CONNECT=='Y' or DATA_BRICKS_CONNECT=='y':
+        DATABRICKS_CONNECT = os.getenv('DATABRICKS_CONNECT')
+        if DATABRICKS_CONNECT=='Y' or DATABRICKS_CONNECT=='y':
             return initDataBricksConectClient()
         else:
             return initSparkClient()
@@ -130,8 +130,8 @@ class Zingg:
     def initAndExecute(self):
         """ Method to run both init and execute methods consecutively """
         self.client.init()
-        DATA_BRICKS_CONNECT = os.getenv('DATA_BRICKS_CONNECT')
-        if DATA_BRICKS_CONNECT=='Y' or DATA_BRICKS_CONNECT=='y':
+        DATABRICKS_CONNECT = os.getenv('DATABRICKS_CONNECT')
+        if DATABRICKS_CONNECT=='Y' or DATABRICKS_CONNECT=='y':
             options = self.client.getOptions()
             inpPhase = options.get(ClientOptions.PHASE).getValue()
             if (inpPhase==ZinggOptions.LABEL.getValue()):
@@ -278,6 +278,8 @@ class Zingg:
         """ Method to write updated records (as pandas df) after user input
         """
         markedRecordsAsDS = (getSparkSession().createDataFrame(candidate_pairs_pd))._jdf
+        # pands df gives z_isMatch as long so needs to be cast
+        markedRecordsAsDS = markedRecordsAsDS.withColumn(ColName.MATCH_FLAG_COL,markedRecordsAsDS.col(ColName.MATCH_FLAG_COL).cast("int"))
         updatedRecords = getJVM().zingg.spark.client.SparkFrame(markedRecordsAsDS)
         self.writeLabelledOutput(updatedRecords,args)
 
@@ -518,6 +520,15 @@ class Arguments:
         :type stopWordsCutoff: float
         """
         self.args.setStopWordsCutoff(stopWordsCutoff)
+    
+    def setColumn(self, column):
+        """ Method to set stopWordsCutoff parameter value
+        By default, Zingg extracts 10% of the high frequency unique words from a dataset. If user wants different selection, they should set up StopWordsCutoff property
+
+        :param stopWordsCutoff: The stop words cutoff parameter value of ClientOption object or file address of json file
+        :type stopWordsCutoff: float
+        """
+        self.args.setColumn(column)
 
     @staticmethod
     def createArgumentsFromJSON(fileName, phase):
@@ -564,7 +575,7 @@ class Arguments:
 
 class ClientOptions:
     """ Class that contains Client options for Zingg object
-    :param phase: trainMatch, train, match, link, findAndLabel, findTrainingData etc
+    :param phase: trainMatch, train, match, link, findAndLabel, findTrainingData, recommend etc
     :type phase: String
     :param args: Parse a list of Zingg command line options parameter values e.g. "--location" etc. optional argument for initializing this class.
     :type args: List(String) or None
@@ -585,6 +596,8 @@ class ClientOptions:
     """:ZINGG_DIR: location where Zingg saves the model, training data etc"""
     MODEL_ID = getJVM().zingg.common.client.ClientOptions.MODEL_ID
     """:MODEL_ID: ZINGG_DIR/MODEL_ID is used to save the model"""
+    COLUMN = getJVM().zingg.common.client.ClientOptions.COLUMN
+    """:COLUMN: Column whose stop words are to be recommended through Zingg"""
 
     def __init__(self, argsSent=None):
         print(argsSent)

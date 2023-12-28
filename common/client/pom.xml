@@ -13,11 +13,5 @@
 			<artifactId>mail</artifactId>
 			<version>1.4</version>
 		</dependency>
-		<dependency>
-			<groupId>py4j</groupId>
-			<artifactId>py4j</artifactId>
-			<version>0.10.9</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 </project>
