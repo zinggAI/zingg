@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -169,7 +170,7 @@ public class Arguments implements Serializable, IArguments {
 	public List<? extends FieldDefinition> getFieldDefinition() {
 		return fieldDefinition;
 	}
-
+	
 	/**
 	 * Set the field definitions consisting of match field indices, types and
 	 * classes
