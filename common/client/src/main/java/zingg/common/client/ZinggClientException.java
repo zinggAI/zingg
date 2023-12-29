@@ -1,7 +1,5 @@
 package zingg.common.client;
 
-import java.io.Serializable;
-
 /**
  * Base class for all Zingg Exceptions
  * 
@@ -9,8 +7,10 @@ import java.io.Serializable;
  *
  */
 
-public class ZinggClientException extends Throwable implements Serializable {
+public class ZinggClientException extends Throwable {
 
+	private static final long serialVersionUID = 1L;
+	
 	public String message;
 
 	public ZinggClientException(String m) {

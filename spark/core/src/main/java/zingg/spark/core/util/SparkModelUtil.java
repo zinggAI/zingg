@@ -6,7 +6,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.feature.FeatureFactory;
 import zingg.common.core.model.Model;
@@ -26,7 +26,7 @@ public class SparkModelUtil extends ModelUtil<SparkSession,DataType,Dataset<Row>
         super(s);
     }
 
-	public Model<SparkSession,DataType,Dataset<Row>, Row, Column> getModel(boolean isLabel, Arguments args) throws ZinggClientException{
+	public Model<SparkSession,DataType,Dataset<Row>, Row, Column> getModel(boolean isLabel, IArguments args) throws ZinggClientException{
         Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = null;
         if (isLabel) {
             model = new SparkLabelModel(session, getFeaturers(args));
@@ -39,7 +39,7 @@ public class SparkModelUtil extends ModelUtil<SparkSession,DataType,Dataset<Row>
 
     @Override
     public Model<SparkSession,DataType,Dataset<Row>, Row, Column> loadModel(boolean isLabel,
-        Arguments args) throws ZinggClientException    {
+        IArguments args) throws ZinggClientException    {
         Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = getModel(isLabel, args);
         model.load(args.getModel());
         return model;

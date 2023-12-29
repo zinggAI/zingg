@@ -17,6 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.util.ColName;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.documenter.SparkModelDocumenter;
@@ -25,7 +26,7 @@ import zingg.spark.core.executor.ZinggSparkTester;
 public class TestModelDocumenter extends ZinggSparkTester {
 	public static final Log LOG = LogFactory.getLog(TestModelDocumenter.class);
 
-	Arguments docArguments = new Arguments();
+	IArguments docArguments = new Arguments();
 	
 	@BeforeEach
 	public void setUp(){

@@ -3,8 +3,8 @@ package zingg.common.core.executor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.ClientOptions;
+import zingg.common.client.IArguments;
 import zingg.common.client.ITrainingDataModel;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -67,13 +67,13 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 	}
 
 	
-	public void writeLabelledOutput(ZFrame<D,R,C> records, Arguments args) throws ZinggClientException {
+	public void writeLabelledOutput(ZFrame<D,R,C> records, IArguments args) throws ZinggClientException {
 		Pipe p = getOutputPipe(args);
 		writeLabelledOutput(records,args,p);
 	}
 
 	
-	public void writeLabelledOutput(ZFrame<D,R,C> records, Arguments args, Pipe p) throws ZinggClientException {
+	public void writeLabelledOutput(ZFrame<D,R,C> records, IArguments args, Pipe p) throws ZinggClientException {
 		if (records == null) {
 			LOG.warn("No labelled records");
 			return;
@@ -81,7 +81,7 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 		getPipeUtil().write(records, p);
 	}
 	
-	public Pipe getOutputPipe(Arguments args) {
+	public Pipe getOutputPipe(IArguments args) {
 		return getPipeUtil().getTrainingDataMarkedPipe(args);
 	}
 	

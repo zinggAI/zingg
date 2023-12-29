@@ -8,9 +8,9 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.SparkSession;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.Client;
 import zingg.common.client.ClientOptions;
+import zingg.common.client.IArguments;
 import zingg.common.client.IZinggFactory;
 import zingg.common.client.ZinggClientException;
 /**
@@ -24,13 +24,14 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 	private static final long serialVersionUID = 1L;
 	protected static final String zFactoryClassName = "zingg.spark.core.executor.SparkZFactory";
 
-	public SparkClient(Arguments args, ClientOptions options) throws ZinggClientException {
+	public SparkClient(IArguments args, ClientOptions options) throws ZinggClientException {
 		super(args, options, zFactoryClassName);
+		
 	}
 		
 	
 
-	public SparkClient(Arguments args, ClientOptions options, SparkSession s) throws ZinggClientException {
+	public SparkClient(IArguments args, ClientOptions options, SparkSession s) throws ZinggClientException {
 		super(args, options, s, zFactoryClassName);
 	}
 
@@ -50,7 +51,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 
 
 	@Override
-	public Client<SparkSession, Dataset<Row>, Row, Column, DataType> getClient(Arguments args, 
+	public Client<SparkSession, Dataset<Row>, Row, Column, DataType> getClient(IArguments args, 
 		ClientOptions options) throws ZinggClientException {
 		// TODO Auto-generated method stub
 		SparkClient client = null;

@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
+import zingg.common.client.IArguments;
 import zingg.common.client.IZingg;
 import org.apache.spark.sql.SparkSession;
 
@@ -31,7 +32,7 @@ import zingg.spark.core.util.SparkPipeUtil;
 
 public class ZinggSparkTester {
 
-    public static Arguments args;
+    public static IArguments args;
     public static JavaSparkContext ctx;
     public static SparkSession spark;
     public static ZinggSparkContext zsCTX;

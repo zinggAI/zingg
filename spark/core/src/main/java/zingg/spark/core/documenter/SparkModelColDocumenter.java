@@ -8,6 +8,7 @@ import org.apache.spark.sql.types.DataType;
 import freemarker.template.Version;
 import zingg.common.client.Arguments;
 import zingg.common.core.context.Context;
+import zingg.common.client.IArguments;
 import zingg.common.core.documenter.ModelColDocumenter;
 import zingg.common.core.documenter.RowWrapper;
 import org.apache.spark.sql.SparkSession;
@@ -21,7 +22,7 @@ public class SparkModelColDocumenter extends ModelColDocumenter<SparkSession, Da
 
 	private static final long serialVersionUID = 1L;
 
-	public SparkModelColDocumenter(Context<SparkSession, Dataset<Row>, Row, Column,DataType> context, Arguments args) {
+	public SparkModelColDocumenter(Context<SparkSession, Dataset<Row>, Row, Column,DataType> context, IArguments args) {
 		super(context, args);
 	}
 

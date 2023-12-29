@@ -320,58 +320,5 @@ public class TestSparkFrame extends TestSparkFrameBase {
    }
 	
 	
-	private SparkFrame getPosPairDF() {
-		Row[] posData = getPosPairRows();	
-		StructType schema = getPairSchema();
-		SparkFrame posDF = new SparkFrame(spark.createDataFrame(Arrays.asList(posData), schema));
-		return posDF;
-	}
-	
-	private Row[] getPosPairRows() {
-		int row_id = 1;
-		// Create a DataFrame containing test data
-		Row[] posData = { 
-				RowFactory.create( row_id++, "1675683807452:31",  "nicole","event1","comment1", 1992,  new Integer(100),   1, row_id++, "1675683807452:31",    "nicol","event11","comment11"    , 1992, new Integer(101),1),
-				RowFactory.create( row_id++, "1675683807452:32", "vkas","event2","comment2",1993,     new Integer(200),1, row_id++, "1675683807452:32", "vikas","event12","comment21"      ,1992, new Integer(201),1  ),
-				RowFactory.create(row_id++, "1675683807452:33",  "agrawaal","event3","comment3",1994,    new Integer(300),1, row_id++, "1675683807452:33", "agarwal","event13","comment31"    ,1992,      new Integer(301),1 ),
-				RowFactory.create( row_id++, "1675683807452:31",  "nicole","event1","comment1", 1992,  new Integer(100),   1, row_id++, "1675683807452:31",    "nicol","event11","comment11"    , 1992, new Integer(101),1),
-				RowFactory.create( row_id++, "1675683807452:32", "vkas","event2","comment2",1993,     new Integer(200),1, row_id++, "1675683807452:32", "vikas","event12","comment21"      ,1992, new Integer(201),1  ),
-				RowFactory.create(row_id++, "1675683807452:33",  "agrawaal","event3","comment3",1994,    new Integer(300),1, row_id++, "1675683807452:33", "agarwal","event13","comment31"    ,1992,      new Integer(301),1 ),
-				RowFactory.create( row_id++, "1675683807452:31",  "nicole","event1","comment1", 1992,  new Integer(100),   1, row_id++, "1675683807452:31",    "nicol","event11","comment11"    , 1992, new Integer(101),1),
-				RowFactory.create( row_id++, "1675683807452:32", "vkas","event2","comment2",1993,     new Integer(200),1, row_id++, "1675683807452:32", "vikas","event12","comment21"      ,1992, new Integer(201),1  ),
-				RowFactory.create(row_id++, "1675683807452:33",  "agrawaal","event3","comment3",1994,    new Integer(300),1, row_id++, "1675683807452:33", "agarwal","event13","comment31"    ,1992,      new Integer(301),1 ),
-				RowFactory.create( row_id++, "1675683807452:31",  "nicole","event1","comment1", 1992,  new Integer(100),   1, row_id++, "1675683807452:31",    "nicol","event11","comment11"    , 1992, new Integer(101),1),
-				RowFactory.create( row_id++, "1675683807452:32", "vkas","event2","comment2",1993,     new Integer(200),1, row_id++, "1675683807452:32", "vikas","event12","comment21"      ,1992, new Integer(201),1  ),
-				RowFactory.create(row_id++, "1675683807452:33",  "agrawaal","event3","comment3",1994,    new Integer(300),1, row_id++, "1675683807452:33", "agarwal","event13","comment31"    ,1992,      new Integer(301),1 ),
-				RowFactory.create( ++row_id, "52",   "nameObvDupe1"     ,"def"    ,"geh"    ,1900,   new Integer(1900), 0,++row_id, "410",   "nameObvDupe1",    "lmn",    "opq",       2001,       new Integer(1900), 0),
-				RowFactory.create( ++row_id, "53",   "nameObvDupe2"     ,"eventObvDupe2"    ,"commentObvDupe2"    ,1900,   new Integer(1900), 0,++row_id, "54",   "nameObvDupe2",    "eventObvDupe2",    "commentObvDupe2",       2001,       new Integer(1901), 0),
-				RowFactory.create( ++row_id, "53",   "nameObvDupe3"     ,"eventObvDupe3"    ,"commentObvDupe3"    ,1900,   new Integer(1901), 0,++row_id, "54",   "nameObvDupe3",    "eventObvDupe3",    "commentObvDupe3",       2001,       new Integer(1901), 0),
-				RowFactory.create( ++row_id, "53",   "nameObvDupe3"     ,"eventObvDupe3"    ,"commentObvDupe3"    ,1900,   new Integer(1901), 0,++row_id, "54",   null,    "eventObvDupe3",    "commentObvDupe3",       2001,       new Integer(1901), 0)
-		};
-		return posData;
-	}
-	
-	private StructType getPairSchema() {
-		StructType schema = new StructType(new StructField[] {
-				new StructField("z_zid", DataTypes.IntegerType, true, Metadata.empty()),
-				new StructField("z_cluster", DataTypes.StringType, true, Metadata.empty()), 	
-				new StructField("name", DataTypes.StringType, true, Metadata.empty()),
-				new StructField("event", DataTypes.StringType, true, Metadata.empty()),
-				new StructField("comment", DataTypes.StringType, true, Metadata.empty()),
-				new StructField("year", DataTypes.IntegerType, true, Metadata.empty()),
-				new StructField("dob", DataTypes.IntegerType, true, Metadata.empty()),
-				new StructField("z_isMatch", DataTypes.IntegerType, true, Metadata.empty()),
-				new StructField("z_z_zid", DataTypes.IntegerType, true, Metadata.empty()),
-				new StructField("z_z_cluster", DataTypes.StringType, true, Metadata.empty()), 
-				new StructField("z_name", DataTypes.StringType, true, Metadata.empty()),
-				new StructField("z_event", DataTypes.StringType, true, Metadata.empty()),
-				new StructField("z_comment", DataTypes.StringType, true, Metadata.empty()),
-				new StructField("z_year", DataTypes.IntegerType, true, Metadata.empty()),
-				new StructField("z_dob", DataTypes.IntegerType, true, Metadata.empty()),
-				new StructField("z_z_isMatch", DataTypes.IntegerType, true, Metadata.empty())}
-			);
-		return schema;
-	}
-	
 	
 }

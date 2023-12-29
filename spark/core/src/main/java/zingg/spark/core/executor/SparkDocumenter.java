@@ -7,7 +7,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 
@@ -32,7 +32,7 @@ public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row,
 	}
 
 	@Override
-	public void init(Arguments args)  throws ZinggClientException {
+	public void init(IArguments args)  throws ZinggClientException {
 		super.init(args);
 		getContext().init();
 	}

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -79,7 +80,7 @@ import zingg.common.client.pipe.Pipe;
  * </pre>
  */
 @JsonInclude(Include.NON_NULL)
-public class Arguments implements Serializable {
+public class Arguments implements Serializable, IArguments {
 
 	private static final long serialVersionUID = 1L;
 	// creates DriverArgs and invokes the main object
@@ -103,6 +104,7 @@ public class Arguments implements Serializable {
 	
 	
 
+	@Override
 	public void setThreshold(double threshold) {
 		this.threshold = threshold;
 	}
@@ -115,10 +117,12 @@ public class Arguments implements Serializable {
 	public Arguments() {
 	}
 
+	@Override
 	public int getNumPartitions() {
 		return numPartitions;
 	}
 
+	@Override
 	public void setNumPartitions(int numPartitions) throws ZinggClientException{
 		if (numPartitions != -1 && numPartitions <= 0) 
 			throw new ZinggClientException(
@@ -134,6 +138,7 @@ public class Arguments implements Serializable {
 	 * @return sample percent as a float between 0 and 1
 	 */
 
+	@Override
 	public float getLabelDataSampleSize() {
 		return labelDataSampleSize;
 	}
@@ -149,6 +154,7 @@ public class Arguments implements Serializable {
 	 *            generating seed samples
 	 * @throws ZinggClientException 
 	 */
+	@Override
 	public void setLabelDataSampleSize(float labelDataSampleSize) throws ZinggClientException {
 		if (labelDataSampleSize > 1 || labelDataSampleSize < 0)
 			throw new ZinggClientException("Label Data Sample Size should be between 0 and 1");
@@ -160,10 +166,11 @@ public class Arguments implements Serializable {
 	 * 
 	 * @return list of field definitions
 	 */
+	@Override
 	public List<? extends FieldDefinition> getFieldDefinition() {
 		return fieldDefinition;
 	}
-
+	
 	/**
 	 * Set the field definitions consisting of match field indices, types and
 	 * classes
@@ -173,6 +180,7 @@ public class Arguments implements Serializable {
 	 *            list of fields
 	 * @throws ZinggClientException 
 	 */
+	@Override
 	public void setFieldDefinition(List<? extends FieldDefinition> fieldDefinition) throws ZinggClientException {
 		/*if (fieldDefinition == null || fieldDefinition.size() ==0) 
 			throw new ZinggClientException("Missing or incorrect field definitions");
@@ -185,6 +193,7 @@ public class Arguments implements Serializable {
 	 * 
 	 * @return path to labeled positive sample file
 	 */
+	@Override
 	public Pipe[] getTrainingSamples() {
 		return trainingSamples;
 	}
@@ -196,6 +205,7 @@ public class Arguments implements Serializable {
 	 *            path of the matching (positive)labeled sample file
 	 * @throws ZinggClientException 
 	 */
+	@Override
 	@JsonSetter
 	public void setTrainingSamples(Pipe[] trainingSamples) throws ZinggClientException {
 		//checkNullBlankEmpty(positiveTrainingSamples, "positive training samples");
@@ -226,10 +236,12 @@ public class Arguments implements Serializable {
 	
 	
 
+	@Override
 	public String getModelId() {
 		return modelId;
 	}
 
+	@Override
 	public void setModelId(String modelId) {
 		this.modelId = modelId;
 	}
@@ -239,6 +251,7 @@ public class Arguments implements Serializable {
 	 * 
 	 * @return output directory path of the result
 	 */
+	@Override
 	public Pipe[] getOutput() {
 		return output;
 	}
@@ -250,6 +263,7 @@ public class Arguments implements Serializable {
 	 *            where the match result is saved
 	 * @throws ZinggClientException 
 	 */
+	@Override
 	public void setOutput(Pipe[] outputDir) throws ZinggClientException {
 		//checkNullBlankEmpty(outputDir, " path for saving results");
 		this.output = outputDir;
@@ -260,6 +274,7 @@ public class Arguments implements Serializable {
 	 * 
 	 * @return path of data file to be matched
 	 */
+	@Override
 	public Pipe[] getData() {
 		return this.data;
 	}
@@ -272,6 +287,7 @@ public class Arguments implements Serializable {
 	 *            /home/zingg/path/to/my/file/to/be/matched.csv
 	 * @throws ZinggClientException 
 	 */
+	@Override
 	public void setData(Pipe[] dataFile) throws ZinggClientException {
 		checkNullBlankEmpty(dataFile, "file to be matched");
 		this.data = dataFile;
@@ -312,6 +328,7 @@ public class Arguments implements Serializable {
 	 * 
 	 * @return the path for internal Zingg usage
 	 */
+	@Override
 	public String getZinggDir() {
 		return zinggDir;
 	}
@@ -323,6 +340,7 @@ public class Arguments implements Serializable {
 	 * @param zinggDir
 	 *            path to the Zingg directory
 	 */
+	@Override
 	public void setZinggDir(String zinggDir) {
 		this.zinggDir = zinggDir;
 	}
@@ -334,25 +352,30 @@ public class Arguments implements Serializable {
 	 * @return the path for internal Zingg usage
 	 */
 
+	@Override
 	@JsonIgnore
 	public String getZinggBaseModelDir(){
 		return zinggDir + "/" + modelId;
 	}
+	@Override
 	@JsonIgnore
 	public String getZinggModelDir() {
 		return getZinggBaseModelDir() + "/model";
 	}
 
+	@Override
 	@JsonIgnore
 	public String getZinggDocDir() {
 		return getZinggBaseModelDir() + "/docs/";
 	}
 
+	@Override
 	@JsonIgnore
 	public String getZinggModelDocFile() {
 		return getZinggDocDir() + "/model.html";
 	}
 
+	@Override
 	@JsonIgnore
 	public String getZinggDataDocFile() {
 		return getZinggDocDir() + "/data.html";
@@ -363,6 +386,7 @@ public class Arguments implements Serializable {
 	 * 
 	 * @return the path for internal Zingg usage
 	 */
+	@Override
 	@JsonIgnore
 	public String getZinggBaseTrainingDataDir() {
 		return getZinggBaseModelDir() + "/trainingData/";
@@ -375,6 +399,7 @@ public class Arguments implements Serializable {
 	 * 
 	 * @return the path for internal Zingg usage
 	 */
+	@Override
 	@JsonIgnore
 	public String getZinggTrainingDataUnmarkedDir() {
 		return this.getZinggBaseTrainingDataDir() + "/unmarked/";
@@ -385,6 +410,7 @@ public class Arguments implements Serializable {
 	 * 
 	 * @return the path for internal Zingg usage
 	 */
+	@Override
 	@JsonIgnore
 	public String getZinggTrainingDataMarkedDir() {
 		return this.getZinggBaseTrainingDataDir() + "/marked/";
@@ -395,6 +421,7 @@ public class Arguments implements Serializable {
 	 * 
 	 * @return the path for internal Zingg usage
 	 */
+	@Override
 	@JsonIgnore
 	public String getZinggPreprocessedDataDir() {
 		return zinggDir + "/preprocess";
@@ -406,6 +433,7 @@ public class Arguments implements Serializable {
 	 * 
 	 * @return the blockFile
 	 */
+	@Override
 	@JsonIgnore
 	public String getBlockFile() {
 		return getZinggModelDir() + "/block/zingg.block";
@@ -416,6 +444,7 @@ public class Arguments implements Serializable {
 	 * 
 	 * @return model path
 	 */
+	@Override
 	@JsonIgnore
 	public String getModel() {
 		return getZinggModelDir() + "/classifier/best.model";
@@ -423,60 +452,73 @@ public class Arguments implements Serializable {
 
 
 
+	@Override
 	public int getJobId() {
 		return jobId;
 	}
 
 
 
+	@Override
 	public void setJobId(int jobId) {
 		this.jobId = jobId;
 	}
 
+	@Override
 	public boolean getCollectMetrics() {
 		return collectMetrics;
 	}
 
+	@Override
 	public void setCollectMetrics(boolean collectMetrics) {
 		this.collectMetrics = collectMetrics;
 	}
 	 
+	@Override
 	public float getStopWordsCutoff() {
 		return stopWordsCutoff;
 	}
 
+	@Override
 	public void setStopWordsCutoff(float stopWordsCutoff) throws ZinggClientException {
 		if (stopWordsCutoff > 1 || stopWordsCutoff < 0)
 			throw new ZinggClientException("Stop words cutoff should be between 0 and 1");
 		this.stopWordsCutoff = stopWordsCutoff;
 	}
 
+	@Override
 	public boolean getShowConcise() {
 		return showConcise;
 	}
 
+	@Override
 	public void setShowConcise(boolean showConcise) {
 		this.showConcise = showConcise;
 	}
 
+	@Override
 	public String getColumn() {
 		return column;
 	}
 
+	@Override
 	public void setColumn(String column) {
 		this.column = column;
 	}
 	
 	
 
+	@Override
 	public long getBlockSize() {
 		return blockSize;
 	}
 
+	@Override
 	public void setBlockSize(long blockSize){
 		this.blockSize = blockSize;
 	}
 
+	@Override
 	@JsonIgnore
 	public String[] getPipeNames() {
 		Pipe[] input = this.getData();
@@ -488,6 +530,7 @@ public class Arguments implements Serializable {
 		return sourceNames;
 	}
 
+	@Override
 	@JsonIgnore
     public String getStopWordsDir() {
     	return getZinggBaseModelDir() + "/stopWords/";

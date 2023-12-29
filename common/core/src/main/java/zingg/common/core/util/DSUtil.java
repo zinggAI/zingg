@@ -1,8 +1,8 @@
 package zingg.common.core.util;
 
 
-import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
+import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -108,7 +108,7 @@ public abstract class DSUtil<S, D, R, C> {
 		return join(lines, lines1, joinColumn, filter);
 	}
 	
-	public  ZFrame<D, R, C> joinWithItselfSourceSensitive(ZFrame<D, R, C> lines, String joinColumn, Arguments args) throws Exception {
+	public  ZFrame<D, R, C> joinWithItselfSourceSensitive(ZFrame<D, R, C> lines, String joinColumn, IArguments args) throws Exception {
 		
 		ZFrame<D, R, C> lines1 = getPrefixedColumnsDS(lines).cache();
 		
@@ -118,7 +118,7 @@ public abstract class DSUtil<S, D, R, C> {
 		return join(lines, lines1, joinColumn, false);
 	}
 
-	public  ZFrame<D, R, C> alignLinked(ZFrame<D, R, C> dupesActual, Arguments args) {
+	public  ZFrame<D, R, C> alignLinked(ZFrame<D, R, C> dupesActual, IArguments args) {
 		dupesActual = dupesActual.cache();
 				
 		List<C> cols = new ArrayList<C>();
@@ -153,7 +153,7 @@ public abstract class DSUtil<S, D, R, C> {
 		return dupes1;
 	}
 
-	public  ZFrame<D, R, C> alignDupes(ZFrame<D, R, C> dupesActual, Arguments args) {
+	public  ZFrame<D, R, C> alignDupes(ZFrame<D, R, C> dupesActual, IArguments args) {
 		dupesActual = dupesActual.cache();
 		List<C> cols = new ArrayList<C>();
 		
@@ -191,7 +191,7 @@ public abstract class DSUtil<S, D, R, C> {
 		return dupes1;
 	}
 
-	public  ZFrame<D, R, C> allFieldsEqual(ZFrame<D, R, C> a, Arguments args) {
+	public  ZFrame<D, R, C> allFieldsEqual(ZFrame<D, R, C> a, IArguments args) {
 		for (FieldDefinition def : args.getFieldDefinition()) {
 			if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
 				//columns.add(def.getFieldName());
@@ -204,7 +204,7 @@ public abstract class DSUtil<S, D, R, C> {
 		
 	}
 
-	public  List<C> getFieldDefColumns (ZFrame<D, R, C> ds, Arguments args, boolean includeZid, boolean showConcise) {
+	public  List<C> getFieldDefColumns (ZFrame<D, R, C> ds, IArguments args, boolean includeZid, boolean showConcise) {
 		List<C> cols = new ArrayList<C>();
 		if (includeZid) {
 			cols.add(ds.col(ColName.ID_COL));						
@@ -220,7 +220,7 @@ public abstract class DSUtil<S, D, R, C> {
 
 	}
 
-	public  ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> ds, Arguments args, boolean includeZid) {
+	public  ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> ds, IArguments args, boolean includeZid) {
 		return select(ds, getFieldDefColumns(ds, args, includeZid, false));
 	}
 
@@ -228,7 +228,7 @@ public abstract class DSUtil<S, D, R, C> {
 		return ds.select(cols);
 	}
 
-	public  ZFrame<D, R, C> dropDuplicates(ZFrame<D, R, C> a, Arguments args) {
+	public  ZFrame<D, R, C> dropDuplicates(ZFrame<D, R, C> a, IArguments args) {
 		LOG.info("duplicates before " + a.count());
 		List<String> cols = new ArrayList<String>();
 		for (FieldDefinition def : args.getFieldDefinition()) {
@@ -243,17 +243,21 @@ public abstract class DSUtil<S, D, R, C> {
 		return a;			
 	}	
 
-	public  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, Arguments args) {
+	public  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, IArguments args) {
 		return getTraining(pipeUtil, args, pipeUtil.getTrainingDataMarkedPipe(args)); 			
 	}
 	
-	private  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, Arguments args, Pipe<D,R,C> p) {
+	private  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, IArguments args, Pipe<D,R,C> p) {
 		ZFrame<D, R, C> trFile = null;
 		try{
-			trFile = pipeUtil.read(false, false, p); 
-			LOG.warn("Read marked training samples ");
-			trFile = trFile.drop(ColName.PREDICTION_COL);
-			trFile = trFile.drop(ColName.SCORE_COL);				
+			try {
+				trFile = pipeUtil.read(false, false, p); 
+				LOG.warn("Read marked training samples ");
+				trFile = trFile.drop(ColName.PREDICTION_COL);
+				trFile = trFile.drop(ColName.SCORE_COL);
+			} catch (ZinggClientException e) {
+				LOG.warn("No marked data found");
+			}				
 		
 			if (args.getTrainingSamples() != null) {
 				ZFrame<D, R, C> trSamples = pipeUtil.read(true, false, args.getTrainingSamples()); 
@@ -271,7 +275,7 @@ public abstract class DSUtil<S, D, R, C> {
 		return trFile;		
 	}
 
-	public  List<FieldDefinition> getFieldDefinitionFiltered(Arguments args, MatchType type) {
+	public  List<FieldDefinition> getFieldDefinitionFiltered(IArguments args, MatchType type) {
 		return args.getFieldDefinition()
 				.stream()
 				.filter(f -> !(f.getMatchType() == null || f.getMatchType().contains(type)))

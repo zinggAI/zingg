@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
@@ -310,21 +310,21 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 	}
 	*/
 
-	public Pipe<D,R,C> getTrainingDataUnmarkedPipe(Arguments args) {
+	public Pipe<D,R,C> getTrainingDataUnmarkedPipe(IArguments args) {
 		Pipe<D,R,C> p = new Pipe<D,R,C>();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getZinggTrainingDataUnmarkedDir());
 		return p;
 	}
 
-	public  Pipe<D,R,C> getTrainingDataMarkedPipe(Arguments args) {
+	public  Pipe<D,R,C> getTrainingDataMarkedPipe(IArguments args) {
 		Pipe<D,R,C> p = new Pipe<D,R,C>();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getZinggTrainingDataMarkedDir());
 		return p;
 	}
 	
-	public  Pipe<D,R,C> getModelDocumentationPipe(Arguments args) {
+	public  Pipe<D,R,C> getModelDocumentationPipe(IArguments args) {
 		Pipe<D,R,C> p = new Pipe<D,R,C>();
 		p.setFormat(Pipe.FORMAT_TEXT);
 		p.setProp(FilePipe.LOCATION, args.getZinggModelDocFile());
@@ -334,7 +334,7 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 	
 	
 	
-	public Pipe<D,R,C> getStopWordsPipe(Arguments args, String fileName) {
+	public Pipe<D,R,C> getStopWordsPipe(IArguments args, String fileName) {
 		Pipe p = new Pipe<D,R,C>();
 		p.setFormat(Pipe.FORMAT_CSV);
 		p.setProp(FilePipe.HEADER, "true");
@@ -344,7 +344,7 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 		return p;
 	}
 
-	public  Pipe<D,R,C> getBlockingTreePipe(Arguments args) {
+	public  Pipe<D,R,C> getBlockingTreePipe(IArguments args) {
 		Pipe p = new Pipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, args.getBlockFile());

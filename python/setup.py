@@ -168,7 +168,7 @@ try:
             'zingg.conf': ['*'],
             'zingg.phases': ['*'],
             '':['*.py'],
-            '':['LICENCE']
+            '':['LICENSE']
             },
         include_package_data=True,
         scripts=scripts,

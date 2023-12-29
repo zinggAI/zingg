@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ public class TestArguments {
 
 	public static final Log LOG = LogFactory.getLog(TestArguments.class);
 	protected ArgumentsUtil argsUtil = new ArgumentsUtil();
+	
 	@Test
 	public void testSubstituteVariablesWithAllEnvVarSet() {
 		try {
@@ -37,7 +39,7 @@ public class TestArguments {
 					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = argsUtil.substituteVariables(template, env);
-			Arguments args = argsUtil.createArgumentsFromJSONString(json, "");
+			IArguments args = argsUtil.createArgumentsFromJSONString(json, "");
 
 			assertEquals(args.getData()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
 			assertEquals(args.getData()[0].getFormat(), env.get(KEY_FORMAT));
@@ -59,7 +61,7 @@ public class TestArguments {
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = argsUtil.substituteVariables(template, env);
-			Arguments args = argsUtil.createArgumentsFromJSONString(json, "");
+			IArguments args = argsUtil.createArgumentsFromJSONString(json, "");
 			fail("Exception was expected due to missing environment variable");
  		} catch (IOException | ZinggClientException e) {
 			LOG.warn("Expected exception received due to missing environment variable");
@@ -79,7 +81,7 @@ public class TestArguments {
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = argsUtil.substituteVariables(template, env);
-			Arguments args = argsUtil.createArgumentsFromJSONString(json, "");
+			IArguments args = argsUtil.createArgumentsFromJSONString(json, "");
 
 			fail("Exception was expected for blank value for an environment variable");
  		} catch (IOException | ZinggClientException e) {
@@ -122,7 +124,7 @@ public class TestArguments {
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = argsUtil.substituteVariables(template, env);
-			Arguments args = argsUtil.createArgumentsFromJSONString(json, "");
+			IArguments args = argsUtil.createArgumentsFromJSONString(json, "");
  
 			assertEquals(args.getOutput()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
 		} catch (IOException | ZinggClientException e) {
@@ -166,7 +168,7 @@ public class TestArguments {
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = argsUtil.substituteVariables(template, env);
-			Arguments args = argsUtil.createArgumentsFromJSONString(json, "");
+			IArguments args = argsUtil.createArgumentsFromJSONString(json, "");
 
 			//Numeric within quotes are allowed
 			assertEquals(args.getModelId(), env.get(KEY_MODEL_ID));
@@ -189,7 +191,7 @@ public class TestArguments {
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = argsUtil.substituteVariables(template, env);
-			Arguments args = argsUtil.createArgumentsFromJSONString(json, "");
+			IArguments args = argsUtil.createArgumentsFromJSONString(json, "");
 
 			fail("Exception was expected for malformed variable in json");
 		} catch (IOException | ZinggClientException e) {
@@ -210,7 +212,7 @@ public class TestArguments {
 
 	@Test
 	public void testMatchTypeMultiple() {
-			Arguments args;
+			IArguments args;
             try {
                 args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile(), "test");
 				List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
@@ -229,7 +231,7 @@ public class TestArguments {
 
 	@Test
 	public void testMatchTypeWrong() {
-			Arguments args;
+			IArguments args;
             try {
                 args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
 				//List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();

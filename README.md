@@ -1,3 +1,5 @@
+## On our way to 0.4.0 release of Zingg soon..............stay tuned!
+
 ## The Problem
 
 Real world data contains multiple records belonging to the same customer. These records can be in single or multiple systems and they have variations across fields, which makes it hard to combine them together, especially with growing data volumes. This hurts [customer analytics](docs/bizLeaderSurvey.md) - establishing lifetime value, loyalty programs, or marketing channels is impossible when the base data is not linked. No AI algorithm for segmentation can produce the right results when there are multiple copies of the same customer lurking in the data. No warehouse can live up to its promise if the dimension tables have duplicates. 
@@ -58,8 +60,13 @@ See Zingg in action [here](https://www.youtube.com/watch?v=zOabyZxN9b0)
 
 The easiest way to get started with Zingg is through Docker and by running the prebuilt models.
 ```
+<<<<<<< HEAD
 docker pull zingg/zingg:0.4.0
 docker run -it zingg/zingg:0.4.0 bash
+=======
+docker pull zingg/zingg:0.3.4
+docker run -it zingg/zingg:0.3.4 bash
+>>>>>>> main
 ./scripts/zingg.sh --phase match --conf examples/febrl/config.json
 ``` 
 
@@ -106,7 +113,7 @@ Want to commit code? Please check the [contributing documentation.](https://docs
 
 ## Book Office Hours
 
-If you want to schedule a 30-min call with our team to help you understand if Zingg is the right technology for your problem, please book a slot [here](https://calendly.com/sonalgoyal/30min). 
+If you want to schedule a 30-min call with our team to help you understand if Zingg is the right technology for your problem, please book a slot [here](https://calendly.com/sonalgoyal/30min). For troubleshooting and Zingg issues, please report the problem as an issue on github. 
 
 ## Asking questions on running Zingg
 

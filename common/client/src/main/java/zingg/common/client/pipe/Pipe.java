@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import zingg.common.client.ZFrame;
+import zingg.common.client.util.StringRedactor;
 
 
 /**Actual pipe def in the args. One pipe can be used at multiple places with different tables, locations, queries etc
@@ -132,8 +133,9 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 
 	@Override
 	public String toString() {
+		StringRedactor redactor = new StringRedactor();
 		return "Pipe [name=" + name + ", format=" + format + ", preprocessors="
-				+ preprocessors + ", props=" + props + "]";
+				+ preprocessors + ", props=" + redactor.redact(props) + "]";
 	}
 	
 	public String getMode(){

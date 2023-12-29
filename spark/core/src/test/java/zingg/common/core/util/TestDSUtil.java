@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
+import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
@@ -54,7 +55,7 @@ public class TestDSUtil extends ZinggSparkTester{
 		fieldDef.add(def1);
 		fieldDef.add(def2);
 		fieldDef.add(def3);
-		Arguments args = null; 
+		IArguments args = null; 
 		try {
 			args = new Arguments();
 			args.setFieldDefinition(fieldDef);
@@ -105,7 +106,7 @@ public class TestDSUtil extends ZinggSparkTester{
 		fieldDef.add(def1);
 		fieldDef.add(def2);
 		fieldDef.add(def3);
-		Arguments args = null; 
+		IArguments args = null; 
 		try {
 			args = new Arguments();
 			args.setFieldDefinition(fieldDef);

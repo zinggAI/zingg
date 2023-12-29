@@ -8,6 +8,22 @@ sudo apt update
 
 ****
 
+_**Step 0 :  Install Ubuntu on WSL2 on Windows**_
+
+* Install wsl: Type the following command in **Windows PowerShell**.
+```
+wsl --install
+```
+* Download Ubuntu from **Microsoft Store**, **Ubuntu 20.04 LTS**
+* Configure Ubuntu with a **username** and **password**
+* Open **Ubuntu 20.04 LTS** and start working
+```
+sudo apt update
+```
+* Follow this [tutorial](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview) for more information.
+
+****
+
 _**Step 1 :  Clone the Zingg Repository**_
 
 * Install and SetUp Git: **sudo apt install git**
@@ -15,9 +31,11 @@ _**Step 1 :  Clone the Zingg Repository**_
 * Set up Git by following the [tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-20-04).
 * Clone the Zingg Repository: **git clone https://github.com/zinggAI/zingg.git**
 
+_**Note :-**_ It is suggested to fork the repository to your account and then clone the repository.
+
 ****
 
-_**Step 2**_** :  **_**Install JDK 1.8 (Java Development Kit)**_
+_**Step 2 :  Install JDK 1.8 (Java Development Kit)**_
 
 * Follow this [tutorial](https://linuxize.com/post/install-java-on-ubuntu-20-04/) to install Java8 JDK1.8 in Ubuntu.&#x20;
 
@@ -35,15 +53,17 @@ _**Step 3 :  Install Apache Spark -**_
 * Download Apache Spark - from the [Apache Spark Official Website](https://spark.apache.org/downloads.html).
 * Install downloaded Apache Spark - on your Ubuntu by following [this tutorial](https://computingforgeeks.com/how-to-install-apache-spark-on-ubuntu-debian/).
 
-* For example for 3.3.2:
+* For example for 3.5.0:
 ```
-wget https://dlcdn.apache.org/spark/spark-3.3.2/spark-3.3.2-bin-hadoop3.tgz
-tar -xvf spark-3.3.2-bin-hadoop3.tgz
-rm -rf spark-3.3.2-bin-hadoop3.tgz
-sudo mv spark-3.3.2-bin-hadoop3 /opt/spark
+wget https://www.apache.org/dyn/closer.lua/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+tar -xvf spark-3.5.0-bin-hadoop3.tgz
+rm -rf spark-3.5.0-bin-hadoop3.tgz
+sudo mv spark-3.5.0-bin-hadoop3 /opt/spark
 ```
 
 Make sure that spark version you have installed is compatible with java you have installed, and Zingg is supporting those versions.
+
+_**Note :-**_ Zingg supports Spark 3.5 and the corresponding Java version.
 
 ****
 
@@ -98,12 +118,12 @@ _**Step 6 :  Compile the Zingg Repository**_
 git branch
 (Ensure you are on main branch)
 mvn initialize
-
-Now switch to latest dev branch e.g. 0.4.0
-git checkout 0.4.0
-mvn initialize clean compile package -Dspark=3.3 -Dmaven.test.skip=true
-mvn clean compile package -Dspark=3.3 -Dmaven.test.skip=true
+* Run the following to Compile the Zingg Repository - **mvn initialize** and
+* **mvn clean compile package -Dspark=sparkVer**
 ```
+
+_**Note :-**_	Replace the **sparkVer** with the version of spark you installed, For example, **-Dspark=3.5** and if still facing error, include **-Dmaven.test.skip=true** with the above command.
+
 
 _**Note :-**_ substitute 3.3 with profile of the spark version you have installed. This is based on profiles specified in pom.xml
 ****

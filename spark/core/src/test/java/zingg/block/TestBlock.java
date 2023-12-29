@@ -16,9 +16,9 @@ import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.FieldDefinition;
+import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -38,7 +38,7 @@ public class TestBlock  extends ZinggSparkTester {
 
 		ZFrame<Dataset<Row>, Row, Column> posDf = getPosData();
 
-		Arguments args = getArguments();
+		IArguments args = getArguments();
 
 		// form tree
 		SparkBlockingTreeUtil blockingTreeUtil = new SparkBlockingTreeUtil(spark, zsCTX.getPipeUtil());
@@ -74,10 +74,10 @@ public class TestBlock  extends ZinggSparkTester {
 	
 	
 	
-	private Arguments getArguments() throws ZinggClientException {
+	private IArguments getArguments() throws ZinggClientException {
 		String configFilePath = getClass().getResource("../../testFebrl/config.json").getFile();
 		
-		Arguments args = argsUtil.createArgumentsFromJSON(configFilePath, "trainMatch");
+		IArguments args = argsUtil.createArgumentsFromJSON(configFilePath, "trainMatch");
 
 		List<FieldDefinition> fdList = getFieldDefList();
 

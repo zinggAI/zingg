@@ -8,7 +8,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.SparkSession;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 
@@ -37,7 +37,7 @@ public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Col
 	}
 
   @Override
-  public void init(Arguments args)  throws ZinggClientException {
+  public void init(IArguments args)  throws ZinggClientException {
     super.init(args);
     getContext().init();
   }
