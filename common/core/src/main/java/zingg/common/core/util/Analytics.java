@@ -93,12 +93,13 @@ public class Analytics {
 				paramNode.put(entry.getKey(), entry.getValue());
 			}
 			eventNode.set("params", paramNode); 
-
-			ArrayNode eventList;
-			eventList = mapper.createArrayNode();
-			eventList.add(eventNode);
-			rootNode.set("events", eventList);
 		}
+
+		ArrayNode eventList;
+		eventList = mapper.createArrayNode();
+		eventList.add(eventNode);
+		rootNode.set("events", eventList);
+		rootNode.put("user_id", getDomain());
 		
 		String metricEvent = rootNode.toString();
 		LOG.warn("event is " + metricEvent);
