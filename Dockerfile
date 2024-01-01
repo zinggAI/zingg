@@ -10,7 +10,7 @@ ENV LANG C.UTF-8
 WORKDIR /
 USER root
 WORKDIR /zingg-0.4.0
-RUN curl --location https://github.com/zinggAI/zingg/releases/download/v0.4.0/zingg-0.4.0-spark-3.4.0.tar.gz | \
+RUN curl --location https://github.com/zinggAI/zingg/releases/download/v0.4.0/zingg-0.4.0-spark-3.5.0.tar.gz | \
 tar --extract --gzip --strip=1 
 RUN pip install -r python/requirements.txt
 RUN pip install zingg
