@@ -37,7 +37,7 @@ job_spec_template = {
                         }
                     },
                     {
-                      "jar": "dbfs:/FileStore/jars/zingg_0_4_0.jar"
+                      "jar": "dbfs:/FileStore/jars/zingg_0_4_1_SNAPSHOT.jar"
                    }
                    ],
                 "timeout_seconds": 0,
