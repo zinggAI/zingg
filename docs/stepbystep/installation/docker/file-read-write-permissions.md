@@ -9,5 +9,5 @@ A docker image is preferred to run with a non-root user. By default, the Zingg c
 ```
 $ id 
 uid=1000(abc) gid=1000(abc) groups=1000(abc)
-$ docker run -u <uid> -it zingg/zingg:0.4.0 bash
+$ docker run -u <uid> -it zingg/zingg:0.4.1 bash
 ```

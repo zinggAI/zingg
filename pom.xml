@@ -64,7 +64,7 @@
 		</profile>
 	</profiles>
 	<properties>
-		<zingg.version>0.4.0</zingg.version>
+		<zingg.version>0.4.1</zingg.version>
 		<skipTests>false</skipTests>
 		<failIfNoTests>false</failIfNoTests>
 		<maven.compiler.source>8</maven.compiler.source>

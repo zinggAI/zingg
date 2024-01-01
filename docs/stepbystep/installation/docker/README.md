@@ -9,8 +9,8 @@ description: From pre-built Docker image with all dependencies included
 The easiest way to get started is to pull the Docker image with the last release of Zingg.
 
 ```
-docker pull zingg/zingg:0.4.0
-docker run -it zingg/zingg:0.4.0 bash
+docker pull zingg/zingg:0.4.1
+docker run -it zingg/zingg:0.4.1 bash
 ```
 
 To know more about Docker, please refer to the official [docker documentation](https://docs.docker.com/).
