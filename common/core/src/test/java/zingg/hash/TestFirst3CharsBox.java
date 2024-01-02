@@ -25,8 +25,49 @@ public class TestFirst3CharsBox {
         First3CharsBox value = getInstance();
         assertEquals(2, value.call("India"));
     }
-  
     
+    @Test
+    public void testFirst3CharsBox4() {
+        First3CharsBox value = getInstance();
+        assertEquals(3, value.call("Izzze"));
+    }
+
+    @Test
+    public void testFirst3CharsBox5() {
+        First3CharsBox value = getInstance();
+        assertEquals(4, value.call("Noddy"));
+    }
+    
+    @Test
+    public void testFirst3CharsBox6() {
+        First3CharsBox value = getInstance();
+        assertEquals(5, value.call("Sunday"));
+    }
+
+    @Test
+    public void testFirst3CharsBox7() {
+        First3CharsBox value = getInstance();
+        assertEquals(6, value.call("Uzzzz"));
+    }
+
+    @Test
+    public void testFirst3CharsBox8() {
+        First3CharsBox value = getInstance();
+        assertEquals(6, value.call("xyzxyz"));
+    }
+
+    @Test
+    public void testFirst3CharsBoxForShortWord() {
+        First3CharsBox value = getInstance();
+        assertEquals(0, value.call("ab"));
+    }
+
+    @Test
+    public void testFirst3CharsBoxForNull() {
+        First3CharsBox value = getInstance();
+        assertEquals(0, value.call(null));
+    }
+
     private First3CharsBox getInstance() {
         return new First3CharsBox();
     }

@@ -11,7 +11,7 @@ grand_parent: Step By Step Guide
 
 If you already have some training data that you want to start with, you can use that as well with Zingg. Add an attribute trainingSamples to the config and define the training pairs.
 
-The training data supplied to Zingg should have a z\_cluster column that groups the records together. It also needs the z\_isMatch column which is 1 if the pairs match or 0 if they do not match.
+The training data supplied to Zingg should have a z\_cluster column that groups the records together. The z\_cluster uniquely identies the group. We also need to add the z\_isMatch column which is 1 if the pairs match or 0 if they do not match. The z\_isMatch value has to be same for all the records in the z\_cluster group. They either match with each other or they dont.  
 
 An example is provided in [Github training data](../../../examples/febrl/training.csv).
 

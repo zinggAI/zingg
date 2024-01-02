@@ -17,6 +17,10 @@ on:
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ main, 0.4.0 ]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
+>>>>>>> 0.4.0
   schedule:
     - cron: '22 3 * * 5'
 
@@ -24,7 +28,6 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-    needs: java_build
     permissions:
       actions: read
       contents: read
@@ -33,7 +36,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'java' ]
+        language: [ 'java', 'python' ]
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Learn more about CodeQL language support at https://git.io/codeql-language-support
 
@@ -50,13 +53,14 @@ jobs:
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v1
     - name: Analyze
       uses: github/codeql-action/analyze@v2
    
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 https://git.io/JvXDl
-  java_build:
-    uses: ./.github/workflows/build.yml
+  
   
       

@@ -1,6 +1,12 @@
 package zingg.common.core.util;
-import zingg.common.client.Arguments;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import zingg.common.client.FieldDefinition;
+import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -9,12 +15,6 @@ import zingg.common.client.util.ColValues;
 import zingg.common.core.feature.Feature;
 import zingg.common.core.feature.FeatureFactory;
 import zingg.common.core.model.Model;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 
 public abstract class ModelUtil<S,T, D,R,C> {
@@ -25,11 +25,11 @@ public abstract class ModelUtil<S,T, D,R,C> {
     
     public abstract FeatureFactory<T> getFeatureFactory();
 
-    public void loadFeatures(Arguments args) throws ZinggClientException {
+    public void loadFeatures(IArguments args) throws ZinggClientException {
 		try{
 		LOG.info("Start reading internal configurations and functions");
         if (args.getFieldDefinition() != null) {
-			featurers = new HashMap<FieldDefinition, Feature<T>>();
+			featurers = new LinkedHashMap<FieldDefinition, Feature<T>>();
 			for (FieldDefinition def : args.getFieldDefinition()) {
 				if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
 					Feature fea =  (Feature) getFeatureFactory().get(def.getDataType());
@@ -48,7 +48,7 @@ public abstract class ModelUtil<S,T, D,R,C> {
 		}
 	}
 
-    public Map<FieldDefinition,Feature<T>> getFeaturers(Arguments args) throws ZinggClientException {
+    public Map<FieldDefinition,Feature<T>> getFeaturers(IArguments args) throws ZinggClientException {
         if (this.featurers == null) loadFeatures(args);
         return this.featurers;
     }
@@ -58,7 +58,7 @@ public abstract class ModelUtil<S,T, D,R,C> {
     }
 
 	public Model<S,T,D,R,C> createModel(ZFrame<D,R,C> positives,
-        ZFrame<D,R,C> negatives, boolean isLabel, Arguments args) throws Exception, ZinggClientException {
+        ZFrame<D,R,C> negatives, boolean isLabel, IArguments args) throws Exception, ZinggClientException {
         LOG.info("Learning similarity rules");
         ZFrame<D,R,C> posLabeledPointsWithLabel = positives.withColumn(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_MATCH);
         posLabeledPointsWithLabel = posLabeledPointsWithLabel.cache();
@@ -77,9 +77,9 @@ public abstract class ModelUtil<S,T, D,R,C> {
         return model;
     }
 
-    public abstract Model<S,T,D,R,C> getModel(boolean isLabel, Arguments args) throws ZinggClientException;
+    public abstract Model<S,T,D,R,C> getModel(boolean isLabel, IArguments args) throws ZinggClientException;
 
-    public abstract Model<S,T,D,R,C> loadModel(boolean isLabel, Arguments args) throws ZinggClientException;
+    public abstract Model<S,T,D,R,C> loadModel(boolean isLabel, IArguments args) throws ZinggClientException;
 
 
 

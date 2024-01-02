@@ -8,18 +8,18 @@ import java.util.Map;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
-// import org.apache.spark.sql.SparkSession;
 import freemarker.template.Version;
-import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.core.Context;
 import zingg.common.core.executor.ZinggBase;
 
 public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
+	private static final long serialVersionUID = 1L;
 	protected static Configuration config;
 
-	public DocumenterBase(Context<S,D,R,C,T> context, Arguments args) {
+	public DocumenterBase(Context<S,D,R,C,T> context, IArguments args) {
 		super.context = context;
 		super.args = args;
 		config = createConfigurationObject();
@@ -47,7 +47,7 @@ public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		cfg.setWrapUncheckedExceptions(true);
 		cfg.setFallbackOnNullLoopVariable(false);
 		cfg.setObjectWrapper(getRowWrapper(cfg.getIncompatibleImprovements()));
-
+		cfg.setBooleanFormat("c");
 		/* ------------------------------------------------------------------------ */
 		/* You usually do these for MULTIPLE TIMES in the application life-cycle: */
 		return cfg;

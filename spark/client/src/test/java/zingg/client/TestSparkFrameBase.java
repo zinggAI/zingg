@@ -20,12 +20,14 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
+import zingg.common.client.util.ColName;
 import zingg.spark.client.SparkFrame;
 
 public class TestSparkFrameBase {
 
-	public static Arguments args;
+	public static IArguments args;
 	public static JavaSparkContext ctx;
 	public static SparkSession spark;
 
@@ -124,6 +126,82 @@ public class TestSparkFrameBase {
 		return sample;
 	}
 
+	protected SparkFrame getZScoreDF() {
+		Row[] rows = { 
+				RowFactory.create( 0,100,900),
+				RowFactory.create( 1,100,1001),
+				RowFactory.create( 1,100,1002),
+				RowFactory.create( 1,100,2001),
+				RowFactory.create( 1,100,2002),
+				RowFactory.create( 11,100,9002),
+				RowFactory.create( 3,300,3001),
+				RowFactory.create( 3,300,3002),
+				RowFactory.create( 3,400,4001),
+				RowFactory.create( 4,400,4002)
+		};
+		StructType schema = new StructType(new StructField[] {
+				new StructField(ColName.ID_COL, DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField(ColName.CLUSTER_COLUMN, DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField(ColName.SCORE_COL, DataTypes.IntegerType, false, Metadata.empty())});
+		SparkFrame df = new SparkFrame(spark.createDataFrame(Arrays.asList(rows), schema));
+		return df;
+	}	
+
+	protected SparkFrame getInputData() {
+		Row[] rows = { 
+				RowFactory.create( 1,"fname1","b"),
+				RowFactory.create( 2,"fname","a"),
+				RowFactory.create( 3,"fna","b"),
+				RowFactory.create( 4,"x","c"),
+				RowFactory.create( 5,"y","c"),
+				RowFactory.create( 11,"new1","b"),
+				RowFactory.create( 22,"new12","a"),
+				RowFactory.create( 33,"new13","b"),
+				RowFactory.create( 44,"new14","c"),
+				RowFactory.create( 55,"new15","c")				
+		};
+		StructType schema = new StructType(new StructField[] {
+				new StructField(ColName.ID_COL, DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField("fname", DataTypes.StringType, false, Metadata.empty()),
+				new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())});
+		SparkFrame df = new SparkFrame(spark.createDataFrame(Arrays.asList(rows), schema));
+		return df;
+	}	
+	
+	
+	protected SparkFrame getClusterData() {
+		Row[] rows = { 
+				RowFactory.create( 1,100,1001,"b"),
+				RowFactory.create( 2,100,1002,"a"),
+				RowFactory.create( 3,100,2001,"b"),
+				RowFactory.create( 4,900,2002,"c"),
+				RowFactory.create( 5,111,9002,"c")
+		};
+		StructType schema = new StructType(new StructField[] {
+				new StructField(ColName.ID_COL, DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField(ColName.CLUSTER_COLUMN, DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField(ColName.SCORE_COL, DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())});
+		SparkFrame df = new SparkFrame(spark.createDataFrame(Arrays.asList(rows), schema));
+		return df;
+	}	
+	
+	protected SparkFrame getClusterDataWithNull() {
+		Row[] rows = { 
+				RowFactory.create( 1,100,1001,"b"),
+				RowFactory.create( 2,100,1002,"a"),
+				RowFactory.create( 3,100,2001,null),
+				RowFactory.create( 4,900,2002,"c"),
+				RowFactory.create( 5,111,9002,null)
+		};
+		StructType schema = new StructType(new StructField[] {
+				new StructField(ColName.COL_PREFIX+ ColName.ID_COL, DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField(ColName.CLUSTER_COLUMN, DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField(ColName.SCORE_COL, DataTypes.IntegerType, false, Metadata.empty()),
+				new StructField(ColName.SOURCE_COL, DataTypes.StringType, true, Metadata.empty())});
+		SparkFrame df = new SparkFrame(spark.createDataFrame(Arrays.asList(rows), schema));
+		return df;
+	}	
 	
 	protected void assertTrueCheckingExceptOutput(ZFrame<Dataset<Row>, Row, Column> sf1, ZFrame<Dataset<Row>, Row, Column> sf2, String message) {
 		assertTrue(sf1.except(sf2).isEmpty(), message);

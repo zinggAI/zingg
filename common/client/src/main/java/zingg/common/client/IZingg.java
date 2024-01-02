@@ -1,8 +1,10 @@
 package zingg.common.client;
 
+import zingg.common.client.license.IZinggLicense;
+
 public interface IZingg<S,D,R,C> {
 
-	public void init(Arguments args, String license)
+	public void init(IArguments args, IZinggLicense license)
 			throws ZinggClientException;
 
 	public void execute() throws ZinggClientException;

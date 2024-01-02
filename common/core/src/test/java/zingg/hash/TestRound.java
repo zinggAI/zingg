@@ -19,6 +19,12 @@ public class TestRound {
         Round value = getInstance();
         assertEquals(543534, value.call(543534.377));
     }
+
+    @Test
+    public void testRound3() {
+        Round value = getInstance();
+        assertEquals(null, value.call(null));
+    }
 	
 	
     private Round getInstance() {

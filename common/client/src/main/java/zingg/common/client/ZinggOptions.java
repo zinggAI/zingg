@@ -17,7 +17,8 @@ public enum ZinggOptions {
     ASSESS_MODEL("assessModel"),
     PEEK_MODEL("peekModel"),
     EXPORT_MODEL("exportModel"),
-	RESOLVE("resolve");
+    APPROVE_CLUSTERS("approveClusters"),
+    RUN_INCREMENTAL("runIncremental");
 
     private String value;
 

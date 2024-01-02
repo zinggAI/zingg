@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
@@ -24,9 +24,9 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 	protected static final int COLUMN_INDEX_DEFAULT = 0;
 	
 	protected Context<S,D,R,C,T> context;
-	protected Arguments args;
+	protected IArguments args;
 
-	public StopWordsRemover(Context<S, D, R, C, T> context,Arguments args) {
+	public StopWordsRemover(Context<S, D, R, C, T> context,IArguments args) {
 		super();
 		this.context = context;
 		this.args = args;
@@ -90,11 +90,11 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 		this.context = context;
 	}
 
-	public Arguments getArgs() {
+	public IArguments getArgs() {
 		return args;
 	}
 
-	public void setArgs(Arguments args) {
+	public void setArgs(IArguments args) {
 		this.args = args;
 	}
 

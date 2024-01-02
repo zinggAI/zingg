@@ -9,7 +9,9 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
+import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.FieldDefinition;
+import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
@@ -18,10 +20,10 @@ import zingg.spark.client.pipe.SparkPipe;
 public class TestArguments {
 
 	public static final Log LOG = LogFactory.getLog(TestArguments.class);
-
+	protected ArgumentsUtil argsUtil = new ArgumentsUtil();
 	@Test
 	public void testWriteArgumentObjectToJSONFile() {
-			Arguments args = new Arguments();
+			IArguments args = new Arguments();
 			try {
 				FieldDefinition fname = new FieldDefinition();
 				fname.setFieldName("fname");
@@ -51,10 +53,10 @@ public class TestArguments {
 				args.setBlockSize(400L);
 				args.setCollectMetrics(true);
 				args.setModelId("500");
-                Arguments.writeArgumentsToJSON("/tmp/configFromArgObject.json", args);
+				argsUtil.writeArgumentsToJSON("/tmp/configFromArgObject.json", args);
 
 				//reload the same config file to check if deserialization is successful
-				Arguments newArgs = Arguments.createArgumentsFromJSON("/tmp/configFromArgObject.json", "test");
+				IArguments newArgs = argsUtil.createArgumentsFromJSON("/tmp/configFromArgObject.json", "test");
 				assertEquals(newArgs.getModelId(), "500", "Model id is different");
 				assertEquals(newArgs.getBlockSize(), 400L, "Block size is different");
 				assertEquals(newArgs.getFieldDefinition().get(0).getFieldName(), "fname", "Field Definition[0]'s name is different");

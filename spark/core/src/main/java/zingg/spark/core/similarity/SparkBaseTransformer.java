@@ -7,21 +7,19 @@ import org.apache.spark.ml.param.Param;
 import org.apache.spark.ml.param.ParamMap;
 import org.apache.spark.ml.param.shared.HasInputCol;
 import org.apache.spark.ml.param.shared.HasOutputCol;
-import org.apache.spark.ml.util.Identifiable$;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.functions;
-import org.apache.spark.sql.api.java.UDF2;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
 
 import zingg.common.client.util.ColName;
-import zingg.common.core.similarity.function.SimFunction;
+import zingg.spark.client.ZSparkSession;
 
 
 public abstract class SparkBaseTransformer extends Transformer implements HasInputCol, HasOutputCol {
 	
+	private static final long serialVersionUID = 1L;
 	Param<String> inputcol; //= new Param<String>(this, "inputCol", "input column name");
 	Param<String> outputcol; //= new Param<String>(this, "outputCol", "output column name");
 	protected String uid;
@@ -115,6 +113,6 @@ public abstract class SparkBaseTransformer extends Transformer implements HasInp
     
      
 	 
-    public abstract void register(SparkSession spark);
+    public abstract void register(ZSparkSession spark);
 }
 

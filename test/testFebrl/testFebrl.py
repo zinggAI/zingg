@@ -1,6 +1,5 @@
 import unittest
 from unittest.case import TestCase
-import unittest
 from io import StringIO
 
 
@@ -23,7 +22,8 @@ fieldDefs = [fname, lname, stNo, add1, add2, city, areacode, state, dob, ssn]
 
 args.setFieldDefinition(fieldDefs)
 args.setModelId("100")
-args.setZinggDir("models")
+# args.setZinggDir("/tmp/models")
+args.setZinggDir("test/testFebrl")
 args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
 
@@ -40,7 +40,7 @@ class Accuracy_recordCount(TestCase):
 		client = Zingg(args, options)
 		client.initAndExecute()
 		pMarkedDF = getPandasDfFromDs(client.getMarkedRecords())
-		labelledData = getSparkSession().createDataFrame(pMarkedDF)
+		# labelledData = getSparkSession().createDataFrame(pMarkedDF)
 
 		total_marked = pMarkedDF.shape[0]
 
@@ -51,5 +51,5 @@ class Accuracy_recordCount(TestCase):
 		acc = (pMarkedDF[ColName.MATCH_FLAG_COL]== pMarkedDF[ColName.PREDICTION_COL]).mean()
 
 		# accuracy test
-		self.assertGreater(acc, 0.9)
+		self.assertGreater(acc, 0.95)
 

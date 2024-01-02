@@ -4,6 +4,7 @@ import static org.apache.spark.sql.functions.col;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -11,13 +12,20 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.functions;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.Metadata;
+import org.apache.spark.sql.types.StructField;
+import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
 import scala.collection.JavaConverters;
 import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.ColName;
 import zingg.spark.client.SparkFrame;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestSparkFrame extends TestSparkFrameBase {
 	public static final Log LOG = LogFactory.getLog(TestSparkFrame.class);
 
@@ -48,7 +56,7 @@ public class TestSparkFrame extends TestSparkFrameBase {
 	@Test
 	public void testSelectWithSingleColumnName() {
 		Dataset<Row> df = createSampleDataset();
-		SparkFrame sf = new SparkFrame(df);
+		ZFrame<Dataset<Row>, Row, Column>  sf = new SparkFrame(df);
 		String colName = "recid";
 		ZFrame<Dataset<Row>, Row, Column> sf2 = sf.select(colName);
 		SparkFrame sf3 = new SparkFrame(df.select(colName));
@@ -79,7 +87,7 @@ public class TestSparkFrame extends TestSparkFrameBase {
 	@Test
 	public void testSelectWithMultipleColumnNamesAsString() {
 		Dataset<Row> df = createSampleDataset();
-		SparkFrame sf = new SparkFrame(df);
+		ZFrame<Dataset<Row>, Row, Column>  sf = new SparkFrame(df);
 		ZFrame<Dataset<Row>, Row, Column> sf2 = sf.select("recid",  "surname",  "postcode");
 		SparkFrame sf3 = new SparkFrame(df.select("recid",  "surname",  "postcode"));
 		assertTrueCheckingExceptOutput(sf2, sf3, "SparkFrame.select(str1, str2, ...) value does not match with standard select output");
@@ -244,4 +252,73 @@ public class TestSparkFrame extends TestSparkFrameBase {
 		ZFrame<Dataset<Row>,Row,Column> sf2 = sf.withColumn(newCol, col(oldCol));
   		assertTrueCheckingExceptOutput(sf2, df.withColumn(newCol, col(oldCol)), "SparkFrame.withColumn(c, Column) output is not as expected");
 	}
+	
+	@Test
+	public void testGetMaxVal(){
+		SparkFrame zScoreDF = getZScoreDF();
+		assertEquals(400,zScoreDF.getMaxVal(ColName.CLUSTER_COLUMN));
+    }		
+	
+	@Test
+	public void testGroupByMinMax(){
+		SparkFrame zScoreDF = getZScoreDF();
+		ZFrame<Dataset<Row>, Row, Column> groupByDF = zScoreDF.groupByMinMaxScore(zScoreDF.col(ColName.ID_COL));
+		
+		Dataset<Row> assertionDF = groupByDF.df();
+		List<Row>  assertionRows = assertionDF.collectAsList();
+		for (Row row : assertionRows) {
+			if(row.getInt(0)==1) {
+				assertEquals(1001,row.getInt(1));
+				assertEquals(2002,row.getInt(2));
+			}
+		}		
+    }
+
+	@Test
+	public void testGroupByMinMax2(){
+		SparkFrame zScoreDF = getZScoreDF();
+		ZFrame<Dataset<Row>, Row, Column> groupByDF = zScoreDF.groupByMinMaxScore(zScoreDF.col(ColName.CLUSTER_COLUMN));
+		
+		Dataset<Row> assertionDF = groupByDF.df();
+		List<Row>  assertionRows = assertionDF.collectAsList();
+		for (Row row : assertionRows) {
+			if(row.getInt(0)==100) {
+				assertEquals(900,row.getInt(1));
+				assertEquals(9002,row.getInt(2));
+			}
+		}		
+    }
+	
+	@Test
+	public void testRightJoinMultiCol(){
+		ZFrame<Dataset<Row>, Row, Column> inpData = getInputData();
+		ZFrame<Dataset<Row>, Row, Column> clusterData = getClusterData();
+		ZFrame<Dataset<Row>, Row, Column> joinedData = clusterData.join(inpData,ColName.ID_COL,ColName.SOURCE_COL,ZFrame.RIGHT_JOIN);
+		assertEquals(10,joinedData.count());
+   }
+	
+	@Test
+	public void testFilterInCond(){
+		SparkFrame inpData = getInputData();
+		SparkFrame clusterData = getClusterDataWithNull();
+		ZFrame<Dataset<Row>, Row, Column> filteredData = inpData.filterInCond(ColName.ID_COL, clusterData, ColName.COL_PREFIX+ ColName.ID_COL);
+		assertEquals(5,filteredData.count());
+   }
+
+	@Test
+	public void testFilterNotNullCond(){
+		SparkFrame clusterData = getClusterDataWithNull();
+		ZFrame<Dataset<Row>, Row, Column> filteredData = clusterData.filterNotNullCond(ColName.SOURCE_COL);
+		assertEquals(3,filteredData.count());
+   }
+
+	@Test
+	public void testFilterNullCond(){
+		SparkFrame clusterData = getClusterDataWithNull();
+		ZFrame<Dataset<Row>, Row, Column> filteredData = clusterData.filterNullCond(ColName.SOURCE_COL);
+		assertEquals(2,filteredData.count());
+   }
+	
+	
+	
 }

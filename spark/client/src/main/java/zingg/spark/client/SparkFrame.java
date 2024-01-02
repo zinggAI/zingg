@@ -2,6 +2,7 @@ package zingg.spark.client;
 
 import java.util.List;
 
+import org.apache.spark.internal.config.R;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
@@ -18,7 +19,7 @@ import zingg.common.client.util.ColName;
 public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 
 	public Dataset<Row> df;
-
+	
     public SparkFrame(Dataset<Row> df) {
         this.df = df;
     }
@@ -44,14 +45,30 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.select(cols));
     }
 
+    public ZFrame<Dataset<Row>, Row, Column> select(Column col) {
+        return new SparkFrame(df.select(col));
+    }
+
     
     public ZFrame<Dataset<Row>, Row, Column> select(List<Column> cols){
         return new SparkFrame(df.select(JavaConverters.asScalaIteratorConverter(cols.iterator()).asScala().toSeq()));
     }
     
     
-    public ZFrame<Dataset<Row>, Row, Column> select(String col) {
-        return new SparkFrame(df.select(col));
+    public ZFrame<Dataset<Row>, Row, Column> select(String... col) {
+ 
+    	if (col==null || col.length==0) return null;
+    	
+    	if (col.length==1) return select(col[0],new String[] {});
+    	
+    	if (col.length>1) {
+    		String[] colPart = new String[col.length-1];
+    		System.arraycopy(col, 1, colPart, 0, col.length-1);   		
+    		return select(col[0],colPart);
+    	}
+    	
+    	return null;
+ 
     }
 
     public ZFrame<Dataset<Row>, Row, Column> selectExpr(String... col) {
@@ -90,13 +107,22 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.join(lines1.df(), joinColumn));
     }
 
+    public ZFrame<Dataset<Row>, Row, Column> joinOnCol(ZFrame<Dataset<Row>, Row, Column> lines1, Column joinColumn){
+        return new SparkFrame(df.join(lines1.df(), joinColumn));
+    }
+    
     public ZFrame<Dataset<Row>, Row, Column> join(ZFrame<Dataset<Row>, Row, Column> lines1, String joinColumn1, String joinColumn2){
         return new SparkFrame(df.join(lines1.df(), 
             df.col(joinColumn1).equalTo(lines1.df().col(joinColumn1)).and(df.col(joinColumn2).equalTo(lines1.df().col(joinColumn2)))));
     }
 
+    public ZFrame<Dataset<Row>, Row, Column> join(ZFrame<Dataset<Row>, Row, Column> lines1, String joinColumn1, String joinColumn2, String joinType){
+        return new SparkFrame(df.join(lines1.df(), 
+            df.col(joinColumn1).equalTo(lines1.df().col(joinColumn1)).and(df.col(joinColumn2).equalTo(lines1.df().col(joinColumn2))), joinType));
+    }
+    
     public ZFrame<Dataset<Row>, Row, Column> joinRight(ZFrame<Dataset<Row>, Row, Column> lines1, String joinColumn) {
-        return join(lines1, joinColumn, false, "right");
+        return join(lines1, joinColumn, false, ZFrame.RIGHT_JOIN);
     }
 
     public ZFrame<Dataset<Row>, Row, Column> join(ZFrame<Dataset<Row>, Row, Column> lines1, String joinColumn, boolean addPrefixToCol, String joinType) {
@@ -145,15 +171,15 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     	return df.agg(functions.sum(colName).cast("double")).collectAsList().get(0).getDouble(0);
     }
 
-    public ZFrame<Dataset<Row>, Row, Column> groupByMinMax(Column c) {
-        return new SparkFrame(df.groupBy(df.col(ColName.ID_COL)).agg(
+    public ZFrame<Dataset<Row>, Row, Column> groupByMinMaxScore(Column c) {
+        return new SparkFrame(df.groupBy(c).agg(
 			functions.min(ColName.SCORE_COL).as(ColName.SCORE_MIN_COL),
 			functions.max(ColName.SCORE_COL).as(ColName.SCORE_MAX_COL)));
     }
 
     @Override
     public ZFrame<Dataset<Row>, Row, Column> groupByCount(String colName, String countColName){
-    	return new SparkFrame(df.groupBy(colName).count().withColumnRenamed("count",countColName));
+    	return new SparkFrame(df.groupBy(colName).count().withColumnRenamed(COL_COUNT,countColName));
     }
     
     public ZFrame<Dataset<Row>, Row, Column> dropDuplicates(String[] c) {
@@ -165,6 +191,11 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.union(other.df()));
     }
 
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> unionAll(ZFrame<Dataset<Row>, Row, Column> other) {
+        return new SparkFrame(df.unionAll(other.df()));
+    }
+    
     public ZFrame<Dataset<Row>, Row, Column> unionByName(ZFrame<Dataset<Row>, Row, Column> other, boolean flag) {
         return new SparkFrame(df.unionByName(other.df(), flag));
     }
@@ -188,9 +219,15 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.repartition(nul, c));
     }
 
+    @Override
     public Column gt(String c) {
-		return df.col(c).gt(df.col(ColName.COL_PREFIX + c));
+		return gt(this,c);
 	}
+    
+    @Override
+    public Column gt(ZFrame<Dataset<Row>, Row, Column> other, String c) {
+		return df.col(c).gt(other.col(ColName.COL_PREFIX + c));
+	}    
     
     @Override
     public Column gt(String c, double val) {
@@ -199,6 +236,14 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     
 	public Column equalTo(String c, String e){
 		return df.col(c).equalTo(e);
+	}
+
+	public Column equalTo(Column column1, Column column2) {
+		return column1.equalTo(column2);
+	}
+			
+	public Column notEqual(String e) {
+		return df.col(e).notEqual(df.col(ColName.COL_PREFIX + e));
 	}
 
 	public Column notEqual(String c, String e) {
@@ -216,7 +261,27 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 	public Column notEqual(String c, int e) {
 		return df.col(c).notEqual(e);
 	}
-
+	
+	@Override
+	public Column not(Column col) {
+		return functions.not(col);
+	}	
+	
+	@Override
+	public Column isNotNull(Column col) {
+		return col.isNotNull();
+	}
+	
+	@Override
+	public Column and(Column col1, Column col2) {
+		return col1.and(col2);
+	}
+	
+	@Override
+	public Column or(Column col1, Column col2) {
+		return col1.or(col2);
+	}
+	
     public ZFrame<Dataset<Row>, Row, Column> sample(boolean withReplacement, float num){
         return new SparkFrame(df.sample(withReplacement, num));
     }
@@ -343,5 +408,47 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 		}
 		return fieldDataArr;
     }
+    
+	@Override
+    public Object getMaxVal(String colName) {
+    	Row r =  df.agg(functions.max(colName)).head();
+    	return r.get(0);
+    }
+	
+	@Override    
+	public ZFrame<Dataset<Row>, Row, Column> filterInCond(String colName,ZFrame<Dataset<Row>, Row, Column> innerDF, String innerDFCol) {
+		ZFrame<Dataset<Row>, Row, Column> innerDF2 = innerDF.select(innerDF.col(innerDFCol).alias(colName));
+		return this.joinOnCol(innerDF2, colName);
+	}
+	
+	@Override
+	public ZFrame<Dataset<Row>, Row, Column> filterNotNullCond(String colName) {
+		return this.filter(df.col(colName).isNotNull());
+	}
+	
+	@Override
+	public ZFrame<Dataset<Row>, Row, Column> filterNullCond(String colName) {
+		return this.filter(df.col(colName).isNull());
+	}	
+	
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> join(ZFrame<Dataset<Row>, Row, Column> lines1, Column joinColumn,
+            String joinType) {
+       return new SparkFrame(df.join(lines1.df(), joinColumn, joinType));
+    }
 
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> countDistinct(String groupByCol, String distinctCol, String distinctcolCountName){
+        return new SparkFrame(df.groupBy(groupByCol).agg(functions.count_distinct(df.col(distinctCol)).as(distinctcolCountName)));
+    }
+
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> groupByCount(String groupByCol1, String groupByCol2, String countColName){
+        return new SparkFrame(df.groupBy(groupByCol1, groupByCol2).agg(functions.count(groupByCol1).as(countColName)));
+    }
+
+
+
+	
 }
+	

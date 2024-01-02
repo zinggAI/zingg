@@ -1,5 +1,8 @@
 package zingg.common.core.hash;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import zingg.common.client.ZFrame;
@@ -76,5 +79,27 @@ public abstract class HashFunction<D,R,C,T> implements Serializable{
 		public abstract Object apply(R r, String column);
 
 		public abstract Object apply(D df, R r, String column); // added for SnowFrame getAsString method
+
+		/* 
+		public abstract void writeCustomObject(ObjectOutputStream out) throws IOException;
+		public abstract void readCustomObject(ObjectInputStream ois) throws ClassNotFoundException, IOException;
+		
+		
+		private void writeObject(ObjectOutputStream out) throws IOException{
+			out.writeUTF(name);
+			out.writeBoolean(isUdf);
+			writeCustomObject(out);
+			//out.close();
+			
+		}
+	
+		private void readObject(ObjectInputStream ois) 
+			throws ClassNotFoundException, IOException {
+				setName(ois.readUTF());
+				setUdf(ois.readBoolean());
+				readCustomObject(ois);
+			}
+			*/
+	
 }
 

@@ -6,13 +6,13 @@ description: Downloading and setting things up
 
 Download the tar zingg-version.tar.gz from the [Zingg releases page](https://github.com/zinggAI/zingg/releases) to a folder of your choice and run the following:
 
-> gzip -d zingg-0.3.5-SNAPSHOT-bin.tar.gz ; tar xvf zingg-0.3.5-SNAPSHOT-bin.tar
+> gzip -d zingg-0.4.0.tar.gz ; tar xvf zingg-0.4.0.tar
 
-This will create a folder zingg-0.3.5-SNAPSHOT under the chosen folder.
+This will create a folder zingg-0.4.0 under the chosen folder.
 
 Move the above folder to zingg.
 
-> mv zingg-0.3.5-SNAPSHOT-bin \~/zingg
+> mv zingg-0.4.0 \~/zingg
 
 > export ZINGG\_HOME=path to zingg
 

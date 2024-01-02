@@ -4,7 +4,7 @@ Zingg Python APIs for entity resolution, record linkage, data mastering and dedu
 [Zingg.AI](https://www.zingg.ai) 
 
 # requirement
-python 3.6+; spark 3.1.2
+python 3.6+; spark 3.5.0
 
 # Installation
 

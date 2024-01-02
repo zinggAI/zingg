@@ -1,18 +1,18 @@
 Metadata-Version: 2.1
 Name: zingg
-Version: 0.3.5
+Version: 0.4.0
 Summary: Zingg.ai Entity Resolution
 Home-page: www.zingg.ai
 Author: Zingg.AI
 Author-email: sonalgoyal4@gmail.com
-License: UNKNOWN
+License: AGPL
 Description: ## About Zingg
         
         Zingg is an ML based entity resolution framework. The Python Package is used for building training data, training Zingg models and running the matching and linking processes.
         [Zingg.AI](https://www.zingg.ai) 
         
         # requirement
-        python 3.6+; spark 3.1.2
+        python 3.6+; spark 3.4.0
         
         # Installation
         

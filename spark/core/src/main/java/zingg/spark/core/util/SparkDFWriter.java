@@ -1,19 +1,13 @@
 package zingg.spark.core.util;
 
-import zingg.common.core.util.DFWriter;
-import zingg.common.client.pipe.Pipe;
-import org.apache.spark.sql.Row;
 import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.DataFrameReader;
 import org.apache.spark.sql.DataFrameWriter;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.StructType;
-
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
-import org.apache.spark.storage.StorageLevel;
-import zingg.spark.client.SparkFrame;
+
 import zingg.common.client.ZFrame;
+import zingg.common.core.util.DFWriter;
 
 public class SparkDFWriter implements DFWriter<Dataset<Row>, Row, Column>{
     private DataFrameWriter writer;

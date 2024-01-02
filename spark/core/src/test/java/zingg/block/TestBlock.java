@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.spark.sql.Column;
@@ -18,8 +16,9 @@ import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.FieldDefinition;
+import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -39,11 +38,11 @@ public class TestBlock  extends ZinggSparkTester {
 
 		ZFrame<Dataset<Row>, Row, Column> posDf = getPosData();
 
-		Arguments args = getArguments();
+		IArguments args = getArguments();
 
 		// form tree
-		SparkBlockingTreeUtil blockingTreeUtil = new SparkBlockingTreeUtil(spark, zsCTX.getPipeUtil());
-		SparkHashUtil hashUtil = new SparkHashUtil(spark);
+		SparkBlockingTreeUtil blockingTreeUtil = new SparkBlockingTreeUtil(zSession, zsCTX.getPipeUtil());
+		SparkHashUtil hashUtil = new SparkHashUtil(zSession);
 
 		Tree<Canopy<Row>> blockingTree = blockingTreeUtil.createBlockingTreeFromSample(testData, posDf, 0.5, -1,
 				args, hashUtil.getHashFunctionList());
@@ -75,10 +74,10 @@ public class TestBlock  extends ZinggSparkTester {
 	
 	
 	
-	private Arguments getArguments() throws ZinggClientException {
+	private IArguments getArguments() throws ZinggClientException {
 		String configFilePath = getClass().getResource("../../testFebrl/config.json").getFile();
 		
-		Arguments args = Arguments.createArgumentsFromJSON(configFilePath, "trainMatch");
+		IArguments args = argsUtil.createArgumentsFromJSON(configFilePath, "trainMatch");
 
 		List<FieldDefinition> fdList = getFieldDefList();
 
@@ -87,7 +86,7 @@ public class TestBlock  extends ZinggSparkTester {
 	}
 
 	private List<FieldDefinition> getFieldDefList() {
-		List<FieldDefinition> fdList = new ArrayList<>(4);
+		List<FieldDefinition> fdList = new ArrayList<FieldDefinition>(4);
 
 		FieldDefinition idFD = new FieldDefinition();
 		idFD.setDataType("integer");

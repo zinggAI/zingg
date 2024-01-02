@@ -8,6 +8,7 @@ import org.apache.spark.sql.SaveMode;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
 import zingg.spark.core.executor.ZinggSparkTester;
@@ -17,7 +18,7 @@ public class TestPipeUtil extends ZinggSparkTester{
 
 	@Test
 	public void testStopWordsPipe() {
-		Arguments args = new Arguments();
+		IArguments args = new Arguments();
 		String fileName = args.getStopWordsDir() + "file";
 		Pipe p = zsCTX.getPipeUtil().getStopWordsPipe(args, fileName);
 

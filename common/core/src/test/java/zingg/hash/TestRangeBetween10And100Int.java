@@ -56,5 +56,16 @@ public class TestRangeBetween10And100Int {
 	    RangeInt value = getInstance();
 		assertEquals(0, value.call(null));
 	}
+	@Test
+	public void testRangeForUpperLimit() {
+		RangeInt value = getInstance();
+		assertEquals(100, value.getUpperLimit()); 
+	}
+	@Test
+	public void testRangeForLowerLimit() {
+		RangeInt value = getInstance();
+		assertEquals(10, value.getLowerLimit()); 
+	}
+
 
 }
