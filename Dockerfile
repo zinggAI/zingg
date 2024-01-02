@@ -1,5 +1,5 @@
 #FROM docker.io/bitnami/spark:3.1.2
-FROM apache/spark-py:v3.5.0
+FROM apache/spark:3.5.0-python3
 USER 0
 RUN apt-get update && \
 	apt install -y curl vim 
@@ -15,6 +15,6 @@ tar --extract --gzip --strip=1
 RUN pip install -r python/requirements.txt
 RUN pip install zingg
 RUN chmod -R a+rwx /zingg-0.4.0/models
-RUN chown -R 1001 /zingg-0.4.0/models
-USER 1001
+RUN chown -R spark /zingg-0.4.0/models
+USER spark
 
