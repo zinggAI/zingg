@@ -15,7 +15,7 @@ public class TestIdentityLong {
     }
 
     @Test
-    public void testIdentityLong1() {
+    public void testNullValue() {
         IdentityLong value = getInstance();
         assertEquals(null, value.call(null));
     }
