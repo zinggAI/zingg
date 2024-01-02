@@ -7,7 +7,7 @@ args = Arguments()
 id = FieldDefinition("id", "string", MatchType.DONT_USE)
 title = FieldDefinition("title", "string", MatchType.NUMERIC)
 description = FieldDefinition("description", "string", MatchType.TEXT)
-description.setStopWords("examples/amazon-google/stopWords.csv")
+description.setStopWords("examples/amazon-google/stopWords.csv.gz")
 manufacturer = FieldDefinition("manufacturer","string", MatchType.FUZZY)
 price = FieldDefinition("price", "double", MatchType.FUZZY)
 
@@ -23,8 +23,8 @@ args.setLabelDataSampleSize(0.4)
 #below line should not be required if you are reading from in memory dataset
 #in that case, replace df with input df
 schema = "id string, title string, description string, manufacturer string, price double "
-inputPipeAmazon = CsvPipe("testAmazon", "examples/amazon-google/Amazon.csv", schema)
-inputPipeGoogle = CsvPipe("testGoogle", "examples/amazon-google/GoogleProducts.csv", schema)
+inputPipeAmazon = CsvPipe("testAmazon", "examples/amazon-google/Amazon.csv.gz", schema)
+inputPipeGoogle = CsvPipe("testGoogle", "examples/amazon-google/GoogleProducts.csv.gz", schema)
 
 args.setData(inputPipeAmazon,inputPipeGoogle)
 

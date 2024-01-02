@@ -43,7 +43,7 @@
 			"name":"beerAdvo", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/beerAdvo-rateBeer/BeerAdvo.csv",
+				"location": "examples/beerAdvo-rateBeer/BeerAdvo.csv.gz",
 				"delimiter": ",",
 				"header":true					
 			},
@@ -53,7 +53,7 @@
 			"name":"rateBeer", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/beerAdvo-rateBeer/RateBeer.csv",
+				"location": "examples/beerAdvo-rateBeer/RateBeer.csv.gz",
 				"delimiter": ",",
 				"header":true					
 			},

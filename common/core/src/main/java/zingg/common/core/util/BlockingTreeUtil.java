@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
+import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZFrame;
@@ -43,7 +43,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 
 	public Tree<Canopy<R>> createBlockingTree(ZFrame<D,R,C> testData,  
 			ZFrame<D,R,C> positives, double sampleFraction, long blockSize,
-            Arguments args,
+            IArguments args,
 			ListMap<T, HashFunction<D,R,C,T>> hashFunctions) throws Exception, ZinggClientException {
 		ZFrame<D,R,C> sample = testData.sample(false, sampleFraction);
 		sample = sample.cache();
@@ -81,13 +81,13 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 	
 	
 	public  Tree<Canopy<R>> createBlockingTreeFromSample(ZFrame<D,R,C> testData,  
-			ZFrame<D,R,C> positives, double sampleFraction, long blockSize, Arguments args, 
+			ZFrame<D,R,C> positives, double sampleFraction, long blockSize, IArguments args, 
             ListMap hashFunctions) throws Exception, ZinggClientException {
 		ZFrame<D,R,C> sample = testData.sample(false, sampleFraction); 
 		return createBlockingTree(sample, positives, sampleFraction, blockSize, args, hashFunctions);
 	}
 	
-	public void writeBlockingTree(Tree<Canopy<R>> blockingTree, Arguments args) throws Exception, ZinggClientException {
+	public void writeBlockingTree(Tree<Canopy<R>> blockingTree, IArguments args) throws Exception, ZinggClientException {
 		byte[] byteArray  = Util.convertObjectIntoByteArray(blockingTree);
         PipeUtilBase<S, D, R, C> pu = getPipeUtil();
         pu.write(getTreeDF(byteArray), args, pu.getBlockingTreePipe(args));
@@ -102,7 +102,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 	}
 
 
-	public Tree<Canopy<R>> readBlockingTree(Arguments args) throws Exception, ZinggClientException{
+	public Tree<Canopy<R>> readBlockingTree(IArguments args) throws Exception, ZinggClientException{
 		PipeUtilBase<S, D, R, C> pu = getPipeUtil();
         ZFrame<D, R, C> tree = pu.read(false, 1, false, pu.getBlockingTreePipe(args));
         //tree.show();

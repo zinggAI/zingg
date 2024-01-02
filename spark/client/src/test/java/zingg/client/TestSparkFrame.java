@@ -4,6 +4,7 @@ import static org.apache.spark.sql.functions.col;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -11,11 +12,17 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.functions;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.Metadata;
+import org.apache.spark.sql.types.StructField;
+import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
 import scala.collection.JavaConverters;
 import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.spark.client.SparkFrame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,7 +56,7 @@ public class TestSparkFrame extends TestSparkFrameBase {
 	@Test
 	public void testSelectWithSingleColumnName() {
 		Dataset<Row> df = createSampleDataset();
-		SparkFrame sf = new SparkFrame(df);
+		ZFrame<Dataset<Row>, Row, Column>  sf = new SparkFrame(df);
 		String colName = "recid";
 		ZFrame<Dataset<Row>, Row, Column> sf2 = sf.select(colName);
 		SparkFrame sf3 = new SparkFrame(df.select(colName));
@@ -80,7 +87,7 @@ public class TestSparkFrame extends TestSparkFrameBase {
 	@Test
 	public void testSelectWithMultipleColumnNamesAsString() {
 		Dataset<Row> df = createSampleDataset();
-		SparkFrame sf = new SparkFrame(df);
+		ZFrame<Dataset<Row>, Row, Column>  sf = new SparkFrame(df);
 		ZFrame<Dataset<Row>, Row, Column> sf2 = sf.select("recid",  "surname",  "postcode");
 		SparkFrame sf3 = new SparkFrame(df.select("recid",  "surname",  "postcode"));
 		assertTrueCheckingExceptOutput(sf2, sf3, "SparkFrame.select(str1, str2, ...) value does not match with standard select output");
@@ -311,6 +318,7 @@ public class TestSparkFrame extends TestSparkFrameBase {
 		ZFrame<Dataset<Row>, Row, Column> filteredData = clusterData.filterNullCond(ColName.SOURCE_COL);
 		assertEquals(2,filteredData.count());
    }
+	
 	
 	
 }

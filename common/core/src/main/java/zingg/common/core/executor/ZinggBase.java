@@ -5,8 +5,8 @@ import java.io.Serializable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.ClientOptions;
+import zingg.common.client.IArguments;
 import zingg.common.client.ILabelDataViewHelper;
 import zingg.common.client.ITrainingDataModel;
 import zingg.common.client.IZingg;
@@ -30,7 +30,7 @@ import zingg.common.core.util.PipeUtilBase;
 
 public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S, D, R, C> {
 
-    protected Arguments args;
+    protected IArguments args;
 	
     protected Context<S,D,R,C,T> context;
     protected String name;
@@ -63,7 +63,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
 
    
     
-    public void init(Arguments args, IZinggLicense license)
+    public void init(IArguments args, IZinggLicense license)
         throws ZinggClientException {
             startTime = System.currentTimeMillis();
             this.args = args;
@@ -85,15 +85,26 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
                 collectMetrics);
 		Analytics.track(Metric.DATA_FORMAT, getPipeUtil().getPipesAsString(args.getData()), collectMetrics);
 		Analytics.track(Metric.OUTPUT_FORMAT, getPipeUtil().getPipesAsString(args.getOutput()), collectMetrics);
-
-		Analytics.postEvent(zinggOptions.getValue(), collectMetrics);
+        Analytics.track(Metric.MODEL_ID, args.getModelId(), collectMetrics);
+        Analytics.track(Metric.ZINGG_VERSION, "0.4.0", collectMetrics);
+        Analytics.trackEnvProp(Metric.DATABRICKS_RUNTIME_VERSION, collectMetrics);
+        Analytics.trackEnvProp(Metric.DB_INSTANCE_TYPE, collectMetrics);
+        Analytics.trackEnvProp(Metric.JAVA_HOME, collectMetrics); 
+        Analytics.trackEnvProp(Metric.JAVA_VERSION, collectMetrics); 
+        Analytics.trackEnvProp(Metric.OS_ARCH, collectMetrics); 
+        Analytics.trackEnvProp(Metric.OS_NAME, collectMetrics); 
+        //Analytics.trackEnvProp(Metric.USER_NAME, collectMetrics); 
+        //Analytics.trackEnvProp(Metric.USER_HOME, collectMetrics); 
+        Analytics.trackDomain(Metric.DOMAIN, collectMetrics);
+        Analytics.track(Metric.ZINGG_VERSION, "0.4.0", collectMetrics);
+        Analytics.postEvent(zinggOptions.getValue(), collectMetrics);
 	}
 
-    public Arguments getArgs() {
+    public IArguments getArgs() {
         return this.args;
     }
 
-    public void setArgs(Arguments args) {
+    public void setArgs(IArguments args) {
         this.args = args;
     }
 

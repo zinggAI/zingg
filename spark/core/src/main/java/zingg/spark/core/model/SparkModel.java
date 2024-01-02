@@ -37,7 +37,6 @@ import zingg.spark.core.similarity.SparkTransformer;
 public class SparkModel extends Model<ZSparkSession, DataType, Dataset<Row>, Row, Column>{
 	
 	public static final Log LOG = LogFactory.getLog(SparkModel.class);
-	public static final Log DbLOG = LogFactory.getLog("WEB");
 	//private Map<FieldDefinition, Feature> featurers;
 	List<PipelineStage> pipelineStage;
 	List<SparkTransformer> featureCreators; 

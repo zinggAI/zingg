@@ -9,6 +9,7 @@
 	<artifactId>zingg-common</artifactId>
 	<packaging>pom</packaging>
 	<modules>
+		<module>infra</module>
 		<module>core</module>
 		<module>client</module>
 	</modules>

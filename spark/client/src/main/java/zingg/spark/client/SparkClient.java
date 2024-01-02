@@ -6,10 +6,11 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.SparkSession;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.Client;
 import zingg.common.client.ClientOptions;
+import zingg.common.client.IArguments;
 import zingg.common.client.IZinggFactory;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.license.IZinggLicense;
@@ -24,15 +25,19 @@ public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column
 	
 	private static final long serialVersionUID = 1L;
 
-	public SparkClient(Arguments args, ClientOptions options) throws ZinggClientException {
+	public SparkClient(IArguments args, ClientOptions options) throws ZinggClientException {
 		super(args, options);
 		
 	}
 
-	public SparkClient(Arguments args, ClientOptions options, ZSparkSession s) throws ZinggClientException {
+	public SparkClient(IArguments args, ClientOptions options, ZSparkSession s) throws ZinggClientException {
 		super(args, options, s);
 	}
 
+	public SparkClient(IArguments args, ClientOptions options, SparkSession s) throws ZinggClientException {
+		this(args, options, new ZSparkSession(s,null));
+	}
+	
 	public SparkClient() {
 		/*SparkSession session = SparkSession
                 .builder()
@@ -51,7 +56,7 @@ public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column
 	
 
 	@Override
-	public Client<ZSparkSession, Dataset<Row>, Row, Column, DataType> getClient(Arguments args, 
+	public Client<ZSparkSession, Dataset<Row>, Row, Column, DataType> getClient(IArguments args, 
 		ClientOptions options) throws ZinggClientException {
 		// TODO Auto-generated method stub
 		SparkClient client = null;

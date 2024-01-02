@@ -16,9 +16,11 @@ import zingg.common.core.preprocess.StopWordsRemover;
 
 public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
+	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.TrainingDataFinder";
 	public static final Log LOG = LogFactory.getLog(TrainingDataFinder.class);    
-
+	
+	
     public TrainingDataFinder() {
         setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
     }
@@ -27,10 +29,15 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 		return getDSUtil().getTraining(getPipeUtil(), args);
 	}
 	
+	protected ZFrame<D,R,C> getData() throws ZinggClientException {
+		return getPipeUtil().read(true, true, args.getData());
+	}
+	
 	 public void execute() throws ZinggClientException {
 			try{
-				ZFrame<D,R,C> data = getPipeUtil().read(true, true, args.getData());
+				ZFrame<D,R,C> data = getData();
 				LOG.warn("Read input data " + data.count());
+				LOG.debug("input data schema is " +data.showSchema());
 				//create 20 pos pairs
 
 				ZFrame<D,R,C> posPairs = null;
@@ -78,16 +85,21 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				ZFrame<D,R,C> sample = getStopWords().preprocessForStopWords(sampleOrginal);
 
 				Tree<Canopy<R>> tree = getBlockingTreeUtil().createBlockingTree(sample, posPairs, 1, -1, args, getHashUtil().getHashFunctionList());		
-				tree.print(2);	
+				//tree.print(2);	
 				ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(sample, tree); 
 				
 				blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
-				System.out.println("blocked");
-				blocked.show(true);
-				ZFrame<D,R,C> blocks = getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
+				LOG.debug("blocked");
+				if (LOG.isDebugEnabled()) {
+					blocked.show(true);
+				}
+				ZFrame<D,R,C> blocks = getBlocks(blocked); 
+				
 				blocks = blocks.cache();	
-				System.out.println("blocks");
-				blocks.show();
+				LOG.debug("blocks");
+				if (LOG.isDebugEnabled()) {
+					blocks.show();
+				}
 				//TODO HASH Partition
 				if (negPairs!= null) negPairs = negPairs.cache();
 					//train classifier and predict the blocked values from classifier
@@ -98,7 +110,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 						if (LOG.isDebugEnabled()) {
 							LOG.debug("num blocks " + blocks.count());		
 						}
-						Model<S,T,D,R,C> model = getModelUtil().createModel(posPairs, negPairs, false, args);
+						Model<S,T,D,R,C> model = getModelUtil().createModel(posPairs, negPairs, true, args);
 						ZFrame<D,R,C> dupes = model.predict(blocks); 
 						if (LOG.isDebugEnabled()) {
 							LOG.debug("num dupes " + dupes.count());	
@@ -128,8 +140,14 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 			}	
     }
 
+	protected ZFrame<D,R,C> getBlocks(ZFrame<D,R,C> blocked) throws Exception{
+		return getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
+	}
+
 	public void writeUncertain(ZFrame<D,R,C> dupesActual, ZFrame<D,R,C> sampleOrginal) throws ZinggClientException {
-		dupesActual.show(40);
+		if (LOG.isDebugEnabled()) {
+			dupesActual.show(40);
+		}
 		//input dupes are pairs
 		dupesActual = getDSUtil().addClusterRowNumber(dupesActual);
 		dupesActual = getDSUtil().addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN );	
@@ -185,5 +203,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 	}
 
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
+    
+	
 		    
 }

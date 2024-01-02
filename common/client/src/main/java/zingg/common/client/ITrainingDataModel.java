@@ -10,9 +10,9 @@ public interface ITrainingDataModel<S, D, R, C> {
 
 	public void updateLabellerStat(int selected_option, int increment);
 
-	public void writeLabelledOutput(ZFrame<D, R, C> records, Arguments args) throws ZinggClientException;
+	public void writeLabelledOutput(ZFrame<D, R, C> records, IArguments args) throws ZinggClientException;
 	
-	public void writeLabelledOutput(ZFrame<D,R,C> records, Arguments args, Pipe p) throws ZinggClientException;
+	public void writeLabelledOutput(ZFrame<D,R,C> records, IArguments args, Pipe p) throws ZinggClientException;
 	
 	public long getPositivePairsCount();
 

@@ -8,17 +8,19 @@ public interface ZFrame<D, R, C> {
 	public static final String RIGHT_JOIN = "right";
 	public static final String LEFT_JOIN = "left";
 	
+	public static final String COL_COUNT = "count";
+	public static final String COL_VALUE = "VALUE";
+		
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
     public String[] columns();
-    public ZFrame<D, R, C> select(C... cols);
+    public ZFrame<D, R, C> select(String... string);
     public ZFrame<D, R, C> select(List<C> cols);
-    public ZFrame<D, R, C> select(String col, String... cols);
-    public ZFrame<D, R, C> select(String col);
+    public ZFrame<D, R, C> select(C... col);
     public ZFrame<D, R, C> selectExpr(String... col);
     public ZFrame <D, R, C> distinct();
     public List<R> collectAsList();
-    public List<String> collectAsListOfStrings();
+    public List<String> collectFirstColumn();
 
     public ZFrame<D, R, C> toDF(String[] cols);
     public ZFrame<D, R, C> toDF(String col1, String col2);
@@ -28,6 +30,9 @@ public interface ZFrame<D, R, C> {
     /**doesnt dupe the join col */
     public ZFrame<D, R, C> joinOnCol(ZFrame<D, R, C> lines1, String joinColumn);
     
+    public ZFrame<D, R, C> joinOnCol(ZFrame<D, R, C> lines1, C joinColumn);
+
+    public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, C joinColumn, String joinType);
 
     public ZFrame<D, R, C> join(ZFrame<D, R, C> lines1, String joinColumn1, String joinColumn2);
     
@@ -63,6 +68,8 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> groupByCount(String colName, String countColName);
 
     public ZFrame<D, R, C> union(ZFrame<D, R, C> other);
+    
+    public ZFrame<D, R, C> unionAll(ZFrame<D, R, C> other);
 
     public ZFrame<D, R, C> unionByName(ZFrame<D, R, C> other, boolean flag);
 
@@ -82,19 +89,32 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> coalesce(int num);
 
     public C gt(String c);
+    
+    public C gt(ZFrame<D, R, C> other, String c);    
 
     public C gt(String c, double val);
     
 	public C equalTo(String c, String e);
-
+	
+	public C equalTo(C column1, C column2);
+	
 	public C notEqual(String c, String e);
+
+    public C notEqual(String e);
     
     public C equalTo(String c, int e);
     public C equalTo(String c, double e);
     public C concat(C a, C b);
 
-	public C notEqual(String c, int e);
+    public C notEqual(String c, int e);
 
+    public C not(C col);
+	
+    public C isNotNull(C col);
+	
+    public C and(C col1, C col2);
+
+    public C or(C col1, C col2);
 
     public void show(int num);
     public void show();
@@ -145,6 +165,10 @@ public interface ZFrame<D, R, C> {
 	public ZFrame<D, R, C> filterNotNullCond(String colName);
 	
 	public ZFrame<D, R, C> filterNullCond(String colName);
-    
-        
+
+    public ZFrame<D,R,C> countDistinct(String groupByCol, String distinctCol, String distinctcolCountName);
+
+    public ZFrame<D,R,C> groupByCount(String groupByCol1, String groupByCol2, String countColName);
+
+   
 }

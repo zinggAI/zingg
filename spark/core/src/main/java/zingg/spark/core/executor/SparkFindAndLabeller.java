@@ -8,7 +8,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZinggOptions;
 import zingg.common.client.license.IZinggLicense;
@@ -22,13 +22,15 @@ public class SparkFindAndLabeller extends FindAndLabeller<ZSparkSession, Dataset
 	public static final Log LOG = LogFactory.getLog(SparkFindAndLabeller.class);
 
 	public SparkFindAndLabeller() {
-		setZinggOptions(ZinggOptions.FIND_AND_LABEL);		
-		finder = new SparkTrainingDataFinder();
-		setContext(new ZinggSparkContext());
+		setZinggOptions(ZinggOptions.FIND_AND_LABEL);	
+		ZinggSparkContext sparkContext = new ZinggSparkContext();
+		setContext(sparkContext);
+		finder = new SparkTrainingDataFinder(sparkContext);
+		labeller = new SparkLabeller(sparkContext);
 	}	
 	
 	@Override
-	public void init(Arguments args, IZinggLicense license) throws ZinggClientException {
+	public void init(IArguments args, IZinggLicense license) throws ZinggClientException {
 		super.init(args, license);
 		getContext().init(license);
 	}	

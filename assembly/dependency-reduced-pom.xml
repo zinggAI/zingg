@@ -38,6 +38,7 @@
               <exclude>org.scala-lang:*</exclude>
               <exclude>sonal</exclude>
               <exclude>*:jar:*</exclude>
+              <exclude>org.slf4j:*</exclude>
             </excludes>
           </artifactSet>
         </configuration>
@@ -94,6 +95,18 @@
           <artifactId>junit-platform-commons</artifactId>
           <groupId>org.junit.platform</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>apiguardian-api</artifactId>
+          <groupId>org.apiguardian</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>5.8.1</version>
+      <scope>test</scope>
+      <exclusions>
         <exclusion>
           <artifactId>apiguardian-api</artifactId>
           <groupId>org.apiguardian</groupId>
