@@ -8,7 +8,7 @@ Contents
 Zingg Python APIs for entity resolution, record linkage, data mastering and deduplication
 (https://www.zingg.ai) 
 
-requires python 3.6+; spark 3.1.2
+requires python 3.6+; spark 3.5.0
 Otherwise, :py:func:`zingg.client.Zingg` cannot be executed
 
 .. automodule:: zingg
