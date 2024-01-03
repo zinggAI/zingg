@@ -365,7 +365,6 @@ class ZinggWithSpark(Zingg):
     :type options: ClientOptions
 
     """
-
     def __init__(self, args, options):
         self.client = getJVM().zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions(), getSparkSession()._jsparkSession)
 

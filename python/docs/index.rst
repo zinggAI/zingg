@@ -3,50 +3,82 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to the documentation of Zingg Entity Resolution With Python package!
+Zingg Entity Resolution Python Package
 ============================================================================
    
-Contents:
+ 
+Zingg Python APIs for entity resolution, identity resolution, record linkage, data mastering and deduplication using ML
+(https://www.zingg.ai) 
+
+
+.. note::
+   Requires python 3.6+; spark 3.5.0
+   Otherwise, :py:func:`zingg.client.Zingg` cannot be executed
+
 
 .. toctree::
    :maxdepth: 3
-   
-   zingg
- 
 
-Zingg Python APIs for entity resolution, record linkage, data mastering and deduplication using ML
-(https://www.zingg.ai) 
+Example API Usage
+=================
 
-requires python 3.6+; spark 3.5.0
-Otherwise, :py:func:`zingg.client.Zingg` cannot be executed
+.. code:: python
+   :number-lines:
 
-.. toctree::
-   :maxdepth: 2
-   
+   from zingg.client import *
+   from zingg.pipes import *
 
-.. automodule:: zingg
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   #build the arguments for zingg
+   args = Arguments()
+   #set field definitions
+   fname = FieldDefinition("fname", "string", MatchType.FUZZY)
+   lname = FieldDefinition("lname", "string", MatchType.FUZZY)
+   stNo = FieldDefinition("stNo", "string", MatchType.FUZZY)
+   add1 = FieldDefinition("add1","string", MatchType.FUZZY)
+   add2 = FieldDefinition("add2", "string", MatchType.FUZZY)
+   city = FieldDefinition("city", "string", MatchType.FUZZY)
+   areacode = FieldDefinition("areacode", "string", MatchType.FUZZY)
+   state = FieldDefinition("state", "string", MatchType.FUZZY)
+   dob = FieldDefinition("dob", "string", MatchType.FUZZY)
+   ssn = FieldDefinition("ssn", "string", MatchType.FUZZY)
 
-.. automodule:: zingg.client
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   fieldDefs = [fname, lname, stNo, add1, add2, city, areacode, state, dob, ssn]
 
-.. automodule:: zingg.pipes
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   args.setFieldDefinition(fieldDefs)
+   #set the modelid and the zingg dir
+   args.setModelId("100")
+   args.setZinggDir("models")
+   args.setNumPartitions(4)
+   args.setLabelDataSampleSize(0.5)
 
-Indices and tables
+   #reading dataset into inputPipe and settint it up in 'args'
+   #below line should not be required if you are reading from in memory dataset
+   #in that case, replace df with input df
+   schema = "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
+   inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
+   args.setData(inputPipe)
+   outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
+
+   args.setOutput(outputPipe)
+
+   options = ClientOptions([ClientOptions.PHASE,"match"])
+
+   #Zingg execution for the given phase
+   zingg = Zingg(args, options)
+   zingg.initAndExecute()
+
+
+API Reference
 ==================
-
-* :ref:`genindex`
 * :ref:`modindex`
+
+Index
+======
+* :ref:`genindex`
+
+
 * :ref:`search`
 
-.. note::
-
-   This project is used by Zingg.AI
-
+.. meta::
+   :description: Zingg Entity Resolution With Python and AI
+   :keywords: entity resolution, identity resolution, record linkage
