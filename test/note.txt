@@ -5,7 +5,7 @@ To run it:
 1. cd test/
 2. pyspark < testInfraOwnGateway.py
 (or)
-2. /opt/spark-3.2.4-bin-hadoop3.2/bin/spark-submit --jars ../common/client/target/zingg-common-client-0.4.0-SNAPSHOT.jar testInfraOwnGateway.py
+2. /opt/spark-3.2.4-bin-hadoop3.2/bin/spark-submit --jars ../common/client/target/zingg-common-client-0.4.1-SNAPSHOT.jar testInfraOwnGateway.py
 
 
 If faced version mismatch issue:
