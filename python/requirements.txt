@@ -2,5 +2,7 @@ pandas
 seaborn
 matplotlib
 sphinx
-sphinx-rtd-theme
+sphinx_rtd_theme
 pyspark
+numpy
+
