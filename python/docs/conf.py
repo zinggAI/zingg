@@ -14,11 +14,12 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('../zingg/'))
-
+print("path is ")
+print(os.path.abspath('../zingg/'))
 # -- Project information -----------------------------------------------------
 
 project = 'Zingg'
-copyright = '2022, Zingg.AI'
+copyright = '2024, Zingg.AI'
 author = 'Zingg.AI'
 
 # The full version, including alpha/beta/rc tags
@@ -39,7 +40,7 @@ extensions = [
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+#templates_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -52,7 +53,8 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'classic'
+
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
