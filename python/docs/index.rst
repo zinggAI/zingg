@@ -19,6 +19,13 @@ Zingg Python APIs for entity resolution, identity resolution, record linkage, da
 .. toctree::
    :maxdepth: 3
 
+
+API Reference
+==================
+* :ref:`modindex`
+* :ref:`genindex`
+* :ref:`search`
+
 Example API Usage
 =================
 
@@ -68,16 +75,6 @@ Example API Usage
    zingg.initAndExecute()
 
 
-API Reference
-==================
-* :ref:`modindex`
-
-Index
-======
-* :ref:`genindex`
-
-
-* :ref:`search`
 
 .. meta::
    :description: Zingg Entity Resolution With Python and AI
