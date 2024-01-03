@@ -19,6 +19,7 @@ Zingg Python APIs for entity resolution, identity resolution, record linkage, da
 .. toctree::
    :maxdepth: 3
 
+   zingg
 
 API Reference
 ==================
