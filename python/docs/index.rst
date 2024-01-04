@@ -75,8 +75,3 @@ Example API Usage
    zingg = Zingg(args, options)
    zingg.initAndExecute()
 
-
-
-.. meta::
-   :description: Zingg Entity Resolution With Python and AI
-   :keywords: entity resolution, identity resolution, record linkage
