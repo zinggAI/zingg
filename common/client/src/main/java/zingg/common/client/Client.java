@@ -141,7 +141,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 	
 	public void printBanner() {
-		String versionStr = "0.4.0";
+		String versionStr = "0.4.1-SNAPSHOT";
 		LOG.info("");
 		LOG.info("********************************************************");
 		LOG.info("*                    Zingg AI                          *");
@@ -168,9 +168,9 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 		else {
 			LOG.info("");
-			LOG.info("********************************************************");
-			LOG.info("*    Zingg is not collecting any analytics data        *");
-			LOG.info("********************************************************");
+			LOG.info("*************************************************************************************************************");
+			LOG.info("*    Zingg is not collecting any analytics data and will only log a blank event with the name of the phase  *");
+			LOG.info("*************************************************************************************************************");
 			LOG.info("");
 		}
 	}

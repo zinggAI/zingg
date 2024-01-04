@@ -1,15 +1,19 @@
-Zingg package
+Zingg Entity Resolution Package
 =============
 
 
 Contents
 ---------------
 
-Zingg Python APIs for entity resolution, record linkage, data mastering and deduplication
+Zingg Python APIs for entity resolution, record linkage, data mastering and deduplication using ML
 (https://www.zingg.ai) 
 
-requires python 3.6+; spark 3.1.2
+requires python 3.6+; spark 3.5.0
 Otherwise, :py:func:`zingg.client.Zingg` cannot be executed
+
+.. toctree::
+   :maxdepth: 2
+   
 
 .. automodule:: zingg
    :members:
