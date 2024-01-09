@@ -42,13 +42,13 @@ public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row,
 	}
 	
 	@Override
-	protected ModelDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> getModelDocumenter() {
+	public ModelDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> getModelDocumenter() {
 		return new SparkModelDocumenter(getContext(),getArgs());
 	}
 
 
 	@Override
-	protected DataDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> getDataDocumenter() {
+	public DataDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> getDataDocumenter() {
 		return new SparkDataDocumenter(getContext(),getArgs());
 	}
 

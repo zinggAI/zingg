@@ -44,7 +44,7 @@ public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, 
         getContext().init();
     }
     	
-	protected Pipe setSaveModeOnPipe(Pipe p) {
+    public Pipe setSaveModeOnPipe(Pipe p) {
 		p.setMode(SaveMode.Overwrite.toString());
 		return p;
 	}
