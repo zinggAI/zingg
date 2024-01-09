@@ -22,8 +22,12 @@ public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, 
 	public static final Log LOG = LogFactory.getLog(SparkTrainMatcher.class);
 
 	public SparkTrainMatcher() {
+		this(new ZinggSparkContext());
+	}
+	
+	
+	public SparkTrainMatcher(ZinggSparkContext sparkContext) {
 		setZinggOption(ZinggOptions.TRAIN_MATCH);
-		ZinggSparkContext sparkContext = new ZinggSparkContext();
 		setContext(sparkContext);
 		trainer = new SparkTrainer(sparkContext);
 		matcher = new SparkMatcher(sparkContext);

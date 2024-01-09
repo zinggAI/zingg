@@ -27,10 +27,14 @@ public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row,
 	public static final Log LOG = LogFactory.getLog(SparkDocumenter.class);
 
 	public SparkDocumenter() {
-		setZinggOption(ZinggOptions.GENERATE_DOCS);
-		setContext(new ZinggSparkContext());
+		this(new ZinggSparkContext());
 	}
 
+	public SparkDocumenter(ZinggSparkContext sparkContext) {
+		setZinggOption(ZinggOptions.GENERATE_DOCS);
+		setContext(sparkContext);
+	}	
+	
 	@Override
 	public void init(IArguments args)  throws ZinggClientException {
 		super.init(args);
@@ -38,13 +42,13 @@ public class SparkDocumenter extends Documenter<SparkSession, Dataset<Row>, Row,
 	}
 	
 	@Override
-	protected ModelDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> getModelDocumenter() {
+	public ModelDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> getModelDocumenter() {
 		return new SparkModelDocumenter(getContext(),getArgs());
 	}
 
 
 	@Override
-	protected DataDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> getDataDocumenter() {
+	public DataDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> getDataDocumenter() {
 		return new SparkDataDocumenter(getContext(),getArgs());
 	}
 

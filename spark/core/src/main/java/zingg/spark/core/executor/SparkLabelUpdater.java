@@ -30,10 +30,13 @@ public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, 
 	public static final Log LOG = LogFactory.getLog(SparkLabelUpdater.class);
 
 	public SparkLabelUpdater() {
-		setZinggOption(ZinggOptions.UPDATE_LABEL);
-		setContext(new ZinggSparkContext());
+		this(new ZinggSparkContext());
 	}
 
+	public SparkLabelUpdater(ZinggSparkContext sparkContext) {
+		setZinggOption(ZinggOptions.UPDATE_LABEL);
+		setContext(sparkContext);
+	}
 
     @Override
     public void init(IArguments args)  throws ZinggClientException {
@@ -41,7 +44,7 @@ public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, 
         getContext().init();
     }
     	
-	protected Pipe setSaveModeOnPipe(Pipe p) {
+    public Pipe setSaveModeOnPipe(Pipe p) {
 		p.setMode(SaveMode.Overwrite.toString());
 		return p;
 	}

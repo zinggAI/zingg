@@ -38,7 +38,7 @@ public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Da
 	}
 	
 	@Override
-	protected StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
+	public StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
 		return new SparkStopWordsRemover(getContext(),getArgs());
 	}
 	

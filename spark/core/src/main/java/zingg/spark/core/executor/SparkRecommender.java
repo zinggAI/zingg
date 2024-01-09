@@ -29,10 +29,14 @@ public class SparkRecommender extends Recommender<SparkSession, Dataset<Row>, Ro
 	public static final Log LOG = LogFactory.getLog(SparkRecommender.class);
 
 	public SparkRecommender() {
-		setZinggOption(ZinggOptions.RECOMMEND);
-		setContext(new ZinggSparkContext());
+		this(new ZinggSparkContext());
 	}
 
+	public SparkRecommender(ZinggSparkContext sparkContext) {
+		setZinggOption(ZinggOptions.RECOMMEND);
+		setContext(sparkContext);
+	}	
+	
     @Override
     public void init(IArguments args)  throws ZinggClientException {
         super.init(args);
