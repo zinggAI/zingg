@@ -5,18 +5,17 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
-
 import zingg.common.core.executor.Linker;
 import zingg.common.core.model.Model;
 import zingg.common.core.preprocess.StopWordsRemover;
-import org.apache.spark.sql.SparkSession;
-import zingg.spark.core.preprocess.SparkStopWordsRemover;
 import zingg.spark.core.context.ZinggSparkContext;
+import zingg.spark.core.preprocess.SparkStopWordsRemover;
 
 
 public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,DataType> {
@@ -26,10 +25,14 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
 	public static final Log LOG = LogFactory.getLog(SparkLinker.class);
 
 	public SparkLinker() {
-		setZinggOption(ZinggOptions.LINK);
-		setContext(new ZinggSparkContext());
+		this(new ZinggSparkContext());
 	}
 
+	public SparkLinker(ZinggSparkContext sparkContext) {
+		setZinggOption(ZinggOptions.LINK);
+		setContext(sparkContext);
+	}
+	
     @Override
     public void init(IArguments args)  throws ZinggClientException {
         super.init(args);

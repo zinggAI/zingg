@@ -24,8 +24,11 @@ public class SparkFindAndLabeller extends FindAndLabeller<SparkSession, Dataset<
 	public static final Log LOG = LogFactory.getLog(SparkFindAndLabeller.class);
 
 	public SparkFindAndLabeller() {
-		setZinggOption(ZinggOptions.FIND_AND_LABEL);	
-		ZinggSparkContext sparkContext = new ZinggSparkContext();
+		this(new ZinggSparkContext());
+	}	
+	
+	public SparkFindAndLabeller(ZinggSparkContext sparkContext) {
+		setZinggOption(ZinggOptions.FIND_AND_LABEL);
 		setContext(sparkContext);
 		finder = new SparkTrainingDataFinder(sparkContext);
 		labeller = new SparkLabeller(sparkContext);
