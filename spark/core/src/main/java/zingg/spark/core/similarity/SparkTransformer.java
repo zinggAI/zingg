@@ -10,6 +10,7 @@ import org.apache.spark.sql.SparkSession;
 
 public class SparkTransformer extends SparkBaseTransformer {
 	private static final long serialVersionUID = 1L;
+    private static boolean udfRegistered = false;
 
 	protected SparkSimFunction function;
 	
@@ -28,7 +29,9 @@ public class SparkTransformer extends SparkBaseTransformer {
     public void register(SparkSession spark) {
         if (!isUDFRegistered(spark, getUid())) {
             spark.udf().register(getUid(), (UDF2) function, DataTypes.DoubleType);
+            udfRegistered = true;
         } else {
+            udfRegistered = true;
         }
     }
 
