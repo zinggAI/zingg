@@ -25,6 +25,3 @@ Otherwise, :py:func:`zingg.client.Zingg` cannot be executed
    :members:
    :undoc-members:
    :show-inheritance:
-
-   
-

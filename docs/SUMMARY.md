@@ -51,6 +51,7 @@
   * [BigQuery](dataSourcesAndSinks/bigquery.md)
   * [Exasol](dataSourcesAndSinks/exasol.md)
 * [Working With Python](working-with-python.md)
+  * [Python API](python/markdown/index.md)
 * [Running Zingg on Cloud](running/running.md)
   * [Running on AWS](running/aws.md)
   * [Running on Azure](running/azure.md)

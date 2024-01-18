@@ -37,8 +37,11 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
-    'sphinx.ext.coverage'
+    'sphinx.ext.coverage',
+    'sphinx_markdown_builder'
 ]
+
+
 
 # Add any paths that contain templates here, relative to this directory.
 #templates_path = ['_templates']
