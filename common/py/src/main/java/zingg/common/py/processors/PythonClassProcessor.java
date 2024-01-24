@@ -36,7 +36,7 @@ public class PythonClassProcessor extends AbstractProcessor {
                 // __init__ method
                 System.out.println("    def __init__(self" +
                         generateConstructorParameters(classElement) + "):");
-                if (element.getSimpleName().contentEquals("EPipe")) {
+                if (element.getSimpleName().contentEquals("pipe")) {
                     generateClassInitializationCode(classElement);
                 }
                 for (VariableElement field : ElementFilter.fieldsIn(classElement.getEnclosedElements())) {
@@ -65,12 +65,12 @@ public class PythonClassProcessor extends AbstractProcessor {
     }
 
     private void generateClassInitializationCode(TypeElement classElement) {
-        System.out.println("        self.EPipe = getJVM().zingg.spark.client.pipe.SparkPipe()");
+        System.out.println("        self.pipe = getJVM().zingg.spark.client.pipe.SparkPipe()");
     }
 
     // private void generateFieldInitializationCode(VariableElement field, ExecutableElement methodElement, TypeElement classElement) {
     private void generateFieldInitializationCode(VariableElement field) {
-        System.out.println("        self.EPipe." + field.getSimpleName() + " = " + field.getSimpleName());
+        System.out.println("        self.pipe." + field.getSimpleName() + " = " + field.getSimpleName());
         // String fieldName = field.getSimpleName().toString();
         // String methodName = methodElement.getSimpleName().toString();
         // System.out.println("        self." + fieldName + " = " + "getJVM()." +
