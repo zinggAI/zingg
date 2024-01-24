@@ -3,15 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>zingg</groupId>
-		<artifactId>parent</artifactId>
+		<artifactId>zingg-common</artifactId>
 		<version>${zingg.version}</version>
 	</parent>
-	<artifactId>zingg-common</artifactId>
-	<packaging>pom</packaging>
-	<modules>
-		<module>infra</module>
-		<module>core</module>
-		<module>client</module>
-		<module>py</module>
-	</modules>
+	<artifactId>zingg-common-py</artifactId>
 </project>
