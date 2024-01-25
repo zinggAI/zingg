@@ -1,36 +1,51 @@
 package zingg.common.py.processors;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.processing.*;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeKind;
 import java.util.Set;
-import javax.lang.model.element.*;
-import javax.lang.model.util.ElementFilter;
+import java.util.logging.Logger;
 
+import javax.lang.model.element.*;
 import zingg.common.py.annotations.*;
 
 @SupportedAnnotationTypes("zingg.common.py.annotations.PythonMethod")
 public class PythonMethodProcessor extends AbstractProcessor {
 
-    private boolean importsAndDeclarationsGenerated = false;
-
+    private Map<String, List<String>> classMethodsMap;
+    // private static final Logger LOG = Logger.getLogger(PythonMethodProcessor.class.getName());
+    
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         
+        ProcessorContext processorContext = ProcessorContext.getInstance();
+        classMethodsMap = processorContext.getClassMethodsMap();
+        // LOG.info("Processing PythonMethod annotations...");
+
         // process Services annotation
         for (Element element : roundEnv.getElementsAnnotatedWith(PythonMethod.class)) {
             
             if (element.getKind() == ElementKind.METHOD) {
                 ExecutableElement methodElement = (ExecutableElement) element;
-                System.out.println("    def " + methodElement.getSimpleName() + "(self" +
-                        generateMethodSignature(methodElement) + "):\n        " + generateMethodReturn(methodElement));
-                generateFieldAssignment(methodElement);
-            }
-            System.out.println();
+                String className = methodElement.getEnclosingElement().getSimpleName().toString();
                 
-                // rest of generated class contents
+                if (classMethodsMap.containsKey(className)) {
+                    List<String> methodNames = classMethodsMap.get(className);
+
+                    if (methodNames.contains(methodElement.getSimpleName().toString())) {
+                        // LOG.info("Generating Python method for: " + methodElement.getSimpleName());
+                        System.out.println("    def " + methodElement.getSimpleName() + "(self" +
+                                generateMethodSignature(methodElement) + "):\n        " + generateMethodReturn(methodElement));
+                        generateFieldAssignment(methodElement);
+                    }
+                }
+            }
+            System.out.println();  
         }
+        // LOG.info("Processing complete.");
         return false;
     }
 
@@ -65,12 +80,21 @@ public class PythonMethodProcessor extends AbstractProcessor {
     }
 
     private void generateFieldAssignment(ExecutableElement methodElement) {
-    List<? extends VariableElement> parameters = methodElement.getParameters();
-    if (!parameters.isEmpty()) {
-        VariableElement parameter = parameters.get(0);
-        String variableName = parameter.getSimpleName().toString();
-        System.out.println("        self." + variableName + " = " + variableName);
+        List<? extends VariableElement> parameters = methodElement.getParameters();
+        
+        if (!parameters.isEmpty()) {
+            String methodName = methodElement.getSimpleName().toString();
+            String className = methodElement.getEnclosingElement().getSimpleName().toString();
+
+            StringBuilder parameterList = new StringBuilder();
+            for (VariableElement parameter : parameters) {
+                if (parameterList.length() > 0) {
+                    parameterList.append(", ");
+                }
+                parameterList.append(parameter.getSimpleName());
+            }
+            System.out.println("        self." + className.toLowerCase() + "." + methodName + "(" + parameterList + ")");
+        }
     }
-}
     
 }
