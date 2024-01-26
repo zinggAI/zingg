@@ -7,7 +7,7 @@ import javax.annotation.processing.*;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeKind;
 import java.util.Set;
-import java.util.logging.Logger;
+// import java.util.logging.Logger;
 
 import javax.lang.model.element.*;
 import zingg.common.py.annotations.*;
@@ -38,7 +38,8 @@ public class PythonMethodProcessor extends AbstractProcessor {
                     if (methodNames.contains(methodElement.getSimpleName().toString())) {
                         // LOG.info("Generating Python method for: " + methodElement.getSimpleName());
                         System.out.println("    def " + methodElement.getSimpleName() + "(self" +
-                                generateMethodSignature(methodElement) + "):\n        " + generateMethodReturn(methodElement));
+                                generateMethodSignature(methodElement) + "):");
+                        generateMethodReturn(methodElement);
                         generateFieldAssignment(methodElement);
                     }
                 }
@@ -64,14 +65,15 @@ public class PythonMethodProcessor extends AbstractProcessor {
         return parameters.toString();
     }
 
-    private String generateMethodReturn(ExecutableElement methodElement) {
+    private void generateMethodReturn(ExecutableElement methodElement) {
         TypeMirror returnType = methodElement.getReturnType();
         if (returnType.getKind() == TypeKind.VOID) {
-            return "";
+            return;
         } else {
             String returnTypeString = resolveType(returnType);
-            String variableName = methodElement.getSimpleName().toString();
-            return "return " + variableName;
+            String methodName = methodElement.getSimpleName().toString();
+            String className = methodElement.getEnclosingElement().getSimpleName().toString();
+            System.out.println("        return self." + className.toLowerCase() + "." + methodName + "()");
         }
     }
 
