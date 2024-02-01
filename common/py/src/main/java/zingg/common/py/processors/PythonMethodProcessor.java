@@ -1,5 +1,8 @@
 package zingg.common.py.processors;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +10,6 @@ import javax.annotation.processing.*;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeKind;
 import java.util.Set;
-// import java.util.logging.Logger;
 
 import javax.lang.model.element.*;
 import zingg.common.py.annotations.*;
@@ -16,16 +18,13 @@ import zingg.common.py.annotations.*;
 public class PythonMethodProcessor extends AbstractProcessor {
 
     private Map<String, List<String>> classMethodsMap;
-    // private static final Logger LOG = Logger.getLogger(PythonMethodProcessor.class.getName());
     
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         
         ProcessorContext processorContext = ProcessorContext.getInstance();
         classMethodsMap = processorContext.getClassMethodsMap();
-        // LOG.info("Processing PythonMethod annotations...");
 
-        // process Services annotation
         for (Element element : roundEnv.getElementsAnnotatedWith(PythonMethod.class)) {
             
             if (element.getKind() == ElementKind.METHOD) {
@@ -36,17 +35,18 @@ public class PythonMethodProcessor extends AbstractProcessor {
                     List<String> methodNames = classMethodsMap.get(className);
 
                     if (methodNames.contains(methodElement.getSimpleName().toString())) {
-                        // LOG.info("Generating Python method for: " + methodElement.getSimpleName());
-                        System.out.println("    def " + methodElement.getSimpleName() + "(self" +
-                                generateMethodSignature(methodElement) + "):");
-                        generateMethodReturn(methodElement);
-                        generateFieldAssignment(methodElement);
+                        try (FileWriter fileWriter = new FileWriter("python/zingg" + File.separator + className + "Generated.py", true)) {
+                            fileWriter.write("    def " + methodElement.getSimpleName() + "(self" + generateMethodSignature(methodElement) + "):\n");
+                            generateMethodReturn(methodElement, fileWriter);
+                            generateFieldAssignment(methodElement, fileWriter);
+                            fileWriter.write("\n");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
-            System.out.println();  
         }
-        // LOG.info("Processing complete.");
         return false;
     }
 
@@ -65,7 +65,7 @@ public class PythonMethodProcessor extends AbstractProcessor {
         return parameters.toString();
     }
 
-    private void generateMethodReturn(ExecutableElement methodElement) {
+    private void generateMethodReturn(ExecutableElement methodElement, FileWriter fileWriter) throws IOException {
         TypeMirror returnType = methodElement.getReturnType();
         if (returnType.getKind() == TypeKind.VOID) {
             return;
@@ -73,7 +73,7 @@ public class PythonMethodProcessor extends AbstractProcessor {
             String returnTypeString = resolveType(returnType);
             String methodName = methodElement.getSimpleName().toString();
             String className = methodElement.getEnclosingElement().getSimpleName().toString();
-            System.out.println("        return self." + className.toLowerCase() + "." + methodName + "()");
+            fileWriter.write("        return self." + className.toLowerCase() + "." + methodName + "()\n");
         }
     }
 
@@ -81,7 +81,7 @@ public class PythonMethodProcessor extends AbstractProcessor {
         return typeMirror.toString();
     }
 
-    private void generateFieldAssignment(ExecutableElement methodElement) {
+    private void generateFieldAssignment(ExecutableElement methodElement, FileWriter fileWriter) throws IOException {
         List<? extends VariableElement> parameters = methodElement.getParameters();
         
         if (!parameters.isEmpty()) {
@@ -95,7 +95,7 @@ public class PythonMethodProcessor extends AbstractProcessor {
                 }
                 parameterList.append(parameter.getSimpleName());
             }
-            System.out.println("        self." + className.toLowerCase() + "." + methodName + "(" + parameterList + ")");
+            fileWriter.write("        self." + className.toLowerCase() + "." + methodName + "(" + parameterList + ")\n");
         }
     }
     

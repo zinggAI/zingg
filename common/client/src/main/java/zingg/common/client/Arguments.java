@@ -17,6 +17,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import zingg.common.client.pipe.Pipe;
+import zingg.common.py.annotations.PythonClass;
+import zingg.common.py.annotations.PythonMethod;
 
 
 /**
@@ -79,6 +81,7 @@ import zingg.common.client.pipe.Pipe;
  * }
  * </pre>
  */
+@PythonClass
 @JsonInclude(Include.NON_NULL)
 public class Arguments implements Serializable, IArguments {
 
@@ -121,7 +124,7 @@ public class Arguments implements Serializable, IArguments {
 	public int getNumPartitions() {
 		return numPartitions;
 	}
-
+	@PythonMethod
 	@Override
 	public void setNumPartitions(int numPartitions) throws ZinggClientException{
 		if (numPartitions != -1 && numPartitions <= 0) 
@@ -154,6 +157,7 @@ public class Arguments implements Serializable, IArguments {
 	 *            generating seed samples
 	 * @throws ZinggClientException 
 	 */
+	@PythonMethod
 	@Override
 	public void setLabelDataSampleSize(float labelDataSampleSize) throws ZinggClientException {
 		if (labelDataSampleSize > 1 || labelDataSampleSize < 0)
@@ -235,12 +239,12 @@ public class Arguments implements Serializable, IArguments {
 	*/
 	
 	
-
+	@PythonMethod
 	@Override
 	public String getModelId() {
 		return modelId;
 	}
-
+	@PythonMethod
 	@Override
 	public void setModelId(String modelId) {
 		this.modelId = modelId;
@@ -263,6 +267,7 @@ public class Arguments implements Serializable, IArguments {
 	 *            where the match result is saved
 	 * @throws ZinggClientException 
 	 */
+	@PythonMethod
 	@Override
 	public void setOutput(Pipe[] outputDir) throws ZinggClientException {
 		//checkNullBlankEmpty(outputDir, " path for saving results");
@@ -340,6 +345,7 @@ public class Arguments implements Serializable, IArguments {
 	 * @param zinggDir
 	 *            path to the Zingg directory
 	 */
+	@PythonMethod
 	@Override
 	public void setZinggDir(String zinggDir) {
 		this.zinggDir = zinggDir;
@@ -351,12 +357,13 @@ public class Arguments implements Serializable, IArguments {
 	 * 
 	 * @return the path for internal Zingg usage
 	 */
-
+	@PythonMethod
 	@Override
 	@JsonIgnore
 	public String getZinggBaseModelDir(){
 		return zinggDir + "/" + modelId;
 	}
+	@PythonMethod
 	@Override
 	@JsonIgnore
 	public String getZinggModelDir() {
@@ -386,6 +393,7 @@ public class Arguments implements Serializable, IArguments {
 	 * 
 	 * @return the path for internal Zingg usage
 	 */
+	@PythonMethod
 	@Override
 	@JsonIgnore
 	public String getZinggBaseTrainingDataDir() {
@@ -399,6 +407,7 @@ public class Arguments implements Serializable, IArguments {
 	 * 
 	 * @return the path for internal Zingg usage
 	 */
+	@PythonMethod
 	@Override
 	@JsonIgnore
 	public String getZinggTrainingDataUnmarkedDir() {
@@ -410,6 +419,7 @@ public class Arguments implements Serializable, IArguments {
 	 * 
 	 * @return the path for internal Zingg usage
 	 */
+	@PythonMethod
 	@Override
 	@JsonIgnore
 	public String getZinggTrainingDataMarkedDir() {
@@ -478,7 +488,7 @@ public class Arguments implements Serializable, IArguments {
 	public float getStopWordsCutoff() {
 		return stopWordsCutoff;
 	}
-
+	@PythonMethod
 	@Override
 	public void setStopWordsCutoff(float stopWordsCutoff) throws ZinggClientException {
 		if (stopWordsCutoff > 1 || stopWordsCutoff < 0)
@@ -500,7 +510,7 @@ public class Arguments implements Serializable, IArguments {
 	public String getColumn() {
 		return column;
 	}
-
+	@PythonMethod
 	@Override
 	public void setColumn(String column) {
 		this.column = column;
