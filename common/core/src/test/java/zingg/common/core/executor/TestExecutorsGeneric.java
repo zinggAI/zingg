@@ -1,8 +1,5 @@
 package zingg.common.core.executor;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -21,8 +18,6 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
 	protected S session;
 	
-	protected final String PARENT_CONFIG_FILE = "PARENT-CONFIG-FILE";
-	
 	public TestExecutorsGeneric() {
 					
 	}
@@ -34,7 +29,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	public void init(S s) throws ZinggClientException, IOException {
 		this.session = s;
 		// set up args
-		String configFile = setupArgs();					
+		setupArgs();					
 	}
 
 	public String setupArgs() throws ZinggClientException, IOException {
@@ -47,11 +42,6 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
 	public abstract String getConfigFile();
 	
-	public abstract String getConfigIncrFile();
-	
-	public abstract String getConfigApproveFile();
-	
-
 	public void testExecutors(List<ExecutorTester<S, D, R, C, T>> executorTesterList) throws ZinggClientException {
 		for (ExecutorTester<S, D, R, C, T> executorTester : executorTesterList) {
 			executorTester.execute();
@@ -59,25 +49,6 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 		}
 	}	
 
-	public abstract void tearDown();
-	
-	public String getFileContentAsStr(String filePath) throws IOException {		
-
-		StringBuilder fileContent = new StringBuilder();
-		
-		try (
-			InputStream ioStream = this.getClass().getClassLoader().getResourceAsStream(filePath);	
-			InputStreamReader streamReader = new InputStreamReader(ioStream);
-			BufferedReader reader = new BufferedReader(streamReader);
-		)
-		{
-			for (String line; (line = reader.readLine()) != null;) {
-				fileContent.append(line);
-				fileContent.append("\n");
-			}
-		}		
-		return fileContent.toString();
-	}
-	
+	public abstract void tearDown();	
 	
 }
