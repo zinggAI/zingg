@@ -79,6 +79,13 @@ public class PythonClassProcessor extends AbstractProcessor {
             fileWriter.write("JStructType = getJVM().org.apache.spark.sql.types.StructType\n");
             fileWriter.write("\n");
         }
+
+        String javadoc = processingEnv.getElementUtils().getDocComment(element);
+        if (javadoc != null) {
+            fileWriter.write("'''\n");
+            fileWriter.write(javadoc.trim());
+            fileWriter.write("\n'''\n");
+        }
     }
 
     private void generateClassInitializationCode(TypeElement classElement, Element element, FileWriter fileWriter) throws IOException {
