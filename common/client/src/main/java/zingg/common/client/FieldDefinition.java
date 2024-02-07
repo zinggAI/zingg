@@ -22,6 +22,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
+import zingg.common.py.annotations.PythonClass;
+import zingg.common.py.annotations.PythonMethod;
+
 
 /**
  * This class defines each field that we use in matching We can use this to
@@ -30,6 +33,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
  * @author sgoyal
  *
  */
+@PythonClass
 public class FieldDefinition implements 
 		Serializable {
 
@@ -52,7 +56,7 @@ public class FieldDefinition implements
 	}
 
 	public String getFields() { return fields; }
-
+	@PythonMethod
 	public void setFields(String fields) { this.fields = fields;}	
 	
 	/**
@@ -71,6 +75,7 @@ public class FieldDefinition implements
 	 * @param type
 	 *            the type to set
 	*/
+	@PythonMethod
 	@JsonDeserialize(using = MatchTypeDeserializer.class)	
 	public void setMatchType(List<MatchType> type) {
 		this.matchType = type; //MatchTypeDeserializer.getMatchTypeFromString(type);
@@ -98,7 +103,7 @@ public class FieldDefinition implements
 	public String getStopWords() {
 		return stopWords;
 	}
-
+	@PythonMethod
 	public void setStopWords(String stopWords) {
 		this.stopWords = stopWords;
 	}
@@ -115,6 +120,7 @@ public class FieldDefinition implements
 		return fieldName;
 	}
 
+	@PythonMethod
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
 	}
