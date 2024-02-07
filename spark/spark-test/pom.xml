@@ -29,5 +29,10 @@
 			<artifactId>zingg-common-client</artifactId>
 			<version>${zingg.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>zingg-common-test</artifactId>
+			<version>${zingg.version}</version>
+		</dependency>		
 	</dependencies>
 </project>

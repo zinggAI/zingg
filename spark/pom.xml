@@ -11,6 +11,7 @@
 	<modules>
 		<module>core</module>
 		<module>client</module>
+		<module>spark-test</module>
 	</modules>
 	<dependencies>
 		<dependency>

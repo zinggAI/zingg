@@ -12,5 +12,6 @@
 		<module>infra</module>
 		<module>core</module>
 		<module>client</module>
+		<module>common-test</module>
 	</modules>
 </project>

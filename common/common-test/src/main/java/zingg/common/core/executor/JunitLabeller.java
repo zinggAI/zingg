@@ -6,7 +6,6 @@ import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.context.Context;
-import zingg.common.core.executor.Labeller;
 
 public class JunitLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	
