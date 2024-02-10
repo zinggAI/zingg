@@ -43,7 +43,12 @@ public abstract class DSUtil<S, D, R, C> {
 	}
 
 	public ZFrame<D, R, C> getPrefixedColumnsDS(ZFrame<D, R, C> lines) {
-		return lines.toDF(getPrefixedColumns(lines.columns()));
+		try {
+			return lines.toDF(getPrefixedColumns(lines.columns()));
+		} catch (Exception e) {
+			LOG.error("Please ensure that the 'ftd' and 'label' processes are executed before initiating the training phase");
+			throw e;
+		}
 	}
 
 	
