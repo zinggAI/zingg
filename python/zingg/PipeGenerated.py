@@ -6,6 +6,11 @@ JPipe = getJVM().zingg.spark.client.pipe.SparkPipe
 FilePipe = getJVM().zingg.common.client.pipe.FilePipe
 JStructType = getJVM().org.apache.spark.sql.types.StructType
 
+'''
+Actual pipe def in the args. One pipe can be used at multiple places with different tables, locations, queries etc
+ 
+ @author sgoyal
+'''
 class Pipe:
     def __init__(self, name, format):
         self.pipe = getJVM().zingg.spark.client.pipe.SparkPipe()

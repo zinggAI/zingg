@@ -36,9 +36,12 @@ public class PythonClassProcessor extends AbstractProcessor {
             if (element.getKind() == ElementKind.CLASS) {
                 TypeElement classElement = (TypeElement) element;
                 PackageElement packageElement = (PackageElement) classElement.getEnclosingElement();
+                String packageName = packageElement.getQualifiedName().toString();
                 List<String> methodNames = new ArrayList<>();
+
+                String outputDirectory = determineOutputDirectory(packageName);
                 
-                try (FileWriter fileWriter = new FileWriter("python/zingg"+ File.separator + element.getSimpleName() + "Generated.py")) {
+                try (FileWriter fileWriter = new FileWriter(outputDirectory + File.separator + element.getSimpleName() + "Generated.py")) {
                     generateImportsAndDeclarations(element, fileWriter);
 
                     fileWriter.write("class " + element.getSimpleName() + ":\n");
@@ -68,6 +71,18 @@ public class PythonClassProcessor extends AbstractProcessor {
         return classMethodsMap;
     }
 
+    private String determineOutputDirectory(String packageName) {
+        if (packageName.contains("enterprise") && packageName.contains("common")) {
+            return "common/python";
+        } else if (packageName.contains("enterprise") && packageName.contains("snowflake")) {
+            return "snowflake/python";
+        } else if (packageName.contains("enterprise") && packageName.contains("spark")) {
+            return "spark/python";
+        } else {
+            return "python/zingg";
+        }
+    }    
+
     private void generateImportsAndDeclarations(Element element, FileWriter fileWriter) throws IOException {
         fileWriter.write("from zingg.otherThanGenerated import *\n");
         if (element.getSimpleName().contentEquals("Pipe")) {
@@ -79,6 +94,13 @@ public class PythonClassProcessor extends AbstractProcessor {
             fileWriter.write("JStructType = getJVM().org.apache.spark.sql.types.StructType\n");
             fileWriter.write("\n");
         }
+
+        String javadoc = processingEnv.getElementUtils().getDocComment(element);
+        if (javadoc != null) {
+            fileWriter.write("'''\n");
+            fileWriter.write(javadoc.trim());
+            fileWriter.write("\n'''\n");
+        }
     }
 
     private void generateClassInitializationCode(TypeElement classElement, Element element, FileWriter fileWriter) throws IOException {
@@ -87,7 +109,14 @@ public class PythonClassProcessor extends AbstractProcessor {
             fileWriter.write("        self." + element.getSimpleName().toString().toLowerCase() + ".setName(name)\n");
             fileWriter.write("        self." + element.getSimpleName().toString().toLowerCase() + ".setFormat(format)\n");
         }
+        else if (element.getSimpleName().contentEquals("EPipe")) {
+            fileWriter.write("        self." + element.getSimpleName().toString().toLowerCase() + " = getJVM().zingg.spark.client.pipe.SparkPipe()\n");
+            fileWriter.write("        self." + element.getSimpleName().toString().toLowerCase() + ".setPassthroughExpr(passthroughExpr)\n");
+        }
         else if (element.getSimpleName().contentEquals("Arguments")) {
+            fileWriter.write("        self." + element.getSimpleName().toString().toLowerCase() + " = getJVM().zingg.common.client.Arguments()\n");
+        }
+        else if (element.getSimpleName().contentEquals("EArguments")) {
             fileWriter.write("        self." + element.getSimpleName().toString().toLowerCase() + " = getJVM().zingg.common.client.Arguments()\n");
         }
         else if (element.getSimpleName().contentEquals("FieldDefinition")) {

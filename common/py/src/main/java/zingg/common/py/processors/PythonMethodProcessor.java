@@ -36,6 +36,14 @@ public class PythonMethodProcessor extends AbstractProcessor {
 
                     if (methodNames.contains(methodElement.getSimpleName().toString())) {
                         try (FileWriter fileWriter = new FileWriter("python/zingg" + File.separator + className + "Generated.py", true)) {
+
+                            String javadoc = processingEnv.getElementUtils().getDocComment(methodElement);
+                            if (javadoc != null) {
+                                fileWriter.write("    '''\n");
+                                fileWriter.write(javadoc.trim());
+                                fileWriter.write("\n    '''\n");
+                            }
+
                             fileWriter.write("    def " + methodElement.getSimpleName() + "(self" + generateMethodSignature(methodElement) + "):\n");
                             generateMethodReturn(methodElement, fileWriter);
                             generateFieldAssignment(methodElement, fileWriter);
