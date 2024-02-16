@@ -5,6 +5,13 @@ import java.io.Serializable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.event.events.IEvent;
+import zingg.common.client.event.events.ZinggStartEvent;
+import zingg.common.client.event.events.ZinggStopEvent;
+import zingg.common.client.event.listeners.EventsListener;
+import zingg.common.client.event.listeners.IEventListener;
+import zingg.common.client.event.listeners.ZinggStartListener;
+import zingg.common.client.event.listeners.ZinggStopListener;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.Email;
 import zingg.common.client.util.EmailBody;
@@ -323,5 +330,14 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 		return argsUtil;
 	}    
+
+	public void addListener(IEvent event, IEventListener listener) {
+        EventsListener.getInstance().addListener(event.getClass(), listener);
+    }
+
+    public void initializeListeners() {
+        addListener(new ZinggStartEvent(), new ZinggStartListener());
+        addListener(new ZinggStopEvent(), new ZinggStopListener());
+    }
     
 }
