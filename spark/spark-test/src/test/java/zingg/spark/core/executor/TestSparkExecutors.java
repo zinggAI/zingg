@@ -47,25 +47,21 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 	@Override
 	protected SparkTrainingDataFinder getTrainingDataFinder() throws ZinggClientException {
 		SparkTrainingDataFinder stdf = new SparkTrainingDataFinder(ctx);
-		stdf.init(args);
 		return stdf;
 	}
 	@Override
 	protected Labeller<SparkSession,Dataset<Row>,Row,Column,DataType> getLabeller() throws ZinggClientException {
 		JunitSparkLabeller jlbl = new JunitSparkLabeller(ctx);
-		jlbl.init(args);
 		return jlbl;
 	}
 	@Override
 	protected SparkTrainer getTrainer() throws ZinggClientException {
 		SparkTrainer st = new SparkTrainer(ctx);
-		st.init(args);
 		return st;
 	}
 	@Override
 	protected SparkMatcher getMatcher() throws ZinggClientException {
 		SparkMatcher sm = new SparkMatcher(ctx);
-		sm.init(args);
 		return sm;
 	}
 	

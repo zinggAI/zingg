@@ -49,23 +49,35 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	public void testExecutors() throws ZinggClientException {	
 		List<ExecutorTester<S, D, R, C, T>> executorTesterList = new ArrayList<ExecutorTester<S, D, R, C, T>>();
 
-		TrainingDataFinderTester<S, D, R, C, T> tdft = new TrainingDataFinderTester<S, D, R, C, T>(getTrainingDataFinder());
+		TrainingDataFinder<S, D, R, C, T> trainingDataFinder = getTrainingDataFinder();
+		trainingDataFinder.init(args);
+		TrainingDataFinderTester<S, D, R, C, T> tdft = new TrainingDataFinderTester<S, D, R, C, T>(trainingDataFinder);
 		executorTesterList.add(tdft);
 		
-		LabellerTester<S, D, R, C, T> lt = new LabellerTester<S, D, R, C, T>(getLabeller());
+		Labeller<S, D, R, C, T> labeller = getLabeller();
+		labeller.init(args);
+		LabellerTester<S, D, R, C, T> lt = new LabellerTester<S, D, R, C, T>(labeller);
 		executorTesterList.add(lt);
 
 		// training and labelling needed twice to get sufficient data
-		TrainingDataFinderTester<S, D, R, C, T> tdft2 = new TrainingDataFinderTester<S, D, R, C, T>(getTrainingDataFinder());
+		TrainingDataFinder<S, D, R, C, T> trainingDataFinder2 = getTrainingDataFinder();
+		trainingDataFinder2.init(args);
+		TrainingDataFinderTester<S, D, R, C, T> tdft2 = new TrainingDataFinderTester<S, D, R, C, T>(trainingDataFinder2);
 		executorTesterList.add(tdft2);
 		
-		LabellerTester<S, D, R, C, T> lt2 = new LabellerTester<S, D, R, C, T>(getLabeller());
+		Labeller<S, D, R, C, T> labeller2 = getLabeller();
+		labeller2.init(args);
+		LabellerTester<S, D, R, C, T> lt2 = new LabellerTester<S, D, R, C, T>(labeller2);
 		executorTesterList.add(lt2);
 	
-		TrainerTester<S, D, R, C, T> tt = new TrainerTester<S, D, R, C, T>(getTrainer());
+		Trainer<S, D, R, C, T> trainer = getTrainer();
+		trainer.init(args);
+		TrainerTester<S, D, R, C, T> tt = new TrainerTester<S, D, R, C, T>(trainer);
 		executorTesterList.add(tt);
 
-		MatcherTester<S, D, R, C, T> mt = new MatcherTester(getMatcher());
+		Matcher<S, D, R, C, T> matcher = getMatcher();
+		matcher.init(args);
+		MatcherTester<S, D, R, C, T> mt = new MatcherTester(matcher);
 		executorTesterList.add(mt);
 		
 		testExecutors(executorTesterList);

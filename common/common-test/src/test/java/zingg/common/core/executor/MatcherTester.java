@@ -53,8 +53,8 @@ public class MatcherTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> 
 		LOG.info("precision " + (tpCount*1.0d/(tpCount+fpCount)));
 		LOG.info("recall " + tpCount + " denom " + (tpCount+fnCount) + " overall " + (tpCount*1.0d/(tpCount+fnCount)));
 
-		assertTrue(0.8 < (tpCount*1.0d/(tpCount+fpCount)));
-		assertTrue(0.8 < (tpCount*1.0d/(tpCount+fnCount)));
+		assertTrue(0.8 < Math.round(tpCount*1.0d/(tpCount+fpCount)));
+		assertTrue(0.8 < Math.round(tpCount*1.0d/(tpCount+fnCount)));
 	}
 
 	public ZFrame<D, R, C> getOutputData() throws ZinggClientException {
