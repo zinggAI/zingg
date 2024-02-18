@@ -9,7 +9,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 
-public abstract class MatcherTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> {
+public class MatcherTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> {
 
 	public static final Log LOG = LogFactory.getLog(MatcherTester.class);
 	
