@@ -31,7 +31,7 @@ public abstract class MatcherTester<S, D, R, C, T> extends ExecutorTester<S, D, 
 		
 		df = df.withColumn("fnameId",df.concat(df.col("fname"), df.col("id")));
 		df = df.select("fnameId", getClusterColName());
-		df = df.withColumn("dupeFnameId",substr(df.col("fnameId"),0,8)).cache();
+		df = df.withColumn("dupeFnameId",df.substr(df.col("fnameId"),0,8)).cache();
 		ZFrame<D, R, C> df1 = df.withColumnRenamed("fnameId", "fnameId1").withColumnRenamed("dupeFnameId", "dupeFnameId1")
 							.withColumnRenamed(getClusterColName(), getClusterColName() + "1").cache();
 					
@@ -40,7 +40,7 @@ public abstract class MatcherTester<S, D, R, C, T> extends ExecutorTester<S, D, 
 		ZFrame<D, R, C> result = joinAndFilter(getClusterColName(), df, df1).cache();
 
 		ZFrame<D, R, C> fn = gold.except(result);
-		ZFrame<D, R, C> tp = intersect(gold,result);
+		ZFrame<D, R, C> tp = gold.intersect(result);
 		ZFrame<D, R, C> fp = result.except(gold);
 
 		long fnCount = fn.count();
@@ -66,17 +66,7 @@ public abstract class MatcherTester<S, D, R, C, T> extends ExecutorTester<S, D, 
 		C col1 = df.col(colName);
 		C col2 = df1.col(colName+"1");
 		ZFrame<D, R, C> joined = df.joinOnCol(df1, df.equalTo(col1, col2));
-		return joined.filter(gt(joined.col("fnameId"), joined.col("fnameId1")));
+		return joined.filter(joined.gt(joined.col("fnameId"), joined.col("fnameId1")));
 	}
 	
-	
-	// returns df1.intersect(df2)
-	public abstract ZFrame<D, R, C> intersect(ZFrame<D, R, C> df1, ZFrame<D, R, C> df2);
-	
-	// return col.substr(startPos,len)
-	public abstract C substr(C col, int startPos, int len);
-	
-	// return c1.gt(c2)
-	public abstract C gt(C column1, C column2);
-
 }
