@@ -31,6 +31,14 @@
 		</dependency>
 		<dependency>
 			<groupId>zingg</groupId>
+			<artifactId>zingg-common-core</artifactId>
+			<classifier>tests</classifier>
+			<type>test-jar</type>			
+			<version>${zingg.version}</version>
+			<scope>test</scope>
+		</dependency>				
+		<dependency>
+			<groupId>zingg</groupId>
 			<artifactId>zingg-common-test</artifactId>
 			<classifier>tests</classifier>
 			<type>test-jar</type>			
