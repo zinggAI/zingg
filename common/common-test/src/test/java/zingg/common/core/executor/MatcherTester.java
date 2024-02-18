@@ -46,15 +46,21 @@ public class MatcherTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> 
 		long fnCount = fn.count();
 		long tpCount = tp.count();
 		long fpCount = fp.count();
-		
+		double score1 = tpCount*1.0d/(tpCount+fpCount);
+		double score2 = tpCount*1.0d/(tpCount+fnCount);
+	
 		LOG.info("False negative " + fnCount);
 		LOG.info("True positive " + tpCount);
 		LOG.info("False positive " + fpCount);
-		LOG.info("precision " + (tpCount*1.0d/(tpCount+fpCount)));
-		LOG.info("recall " + tpCount + " denom " + (tpCount+fnCount) + " overall " + (tpCount*1.0d/(tpCount+fnCount)));
+		LOG.info("precision " + score1);
+		LOG.info("recall " + tpCount + " denom " + (tpCount+fnCount) + " overall " + score2);
 
-		assertTrue(0.8 < Math.round(tpCount*1.0d/(tpCount+fpCount)));
-		assertTrue(0.8 < Math.round(tpCount*1.0d/(tpCount+fnCount)));
+		System.out.println("precision score1 " + score1);
+		
+		System.out.println("recall score2 " + score2);
+		
+		assertTrue(0.8 <= score1);
+		assertTrue(0.8 <= score2);
 	}
 
 	public ZFrame<D, R, C> getOutputData() throws ZinggClientException {
