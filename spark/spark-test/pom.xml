@@ -3,32 +3,40 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>zingg</groupId>
-		<artifactId>zingg-common</artifactId>
+		<artifactId>zingg-spark</artifactId>
 		<version>${zingg.version}</version>
 	</parent>
-	<artifactId>zingg-common-core</artifactId>
+	<artifactId>zingg-spark-test</artifactId>
 	<packaging>jar</packaging>
 	<dependencies>
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>zingg-spark-core</artifactId>
+			<version>${zingg.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>zingg-spark-client</artifactId>
+			<version>${zingg.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>zingg-common-core</artifactId>
+			<version>${zingg.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>zingg</groupId>
 			<artifactId>zingg-common-client</artifactId>
 			<version>${zingg.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.wcohen.ss</groupId>
-			<artifactId>secondstring</artifactId>
-			<version>2021</version>
-		</dependency>
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>2.3.31</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.14</version>
-		</dependency>	
+			<groupId>zingg</groupId>
+			<artifactId>zingg-common-core</artifactId>
+			<classifier>tests</classifier>
+			<type>test-jar</type>			
+			<version>${zingg.version}</version>
+			<scope>test</scope>
+		</dependency>				
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
@@ -46,7 +54,7 @@
 			<artifactId>junit-jupiter-params</artifactId>
 			<version>5.8.1</version>
 			<scope>test</scope>
-		</dependency>		
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -63,5 +71,5 @@
 				</executions>
 			</plugin>
 		</plugins>
-	</build>				
+	</build>			
 </project>

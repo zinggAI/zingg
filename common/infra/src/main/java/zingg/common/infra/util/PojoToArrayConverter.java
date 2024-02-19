@@ -1,4 +1,4 @@
-package zingg.common.infraForTest.util;
+package zingg.common.infra.util;
 
 import java.lang.reflect.*;
 import java.security.NoSuchAlgorithmException;

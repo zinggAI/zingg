@@ -170,5 +170,10 @@ public interface ZFrame<D, R, C> {
 
     public ZFrame<D,R,C> groupByCount(String groupByCol1, String groupByCol2, String countColName);
 
-   
+    public ZFrame<D,R,C> intersect(ZFrame<D,R,C> other);
+	
+	public C substr(C col, int startPos, int len);
+
+	public C gt(C column1, C column2);
+
 }

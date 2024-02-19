@@ -448,7 +448,20 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     }
 
 
+	@Override
+	public ZFrame<Dataset<Row>, Row, Column> intersect(ZFrame<Dataset<Row>, Row, Column> other) {
+		return new SparkFrame(df.intersect(other.df())); 
+	}
 
+	@Override
+	public Column substr(Column col, int startPos, int len) {
+		return col.substr(startPos, len);
+	}
+	
+    @Override
+    public Column gt(Column column1, Column column2) {
+		return column1.gt(column2);
+	}
 	
 }
 	
