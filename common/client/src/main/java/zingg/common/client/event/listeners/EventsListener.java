@@ -1,5 +1,6 @@
 package zingg.common.client.event.listeners;
 
+import zingg.common.client.ZinggClientException;
 import zingg.common.client.event.events.IEvent;
 import zingg.common.client.util.ListMap;
 
@@ -21,11 +22,11 @@ public class EventsListener {
         eventListeners.add(eventClass, listener);
     }
 
-    public void fireEvent(IEvent event) {
+    public void fireEvent(IEvent event) throws ZinggClientException {
         listen(event);
     }
 
-    private void listen(IEvent event) {
+    private void listen(IEvent event) throws ZinggClientException {
         Class<? extends IEvent> eventClass = event.getClass();
         for (IEventListener listener : eventListeners.get(eventClass)) {
             listener.listen(event);
