@@ -1,4 +1,4 @@
-package zingg.common.core.executor;
+package zingg.spark.core.executor;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
@@ -12,7 +12,6 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.core.executor.JunitLabeller;
 import zingg.spark.core.context.ZinggSparkContext;
-import zingg.spark.core.executor.SparkLabeller;
 
 public class JunitSparkLabeller extends SparkLabeller {
 
