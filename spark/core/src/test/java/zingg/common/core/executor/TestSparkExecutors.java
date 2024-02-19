@@ -1,4 +1,4 @@
-package zingg.spark.core.executor;
+package zingg.common.core.executor;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +16,9 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.Labeller;
 import zingg.common.core.executor.TestExecutorsGeneric;
 import zingg.spark.core.context.ZinggSparkContext;
+import zingg.spark.core.executor.SparkMatcher;
+import zingg.spark.core.executor.SparkTrainer;
+import zingg.spark.core.executor.SparkTrainingDataFinder;
 
 public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Dataset<Row>,Row,Column,DataType> {
 	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
