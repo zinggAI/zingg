@@ -185,10 +185,12 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public abstract Client<S,D,R,C,T> getClient(IArguments args, ClientOptions options) throws ZinggClientException;
 	
 	public void mainMethod(String... args) {
+		initializeListeners();
 		printBanner();
 		Client<S,D,R,C,T> client = null;
 		ClientOptions options = null;
 		try {
+			EventsListener.getInstance().fireEvent(new ZinggStartEvent());
 			for (String a: args) LOG.debug("args " + a);
 			options = new ClientOptions(args);
 			setOptions(options);
