@@ -33,7 +33,7 @@ import zingg.common.py.annotations.PythonMethod;
  * @author sgoyal
  *
  */
-@PythonClass
+@PythonClass(module = "client")
 public class FieldDefinition implements 
 		Serializable {
 
