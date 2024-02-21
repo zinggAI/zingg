@@ -1,4 +1,4 @@
-package zingg.common.core.util;
+package zingg.common.client.util;
 
 
 import zingg.common.client.FieldDefinition;
@@ -7,8 +7,6 @@ import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
-import zingg.common.client.util.ColName;
-import zingg.common.client.util.ColValues;
 
 import java.util.ArrayList;
 import java.util.List;

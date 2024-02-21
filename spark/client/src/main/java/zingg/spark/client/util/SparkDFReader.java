@@ -1,4 +1,4 @@
-package zingg.spark.core.util;
+package zingg.spark.client.util;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.DataFrameReader;
@@ -8,7 +8,7 @@ import org.apache.spark.sql.types.StructType;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.core.util.DFReader;
+import zingg.common.client.util.DFReader;
 import zingg.spark.client.SparkFrame;
 import org.apache.spark.sql.SparkSession;
 

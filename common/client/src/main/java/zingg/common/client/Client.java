@@ -15,6 +15,7 @@ import zingg.common.client.event.listeners.ZinggStopListener;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.Email;
 import zingg.common.client.util.EmailBody;
+import zingg.common.client.util.PipeUtilBase;
 
 /**
  * This is the main point of interface with the Zingg matching product.
@@ -29,7 +30,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	protected IZingg<S,D,R,C> zingg;
 	protected ClientOptions options;
 	protected S session;
-
+	protected PipeUtilBase<S,D,R,C> pipeUtil;
 	public static final Log LOG = LogFactory.getLog(Client.class);
 
 	protected String zFactoryClassName;
@@ -258,7 +259,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public void init() throws ZinggClientException {
-		zingg.init(getArguments());
+		zingg.init(getArguments(), getSession());
 		if (session != null) zingg.setSession(session);
 		
 	}
@@ -341,5 +342,17 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
         addListener(new ZinggStartEvent(), new ZinggStartListener());
         addListener(new ZinggStopEvent(), new ZinggStopListener());
     }
+    
+    public abstract S getSession();
+    
+    public void setSession(S s) {
+    	this.session = s;
+    }
+
+	public abstract PipeUtilBase<S, D, R, C> getPipeUtil();
+
+	public void setPipeUtil(PipeUtilBase<S, D, R, C> pipeUtil) {
+		this.pipeUtil = pipeUtil;
+	}
     
 }

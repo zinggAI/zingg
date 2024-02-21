@@ -38,9 +38,9 @@ public class SparkRecommender extends Recommender<SparkSession, Dataset<Row>, Ro
 	}	
 	
     @Override
-    public void init(IArguments args)  throws ZinggClientException {
-        super.init(args);
-        getContext().init();
+    public void init(IArguments args, SparkSession s)  throws ZinggClientException {
+        super.init(args,s);
+        getContext().init(s);
     }	
 
     @Override

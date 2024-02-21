@@ -20,10 +20,10 @@ public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S, D, R, 
 	}
 
 	@Override
-	public void init(IArguments args) throws ZinggClientException {
-		finder.init(args);
-		labeller.init(args);
-		super.init(args);
+	public void init(IArguments args, S s) throws ZinggClientException {
+		finder.init(args,s);
+		labeller.init(args,s);
+		super.init(args,s);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package zingg.spark.core.util;
+package zingg.spark.client.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,9 +10,9 @@ import org.apache.spark.sql.SaveMode;
 import zingg.common.client.ZFrame;
 //import zingg.common.client.pipe.InMemoryPipe;
 import zingg.common.client.pipe.Pipe;
-import zingg.common.core.util.DFReader;
-import zingg.common.core.util.DFWriter;
-import zingg.common.core.util.PipeUtil;
+import zingg.common.client.util.DFReader;
+import zingg.common.client.util.DFWriter;
+import zingg.common.client.util.PipeUtil;
 import zingg.spark.client.SparkFrame;
 import org.apache.spark.sql.SparkSession;
 

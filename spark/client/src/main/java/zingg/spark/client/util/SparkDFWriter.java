@@ -1,4 +1,4 @@
-package zingg.spark.core.util;
+package zingg.spark.client.util;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.DataFrameWriter;
@@ -7,7 +7,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 
 import zingg.common.client.ZFrame;
-import zingg.common.core.util.DFWriter;
+import zingg.common.client.util.DFWriter;
 
 public class SparkDFWriter implements DFWriter<Dataset<Row>, Row, Column>{
     private DataFrameWriter writer;

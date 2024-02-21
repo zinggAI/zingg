@@ -21,11 +21,11 @@ public abstract class TrainMatcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     }
 
 	@Override
-	public void init(IArguments args)
+	public void init(IArguments args, S s)
         throws ZinggClientException {
-			trainer.init(args);
-			matcher.init(args);
-			super.init(args);			
+			trainer.init(args,s);
+			matcher.init(args,s);
+			super.init(args,s);			
 	}
 
 	@Override

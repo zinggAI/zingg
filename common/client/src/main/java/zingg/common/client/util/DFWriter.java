@@ -1,4 +1,4 @@
-package zingg.common.core.util;
+package zingg.common.client.util;
 
 public interface DFWriter<D,R,C> {
 

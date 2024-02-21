@@ -50,7 +50,7 @@ public class TestFebrlDataset extends ZinggSparkTester{
 	public void testModelAccuracy(){
 		TrainMatcher tm = new SparkTrainMatcher();
 		try {
-			tm.init(args);
+			tm.init(args,spark);
 //			tm.setSpark(spark);
 //			tm.setCtx(ctx);
 			tm.setArgs(args);

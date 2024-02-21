@@ -35,9 +35,9 @@ public class SparkTrainer extends Trainer<SparkSession, Dataset<Row>, Row, Colum
 	}
 	
     @Override
-    public void init(IArguments args)  throws ZinggClientException {
-        super.init(args);
-        getContext().init();
+    public void init(IArguments args, SparkSession s)  throws ZinggClientException {
+        super.init(args,s);
+        getContext().init(s);
     }	
 	
 	@Override

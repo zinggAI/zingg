@@ -1,18 +1,17 @@
 package zingg.spark.client;
 
-import java.io.Serializable;
-
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Client;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
-import zingg.common.client.IZinggFactory;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.PipeUtilBase;
+import zingg.spark.client.util.SparkPipeUtil;
 /**
  * This is the main point of interface with the Zingg matching product.
  * 
@@ -71,7 +70,30 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 		client.mainMethod(args);
 	}
 
+	@Override
+	public SparkSession getSession() {
+		if (session!=null) {
+			return session;
+		} else {
+			SparkSession s = SparkSession
+                    .builder()
+                    .appName("Zingg")
+                    .getOrCreate();	
+			setSession(s);
+			return s;
+		}
+		
+	}
 	
-	
+	@Override
+	public PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> getPipeUtil() {
+		if (pipeUtil!=null) {
+			return pipeUtil;
+		} else {
+			PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> p = new SparkPipeUtil(session);
+			setPipeUtil(p);
+			return p;
+		}
+	}
 	
 }
