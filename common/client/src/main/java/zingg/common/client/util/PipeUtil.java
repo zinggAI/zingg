@@ -1,4 +1,4 @@
-package zingg.common.core.util;
+package zingg.common.client.util;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -12,7 +12,6 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
 //import zingg.common.client.pipe.InMemoryPipe;
 import zingg.common.client.pipe.Pipe;
-import zingg.common.client.util.ColName;
 
 //import com.datastax.spark.connector.cql.*;
 //import org.elasticsearch.spark.sql.api.java.JavaEsSparkSQL;

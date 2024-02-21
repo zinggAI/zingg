@@ -2,7 +2,7 @@ package zingg.common.client;
 
 public interface IZingg<S,D,R,C> {
 
-	public void init(IArguments args)
+	public void init(IArguments args, S session)
 			throws ZinggClientException;
 
 	public void execute() throws ZinggClientException;

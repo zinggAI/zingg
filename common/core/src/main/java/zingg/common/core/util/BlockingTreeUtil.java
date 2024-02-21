@@ -12,6 +12,7 @@ import zingg.common.client.MatchType;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ListMap;
+import zingg.common.client.util.PipeUtilBase;
 import zingg.common.client.util.Util;
 import zingg.common.core.block.Block;
 import zingg.common.core.block.Canopy;

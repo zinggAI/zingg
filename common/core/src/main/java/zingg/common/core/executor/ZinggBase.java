@@ -17,15 +17,15 @@ import zingg.common.client.options.ZinggOption;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
+import zingg.common.client.util.DSUtil;
+import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.context.Context;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.BlockingTreeUtil;
-import zingg.common.core.util.DSUtil;
 import zingg.common.core.util.GraphUtil;
 import zingg.common.core.util.HashUtil;
 import zingg.common.core.util.Metric;
 import zingg.common.core.util.ModelUtil;
-import zingg.common.core.util.PipeUtilBase;
 
 
 public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S, D, R, C> {
@@ -62,8 +62,8 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     }
 
    
-    
-    public void init(IArguments args)
+    @Override
+    public void init(IArguments args, S session)
         throws ZinggClientException {
             startTime = System.currentTimeMillis();
             this.args = args;

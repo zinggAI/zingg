@@ -1,4 +1,4 @@
-package zingg.common.core.util;
+package zingg.common.client.util;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;

@@ -1,4 +1,4 @@
-package zingg.spark.core.util;
+package zingg.spark.client.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -7,7 +7,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 
 import zingg.common.client.ZFrame;
-import zingg.common.core.util.DSUtil;
+import zingg.common.client.util.DSUtil;
 import zingg.scala.DFUtil;
 import zingg.spark.client.SparkFrame;
 import org.apache.spark.sql.SparkSession;

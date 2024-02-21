@@ -11,20 +11,20 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.IZingg;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.DSUtil;
+import zingg.common.client.util.PipeUtilBase;
 //
 import zingg.common.core.context.Context;
 import zingg.common.core.util.BlockingTreeUtil;
-import zingg.common.core.util.DSUtil;
 import zingg.common.core.util.GraphUtil;
 import zingg.common.core.util.HashUtil;
 import zingg.common.core.util.ModelUtil;
-import zingg.common.core.util.PipeUtilBase;
+import zingg.spark.client.util.SparkDSUtil;
+import zingg.spark.client.util.SparkPipeUtil;
 import zingg.spark.core.util.SparkBlockingTreeUtil;
-import zingg.spark.core.util.SparkDSUtil;
 import zingg.spark.core.util.SparkGraphUtil;
 import zingg.spark.core.util.SparkHashUtil;
 import zingg.spark.core.util.SparkModelUtil;
-import zingg.spark.core.util.SparkPipeUtil;
 
 
 public class ZinggSparkContext extends Context<SparkSession, Dataset<Row>, Row,Column,DataType>{
@@ -37,17 +37,18 @@ public class ZinggSparkContext extends Context<SparkSession, Dataset<Row>, Row,C
     
 
     @Override
-    public void init()
+    public void init(SparkSession session)
         throws ZinggClientException {
         try{
-            if (session==null) {
-            	session = SparkSession
-                    .builder()
-                    .appName("Zingg")
-                    .getOrCreate();
-            	
-            	//session = new SparkSession(spark, license);
-            }
+//            if (session==null) {
+//            	session = SparkSession
+//                    .builder()
+//                    .appName("Zingg")
+//                    .getOrCreate();
+//            	
+//            	//session = new SparkSession(spark, license);
+//            }
+        	this.session = session;
             if (ctx==null) {
 				ctx = JavaSparkContext.fromSparkContext(session.sparkContext());
 				JavaSparkContext.jarOfClass(IZingg.class);

@@ -39,9 +39,9 @@ public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, 
 	}
 
     @Override
-    public void init(IArguments args)  throws ZinggClientException {
-        super.init(args);
-        getContext().init();
+    public void init(IArguments args, SparkSession s)  throws ZinggClientException {
+        super.init(args,s);
+        getContext().init(s);
     }
     	
     public Pipe setSaveModeOnPipe(Pipe p) {

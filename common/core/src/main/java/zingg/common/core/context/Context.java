@@ -3,12 +3,12 @@ package zingg.common.core.context;
 import java.io.Serializable;
 
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.DSUtil;
+import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.util.BlockingTreeUtil;
-import zingg.common.core.util.DSUtil;
 import zingg.common.core.util.GraphUtil;
 import zingg.common.core.util.HashUtil;
 import zingg.common.core.util.ModelUtil;
-import zingg.common.core.util.PipeUtilBase;
 
 public abstract class Context <S,D, R, C,T> implements Serializable {
     protected S session;
@@ -62,7 +62,7 @@ public abstract class Context <S,D, R, C,T> implements Serializable {
         return this.blockingTreeUtil;
     }
 
-    public abstract void init()
+    public abstract void init(S session)
         throws ZinggClientException;
     
     public abstract void cleanup();
