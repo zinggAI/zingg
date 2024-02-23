@@ -19,6 +19,7 @@ import zingg.common.py.annotations.*;
 public class PythonClassProcessor extends AbstractProcessor {
 
     private Set<TypeElement> processedElements = new HashSet<>();
+    private Set<String> folders = new HashSet<>();
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -26,16 +27,21 @@ public class PythonClassProcessor extends AbstractProcessor {
         super.init(processingEnv);
 
         // Clear the output directory on initialization
-        String outputDirectory = "python/zinggGenerated";
-        File dir = new File(outputDirectory);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        } else {
-            for (File file : dir.listFiles()) {
-                file.delete();
+        folders.add("python/zinggGenerated");
+        folders.add("common/python");
+        folders.add("snowflake/python");
+        folders.add("spark/python");
+
+        for (String folder : folders) {
+            File directory = new File(folder);
+            if (directory.exists()) {
+                for (File file : directory.listFiles()) {
+                    file.delete();
+                    System.out.println(file + "deeellleeeeteeed");
+                    System.out.println(file + "geeneerateedddd");
+                }
             }
         }
-
     }
 
     @Override
@@ -56,19 +62,22 @@ public class PythonClassProcessor extends AbstractProcessor {
         // Mark the class as processed
         processedElements.add(classElement);
 
-        // System.out.println("Called for " + classElement);
-        PackageElement packageElement = (PackageElement) classElement.getEnclosingElement();
-        String packageName = packageElement.getQualifiedName().toString();
         PythonClass pythonClassAnnotation = classElement.getAnnotation(PythonClass.class);
 
-        String outputDirectory = determineOutputDirectory(packageName);
+        String outputDirectory = pythonClassAnnotation.outputDirectory();
         String moduleName = pythonClassAnnotation.module();
         String outputFile = outputDirectory + File.separator + moduleName + ".py";
+        String parentClassName = pythonClassAnnotation.parent();
       
         try (FileWriter fileWriter = new FileWriter(outputFile, true)) {
             generateImportsAndDeclarations(classElement, fileWriter);
-
-            fileWriter.write("class " + classElement.getSimpleName() + ":\n");
+            
+            if (!parentClassName.isEmpty()) {
+                fileWriter.write("class " + classElement.getSimpleName() + "(" + parentClassName + "):\n");
+            } else {
+                fileWriter.write("class " + classElement.getSimpleName() + ":\n");
+            }
+            // System.out.println(classElement.getSimpleName() + "ccccccccccccccccccccccccc");
 
             // __init__ method
             fileWriter.write("    def __init__(self" + generateConstructorParameters(classElement, classElement) + "):\n");
@@ -91,18 +100,6 @@ public class PythonClassProcessor extends AbstractProcessor {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private String determineOutputDirectory(String packageName) {
-        if (packageName.contains("enterprise") && packageName.contains("common")) {
-            return "common/python";
-        } else if (packageName.contains("enterprise") && packageName.contains("snowflake")) {
-            return "snowflake/python";
-        } else if (packageName.contains("enterprise") && packageName.contains("spark")) {
-            return "spark/python";
-        } else {
-            return "python/zinggGenerated";
         }
     }    
 

@@ -6,4 +6,6 @@ import java.lang.annotation.ElementType;
 @Target({ElementType.TYPE})
 public @interface PythonClass {
     String module();
+    String parent() default "";
+    String outputDirectory();
 }

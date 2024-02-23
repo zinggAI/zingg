@@ -20,7 +20,7 @@ import zingg.common.py.annotations.PythonMethod;
  * @author sgoyal
  *
  */
-@PythonClass(module = "pipes")
+@PythonClass(module = "pipes", outputDirectory = "python/zinggGenerated")
 @JsonInclude(Include.NON_NULL)
 public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	
