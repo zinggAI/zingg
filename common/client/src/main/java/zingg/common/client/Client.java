@@ -243,6 +243,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 		finally {
 			try {
+				EventsListener.getInstance().fireEvent(new ZinggStopEvent());
 				if (client != null) {
 					//client.postMetrics();
 					client.stop();
