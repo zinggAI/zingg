@@ -186,16 +186,19 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public abstract Client<S,D,R,C,T> getClient(IArguments args, ClientOptions options) throws ZinggClientException;
 	
 	public void mainMethod(String... args) {
-		initializeListeners();
 		printBanner();
 		Client<S,D,R,C,T> client = null;
 		ClientOptions options = null;
 		try {
-			EventsListener.getInstance().fireEvent(new ZinggStartEvent());
+			
 			for (String a: args) LOG.debug("args " + a);
 			options = new ClientOptions(args);
 			setOptions(options);
-		
+
+			// after setting options as some of the listeners need options
+			initializeListeners();
+			EventsListener.getInstance().fireEvent(new ZinggStartEvent());
+			
 			if (options.has(options.HELP) || options.has(options.HELP1) || options.get(ClientOptions.PHASE) == null) {
 				LOG.warn(options.getHelp());
 				System.exit(0);
@@ -243,6 +246,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 		finally {
 			try {
+				EventsListener.getInstance().fireEvent(new ZinggStopEvent());
 				if (client != null) {
 					//client.postMetrics();
 					client.stop();
