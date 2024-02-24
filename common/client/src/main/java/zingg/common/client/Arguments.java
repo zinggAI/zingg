@@ -81,7 +81,7 @@ import zingg.common.py.annotations.PythonMethod;
  * }
  * </pre>
  */
-@PythonClass
+@PythonClass(module = "client", outputDirectory = "python/zinggGenerated")
 @JsonInclude(Include.NON_NULL)
 public class Arguments implements Serializable, IArguments {
 

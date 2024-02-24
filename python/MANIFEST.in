@@ -11,4 +11,5 @@ recursive-include zingg/examples/amazon-google *
 recursive-include zingg/examples/febrl *
 recursive-include zingg/models *
 recursive-include zingg/phases *.py
+recursive-include zingg/zinggGenerated *.py
 recursive-include zingg/config *

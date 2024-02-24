@@ -56,6 +56,7 @@ SCRIPTS_PATH = os.path.join(ZINGG_HOME, "scripts")
 DATA_PATH = os.path.join(ZINGG_HOME, "models")
 CONF_PATH = os.path.join(ZINGG_HOME, "config")
 PHASES_PATH = os.path.join(ZINGG_HOME, "python/phases")
+GENERATEDCODE_PATH = os.path.join(ZINGG_HOME, "python/zinggGenerated")
 
 SCRIPTS_TARGET = os.path.join("zingg", "scripts")
 JARS_TARGET = os.path.join("zingg", "jars")
@@ -63,6 +64,7 @@ EXAMPLES_TARGET = os.path.join("zingg", "examples")
 DATA_TARGET = os.path.join("zingg", "models")
 CONF_TARGET = os.path.join("zingg", "config")
 PHASES_TARGET = os.path.join("zingg", "phases")
+GENERATEDCODE_TARGET = os.path.join("zingg", "zinggGenerated")
 
 # Check and see if we are under the Zingg path in which case we need to build the symlink farm.
 # This is important because we only want to build the symlink farm while under Zingg otherwise we
@@ -112,6 +114,7 @@ try:
             os.symlink(DATA_PATH, DATA_TARGET)
             os.symlink(CONF_PATH, CONF_TARGET)
             os.symlink(PHASES_PATH, PHASES_TARGET)
+            os.symlink(GENERATEDCODE_PATH, GENERATEDCODE_TARGET)
         else:
             # For windows fall back to the slower copytree
             copytree(JARS_PATH, JARS_TARGET)
@@ -120,6 +123,7 @@ try:
             copytree(DATA_PATH, DATA_TARGET)
             copytree(CONF_PATH, CONF_TARGET)
             copytree(PHASES_PATH, PHASES_TARGET)
+            copytree(GENERATEDCODE_PATH, GENERATEDCODE_TARGET)
     else:
         # If we are not inside of ZINGG_HOME verify we have the required symlink farm
         if not os.path.exists(JARS_TARGET):
@@ -158,7 +162,8 @@ try:
             'zingg.data': 'zingg/models',
             'zingg.examples': 'zingg/examples',
             'zingg.conf': 'zingg/config',
-            'zingg.phases': 'zingg/phases'
+            'zingg.phases': 'zingg/phases',
+            'zingg.zinggGenerated': 'zingg/zinggGenerated'
         },
         package_data={
             'zingg.jars': ['*.jar'],
@@ -167,6 +172,7 @@ try:
             'zingg.examples': ['*.py', '*/examples/*.py'],
             'zingg.conf': ['*'],
             'zingg.phases': ['*'],
+            'zingg.zinggGenerated': ['*'],
             '':['*.py'],
             '':['LICENSE']
             },
@@ -198,6 +204,7 @@ finally:
             os.remove(os.path.join("zingg", "examples"))
             os.remove(os.path.join("zingg", "phases"))
             os.remove(os.path.join("zingg", "config"))
+            os.remove(os.path.join("zingg", "zinggGenerated"))
         else:
             rmtree(os.path.join("zingg", "jars"))
             rmtree(os.path.join("zingg", "scripts"))
@@ -205,3 +212,4 @@ finally:
             rmtree(os.path.join("zingg", "examples"))
             rmtree(os.path.join("zingg", "phases"))
             rmtree(os.path.join("zingg", "config"))
+            rmtree(os.path.join("zingg", "zinggGenerated"))

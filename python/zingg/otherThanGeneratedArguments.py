@@ -1,4 +1,4 @@
-from zingg.ArgumentsGenerated import *
+from zingg.zinggGenerated.client import *
 from zingg.otherThanGeneratedFieldDefinition import *
 
 class ExtendedArgumentsGenerated(Arguments):
