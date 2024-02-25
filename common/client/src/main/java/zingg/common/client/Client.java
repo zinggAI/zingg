@@ -195,10 +195,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			options = new ClientOptions(args);
 			setOptions(options);
 
-			// after setting options as some of the listeners need options
-			initializeListeners();
-			EventsListener.getInstance().fireEvent(new ZinggStartEvent());
-			
 			if (options.has(options.HELP) || options.has(options.HELP1) || options.get(ClientOptions.PHASE) == null) {
 				LOG.warn(options.getHelp());
 				System.exit(0);
@@ -216,6 +212,10 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 				arguments = getArgsUtil().createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
 
+			// after setting arguments as some of the listeners need arguments
+			initializeListeners();
+			EventsListener.getInstance().fireEvent(new ZinggStartEvent());
+			
 			client = getClient(arguments, options);
 			client.init();
 			client.execute();
