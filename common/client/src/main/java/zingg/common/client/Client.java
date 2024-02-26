@@ -201,7 +201,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			}
 			String phase = options.get(ClientOptions.PHASE).value.trim();
 			ZinggOptions.verifyPhase(phase);
-			IArguments arguments = null;
 			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
 					arguments = getArgsUtil().createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
 			}
