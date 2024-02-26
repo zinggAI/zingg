@@ -211,12 +211,11 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 				arguments = getArgsUtil().createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
 
-			// after setting arguments as some of the listeners need arguments
-			initializeListeners();
-			EventsListener.getInstance().fireEvent(new ZinggStartEvent());
-			
 			client = getClient(arguments, options);
 			client.init();
+			// after setting arguments etc. as some of the listeners need it
+			initializeListeners();
+			EventsListener.getInstance().fireEvent(new ZinggStartEvent());			
 			client.execute();
 			client.postMetrics();
 			LOG.warn("Zingg processing has completed");				
