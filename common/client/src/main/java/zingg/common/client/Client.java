@@ -336,13 +336,13 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		return argsUtil;
 	}    
 
-	public void addListener(IEvent event, IEventListener listener) {
-        EventsListener.getInstance().addListener(event.getClass(), listener);
+	public void addListener(Class<? extends IEvent> eventClass, IEventListener listener) {
+        EventsListener.getInstance().addListener(eventClass, listener);
     }
 
     public void initializeListeners() {
-        addListener(new ZinggStartEvent(), new ZinggStartListener());
-        addListener(new ZinggStopEvent(), new ZinggStopListener());
+        addListener(ZinggStartEvent.class, new ZinggStartListener());
+        addListener(ZinggStopEvent.class, new ZinggStopListener());
     }
     
     public abstract S getSession();
