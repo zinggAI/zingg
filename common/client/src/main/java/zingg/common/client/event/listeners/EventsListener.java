@@ -6,7 +6,7 @@ import zingg.common.client.util.ListMap;
 
 public class EventsListener {
     private static EventsListener eventsListener = null;
-    private final ListMap<Class<? extends IEvent>, IEventListener> eventListeners;
+    private final ListMap<String, IEventListener> eventListeners;
 
     private EventsListener() {
         eventListeners = new ListMap<>();
@@ -19,7 +19,7 @@ public class EventsListener {
     }
 
     public void addListener(Class<? extends IEvent> eventClass, IEventListener listener) {
-        eventListeners.add(eventClass, listener);
+        eventListeners.add(eventClass.getCanonicalName(), listener);
     }
 
     public void fireEvent(IEvent event) throws ZinggClientException {
@@ -28,7 +28,7 @@ public class EventsListener {
 
     private void listen(IEvent event) throws ZinggClientException {
         Class<? extends IEvent> eventClass = event.getClass();
-        for (IEventListener listener : eventListeners.get(eventClass)) {
+        for (IEventListener listener : eventListeners.get(eventClass.getCanonicalName())) {
             listener.listen(event);
         }
     }

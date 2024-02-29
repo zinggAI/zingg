@@ -195,17 +195,12 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			options = new ClientOptions(args);
 			setOptions(options);
 
-			// after setting options as some of the listeners need options
-			initializeListeners();
-			EventsListener.getInstance().fireEvent(new ZinggStartEvent());
-			
 			if (options.has(options.HELP) || options.has(options.HELP1) || options.get(ClientOptions.PHASE) == null) {
 				LOG.warn(options.getHelp());
 				System.exit(0);
 			}
 			String phase = options.get(ClientOptions.PHASE).value.trim();
 			ZinggOptions.verifyPhase(phase);
-			IArguments arguments = null;
 			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
 					arguments = getArgsUtil().createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
 			}
@@ -218,6 +213,9 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 
 			client = getClient(arguments, options);
 			client.init();
+			// after setting arguments etc. as some of the listeners need it
+			initializeListeners();
+			EventsListener.getInstance().fireEvent(new ZinggStartEvent());			
 			client.execute();
 			client.postMetrics();
 			LOG.warn("Zingg processing has completed");				
@@ -338,13 +336,13 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		return argsUtil;
 	}    
 
-	public void addListener(IEvent event, IEventListener listener) {
-        EventsListener.getInstance().addListener(event.getClass(), listener);
+	public void addListener(Class<? extends IEvent> eventClass, IEventListener listener) {
+        EventsListener.getInstance().addListener(eventClass, listener);
     }
 
     public void initializeListeners() {
-        addListener(new ZinggStartEvent(), new ZinggStartListener());
-        addListener(new ZinggStopEvent(), new ZinggStopListener());
+        addListener(ZinggStartEvent.class, new ZinggStartListener());
+        addListener(ZinggStopEvent.class, new ZinggStopListener());
     }
     
     public abstract S getSession();
