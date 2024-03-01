@@ -79,7 +79,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				if (negPairs!= null) negPairs = negPairs.cache();
 				//create random samples for blocking
 				ZFrame<D,R,C> sampleOrginal = data.sample(false, args.getLabelDataSampleSize()).repartition(args.getNumPartitions()).cache();
-				sampleOrginal = getDSUtil().getFieldDefColumnsDS(sampleOrginal, args, true);
+				sampleOrginal = getDSUtil().ZidSelector(sampleOrginal, args, true);
 				LOG.info("Preprocessing DS for stopWords");
 
 				ZFrame<D,R,C> sample = getStopWords().preprocessForStopWords(sampleOrginal);

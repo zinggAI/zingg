@@ -39,9 +39,13 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	}
 
 	
+	// @Override
+	// public List<C> getDisplayColumns(ZFrame<D,R,C>  lines, IArguments args) {
+	// 	return getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
+	// }
 	@Override
-	public List<C> getDisplayColumns(ZFrame<D,R,C>  lines, IArguments args) {
-		return getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
+	public List<C> getDisplayColumns(ZFrame<D, R, C> lines, IArguments args) {
+		return getDSUtil().ZidSelector(lines, args, args.getShowConcise());
 	}
 
 	

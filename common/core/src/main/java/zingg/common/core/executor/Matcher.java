@@ -34,9 +34,12 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return data;
 	}
 
+	// public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
+	// 	return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
+	// }
 	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
-		return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
-	}
+		return getDSUtil().ZidSelector(testDataOriginal, args, true);
+	}	
 
 
 	public ZFrame<D,R,C>  getBlocked( ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
