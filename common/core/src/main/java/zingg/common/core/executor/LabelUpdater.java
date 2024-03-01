@@ -11,6 +11,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
+import zingg.common.client.IArguments;
 import zingg.common.core.util.LabelMatchType;
 
 public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
@@ -34,9 +35,8 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 		}
 	}
 
-	@Override
-	public List<C> getDisplayColumns(ZFrame<D, R, C> lines, IArguments args) {
-		return getDSUtil().ZidSelector(lines, args, false, args.getShowConcise());
+	public ZFrame<D, R, C> getDisplayColumns(ZFrame<D, R, C> lines, IArguments args) {
+		return getDSUtil().ZidSelector(lines, args, args.getShowConcise());
 	}
 
 	public ZFrame<D,R,C> processRecordsCli(ZFrame<D,R,C> lines) throws ZinggClientException {

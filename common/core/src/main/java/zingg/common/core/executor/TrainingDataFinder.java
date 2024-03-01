@@ -188,7 +188,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 		}
 		ZFrame<D,R,C> posSample = data.sample(false, args.getLabelDataSampleSize());
 		//select only those columns which are mentioned in the field definitions
-		posSample = getDSUtil().getFieldDefColumnsDS(posSample, args, true);
+		posSample = getDSUtil().ZidSelector(posSample, args, true);
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Sampled " + posSample.count());
 		}

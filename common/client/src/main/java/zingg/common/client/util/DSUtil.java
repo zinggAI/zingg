@@ -223,11 +223,21 @@ public abstract class DSUtil<S, D, R, C> {
 
 	}
 
+	public ZFrame<D, R, C> ZidSelector(ZFrame<D, R, C> frame, IArguments args, boolean someFlag) {
+		return null;
+	}
+
 	// public  ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> ds, IArguments args, boolean includeZid) {
 	// 	return select(ds, getFieldDefColumns(ds, args, includeZid, false));
 	// }
+
+	private Object getDSUtil() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getDSUtil'");
+	}
+
 	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> ds, IArguments args, boolean includeZid) {
-		return getDSUtil().ZidSelector(getFieldDefColumns(ds, args, includeZid, false), args, true);
+		return ((DSUtil) getDSUtil()).ZidSelector(ds, args, true);
 	}
 
 	public  ZFrame<D, R, C> select(ZFrame<D, R, C> ds, List<C> cols) {

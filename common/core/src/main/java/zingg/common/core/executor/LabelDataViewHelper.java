@@ -1,5 +1,6 @@
 package zingg.common.core.executor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -44,9 +45,11 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	// 	return getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
 	// }
 	@Override
-	public List<C> getDisplayColumns(ZFrame<D, R, C> lines, IArguments args) {
-		return getDSUtil().ZidSelector(lines, args, args.getShowConcise());
-	}
+    public List<C> getDisplayColumns(ZFrame<D, R, C> lines, IArguments args) {
+        ZFrame<D, R, C> resultFrame = getDSUtil().ZidSelector(lines, args, args.getShowConcise());
+		List<C> resultList = new ArrayList<>();
+		return resultList;
+    }
 
 	
 	@Override

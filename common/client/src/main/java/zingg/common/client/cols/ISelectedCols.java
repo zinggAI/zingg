@@ -8,7 +8,9 @@ public interface ISelectedCols {
 
     String[] getCols();
 
-    void setCols(String[] cols);
-    
     void setCols(List<String> cols);
+
+    void setNamedCols(List<? extends Named> n);
+
+    void setStringCols(List<String> cols);
 }
