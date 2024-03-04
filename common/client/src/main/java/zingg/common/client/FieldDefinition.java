@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
+import zingg.common.client.cols.Named;
 import zingg.common.py.annotations.PythonClass;
 import zingg.common.py.annotations.PythonMethod;
 
@@ -34,7 +35,7 @@ import zingg.common.py.annotations.PythonMethod;
  *
  */
 @PythonClass(module = "client", outputDirectory = "python/zinggGenerated")
-public class FieldDefinition implements 
+public class FieldDefinition implements Named,
 		Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -124,6 +125,21 @@ public class FieldDefinition implements
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
 	}
+
+	public boolean isDontUse() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isDontUse'");
+    }
+
+	@Override
+    public String getName() {
+        return getFieldName();
+    }
+
+    @Override
+    public void setName(String name) {
+        setFieldName(name);
+    }
 
 	@Override
 	public int hashCode() {
