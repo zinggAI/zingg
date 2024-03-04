@@ -6,11 +6,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IArguments;
 import zingg.common.client.ILabelDataViewHelper;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.context.Context;
@@ -39,11 +37,11 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	}
 
 	
-	@Override
-	public List<C> getDisplayColumns(ZFrame<D,R,C>  lines, IArguments args) {
-		return getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
-	}
-
+//	@Override
+//	public List<C> getDisplayColumns(ZFrame<D,R,C>  lines, IArguments args) {
+//		return getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
+//	}
+//
 	
 	@Override
 	public ZFrame<D,R,C>  getCurrentPair(ZFrame<D,R,C>  lines, int index, List<R>  clusterIds, ZFrame<D,R,C>  clusterLines) {

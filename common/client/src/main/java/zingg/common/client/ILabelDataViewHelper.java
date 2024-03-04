@@ -8,7 +8,7 @@ public interface ILabelDataViewHelper<S, D, R, C> {
 
 	List<R> getClusterIds(ZFrame<D, R, C> lines);
 
-	List<C> getDisplayColumns(ZFrame<D, R, C> lines, IArguments args);
+//	List<C> getDisplayColumns(ZFrame<D, R, C> lines, IArguments args);
 
 	ZFrame<D, R, C> getCurrentPair(ZFrame<D, R, C> lines, int index, List<R> clusterIds, ZFrame<D, R, C> clusterLines);
 

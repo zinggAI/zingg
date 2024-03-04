@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
@@ -35,7 +36,9 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
-		return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
+		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
+		return testDataOriginal.select(zidAndFieldDefSelector.getCols());
+//		return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
 	}
 
 

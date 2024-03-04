@@ -1,10 +1,13 @@
 package zingg.common.core.executor;
 
+import java.util.Arrays;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
@@ -79,7 +82,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				if (negPairs!= null) negPairs = negPairs.cache();
 				//create random samples for blocking
 				ZFrame<D,R,C> sampleOrginal = data.sample(false, args.getLabelDataSampleSize()).repartition(args.getNumPartitions()).cache();
-				sampleOrginal = getDSUtil().getFieldDefColumnsDS(sampleOrginal, args, true);
+				sampleOrginal = getFieldDefColumnsDS(sampleOrginal);
 				LOG.info("Preprocessing DS for stopWords");
 
 				ZFrame<D,R,C> sample = getStopWords().preprocessForStopWords(sampleOrginal);
@@ -188,7 +191,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 		}
 		ZFrame<D,R,C> posSample = data.sample(false, args.getLabelDataSampleSize());
 		//select only those columns which are mentioned in the field definitions
-		posSample = getDSUtil().getFieldDefColumnsDS(posSample, args, true);
+		posSample = getFieldDefColumnsDS(posSample);
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Sampled " + posSample.count());
 		}
@@ -202,8 +205,13 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 		return posPairs;
 	}
 
+	protected ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> data) {
+		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
+		String[] cols = zidAndFieldDefSelector.getCols();
+		return data.select(cols);
+		//return getDSUtil().getFieldDefColumnsDS(data, args, true);
+	}
+
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
     
-	
-		    
 }
