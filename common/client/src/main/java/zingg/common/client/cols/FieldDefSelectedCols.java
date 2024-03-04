@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import zingg.common.client.FieldDefinition;
+import zingg.common.client.MatchType;
 
 public class FieldDefSelectedCols extends SelectedCols {
 
@@ -24,7 +25,7 @@ public class FieldDefSelectedCols extends SelectedCols {
 		List<FieldDefinition> namedList = new ArrayList<FieldDefinition>();
 
         for (FieldDefinition fieldDef : fieldDefs) {
-            if (showConcise && fieldDef.isDontUse()) {
+            if (showConcise && fieldDef.matchType.contains(MatchType.DONT_USE)) {
                 continue;
             }
             namedList.add(fieldDef);
