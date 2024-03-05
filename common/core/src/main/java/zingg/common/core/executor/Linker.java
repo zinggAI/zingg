@@ -13,12 +13,17 @@ import zingg.common.client.util.ColValues;
 
 public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 
-	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.Linker";
 	public static final Log LOG = LogFactory.getLog(Linker.class);
 
 	public Linker() {
 		setZinggOption(ZinggOptions.LINK);
+	}
+
+	public ZFrame<D,R,C> getBlocks(ZFrame<D,R,C> blocked, ZFrame<D,R,C> bAll) throws Exception{
+		// THIS LOG IS NEEDED FOR PLAN CALCULATION USING COUNT, DO NOT REMOVE
+		LOG.info("in getBlocks, blocked count is " + blocked.count());
+		return getDSUtil().joinWithItselfSourceSensitive(blocked, ColName.HASH_COL, args).cache();
 	}
 
 	public ZFrame<D,R,C> selectColsFromBlocked(ZFrame<D,R,C> blocked) {

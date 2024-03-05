@@ -52,6 +52,10 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	
 	
+	public ZFrame<D,R,C> getBlocks(ZFrame<D,R,C>blocked) throws Exception{
+		return getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true).cache();
+	}
+
 	public ZFrame<D,R,C> getBlocks(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
 		ZFrame<D,R,C>joinH =  getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true).cache();
 		/*ZFrame<D,R,C>joinH = blocked.as("first").joinOnCol(blocked.as("second"), ColName.HASH_COL)
