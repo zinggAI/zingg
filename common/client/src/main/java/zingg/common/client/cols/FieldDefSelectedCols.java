@@ -4,27 +4,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import zingg.common.client.FieldDefinition;
+import zingg.common.client.MatchType;
 
 public class FieldDefSelectedCols extends SelectedCols {
 
-    public FieldDefSelectedCols(List<FieldDefinition> fieldDefs, boolean showConcise) {
+	protected FieldDefSelectedCols() {
+		
+	}
+	
+    public FieldDefSelectedCols(List<? extends FieldDefinition> fieldDefs, boolean showConcise) {
+        List<String> colList = getColList(fieldDefs, showConcise);
+        setCols(colList);
+    }
+    
+	protected List<String> getColList(List<? extends FieldDefinition> fieldDefs) {
+		return getColList(fieldDefs,false);
+	}
 
-        List<FieldDefinition> namedList = new ArrayList<>();
+	protected List<String> getColList(List<? extends FieldDefinition> fieldDefs, boolean showConcise) {
+		List<FieldDefinition> namedList = new ArrayList<FieldDefinition>();
 
         for (FieldDefinition fieldDef : fieldDefs) {
-            if (showConcise && fieldDef.isDontUse()) {
+            if (showConcise && fieldDef.matchType.contains(MatchType.DONT_USE)) {
                 continue;
             }
             namedList.add(fieldDef);
         }
-
-        namedList.add(new FieldDefinition());
         List<String> stringList = convertNamedListToStringList(namedList);
-        setCols(stringList);
-    }
+		return stringList;
+	}
 
-    private List<String> convertNamedListToStringList(List<FieldDefinition> namedList) {
-        List<String> stringList = new ArrayList<>();
+	protected List<String> convertNamedListToStringList(List<? extends FieldDefinition> namedList) {
+        List<String> stringList = new ArrayList<String>();
         for (FieldDefinition named : namedList) {
             stringList.add(named.getName());
         }

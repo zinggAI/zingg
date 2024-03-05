@@ -10,6 +10,7 @@ import zingg.common.client.ILabelDataViewHelper;
 import zingg.common.client.ITrainingDataModel;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 
@@ -79,7 +80,8 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 					);
 
 			lines = lines.cache();
-			List<C> displayCols = getLabelDataViewHelper().getDisplayColumns(lines, args);
+//			List<C> displayCols = getLabelDataViewHelper().getDisplayColumns(lines, args);
+			ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition(), false, args.getShowConcise());
 			//have to introduce as snowframe can not handle row.getAs with column
 			//name and row and lines are out of order for the code to work properly
 			//snow getAsString expects row to have same struc as dataframe which is 
@@ -104,7 +106,8 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 					msg2 = getLabelDataViewHelper().getMsg2(prediction, score);
 					//String msgHeader = msg1 + msg2;
 
-					selectedOption = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), msg1, msg2);
+//					selectedOption = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), msg1, msg2);
+					selectedOption = displayRecordsAndGetUserInput(currentPair.select(zidAndFieldDefSelector.getCols()), msg1, msg2);
 					getTrainingDataModel().updateLabellerStat(selectedOption, INCREMENT);
 					getLabelDataViewHelper().printMarkedRecordsStat(
 							getTrainingDataModel().getPositivePairsCount(),
