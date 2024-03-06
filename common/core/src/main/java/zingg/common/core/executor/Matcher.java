@@ -15,6 +15,8 @@ import zingg.common.client.util.ColValues;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
+import zingg.common.core.pairs.IPairBuilder;
+import zingg.common.core.pairs.SelfPairBuilder;
 import zingg.common.core.preprocess.StopWordsRemover;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
@@ -25,6 +27,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected static String name = "zingg.Matcher";
 	public static final Log LOG = LogFactory.getLog(Matcher.class);    
 	
+	protected IPairBuilder<S, D, R, C>  iPairBuilder;
 	
     public Matcher() {
         setZinggOption(ZinggOptions.MATCH);
@@ -50,26 +53,8 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return blocked1;
 	}
 	
-	public ZFrame<D,R,C> getBlocks(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
-		ZFrame<D,R,C>joinH =  getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true).cache();
-		/*ZFrame<D,R,C>joinH = blocked.as("first").joinOnCol(blocked.as("second"), ColName.HASH_COL)
-			.selectExpr("first.z_zid as z_zid", "second.z_zid as z_z_zid");
-		*/
-		//joinH.show();
-		joinH = joinH.filter(joinH.gt(ColName.ID_COL));	
-		LOG.warn("Num comparisons " + joinH.count());
-		joinH = joinH.repartition(args.getNumPartitions(), joinH.col(ColName.ID_COL));
-		bAll = bAll.repartition(args.getNumPartitions(), bAll.col(ColName.ID_COL));
-		joinH = joinH.joinOnCol(bAll, ColName.ID_COL);
-		LOG.warn("Joining with actual values");
-		//joinH.show();
-		bAll = getDSUtil().getPrefixedColumnsDS(bAll);
-		//bAll.show();
-		joinH = joinH.repartition(args.getNumPartitions(), joinH.col(ColName.COL_PREFIX + ColName.ID_COL));
-		joinH = joinH.joinOnCol(bAll, ColName.COL_PREFIX + ColName.ID_COL);
-		LOG.warn("Joining again with actual values");
-		//joinH.show();
-		return joinH;
+	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
+		return getIPairBuilder().getPairs(blocked, bAll);
 	}
 
 	protected abstract Model getModel() throws ZinggClientException;
@@ -91,7 +76,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
-			ZFrame<D,R,C> blocks = getBlocks(selectColsFromBlocked(blocked), testData);
+			ZFrame<D,R,C> blocks = getPairs(selectColsFromBlocked(blocked), testData);
 			ZFrame<D,R,C>dupesActual = predictOnBlocks(blocks); 
 			return getDupesActualForGraph(dupesActual);
 	}
@@ -284,6 +269,21 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
+
+    /**
+     * Each sub class of matcher can inject it's own iPairBuilder implementation
+     * @return
+     */
+	public IPairBuilder<S, D, R, C> getIPairBuilder() {	
+		if(iPairBuilder==null) {
+			iPairBuilder = new SelfPairBuilder<S, D, R, C> (getDSUtil(),args);
+		}
+		return iPairBuilder;
+	}
+
+	public void setIPairBuilder(IPairBuilder<S, D, R, C> iPairBuilder) {
+		this.iPairBuilder = iPairBuilder;
+	}
 
 	
 	    

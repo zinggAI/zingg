@@ -8,28 +8,27 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
+import zingg.common.core.pairs.IPairBuilder;
+import zingg.common.core.pairs.SelfPairBuilderSourceSensitive;
 
 
 
 public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 
+	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.Linker";
 	public static final Log LOG = LogFactory.getLog(Linker.class);
 
 	public Linker() {
 		setZinggOption(ZinggOptions.LINK);
 	}
-
-	public ZFrame<D,R,C> getBlocks(ZFrame<D,R,C> blocked, ZFrame<D,R,C> bAll) throws Exception{
-		// THIS LOG IS NEEDED FOR PLAN CALCULATION USING COUNT, DO NOT REMOVE
-		LOG.info("in getBlocks, blocked count is " + blocked.count());
-		return getDSUtil().joinWithItselfSourceSensitive(blocked, ColName.HASH_COL, args).cache();
-	}
-
+	
+	@Override
 	public ZFrame<D,R,C> selectColsFromBlocked(ZFrame<D,R,C> blocked) {
 		return blocked;
 	}
 
+	@Override
 	public void writeOutput(ZFrame<D,R,C> sampleOrginal, ZFrame<D,R,C> dupes) throws ZinggClientException {
 		try {
 			// input dupes are pairs
@@ -53,12 +52,19 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 		}
 	}
 
+	@Override
 	public ZFrame<D,R,C> getDupesActualForGraph(ZFrame<D,R,C> dupes) {
 		ZFrame<D,R,C> dupesActual = dupes
 				.filter(dupes.equalTo(ColName.PREDICTION_COL, ColValues.IS_MATCH_PREDICTION));
 		return dupesActual;
 	}
 
-	
+	@Override
+	public IPairBuilder<S, D, R, C> getIPairBuilder() {	
+		if(iPairBuilder==null) {
+			iPairBuilder = new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args);
+		}
+		return iPairBuilder;
+	}
 
 }
