@@ -8,7 +8,6 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
-import zingg.common.core.pairs.IPairBuilder;
 import zingg.common.core.pairs.SelfPairBuilderSourceSensitive;
 
 
@@ -27,6 +26,11 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	public ZFrame<D,R,C> selectColsFromBlocked(ZFrame<D,R,C> blocked) {
 		return blocked;
 	}
+	
+	@Override
+	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
+		return getPairs(blocked, bAll, new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args));
+	}	
 
 	@Override
 	public void writeOutput(ZFrame<D,R,C> sampleOrginal, ZFrame<D,R,C> dupes) throws ZinggClientException {
@@ -57,14 +61,6 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 		ZFrame<D,R,C> dupesActual = dupes
 				.filter(dupes.equalTo(ColName.PREDICTION_COL, ColValues.IS_MATCH_PREDICTION));
 		return dupesActual;
-	}
-
-	@Override
-	public IPairBuilder<S, D, R, C> getIPairBuilder() {	
-		if(iPairBuilder==null) {
-			iPairBuilder = new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args);
-		}
-		return iPairBuilder;
 	}
 
 }

@@ -27,8 +27,6 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected static String name = "zingg.Matcher";
 	public static final Log LOG = LogFactory.getLog(Matcher.class);    
 	
-	protected IPairBuilder<S, D, R, C>  iPairBuilder;
-	
     public Matcher() {
         setZinggOption(ZinggOptions.MATCH);
     }
@@ -54,7 +52,11 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 	
 	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
-		return getIPairBuilder().getPairs(blocked, bAll);
+		return getPairs(blocked, bAll, new SelfPairBuilder<S, D, R, C> (getDSUtil(),args));
+	}
+	
+	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception{
+		return iPairBuilder.getPairs(blocked, bAll);
 	}
 
 	protected abstract Model getModel() throws ZinggClientException;
@@ -270,21 +272,5 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
 
-    /**
-     * Each sub class of matcher can inject it's own iPairBuilder implementation
-     * @return
-     */
-	public IPairBuilder<S, D, R, C> getIPairBuilder() {	
-		if(iPairBuilder==null) {
-			iPairBuilder = new SelfPairBuilder<S, D, R, C> (getDSUtil(),args);
-		}
-		return iPairBuilder;
-	}
-
-	public void setIPairBuilder(IPairBuilder<S, D, R, C> iPairBuilder) {
-		this.iPairBuilder = iPairBuilder;
-	}
-
-	
 	    
 }
