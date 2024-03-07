@@ -53,14 +53,14 @@ public class PythonClassProcessor extends AbstractProcessor {
                 // __init__ method
                 System.out.println("    def __init__(self" +
                         generateConstructorParameters(classElement) + "):");
-                generateClassInitializationCode(classElement, element);
-
-                // for (VariableElement field : ElementFilter.fieldsIn(classElement.getEnclosedElements())) {
-                //     if (!field.getSimpleName().contentEquals("serialVersionUID")) {
-                //         generateFieldInitializationCode(field, element);
-                //     }
-                // }
-
+                if (element.getSimpleName().contentEquals("Pipe")) {
+                    generateClassInitializationCode(classElement, element);
+                }
+                for (VariableElement field : ElementFilter.fieldsIn(classElement.getEnclosedElements())) {
+                    if (!field.getSimpleName().contentEquals("serialVersionUID")) {
+                        generateFieldInitializationCode(field, element);
+                    }
+                }
                 for (ExecutableElement methodElement : ElementFilter.methodsIn(classElement.getEnclosedElements())) {
                     if (methodElement.getAnnotation(PythonMethod.class) != null) {
                         methodNames.add(methodElement.getSimpleName().toString());
@@ -140,16 +140,17 @@ public class PythonClassProcessor extends AbstractProcessor {
             fileWriter.write("        return self.fielddefinition\n");
         }
         fileWriter.write("\n");
+        System.out.println("        self." + element.getSimpleName().toString().toLowerCase() + " = getJVM().zingg.spark.client.pipe.SparkPipe()");
     }
 
-    // private void generateFieldInitializationCode(VariableElement field, Element element) {
-    //     String fieldName = field.getSimpleName().toString();
-    //     String fieldAssignment = "self." + element.getSimpleName().toString().toLowerCase() + "." + fieldName + " = " + fieldName;
+    private void generateFieldInitializationCode(VariableElement field, Element element) {
+        String fieldName = field.getSimpleName().toString();
+        String fieldAssignment = "self." + element.getSimpleName().toString().toLowerCase() + "." + fieldName + " = " + fieldName;
     
-    //     if (!fieldName.startsWith("FORMAT_")) {
-    //         System.out.println("        " + fieldAssignment);
-    //     }
-    // }
+        if (!fieldName.startsWith("FORMAT_")) {
+            System.out.println("        " + fieldAssignment);
+        }
+    }
 
     private String generateConstructorParameters(TypeElement classElement) {
         StringBuilder parameters = new StringBuilder();
