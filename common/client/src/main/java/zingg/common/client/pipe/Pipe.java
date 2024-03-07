@@ -55,7 +55,7 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 		return schema;
 	}
 
-	@PythonMethod
+
 	public void setSchema(String schema) {
 		this.schema = schema;
 	}
@@ -71,12 +71,10 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 		this.name = name;		
 	}
 	
-	@PythonMethod
 	public String getFormat() {
 		return format;
 	}
 	
-	@PythonMethod
 	@JsonValue
 	public void setFormat(String sinkType) {
 		this.format = sinkType;
@@ -92,7 +90,6 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 		return props;
 	}
 	
-	@PythonMethod
 	public void setProp(String k, String v) {
 		if (props == null) props = new HashMap<String, String>();
 		this.props.put(k, v);
@@ -137,7 +134,6 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 		this.dataset = ds;
 	}
 
-	@PythonMethod
 	@Override
 	public String toString() {
 		StringRedactor redactor = new StringRedactor();

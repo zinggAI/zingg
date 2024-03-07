@@ -1,14 +1,10 @@
 package zingg.common.py.processors;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.annotation.processing.*;
+import javax.lang.model.type.TypeMirror;
+import javax.lang.model.type.TypeKind;
 import java.util.Set;
-import java.util.stream.Collectors;
-
 import javax.lang.model.element.*;
 import javax.lang.model.util.ElementFilter;
 
@@ -18,12 +14,6 @@ import zingg.common.py.annotations.*;
 public class PythonClassProcessor extends AbstractProcessor {
 
     private boolean importsAndDeclarationsGenerated = false;
-    private Map<String, List<String>> classMethodsMap = new HashMap<>();
-
-    @Override
-    public synchronized void init(ProcessingEnvironment processingEnv) {
-        super.init(processingEnv);
-    }
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
@@ -48,37 +38,28 @@ public class PythonClassProcessor extends AbstractProcessor {
                 try (FileWriter fileWriter = new FileWriter(outputDirectory + File.separator + element.getSimpleName() + "Generated.py")) {
                     generateImportsAndDeclarations(element, fileWriter);
 
+                PackageElement packageElement =
+                    (PackageElement) classElement.getEnclosingElement();
                 System.out.println("class " + element.getSimpleName() + ":");
 
                 // __init__ method
                 System.out.println("    def __init__(self" +
                         generateConstructorParameters(classElement) + "):");
-                if (element.getSimpleName().contentEquals("Pipe")) {
-                    generateClassInitializationCode(classElement, element);
+                if (element.getSimpleName().contentEquals("pipe")) {
+                    generateClassInitializationCode(classElement);
                 }
                 for (VariableElement field : ElementFilter.fieldsIn(classElement.getEnclosedElements())) {
                     if (!field.getSimpleName().contentEquals("serialVersionUID")) {
-                        generateFieldInitializationCode(field, element);
+                        generateFieldInitializationCode(field);
                     }
                 }
-                for (ExecutableElement methodElement : ElementFilter.methodsIn(classElement.getEnclosedElements())) {
-                    if (methodElement.getAnnotation(PythonMethod.class) != null) {
-                        methodNames.add(methodElement.getSimpleName().toString());
-                    }
-                }
-                classMethodsMap.put(element.getSimpleName().toString(), methodNames);
             }
             System.out.println();   
-            // rest of generated class contents
+                // rest of generated class contents
         }
-        ProcessorContext processorContext = ProcessorContext.getInstance();
-        processorContext.getClassMethodsMap().putAll(classMethodsMap);
 
         return false;
-    }
 
-    Map<String, List<String>> getClassMethodsMap() {
-        return classMethodsMap;
     }
 
     private String determineOutputDirectory(String packageName) {
@@ -143,37 +124,24 @@ public class PythonClassProcessor extends AbstractProcessor {
         System.out.println("        self." + element.getSimpleName().toString().toLowerCase() + " = getJVM().zingg.spark.client.pipe.SparkPipe()");
     }
 
-    private void generateFieldInitializationCode(VariableElement field, Element element) {
-        String fieldName = field.getSimpleName().toString();
-        String fieldAssignment = "self." + element.getSimpleName().toString().toLowerCase() + "." + fieldName + " = " + fieldName;
-    
-        if (!fieldName.startsWith("FORMAT_")) {
-            System.out.println("        " + fieldAssignment);
-        }
+    // private void generateFieldInitializationCode(VariableElement field, ExecutableElement methodElement, TypeElement classElement) {
+    private void generateFieldInitializationCode(VariableElement field) {
+        System.out.println("        self.pipe." + field.getSimpleName() + " = " + field.getSimpleName());
+        // String fieldName = field.getSimpleName().toString();
+        // String methodName = methodElement.getSimpleName().toString();
+        // System.out.println("        self." + fieldName + " = " + "getJVM()." +
+        //         classElement.getQualifiedName().toString() + "." + methodName + "(" + fieldName + ")");
     }
 
     private String generateConstructorParameters(TypeElement classElement) {
         StringBuilder parameters = new StringBuilder();
-        List<VariableElement> fields = ElementFilter.fieldsIn(classElement.getEnclosedElements());
-
-        fields = fields.stream()
-                .filter(field -> !field.getSimpleName().contentEquals("serialVersionUID"))
-                .filter(this::isFieldForConstructor)
-                .collect(Collectors.toList());
-
-        for (VariableElement field : fields) {
-            parameters.append(", ");
-            parameters.append(field.getSimpleName());
+        for (VariableElement field : ElementFilter.fieldsIn(classElement.getEnclosedElements())) {
+            if (!field.getSimpleName().contentEquals("serialVersionUID")) {
+                parameters.append(", ");
+                parameters.append(field.getSimpleName());
+            }
         }
         return parameters.toString();
-    }
-
-    private boolean isFieldForConstructor(VariableElement field) {
-        String fieldName = field.getSimpleName().toString();
-    
-        return !fieldName.equals(fieldName.toUpperCase())
-                && !field.getModifiers().contains(Modifier.STATIC)
-                && !fieldName.startsWith("FORMAT_");
     }
     
 }
