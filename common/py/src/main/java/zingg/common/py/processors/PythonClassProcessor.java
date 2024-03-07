@@ -3,8 +3,10 @@ package zingg.common.py.processors;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.processing.*;
 import java.util.Set;
@@ -18,88 +20,66 @@ import zingg.common.py.annotations.*;
 @SupportedAnnotationTypes("zingg.common.py.annotations.PythonClass")
 public class PythonClassProcessor extends AbstractProcessor {
 
-    private Set<TypeElement> processedElements = new HashSet<>();
-    private Set<String> folders = new HashSet<>();
+    private Map<String, List<String>> classMethodsMap = new HashMap<>();
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
-        System.out.println("ProcessingEnv " + processingEnv);
         super.init(processingEnv);
-
-        // Clear the output directory on initialization
-        folders.add("python/zinggGenerated");
-        folders.add("common/python");
-        folders.add("snowflake/python");
-        folders.add("spark/python");
-
-        for (String folder : folders) {
-            File directory = new File(folder);
-            if (directory.exists()) {
-                for (File file : directory.listFiles()) {
-                    file.delete();
-                    System.out.println(file + "deeellleeeeteeed");
-                    System.out.println(file + "geeneerateedddd");
-                }
-            }
-        }
     }
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
-        // Process each PythonClass annotated element
+        
+        // process Services annotation
         for (Element element : roundEnv.getElementsAnnotatedWith(PythonClass.class)) {
-            if (element.getKind() == ElementKind.CLASS && !processedElements.contains(element)) {
-                processClass((TypeElement) element, roundEnv);
+            if (element.getKind() == ElementKind.CLASS) {
+                TypeElement classElement = (TypeElement) element;
+                PackageElement packageElement = (PackageElement) classElement.getEnclosingElement();
+                String packageName = packageElement.getQualifiedName().toString();
+                List<String> methodNames = new ArrayList<>();
+
+                String outputDirectory = determineOutputDirectory(packageName);
+                
+                try (FileWriter fileWriter = new FileWriter(outputDirectory + File.separator + element.getSimpleName() + "Generated.py")) {
+                    generateImportsAndDeclarations(element, fileWriter);
+
+                    fileWriter.write("class " + element.getSimpleName() + ":\n");
+
+                    // __init__ method
+                    fileWriter.write("    def __init__(self" + generateConstructorParameters(classElement, element) + "):\n");
+                    generateClassInitializationCode(classElement, element, fileWriter);
+
+                    for (ExecutableElement methodElement : ElementFilter.methodsIn(classElement.getEnclosedElements())) {
+                        if (methodElement.getAnnotation(PythonMethod.class) != null) {
+                            methodNames.add(methodElement.getSimpleName().toString());
+                        }
+                    }
+                    classMethodsMap.put(element.getSimpleName().toString(), methodNames);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+        ProcessorContext processorContext = ProcessorContext.getInstance();
+        processorContext.getClassMethodsMap().putAll(classMethodsMap);
+
         return false;
     }
 
+    Map<String, List<String>> getClassMethodsMap() {
+        return classMethodsMap;
+    }
 
-    private void processClass(TypeElement classElement, RoundEnvironment roundEnv) {
-
-        // Mark the class as processed
-        processedElements.add(classElement);
-
-        PythonClass pythonClassAnnotation = classElement.getAnnotation(PythonClass.class);
-
-        String outputDirectory = pythonClassAnnotation.outputDirectory();
-        String moduleName = pythonClassAnnotation.module();
-        String outputFile = outputDirectory + File.separator + moduleName + ".py";
-        String parentClassName = pythonClassAnnotation.parent();
-      
-        try (FileWriter fileWriter = new FileWriter(outputFile, true)) {
-            generateImportsAndDeclarations(classElement, fileWriter);
-            
-            if (!parentClassName.isEmpty()) {
-                fileWriter.write("class " + classElement.getSimpleName() + "(" + parentClassName + "):\n");
-            } else {
-                fileWriter.write("class " + classElement.getSimpleName() + ":\n");
-            }
-            // System.out.println(classElement.getSimpleName() + "ccccccccccccccccccccccccc");
-
-            // __init__ method
-            fileWriter.write("    def __init__(self" + generateConstructorParameters(classElement, classElement) + "):\n");
-            generateClassInitializationCode(classElement, classElement, fileWriter);
-
-            for (ExecutableElement methodElement : ElementFilter.methodsIn(classElement.getEnclosedElements())) {
-                if (methodElement.getAnnotation(PythonMethod.class) != null) {
-                    String javadoc = processingEnv.getElementUtils().getDocComment(methodElement);
-                    if (javadoc != null) {
-                        fileWriter.write("    '''\n");
-                        fileWriter.write(javadoc.trim());
-                        fileWriter.write("\n    '''\n");
-                    }
-
-                    fileWriter.write("    def " + methodElement.getSimpleName() + "(self" + PythonMethodProcessor.generateMethodSignature(methodElement) + "):\n");
-                    PythonMethodProcessor.generateMethodReturn(methodElement, fileWriter);
-                    PythonMethodProcessor.generateFieldAssignment(methodElement, fileWriter);
-                    fileWriter.write("\n");
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    private String determineOutputDirectory(String packageName) {
+        if (packageName.contains("enterprise") && packageName.contains("common")) {
+            return "common/python";
+        } else if (packageName.contains("enterprise") && packageName.contains("snowflake")) {
+            return "snowflake/python";
+        } else if (packageName.contains("enterprise") && packageName.contains("spark")) {
+            return "spark/python";
+        } else {
+            return "python/zingg";
         }
     }    
 
@@ -151,6 +131,15 @@ public class PythonClassProcessor extends AbstractProcessor {
         }
         fileWriter.write("\n");
     }
+
+    // private void generateFieldInitializationCode(VariableElement field, Element element) {
+    //     String fieldName = field.getSimpleName().toString();
+    //     String fieldAssignment = "self." + element.getSimpleName().toString().toLowerCase() + "." + fieldName + " = " + fieldName;
+    
+    //     if (!fieldName.startsWith("FORMAT_")) {
+    //         System.out.println("        " + fieldAssignment);
+    //     }
+    // }
 
     private String generateConstructorParameters(TypeElement classElement, Element element) {
 

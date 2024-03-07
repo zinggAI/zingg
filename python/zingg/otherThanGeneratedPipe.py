@@ -1,4 +1,4 @@
-from zingg.zinggGenerated.pipes import *
+from zingg.PipeGenerated import *
 
 class ExtendedPipeGenerated(Pipe):
     def __init__(self, name, format):

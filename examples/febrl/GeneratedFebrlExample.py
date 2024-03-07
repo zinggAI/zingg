@@ -1,5 +1,6 @@
-from zingg.zinggGenerated.client import *
-from zingg.zinggGenerated.pipes import *
+from zingg.ArgumentsGenerated import *
+from zingg.FieldDefinitionGenerated import *
+from zingg.PipeGenerated import *
 from zingg.otherThanGenerated import *
 from zingg.otherThanGeneratedPipe import *
 from zingg.otherThanGeneratedArguments import *
@@ -38,7 +39,7 @@ outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
 
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"match"])
+options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)

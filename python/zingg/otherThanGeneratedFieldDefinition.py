@@ -1,4 +1,4 @@
-from zingg.zinggGenerated.client import *
+from zingg.FieldDefinitionGenerated import *
 
 class ExtendedFieldDefinitionGenerated(FieldDefinition):
     def __init__(self, name, dataType, *matchType):
