@@ -1,8 +1,5 @@
 package zingg.common.py.processors;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +17,7 @@ import zingg.common.py.annotations.*;
 @SupportedAnnotationTypes("zingg.common.py.annotations.PythonClass")
 public class PythonClassProcessor extends AbstractProcessor {
 
+    private boolean importsAndDeclarationsGenerated = false;
     private Map<String, List<String>> classMethodsMap = new HashMap<>();
 
     @Override
@@ -29,6 +27,12 @@ public class PythonClassProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+
+        // Imports and global declarations
+        if (!importsAndDeclarationsGenerated) {
+            generateImportsAndDeclarations();
+            importsAndDeclarationsGenerated = true;
+        }
 
         
         // process Services annotation
@@ -44,22 +48,28 @@ public class PythonClassProcessor extends AbstractProcessor {
                 try (FileWriter fileWriter = new FileWriter(outputDirectory + File.separator + element.getSimpleName() + "Generated.py")) {
                     generateImportsAndDeclarations(element, fileWriter);
 
-                    fileWriter.write("class " + element.getSimpleName() + ":\n");
+                System.out.println("class " + element.getSimpleName() + ":");
 
-                    // __init__ method
-                    fileWriter.write("    def __init__(self" + generateConstructorParameters(classElement, element) + "):\n");
-                    generateClassInitializationCode(classElement, element, fileWriter);
+                // __init__ method
+                System.out.println("    def __init__(self" +
+                        generateConstructorParameters(classElement) + "):");
+                generateClassInitializationCode(classElement, element);
 
-                    for (ExecutableElement methodElement : ElementFilter.methodsIn(classElement.getEnclosedElements())) {
-                        if (methodElement.getAnnotation(PythonMethod.class) != null) {
-                            methodNames.add(methodElement.getSimpleName().toString());
-                        }
+                // for (VariableElement field : ElementFilter.fieldsIn(classElement.getEnclosedElements())) {
+                //     if (!field.getSimpleName().contentEquals("serialVersionUID")) {
+                //         generateFieldInitializationCode(field, element);
+                //     }
+                // }
+
+                for (ExecutableElement methodElement : ElementFilter.methodsIn(classElement.getEnclosedElements())) {
+                    if (methodElement.getAnnotation(PythonMethod.class) != null) {
+                        methodNames.add(methodElement.getSimpleName().toString());
                     }
-                    classMethodsMap.put(element.getSimpleName().toString(), methodNames);
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
+                classMethodsMap.put(element.getSimpleName().toString(), methodNames);
             }
+            System.out.println();   
+            // rest of generated class contents
         }
         ProcessorContext processorContext = ProcessorContext.getInstance();
         processorContext.getClassMethodsMap().putAll(classMethodsMap);
@@ -94,13 +104,20 @@ public class PythonClassProcessor extends AbstractProcessor {
             fileWriter.write("JStructType = getJVM().org.apache.spark.sql.types.StructType\n");
             fileWriter.write("\n");
         }
+    private void generateImportsAndDeclarations() {
+        System.out.println("import logging");
+        System.out.println("from zingg.client import *");
+        System.out.println("LOG = logging.getLogger(\"zingg.pipes\")");
+        System.out.println();
+        System.out.println("JPipe = getJVM().zingg.spark.client.pipe.SparkPipe");
+        System.out.println("FilePipe = getJVM().zingg.common.client.pipe.FilePipe");
+        System.out.println("JStructType = getJVM().org.apache.spark.sql.types.StructType");
+        System.out.println();
     }
 
-    private void generateClassInitializationCode(TypeElement classElement, Element element, FileWriter fileWriter) throws IOException {
+    private void generateClassInitializationCode(TypeElement classElement, Element element) {
         if (element.getSimpleName().contentEquals("Pipe")) {
-            fileWriter.write("        self." + element.getSimpleName().toString().toLowerCase() + " = getJVM().zingg.spark.client.pipe.SparkPipe()\n");
-            fileWriter.write("        self." + element.getSimpleName().toString().toLowerCase() + ".setName(name)\n");
-            fileWriter.write("        self." + element.getSimpleName().toString().toLowerCase() + ".setFormat(format)\n");
+            System.out.println("        self." + element.getSimpleName().toString().toLowerCase() + " = getJVM().zingg.spark.client.pipe.SparkPipe()");
         }
         else if (element.getSimpleName().contentEquals("EPipe")) {
             fileWriter.write("        self." + element.getSimpleName().toString().toLowerCase() + " = getJVM().zingg.spark.client.pipe.SparkPipe()\n");
@@ -134,32 +151,18 @@ public class PythonClassProcessor extends AbstractProcessor {
     //     }
     // }
 
-    private String generateConstructorParameters(TypeElement classElement, Element element) {
-
+    private String generateConstructorParameters(TypeElement classElement) {
         StringBuilder parameters = new StringBuilder();
+        List<VariableElement> fields = ElementFilter.fieldsIn(classElement.getEnclosedElements());
 
-        if (element.getSimpleName().contentEquals("Arguments")) {
-            // For the "Arguments" class, no constructor parameters are needed
-            return "";
-        }
-        else if (element.getSimpleName().contentEquals("Pipe")) {
-            parameters.append(", name, format");
-        } 
-        else if (element.getSimpleName().contentEquals("FieldDefinition")) {
-            parameters.append(", name, dataType, *matchType");
-        } 
-        else {
-            List<VariableElement> fields = ElementFilter.fieldsIn(classElement.getEnclosedElements());
-    
-            fields = fields.stream()
-                    .filter(field -> !field.getSimpleName().contentEquals("serialVersionUID"))
-                    .filter(this::isFieldForConstructor)
-                    .collect(Collectors.toList());
-    
-            for (VariableElement field : fields) {
-                parameters.append(", ");
-                parameters.append(field.getSimpleName());
-            }
+        fields = fields.stream()
+                .filter(field -> !field.getSimpleName().contentEquals("serialVersionUID"))
+                .filter(this::isFieldForConstructor)
+                .collect(Collectors.toList());
+
+        for (VariableElement field : fields) {
+            parameters.append(", ");
+            parameters.append(field.getSimpleName());
         }
         return parameters.toString();
     }
