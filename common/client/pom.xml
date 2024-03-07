@@ -9,37 +9,9 @@
 	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
-			<groupId>zingg</groupId>
-			<artifactId>zingg-common-py</artifactId>
-			<version>${zingg.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4</version>
 		</dependency>
 	</dependencies>
-
-	<build>		
-			<plugins>
-			<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven-compiler-plugin.version}</version>
-					<configuration>
-						<source>${maven.compiler.source}</source>
-						<target>${maven.compiler.source}</target>
-						<showWarnings>true</showWarnings>
-						
-						<annotationProcessors>
-							<annotationProcessor>
-								zingg.common.py.processors.PythonClassProcessor
-							</annotationProcessor>
-							<annotationProcessor>
-								zingg.common.py.processors.PythonMethodProcessor
-							</annotationProcessor>
-						</annotationProcessors>
-					</configuration>
-				</plugin>
-				</plugins>
-		</build>
 </project>

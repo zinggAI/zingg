@@ -11,16 +11,13 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.StringRedactor;
 
-import zingg.common.py.annotations.PythonClass;
-import zingg.common.py.annotations.PythonMethod;
-
 
 /**Actual pipe def in the args. One pipe can be used at multiple places with different tables, locations, queries etc
  * 
  * @author sgoyal
  *
  */
-@PythonClass
+
 @JsonInclude(Include.NON_NULL)
 public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	
@@ -60,12 +57,12 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 		this.schema = schema;
 	}
 
-	@PythonMethod
+
 	public String getName() {
 		return name;
 	}
 	
-	@PythonMethod
+	
 	@JsonValue
 	public void setName(String name) {
 		this.name = name;		
