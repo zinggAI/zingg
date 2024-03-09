@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -121,9 +122,9 @@ public class FieldDefinition implements Named,
 		this.fieldName = fieldName;
 	}
 
+	@JsonIgnore
 	public boolean isDontUse() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isDontUse'");
+        return (matchType != null && matchType.contains(MatchType.DONT_USE));
     }
 
 	@Override
