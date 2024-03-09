@@ -23,3 +23,10 @@ python/docs/_build/_doctrees
 **/python/build/*
 **/assembly/.classpath
 **/.DS_Store
+
+# Python stuff
+.env
+.venv
+
+# Sphinx _build
+**/_build
