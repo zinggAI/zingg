@@ -64,6 +64,12 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 		SparkMatcher sm = new SparkMatcher(ctx);
 		return sm;
 	}
+
+	@Override
+	protected SparkLinker getLinker() throws ZinggClientException {
+		SparkLinker sl = new SparkLinker(ctx);
+		return sl;
+	}
 	
 	
 	@Override

@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.pipe.FilePipe;
+import zingg.common.client.pipe.Pipe;
 
 public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
@@ -79,6 +81,22 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 		matcher.init(args,session);
 		MatcherTester<S, D, R, C, T> mt = new MatcherTester(matcher);
 		executorTesterList.add(mt);
+
+		Linker<S, D, R, C, T> linker = getLinker();
+
+		Pipe dataPipe1 = args.getData()[0];
+		String csvPath_1 = getClass().getResource("../../../../testLinker/test1.csv").getPath();
+		dataPipe1.setProp(FilePipe.LOCATION, csvPath_1);
+
+		Pipe dataPipe2 = args.getData()[0];
+		String csvPath_2 = getClass().getResource("../../../../testLinker/test2.csv").getPath();
+		dataPipe2.setProp(FilePipe.LOCATION, csvPath_2);
+		
+		args.setData(new Pipe[]{dataPipe1, dataPipe2});
+
+		linker.init(args,session);
+		LinkerTester<S, D, R, C, T> li = new LinkerTester<S, D, R, C, T>(linker);
+		executorTesterList.add(li);
 		
 		testExecutors(executorTesterList);
 	}
@@ -100,5 +118,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	protected abstract Trainer<S, D, R, C, T> getTrainer() throws ZinggClientException;
 
 	protected abstract Matcher<S, D, R, C, T> getMatcher() throws ZinggClientException;	
+
+	protected abstract Linker<S, D, R, C, T> getLinker() throws ZinggClientException;
 	
 }
