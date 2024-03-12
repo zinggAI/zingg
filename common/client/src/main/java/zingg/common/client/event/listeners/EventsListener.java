@@ -1,5 +1,7 @@
 package zingg.common.client.event.listeners;
 
+import java.util.List;
+
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.event.events.IEvent;
 import zingg.common.client.util.ListMap;
@@ -26,8 +28,13 @@ public class EventsListener {
 
     private void listen(IEvent event) throws ZinggClientException {
         Class<? extends IEvent> eventClass = event.getClass();
-        for (IEventListener listener : eventListenersList.get(eventClass.getCanonicalName())) {
-            listener.listen(event);
-        }
+        List<IEventListener> listenerList = eventListenersList.get(eventClass.getCanonicalName());
+		if (listenerList != null) {
+			for (IEventListener listener : listenerList) {
+				if (listener != null) {
+					listener.listen(event);
+				}
+			} 
+		}
     }
 }
