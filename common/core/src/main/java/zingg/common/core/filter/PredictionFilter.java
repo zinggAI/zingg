@@ -25,12 +25,20 @@ public class PredictionFilter<D, R, C> implements IFilter<D, R, C> {
 
 	@Override
 	public ZFrame<D, R, C> filter(ZFrame<D, R, C> dupes) {		
-		LOG.debug("dupes al");
-		if (LOG.isDebugEnabled()) dupes.show();		
-		dupes = dupes.filter(dupes.equalTo(ColName.PREDICTION_COL,ColValues.IS_MATCH_PREDICTION));		
+		dupes = filterMatches(dupes);		
+		dupes = selectCols(dupes);
+		return dupes;
+	}
+
+	protected ZFrame<D, R, C> selectCols(ZFrame<D, R, C> dupes) {
 		if(colsSelector!=null) {
 			dupes = dupes.select(colsSelector.getCols());
 		}
+		return dupes;
+	}
+
+	protected ZFrame<D, R, C> filterMatches(ZFrame<D, R, C> dupes) {
+		dupes = dupes.filter(dupes.equalTo(ColName.PREDICTION_COL,ColValues.IS_MATCH_PREDICTION));
 		return dupes;
 	}
 
