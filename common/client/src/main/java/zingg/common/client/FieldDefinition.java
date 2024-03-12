@@ -126,10 +126,10 @@ public class FieldDefinition implements Named,
 		this.fieldName = fieldName;
 	}
 
-	public boolean isDontUse() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isDontUse'");
-    }
+//	public boolean isDontUse() {
+//        // TODO Auto-generated method stub
+//        throw new UnsupportedOperationException("Unimplemented method 'isDontUse'");
+//    }
 
 	@Override
     public String getName() {
