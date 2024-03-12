@@ -5,9 +5,11 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.cols.PredictionColsSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
+import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.pairs.SelfPairBuilderSourceSensitive;
 
 
@@ -33,11 +35,19 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	}	
 
 	@Override
+	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
+		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>(); // no input in constructor as all cols need to be returned
+		SelfPairBuilderSourceSensitive<S, D, R, C> iPairBuilder = new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args);
+		return getActualDupes(blocked, testData,predictionFilter, iPairBuilder);
+	}
+		
+	@Override
 	public void writeOutput(ZFrame<D,R,C> sampleOrginal, ZFrame<D,R,C> dupes) throws ZinggClientException {
 		try {
 			// input dupes are pairs
 			/// pick ones according to the threshold by user
-			ZFrame<D,R,C> dupesActual = getDupesActualForGraph(dupes);
+			PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
+			ZFrame<D,R,C> dupesActual = predictionFilter.filter(dupes);
 
 			// all clusters consolidated in one place
 			if (args.getOutput() != null) {
@@ -54,13 +64,6 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public ZFrame<D,R,C> getDupesActualForGraph(ZFrame<D,R,C> dupes) {
-		ZFrame<D,R,C> dupesActual = dupes
-				.filter(dupes.equalTo(ColName.PREDICTION_COL, ColValues.IS_MATCH_PREDICTION));
-		return dupesActual;
 	}
 
 }
