@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,8 +24,6 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import zingg.common.client.cols.Named;
-import zingg.common.py.annotations.PythonClass;
-import zingg.common.py.annotations.PythonMethod;
 
 
 /**
@@ -34,7 +33,6 @@ import zingg.common.py.annotations.PythonMethod;
  * @author sgoyal
  *
  */
-@PythonClass(module = "client", outputDirectory = "python/zinggGenerated")
 public class FieldDefinition implements Named,
 		Serializable {
 
@@ -57,7 +55,7 @@ public class FieldDefinition implements Named,
 	}
 
 	public String getFields() { return fields; }
-	@PythonMethod
+
 	public void setFields(String fields) { this.fields = fields;}	
 	
 	/**
@@ -76,7 +74,6 @@ public class FieldDefinition implements Named,
 	 * @param type
 	 *            the type to set
 	*/
-	@PythonMethod
 	@JsonDeserialize(using = MatchTypeDeserializer.class)	
 	public void setMatchType(List<MatchType> type) {
 		this.matchType = type; //MatchTypeDeserializer.getMatchTypeFromString(type);
@@ -104,7 +101,7 @@ public class FieldDefinition implements Named,
 	public String getStopWords() {
 		return stopWords;
 	}
-	@PythonMethod
+
 	public void setStopWords(String stopWords) {
 		this.stopWords = stopWords;
 	}
@@ -121,15 +118,14 @@ public class FieldDefinition implements Named,
 		return fieldName;
 	}
 
-	@PythonMethod
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
 	}
 
-//	public boolean isDontUse() {
-//        // TODO Auto-generated method stub
-//        throw new UnsupportedOperationException("Unimplemented method 'isDontUse'");
-//    }
+	@JsonIgnore
+	public boolean isDontUse() {
+        return (matchType != null && matchType.contains(MatchType.DONT_USE));
+    }
 
 	@Override
     public String getName() {

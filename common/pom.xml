@@ -12,6 +12,5 @@
 		<module>infra</module>
 		<module>core</module>
 		<module>client</module>
-		<module>py</module>
 	</modules>
 </project>

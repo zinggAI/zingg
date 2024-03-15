@@ -25,7 +25,7 @@ public class FieldDefSelectedCols extends SelectedCols {
 		List<FieldDefinition> namedList = new ArrayList<FieldDefinition>();
 
         for (FieldDefinition fieldDef : fieldDefs) {
-            if (showConcise && fieldDef.matchType.contains(MatchType.DONT_USE)) {
+            if (showConcise && fieldDef.isDontUse()) {
                 continue;
             }
             namedList.add(fieldDef);
