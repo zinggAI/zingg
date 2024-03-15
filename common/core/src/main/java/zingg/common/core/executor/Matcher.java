@@ -80,16 +80,25 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
-		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>(new PredictionColsSelector());
+		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
 		SelfPairBuilder<S, D, R, C> iPairBuilder = new SelfPairBuilder<S, D, R, C> (getDSUtil(),args);
-		return getActualDupes(blocked, testData,predictionFilter, iPairBuilder);
+		return getActualDupes(blocked, testData,predictionFilter, iPairBuilder,new PredictionColsSelector());
 	}
 
 	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData, 
 			IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception, ZinggClientException{
+		return getActualDupes(blocked,testData,predictionFilter,iPairBuilder,null);
+	}
+	
+	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData, 
+			IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder, PredictionColsSelector colsSelector) throws Exception, ZinggClientException{
 		ZFrame<D,R,C> blocks = getPairs(selectColsFromBlocked(blocked), testData, iPairBuilder);
 		ZFrame<D,R,C>dupesActual = predictOnBlocks(blocks); 
-		return predictionFilter.filter(dupesActual);
+		ZFrame<D, R, C> filteredData = predictionFilter.filter(dupesActual);
+		if(colsSelector!=null) {
+			filteredData = filteredData.select(colsSelector.getCols());
+		}
+		return filteredData;
 	}
 	
 	@Override
