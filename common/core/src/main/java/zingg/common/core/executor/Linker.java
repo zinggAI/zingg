@@ -36,7 +36,7 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
 		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
 		SelfPairBuilderSourceSensitive<S, D, R, C> iPairBuilder = new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args);
-		return getActualDupes(blocked, testData,predictionFilter, iPairBuilder);
+		return getActualDupes(blocked, testData,predictionFilter, iPairBuilder, null);
 	}
 		
 	@Override

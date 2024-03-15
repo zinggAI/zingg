@@ -86,11 +86,6 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData, 
-			IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception, ZinggClientException{
-		return getActualDupes(blocked,testData,predictionFilter,iPairBuilder,null);
-	}
-	
-	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData, 
 			IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder, PredictionColsSelector colsSelector) throws Exception, ZinggClientException{
 		ZFrame<D,R,C> blocks = getPairs(selectColsFromBlocked(blocked), testData, iPairBuilder);
 		ZFrame<D,R,C>dupesActual = predictOnBlocks(blocks); 
