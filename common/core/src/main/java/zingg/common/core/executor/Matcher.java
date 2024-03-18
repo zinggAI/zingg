@@ -8,12 +8,14 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.cols.PredictionColsSelector;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
-import zingg.common.client.util.ColValues;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
+import zingg.common.core.filter.IFilter;
+import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.model.Model;
 import zingg.common.core.pairs.IPairBuilder;
 import zingg.common.core.pairs.SelfPairBuilder;
@@ -26,8 +28,6 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.Matcher";
 	public static final Log LOG = LogFactory.getLog(Matcher.class);    
-	
-	protected IPairBuilder<S, D, R, C>  iPairBuilder;
 	
     public Matcher() {
         setZinggOption(ZinggOptions.MATCH);
@@ -54,7 +54,11 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 	
 	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
-		return getIPairBuilder().getPairs(blocked, bAll);
+		return getPairs(blocked, bAll, new SelfPairBuilder<S, D, R, C> (getDSUtil(),args));
+	}
+	
+	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception{
+		return iPairBuilder.getPairs(blocked, bAll);
 	}
 
 	protected abstract Model getModel() throws ZinggClientException;
@@ -76,11 +80,22 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
-			ZFrame<D,R,C> blocks = getPairs(selectColsFromBlocked(blocked), testData);
-			ZFrame<D,R,C>dupesActual = predictOnBlocks(blocks); 
-			return getDupesActualForGraph(dupesActual);
+		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
+		SelfPairBuilder<S, D, R, C> iPairBuilder = new SelfPairBuilder<S, D, R, C> (getDSUtil(),args);
+		return getActualDupes(blocked, testData,predictionFilter, iPairBuilder,new PredictionColsSelector());
 	}
 
+	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData, 
+			IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder, PredictionColsSelector colsSelector) throws Exception, ZinggClientException{
+		ZFrame<D,R,C> blocks = getPairs(selectColsFromBlocked(blocked), testData, iPairBuilder);
+		ZFrame<D,R,C>dupesActual = predictOnBlocks(blocks); 
+		ZFrame<D, R, C> filteredData = predictionFilter.filter(dupesActual);
+		if(colsSelector!=null) {
+			filteredData = filteredData.select(colsSelector.getCols());
+		}
+		return filteredData;
+	}
+	
 	@Override
     public void execute() throws ZinggClientException {
         try {
@@ -251,40 +266,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return allScores.groupByMinMaxScore(allScores.col(ColName.ID_COL));			
 	}
 
-	protected ZFrame<D,R,C> getDupesActualForGraph(ZFrame<D,R,C>dupes) {
-		dupes = selectColsFromDupes(dupes);
-		LOG.debug("dupes al");
-		if (LOG.isDebugEnabled()) dupes.show();
-		return dupes.filter(dupes.equalTo(ColName.PREDICTION_COL,ColValues.IS_MATCH_PREDICTION));
-	}
-
-	protected ZFrame<D,R,C> selectColsFromDupes(ZFrame<D,R,C>dupesActual) {
-		List<C> cols = new ArrayList<C>();
-		cols.add(dupesActual.col(ColName.ID_COL));
-		cols.add(dupesActual.col(ColName.COL_PREFIX + ColName.ID_COL));
-		cols.add(dupesActual.col(ColName.PREDICTION_COL));
-		cols.add(dupesActual.col(ColName.SCORE_COL));
-		ZFrame<D,R,C> dupesActual1 = dupesActual.select(cols); //.cache();
-		return dupesActual1;
-	}
-
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
 
-    /**
-     * Each sub class of matcher can inject it's own iPairBuilder implementation
-     * @return
-     */
-	public IPairBuilder<S, D, R, C> getIPairBuilder() {	
-		if(iPairBuilder==null) {
-			iPairBuilder = new SelfPairBuilder<S, D, R, C> (getDSUtil(),args);
-		}
-		return iPairBuilder;
-	}
-
-	public void setIPairBuilder(IPairBuilder<S, D, R, C> iPairBuilder) {
-		this.iPairBuilder = iPairBuilder;
-	}
-
-	
 	    
 }

@@ -214,8 +214,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			client = getClient(arguments, options);
 			client.init();
 			// after setting arguments etc. as some of the listeners need it
-			initializeListeners();
-			EventsListener.getInstance().fireEvent(new ZinggStartEvent());			
 			client.execute();
 			client.postMetrics();
 			LOG.warn("Zingg processing has completed");				
@@ -263,7 +261,8 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public void init() throws ZinggClientException {
 		zingg.init(getArguments(), getSession());
 		if (session != null) zingg.setSession(session);
-		
+		initializeListeners();
+		EventsListener.getInstance().fireEvent(new ZinggStartEvent());					
 	}
 
 	/**

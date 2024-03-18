@@ -7,8 +7,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
-import zingg.common.client.util.ColValues;
-import zingg.common.core.pairs.IPairBuilder;
+import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.pairs.SelfPairBuilderSourceSensitive;
 
 
@@ -27,13 +26,26 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	public ZFrame<D,R,C> selectColsFromBlocked(ZFrame<D,R,C> blocked) {
 		return blocked;
 	}
+	
+	@Override
+	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
+		return getPairs(blocked, bAll, new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args));
+	}	
 
+	@Override
+	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
+		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
+		SelfPairBuilderSourceSensitive<S, D, R, C> iPairBuilder = new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args);
+		return getActualDupes(blocked, testData,predictionFilter, iPairBuilder, null);
+	}
+		
 	@Override
 	public void writeOutput(ZFrame<D,R,C> sampleOrginal, ZFrame<D,R,C> dupes) throws ZinggClientException {
 		try {
 			// input dupes are pairs
 			/// pick ones according to the threshold by user
-			ZFrame<D,R,C> dupesActual = getDupesActualForGraph(dupes);
+			PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
+			ZFrame<D,R,C> dupesActual = predictionFilter.filter(dupes);
 
 			// all clusters consolidated in one place
 			if (args.getOutput() != null) {
@@ -50,21 +62,6 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public ZFrame<D,R,C> getDupesActualForGraph(ZFrame<D,R,C> dupes) {
-		ZFrame<D,R,C> dupesActual = dupes
-				.filter(dupes.equalTo(ColName.PREDICTION_COL, ColValues.IS_MATCH_PREDICTION));
-		return dupesActual;
-	}
-
-	@Override
-	public IPairBuilder<S, D, R, C> getIPairBuilder() {	
-		if(iPairBuilder==null) {
-			iPairBuilder = new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args);
-		}
-		return iPairBuilder;
 	}
 
 }

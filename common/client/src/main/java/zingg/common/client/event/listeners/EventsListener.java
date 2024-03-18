@@ -1,25 +1,25 @@
 package zingg.common.client.event.listeners;
 
+import java.util.List;
+
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.event.events.IEvent;
 import zingg.common.client.util.ListMap;
 
 public class EventsListener {
-    private static EventsListener eventsListener = null;
-    private final ListMap<String, IEventListener> eventListeners;
+    private static EventsListener _eventsListener = new EventsListener();
+    private final ListMap<String, IEventListener> eventListenersList;
 
     private EventsListener() {
-        eventListeners = new ListMap<>();
+        eventListenersList = new ListMap<String, IEventListener>();
     }
 
     public static EventsListener getInstance() {
-        if (eventsListener == null)
-            eventsListener = new EventsListener();
-        return eventsListener;
+        return _eventsListener;
     }
 
     public void addListener(Class<? extends IEvent> eventClass, IEventListener listener) {
-        eventListeners.add(eventClass.getCanonicalName(), listener);
+        eventListenersList.add(eventClass.getCanonicalName(), listener);
     }
 
     public void fireEvent(IEvent event) throws ZinggClientException {
@@ -28,8 +28,13 @@ public class EventsListener {
 
     private void listen(IEvent event) throws ZinggClientException {
         Class<? extends IEvent> eventClass = event.getClass();
-        for (IEventListener listener : eventListeners.get(eventClass.getCanonicalName())) {
-            listener.listen(event);
-        }
+        List<IEventListener> listenerList = eventListenersList.get(eventClass.getCanonicalName());
+		if (listenerList != null) {
+			for (IEventListener listener : listenerList) {
+				if (listener != null) {
+					listener.listen(event);
+				}
+			} 
+		}
     }
 }
