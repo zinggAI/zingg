@@ -50,6 +50,7 @@ public class TestBlock  extends ZinggSparkTester {
 		// primary deciding is unique year so identityInteger should have been picked
 		Canopy<Row> head = blockingTree.getHead();
 		assertEquals("identityInteger", head.getFunction().getName());
+		blockingTree.toString();
 				
 	}
 

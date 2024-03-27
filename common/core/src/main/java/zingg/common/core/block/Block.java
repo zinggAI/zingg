@@ -126,14 +126,18 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		Canopy<R>best = null;
 
 		for (FieldDefinition field : fieldsOfInterest) {
-			LOG.debug("Trying for " + field + " with data type " + field.getDataType() + " and real dt " 
-				+ getDataTypeFromString(field.getDataType()));
+			if (LOG.isDebugEnabled()){
+				LOG.debug("Trying for " + field + " with data type " + field.getDataType() + " and real dt " 
+					+ getDataTypeFromString(field.getDataType()));
+			}
 			//Class type = FieldClass.getFieldClassClass(field.getFieldClass());
 			FieldDefinition context = field;
 			if (least ==0) break;//how much better can it get?
 			// applicable functions
 			List<HashFunction<D,R,C,T>> functions = functionsMap.get(getDataTypeFromString(field.getDataType()));
-			LOG.debug("functions are " + functions);
+			if (LOG.isDebugEnabled()){
+				LOG.debug("functions are " + functions);
+			}
 			
 			if (functions != null) {
 				
@@ -144,8 +148,10 @@ public abstract class Block<D,R,C,T> implements Serializable {
 							//!childless.contains(function, field.fieldName)
 							) 
 							{
-						LOG.debug("Evaluating field " + field.fieldName
+						if (LOG.isDebugEnabled()){
+							LOG.debug("Evaluating field " + field.fieldName
 								+ " and function " + function + " for " + field.dataType);
+						}
 						Canopy<R>trial = getNodeFromCurrent(node, function,
 								context);
 						estimateElimCount(trial, least);
@@ -182,7 +188,9 @@ public abstract class Block<D,R,C,T> implements Serializable {
 								}*/
 							}
 							else {
-								LOG.debug("No child " + function);
+								if (LOG.isDebugEnabled()){
+									LOG.debug("No child " + function);
+								}
 								//childless.add(function, field.fieldName);
 							}
 							
