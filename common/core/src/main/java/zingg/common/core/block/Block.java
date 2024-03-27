@@ -66,16 +66,13 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	/**
 	 * @return the types
 	 * 
-	 *         public Class[] getTypes() { return types; }
 	 */
 
 	/**
 	 * @param types
-	 *            the types to set
+	 * the types to set
 	 * 
-	 *            public void setTypes(Class[] types) { this.types = types; }
-	 * 
-	 *            /**
+	 *           
 	 * @return the maxSize
 	 */
 	public long getMaxSize() {
@@ -84,7 +81,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 
 	/**
 	 * @param maxSize
-	 *            the maxSize to set
+	 *  the maxSize to set
 	 */
 	public void setMaxSize(long maxSize) {
 		this.maxSize = maxSize;
@@ -102,15 +99,22 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		this.functionsMap = m;
 	}
 
+	protected Canopy<R> getCanopy(){
+		return new Canopy<R>();
+	}
 	
 	public Canopy<R>getNodeFromCurrent(Canopy<R>node, HashFunction<D,R,C,T> function,
 			FieldDefinition context) {
-		Canopy<R>trial = new Canopy<R>();
+		Canopy<R>trial = getCanopy();
 		trial = node.copyTo(trial);
 		// node.training, node.dupeN, function, context);
 		trial.function = function;
 		trial.context = context;
 		return trial;
+	}
+
+	public void estimateElimCount(Canopy<R> c, long elimCount) {
+		c.estimateElimCount();
 	}
 
 	public abstract T getDataTypeFromString(String t);
@@ -144,7 +148,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 								+ " and function " + function + " for " + field.dataType);
 						Canopy<R>trial = getNodeFromCurrent(node, function,
 								context);
-						trial.estimateElimCount();
+						estimateElimCount(trial, least);
 						long elimCount = trial.getElimCount();
 
 						
