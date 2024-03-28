@@ -13,7 +13,7 @@ public class LastWord extends BaseHash<String,String>{
 			r = field;
 		}
 		else {
-			String[] v= field.trim().toLowerCase().split(" ");
+			//String[] v= field.trim().toLowerCase().split(" ");
 			String[] v= field.trim().split(" ");
 			return v[v.length-1];
 		}
