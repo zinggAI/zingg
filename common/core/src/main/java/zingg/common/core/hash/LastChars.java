@@ -16,7 +16,8 @@ public class LastChars extends BaseHash<String,String>{
 		}
 		else {
 			field = field.trim().toLowerCase();
-			r= field.trim().toLowerCase().substring(Math.max(field.length() - numChars, 0));
+			//r= field.trim().toLowerCase().substring(Math.max(field.length() - numChars, 0));
+			r= field.trim().substring(Math.max(field.length() - numChars, 0));
 		}
 		return r;
 	}
