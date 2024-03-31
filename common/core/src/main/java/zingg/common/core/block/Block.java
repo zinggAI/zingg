@@ -3,6 +3,7 @@ package zingg.common.core.block;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -206,6 +207,16 @@ public abstract class Block<D,R,C,T> implements Serializable {
 
 	}
 
+	/** 
+	 * */
+	protected List<FieldDefinition> getFieldsOfInterest(List<FieldDefinition> fieldsOfInterest){
+		//shallow clone is fine
+		List<FieldDefinition> shuffled = new ArrayList<FieldDefinition>(fieldsOfInterest);
+		Collections.shuffle(shuffled);
+		LOG.warn("shuffling");
+		return shuffled;
+	}
+
 	/**
 	 * Holy Grail of Standalone
 	 * 
@@ -228,7 +239,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		}
 		if (size > maxSize && node.getDupeN() != null && node.getDupeN().size() > 0) {
 			LOG.debug("Size is bigger ");
-			Canopy<R>best = getBestNode(tree, parent, node, fieldsOfInterest);
+			Canopy<R>best = getBestNode(tree, parent, node, getFieldsOfInterest(fieldsOfInterest));
 			if (best != null) {
 				LOG.warn(" HashFunction is " + best + " and node is " + node);
 				if (LOG.isDebugEnabled()) {
