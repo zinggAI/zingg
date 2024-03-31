@@ -218,10 +218,10 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	 */
 	public Tree<Canopy<R>> getBlockingTree(Tree<Canopy<R>> tree, Canopy<R>parent,
 			Canopy<R>node, List<FieldDefinition> fieldsOfInterest) throws Exception, ZinggClientException {
-		if (LOG.isDebugEnabled()) {
+		/*if (LOG.isDebugEnabled()) {
 			LOG.debug("Tree so far ");
 			LOG.debug(tree);
-		}
+		}*/
 		long size = node.getTrainingSize();
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Size, maxSize " + size + ", " + maxSize);
@@ -230,6 +230,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 			LOG.debug("Size is bigger ");
 			Canopy<R>best = getBestNode(tree, parent, node, fieldsOfInterest);
 			if (best != null) {
+				LOG.warn(" HashFunction is " + best + " and node is " + node);
 				if (LOG.isDebugEnabled()) {
 					LOG.debug(" HashFunction is " + best + " and node is " + node);
 				}
