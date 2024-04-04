@@ -1,0 +1,2 @@
+class JobBuilderNotInitialized(ValueError):
+    pass

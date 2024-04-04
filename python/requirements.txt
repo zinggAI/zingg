@@ -3,4 +3,4 @@ seaborn
 matplotlib
 sphinx
 sphinx-rtd-theme
-pyspark
+pyspark>=3.5
