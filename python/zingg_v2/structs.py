@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass, fields
 from enum import StrEnum, auto
-from typing import Optional, Union
+from typing import Any, Optional, Sequence, Union
 
-from pyspark.sql.types import DataType, StructType
+from pandas.core.frame import itertools
 
 
 class ZinggMatchType(StrEnum):
@@ -21,63 +21,98 @@ class ZinggMatchType(StrEnum):
     ONLY_ALPHABETS_FUZZY = auto()
 
 
-class ZinggFormatType(StrEnum):
-    CSV = auto()
-    PARQUET = auto()
-    ORC = auto()
-    JDBC = auto()
-    AVRO = auto()
+class FieldDefinition:
+    def __init__(self, name: str, dataType: str, *matchType: Union[str, ZinggMatchType]) -> None:
+        self.name = name
+        self.dataType = dataType
+        self.match_types = []
+        for mt in matchType:
+            if isinstance(mt, str):
+                mt = ZinggMatchType(mt)
 
+            self.match_types.append(mt)
 
-class ZinggJobType(StrEnum):
-    SPARK = auto()
-    BIG_QUERY = auto()
-    SNOWFLAKE = auto()
+        self.stopwords: Optional[str] = None
 
+    def setStopWords(self, stopWords: str) -> None:
+        self.stopwords = stopWords
 
-@dataclass
-class ZinggField:
-    filed_name: str
-    fields: list[str]
-    data_type: DataType
-    match_type: ZinggMatchType
-
-
-@dataclass
-class ZinggData:
-    name: str
-    format: ZinggFormatType
-    props: dict[str, str]
-    schema: StructType
+    def getFieldDefinition(self) -> Any:
+        # TODO: imeplement it
+        # A single point where all the interactions with JVM should be
+        raise NotImplementedError()
 
 
 @dataclass
-class ZinggBigQueryParams:
-    views_enabled: bool
-    credential_file: str
-    table: str
-    temp_gcs_bucket: str
+class ClientOptionsV2:
+    phase: str = "peekModel"
+    license: str = "zinggLic.txt"
+    email: str = "zingg@zingg.ai"
+    conf: str = "dummyConf.json"
+    preprocess: Optional[str] = None
+    jobId: Optional[str] = None
+    format: Optional[str] = None
+    zinggDir: Optional[str] = None
+    modelId: Optional[str] = None
+    collectMetrics: Optional[str] = None
+    showConcise: Optional[str] = None
+    location: Optional[str] = None
+    column: Optional[str] = None
+    remote: Optional[str] = None
+
+    def to_java_args(self) -> list[str]:
+        return list(itertools.chain.from_iterable([[f"--{key}", value] for key, value in asdict(self) if value is not None]))
 
 
-@dataclass
-class ZinggSnowFlakeParams:
-    url: str
-    user: str
-    password: str
-    database: str
-    schema: str
-    warehouse: str
-    dbtable: str
+class ClientOptions:
+    def __init__(self, argsSent: Optional[Sequence[str]]) -> None:
+        if argsSent is None:
+            args = []
+        else:
+            args = [a for a in argsSent]
 
+        self._opt_v2 = ClientOptionsV2(**{k: v for k, v in zip(args[:-1], args[1:])})
+        print("arguments for client options are ", self._opt_v2.to_java_args())
 
-@dataclass
-class ZinggJobDefinition:
-    job_type: ZinggJobType
-    fields_definition: list[ZinggField]
-    output: list[ZinggData]
-    data: list[ZinggData]
-    label_sample_size: float
-    num_partitions: int
-    model_id: int
-    zingg_dir: str
-    job_params: Optional[Union[ZinggSnowFlakeParams, ZinggBigQueryParams]] = None
+    def getClientOptions(self):
+        java_args = self._opt_v2.to_java_args()
+        # TODO: implement it by passing options ot JVM
+        # A single point where all the interactions with JVM should be
+        raise NotImplementedError()
+
+    def getOptionValue(self, option: str) -> str:
+        if option.startswith("--"):
+            option = option[2:]
+
+        if not hasattr(self._opt_v2, option):
+            _msg = "Wrong option; possible options are: "
+            _msg += ", ".join(f.name for f in fields(self._opt_v2))
+            raise KeyError(_msg)
+
+        return getattr(self._opt_v2, option)
+
+    def setOptionValue(self, option: str, value: str) -> None:
+        if option.startswith("--"):
+            option = option[2:]
+
+        if not hasattr(self._opt_v2, option):
+            _msg = "Wrong option; possible options are: "
+            _msg += ", ".join(f.name for f in fields(self._opt_v2))
+            raise KeyError(_msg)
+
+        setattr(self._opt_v2, option, value)
+
+    def getPhase(self) -> str:
+        return self._opt_v2.phase
+
+    def setPhase(self, newValue: str) -> None:
+        self._opt_v2.phase = newValue
+
+    def getConf(self) -> str:
+        return self._opt_v2.conf
+
+    def hasLocation(self) -> bool:
+        return self._opt_v2.location is None
+
+    def getLocation(self) -> Optional[str]:
+        return self._opt_v2.location
