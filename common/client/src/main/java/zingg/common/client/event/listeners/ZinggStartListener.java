@@ -6,7 +6,6 @@ public class ZinggStartListener extends IEventListener {
 
     @Override
     public void listen(IEvent event) {
-        System.out.println("ZinggStartListener: I am listening");
     }
     
 }
