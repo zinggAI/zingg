@@ -21,13 +21,29 @@ class ZinggMatchType(StrEnum):
     ONLY_ALPHABETS_FUZZY = auto()
 
 
+class ZinggFileFormat(StrEnum):
+    CSV = auto()
+    PARQUET = auto()
+    JSON = auto()
+    TEXT = auto()
+    XLS = "com.crealytics.spark.excel"
+    AVRO = auto()
+    JDBC = auto()
+    CASSANDRA = "org.apache.spark.sql.cassandra"
+    SNOWFLAKE = "net.snowflake.spark.snowflake"
+    ELASTIC = "org.elasticsearch.spark.sql"
+    EXACOL = "com.exasol.spark"
+    BIGQUERY = auto()
+    INMEMORY = auto()
+
+
 class FieldDefinition:
     def __init__(self, name: str, dataType: str, *matchType: Union[str, ZinggMatchType]) -> None:
         self.name = name
         self.dataType = dataType
         self.match_types = []
         for mt in matchType:
-            if isinstance(mt, str):
+            if not isinstance(mt, ZinggMatchType):
                 mt = ZinggMatchType(mt)
 
             self.match_types.append(mt)
