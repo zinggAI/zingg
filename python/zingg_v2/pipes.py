@@ -8,35 +8,34 @@ from pandas import DataFrame as PDataFrame
 from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql.types import StructType
 
-from zingg_v2.structs import ZinggFileFormat
+from zingg_v2 import models as models_v2
 
 
 class Pipe:
-    def __init__(self, name: str, format: Union[str, ZinggFileFormat]) -> None:
-        self.name = name
-        if not isinstance(format, ZinggFileFormat):
-            format = ZinggFileFormat(format)
-        self.format = format
-        self.properties: dict[str, str] = {}
-        self.schema: Optional[str] = None
+    def __init__(self, name: str, format: Union[str, models_v2.FileFormat]) -> None:
+        if not isinstance(format, models_v2.FileFormat):
+            format = models_v2.FileFormat(format)
+        self._pipe_v2 = models_v2.Pipe(name=name, format=format)
 
-    def getPipe(self):
-        # TODO: implement it
-        raise NotImplementedError()
+    def getPipe(self) -> str:
+        return self.toString()
 
     def addProperty(self, name: str, value: str) -> None:
-        self.properties[name] = value
+        self._pipe_v2.props[name] = value
 
     def setSchema(self, schema: str) -> None:
         self.schema = schema
 
     def toString(self) -> str:
-        return json.dumps({"name": self.name, "format": self.format, "schema": self.schema, "properties": json.dumps(self.properties)})
+        return json.dumps(self._pipe_v2.model_dump_json())
+
+    def to_v2(self) -> models_v2.Pipe:
+        return self._pipe_v2
 
 
 class CsvPipe(Pipe):
     def __init__(self, name: str, location: Optional[str] = None, schema: Optional[str] = None) -> None:
-        super().__init__(name, ZinggFileFormat.CSV)
+        super().__init__(name, models_v2.FileFormat.CSV)
         if schema is not None:
             self.setSchema(schema)
         if location is not None:
@@ -54,7 +53,7 @@ class CsvPipe(Pipe):
 
 class BigQueryPipe(Pipe):
     def __init__(self, name: str) -> None:
-        super().__init__(name, ZinggFileFormat.BIGQUERY)
+        super().__init__(name, models_v2.FileFormat.BIGQUERY)
 
     def setCredentialFile(self, credentials_file: str) -> None:
         self.addProperty("credentialsFile", credentials_file)
@@ -71,7 +70,7 @@ class BigQueryPipe(Pipe):
 
 class SnowflakePipe(Pipe):
     def __init__(self, name: str) -> None:
-        super().__init__(name, ZinggFileFormat.SNOWFLAKE)
+        super().__init__(name, models_v2.FileFormat.SNOWFLAKE)
         self.addProperty("application", "zinggai_zingg")
 
     def setUrl(self, url: str) -> None:
@@ -98,7 +97,7 @@ class SnowflakePipe(Pipe):
 
 class InMemoryPipe(Pipe):
     def __init__(self, name: str, df: Optional[Union[DataFrame, PDataFrame]] = None) -> None:
-        super().__init__(name, ZinggFileFormat.INMEMORY)
+        super().__init__(name, models_v2.FileFormat.INMEMORY)
         self.df: Optional[DataFrame] = None
         if df is not None:
             self.setDataset(df)

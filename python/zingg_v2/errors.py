@@ -1,2 +1,5 @@
-class JobBuilderNotInitialized(ValueError):
+class ZinggArgumentsValidationError(ValueError):
+    pass
+
+class ZinggParameterIsNotSet(ValueError):
     pass
