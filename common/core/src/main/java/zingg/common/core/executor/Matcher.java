@@ -9,19 +9,15 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.PredictionColsSelector;
-import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
-import zingg.common.core.block.Canopy;
-import zingg.common.core.block.Tree;
+import zingg.common.core.data.df.ZFrameDataSelector;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.model.Model;
 import zingg.common.core.pairs.IPairBuilder;
 import zingg.common.core.pairs.SelfPairBuilder;
 import zingg.common.core.preprocess.StopWordsRemover;
-import zingg.common.core.util.Analytics;
-import zingg.common.core.util.Metric;
 
 public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
@@ -33,25 +29,20 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
         setZinggOption(ZinggOptions.MATCH);
     }
 
-	public ZFrame<D,R,C>  getTestData() throws ZinggClientException{
-		 ZFrame<D,R,C>  data = getPipeUtil().read(true, true, args.getNumPartitions(), true, args.getData());
-		return data;
+	public ZFrameDataSelector<S,D,R,C,T>  getRawData() throws ZinggClientException{
+		 ZFrame<D,R,C>  data = readInputData();
+		 
+		 return getDataSelector(data);
 	}
 
-	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
-		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
-		return testDataOriginal.select(zidAndFieldDefSelector.getCols());
-//		return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
+	protected ZFrameDataSelector<S, D, R, C, T> getDataSelector(ZFrame<D, R, C> data) {
+		return new ZFrameDataSelector<S,D,R,C,T>(data,args,context,getStopWords());
 	}
 
-
-	public ZFrame<D,R,C>  getBlocked( ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
-		LOG.debug("Blocking model file location is " + args.getBlockFile());
-		Tree<Canopy<R>> tree = getBlockingTreeUtil().readBlockingTree(args);
-		ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(testData, tree);		
-		ZFrame<D,R,C> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)); //.cache();
-		return blocked1;
+	protected ZFrame<D,R,C> readInputData() throws ZinggClientException {
+		return getPipeUtil().read(true, true, args.getNumPartitions(), true, args.getData());
 	}
+
 	
 	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
 		return getPairs(blocked, bAll, new SelfPairBuilder<S, D, R, C> (getDSUtil(),args));
@@ -100,16 +91,8 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     public void execute() throws ZinggClientException {
         try {
 			// read input, filter, remove self joins
-			ZFrame<D,R,C>  testDataOriginal = getTestData();
-			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal);
-			ZFrame<D,R,C>  testData = getStopWords().preprocessForStopWords(testDataOriginal);
-			testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
-			//testData = dropDuplicates(testData);
-			long count = testData.count();
-			LOG.info("Read " + count);
-			Analytics.track(Metric.DATA_COUNT, count, args.getCollectMetrics());
-
-			ZFrame<D,R,C>blocked = getBlocked(testData);
+        	ZFrameDataSelector<S,D,R,C,T>  rawData = getRawData();
+			ZFrame<D,R,C>blocked = rawData.getBlocked();
 			LOG.info("Blocked ");
 			/*blocked = blocked.cache();
 			blocked.withColumn("partition_id", functions.spark_partition_id())
@@ -120,12 +103,12 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 				blocked.show();
 			}
 			//LOG.warn("Num distinct hashes " + blocked.agg(functions.approx_count_distinct(ColName.HASH_COL)).count());
-			ZFrame<D,R,C> dupesActual = getActualDupes(blocked, testData);
+			ZFrame<D,R,C> dupesActual = getActualDupes(blocked, rawData.getPreprocessedRepartitionedData());
 			
 			//dupesActual.explain();
 			//dupesActual.toJavaRDD().saveAsTextFile("/tmp/zdupes");
 			
-			writeOutput(testDataOriginal, dupesActual);		
+			writeOutput(rawData, dupesActual);		
 			
 		} catch (Exception e) {
 			if (LOG.isDebugEnabled()) e.printStackTrace();
@@ -137,15 +120,13 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	
 
 	
-	public void writeOutput( ZFrame<D,R,C>  blocked,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException {
+	public void writeOutput( ZFrameDataSelector<S,D,R,C,T>  rawData,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException {
 		try{
 		//input dupes are pairs
 		///pick ones according to the threshold by user
-		
-			
 		//all clusters consolidated in one place
 		if (args.getOutput() != null) {
-			ZFrame<D, R, C> graphWithScores = getOutput(blocked, dupesActual);
+			ZFrame<D, R, C> graphWithScores = getOutput(rawData, dupesActual);
 			getPipeUtil().write(graphWithScores, args.getOutput());
 		}
 		}
@@ -157,19 +138,19 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	
 
-	protected ZFrame<D, R, C> getOutput(ZFrame<D, R, C> blocked, ZFrame<D, R, C> dupesActual) throws ZinggClientException, Exception {
+	protected ZFrame<D, R, C> getOutput(ZFrameDataSelector<S,D,R,C,T>  rawData, ZFrame<D, R, C> dupesActual) throws ZinggClientException, Exception {
 		//-1 is initial suggestion, 1 is add, 0 is deletion, 2 is unsure
 		/*blocked = blocked.drop(ColName.HASH_COL);
 		blocked = blocked.drop(ColName.SOURCE_COL);
 		blocked = blocked.cache();
 		*/
-		
+		ZFrame<D, R, C> fieldDefColumnsDS = rawData.getFieldDefColumnsDS();
 		dupesActual = dupesActual.cache();
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("dupes ------------");
 			dupesActual.show();
 		}
-		ZFrame<D,R,C>graph = getGraphUtil().buildGraph(blocked, dupesActual).cache();
+		ZFrame<D,R,C>graph = getGraphUtil().buildGraph(fieldDefColumnsDS, dupesActual).cache();
 		//graph.toJavaRDD().saveAsTextFile("/tmp/zgraph");
 		
 		if (LOG.isDebugEnabled()) {
