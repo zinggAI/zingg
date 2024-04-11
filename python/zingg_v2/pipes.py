@@ -12,9 +12,9 @@ from zingg_v2 import models as models_v2
 
 
 class Pipe:
-    def __init__(self, name: str, format: Union[str, models_v2.FileFormat]) -> None:
-        if not isinstance(format, models_v2.FileFormat):
-            format = models_v2.FileFormat(format)
+    def __init__(self, name: str, format: Union[str, models_v2.DataFormat]) -> None:
+        if not isinstance(format, models_v2.DataFormat):
+            format = models_v2.DataFormat(format)
         self._pipe_v2 = models_v2.Pipe(name=name, format=format)
 
     def getPipe(self) -> str:
@@ -35,7 +35,7 @@ class Pipe:
 
 class CsvPipe(Pipe):
     def __init__(self, name: str, location: Optional[str] = None, schema: Optional[str] = None) -> None:
-        super().__init__(name, models_v2.FileFormat.CSV)
+        super().__init__(name, models_v2.DataFormat.CSV)
         if schema is not None:
             self.setSchema(schema)
         if location is not None:
@@ -53,7 +53,7 @@ class CsvPipe(Pipe):
 
 class BigQueryPipe(Pipe):
     def __init__(self, name: str) -> None:
-        super().__init__(name, models_v2.FileFormat.BIGQUERY)
+        super().__init__(name, models_v2.DataFormat.BIGQUERY)
 
     def setCredentialFile(self, credentials_file: str) -> None:
         self.addProperty("credentialsFile", credentials_file)
@@ -70,7 +70,7 @@ class BigQueryPipe(Pipe):
 
 class SnowflakePipe(Pipe):
     def __init__(self, name: str) -> None:
-        super().__init__(name, models_v2.FileFormat.SNOWFLAKE)
+        super().__init__(name, models_v2.DataFormat.SNOWFLAKE)
         self.addProperty("application", "zinggai_zingg")
 
     def setUrl(self, url: str) -> None:
@@ -97,7 +97,7 @@ class SnowflakePipe(Pipe):
 
 class InMemoryPipe(Pipe):
     def __init__(self, name: str, df: Optional[Union[DataFrame, PDataFrame]] = None) -> None:
-        super().__init__(name, models_v2.FileFormat.INMEMORY)
+        super().__init__(name, models_v2.DataFormat.INMEMORY)
         self.df: Optional[DataFrame] = None
         if df is not None:
             self.setDataset(df)

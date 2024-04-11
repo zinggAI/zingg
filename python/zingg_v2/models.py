@@ -22,7 +22,7 @@ class MatchType(StrEnum):
     ONLY_ALPHABETS_FUZZY = auto()
 
 
-class FileFormat(StrEnum):
+class DataFormat(StrEnum):
     CSV = auto()
     PARQUET = auto()
     JSON = auto()
@@ -38,25 +38,6 @@ class FileFormat(StrEnum):
     INMEMORY = auto()
 
 
-class FieldPreprocessor(StrEnum):
-    NONE = auto()
-    CHINESE_COMPANY_STOP_WORD_REMOVER = auto()
-    CHINESE_NAME_STOP_WORD_REMOVER = auto()
-    MOBILE_STOP_WORD_REMOVER = auto()
-    CAMERA_STOP_WORD_REMOVER = auto()
-    THAI_COLOR_STOP_WORD_REMOVER = auto()
-    PUNCTUATION_CHARS_STOP_WORD_REMOVER = auto()
-    ADDRESS_STOP_WORD_REMOVER = auto()
-    PERFUME_STOP_WORD_REMOVER = auto()
-    FRENCH_COMPANY_STOP_WORD_REMOVER = auto()
-    ENGLISH_COMPANY_STOP_WORD_REMOVER = auto()
-    AUTO_STOP_WORD_REMOVER = auto()
-    POWER_TOOLS_STOP_WORD_REMOVER = auto()
-    DOMAIN_EXTRACTOR = auto()
-    JAPANESE_COMPANY_STOP_WORD_REMOVER = auto()
-    JAPANESE_NAME_STOP_WORD_REMOVER = auto()
-
-
 class FieldDefinition(BaseModel):
     matchType: Union[MatchType, list[MatchType]]
     dataType: str
@@ -68,8 +49,7 @@ class FieldDefinition(BaseModel):
 
 class Pipe(BaseModel):
     name: str
-    format: FileFormat
-    preprocessors: Optional[FieldPreprocessor] = None
+    format: DataFormat
     props: dict[str, Any] = {}
     schema: Optional[str] = None
     mode: Optional[str] = None
