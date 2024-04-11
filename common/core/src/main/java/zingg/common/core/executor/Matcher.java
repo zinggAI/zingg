@@ -11,13 +11,15 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.PredictionColsSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
-import zingg.common.core.data.df.ZFrameDataSelector;
+import zingg.common.core.data.df.ZData;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.model.Model;
 import zingg.common.core.pairs.IPairBuilder;
 import zingg.common.core.pairs.SelfPairBuilder;
 import zingg.common.core.preprocess.StopWordsRemover;
+import zingg.common.core.util.Analytics;
+import zingg.common.core.util.Metric;
 
 public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
@@ -29,14 +31,14 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
         setZinggOption(ZinggOptions.MATCH);
     }
 
-	public ZFrameDataSelector<S,D,R,C,T>  getRawData() throws ZinggClientException{
+	public ZData<S,D,R,C,T>  getRawData() throws ZinggClientException{
 		 ZFrame<D,R,C>  data = readInputData();
 		 
 		 return getDataSelector(data);
 	}
 
-	protected ZFrameDataSelector<S, D, R, C, T> getDataSelector(ZFrame<D, R, C> data) {
-		return new ZFrameDataSelector<S,D,R,C,T>(data,args,context,getStopWords());
+	protected ZData<S, D, R, C, T> getDataSelector(ZFrame<D, R, C> data) throws ZinggClientException {
+		return new ZData<S,D,R,C,T>(data,args,context,getStopWords());
 	}
 
 	protected ZFrame<D,R,C> readInputData() throws ZinggClientException {
@@ -91,8 +93,9 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     public void execute() throws ZinggClientException {
         try {
 			// read input, filter, remove self joins
-        	ZFrameDataSelector<S,D,R,C,T>  rawData = getRawData();
-			ZFrame<D,R,C>blocked = rawData.getBlocked();
+        	ZData<S,D,R,C,T>  rawData = getRawData();
+			ZFrame<D,R,C>blocked = rawData.getBlockedFrame().getProcessedDF();
+			writeAnalytics(rawData);			
 			LOG.info("Blocked ");
 			/*blocked = blocked.cache();
 			blocked.withColumn("partition_id", functions.spark_partition_id())
@@ -103,7 +106,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 				blocked.show();
 			}
 			//LOG.warn("Num distinct hashes " + blocked.agg(functions.approx_count_distinct(ColName.HASH_COL)).count());
-			ZFrame<D,R,C> dupesActual = getActualDupes(blocked, rawData.getPreprocessedRepartitionedData());
+			ZFrame<D,R,C> dupesActual = getActualDupes(blocked, rawData.getRepartitionFrame().getProcessedDF());
 			
 			//dupesActual.explain();
 			//dupesActual.toJavaRDD().saveAsTextFile("/tmp/zdupes");
@@ -117,10 +120,14 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		}
     }
 
+	protected void writeAnalytics(ZData<S, D, R, C, T> rawData) throws Exception, ZinggClientException {
+		long count = rawData.getBlockedFrame().getOriginalDF().count();
+		LOG.info("Read " + count);
+		Analytics.track(Metric.DATA_COUNT, count, args.getCollectMetrics());
+		LOG.debug("Blocking model file location is " + args.getBlockFile());
+	}
 	
-
-	
-	public void writeOutput( ZFrameDataSelector<S,D,R,C,T>  rawData,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException {
+	public void writeOutput( ZData<S,D,R,C,T>  rawData,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException {
 		try{
 		//input dupes are pairs
 		///pick ones according to the threshold by user
@@ -138,13 +145,13 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	
 
-	protected ZFrame<D, R, C> getOutput(ZFrameDataSelector<S,D,R,C,T>  rawData, ZFrame<D, R, C> dupesActual) throws ZinggClientException, Exception {
+	protected ZFrame<D, R, C> getOutput(ZData<S,D,R,C,T>  rawData, ZFrame<D, R, C> dupesActual) throws ZinggClientException, Exception {
 		//-1 is initial suggestion, 1 is add, 0 is deletion, 2 is unsure
 		/*blocked = blocked.drop(ColName.HASH_COL);
 		blocked = blocked.drop(ColName.SOURCE_COL);
 		blocked = blocked.cache();
 		*/
-		ZFrame<D, R, C> fieldDefColumnsDS = rawData.getFieldDefColumnsDS();
+		ZFrame<D, R, C> fieldDefColumnsDS = rawData.getFieldDefFrame().getProcessedDF();
 		dupesActual = dupesActual.cache();
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("dupes ------------");
