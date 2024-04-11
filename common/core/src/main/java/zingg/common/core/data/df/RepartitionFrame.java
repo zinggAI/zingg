@@ -5,7 +5,6 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
-import zingg.common.client.util.ColName;
 
 public class RepartitionFrame<S, D, R, C, T> implements IZFrameProcessor<S, D, R, C, T> {
 
@@ -15,13 +14,17 @@ public class RepartitionFrame<S, D, R, C, T> implements IZFrameProcessor<S, D, R
 	
 	protected IArguments args;
 	
+	protected int numPartitions;
+	
+	protected String partitionCol;
+	
 	public static final Log LOG = LogFactory.getLog(RepartitionFrame.class);   
 	
-	public RepartitionFrame(ZFrame<D, R, C> originalDF, IArguments args) {
+	public RepartitionFrame(ZFrame<D, R, C> originalDF, int numPartitions, String partitionCol) {
 		super();
 		this.originalDF = originalDF;
-		this.args = args;
-		this.processedDF = getOriginalDF().repartition(args.getNumPartitions(),getOriginalDF().col(ColName.ID_COL));		
+		this.numPartitions = numPartitions;
+		this.partitionCol = partitionCol;	
 	}
 
 	@Override
@@ -34,4 +37,9 @@ public class RepartitionFrame<S, D, R, C, T> implements IZFrameProcessor<S, D, R
 		return processedDF;
 	}
 
+	@Override
+	public void process() {
+		this.processedDF = getOriginalDF().repartition(numPartitions,getOriginalDF().col(partitionCol));		
+	}
+	
 }

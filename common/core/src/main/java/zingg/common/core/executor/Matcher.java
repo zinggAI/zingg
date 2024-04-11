@@ -17,6 +17,7 @@ import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.model.Model;
 import zingg.common.core.pairs.IPairBuilder;
 import zingg.common.core.pairs.SelfPairBuilder;
+import zingg.common.core.preprocess.IPreProcessor;
 import zingg.common.core.preprocess.StopWordsRemover;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
@@ -38,7 +39,11 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	protected ZData<S, D, R, C, T> getDataSelector(ZFrame<D, R, C> data) throws ZinggClientException {
-		return new ZData<S,D,R,C,T>(data,args,context,getStopWords());
+		List<IPreProcessor<S,D,R,C,T>> preProcessors = new ArrayList<IPreProcessor<S,D,R,C,T>>();
+		preProcessors.add(getStopWords());		
+		ZData<S, D, R, C, T> zData = new ZData<S,D,R,C,T>(data,args,context,preProcessors);
+		zData.process();
+		return zData;
 	}
 
 	protected ZFrame<D,R,C> readInputData() throws ZinggClientException {

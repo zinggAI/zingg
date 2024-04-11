@@ -16,7 +16,7 @@ import zingg.common.client.util.ColName;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.context.Context;
 
-public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
+public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable, IPreProcessor<S,D,R,C,T>{
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.preprocess.StopWordsRemover";
@@ -45,6 +45,11 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 		return ds;
 	}
 
+	@Override
+	public ZFrame<D, R, C> preprocess(ZFrame<D, R, C> ds) throws ZinggClientException {
+		return preprocessForStopWords(ds);
+	}
+	
 	protected ZFrame<D,R,C> getStopWords(FieldDefinition def) throws ZinggClientException {
 		PipeUtilBase<S,D,R,C> pipeUtil = getContext().getPipeUtil();
 		ZFrame<D,R,C> stopWords = pipeUtil.read(false, false, pipeUtil.getStopWordsPipe(getArgs(), def.getStopWords()));
