@@ -49,7 +49,7 @@ public class ZData<S, D, R, C, T> {
 		return repartitionFrame;
 	}	
 	
-	public BlockedFrame<S, D, R, C, T>  getBlockedFrame() throws Exception, ZinggClientException{
+	public BlockedFrame<S, D, R, C, T>  getBlockedFrame() {
 		return blockedFrame;
 	}
 
