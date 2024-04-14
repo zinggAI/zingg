@@ -7,15 +7,16 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
+import zingg.common.client.cols.SelectedCols;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
 
-public class FieldDefFrame<S, D, R, C, T> implements IZFrameProcessor<S, D, R, C, T> {
+public class FieldDefFrame<D, R, C> implements IZFrameProcessor<D, R, C> {
 
 	protected ZFrame<D,R,C> originalDF;
 	
 	protected ZFrame<D,R,C> processedDF;
 	
-	protected ZidAndFieldDefSelector zidAndFieldDefSelector;
+	protected SelectedCols selectedCols;
 	
 	protected List<? extends FieldDefinition> fieldDefinition;
 	
@@ -26,10 +27,10 @@ public class FieldDefFrame<S, D, R, C, T> implements IZFrameProcessor<S, D, R, C
 	}
 
 	public FieldDefFrame(ZFrame<D, R, C> originalDF, List<? extends FieldDefinition> fieldDefinition,
-			ZidAndFieldDefSelector zidAndFieldDefSelector) {
+			SelectedCols selectedCols) {
 		this.originalDF = originalDF;
 		this.fieldDefinition = fieldDefinition;
-		this.zidAndFieldDefSelector = zidAndFieldDefSelector;
+		this.selectedCols = selectedCols;
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class FieldDefFrame<S, D, R, C, T> implements IZFrameProcessor<S, D, R, C
 	
 	@Override
 	public void process() {
-		this.processedDF = getOriginalDF().select(zidAndFieldDefSelector.getCols());
+		this.processedDF = getOriginalDF().select(selectedCols.getCols());
 //		return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
 	}
 

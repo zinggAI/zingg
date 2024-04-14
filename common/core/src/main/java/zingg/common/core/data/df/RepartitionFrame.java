@@ -6,7 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 
-public class RepartitionFrame<S, D, R, C, T> implements IZFrameProcessor<S, D, R, C, T> {
+public class RepartitionFrame<D, R, C> implements IZFrameProcessor<D, R, C> {
 
 	protected ZFrame<D,R,C> originalDF;
 	

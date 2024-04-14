@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.util.ColName;
 import zingg.common.core.context.Context;
 import zingg.common.core.preprocess.IPreProcessor;
@@ -19,10 +20,10 @@ public class ZData<S, D, R, C, T> {
 	protected Context<S,D,R,C,T> context;
 	protected List<IPreProcessor<S,D,R,C,T>> preProcessors;
 	
-	protected FieldDefFrame<S, D, R, C, T> fieldDefFrame;
+	protected FieldDefFrame<D, R, C> fieldDefFrame;
 	protected BlockedFrame<S, D, R, C, T> blockedFrame;
 	protected PreprocessedFrame<S, D, R, C, T> preprocessedFrame;
-	protected RepartitionFrame<S, D, R, C, T> repartitionFrame;
+	protected RepartitionFrame<D, R, C> repartitionFrame;
 	
 	public static final Log LOG = LogFactory.getLog(ZData.class);   
 	
@@ -37,7 +38,7 @@ public class ZData<S, D, R, C, T> {
 		return rawData;
 	}
 
-	public FieldDefFrame<S, D, R, C, T> getFieldDefFrame() {
+	public FieldDefFrame<D, R, C> getFieldDefFrame() {
 		return fieldDefFrame;
 	}
 	
@@ -45,7 +46,7 @@ public class ZData<S, D, R, C, T> {
 		return preprocessedFrame;
 	}	
 	
-	public RepartitionFrame<S, D, R, C, T> getRepartitionFrame() {
+	public RepartitionFrame<D, R, C> getRepartitionFrame() {
 		return repartitionFrame;
 	}	
 	
@@ -67,8 +68,12 @@ public class ZData<S, D, R, C, T> {
 	}
 
 	protected void setFieldDefFrame() {
-		this.fieldDefFrame = new FieldDefFrame<S, D, R, C, T>(getRawData(),args.getFieldDefinition());
+		this.fieldDefFrame = new FieldDefFrame<D, R, C>(getRawData(),args.getFieldDefinition(),getColSelector());
 		this.fieldDefFrame.process();
+	}
+
+	protected ZidAndFieldDefSelector getColSelector() {
+		return new ZidAndFieldDefSelector(args.getFieldDefinition());
 	}
 
 	protected void setPreprocessedFrame() throws ZinggClientException {
@@ -77,7 +82,7 @@ public class ZData<S, D, R, C, T> {
 	}
 
 	protected void setRepartitionFrame() {
-		this.repartitionFrame = new RepartitionFrame<S, D, R, C, T>(getPreprocessedFrame().getProcessedDF(),args.getNumPartitions(),ColName.ID_COL);
+		this.repartitionFrame = new RepartitionFrame<D, R, C>(getPreprocessedFrame().getProcessedDF(),args.getNumPartitions(),ColName.ID_COL);
 		this.repartitionFrame.process();
 	}
 

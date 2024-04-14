@@ -9,7 +9,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.preprocess.IPreProcessor;
 
-public class PreprocessedFrame<S, D, R, C, T> implements IZFrameProcessor<S, D, R, C, T> {
+public class PreprocessedFrame<S, D, R, C, T> implements IZFrameProcessor<D, R, C> {
 
 	protected ZFrame<D,R,C> originalDF;
 	

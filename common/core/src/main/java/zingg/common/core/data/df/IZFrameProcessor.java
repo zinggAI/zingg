@@ -3,7 +3,7 @@ package zingg.common.core.data.df;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 
-public interface IZFrameProcessor<S, D, R, C, T> {
+public interface IZFrameProcessor<D, R, C> {
 
 	public ZFrame<D,R,C> getOriginalDF();
 	

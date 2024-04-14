@@ -11,7 +11,7 @@ import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.util.BlockingTreeUtil;
 
-public class BlockedFrame<S, D, R, C, T> implements IZFrameProcessor<S, D, R, C, T> {
+public class BlockedFrame<S, D, R, C, T> implements IZFrameProcessor<D, R, C> {
 
 	protected ZFrame<D,R,C> originalDF;
 	
