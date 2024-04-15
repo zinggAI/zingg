@@ -19,6 +19,11 @@ class Zingg:
         # TODO: implement it
         # java_args: arguments in form of string
         # that is pairs of --key value
+
+        if spark_connect:
+            ..
+        else:
+            spark_classic
         java_args = self.options.getClientOptions()
 
         # java_arguments is JSON definition of Zingg Job
@@ -242,9 +247,9 @@ class Arguments:
 
     @staticmethod
     def createArgumentsFromJSONString(jsonArgs: str, phase: str):
-        args_v2 = models_v2.Arguments.model_validate(json.loads(jsonArgs))
+        args_v2 = models_v2.Arguments.model_validate(jsonArgs)
 
-        if not args_v2.validate(phase):
+        if not args_v2.validate_phase(phase):
             raise ZinggArgumentsValidationError("Wrong args for the given phase")
 
         return Arguments._from_v2(args_v2)

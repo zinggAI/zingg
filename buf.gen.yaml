@@ -1,0 +1,9 @@
+version: v1
+plugins:
+  # Building the Python build and building the mypy interfaces.
+  - plugin: buf.build/protocolbuffers/python:v25.3
+    out: python/zingg_v2/proto
+  - plugin: buf.build/grpc/python:v1.62.0
+    out: python/zingg_v2/proto
+  - plugin: buf.build/community/nipunn1313-mypy:v3.5.0
+    out: python/zingg_v2/proto

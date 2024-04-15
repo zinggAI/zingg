@@ -1,0 +1,6 @@
+syntax = 'proto3';
+
+message SubmitZinggJob {
+	string args = 1;
+	string options = 2;
+}

@@ -72,7 +72,7 @@ class Arguments(BaseModel):
     blockSize: int = 100
     column: Optional[str] = None
 
-    def validate(self, phase: str) -> bool:
+    def validate_phase(self, phase: str) -> bool:
         is_valid = True
         if phase in ["train", "match", "trainMatch", "link"]:
             is_valid &= self.trainingSamples is not None
