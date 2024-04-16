@@ -1,14 +1,13 @@
 package zingg.common.core.data.df;
 
-import zingg.common.client.ZFrame;
-import zingg.common.client.ZinggClientException;
+import java.io.Serializable;
 
-public interface IZFrameProcessor<D, R, C> {
+import zingg.common.client.ZFrame;
+
+public interface IZFrameEnriched<D, R, C> extends Serializable{
 
 	public ZFrame<D,R,C> getOriginalDF();
 	
 	public ZFrame<D,R,C> getProcessedDF();
-	
-	public void process() throws ZinggClientException;
-	
+
 }

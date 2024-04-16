@@ -1,4 +1,4 @@
-package zingg.common.core.data.df;
+package zingg.common.core.data.df.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,27 +11,22 @@ import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.util.BlockingTreeUtil;
 
-public class BlockedFrame<S, D, R, C, T> extends AbstractZFrameProcessor<D, R, C> {
-
+public class BlockedDataController<S, D, R, C, T> implements IDataController<D, R, C> {
 	protected IArguments args;
 	
 	protected BlockingTreeUtil<S, D, R, C, T> blockingTreeUtil;
 	
-	public static final Log LOG = LogFactory.getLog(BlockedFrame.class);   
+	public static final Log LOG = LogFactory.getLog(BlockedDataController.class);   
 	
-	public BlockedFrame(ZFrame<D, R, C> originalDF, IArguments args, BlockingTreeUtil<S, D, R, C, T> blockingTreeUtil) throws Exception, ZinggClientException {
-		super();
-		this.originalDF = originalDF;
+	public BlockedDataController(IArguments args, BlockingTreeUtil<S, D, R, C, T> blockingTreeUtil) throws Exception, ZinggClientException {
 		this.args = args;
 		this.blockingTreeUtil = blockingTreeUtil;
 	}
 
-	protected ZFrame<D, R, C> getBlocked() throws ZinggClientException {
+	protected ZFrame<D, R, C> getBlocked(ZFrame<D,R,C> originalDF) throws ZinggClientException {
 		try {
-			//testData = dropDuplicates(testData);
-			
 			Tree<Canopy<R>> tree = blockingTreeUtil.readBlockingTree(args);
-			ZFrame<D, R, C> blocked = blockingTreeUtil.getBlockHashes(getOriginalDF(), tree);
+			ZFrame<D, R, C> blocked = blockingTreeUtil.getBlockHashes(originalDF, tree);
 			ZFrame<D, R, C> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL));//.cache();
 			return blocked1;
 		} catch (ZinggClientException e) {
@@ -42,8 +37,8 @@ public class BlockedFrame<S, D, R, C, T> extends AbstractZFrameProcessor<D, R, C
 	}
 	
 	@Override
-	public void process() throws ZinggClientException {
-		this.processedDF = getBlocked();
-	}
-
+	public ZFrame<D, R, C> process(ZFrame<D,R,C> originalDF) throws ZinggClientException {
+		return getBlocked(originalDF);
+	}	
+	
 }
