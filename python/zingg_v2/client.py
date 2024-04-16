@@ -2,10 +2,15 @@ from __future__ import annotations
 
 import json
 import os
+import warnings
 from dataclasses import fields
 from typing import Optional, Sequence, Union
 
+from pyspark.sql import SparkSession
+from pyspark.sql.connect.dataframe import DataFrame as ConnectDataFrame
+
 from zingg_v2 import models as models_v2
+from zingg_v2.connect import ZinggJob
 from zingg_v2.errors import ZinggArgumentsValidationError
 from zingg_v2.pipes import Pipe
 
@@ -19,15 +24,33 @@ class Zingg:
         # TODO: implement it
         # java_args: arguments in form of string
         # that is pairs of --key value
-
-        if spark_connect:
-            ..
-        else:
-            spark_classic
         java_args = self.options.getClientOptions()
 
-        # java_arguments is JSON definition of Zingg Job
-        java_arguments = self.args.writeArgumentsToJSONString()
+        # java_job_definition is JSON definition of Zingg Job
+        java_job_definition = self.args.writeArgumentsToJSONString()
+
+        spark = SparkSession.getActiveSession()
+
+        if spark is None:
+            _warn_msg = "Spark Session is not initialized in the current thread!"
+            _warn_msg += " It is strongly reccomend to init SparkSession manually!"
+            warnings.warn(_warn_msg)
+            spark = SparkSession.builder.getOrCreate()
+
+        spark_connect = hasattr(spark, "_jvm")
+
+        if spark_connect:
+            _log_msg = "Submitting a Zingg Job\n"
+            _log_msg += f"Arguments: {java_args}\n\n"
+            _log_msg += java_job_definition
+            _log_msg += "\n\n"
+            print(java_job_definition)
+            df = ConnectDataFrame.withPlan(ZinggJob(zingg_args=java_args, zingg_job=java_job_definition), spark)
+            df_rows = df.collect()
+            for row in df_rows:
+                print(row.asDict())
+        else:
+            spark_classic
 
         raise NotImplementedError()
 
