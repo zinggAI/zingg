@@ -9,12 +9,8 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.preprocess.IPreProcessor;
 
-public class PreprocessedFrame<S, D, R, C, T> implements IZFrameProcessor<D, R, C> {
+public class PreprocessedFrame<S, D, R, C, T> extends AbstractZFrameProcessor<D, R, C> {
 
-	protected ZFrame<D,R,C> originalDF;
-	
-	protected ZFrame<D,R,C> processedDF;
-	
 	protected List<IPreProcessor<S,D,R,C,T>> preProcessors;
 	
 	public static final Log LOG = LogFactory.getLog(PreprocessedFrame.class);   
@@ -23,16 +19,6 @@ public class PreprocessedFrame<S, D, R, C, T> implements IZFrameProcessor<D, R, 
 		super();
 		this.originalDF = originalDF;
 		this.preProcessors = preProcessors;
-	}
-
-	@Override
-	public ZFrame<D, R, C> getOriginalDF() {
-		return originalDF;
-	}
-
-	@Override
-	public ZFrame<D, R, C> getProcessedDF() {
-		return processedDF;
 	}
 
 	public void process() throws ZinggClientException {		

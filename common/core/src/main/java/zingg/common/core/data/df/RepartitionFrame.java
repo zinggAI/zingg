@@ -6,12 +6,8 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 
-public class RepartitionFrame<D, R, C> implements IZFrameProcessor<D, R, C> {
+public class RepartitionFrame<D, R, C> extends AbstractZFrameProcessor<D, R, C> {
 
-	protected ZFrame<D,R,C> originalDF;
-	
-	protected ZFrame<D,R,C> processedDF;
-	
 	protected IArguments args;
 	
 	protected int numPartitions;
@@ -25,16 +21,6 @@ public class RepartitionFrame<D, R, C> implements IZFrameProcessor<D, R, C> {
 		this.originalDF = originalDF;
 		this.numPartitions = numPartitions;
 		this.partitionCol = partitionCol;	
-	}
-
-	@Override
-	public ZFrame<D, R, C> getOriginalDF() {
-		return originalDF;
-	}
-
-	@Override
-	public ZFrame<D, R, C> getProcessedDF() {
-		return processedDF;
 	}
 
 	@Override

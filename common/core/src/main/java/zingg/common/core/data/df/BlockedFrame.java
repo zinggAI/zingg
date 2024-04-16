@@ -11,12 +11,8 @@ import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.util.BlockingTreeUtil;
 
-public class BlockedFrame<S, D, R, C, T> implements IZFrameProcessor<D, R, C> {
+public class BlockedFrame<S, D, R, C, T> extends AbstractZFrameProcessor<D, R, C> {
 
-	protected ZFrame<D,R,C> originalDF;
-	
-	protected ZFrame<D,R,C> processedDF;
-	
 	protected IArguments args;
 	
 	protected BlockingTreeUtil<S, D, R, C, T> blockingTreeUtil;
@@ -28,16 +24,6 @@ public class BlockedFrame<S, D, R, C, T> implements IZFrameProcessor<D, R, C> {
 		this.originalDF = originalDF;
 		this.args = args;
 		this.blockingTreeUtil = blockingTreeUtil;
-	}
-
-	@Override
-	public ZFrame<D, R, C> getOriginalDF() {
-		return originalDF;
-	}
-
-	@Override
-	public ZFrame<D, R, C> getProcessedDF() {
-		return processedDF;
 	}
 
 	protected ZFrame<D, R, C> getBlocked() throws ZinggClientException {

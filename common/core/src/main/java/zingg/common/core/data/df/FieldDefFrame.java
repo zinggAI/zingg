@@ -10,11 +10,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.cols.SelectedCols;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
 
-public class FieldDefFrame<D, R, C> implements IZFrameProcessor<D, R, C> {
-
-	protected ZFrame<D,R,C> originalDF;
-	
-	protected ZFrame<D,R,C> processedDF;
+public class FieldDefFrame<D, R, C> extends AbstractZFrameProcessor<D, R, C> {
 	
 	protected SelectedCols selectedCols;
 	
@@ -34,19 +30,8 @@ public class FieldDefFrame<D, R, C> implements IZFrameProcessor<D, R, C> {
 	}
 
 	@Override
-	public ZFrame<D, R, C> getOriginalDF() {
-		return originalDF;
-	}
-
-	@Override
-	public ZFrame<D, R, C> getProcessedDF() {
-		return processedDF;
-	}
-	
-	@Override
 	public void process() {
 		this.processedDF = getOriginalDF().select(selectedCols.getCols());
-//		return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
 	}
 
 }
