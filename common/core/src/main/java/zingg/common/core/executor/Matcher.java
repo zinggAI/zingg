@@ -42,7 +42,6 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		List<IPreProcessor<S,D,R,C,T>> preProcessors = new ArrayList<IPreProcessor<S,D,R,C,T>>();
 		preProcessors.add(getStopWords());		
 		ZData<S, D, R, C, T> zData = new ZData<S,D,R,C,T>(data,args,context,preProcessors);
-		zData.process();
 		return zData;
 	}
 
@@ -77,15 +76,15 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return dupes;
 	}
 
-	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
+	protected ZFrame<D,R,C> getActualDupes(ZData<S,D,R,C,T>  rawData) throws Exception, ZinggClientException{
 		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
 		SelfPairBuilder<S, D, R, C> iPairBuilder = new SelfPairBuilder<S, D, R, C> (getDSUtil(),args);
-		return getActualDupes(blocked, testData,predictionFilter, iPairBuilder,new PredictionColsSelector());
+		return getActualDupes(rawData,predictionFilter, iPairBuilder,new PredictionColsSelector());
 	}
 
-	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData, 
+	protected ZFrame<D,R,C> getActualDupes(ZData<S,D,R,C,T>  rawData, 
 			IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder, PredictionColsSelector colsSelector) throws Exception, ZinggClientException{
-		ZFrame<D,R,C> blocks = getPairs(selectColsFromBlocked(blocked), testData, iPairBuilder);
+		ZFrame<D,R,C> blocks = getPairs(selectColsFromBlocked(rawData.getBlockedFrame().getProcessedDF()), rawData.getRepartitionFrame().getProcessedDF(), iPairBuilder);
 		ZFrame<D,R,C>dupesActual = predictOnBlocks(blocks); 
 		ZFrame<D, R, C> filteredData = predictionFilter.filter(dupesActual);
 		if(colsSelector!=null) {
@@ -99,7 +98,6 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
         try {
 			// read input, filter, remove self joins
         	ZData<S,D,R,C,T>  rawData = getRawData();
-			ZFrame<D,R,C>blocked = rawData.getBlockedFrame().getProcessedDF();
 			writeAnalytics(rawData);			
 			LOG.info("Blocked ");
 			/*blocked = blocked.cache();
@@ -107,11 +105,11 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 				.groupBy("partition_id").agg(functions.count("z_zid")).as("zid").orderBy("partition_id").toJavaRDD().saveAsTextFile("/tmp/zblockedParts");
 				*/
 			if (LOG.isDebugEnabled()) {
-				LOG.debug("Num distinct hashes " + blocked.select(ColName.HASH_COL).distinct().count());
-				blocked.show();
+				LOG.debug("Num distinct hashes " + rawData.getBlockedFrame().getProcessedDF().select(ColName.HASH_COL).distinct().count());
+				rawData.getBlockedFrame().getProcessedDF().show();
 			}
 			//LOG.warn("Num distinct hashes " + blocked.agg(functions.approx_count_distinct(ColName.HASH_COL)).count());
-			ZFrame<D,R,C> dupesActual = getActualDupes(blocked, rawData.getRepartitionFrame().getProcessedDF());
+			ZFrame<D,R,C> dupesActual = getActualDupes(rawData);
 			
 			//dupesActual.explain();
 			//dupesActual.toJavaRDD().saveAsTextFile("/tmp/zdupes");
