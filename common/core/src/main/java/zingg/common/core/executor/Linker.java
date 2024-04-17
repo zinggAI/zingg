@@ -8,6 +8,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.data.df.ZData;
+import zingg.common.core.data.df.ZDataPair;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.pairs.SelfPairBuilderSourceSensitive;
 
@@ -29,7 +30,7 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	}
 	
 	@Override
-	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
+	public ZDataPair<S, D, R, C, T> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
 		return getPairs(blocked, bAll, new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args));
 	}	
 

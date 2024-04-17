@@ -12,6 +12,7 @@ import zingg.common.client.cols.PredictionColsSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.data.df.ZData;
+import zingg.common.core.data.df.ZDataPair;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.model.Model;
@@ -39,10 +40,13 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	protected ZData<S, D, R, C, T> getDataSelector(ZFrame<D, R, C> data) throws ZinggClientException {
+		return new ZData<S,D,R,C,T>(data,args,context,getPreProcessors());
+	}
+
+	protected List<IPreProcessor<S, D, R, C, T>> getPreProcessors() {
 		List<IPreProcessor<S,D,R,C,T>> preProcessors = new ArrayList<IPreProcessor<S,D,R,C,T>>();
-		preProcessors.add(getStopWords());		
-		ZData<S, D, R, C, T> zData = new ZData<S,D,R,C,T>(data,args,context,preProcessors);
-		return zData;
+		preProcessors.add(getStopWords());
+		return preProcessors;
 	}
 
 	protected ZFrame<D,R,C> readInputData() throws ZinggClientException {
@@ -50,12 +54,12 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	
-	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
+	public ZDataPair<S, D, R, C, T> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
 		return getPairs(blocked, bAll, new SelfPairBuilder<S, D, R, C> (getDSUtil(),args));
 	}
 	
-	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception{
-		return iPairBuilder.getPairs(blocked, bAll);
+	public ZDataPair<S, D, R, C, T> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception{
+		return new ZDataPair<S, D, R, C, T>(blocked, bAll,iPairBuilder);
 	}
 
 	protected abstract Model getModel() throws ZinggClientException;
@@ -64,12 +68,12 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return blocked.select(ColName.ID_COL, ColName.HASH_COL);
 	}
 
-	protected ZFrame<D,R,C> predictOnBlocks(ZFrame<D,R,C>blocks) throws Exception, ZinggClientException{
+	protected ZFrame<D,R,C> predictOnBlocks(ZDataPair<S, D, R, C, T> blocks) throws Exception, ZinggClientException{
 		if (LOG.isDebugEnabled()) {
-				LOG.debug("block size" + blocks.count());
+				LOG.debug("block size" + blocks.getPairs().count());
 		}
 		Model model = getModel();
-		ZFrame<D,R,C> dupes = model.predict(blocks); 
+		ZFrame<D,R,C> dupes = model.predict(blocks.getPairs()); 
 		if (LOG.isDebugEnabled()) {
 				LOG.debug("Found dupes " + dupes.count());	
 		}
@@ -84,7 +88,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	protected ZFrame<D,R,C> getActualDupes(ZData<S,D,R,C,T>  rawData, 
 			IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder, PredictionColsSelector colsSelector) throws Exception, ZinggClientException{
-		ZFrame<D,R,C> blocks = getPairs(selectColsFromBlocked(rawData.getBlockedFrame().getProcessedDF()), rawData.getRepartitionFrame().getProcessedDF(), iPairBuilder);
+		ZDataPair<S, D, R, C, T> blocks = getPairs(selectColsFromBlocked(rawData.getBlockedFrame().getProcessedDF()), rawData.getRepartitionFrame().getProcessedDF(), iPairBuilder);
 		ZFrame<D,R,C>dupesActual = predictOnBlocks(blocks); 
 		ZFrame<D, R, C> filteredData = predictionFilter.filter(dupesActual);
 		if(colsSelector!=null) {
