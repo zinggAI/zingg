@@ -22,8 +22,10 @@ public class PreprocessorDataController<S,D,R,C,T> implements IDataController<D,
 	@Override
 	public ZFrame<D, R, C> process(ZFrame<D,R,C> originalDF) throws ZinggClientException {
 		ZFrame<D,R,C> processedDF = originalDF;
-		for (IPreProcessor<S,D,R,C,T> iPreProcessor : preProcessors) {
-			processedDF = iPreProcessor.preprocess(processedDF);
+		if (preProcessors != null) {
+			for (IPreProcessor<S, D, R, C, T> iPreProcessor : preProcessors) {
+				processedDF = iPreProcessor.preprocess(processedDF);
+			} 
 		}
 		return processedDF;
 	}
