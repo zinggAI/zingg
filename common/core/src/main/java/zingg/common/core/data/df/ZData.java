@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.cols.SelectedCols;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.util.ColName;
 import zingg.common.core.context.Context;
@@ -42,61 +43,54 @@ public class ZData<S, D, R, C, T> {
 		return rawData;
 	}
 
-	public ZFrameEnriched<D, R, C> getFieldDefFrame() {
+	public ZFrameEnriched<D, R, C> getFieldDefFrame() throws ZinggClientException {
+		if (fieldDefFrame==null) {
+			ZFrame<D, R, C> originalDF = getRawData();
+			FieldDefDataController<D, R, C> controller = new FieldDefDataController<D, R, C>(args.getFieldDefinition(),
+					getColSelector());
+			this.fieldDefFrame = new ZFrameEnriched<D, R, C>(originalDF, controller.process(originalDF));
+		}
 		return fieldDefFrame;
 	}
 	
-	public ZFrameEnriched<D, R, C> getPreprocessedFrame() {
+	public ZFrameEnriched<D, R, C> getPreprocessedFrame() throws ZinggClientException {
+		if (preprocessedFrame==null) {
+			ZFrame<D, R, C> originalDF = getFieldDefFrame().getProcessedDF();
+			PreprocessorDataController<S, D, R, C, T> controller = new PreprocessorDataController<S, D, R, C, T>(
+					preProcessors);
+			this.preprocessedFrame = new ZFrameEnriched<D, R, C>(originalDF, controller.process(originalDF));
+		}
 		return preprocessedFrame;
 	}	
 	
-	public ZFrameEnriched<D, R, C> getRepartitionFrame() {
+	public ZFrameEnriched<D, R, C> getRepartitionFrame() throws ZinggClientException {
+		if (repartitionFrame==null) {
+			ZFrame<D, R, C> originalDF = getPreprocessedFrame().getProcessedDF();
+			RepartitionDataController<D, R, C> controller = new RepartitionDataController<D, R, C>(
+					args.getNumPartitions(), ColName.ID_COL);
+			this.repartitionFrame = new ZFrameEnriched<D, R, C>(originalDF, controller.process(originalDF));
+		}
 		return repartitionFrame;
 	}	
 	
-	public ZFrameEnriched<D, R, C>  getBlockedFrame() {
+	public ZFrameEnriched<D, R, C>  getBlockedFrame() throws ZinggClientException {
+		if (blockedFrame==null) {
+			try {
+				ZFrame<D, R, C> originalDF = getRepartitionFrame().getProcessedDF();
+				BlockedDataController<S, D, R, C, T> controller = new BlockedDataController<S, D, R, C, T>(args,
+						context.getBlockingTreeUtil());
+				this.blockedFrame = new ZFrameEnriched<D, R, C>(originalDF, controller.process(originalDF));
+			} catch (ZinggClientException zce) {
+				throw zce;
+			} catch (Exception e) {
+				throw new ZinggClientException(e);
+			}
+		}
 		return blockedFrame;
 	}
 
-	public void process() throws ZinggClientException {
-		try {
-			setFieldDefFrame();
-			setPreprocessedFrame();
-			setRepartitionFrame();
-			setBlockedFrame();
-		} catch (ZinggClientException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new ZinggClientException(e);
-		}
-	}
-
-	protected void setFieldDefFrame() throws ZinggClientException {
-		ZFrame<D, R, C> originalDF = getRawData();
-		FieldDefDataController<D, R, C> controller = new FieldDefDataController<D, R, C>(args.getFieldDefinition(),getColSelector());
-		this.fieldDefFrame = new ZFrameEnriched<D, R, C>(originalDF,controller.process(originalDF));
-	}
-
-	protected ZidAndFieldDefSelector getColSelector() {
+	protected SelectedCols getColSelector() {
 		return new ZidAndFieldDefSelector(args.getFieldDefinition());
-	}
-
-	protected void setPreprocessedFrame() throws ZinggClientException {
-		ZFrame<D, R, C> originalDF = getFieldDefFrame().getProcessedDF();
-		PreprocessorDataController<S,D,R,C,T> controller = new PreprocessorDataController<S,D,R,C,T>(preProcessors);
-		this.preprocessedFrame = new ZFrameEnriched<D, R, C>(originalDF, controller.process(originalDF));
-	}
-
-	protected void setRepartitionFrame() throws ZinggClientException {
-		ZFrame<D, R, C> originalDF = getPreprocessedFrame().getProcessedDF();
-		RepartitionDataController<D, R, C> controller = new RepartitionDataController<D, R, C>(args.getNumPartitions(),ColName.ID_COL);
-		this.repartitionFrame = new ZFrameEnriched<D, R, C>(originalDF, controller.process(originalDF));
-	}
-
-	protected void setBlockedFrame() throws Exception, ZinggClientException {
-		ZFrame<D, R, C> originalDF = getRepartitionFrame().getProcessedDF();
-		BlockedDataController<S, D, R, C, T> controller = new BlockedDataController<S, D, R, C, T>(args, context.getBlockingTreeUtil());
-		this.blockedFrame = new ZFrameEnriched<D, R, C>(originalDF, controller.process(originalDF));
 	}
 	
 }
