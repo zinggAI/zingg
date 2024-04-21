@@ -1,5 +1,8 @@
 syntax = 'proto3';
 
+option java_multiple_files = true;
+option java_package = "zingg.spark.connect.proto";
+
 message SubmitZinggJob {
 	string args = 1;
 	string options = 2;

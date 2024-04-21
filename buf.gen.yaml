@@ -1,5 +1,8 @@
 version: v1
 plugins:
+  # Building the Java classes
+  - plugin: buf.build/protocolbuffers/java:v25.3
+    out: spark/client/src/main/java
   # Building the Python build and building the mypy interfaces.
   - plugin: buf.build/protocolbuffers/python:v25.3
     out: python/zingg_v2/proto

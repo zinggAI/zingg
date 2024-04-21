@@ -6,8 +6,9 @@ import warnings
 from dataclasses import fields
 from typing import Optional, Sequence, Union
 
-from pyspark.sql import SparkSession
+from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql.connect.dataframe import DataFrame as ConnectDataFrame
+from pyspark.sql.connect.session import SparkSession as ConnectSession
 
 from zingg_v2 import models as models_v2
 from zingg_v2.connect import ZinggJob
@@ -19,8 +20,15 @@ class Zingg:
     def __init__(self, args: Arguments, options: ClientOptions) -> None:
         self.args = args
         self.options = options
+        self.spark: Union[SparkSession, ConnectSession] = SparkSession.getActiveSession()
 
-    def execute(self) -> None:
+        if self.spark is None:
+            _warn_msg = "Spark Session is not initialized in the current thread!"
+            _warn_msg += " It is strongly reccomend to init SparkSession manually!"
+            warnings.warn(_warn_msg)
+            self.spark = SparkSession.builder.getOrCreate()
+
+    def execute(self) -> Zingg:
         # TODO: implement it
         # java_args: arguments in form of string
         # that is pairs of --key value
@@ -29,30 +37,48 @@ class Zingg:
         # java_job_definition is JSON definition of Zingg Job
         java_job_definition = self.args.writeArgumentsToJSONString()
 
-        spark = SparkSession.getActiveSession()
+        spark_connect = hasattr(self.spark, "_jvm")
 
-        if spark is None:
-            _warn_msg = "Spark Session is not initialized in the current thread!"
-            _warn_msg += " It is strongly reccomend to init SparkSession manually!"
-            warnings.warn(_warn_msg)
-            spark = SparkSession.builder.getOrCreate()
-
-        spark_connect = hasattr(spark, "_jvm")
-
-        if spark_connect:
+        if not spark_connect:
             _log_msg = "Submitting a Zingg Job\n"
             _log_msg += f"Arguments: {java_args}\n\n"
             _log_msg += java_job_definition
             _log_msg += "\n\n"
             print(java_job_definition)
-            df = ConnectDataFrame.withPlan(ZinggJob(zingg_args=java_args, zingg_job=java_job_definition), spark)
-            df_rows = df.collect()
-            for row in df_rows:
-                print(row.asDict())
-        else:
-            spark_classic
+            df = ConnectDataFrame.withPlan(
+                ZinggJob(zingg_args=java_args, zingg_job=java_job_definition), self.spark
+            )
+            output = df.collect()[0].asDict()
+            status: str = output["status"]
+            new_args: str = output["newArgs"]
 
-        raise NotImplementedError()
+        else:
+            # TODO: Put that logic into Java by creating an entry point for Python API?
+            j_options = self.spark._jvm.zingg.common.client.ClientOptions(java_args)
+            j_args = self.spark._jvm.zingg.common.client.ArgumentsUtil.createArgumentsFromJSONString(
+                java_job_definition,
+                self.options.getPhase(),
+            )
+            client = self.spark._jvm.zingg.spark.client(
+                j_args,
+                j_options,
+                self.spark._jsci,
+            )
+            client.init()
+            client.execute()
+            client.postMetrics()
+
+            status = "SUCCESS"
+            new_args: str = self.spark._jvm.zingg.client.ArgumentsUtil.writeArgumentstoJSONString(
+                client.getArguments()
+            )
+
+        print(f"Zingg Job output status: {status}")
+
+        return Zingg(
+            Arguments.createArgumentsFromJSONString(new_args, self.options.getPhase()),
+            self.options.make_copy(),
+        )
 
     def executeLabel(self) -> None:
         raise NotImplementedError()
@@ -60,13 +86,19 @@ class Zingg:
     def executeLabelUpdate(self) -> None:
         raise NotImplementedError()
 
-    def getMarkedRecords(self) -> None:
-        raise NotImplementedError()
+    def getMarkedRecords(self) -> Union[DataFrame, ConnectDataFrame]:
+        marked_path = self.args.getZinggTrainingDataMarkedDir()
+        marked = self.spark.read.parquet(marked_path)
+        return marked
 
-    def getUnmarkedRecords(self) -> None:
-        raise NotImplementedError()
+    def getUnmarkedRecords(self) -> Union[DataFrame, ConnectDataFrame]:
+        unmarked_path = self.args.getZinggTrainingDataUnmarkedDir()
+        unmarked = self.spark.read.parquet(unmarked_path)
+        return unmarked
 
-    def processRecordsCli(self, unmarkedRecords, args):
+    def processRecordsCli(
+        self, unmarkedRecords: Union[DataFrame, ConnectDataFrame], args: Arguments
+    ) -> Union[DataFrame, ConnectDataFrame]:
         raise NotImplementedError()
 
     def processRecordsCliLabelUpdate(self, lines, args):
@@ -110,7 +142,9 @@ class FieldDefinition:
             if not isinstance(mt, models_v2.MatchType):
                 mt = models_v2.MatchType(mt)
 
-        self._model_v2 = models_v2.FieldDefinition(fieldName=name, fields=name, dataType=dataType, matchType=match_types)
+        self._model_v2 = models_v2.FieldDefinition(
+            fieldName=name, fields=name, dataType=dataType, matchType=match_types
+        )
 
     def setStopWords(self, stopWords: str) -> None:
         self._model_v2.stopWords = stopWords
@@ -174,6 +208,9 @@ class ClientOptions:
 
     def to_v2(self) -> models_v2.ClientOptions:
         return self._opt_v2
+
+    def make_copy(self) -> ClientOptions:
+        return ClientOptions(self._opt_v2.to_java_args())
 
 
 class Arguments:

@@ -14,13 +14,14 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15\x63onnect_plugins.proto\">\n\x0eSubmitZinggJob\x12\x12\n\x04\x61rgs\x18\x01 \x01(\tR\x04\x61rgs\x12\x18\n\x07options\x18\x02 \x01(\tR\x07optionsb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15\x63onnect_plugins.proto\">\n\x0eSubmitZinggJob\x12\x12\n\x04\x61rgs\x18\x01 \x01(\tR\x04\x61rgs\x12\x18\n\x07options\x18\x02 \x01(\tR\x07optionsB\x1d\n\x19zingg.spark.connect.protoP\x01\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'connect_plugins_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
-  DESCRIPTOR._options = None
+  _globals['DESCRIPTOR']._options = None
+  _globals['DESCRIPTOR']._serialized_options = b'\n\031zingg.spark.connect.protoP\001'
   _globals['_SUBMITZINGGJOB']._serialized_start=25
   _globals['_SUBMITZINGGJOB']._serialized_end=87
 # @@protoc_insertion_point(module_scope)

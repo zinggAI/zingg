@@ -5,7 +5,7 @@ from dataclasses import asdict, dataclass
 from enum import StrEnum, auto
 from typing import Any, Optional, Union
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, ValidationError, field_validator
 
 
 class MatchType(StrEnum):
@@ -51,7 +51,9 @@ class Pipe(BaseModel):
     name: str
     format: DataFormat
     props: dict[str, Any] = {}
-    schema: Optional[str] = None
+    # "schema" is a built in attribute of BaseModel
+    # that is why we need that alias:
+    schema_field: Optional[str] = Field(default=None, alias="schema")
     mode: Optional[str] = None
 
 
@@ -71,6 +73,24 @@ class Arguments(BaseModel):
     stopWordsCutoff: float = 0.1
     blockSize: int = 100
     column: Optional[str] = None
+
+    @field_validator("numPartitions")
+    @classmethod
+    def validate_num_partitions(cls, v: int) -> int:
+        if (v != -1) or (v <= 0):
+            _err_msg = "Number of partitions can be greater than 0 for user specified partitioning or equal to -1 for system decided partitioning"
+            raise ValidationError(_err_msg)
+
+        return v
+
+    @field_validator("labelDataSampleSize", "stopWordsCutoff")
+    @classmethod
+    def validate_relative_size(cls, v: float) -> float:
+        if (v > 1) or (v < 0):
+            _err_msg = "Label Data Sample Size should be between 0 and 1"
+            raise ValidationError(_err_msg)
+
+        return v
 
     def validate_phase(self, phase: str) -> bool:
         is_valid = True

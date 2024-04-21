@@ -18,4 +18,4 @@ readme = "README.md"
 requires-python = ">=3.11"
 
 [tool.ruff]
-line-length = 150
+line-length = 110

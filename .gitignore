@@ -30,3 +30,13 @@ python/docs/_build/_doctrees
 
 # Sphinx _build
 **/_build
+
+# Helix stuff
+.helix
+
+# JDTLS stuff
+.package
+.classpath
+.project
+.settings
+.factorypath
