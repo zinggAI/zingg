@@ -10,3 +10,4 @@ plugins:
     out: python/zingg_v2/proto
   - plugin: buf.build/community/nipunn1313-mypy:v3.5.0
     out: python/zingg_v2/proto
+

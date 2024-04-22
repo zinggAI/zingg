@@ -77,7 +77,7 @@ class Arguments(BaseModel):
     @field_validator("numPartitions")
     @classmethod
     def validate_num_partitions(cls, v: int) -> int:
-        if (v != -1) or (v <= 0):
+        if (v != -1) and (v <= 0):
             _err_msg = "Number of partitions can be greater than 0 for user specified partitioning or equal to -1 for system decided partitioning"
             raise ValidationError(_err_msg)
 
@@ -130,4 +130,8 @@ class ClientOptions:
     remote: Optional[str] = None
 
     def to_java_args(self) -> list[str]:
-        return list(itertools.chain.from_iterable([[f"--{key}", value] for key, value in asdict(self) if value is not None]))
+        return list(
+            itertools.chain.from_iterable(
+                [[f"--{key}", value] for key, value in asdict(self).items() if value is not None]
+            )
+        )

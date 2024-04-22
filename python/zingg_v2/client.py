@@ -160,10 +160,10 @@ class ClientOptions:
     def __init__(self, argsSent: Optional[Sequence[str]]) -> None:
         if argsSent is None:
             args = []
+            self._opt_v2 = models_v2.ClientOptions()
         else:
             args = [a for a in argsSent]
-
-        self._opt_v2 = models_v2.ClientOptions(**{k: v for k, v in zip(args[:-1], args[1:])})
+            self._opt_v2 = models_v2.ClientOptions(**{k: v for k, v in zip(args[:-1], args[1:])})
         print("arguments for client options are ", self._opt_v2.to_java_args())
 
     def getClientOptions(self) -> str:

@@ -54,8 +54,32 @@
 			<groupId>graphframes</groupId>
 			<artifactId>graphframes</artifactId>
 			<version>${graphframes.version}</version>
-		</dependency>	
+		</dependency>
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>3.25.1</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<version>4.8.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 	
 		
 </project>
