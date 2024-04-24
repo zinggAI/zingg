@@ -3,22 +3,18 @@ package zingg.common.core.similarity.function;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class CheckNullFunctionLong extends SimFunction<Long> {
+public class CheckNullFunction<T> extends SimFunction<T> {
 
 	private static final long serialVersionUID = 1L;
 	public static final Log LOG = LogFactory
-			.getLog(CheckNullFunctionLong.class);
+			.getLog(CheckNullFunction.class);
 
-	public CheckNullFunctionLong() {
-		super("CheckNullFunctionLong");
-	}
-
-	public CheckNullFunctionLong(String name) {
+	public CheckNullFunction(String name) {
 		super(name);
 	}
 
 	@Override
-	public Double call(Long first, Long second) {
+	public Double call(T first, T second) {
 		if (first != null && second != null) {
 			return 1d;
 		}

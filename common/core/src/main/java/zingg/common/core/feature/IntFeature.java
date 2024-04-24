@@ -2,9 +2,9 @@ package zingg.common.core.feature;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.MatchType;
-import zingg.common.core.similarity.function.CheckNullFunctionInt;
+import zingg.common.core.similarity.function.CheckNullFunction;
 import zingg.common.core.similarity.function.IntegerSimilarityFunction;
-import zingg.common.core.similarity.function.IntegerSimilarityFunctionExact;
+import zingg.common.core.similarity.function.SimilarityFunctionExact;
 public class IntFeature extends BaseFeature<Integer> {
 
 	private static final long serialVersionUID = 1L;
@@ -19,10 +19,10 @@ public class IntFeature extends BaseFeature<Integer> {
 			addSimFunction(new IntegerSimilarityFunction());
 		} 
 		if (newParam.getMatchType().contains(MatchType.EXACT)) {
-			addSimFunction(new IntegerSimilarityFunctionExact());
+			addSimFunction(new SimilarityFunctionExact<Integer>("IntegerSimilarityFunctionExact"));
 		} 		
 		if (newParam.getMatchType().contains(MatchType.NULL_OR_BLANK)) {
-			addSimFunction(new CheckNullFunctionInt());	
+			addSimFunction(new CheckNullFunction<Integer>("CheckNullFunctionInt"));	
 		}
 	}
 

@@ -1,21 +1,19 @@
 package zingg.common.core.similarity.function;
 
-import java.util.Date;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class DateSimilarityFunctionExact extends SimFunction<Date> {
+public class SimilarityFunctionExact<T> extends SimFunction<T> {
 	private static final long serialVersionUID = 1L;
 	public static final Log LOG = LogFactory
-			.getLog(DateSimilarityFunctionExact.class);
+			.getLog(SimilarityFunctionExact.class);
 
-	public DateSimilarityFunctionExact() {
-		super("DateSimilarityFunctionExact");
+	public SimilarityFunctionExact(String name) {
+		super(name);
 	}
 
 	@Override
-	public Double call(Date first, Date second) {
+	public Double call(T first, T second) {
 		if (first == null || second == null) return 1d;
 		double score = first.equals(second) ? 1d : 0d;
 		return score;		

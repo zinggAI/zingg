@@ -4,9 +4,9 @@ import java.util.Date;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.MatchType;
-import zingg.common.core.similarity.function.CheckNullFunctionDate;
+import zingg.common.core.similarity.function.CheckNullFunction;
 import zingg.common.core.similarity.function.DateSimilarityFunction;
-import zingg.common.core.similarity.function.DateSimilarityFunctionExact;
+import zingg.common.core.similarity.function.SimilarityFunctionExact;
 
 public class DateFeature extends BaseFeature<Date> {
 
@@ -33,10 +33,10 @@ public class DateFeature extends BaseFeature<Date> {
 			addSimFunction(new DateSimilarityFunction());
 		} 
 		if (f.getMatchType().contains(MatchType.EXACT)) {
-			addSimFunction(new DateSimilarityFunctionExact());
+			addSimFunction(new SimilarityFunctionExact<Date>("DateSimilarityFunctionExact"));
 		} 				
 		if (f.getMatchType().contains(MatchType.NULL_OR_BLANK)) {
-			addSimFunction(new CheckNullFunctionDate());	
+			addSimFunction(new CheckNullFunction<Date>("CheckNullFunctionDate"));	
 		}				
 	}
 

@@ -9,32 +9,32 @@ public class TestIntegerSimilarityFunctionExact {
 	
 	@Test
 	public void testFirstNull() {
-		IntegerSimilarityFunctionExact exact = new IntegerSimilarityFunctionExact();
+		SimilarityFunctionExact<Integer> exact = new SimilarityFunctionExact<Integer>("IntegerSimilarityFunctionExact");
 		assertEquals(1d, exact.call(null, 2));
 	}
 
 
 	@Test
 	public void testSecondNull() {
-		IntegerSimilarityFunctionExact exact = new IntegerSimilarityFunctionExact();
+		SimilarityFunctionExact<Integer> exact = new SimilarityFunctionExact<Integer>("IntegerSimilarityFunctionExact");
 		assertEquals(1d, exact.call(1, null));
 	}
 
 	@Test
 	public void testBothNull() {
-		IntegerSimilarityFunctionExact exact = new IntegerSimilarityFunctionExact();
+		SimilarityFunctionExact<Integer> exact = new SimilarityFunctionExact<Integer>("IntegerSimilarityFunctionExact");
 		assertEquals(1d, exact.call(null, null));
 	}
 
 	@Test
 	public void testNotEqual() {
-		IntegerSimilarityFunctionExact exact = new IntegerSimilarityFunctionExact();
+		SimilarityFunctionExact<Integer> exact = new SimilarityFunctionExact<Integer>("IntegerSimilarityFunctionExact");
 		assertEquals(0d, exact.call(101, 102));
 	}
 
 	@Test
 	public void testEqual() {
-		IntegerSimilarityFunctionExact exact = new IntegerSimilarityFunctionExact();
+		SimilarityFunctionExact<Integer> exact = new SimilarityFunctionExact<Integer>("IntegerSimilarityFunctionExact");
 		assertEquals(1d, exact.call(101, 101));
 	}
 	

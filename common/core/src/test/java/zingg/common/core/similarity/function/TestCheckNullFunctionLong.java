@@ -9,26 +9,26 @@ public class TestCheckNullFunctionLong {
 	
 	@Test
 	public void testFirstNull() {
-		CheckNullFunctionLong isNull = new CheckNullFunctionLong();
+		CheckNullFunction<Long> isNull = new CheckNullFunction<Long>("CheckNullFunctionLong");
 		assertEquals(0d, isNull.call(null, 2l));
 	}
 
 
 	@Test
 	public void testSecondNull() {
-		CheckNullFunctionLong isNull = new CheckNullFunctionLong();
+		CheckNullFunction<Long> isNull = new CheckNullFunction<Long>("CheckNullFunctionLong");
 		assertEquals(0d, isNull.call(1l, null));
 	}
 
 	@Test
 	public void testBothNull() {
-		CheckNullFunctionLong isNull = new CheckNullFunctionLong();
+		CheckNullFunction<Long> isNull = new CheckNullFunction<Long>("CheckNullFunctionLong");
 		assertEquals(0d, isNull.call(null, null));
 	}
 
 	@Test
 	public void testBothNotNull() {
-		CheckNullFunctionLong isNull = new CheckNullFunctionLong();
+		CheckNullFunction<Long> isNull = new CheckNullFunction<Long>("CheckNullFunctionLong");
 		assertEquals(1d, isNull.call(1l, 2l));
 	}
 
