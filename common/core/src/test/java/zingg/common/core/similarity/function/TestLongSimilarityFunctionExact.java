@@ -9,33 +9,31 @@ public class TestLongSimilarityFunctionExact {
 	
 	@Test
 	public void testFirstNull() {
-		SimilarityFunctionExact<Long> exact = new SimilarityFunctionExact<Long>("LongSimilarityFunctionExact");
-		assertEquals(1d, exact.call(null, 2l));
+		assertEquals(1d, simFunc().call(null, 2l));
 	}
-
 
 	@Test
 	public void testSecondNull() {
-		SimilarityFunctionExact<Long> exact = new SimilarityFunctionExact<Long>("LongSimilarityFunctionExact");
-		assertEquals(1d, exact.call(1l, null));
+		assertEquals(1d, simFunc().call(1l, null));
 	}
 
 	@Test
 	public void testBothNull() {
-		SimilarityFunctionExact<Long> exact = new SimilarityFunctionExact<Long>("LongSimilarityFunctionExact");
-		assertEquals(1d, exact.call(null, null));
+		assertEquals(1d, simFunc().call(null, null));
 	}
 
 	@Test
 	public void testNotEqual() {
-		SimilarityFunctionExact<Long> exact = new SimilarityFunctionExact<Long>("LongSimilarityFunctionExact");
-		assertEquals(0d, exact.call(101l, 102l));
+		assertEquals(0d, simFunc().call(101l, 102l));
 	}
 
 	@Test
 	public void testEqual() {
-		SimilarityFunctionExact<Long> exact = new SimilarityFunctionExact<Long>("LongSimilarityFunctionExact");
-		assertEquals(1d, exact.call(101l, 101l));
+		assertEquals(1d, simFunc().call(101l, 101l));
 	}
+	
+	protected SimilarityFunctionExact<Long> simFunc() {
+		return new SimilarityFunctionExact<Long>("LongSimilarityFunctionExact");
+	}	
 	
 }
