@@ -34,9 +34,19 @@ python/docs/_build/_doctrees
 # Helix stuff
 .helix
 
+# Emacs stuff
+.dir-locals.el
+
 # JDTLS stuff
 .package
 .classpath
 .project
 .settings
 .factorypath
+
+# Metals LSP
+.metals
+.bloop
+
+# Hadoop & Spark binaries
+spark-*

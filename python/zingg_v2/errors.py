@@ -3,3 +3,6 @@ class ZinggArgumentsValidationError(ValueError):
 
 class ZinggParameterIsNotSet(ValueError):
     pass
+
+class ZinggSparkConnectEmptySession(ValueError):
+    pass

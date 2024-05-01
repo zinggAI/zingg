@@ -6,6 +6,7 @@ import org.apache.spark.sql.catalyst.plans.logical.LogicalPlan
 import org.apache.spark.sql.connect.planner.SparkConnectPlanner
 import org.apache.spark.sql.connect.plugin.RelationPlugin
 import org.apache.spark.sql.types.{StringType, StructField, StructType}
+
 import zingg.common.client.{ArgumentsUtil, ClientOptions}
 import zingg.spark.client.SparkClient
 import zingg.spark.connect.proto.SubmitZinggJob

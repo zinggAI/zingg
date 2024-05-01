@@ -12,7 +12,7 @@ from pyspark.sql.connect.session import SparkSession as ConnectSession
 
 from zingg_v2 import models as models_v2
 from zingg_v2.connect import ZinggJob
-from zingg_v2.errors import ZinggArgumentsValidationError
+from zingg_v2.errors import ZinggArgumentsValidationError, ZinggSparkConnectEmptySession
 from zingg_v2.pipes import Pipe
 
 
@@ -20,13 +20,19 @@ class Zingg:
     def __init__(self, args: Arguments, options: ClientOptions) -> None:
         self.args = args
         self.options = options
-        self.spark: Union[SparkSession, ConnectSession] = SparkSession.getActiveSession()
-
-        if self.spark is None:
-            _warn_msg = "Spark Session is not initialized in the current thread!"
-            _warn_msg += " It is strongly reccomend to init SparkSession manually!"
-            warnings.warn(_warn_msg)
-            self.spark = SparkSession.builder.getOrCreate()
+        if os.environ["ZINGG_SPARK_CONNECT"]:
+            self.spark = ConnectSession.getActiveSession()
+            if self.spark is None:
+                _err_msg = "SparkConnect mode was choosen but spark session was not created!"
+                _err_msg += "\nYou have to initialize SparkConnectSession before creating Zingg!"
+                raise ZinggSparkConnectEmptySession(_err_msg)
+        else:
+            self.spark = SparkSession.getActiveSession()
+            if self.spark is None:
+                _warn_msg = "Spark Session is not initialized in the current thread!"
+                _warn_msg += " It is strongly reccomend to init SparkSession manually!"
+                warnings.warn(_warn_msg)
+                self.spark = SparkSession.builder.getOrCreate()
 
     def execute(self) -> Zingg:
         # TODO: implement it
@@ -37,9 +43,9 @@ class Zingg:
         # java_job_definition is JSON definition of Zingg Job
         java_job_definition = self.args.writeArgumentsToJSONString()
 
-        spark_connect = hasattr(self.spark, "_jvm")
+        spark_connect = not hasattr(self.spark, "_jvm")
 
-        if not spark_connect:
+        if spark_connect:
             _log_msg = "Submitting a Zingg Job\n"
             _log_msg += f"Arguments: {java_args}\n\n"
             _log_msg += java_job_definition
@@ -53,6 +59,7 @@ class Zingg:
             new_args: str = output["newArgs"]
 
         else:
+            # There are errors that should be fixed! :TODO
             # TODO: Put that logic into Java by creating an entry point for Python API?
             j_options = self.spark._jvm.zingg.common.client.ClientOptions(java_args)
             j_args = self.spark._jvm.zingg.common.client.ArgumentsUtil.createArgumentsFromJSONString(

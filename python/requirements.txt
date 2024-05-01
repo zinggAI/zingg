@@ -3,4 +3,5 @@ seaborn
 matplotlib
 sphinx
 sphinx-rtd-theme
-pyspark>=3.5
+pyspark[connect]>=3.5
+pydantic
