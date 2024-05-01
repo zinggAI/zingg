@@ -5,45 +5,49 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
+import zingg.common.client.options.ZinggOptions;
 import zingg.common.core.executor.Linker;
 import zingg.common.core.model.Model;
 import zingg.common.core.preprocess.StopWordsRemover;
-import zingg.spark.client.ZSparkSession;
+import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.preprocess.SparkStopWordsRemover;
 
 
-public class SparkLinker extends Linker<ZSparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkLinker";
 	public static final Log LOG = LogFactory.getLog(SparkLinker.class);
 
 	public SparkLinker() {
-		setZinggOptions(ZinggOptions.LINK);
-		setContext(new ZinggSparkContext());
+		this(new ZinggSparkContext());
 	}
 
+	public SparkLinker(ZinggSparkContext sparkContext) {
+		setZinggOption(ZinggOptions.LINK);
+		setContext(sparkContext);
+	}
+	
     @Override
-    public void init(IArguments args, IZinggLicense license)  throws ZinggClientException {
-        super.init(args, license);
-        getContext().init(license);
+    public void init(IArguments args, SparkSession s)  throws ZinggClientException {
+        super.init(args,s);
+        getContext().init(s);
     }
 	
 	@Override
-	protected Model getModel() throws ZinggClientException {
+	public Model getModel() throws ZinggClientException {
 		Model model = getModelUtil().loadModel(false, args);
-		model.register(getContext().getSession());
+		model.register();
 		return model;
 	}
 
 	@Override
-	protected StopWordsRemover<ZSparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
+	public StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
 		return new SparkStopWordsRemover(getContext(),getArgs());
 	}
 	

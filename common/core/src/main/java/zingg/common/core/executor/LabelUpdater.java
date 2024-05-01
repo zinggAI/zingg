@@ -1,6 +1,5 @@
 package zingg.common.core.executor;
 
-import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.logging.Log;
@@ -8,7 +7,8 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.cols.ZidAndFieldDefSelector;
+import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
 import zingg.common.core.util.LabelMatchType;
@@ -19,7 +19,7 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	public static final Log LOG = LogFactory.getLog(LabelUpdater.class);
 
 	public LabelUpdater() {
-		setZinggOptions(ZinggOptions.UPDATE_LABEL);
+		setZinggOption(ZinggOptions.UPDATE_LABEL);
 	}
 
 	public void execute() throws ZinggClientException {
@@ -125,14 +125,14 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	}
 
 	protected int getUserInput(ZFrame<D,R,C> lines,ZFrame<D,R,C> currentPair,String cluster_id) {
-		
-		List<C> displayCols = getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
-		
+//		List<C> displayCols = getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
+		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition(), false, args.getShowConcise());
 		int matchFlag = currentPair.getAsInt(currentPair.head(),ColName.MATCH_FLAG_COL);
 		String preMsg = String.format("\n\tThe record pairs belonging to the input cluster id %s are:", cluster_id);
 		String matchType = LabelMatchType.get(matchFlag).msg;
 		String postMsg = String.format("\tThe above pair is labeled as %s\n", matchType);
-		int selectedOption = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), preMsg, postMsg);
+//		int selectedOption = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), preMsg, postMsg);
+		int selectedOption = displayRecordsAndGetUserInput(currentPair.select(zidAndFieldDefSelector.getCols()), preMsg, postMsg);
 		getTrainingDataModel().updateLabellerStat(selectedOption, INCREMENT);
 		getTrainingDataModel().updateLabellerStat(matchFlag, -1*INCREMENT);
 		getLabelDataViewHelper().printMarkedRecordsStat(

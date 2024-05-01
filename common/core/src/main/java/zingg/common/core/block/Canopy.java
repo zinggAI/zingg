@@ -20,19 +20,19 @@ public class Canopy<R> implements Serializable {
 	public static final Log LOG = LogFactory.getLog(Canopy.class);
 
 	// created by function edge leading from parent to this node
-	HashFunction function;
+	protected HashFunction function;
 	// aplied on field
-	FieldDefinition context;
+	protected FieldDefinition context;
 	// list of duplicates passed from parent
-	List<R> dupeN;
+	protected List<R> dupeN;
 	// number of duplicates eliminated after function applied on fn context
-	long elimCount;
+	protected long elimCount;
 	// hash of canopy
-	Object hash;
+	protected Object hash;
 	// training set
-	List<R> training;
+	protected List<R> training;
 	// duplicates remaining after function is applied
-	List<R> dupeRemaining;
+	protected List<R> dupeRemaining;
 
 	public Canopy() {
 	}

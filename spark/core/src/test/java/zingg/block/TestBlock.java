@@ -41,8 +41,8 @@ public class TestBlock  extends ZinggSparkTester {
 		IArguments args = getArguments();
 
 		// form tree
-		SparkBlockingTreeUtil blockingTreeUtil = new SparkBlockingTreeUtil(zSession, zsCTX.getPipeUtil());
-		SparkHashUtil hashUtil = new SparkHashUtil(zSession);
+		SparkBlockingTreeUtil blockingTreeUtil = new SparkBlockingTreeUtil(spark, zsCTX.getPipeUtil());
+		SparkHashUtil hashUtil = new SparkHashUtil(spark);
 
 		Tree<Canopy<Row>> blockingTree = blockingTreeUtil.createBlockingTreeFromSample(testData, posDf, 0.5, -1,
 				args, hashUtil.getHashFunctionList());
@@ -50,6 +50,7 @@ public class TestBlock  extends ZinggSparkTester {
 		// primary deciding is unique year so identityInteger should have been picked
 		Canopy<Row> head = blockingTree.getHead();
 		assertEquals("identityInteger", head.getFunction().getName());
+		blockingTree.toString();
 				
 	}
 

@@ -6,14 +6,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IArguments;
 import zingg.common.client.ILabelDataViewHelper;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
-import zingg.common.core.Context;
+import zingg.common.core.context.Context;
 import zingg.common.core.util.LabelMatchType;
 
 public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> implements ILabelDataViewHelper<S, D, R, C> {
@@ -21,9 +19,8 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	private static final long serialVersionUID = 1L;
 	public static final Log LOG = LogFactory.getLog(LabelDataViewHelper.class);
 	
-	public LabelDataViewHelper(Context<S,D,R,C,T> context, ZinggOptions zinggOptions, ClientOptions clientOptions) {
+	public LabelDataViewHelper(Context<S,D,R,C,T> context, ClientOptions clientOptions) {
 		setContext(context);
-		setZinggOptions(zinggOptions);
 		setClientOptions(clientOptions);
 		setName(this.getClass().getName());
 	}
@@ -40,11 +37,11 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	}
 
 	
-	@Override
-	public List<C> getDisplayColumns(ZFrame<D,R,C>  lines, IArguments args) {
-		return getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
-	}
-
+//	@Override
+//	public List<C> getDisplayColumns(ZFrame<D,R,C>  lines, IArguments args) {
+//		return getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
+//	}
+//
 	
 	@Override
 	public ZFrame<D,R,C>  getCurrentPair(ZFrame<D,R,C>  lines, int index, List<R>  clusterIds, ZFrame<D,R,C>  clusterLines) {
@@ -127,5 +124,7 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException {
 		return this;
 	}
+
+	
 	
 }

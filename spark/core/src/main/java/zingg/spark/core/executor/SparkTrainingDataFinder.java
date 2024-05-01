@@ -9,14 +9,14 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
+import zingg.common.client.options.ZinggOptions;
+import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.TrainingDataFinder;
 import zingg.common.core.preprocess.StopWordsRemover;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.preprocess.SparkStopWordsRemover;
 
-public class SparkTrainingDataFinder extends TrainingDataFinder<ZSparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkTrainingDataFinder";
@@ -27,18 +27,18 @@ public class SparkTrainingDataFinder extends TrainingDataFinder<ZSparkSession, D
 	}
 
 	public SparkTrainingDataFinder(ZinggSparkContext sparkContext) {
-		setZinggOptions(ZinggOptions.FIND_TRAINING_DATA);
+		super();
 		setContext(sparkContext);
 	}
 	
 	@Override
-	public void init(IArguments args, IZinggLicense license)  throws ZinggClientException {
-		super.init(args, license);
-		getContext().init(license);
+	public void init(IArguments args, SparkSession s)  throws ZinggClientException {
+		super.init(args,s);
+		getContext().init(s);
 	}
 	
 	@Override
-	protected StopWordsRemover<ZSparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
+	public StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
 		return new SparkStopWordsRemover(getContext(),getArgs());
 	}
 	

@@ -1,17 +1,15 @@
 package zingg.common.client;
 
-import zingg.common.client.license.IZinggLicense;
-
 public interface IZingg<S,D,R,C> {
 
-	public void init(IArguments args, IZinggLicense license)
+	public void init(IArguments args, S session)
 			throws ZinggClientException;
 
 	public void execute() throws ZinggClientException;
 
 	public void cleanup() throws ZinggClientException;
 
-	public ZinggOptions getZinggOptions();	
+	//public ZinggOptions getZinggOptions();	
 
 	public String getName();
 

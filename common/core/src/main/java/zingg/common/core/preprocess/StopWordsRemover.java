@@ -13,8 +13,8 @@ import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
-import zingg.common.core.Context;
-import zingg.common.core.util.PipeUtilBase;
+import zingg.common.client.util.PipeUtilBase;
+import zingg.common.core.context.Context;
 
 public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 
@@ -65,7 +65,7 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 	}
 	
 	protected List<String> getWordList(ZFrame<D,R,C> stopWords, String stopWordColumn) {
-		return stopWords.select(stopWordColumn).collectAsListOfStrings();
+		return stopWords.select(stopWordColumn).collectFirstColumn();
 	}
 	
 	/**

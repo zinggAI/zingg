@@ -2,6 +2,7 @@ package zingg.spark.core.model;
 
 import java.util.Map;
 
+import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.FieldDefinition;
@@ -11,8 +12,8 @@ public class SparkLabelModel extends SparkModel{
 	
 	private static final long serialVersionUID = 1L;
 
-	public SparkLabelModel(Map<FieldDefinition, Feature<DataType>> f) {
-		super(f);
+	public SparkLabelModel(SparkSession s, Map<FieldDefinition, Feature<DataType>> f) {
+		super(s,f);
 	}
 
 }

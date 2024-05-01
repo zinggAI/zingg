@@ -1,10 +1,11 @@
 package zingg.common.core.util;
 
 import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
 
 public interface GraphUtil<D,R,C> {
 
-	public ZFrame<D,R,C> buildGraph(ZFrame<D,R,C> vertices, ZFrame<D,R,C>edges) ;
+	public ZFrame<D,R,C> buildGraph(ZFrame<D,R,C> vertices, ZFrame<D,R,C>edges) throws ZinggClientException ;
 	
 
 	/*

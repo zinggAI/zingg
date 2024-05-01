@@ -19,7 +19,7 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule;
 
 public class ArgumentsUtil {
 	
-	protected Class<? extends Arguments> argsClass;
+	protected Class<? extends IArguments> argsClass;
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
 	private static final String ESC = "\\";
@@ -31,7 +31,7 @@ public class ArgumentsUtil {
 		this(Arguments.class);
 	}
 
-	public ArgumentsUtil( Class<? extends Arguments> argsClass) {
+	public ArgumentsUtil( Class<? extends IArguments> argsClass) {
 		this.argsClass = argsClass;
 	}
 

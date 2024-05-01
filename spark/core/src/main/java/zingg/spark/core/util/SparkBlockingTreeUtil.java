@@ -20,23 +20,23 @@ import org.apache.spark.sql.types.StructType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ListMap;
+import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.block.Block;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.hash.HashFunction;
 import zingg.common.core.util.BlockingTreeUtil;
-import zingg.common.core.util.PipeUtilBase;
 import zingg.spark.client.SparkFrame;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.block.SparkBlock;
 import zingg.spark.core.block.SparkBlockFunction;
 
-public class SparkBlockingTreeUtil extends BlockingTreeUtil<ZSparkSession, Dataset<Row>, Row, Column, DataType>{
+public class SparkBlockingTreeUtil extends BlockingTreeUtil<SparkSession, Dataset<Row>, Row, Column, DataType>{
 
     public static final Log LOG = LogFactory.getLog(SparkBlockingTreeUtil.class);
-    protected ZSparkSession spark;
+    protected SparkSession spark;
     
-    public SparkBlockingTreeUtil(ZSparkSession s, PipeUtilBase pipeUtil) {
+    public SparkBlockingTreeUtil(SparkSession s, PipeUtilBase pipeUtil) {
         this.spark = s;
         setPipeUtil(pipeUtil);
     }
@@ -63,7 +63,7 @@ public ZFrame<Dataset<Row>, Row, Column> getTreeDF(byte[] blockingTree){
         StructType schema = DataTypes.createStructType(new StructField[] { DataTypes.createStructField("BlockingTree", DataTypes.BinaryType, false) });
         List<Row> objList = new ArrayList<Row>();
         objList.add(RowFactory.create(blockingTree));
-        Dataset<Row> df = spark.getSession().sqlContext().createDataFrame(objList, schema).toDF().coalesce(1);
+        Dataset<Row> df = spark.sqlContext().createDataFrame(objList, schema).toDF().coalesce(1);
         return new SparkFrame(df);
 }
 
