@@ -12,6 +12,7 @@ import zingg.common.client.MatchType;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ListMap;
+import zingg.common.client.util.PipeUtilBase;
 import zingg.common.client.util.Util;
 import zingg.common.core.block.Block;
 import zingg.common.core.block.Canopy;
@@ -90,7 +91,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 	public void writeBlockingTree(Tree<Canopy<R>> blockingTree, IArguments args) throws Exception, ZinggClientException {
 		byte[] byteArray  = Util.convertObjectIntoByteArray(blockingTree);
         PipeUtilBase<S, D, R, C> pu = getPipeUtil();
-        pu.write(getTreeDF(byteArray), args, pu.getBlockingTreePipe(args));
+        pu.write(getTreeDF(byteArray), pu.getBlockingTreePipe(args));
 	}
 
 	public abstract ZFrame<D, R, C> getTreeDF(byte[] tree) ;

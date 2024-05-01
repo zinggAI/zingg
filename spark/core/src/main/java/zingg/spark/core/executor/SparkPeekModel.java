@@ -10,35 +10,37 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
-import zingg.common.core.executor.ZinggBase;
-import zingg.spark.client.ZSparkSession;
+import zingg.common.client.options.ZinggOptions;
 
-public class SparkPeekModel extends ZinggBase<ZSparkSession, Dataset<Row>, Row, Column, DataType>{
+import zingg.common.core.executor.ZinggBase;
+import zingg.spark.core.context.ZinggSparkContext;
+
+
+public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, Column, DataType>{
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.spark.core.executor.SparkPeekModel";
 	public static final Log LOG = LogFactory.getLog(SparkPeekModel.class); 
 	
 	public SparkPeekModel() {
-		setZinggOptions(ZinggOptions.PEEK_MODEL);
+		setZinggOption(ZinggOptions.PEEK_MODEL);
 		setContext(new ZinggSparkContext());
 		
 	}
 
 	@Override
-    public void init(IArguments args, IZinggLicense license)
+    public void init(IArguments args, SparkSession s)
         throws ZinggClientException {
-		super.init(args, license);
+		super.init(args,s);
 		getContext().setUtils();
 		//we wil not init here as we wnt py to drive
 		//the spark session etc
-		//getContext().init(license);
+		getContext().init(s);
     }
 
 	@Override

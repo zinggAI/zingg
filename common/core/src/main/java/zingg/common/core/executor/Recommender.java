@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 import zingg.common.core.recommender.StopWordsRecommender;
 
 public abstract class Recommender<S,D,R,C, T> extends ZinggBase<S,D,R,C,T> {
@@ -13,7 +13,7 @@ public abstract class Recommender<S,D,R,C, T> extends ZinggBase<S,D,R,C,T> {
 	public static final Log LOG = LogFactory.getLog(Recommender.class);
 
 	public Recommender() {
-		setZinggOptions(ZinggOptions.RECOMMEND);
+		setZinggOption(ZinggOptions.RECOMMEND);
  	}
 
 	public void execute() throws ZinggClientException {

@@ -20,7 +20,7 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> selectExpr(String... col);
     public ZFrame <D, R, C> distinct();
     public List<R> collectAsList();
-    public List<String> collectAsListOfStrings();
+    public List<String> collectFirstColumn();
 
     public ZFrame<D, R, C> toDF(String[] cols);
     public ZFrame<D, R, C> toDF(String col1, String col2);
@@ -170,5 +170,10 @@ public interface ZFrame<D, R, C> {
 
     public ZFrame<D,R,C> groupByCount(String groupByCol1, String groupByCol2, String countColName);
 
-   
+    public ZFrame<D,R,C> intersect(ZFrame<D,R,C> other);
+	
+	public C substr(C col, int startPos, int len);
+
+	public C gt(C column1, C column2);
+
 }

@@ -5,7 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.api.java.UDF2;
 import org.apache.spark.sql.types.DataTypes;
 
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 
 
 public class SparkTransformer extends SparkBaseTransformer {
@@ -25,8 +25,8 @@ public class SparkTransformer extends SparkBaseTransformer {
    
 
 	 
-    public void register(ZSparkSession spark) {
-    	spark.getSession().udf().register(getUid(), (UDF2) function, DataTypes.DoubleType);
+    public void register(SparkSession spark) {
+    	spark.udf().register(getUid(), (UDF2) function, DataTypes.DoubleType);
     }
    
 

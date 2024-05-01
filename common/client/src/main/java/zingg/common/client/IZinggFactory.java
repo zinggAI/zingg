@@ -1,9 +1,9 @@
 package zingg.common.client;
 
-import zingg.common.client.IZingg;
+import zingg.common.client.options.ZinggOption;
 
 public interface IZinggFactory {
 
-    public IZingg get(ZinggOptions z) throws InstantiationException, IllegalAccessException, ClassNotFoundException;
+    public IZingg get(ZinggOption z) throws InstantiationException, IllegalAccessException, ClassNotFoundException;
     
 }

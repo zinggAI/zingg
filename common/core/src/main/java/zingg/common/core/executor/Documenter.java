@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 import zingg.common.core.documenter.DataDocumenter;
 import zingg.common.core.documenter.ModelDocumenter;
 
@@ -14,7 +14,7 @@ public abstract class Documenter<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 	public static final Log LOG = LogFactory.getLog(Documenter.class);
 
 	public Documenter() {
-		setZinggOptions(ZinggOptions.GENERATE_DOCS);
+		setZinggOption(ZinggOptions.GENERATE_DOCS);
  	}
 
 	public void execute() throws ZinggClientException {
