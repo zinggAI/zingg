@@ -1,4 +1,4 @@
-package zingg.common.client.cols;
+package zingg.common.client;
 
 public interface Named {
 

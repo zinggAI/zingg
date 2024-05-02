@@ -2,6 +2,8 @@ package zingg.common.client.cols;
 
 import java.util.List;
 
+import zingg.common.client.Named;
+
 public interface ISelectedCols {
 
     String[] getCols(List<? extends Named> n);

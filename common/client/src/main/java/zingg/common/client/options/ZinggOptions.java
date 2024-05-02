@@ -21,6 +21,7 @@ public class ZinggOptions {
     public final static ZinggOption ASSESS_MODEL = new ZinggOption("assessModel");
     public final static ZinggOption PEEK_MODEL = new ZinggOption("peekModel");
     public final static ZinggOption EXPORT_MODEL = new ZinggOption("exportModel");
+    public static final ZinggOption RELATE = new ZinggOption("relate");
 
     public static Map<String, ZinggOption> allZinggOptions;// = new HashMap<String, ZinggOption>();
 
