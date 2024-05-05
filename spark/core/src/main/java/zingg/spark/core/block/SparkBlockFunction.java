@@ -7,7 +7,7 @@ import org.apache.spark.api.java.function.MapFunction;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
 
-import scala.collection.JavaConversions;
+import scala.jdk.CollectionConverters;
 import scala.collection.Seq;
 import zingg.common.core.block.BlockFunction;
 import zingg.common.core.block.Canopy;
@@ -23,7 +23,7 @@ public class SparkBlockFunction extends BlockFunction<Row> implements MapFunctio
     @Override
     public List<Object> getListFromRow(Row r) {
         Seq<Object> sObj = r.toSeq();
-        List<Object> seqList = JavaConversions.seqAsJavaList(sObj);
+        List<Object> seqList = CollectionConverters.SeqHasAsJava(sObj).asJava();
         //the abstract list returned here does not support adding a new element, 
         //so an ugly way is to create a new list altogether (!!)
         //see in perf - maybe just iterate over all the row elements and add the last one?

@@ -2,15 +2,15 @@ package zingg;
 
 import org.apache.spark.sql.api.java.UDF2;
 
-import scala.collection.mutable.WrappedArray;
+import scala.collection.mutable.ArraySeq;
 import zingg.common.core.similarity.function.ArrayDoubleSimilarityFunction;
 
-public class TestUDFDoubleWrappedArr implements UDF2<WrappedArray<Double>,WrappedArray<Double>, Double>{
+public class TestUDFDoubleWrappedArr implements UDF2<ArraySeq<Double>,ArraySeq<Double>, Double>{
 	
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Double call(WrappedArray<Double> t1, WrappedArray<Double> t2) throws Exception {
+	public Double call(ArraySeq<Double> t1, ArraySeq<Double> t2) throws Exception {
 		System.out.println("TestUDFDoubleWrappedArr class" +t1.getClass());
 		
 		Double[] t1Arr = new Double[t1.length()];

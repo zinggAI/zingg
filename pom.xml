@@ -48,7 +48,7 @@
 		<profile>
 			<id>spark-3.5</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 				<property>
 					<name>spark</name>
 					<value>3.5</value>
@@ -62,6 +62,23 @@
 				<graphframes.version>0.8.3-spark3.5-s_2.12</graphframes.version>
 			</properties>
 		</profile>
+    <profile>
+        <id>spark-4.0</id>
+        <activation>
+            <activeByDefault>true</activeByDefault>
+            <property>
+                <name>spark</name>
+                <value>4.0</value>
+            </property>
+        </activation>
+        <properties>
+            <spark.version>4.0.0-SNAPSHOT</spark.version>
+            <scala.version>2.13.13</scala.version>
+            <spark.binary.version>4.0</spark.binary.version>
+            <scala.binary.version>2.13</scala.binary.version>
+            <graphframes.version>0.8.3-spark3.5-s_2.13</graphframes.version>
+        </properties>
+    </profile>
 	</profiles>
 	<properties>
 		<zingg.version>0.4.0</zingg.version>
@@ -89,7 +106,11 @@
 		<repository>
 			<id>SparkPackagesRepo</id>
 			<url>https://repos.spark-packages.org/</url>
-		</repository>		
+		</repository>
+    <repository>
+        <id>Apache Snapshots</id>
+        <url>https://repository.apache.org/snapshots/</url>
+    </repository>
 	</repositories>
 
 	<dependencies>
