@@ -7,7 +7,7 @@ import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 
-public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S, D, R, C, T> {
+public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S,D,R,C,T> {
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.FindAndLabeller";
 	public static final Log LOG = LogFactory.getLog(FindAndLabeller.class);

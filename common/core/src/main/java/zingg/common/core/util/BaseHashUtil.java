@@ -37,7 +37,7 @@ public abstract class BaseHashUtil<S,D,R,C,T> implements HashUtil<S,D,R,C,T>{
 		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS,
 					true);
 		List<HashFnFromConf> scriptArgs = mapper.readValue(
-				zingg.common.core.executor.ZinggBase.class.getResourceAsStream("/" + fileName),
+				zingg.common.core.executor.ZinggBaseCommon.class.getResourceAsStream("/" + fileName),
 				new TypeReference<List<HashFnFromConf>>() {
 				});
 		for (HashFnFromConf scriptArg : scriptArgs) {

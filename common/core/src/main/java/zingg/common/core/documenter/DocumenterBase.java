@@ -14,6 +14,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.core.context.Context;
 import zingg.common.core.executor.ZinggBase;
+import zingg.common.core.executor.ZinggBaseCommon;
 
 public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	private static final long serialVersionUID = 1L;

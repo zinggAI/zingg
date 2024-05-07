@@ -25,9 +25,9 @@ import zingg.common.client.util.PipeUtilBase;
  */
 public abstract class Client<S,D,R,C,T> implements Serializable {
 	private static final long serialVersionUID = 1L;
-	protected IArguments arguments;
+	protected IZArgs<?> arguments;
 	protected ArgumentsUtil argsUtil;
-	protected IZingg<S,D,R,C> zingg;
+	protected IZingg<S,D,R,C, ? extends IZArgs<?>> zingg;
 	protected ClientOptions options;
 	protected S session;
 	protected PipeUtilBase<S,D,R,C> pipeUtil;
@@ -50,7 +50,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		setZFactoryClassName(zFactory);
 	}
 
-	public Client(IArguments args, ClientOptions options, String zFactory) throws ZinggClientException {
+	public Client(IZArgs args, ClientOptions options, String zFactory) throws ZinggClientException {
 		setZFactoryClassName(zFactory);
 		this.options = options;
     	setOptions(options);
@@ -74,7 +74,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
         this.zFactoryClassName = s;
     }
 
-	public Client(IArguments args, ClientOptions options, S s, String zFactory) throws ZinggClientException {
+	public Client(IZArgs args, ClientOptions options, S s, String zFactory) throws ZinggClientException {
 		this(args, options, zFactory);
 		this.session = s;
 		LOG.debug("Session passed is " + s);
@@ -90,7 +90,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	
 
 
-	public void setZingg(IArguments args, ClientOptions options) throws Exception{
+	public void setZingg(IZArgs args, ClientOptions options) throws Exception{
 		IZinggFactory zf = getZinggFactory();
 		try{
 			setZingg(zf.get(ZinggOptions.getByValue(options.get(ClientOptions.PHASE).value.trim())));
@@ -103,21 +103,21 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 	
 
-	public void setZingg(IZingg<S,D,R,C> zingg) {
+	public void setZingg(IZingg<S,D,R,C, ? extends IZArgs<?>> zingg) {
 		this.zingg = zingg; 
 	}
 
-	public void buildAndSetArguments(IArguments args, ClientOptions options) {
+	public void buildAndSetArguments(IZArgs<?> args, ClientOptions options) {
 		setOptions(options);
 		int jobId = new Long(System.currentTimeMillis()).intValue();
 		if (options.get(options.JOBID)!= null) {
 			LOG.info("Using job id from command line");
 			String j = options.get(options.JOBID).value;
 			jobId = Integer.parseInt(j);
-			args.setJobId(jobId);
+			((IArguments) args).setJobId(jobId);
 		}
-		else if (args.getJobId() != -1) {
-			jobId = args.getJobId();
+		else if (((IArguments) args).getJobId() != -1) {
+			jobId = ((IArguments) args).getJobId();
 		}
 		
 		//override value of zinggDir passed from command line
@@ -125,13 +125,13 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			LOG.info("Using zingg dir from command line");
 		
 			String j = options.get(options.ZINGG_DIR).value;
-			args.setZinggDir(j);
+			((IArguments) args).setZinggDir(j);
 		}
 		if (options.get(options.MODEL_ID)!= null) {
 			LOG.info("Using model id from command line");
 		
 			String j = options.get(options.MODEL_ID).value;
-			args.setModelId(j);
+			((IArguments) args).setModelId(j);
 		}
 		if (options.get(options.COLLECT_METRICS)!= null) {
 			String j = options.get(options.COLLECT_METRICS).value;
@@ -139,11 +139,11 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 		if (options.get(ClientOptions.SHOW_CONCISE)!= null) {
 			String j = options.get(ClientOptions.SHOW_CONCISE).value;
-			args.setShowConcise(Boolean.valueOf(j));
+			((IArguments) args).setShowConcise(Boolean.valueOf(j));
 		}
 		if (options.get(ClientOptions.COLUMN)!= null) {
 			String j = options.get(ClientOptions.COLUMN).value;
-			args.setColumn(j);
+			((IArguments) args).setColumn(j);
 		}
 		setArguments(args);
 	}
@@ -183,7 +183,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 	}
 
-	public abstract Client<S,D,R,C,T> getClient(IArguments args, ClientOptions options) throws ZinggClientException;
+	public abstract Client<S,D,R,C,T> getClient(IZArgs args, ClientOptions options) throws ZinggClientException;
 	
 	public void mainMethod(String... args) {
 		printBanner();
@@ -272,10 +272,11 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		zingg.cleanup();
 	}
 
-	public IArguments getArguments() {
+	public IZArgs<?> getArguments() {
 		return arguments;
 	}
 
+	
 	public void execute() throws ZinggClientException {
 		zingg.execute();
  	}
@@ -284,7 +285,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		zingg.postMetrics();
 	}
 
-	public void setArguments(IArguments args) {
+	public void setArguments(IZArgs<?> args) {
 		this.arguments = args;				
 	}
 
@@ -296,37 +297,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		this.options = options;
 	}
 
-	public Long getMarkedRecordsStat(ZFrame<D,R,C>  markedRecords, long value) {
-		return zingg.getMarkedRecordsStat(markedRecords, value);
-	}
-
-    public Long getMatchedMarkedRecordsStat(ZFrame<D,R,C>  markedRecords) {
-		return zingg.getMatchedMarkedRecordsStat(markedRecords);
-	}
-
-    public Long getUnmatchedMarkedRecordsStat(ZFrame<D,R,C>  markedRecords) {
-		return zingg.getUnmatchedMarkedRecordsStat(markedRecords);
-	}
-
-    public Long getUnsureMarkedRecordsStat(ZFrame<D,R,C>  markedRecords) {
-		return zingg.getUnsureMarkedRecordsStat(markedRecords);
-	}
-
-	public ZFrame<D,R,C>  getMarkedRecords() {
-		return zingg.getMarkedRecords();
-	}
-
-	public ZFrame<D,R,C>  getUnmarkedRecords() {
-		return zingg.getUnmarkedRecords();
-	}
-
-    public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException {
-    	return zingg.getTrainingDataModel();
-    }    
-
-    public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException {
-    	return zingg.getLabelDataViewHelper();
-    }
 
 	protected ArgumentsUtil getArgsUtil() {	
 		if (argsUtil==null) {

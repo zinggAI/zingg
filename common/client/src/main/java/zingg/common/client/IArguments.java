@@ -4,7 +4,7 @@ import java.util.List;
 
 import zingg.common.client.pipe.Pipe;
 
-public interface IArguments {
+public interface IArguments extends IZArgs<IArguments>{
 
 	void setThreshold(double threshold);
 
@@ -205,10 +205,6 @@ public interface IArguments {
 	int getJobId();
 
 	void setJobId(int jobId);
-
-	boolean getCollectMetrics();
-
-	void setCollectMetrics(boolean collectMetrics);
 
 	float getStopWordsCutoff();
 
