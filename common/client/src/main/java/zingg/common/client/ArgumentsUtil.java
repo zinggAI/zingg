@@ -31,7 +31,7 @@ public class ArgumentsUtil {
 		this(Arguments.class);
 	}
 
-	public ArgumentsUtil( Class<? extends IZArgs> argsClass) {
+	public ArgumentsUtil(Class<? extends IZArgs> argsClass) {
 		this.argsClass = argsClass;
 	}
 

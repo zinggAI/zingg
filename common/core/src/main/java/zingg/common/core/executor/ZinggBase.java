@@ -58,7 +58,7 @@ public abstract class ZinggBase<S,D, R, C, T> extends ZinggBaseCommon<S, D, R, C
     }
 
 	public void setArgs(IZArgs a){
-        this.args = (IArguments) args;
+        this.args = (IArguments) a;
     }
 
     public ZFrame<D,R,C> getMarkedRecords() {

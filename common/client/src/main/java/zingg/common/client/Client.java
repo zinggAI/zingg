@@ -210,7 +210,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			else {
 				arguments = getArgsUtil().createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
-
+			
 			client = getClient(arguments, options);
 			client.init();
 			// after setting arguments etc. as some of the listeners need it
