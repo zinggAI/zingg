@@ -14,6 +14,7 @@ import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 
@@ -34,7 +35,7 @@ public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, C
 	}
 
 	@Override
-    public void init(IArguments args, SparkSession s)
+    public void init(IZArgs args, SparkSession s)
         throws ZinggClientException {
 		super.init(args,s);
 		getContext().setUtils();

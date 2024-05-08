@@ -25,9 +25,9 @@ import zingg.common.client.util.PipeUtilBase;
  */
 public abstract class Client<S,D,R,C,T> implements Serializable {
 	private static final long serialVersionUID = 1L;
-	protected IZArgs<?> arguments;
+	protected IZArgs arguments;
 	protected ArgumentsUtil argsUtil;
-	protected IZingg<S,D,R,C, ? extends IZArgs<?>> zingg;
+	protected IZingg<S,D,R,C> zingg;
 	protected ClientOptions options;
 	protected S session;
 	protected PipeUtilBase<S,D,R,C> pipeUtil;
@@ -103,11 +103,11 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 	
 
-	public void setZingg(IZingg<S,D,R,C, ? extends IZArgs<?>> zingg) {
+	public void setZingg(IZingg<S,D,R,C> zingg) {
 		this.zingg = zingg; 
 	}
 
-	public void buildAndSetArguments(IZArgs<?> args, ClientOptions options) {
+	public void buildAndSetArguments(IZArgs args, ClientOptions options) {
 		setOptions(options);
 		int jobId = new Long(System.currentTimeMillis()).intValue();
 		if (options.get(options.JOBID)!= null) {
@@ -272,7 +272,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		zingg.cleanup();
 	}
 
-	public IZArgs<?> getArguments() {
+	public IZArgs getArguments() {
 		return arguments;
 	}
 
@@ -285,7 +285,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		zingg.postMetrics();
 	}
 
-	public void setArguments(IZArgs<?> args) {
+	public void setArguments(IZArgs args) {
 		this.arguments = args;				
 	}
 

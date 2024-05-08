@@ -9,6 +9,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.spark.core.context.ZinggSparkContext;
@@ -40,7 +41,7 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
     }
 
     @Override
-    public void init(IArguments args, SparkSession s)  throws ZinggClientException {
+    public void init(IZArgs args, SparkSession s)  throws ZinggClientException {
         super.init(args,s);
         getContext().init(s);
     }

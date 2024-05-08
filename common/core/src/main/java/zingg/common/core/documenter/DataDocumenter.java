@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.FieldData;
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.context.Context;
@@ -22,7 +23,7 @@ public abstract class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T
 	public static final Log LOG = LogFactory.getLog(DataDocumenter.class);
 	protected  ZFrame<D,R,C>  data;
 
-	public DataDocumenter(Context<S,D,R,C,T> context, IArguments args) {
+	public DataDocumenter(Context<S,D,R,C,T> context, IZArgs args) {
 		super(context, args);
 		data = getDSUtil().emptyDataFrame();
 	}

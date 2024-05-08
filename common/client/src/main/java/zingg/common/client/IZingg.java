@@ -1,8 +1,8 @@
 package zingg.common.client;
 
-public interface IZingg<S,D,R,C, A extends IZArgs<A>> {
+public interface IZingg<S,D,R,C> {
 
-	public void init(A args, S session)
+	public void init(IZArgs args, S session)
 			throws ZinggClientException;
 
 	public void execute() throws ZinggClientException;
@@ -21,6 +21,10 @@ public interface IZingg<S,D,R,C, A extends IZArgs<A>> {
 	public ClientOptions getClientOptions(); 
 
 	public void setSession(S session);
+
+	public IZArgs getArgs();
+
+	public void setArgs(IZArgs a);
 	
 	
 }

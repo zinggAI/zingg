@@ -158,7 +158,6 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 		return selection;
 	}
 	
-	@Override
 	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() {	
 		if (trainingDataModel==null) {
 			this.trainingDataModel = new TrainingDataModel<S, D, R, C, T>(getContext(), getClientOptions());
@@ -170,7 +169,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 		this.trainingDataModel = trainingDataModel;
 	}
 
-	@Override
+	
 	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() {
 		if(labelDataViewHelper==null) {
 			labelDataViewHelper = new LabelDataViewHelper<S,D,R,C,T>(getContext(), getClientOptions());

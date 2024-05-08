@@ -8,6 +8,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 
@@ -38,7 +39,7 @@ public class SparkRecommender extends Recommender<SparkSession, Dataset<Row>, Ro
 	}	
 	
     @Override
-    public void init(IArguments args, SparkSession s)  throws ZinggClientException {
+    public void init(IZArgs args, SparkSession s)  throws ZinggClientException {
         super.init(args,s);
         getContext().init(s);
     }	

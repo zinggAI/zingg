@@ -29,10 +29,8 @@ import zingg.common.core.util.Metric;
 import zingg.common.core.util.ModelUtil;
 
 
-public abstract class ZinggBaseCommon<S,D, R, C, T, A extends IZArgs<A>> implements Serializable, IZingg<S, D, R, C, A> {
+public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZingg<S, D, R, C> {
 
-    protected A args;
-	
     protected Context<S,D,R,C,T> context;
     protected String name;
     protected ZinggOption zinggOption;
@@ -62,23 +60,19 @@ public abstract class ZinggBaseCommon<S,D, R, C, T, A extends IZArgs<A>> impleme
 
     }
 
-   
-    @Override
-    public void init(A args, S session)
-        throws ZinggClientException {
-            startTime = System.currentTimeMillis();
-            this.args = args;
-    }
 
 
     public void setSession(S s) {
         getContext().setSession(s);
     }
    
+    public abstract void track( boolean collectMetrics);
+    public abstract IZArgs getArgs();
 
+	public abstract void setArgs(IZArgs a);
    
 	public void postMetrics() {
-        boolean collectMetrics = args.getCollectMetrics();
+        boolean collectMetrics = getArgs().getCollectMetrics();
         track(false);
         Analytics.track(Metric.EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000, collectMetrics);
 		Analytics.track(Metric.ZINGG_VERSION, "0.4.1-SNAPSHOT", collectMetrics);
@@ -95,16 +89,6 @@ public abstract class ZinggBaseCommon<S,D, R, C, T, A extends IZArgs<A>> impleme
         Analytics.postEvent(zinggOption.getName(), collectMetrics);
 	}
 
-    public A getArgs() {
-        return this.args;
-    }
-
-    public void setArgs(A args) {
-        this.args = args;
-    }
-
-   
-    
     
     public Context<S,D,R,C,T> getContext() {
         return this.context;

@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.FieldDefUtil;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
@@ -35,7 +36,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 	
 	protected FieldDefUtil fieldDefUtil;
 
-	public ModelDocumenter(Context<S,D,R,C,T> context, IArguments args) {
+	public ModelDocumenter(Context<S,D,R,C,T> context, IZArgs args) {
 		super(context, args);
 		markedRecords = getDSUtil().emptyDataFrame();
 		fieldDefUtil = new FieldDefUtil();

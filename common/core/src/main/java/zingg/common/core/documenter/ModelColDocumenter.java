@@ -7,6 +7,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
+
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.context.Context;
@@ -18,7 +20,7 @@ public abstract class ModelColDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R
 	private final String COLUMN_DOC_TEMPLATE = "columnDocTemplate.ftlh";
 	private final String Z_COLUMN_TEMPLATE = "zColumnTemplate.ftlh";
 
-	public ModelColDocumenter(Context<S,D,R,C,T> context, IArguments args) {
+	public ModelColDocumenter(Context<S,D,R,C,T> context, IZArgs args) {
 		super(context, args);
 	}
 

@@ -3,7 +3,7 @@ package zingg.common.client;
 /**
  * Marker interface for all Zingg
  */
-public interface IZArgs<A> {
+public interface IZArgs {
 
     boolean getCollectMetrics();
 

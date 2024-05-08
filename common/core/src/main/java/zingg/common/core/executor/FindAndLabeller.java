@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 
@@ -20,7 +21,7 @@ public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S,D,R,C,T
 	}
 
 	@Override
-	public void init(IArguments args, S s) throws ZinggClientException {
+	public void init(IZArgs args, S s) throws ZinggClientException {
 		finder.init(args,s);
 		labeller.init(args,s);
 		super.init(args,s);

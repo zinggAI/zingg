@@ -4,7 +4,7 @@ import java.util.List;
 
 import zingg.common.client.pipe.Pipe;
 
-public interface IArguments extends IZArgs<IArguments>{
+public interface IArguments extends IZArgs{
 
 	void setThreshold(double threshold);
 
