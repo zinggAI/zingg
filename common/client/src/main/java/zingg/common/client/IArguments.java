@@ -78,21 +78,7 @@ public interface IArguments extends IZArgs{
 		return zinggInternal;
 	}
 	
-	/**
-	 * Set the location for Zingg to save its internal computations and
-	 * models. Please set it to a place where the program has write access.
-	 * 
-	 * @param zinggDir
-	 *            path to the Zingg directory
 	
-	public void setZinggInternal(Pipe[] zinggDir) {
-		this.zinggInternal = zinggDir;
-	}
-	*/
-
-	String getModelId();
-
-	void setModelId(String modelId);
 
 	/**
 	 * Get the output directory where the match output will be saved
@@ -126,22 +112,6 @@ public interface IArguments extends IZArgs{
 	 * @throws ZinggClientException 
 	 */
 	void setData(Pipe[] dataFile) throws ZinggClientException;
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	String getZinggDir();
-
-	/**
-	 * Set the location for Zingg to save its internal computations and
-	 * models. Please set it to a place where the program has write access.
-	 * 
-	 * @param zinggDir
-	 *            path to the Zingg directory
-	 */
-	void setZinggDir(String zinggDir);
 
 	/**
 	 * Location for internal Zingg use.

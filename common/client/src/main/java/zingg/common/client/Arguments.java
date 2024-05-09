@@ -87,13 +87,13 @@ public class Arguments implements Serializable, IArguments {
 	Pipe[] output; 
 	Pipe[] data;	
 	//Pipe[] zinggInternal;
-	String zinggDir = "/tmp/zingg";
+	String zinggDir = IZArgs.ZINGG_DIR;
 	
 	Pipe[] trainingSamples;
 	List<? extends FieldDefinition> fieldDefinition;
 	int numPartitions = 10;
 	float labelDataSampleSize = 0.01f;
-	String modelId = "1";
+	String modelId = IZArgs.MODEL_ID;
 	double threshold = 0.5d;
 	int jobId = 1;
 	boolean collectMetrics = true;
