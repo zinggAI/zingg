@@ -18,6 +18,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
+import zingg.common.client.util.IModelHelper;
 import zingg.common.core.context.Context;
 
 
@@ -65,8 +66,8 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 	}
 
 	private void writeModelDocument(Map<String, Object> root) throws ZinggClientException {
-		checkAndCreateDir(args.getZinggDocDir());
-		writeDocument(MODEL_TEMPLATE, root, args.getZinggModelDocFile());
+		checkAndCreateDir(getModelHelper().getZinggDocDir(args));
+		writeDocument(MODEL_TEMPLATE, root, getModelHelper().getZinggModelDocFile(args));
 	}
 
 	protected Map<String, Object> populateTemplateData() {
@@ -173,4 +174,6 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 }

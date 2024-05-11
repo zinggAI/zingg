@@ -352,105 +352,7 @@ public class Arguments implements Serializable, IArguments {
 	 * @return the path for internal Zingg usage
 	 */
 
-	@Override
-	@JsonIgnore
-	public String getZinggBaseModelDir(){
-		return zinggDir + "/" + modelId;
-	}
-	@Override
-	@JsonIgnore
-	public String getZinggModelDir() {
-		return getZinggBaseModelDir() + "/model";
-	}
-
-	@Override
-	@JsonIgnore
-	public String getZinggDocDir() {
-		return getZinggBaseModelDir() + "/docs/";
-	}
-
-	@Override
-	@JsonIgnore
-	public String getZinggModelDocFile() {
-		return getZinggDocDir() + "/model.html";
-	}
-
-	@Override
-	@JsonIgnore
-	public String getZinggDataDocFile() {
-		return getZinggDocDir() + "/data.html";
-	}
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	@Override
-	@JsonIgnore
-	public String getZinggBaseTrainingDataDir() {
-		return getZinggBaseModelDir() + "/trainingData/";
-	}
-
-
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	@Override
-	@JsonIgnore
-	public String getZinggTrainingDataUnmarkedDir() {
-		return this.getZinggBaseTrainingDataDir() + "/unmarked/";
-	}
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	@Override
-	@JsonIgnore
-	public String getZinggTrainingDataMarkedDir() {
-		return this.getZinggBaseTrainingDataDir() + "/marked/";
-	}
 	
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	@Override
-	@JsonIgnore
-	public String getZinggPreprocessedDataDir() {
-		return zinggDir + "/preprocess";
-	}
-	
-	/**
-	 * This is an internal block file location Not to be used directly by the
-	 * client
-	 * 
-	 * @return the blockFile
-	 */
-	@Override
-	@JsonIgnore
-	public String getBlockFile() {
-		return getZinggModelDir() + "/block/zingg.block";
-	}
-	
-	/**
-	 * This is the internal model location Not to be used by the client
-	 * 
-	 * @return model path
-	 */
-	@Override
-	@JsonIgnore
-	public String getModel() {
-		return getZinggModelDir() + "/classifier/best.model";
-	}
-
-
 
 	@Override
 	public int getJobId() {
@@ -531,9 +433,9 @@ public class Arguments implements Serializable, IArguments {
 	}
 
 	@Override
-	@JsonIgnore
+    @JsonIgnore
     public String getStopWordsDir() {
-    	return getZinggBaseModelDir() + "/stopWords/";
+       return getZinggDir() + "/"  + getModelId() + "/stopWords/";
     }
 
 }

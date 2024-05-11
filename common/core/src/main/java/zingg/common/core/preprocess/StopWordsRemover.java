@@ -47,7 +47,7 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 
 	protected ZFrame<D,R,C> getStopWords(FieldDefinition def) throws ZinggClientException {
 		PipeUtilBase<S,D,R,C> pipeUtil = getContext().getPipeUtil();
-		ZFrame<D,R,C> stopWords = pipeUtil.read(false, false, pipeUtil.getStopWordsPipe(getArgs(), def.getStopWords()));
+		ZFrame<D,R,C> stopWords = pipeUtil.read(false, false, getContext().getModelHelper().getStopWordsPipe(def.getStopWords()));
 		return stopWords;
 	}
 

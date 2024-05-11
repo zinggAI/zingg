@@ -113,65 +113,7 @@ public interface IArguments extends IZArgs{
 	 */
 	void setData(Pipe[] dataFile) throws ZinggClientException;
 
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-
-	String getZinggBaseModelDir();
-
-	String getZinggModelDir();
-
-	String getZinggDocDir();
-
-	String getZinggModelDocFile();
-
-	String getZinggDataDocFile();
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	String getZinggBaseTrainingDataDir();
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	String getZinggTrainingDataUnmarkedDir();
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	String getZinggTrainingDataMarkedDir();
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	String getZinggPreprocessedDataDir();
-
-	/**
-	 * This is an internal block file location Not to be used directly by the
-	 * client
-	 * 
-	 * @return the blockFile
-	 */
-	String getBlockFile();
-
-	/**
-	 * This is the internal model location Not to be used by the client
-	 * 
-	 * @return model path
-	 */
-	String getModel();
-
+	
 	int getJobId();
 
 	void setJobId(int jobId);

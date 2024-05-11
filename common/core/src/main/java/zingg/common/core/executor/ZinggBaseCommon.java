@@ -19,6 +19,7 @@ import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.client.util.DSUtil;
+import zingg.common.client.util.IModelHelper;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.context.Context;
 import zingg.common.core.util.Analytics;
@@ -136,6 +137,14 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
 
     public ModelUtil<S,T,D,R,C>  getModelUtil() {
         return context.getModelUtil();
+    }
+
+    public void setModelHelper(IModelHelper h){
+        context.setModelHelper(h);
+    }
+
+    public IModelHelper getModelHelper(){
+        return context.getModelHelper();
     }
 
    

@@ -82,7 +82,7 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 	}
 	
 	public Pipe getOutputPipe(IArguments args) {
-		return getPipeUtil().getTrainingDataMarkedPipe(args);
+		return getModelHelper().getTrainingDataMarkedPipe(args);
 	}
 	
 	
@@ -117,7 +117,7 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 	
 	public ZFrame<D,R,C> getMarkedRecords() {
 		try {
-            return getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
+            return getPipeUtil().read(false, false, getModelHelper().getTrainingDataMarkedPipe(args));
         } catch (ZinggClientException e) {
             return null;
         }
@@ -127,7 +127,7 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
         try{
             ZFrame<D,R,C> unmarkedRecords = null;
             ZFrame<D,R,C> markedRecords = null;
-            unmarkedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataUnmarkedPipe(args));
+            unmarkedRecords = getPipeUtil().read(false, false, getModelHelper().getTrainingDataUnmarkedPipe(args));
             markedRecords = getMarkedRecords();
             if (markedRecords != null ) {
                 unmarkedRecords = unmarkedRecords.join(markedRecords,ColName.CLUSTER_COLUMN, false, "left_anti");

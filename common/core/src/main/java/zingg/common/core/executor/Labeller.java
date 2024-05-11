@@ -47,9 +47,9 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 		ZFrame<D,R,C> unmarkedRecords = null;
 		ZFrame<D,R,C> markedRecords = null;
 		try {
-			unmarkedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataUnmarkedPipe(args));
+			unmarkedRecords = getPipeUtil().read(false, false, getModelHelper().getTrainingDataUnmarkedPipe(args));
 			try {
-				markedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
+				markedRecords = getPipeUtil().read(false, false, getModelHelper().getTrainingDataMarkedPipe(args));
 			} catch (Exception e) {
 				LOG.warn("No record has been marked yet");
 			} catch (ZinggClientException zce) {

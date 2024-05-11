@@ -12,6 +12,7 @@ import zingg.common.client.cols.PredictionColsSelector;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
+import zingg.common.client.util.IModelHelper;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.filter.IFilter;
@@ -46,8 +47,8 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 
 	public ZFrame<D,R,C>  getBlocked( ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
-		LOG.debug("Blocking model file location is " + args.getBlockFile());
-		Tree<Canopy<R>> tree = getBlockingTreeUtil().readBlockingTree(args);
+		LOG.debug("Blocking model file location is " + getModelHelper().getBlockFile(args));
+		Tree<Canopy<R>> tree = getBlockingTreeUtil().readBlockingTree(args, getModelHelper());
 		ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(testData, tree);		
 		ZFrame<D,R,C> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)); //.cache();
 		return blocked1;
@@ -267,6 +268,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
+	
 
 	    
 }

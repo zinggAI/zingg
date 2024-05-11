@@ -49,7 +49,7 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
 
 	@Override
 	public Model getModel() throws ZinggClientException {
-		Model model = getModelUtil().loadModel(false, args);
+		Model model = getModelUtil().loadModel(false, args, getModelHelper());
 		model.register();
 		return model;
 	}

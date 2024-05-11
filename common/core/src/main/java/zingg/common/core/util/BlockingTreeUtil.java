@@ -11,6 +11,7 @@ import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZFrame;
+import zingg.common.client.util.IModelHelper;
 import zingg.common.client.util.ListMap;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.client.util.Util;
@@ -88,10 +89,10 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 		return createBlockingTree(sample, positives, sampleFraction, blockSize, args, hashFunctions);
 	}
 	
-	public void writeBlockingTree(Tree<Canopy<R>> blockingTree, IArguments args) throws Exception, ZinggClientException {
+	public void writeBlockingTree(Tree<Canopy<R>> blockingTree, IArguments args, IModelHelper mu) throws Exception, ZinggClientException {
 		byte[] byteArray  = Util.convertObjectIntoByteArray(blockingTree);
         PipeUtilBase<S, D, R, C> pu = getPipeUtil();
-        pu.write(getTreeDF(byteArray), pu.getBlockingTreePipe(args));
+        pu.write(getTreeDF(byteArray), mu.getBlockingTreePipe(args));
 	}
 
 	public abstract ZFrame<D, R, C> getTreeDF(byte[] tree) ;
@@ -103,9 +104,9 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 	}
 
 
-	public Tree<Canopy<R>> readBlockingTree(IArguments args) throws Exception, ZinggClientException{
+	public Tree<Canopy<R>> readBlockingTree(IArguments args, IModelHelper mu) throws Exception, ZinggClientException{
 		PipeUtilBase<S, D, R, C> pu = getPipeUtil();
-        ZFrame<D, R, C> tree = pu.read(false, 1, false, pu.getBlockingTreePipe(args));
+        ZFrame<D, R, C> tree = pu.read(false, 1, false, mu.getBlockingTreePipe(args));
         //tree.show();
         //tree.df().show();
         //byte [] byteArrayBack = (byte[]) tree.df().head().get(0);

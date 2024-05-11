@@ -31,7 +31,7 @@ public abstract class ModelColDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R
 	private void createColumnDocuments( ZFrame<D,R,C>  data) throws ZinggClientException {
 		LOG.info("Column Documents generation starts");
 		if (!data.isEmpty()) {
-			String columnsDir = args.getZinggDocDir();
+			String columnsDir = getModelHelper().getZinggDocDir(args);
 			checkAndCreateDir(columnsDir);
 			/* 
 			for (StructField field: data.schema().fields()) {

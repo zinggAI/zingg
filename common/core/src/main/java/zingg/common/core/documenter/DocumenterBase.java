@@ -13,6 +13,7 @@ import zingg.common.client.IArguments;
 import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
+import zingg.common.client.util.IModelHelper;
 import zingg.common.core.context.Context;
 import zingg.common.core.executor.ZinggBase;
 import zingg.common.core.executor.ZinggBaseCommon;
@@ -23,7 +24,7 @@ public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	public DocumenterBase(Context<S,D,R,C,T> context, IZArgs args) {
 		super.context = context;
-		super.args = (IArguments) args;
+		setArgs(args);
 		config = createConfigurationObject();
 	}
 
@@ -81,4 +82,6 @@ public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	public abstract RowWrapper<R> getRowWrapper(Version v) ;
+
+	
 }

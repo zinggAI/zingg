@@ -26,7 +26,7 @@ import zingg.common.client.util.PipeUtilBase;
 public abstract class Client<S,D,R,C,T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	protected IZArgs arguments;
-	protected ArgumentsUtil argsUtil;
+	protected ArgumentsUtil<?> argsUtil;
 	protected IZingg<S,D,R,C> zingg;
 	protected ClientOptions options;
 	protected S session;
@@ -202,13 +202,13 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			String phase = options.get(ClientOptions.PHASE).value.trim();
 			ZinggOptions.verifyPhase(phase);
 			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
-					arguments = getArgsUtil().createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
+					arguments = getArgsUtil(phase).createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
 			}
 			else if (options.get(ClientOptions.CONF).value.endsWith("env")) {
-				arguments = getArgsUtil().createArgumentsFromJSONTemplate(options.get(ClientOptions.CONF).value, phase);
+				arguments = getArgsUtil(phase).createArgumentsFromJSONTemplate(options.get(ClientOptions.CONF).value, phase);
 			}
 			else {
-				arguments = getArgsUtil().createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
+				arguments = getArgsUtil(phase).createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
 			
 			client = getClient(arguments, options);
@@ -298,9 +298,9 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 
-	protected ArgumentsUtil getArgsUtil() {	
+	protected ArgumentsUtil<?> getArgsUtil(String phase) {	
 		if (argsUtil==null) {
-			argsUtil = new ArgumentsUtil();
+			argsUtil = new ArgumentsUtil(Arguments.class);
 		}
 		return argsUtil;
 	}    

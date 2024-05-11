@@ -59,7 +59,7 @@ public abstract class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T
 	}
 
 	protected void writeModelDocument(Map<String, Object> root) throws ZinggClientException {
-		writeDocument(DATA_DOC_TEMPLATE, root, args.getZinggDataDocFile());
+		writeDocument(DATA_DOC_TEMPLATE, root, getModelHelper().getZinggDataDocFile(args));
 	}
 
 	protected Map<String, Object> populateTemplateData() {

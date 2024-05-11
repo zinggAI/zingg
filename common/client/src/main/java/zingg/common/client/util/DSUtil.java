@@ -3,6 +3,7 @@ package zingg.common.client.util;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -246,8 +247,8 @@ public abstract class DSUtil<S, D, R, C> {
 		return a;			
 	}	
 
-	public  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, IArguments args) {
-		return getTraining(pipeUtil, args, pipeUtil.getTrainingDataMarkedPipe(args)); 			
+	public  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, IArguments args, IModelHelper modelHelper) {
+		return getTraining(pipeUtil, args, modelHelper.getTrainingDataMarkedPipe(args)); 			
 	}
 	
 	private  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, IArguments args, Pipe<D,R,C> p) {

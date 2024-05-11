@@ -53,7 +53,8 @@ public abstract class ZinggBase<S,D, R, C, T> extends ZinggBaseCommon<S, D, R, C
         setArgs(args);
     }
 
-    public IZArgs getArgs(){
+    @Override
+    public IArguments getArgs(){
         return args;
     }
 
@@ -63,7 +64,8 @@ public abstract class ZinggBase<S,D, R, C, T> extends ZinggBaseCommon<S, D, R, C
 
     public ZFrame<D,R,C> getMarkedRecords() {
 		try {
-            return getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
+            return getPipeUtil().read(false, false, 
+                getModelHelper().getTrainingDataMarkedPipe(args));
         } catch (ZinggClientException e) {
             return null;
         }
@@ -73,7 +75,7 @@ public abstract class ZinggBase<S,D, R, C, T> extends ZinggBaseCommon<S, D, R, C
         try{
             ZFrame<D,R,C> unmarkedRecords = null;
             ZFrame<D,R,C> markedRecords = null;
-            unmarkedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataUnmarkedPipe(args));
+            unmarkedRecords = getPipeUtil().read(false, false, getModelHelper().getTrainingDataUnmarkedPipe(args));
             markedRecords = getMarkedRecords();
             if (markedRecords != null ) {
                 unmarkedRecords = unmarkedRecords.join(markedRecords,ColName.CLUSTER_COLUMN, false, "left_anti");

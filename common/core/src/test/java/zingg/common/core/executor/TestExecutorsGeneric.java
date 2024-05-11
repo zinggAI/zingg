@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IArguments;
+import zingg.common.client.Arguments;
 import zingg.common.client.ZinggClientException;
 
 public abstract class TestExecutorsGeneric<S, D, R, C, T> {
@@ -36,7 +37,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
 	public String setupArgs() throws ZinggClientException, IOException {
 		String configFile = getClass().getClassLoader().getResource(getConfigFile()).getFile();
-		args = new ArgumentsUtil().createArgumentsFromJSON(
+		args = new ArgumentsUtil<Arguments>(Arguments.class).createArgumentsFromJSON(
 			configFile, 
 			"findTrainingData");
 		return configFile;

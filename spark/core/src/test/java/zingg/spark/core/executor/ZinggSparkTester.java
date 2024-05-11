@@ -36,7 +36,7 @@ public class ZinggSparkTester {
     public static JavaSparkContext ctx;
     public static SparkSession spark;
     public static ZinggSparkContext zsCTX;
-    public ArgumentsUtil argsUtil = new ArgumentsUtil();
+    public ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
     public static final Log LOG = LogFactory.getLog(ZinggSparkTester.class);
 
 	protected static final String FIELD_INTEGER = "fieldInteger";

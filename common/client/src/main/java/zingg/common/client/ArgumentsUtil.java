@@ -17,9 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.module.scala.DefaultScalaModule;
 
-public class ArgumentsUtil {
+public class ArgumentsUtil<A extends IZArgs> {
 	
-	protected Class<? extends IZArgs> argsClass;
+	protected Class<A> argsClass;
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
 	private static final String ESC = "\\";
@@ -27,11 +27,9 @@ public class ArgumentsUtil {
 	public static final Log LOG = LogFactory.getLog(ArgumentsUtil.class);	
 	
 	
-	public ArgumentsUtil() {
-		this(Arguments.class);
-	}
+	
 
-	public ArgumentsUtil(Class<? extends IZArgs> argsClass) {
+	public ArgumentsUtil(Class<A> argsClass) {
 		this.argsClass = argsClass;
 	}
 
@@ -58,7 +56,7 @@ public class ArgumentsUtil {
 	 * @throws ZinggClientException
 	 *             in case of invlaid/wrong json/file not found
 	 */
-	public IZArgs createArgumentsFromJSON(String filePath, String phase)
+	public A createArgumentsFromJSON(String filePath, String phase)
 			throws ZinggClientException {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -69,7 +67,7 @@ public class ArgumentsUtil {
 			module.addDeserializer(List<MatchType>.class, new FieldDefinition.MatchTypeDeserializer());
 			mapper.registerModule(module);
 			*/
-			IZArgs args = mapper.readValue(new File(filePath), argsClass);
+			A args = mapper.readValue(new File(filePath), argsClass);
 			LOG.warn("phase is " + phase);
 			//checkValid(args, phase);
 			return args;			
@@ -117,13 +115,13 @@ public class ArgumentsUtil {
 	}
 	*/
 	
-	public IZArgs createArgumentsFromJSONString(String data, String phase)
+	public A createArgumentsFromJSONString(String data, String phase)
 			throws ZinggClientException {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS,
 					true);
-			IZArgs args = mapper.readValue(data, argsClass);
+			A args = mapper.readValue(data, argsClass);
 			LOG.warn("phase is " + phase);
 			//checkValid(args, phase);
 			return args;			
