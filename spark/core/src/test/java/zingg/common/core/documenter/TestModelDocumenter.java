@@ -33,7 +33,7 @@ public class TestModelDocumenter extends ZinggSparkTester {
 
 		try {
 			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
-			docArguments = argsUtil.createArgumentsFromJSON(configPath);
+			docArguments = (IArguments) argsUtil.createArgumentsFromJSON(configPath);
 			String zinggDirPath = getClass().getResource("../../../../"+docArguments.getZinggDir()).getFile();
 			docArguments.setZinggDir(zinggDirPath);
 		} catch (Throwable e) {
@@ -47,21 +47,21 @@ public class TestModelDocumenter extends ZinggSparkTester {
 	public void testIfModelDocumenterGeneratedDocFile() throws Throwable {
 		
 		try {
-			Files.deleteIfExists(Paths.get(docArguments.getZinggModelDocFile()));
+			Files.deleteIfExists(Paths.get(zsCTX.getModelHelper().getZinggModelDocFile(docArguments)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		ModelDocumenter modelDoc = new SparkModelDocumenter(zsCTX, docArguments);
 		modelDoc.createModelDocument();
 
-		assertTrue(Files.exists(Paths.get(docArguments.getZinggModelDocFile())), "Model documentation file is not generated");
+		assertTrue(Files.exists(Paths.get(zsCTX.getModelHelper().getZinggModelDocFile(docArguments))), "Model documentation file is not generated");
 	}
 
 	@Test
 	public void testPopulateTemplateDataWhenMarkedRecordsAreAvailable() throws Throwable {
 		
 		ModelDocumenter modelDoc = new SparkModelDocumenter(zsCTX, docArguments);
-		modelDoc.markedRecords = zsCTX.getPipeUtil().read(false, false, zsCTX.getPipeUtil().getTrainingDataMarkedPipe(docArguments));
+		modelDoc.markedRecords = zsCTX.getPipeUtil().read(false, false, zsCTX.getModelHelper().getTrainingDataMarkedPipe(docArguments));
 
 		Map<String, Object> root =  modelDoc.populateTemplateData();
 		assertTrue(root.containsKey(TemplateFields.MODEL_ID), "The field does not exist - " + TemplateFields.MODEL_ID);

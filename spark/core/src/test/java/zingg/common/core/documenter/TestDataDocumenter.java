@@ -28,7 +28,7 @@ public class TestDataDocumenter extends ZinggSparkTester {
 	public void setUp(){
 		try {
 			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
-			docArguments = argsUtil.createArgumentsFromJSON(configPath);
+			docArguments = (IArguments) argsUtil.createArgumentsFromJSON(configPath);
 		} catch (Throwable e) {
 			e.printStackTrace();
 			LOG.info("Unexpected exception received " + e.getMessage());

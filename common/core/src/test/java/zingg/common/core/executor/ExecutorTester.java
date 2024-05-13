@@ -9,9 +9,9 @@ public abstract class ExecutorTester<S, D, R, C, T> {
 
 	public static final Log LOG = LogFactory.getLog(ExecutorTester.class);
 	
-	public ZinggBaseCommon<S,D, R, C, T> executor;
+	public ZinggBase<S,D, R, C, T> executor;
 	
-	public ExecutorTester(ZinggBaseCommon<S, D, R, C, T> executor) {
+	public ExecutorTester(ZinggBase<S, D, R, C, T> executor) {
 		this.executor = executor;
 	}
 	
