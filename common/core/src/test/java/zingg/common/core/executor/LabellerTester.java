@@ -21,7 +21,7 @@ public class LabellerTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T>
 	public void validateResults() throws ZinggClientException {
 		// check that marked data has at least 1 match row and 1 unmatch row
 		ZFrame<D, R, C> dfMarked = executor.getContext().getPipeUtil().
-				read(false, false, executor.getContext().getPipeUtil().getTrainingDataMarkedPipe(executor.getArgs()));
+				read(false, false, executor.getContext().getModelHelper().getTrainingDataMarkedPipe(executor.getArgs()));
 		
 		C matchCond = dfMarked.equalTo(ColName.MATCH_FLAG_COL, 1);
 		C notMatchCond = dfMarked.equalTo(ColName.MATCH_FLAG_COL, 0);

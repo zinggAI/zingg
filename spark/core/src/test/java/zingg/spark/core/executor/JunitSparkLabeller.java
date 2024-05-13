@@ -6,7 +6,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
@@ -30,7 +30,7 @@ public class JunitSparkLabeller extends SparkLabeller {
 	}
 	
 	@Override
-	public void setArgs(IArguments args) {
+	public void setArgs(IZArgs args) {
 		super.setArgs(args);
 		junitLabeller.setArgs(args);
 	}

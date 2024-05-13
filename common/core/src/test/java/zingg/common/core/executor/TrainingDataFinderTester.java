@@ -20,7 +20,7 @@ public class TrainingDataFinderTester<S, D, R, C, T> extends ExecutorTester<S, D
 	public void validateResults() throws ZinggClientException {
 		// check that unmarked data has at least 10 rows
 		ZFrame<D, R, C> df = executor.getContext().getPipeUtil().read(false, false, 
-			executor.getContext().getPipeUtil().getTrainingDataUnmarkedPipe(
+				executor.getContext().getModelHelper().getTrainingDataUnmarkedPipe(
 				(executor.getArgs())));
 		
 		long trainingDataCount = df.count();

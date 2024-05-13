@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
@@ -31,7 +32,7 @@ public class TestFebrlDataset extends ZinggSparkTester{
     public void setUp() throws Exception, ZinggClientException{
 		String configFilePath = getClass().getResource("../testFebrl/config.json").getFile();
 		System.out.println("configFilePath "+configFilePath);
-		args = argsUtil.createArgumentsFromJSON(configFilePath);
+		args = (IArguments) argsUtil.createArgumentsFromJSON(configFilePath);
 		String modelPath = getClass().getResource("../testFebrl/models").getPath();
 		System.out.println("modelPath "+modelPath);
 		args.setZinggDir(modelPath);
