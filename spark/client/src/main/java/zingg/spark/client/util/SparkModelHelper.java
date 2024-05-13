@@ -104,6 +104,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 		return getZinggModelDir(args) + "/classifier/best.model";
 	}
 
+	@Override
 	public Pipe<Dataset<Row>, Row, Column> getTrainingDataUnmarkedPipe(IZArgs args) {
 		Pipe<Dataset<Row>, Row, Column>p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
@@ -111,6 +112,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 		return p;
 	}
 
+	@Override
 	public  Pipe<Dataset<Row>, Row, Column>getTrainingDataMarkedPipe(IZArgs args) {
 		Pipe<Dataset<Row>, Row, Column>p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
@@ -118,6 +120,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 		return p;
 	}
 	
+	@Override
 	public  Pipe<Dataset<Row>, Row, Column>getModelDocumentationPipe(IZArgs args) {
 		Pipe<Dataset<Row>, Row, Column>p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_TEXT);
@@ -126,18 +129,8 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 	}
 
 	
-	
-	
-	public Pipe<Dataset<Row>, Row, Column>getStopWordsPipe(IZArgs args, String fileName) {
-		SparkPipe p = new SparkPipe();
-		p.setFormat(Pipe.FORMAT_CSV);
-		p.setProp(FilePipe.HEADER, "true");
-		p.setProp(FilePipe.LOCATION, fileName);
-		//p.setMode(SaveMode.Overwrite.toString());
-		p.setOverwriteMode();
-		return p;
-	}
 
+	@Override
 	public  Pipe<Dataset<Row>, Row, Column>getBlockingTreePipe(IZArgs args) {
 		SparkPipe p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
@@ -158,6 +151,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 		p.setOverwriteMode();
 		return p;
 	}
+	
 
 	
 
