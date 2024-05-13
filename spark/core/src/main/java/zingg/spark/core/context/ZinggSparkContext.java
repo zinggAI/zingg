@@ -20,6 +20,7 @@ import zingg.common.core.util.GraphUtil;
 import zingg.common.core.util.HashUtil;
 import zingg.common.core.util.ModelUtil;
 import zingg.spark.client.util.SparkDSUtil;
+import zingg.spark.client.util.SparkModelHelper;
 import zingg.spark.client.util.SparkPipeUtil;
 import zingg.spark.core.util.SparkBlockingTreeUtil;
 import zingg.spark.core.util.SparkGraphUtil;
@@ -90,6 +91,7 @@ public class ZinggSparkContext extends Context<SparkSession, Dataset<Row>, Row,C
         setGraphUtil(new SparkGraphUtil());
         setModelUtil(new SparkModelUtil(session));
         setBlockingTreeUtil(new SparkBlockingTreeUtil(session, getPipeUtil()));
+		setModelHelper(new SparkModelHelper());
     }
 
     
