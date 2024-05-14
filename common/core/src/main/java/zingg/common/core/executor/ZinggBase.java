@@ -46,13 +46,7 @@ public abstract class ZinggBase<S,D, R, C, T> extends ZinggBaseCommon<S, D, R, C
 
 
    
-    @Override
-    public void init(IZArgs args, S session)
-        throws ZinggClientException {
-            startTime = System.currentTimeMillis();
-        setArgs(args);
-    }
-
+   
     @Override
     public IArguments getArgs(){
         return args;

@@ -148,7 +148,13 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
     }
 
    
-  
+    @Override
+    public void init(IZArgs args, S session)
+        throws ZinggClientException {
+        startTime = System.currentTimeMillis();
+        setArgs(args);
+    }
+
    
 
     public DSUtil<S,D,R,C> getDSUtil() {
