@@ -113,10 +113,6 @@ public interface IArguments extends IZArgs{
 	 */
 	void setData(Pipe[] dataFile) throws ZinggClientException;
 
-	
-	int getJobId();
-
-	void setJobId(int jobId);
 
 	float getStopWordsCutoff();
 

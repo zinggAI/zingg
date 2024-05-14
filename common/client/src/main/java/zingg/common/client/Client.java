@@ -114,10 +114,10 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			LOG.info("Using job id from command line");
 			String j = options.get(options.JOBID).value;
 			jobId = Integer.parseInt(j);
-			((IArguments) args).setJobId(jobId);
+			args.setJobId(jobId);
 		}
-		else if (((IArguments) args).getJobId() != -1) {
-			jobId = ((IArguments) args).getJobId();
+		else if (args.getJobId() != -1) {
+			jobId = (args).getJobId();
 		}
 		
 		//override value of zinggDir passed from command line
@@ -125,13 +125,13 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			LOG.info("Using zingg dir from command line");
 		
 			String j = options.get(options.ZINGG_DIR).value;
-			((IArguments) args).setZinggDir(j);
+			args.setZinggDir(j);
 		}
 		if (options.get(options.MODEL_ID)!= null) {
 			LOG.info("Using model id from command line");
 		
 			String j = options.get(options.MODEL_ID).value;
-			((IArguments) args).setModelId(j);
+			args.setModelId(j);
 		}
 		if (options.get(options.COLLECT_METRICS)!= null) {
 			String j = options.get(options.COLLECT_METRICS).value;

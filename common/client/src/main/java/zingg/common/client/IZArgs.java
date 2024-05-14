@@ -43,4 +43,8 @@ public interface IZArgs {
 	 *            path to the Zingg directory
 	 */
 	void setZinggDir(String zinggDir);
+
+	void setJobId(int jobId);
+
+	int getJobId();
 }
