@@ -67,7 +67,9 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
         getContext().setSession(s);
     }
    
-    public abstract void track( boolean collectMetrics);
+    public void track( boolean collectMetrics){
+
+    }
     public abstract IZArgs getArgs();
 
 	public abstract void setArgs(IZArgs a);
@@ -153,6 +155,7 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
         throws ZinggClientException {
         startTime = System.currentTimeMillis();
         setArgs(args);
+        setSession(session);
     }
 
    
