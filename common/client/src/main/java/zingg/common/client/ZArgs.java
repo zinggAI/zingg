@@ -1,5 +1,12 @@
 package zingg.common.client;
 
+import java.io.IOException;
+import java.io.StringWriter;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonParser;
+
+
 public abstract class ZArgs implements IZArgs{
     String zinggDir = IZArgs.ZINGG_DIR;
     String modelId = IZArgs.MODEL_ID;
@@ -70,6 +77,21 @@ public abstract class ZArgs implements IZArgs{
 		this.collectMetrics = collectMetrics;
 	}
 	
+    @Override
+	public String toString() {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS,
+				true);
+		//mapper.configure(JsonParser.Feature.FAIL_ON_EMPTY_BEANS, true)
+		try {
+			StringWriter writer = new StringWriter();
+			return mapper.writeValueAsString(this);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 
 }
