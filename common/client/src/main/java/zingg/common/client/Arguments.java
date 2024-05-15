@@ -80,23 +80,22 @@ import zingg.common.client.pipe.Pipe;
  * </pre>
  */
 @JsonInclude(Include.NON_NULL)
-public class Arguments implements Serializable, IArguments {
+public class Arguments extends ZArgs implements Serializable, IArguments {
 
 	private static final long serialVersionUID = 1L;
 	// creates DriverArgs and invokes the main object
 	Pipe[] output; 
 	Pipe[] data;	
 	//Pipe[] zinggInternal;
-	String zinggDir = IZArgs.ZINGG_DIR;
+	
 	
 	Pipe[] trainingSamples;
 	List<? extends FieldDefinition> fieldDefinition;
 	int numPartitions = 10;
 	float labelDataSampleSize = 0.01f;
-	String modelId = IZArgs.MODEL_ID;
+	
 	double threshold = 0.5d;
-	int jobId = 1;
-	boolean collectMetrics = true;
+
 	boolean showConcise = false;
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
@@ -236,15 +235,6 @@ public class Arguments implements Serializable, IArguments {
 	
 	
 
-	@Override
-	public String getModelId() {
-		return modelId;
-	}
-
-	@Override
-	public void setModelId(String modelId) {
-		this.modelId = modelId;
-	}
 
 	/**
 	 * Get the output directory where the match output will be saved
@@ -323,58 +313,8 @@ public class Arguments implements Serializable, IArguments {
 		}
 	}
 	
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	@Override
-	public String getZinggDir() {
-		return zinggDir;
-	}
-
-	/**
-	 * Set the location for Zingg to save its internal computations and
-	 * models. Please set it to a place where the program has write access.
-	 * 
-	 * @param zinggDir
-	 *            path to the Zingg directory
-	 */
-	@Override
-	public void setZinggDir(String zinggDir) {
-		this.zinggDir = zinggDir;
-	}
-
 	
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-
 	
-
-	@Override
-	public int getJobId() {
-		return jobId;
-	}
-
-
-
-	@Override
-	public void setJobId(int jobId) {
-		this.jobId = jobId;
-	}
-
-	@Override
-	public boolean getCollectMetrics() {
-		return collectMetrics;
-	}
-
-	@Override
-	public void setCollectMetrics(boolean collectMetrics) {
-		this.collectMetrics = collectMetrics;
-	}
 	 
 	@Override
 	public float getStopWordsCutoff() {

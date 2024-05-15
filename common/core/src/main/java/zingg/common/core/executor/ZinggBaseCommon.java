@@ -61,8 +61,6 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
 
     }
 
-
-
     public void setSession(S s) {
         getContext().setSession(s);
     }
