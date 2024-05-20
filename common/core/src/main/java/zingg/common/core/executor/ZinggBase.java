@@ -52,6 +52,7 @@ public abstract class ZinggBase<S,D, R, C, T> extends ZinggBaseCommon<S, D, R, C
         return args;
     }
 
+    @Override
 	public void setArgs(IZArgs a){
         this.args = (IArguments) a;
     }
