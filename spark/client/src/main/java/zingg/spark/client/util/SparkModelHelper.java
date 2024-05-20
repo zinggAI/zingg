@@ -12,12 +12,12 @@ import zingg.spark.client.pipe.SparkPipe;
 
 public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>{
 
-    @Override
+    
 	public String getZinggBaseModelDir(IZArgs args){
 		return args.getZinggDir() + "/" + args.getModelId();
 	}
 
-	@Override
+	
 	public String getZinggModelDir(IZArgs args) {
 		return getZinggBaseModelDir(args) + "/model";
 	}
@@ -89,7 +89,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 	 * 
 	 * @return the blockFile
 	 */
-	@Override
+	
 	public String getBlockFile(IZArgs args) {
 		return getZinggModelDir(args) + "/block/zingg.block";
 	}

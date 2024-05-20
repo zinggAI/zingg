@@ -6,15 +6,7 @@ import zingg.common.client.IZArgs;
 
 public interface IModelHelper<D,R,C> {
 
-    /**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-
-	String getZinggBaseModelDir(IZArgs args);
-
-	String getZinggModelDir(IZArgs args);
+    
 
 	String getZinggDocDir(IZArgs args);
 
@@ -50,14 +42,7 @@ public interface IModelHelper<D,R,C> {
 	 */
 	String getZinggPreprocessedDataDir(IZArgs args);
 
-	/**
-	 * This is an internal block file location Not to be used directly by the
-	 * client
-	 * 
-	 * @return the blockFile
-	 */
-	String getBlockFile(IZArgs args);
-
+	
 	/**
 	 * This is the internal model location Not to be used by the client
 	 * 
