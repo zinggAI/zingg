@@ -3,7 +3,7 @@ package zingg.common.core.match;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 
-public interface IMatchOutputBuilder<D,R,C> {
+public interface IMatchOutputBuilder<S,D,R,C> {
 
     /* takes the original blocked dataset 
      * and the predicted dupicate pairs

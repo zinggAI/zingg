@@ -6,7 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.IArguments;
 import zingg.common.client.util.DSUtil;
 
-public abstract class AOutputBuilder<S,D,R,C> implements IMatchOutputBuilder<D,R,C> {
+public abstract class AOutputBuilder<S,D,R,C> implements IMatchOutputBuilder<S,D,R,C> {
 
     public static final Log LOG = LogFactory.getLog(GraphMatchOutputBuilder.class); 
     private DSUtil<S,D,R,C> dSUtil;

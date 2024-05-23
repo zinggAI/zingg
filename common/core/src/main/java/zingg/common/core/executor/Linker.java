@@ -8,6 +8,8 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.filter.PredictionFilter;
+import zingg.common.core.match.IMatchOutputBuilder;
+import zingg.common.core.match.LinkOutputBuilder;
 import zingg.common.core.pairs.SelfPairBuilderSourceSensitive;
 
 
@@ -25,6 +27,14 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	@Override
 	public ZFrame<D,R,C> selectColsFromBlocked(ZFrame<D,R,C> blocked) {
 		return blocked;
+	}
+
+	@Override
+	public IMatchOutputBuilder<S,D,R,C> getMatchOutputBuilder(){
+		if (this.matchOutputBuilder == null) {
+			this.matchOutputBuilder = new LinkOutputBuilder<S,D,R,C>(getDSUtil(), args);
+		}
+		return this.matchOutputBuilder;
 	}
 	
 	@Override

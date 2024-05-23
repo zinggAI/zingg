@@ -33,7 +33,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.Matcher";
 	public static final Log LOG = LogFactory.getLog(Matcher.class);   
-	protected IMatchOutputBuilder<D,R,C> matchOutputBuilder; 
+	protected IMatchOutputBuilder<S,D,R,C> matchOutputBuilder; 
 	ZFrame<D, R, C> output = null;
 	boolean toWrite = true;
 	
@@ -166,11 +166,11 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		}
     }
 
-	public void setMatchOutputBuilder(IMatchOutputBuilder<D,R,C> o){
+	public void setMatchOutputBuilder(IMatchOutputBuilder<S,D,R,C> o){
 		this.matchOutputBuilder = o;
 	}
 
-	public IMatchOutputBuilder<D,R,C> getMatchOutputBuilder(){
+	public IMatchOutputBuilder<S,D,R,C> getMatchOutputBuilder(){
 		if (this.matchOutputBuilder == null) {
 			this.matchOutputBuilder = new GraphMatchOutputBuilder<S,D,R,C>(getGraphUtil(), getDSUtil(), (IArguments) args);
 		}
