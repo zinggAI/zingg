@@ -13,27 +13,15 @@ import zingg.common.client.util.ColName;
 import zingg.common.client.util.DSUtil;
 import zingg.common.core.util.GraphUtil;
 
-public class GraphMatchOutputBuilder<S,D,R,C> implements IMatchOutputBuilder<D,R,C>{
+public class GraphMatchOutputBuilder<S,D,R,C> extends AOutputBuilder<S,D,R,C>{
 
     public static final Log LOG = LogFactory.getLog(GraphMatchOutputBuilder.class); 
     private GraphUtil<D,R,C> graphUtil;
-    private DSUtil<S,D,R,C> dSUtil;
-
-    public DSUtil<S, D, R, C> getDSUtil() {
-        return dSUtil;
-    }
-
-    public void setDSUtil(DSUtil<S, D, R, C> dsUtil) {
-        this.dSUtil = dsUtil;
-    }
-
-    private IArguments args;
     
     
     public GraphMatchOutputBuilder(GraphUtil<D,R,C> g, DSUtil<S,D,R,C> dsUtil, IArguments args){
-        this.graphUtil = g;
-        this.dSUtil = dsUtil;
-        this.args = args;
+        super(dsUtil, args);
+		this.graphUtil = g;
     }
 
     public GraphUtil<D, R, C> getGraphUtil() {

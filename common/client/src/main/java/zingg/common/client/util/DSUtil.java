@@ -122,40 +122,7 @@ public abstract class DSUtil<S, D, R, C> {
 		return join(lines, lines1, joinColumn, false);
 	}
 
-	public  ZFrame<D, R, C> alignLinked(ZFrame<D, R, C> dupesActual, IArguments args) {
-		dupesActual = dupesActual.cache();
-				
-		List<C> cols = new ArrayList<C>();
-		cols.add(dupesActual.col(ColName.CLUSTER_COLUMN));
-		cols.add(dupesActual.col(ColName.ID_COL));
-		cols.add(dupesActual.col(ColName.SCORE_COL));
-				
-		for (FieldDefinition def: args.getFieldDefinition()) {
-			cols.add(dupesActual.col(def.fieldName));					
-		}	
-		cols.add(dupesActual.col(ColName.SOURCE_COL));	
-
-		ZFrame<D, R, C> dupes1 = dupesActual.select(cols);
-		dupes1 = dupes1.dropDuplicates(ColName.CLUSTER_COLUMN, ColName.SOURCE_COL);
-	 	List<C> cols1 = new ArrayList<C>();
-		cols1.add(dupesActual.col(ColName.CLUSTER_COLUMN));
-		cols1.add(dupesActual.col(ColName.COL_PREFIX + ColName.ID_COL));
-		cols1.add(dupesActual.col(ColName.SCORE_COL));
-		
-		for (FieldDefinition def: args.getFieldDefinition()) {
-			cols1.add(dupesActual.col(ColName.COL_PREFIX + def.fieldName));			
-		}		
-		cols1.add(dupesActual.col(ColName.COL_PREFIX +ColName.SOURCE_COL));
-		/*if (args.getJobId() != -1) {
-			cols1.add(dupesActual.col(ColName.SPARK_JOB_ID_COL));
-		}*/
-		
-		
-		ZFrame<D, R, C> dupes2 = dupesActual.select(cols1);
-	 	dupes2 = dupes2.toDF(dupes1.columns()).cache();
-		dupes1 = dupes1.union(dupes2);
-		return dupes1;
-	}
+	
 
 	public  ZFrame<D, R, C> alignDupes(ZFrame<D, R, C> dupesActual, IArguments args) {
 		dupesActual = dupesActual.cache();
@@ -300,20 +267,7 @@ public abstract class DSUtil<S, D, R, C> {
     	return joined;
     }
 
-    public ZFrame<D,R,C> postprocessLinked(ZFrame<D,R,C> actual, ZFrame<D,R,C> orig) {
-    	List<C> cols = new ArrayList<C>();
-        cols.add(actual.col(ColName.CLUSTER_COLUMN));	
-    	cols.add(actual.col(ColName.ID_COL));
-    	cols.add(actual.col(ColName.SCORE_COL));
-    	cols.add(actual.col(ColName.SOURCE_COL));	
     
-    	ZFrame<D,R,C> zFieldsFromActual = actual.select(cols);
-    	ZFrame<D,R,C> joined = zFieldsFromActual.join(orig,ColName.ID_COL,ColName.SOURCE_COL)
-    					.drop(zFieldsFromActual.col(ColName.SOURCE_COL))
-    					.drop(ColName.ID_COL);
-    	
-    	return joined;
-    }
 
 	public abstract ZFrame<D, R, C> addClusterRowNumber(ZFrame<D, R, C> ds);
 

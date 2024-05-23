@@ -24,6 +24,7 @@ import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
+import zingg.common.core.match.LinkOutputBuilder;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.executor.ZinggSparkTester;
 import zingg.spark.core.preprocess.SparkStopWordsRemover;
@@ -272,7 +273,7 @@ public class TestStopWords extends ZinggSparkTester{
 			System.out.println("testOriginalDataAfterPostprocessLinked original :");
 			original.show(200);
 			
-			Dataset<Row> newDataset = ((SparkFrame)(zsCTX.getDSUtil().postprocessLinked(new SparkFrame(actual), new SparkFrame(original)))).df();
+			Dataset<Row> newDataset = ((SparkFrame)(new LinkOutputBuilder(zsCTX.getDSUtil(), args).postprocessLinked(new SparkFrame(actual), new SparkFrame(original)))).df();
 			
 			System.out.println("testOriginalDataAfterPostprocessLinked newDataset :");
 			newDataset.show(200);
