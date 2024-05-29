@@ -1,5 +1,7 @@
 package zingg.common.client;
 
+import zingg.common.client.pipe.Pipe;
+
 /**
  * Marker interface for all Zingg
  */
@@ -47,4 +49,21 @@ public interface IZArgs {
 	void setJobId(int jobId);
 
 	int getJobId();
+
+	/**
+	 * Get the output directory where the match output will be saved
+	 * 
+	 * @return output directory path of the result
+	 */
+	Pipe[] getOutput();
+
+	/**
+	 * Set the output directory where the match result will be saved
+	 * 
+	 * @param outputDir
+	 *            where the match result is saved
+	 * @throws ZinggClientException 
+	 */
+	void setOutput(Pipe[] outputDir) throws ZinggClientException;
+
 }

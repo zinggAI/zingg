@@ -79,7 +79,7 @@ public class Arguments extends ZArgs implements Serializable, IArguments {
 
 	private static final long serialVersionUID = 1L;
 	// creates DriverArgs and invokes the main object
-	Pipe[] output; 
+
 	Pipe[] data;	
 	//Pipe[] zinggInternal;
 	
@@ -231,29 +231,7 @@ public class Arguments extends ZArgs implements Serializable, IArguments {
 	
 
 
-	/**
-	 * Get the output directory where the match output will be saved
-	 * 
-	 * @return output directory path of the result
-	 */
-	@Override
-	public Pipe[] getOutput() {
-		return output;
-	}
-
-	/**
-	 * Set the output directory where the match result will be saved
-	 * 
-	 * @param outputDir
-	 *            where the match result is saved
-	 * @throws ZinggClientException 
-	 */
-	@Override
-	public void setOutput(Pipe[] outputDir) throws ZinggClientException {
-		//checkNullBlankEmpty(outputDir, " path for saving results");
-		this.output = outputDir;
-	}
-
+	
 	/**
 	 * Get the location of the data file over which the match will be run
 	 * 

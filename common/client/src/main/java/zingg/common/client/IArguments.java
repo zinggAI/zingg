@@ -80,22 +80,7 @@ public interface IArguments extends IZArgs{
 	
 	
 
-	/**
-	 * Get the output directory where the match output will be saved
-	 * 
-	 * @return output directory path of the result
-	 */
-	Pipe[] getOutput();
-
-	/**
-	 * Set the output directory where the match result will be saved
-	 * 
-	 * @param outputDir
-	 *            where the match result is saved
-	 * @throws ZinggClientException 
-	 */
-	void setOutput(Pipe[] outputDir) throws ZinggClientException;
-
+	
 	/**
 	 * Get the location of the data file over which the match will be run
 	 * 

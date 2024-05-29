@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import zingg.common.client.pipe.Pipe;
+
 import com.fasterxml.jackson.core.JsonParser;
 
 
@@ -12,6 +15,7 @@ public abstract class ZArgs implements IZArgs{
     String modelId = IZArgs.MODEL_ID;
     int jobId = 1;
 	boolean collectMetrics = true;
+	Pipe[] output; 
 
 
 	@Override
@@ -91,6 +95,29 @@ public abstract class ZArgs implements IZArgs{
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	/**
+	 * Get the output directory where the match output will be saved
+	 * 
+	 * @return output directory path of the result
+	 */
+	@Override
+	public Pipe[] getOutput() {
+		return output;
+	}
+
+	/**
+	 * Set the output directory where the match result will be saved
+	 * 
+	 * @param outputDir
+	 *            where the match result is saved
+	 * @throws ZinggClientException 
+	 */
+	@Override
+	public void setOutput(Pipe[] outputDir) throws ZinggClientException {
+		//checkNullBlankEmpty(outputDir, " path for saving results");
+		this.output = outputDir;
 	}
 
 
