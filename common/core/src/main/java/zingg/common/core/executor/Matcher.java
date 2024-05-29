@@ -10,6 +10,7 @@ import zingg.common.client.IArguments;
 import zingg.common.client.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.cols.ISelectedCols;
 import zingg.common.client.cols.PredictionColsSelector;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
@@ -36,6 +37,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected IMatchOutputBuilder<S,D,R,C> matchOutputBuilder; 
 	ZFrame<D, R, C> output = null;
 	boolean toWrite = true;
+	protected ISelectedCols predictionColsSelector;
 	
     public Matcher() {
         setZinggOption(ZinggOptions.MATCH);
@@ -114,11 +116,22 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
 		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
 		SelfPairBuilder<S, D, R, C> iPairBuilder = new SelfPairBuilder<S, D, R, C> (getDSUtil(),args);
-		return getActualDupes(blocked, testData,predictionFilter, iPairBuilder,new PredictionColsSelector());
+		return getActualDupes(blocked, testData,predictionFilter, iPairBuilder, getPredictionColsSelector());
+	}
+
+	public ISelectedCols getPredictionColsSelector(){
+		if (predictionColsSelector == null) {
+			this.predictionColsSelector = new PredictionColsSelector();
+		}
+		return predictionColsSelector;
+	}
+
+	public void setPredictionColsSelector(ISelectedCols s){
+		this.predictionColsSelector = s;
 	}
 
 	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData, 
-			IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder, PredictionColsSelector colsSelector) throws Exception, ZinggClientException{
+			IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder, ISelectedCols colsSelector) throws Exception, ZinggClientException{
 		ZFrame<D,R,C> blocks = getPairs(selectColsFromBlocked(blocked), testData, iPairBuilder);
 		ZFrame<D,R,C>dupesActual = predictOnBlocks(blocks); 
 		ZFrame<D, R, C> filteredData = predictionFilter.filter(dupesActual);
