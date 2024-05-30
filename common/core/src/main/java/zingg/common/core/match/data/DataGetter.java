@@ -1,0 +1,20 @@
+package zingg.common.core.match.data;
+
+import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
+import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.PipeUtilBase;
+
+public class DataGetter implements IDataGetter{
+
+    @Override
+    public <S, D, R, C> ZFrame<D, R, C> getData(IArguments args, PipeUtilBase<S, D, R, C> p)  
+        throws ZinggClientException{
+        ZFrame<D,R,C>  data = p.read(true, true, args.getNumPartitions(), true, args.getData());
+        return data;
+    }
+  
+
+    
+}

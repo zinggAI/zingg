@@ -1,4 +1,4 @@
-package zingg.common.core.match;
+package zingg.common.core.match.output;
 
 import java.util.ArrayList;
 import java.util.List;

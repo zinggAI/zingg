@@ -20,8 +20,10 @@ import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
-import zingg.common.core.match.GraphMatchOutputBuilder;
-import zingg.common.core.match.IMatchOutputBuilder;
+import zingg.common.core.match.data.DataGetter;
+import zingg.common.core.match.data.IDataGetter;
+import zingg.common.core.match.output.GraphMatchOutputBuilder;
+import zingg.common.core.match.output.IMatchOutputBuilder;
 import zingg.common.core.model.Model;
 import zingg.common.core.pairs.IPairBuilder;
 import zingg.common.core.pairs.SelfPairBuilder;
@@ -38,6 +40,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	ZFrame<D, R, C> output = null;
 	boolean toWrite = true;
 	protected ISelectedCols predictionColsSelector;
+	protected IDataGetter dataGetter;
 	
     public Matcher() {
         setZinggOption(ZinggOptions.MATCH);
@@ -67,9 +70,19 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		this.toWrite = toWrite;
 	}
 
-	public ZFrame<D,R,C>  getTestData() throws ZinggClientException{
-		 ZFrame<D,R,C>  data = getPipeUtil().read(true, true, args.getNumPartitions(), true, args.getData());
-		return data;
+	public ZFrame<D,R,C> getTestData() throws ZinggClientException{
+		return getDataGetter().getData(args, getPipeUtil());
+	}
+
+	public void setDataGetter(IDataGetter idg){
+		this.dataGetter = idg;
+	}
+
+	public IDataGetter getDataGetter(){
+		if (dataGetter == null){
+			this.dataGetter = new DataGetter();
+		}
+		return dataGetter;
 	}
 
 	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {

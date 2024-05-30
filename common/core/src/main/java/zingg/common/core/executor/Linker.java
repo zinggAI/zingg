@@ -8,8 +8,8 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.filter.PredictionFilter;
-import zingg.common.core.match.IMatchOutputBuilder;
-import zingg.common.core.match.LinkOutputBuilder;
+import zingg.common.core.match.output.IMatchOutputBuilder;
+import zingg.common.core.match.output.LinkOutputBuilder;
 import zingg.common.core.pairs.SelfPairBuilderSourceSensitive;
 
 

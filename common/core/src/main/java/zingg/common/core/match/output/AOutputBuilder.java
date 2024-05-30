@@ -1,4 +1,4 @@
-package zingg.common.core.match;
+package zingg.common.core.match.output;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

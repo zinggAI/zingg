@@ -1,4 +1,4 @@
-package zingg.common.core.match;
+package zingg.common.core.match.output;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;

@@ -24,7 +24,7 @@ import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
-import zingg.common.core.match.LinkOutputBuilder;
+import zingg.common.core.match.output.LinkOutputBuilder;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.executor.ZinggSparkTester;
 import zingg.spark.core.preprocess.SparkStopWordsRemover;
