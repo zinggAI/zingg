@@ -15,6 +15,5 @@ public class DataGetter implements IDataGetter{
         return data;
     }
   
-
     
 }
