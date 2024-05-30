@@ -14,5 +14,4 @@ public interface ISelectedCols {
 
     void setNamedCols(List<? extends Named> n);
 
-    void setStringCols(List<String> cols);
 }

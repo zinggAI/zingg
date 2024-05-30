@@ -31,9 +31,4 @@ public class SelectedCols implements ISelectedCols {
     public void setNamedCols(List<? extends Named> n) {
         this.cols = getCols(n);
     }
-
-    @Override
-    public void setStringCols(List<String> columnNames) {
-        this.cols = columnNames.toArray(new String[0]);
-    }
 }
