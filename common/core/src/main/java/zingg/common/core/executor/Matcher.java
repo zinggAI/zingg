@@ -42,8 +42,12 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected ISelectedCols predictionColsSelector;
 	protected IDataGetter dataGetter;
 	protected IPairBuilder<S, D, R, C> iPairBuilder;
+	protected PredictionFilter<D, R, C> predictionFilter;
+
 	
-    public Matcher() {
+	
+    
+	public Matcher() {
         setZinggOption(ZinggOptions.MATCH);
 		
     }
@@ -53,7 +57,18 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		super.init(args, session);
 	}
 
-	
+	protected PredictionFilter<D, R, C> getPredictionFilter() {
+		if (this.predictionFilter == null) {
+	 		this.predictionFilter = new PredictionFilter<D, R, C>();
+		}
+		return predictionFilter;
+	}
+
+
+	public void setPredictionFilter(PredictionFilter<D, R, C> predictionFilter) {
+		this.predictionFilter = predictionFilter;
+	}
+
 
 	public ZFrame<D, R, C> getOutput() {
 		return output;
@@ -139,9 +154,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
-		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
-		SelfPairBuilder<S, D, R, C> iPairBuilder = new SelfPairBuilder<S, D, R, C> (getDSUtil(),args);
-		return getActualDupes(blocked, testData,predictionFilter, iPairBuilder, getPredictionColsSelector());
+		return getActualDupes(blocked, testData, getPredictionFilter(), getIPairBuilder(), getPredictionColsSelector());
 	}
 
 	public ISelectedCols getPredictionColsSelector(){
