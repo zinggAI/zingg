@@ -41,6 +41,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	boolean toWrite = true;
 	protected ISelectedCols predictionColsSelector;
 	protected IDataGetter dataGetter;
+	protected IPairBuilder<S, D, R, C> iPairBuilder;
 	
     public Matcher() {
         setZinggOption(ZinggOptions.MATCH);
@@ -99,9 +100,20 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		ZFrame<D,R,C> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)); //.cache();
 		return blocked1;
 	}
+
+	public IPairBuilder<S, D, R, C> getIPairBuilder(){
+		if (this.iPairBuilder == null){
+			iPairBuilder = new SelfPairBuilder<S, D, R, C> (getDSUtil(),args);
+		}
+		return iPairBuilder;
+	}
+
+	public void setIPairbuilder(IPairBuilder<S, D, R, C> p){
+		this.iPairBuilder = p;
+	}
 	
 	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
-		return getPairs(blocked, bAll, new SelfPairBuilder<S, D, R, C> (getDSUtil(),args));
+		return getPairs(blocked, bAll, getIPairBuilder());
 	}
 	
 	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception{

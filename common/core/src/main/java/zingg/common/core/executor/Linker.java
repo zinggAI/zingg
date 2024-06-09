@@ -10,6 +10,8 @@ import zingg.common.client.util.ColName;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.match.output.IMatchOutputBuilder;
 import zingg.common.core.match.output.LinkOutputBuilder;
+import zingg.common.core.pairs.IPairBuilder;
+import zingg.common.core.pairs.SelfPairBuilder;
 import zingg.common.core.pairs.SelfPairBuilderSourceSensitive;
 
 
@@ -36,22 +38,13 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 		}
 		return this.matchOutputBuilder;
 	}
-	
-	@Override
-	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
-		return getPairs(blocked, bAll, new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args));
-	}	
 
 	@Override
-	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
-		// input dupes are pairs
-		/// pick ones according to the threshold by user
-			
-		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
-		SelfPairBuilderSourceSensitive<S, D, R, C> iPairBuilder = new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args);
-		return getActualDupes(blocked, testData,predictionFilter, iPairBuilder, null);
+	public IPairBuilder<S, D, R, C> getIPairBuilder(){
+		if (this.iPairBuilder == null){
+			iPairBuilder = new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args);
+		}
+		return iPairBuilder;
 	}
-		
 	
-
 }
