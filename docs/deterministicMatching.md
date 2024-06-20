@@ -4,26 +4,23 @@ Zingg Enterprise allows the ability to plug rule based deterministic matching al
 
 Example for configuring it in json:
 
-"deterministicMatching":[
-	{
-		"matchCondition":[
-			{
-				"fieldName":"fname"
-			},
-			{
-				"fieldName":"stNo"
-			},
-			{
-				"fieldName":"add1"
-			}
-		]
-	}
-],
+    "deterministicMatching":[
+        {
+           "matchCondition":[{"fieldName":"fname"},{"fieldName":"stNo"},{"fieldName":"add1"}]
+        },
+        {
+           "matchCondition":[{"fieldName":"fname"},{"fieldName":"dob"},{"fieldName":"ssn"}]
+        }, 
+        {
+           "matchCondition":[{"fieldName":"fname"},{"fieldName":"email"}]
+        }
+    ]
+
 
 
 Python code example:
 
-dm1 = DeterministicMatching('fname','stNo','add1')
-dm2 = DeterministicMatching('fname','dob','ssn')
-dm3 = DeterministicMatching('fname','stNo','lname')
-args.setDeterministicMatchingCondition(dm1,dm2,dm3)
+detMatchNameAdd = DeterministicMatching('fname','stNo','add1')
+detMatchNameDobSsn = DeterministicMatching('fname','dob','ssn')
+detMatchNameEmail = DeterministicMatching('fname','email')
+args.setDeterministicMatchingCondition(detMatchNameAdd,detMatchNameDobSsn,detMatchNameEmail)
