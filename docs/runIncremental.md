@@ -27,6 +27,8 @@ runIncremental can also be triggerred using python by invoking\
 
 Python code example:
 
+#import the packages
+
 from zingg.client import *
 from zingg.pipes import *
 from zinggEC.enterprise.common.ApproverArguments import *
@@ -71,15 +73,22 @@ outputPipe.setHeader("true")
 
 args.setOutput(outputPipe)
 
+#Run findAndLabel
+options = ClientOptions([ClientOptions.PHASE,"findAndLabel",ClientOptions.LICENSE,<enterprise license file location>])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
+
+#Run trainMatch after above completes
+options = ClientOptions([ClientOptions.PHASE,"trainMatch",ClientOptions.LICENSE,<enterprise license file location>])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
+
+#Now run incremental on output generated above
 incrArgs = IncrementalArguments()
 incrArgs.setParentArgs(args)
 incrPipe = ECsvPipe("testFebrlIncr", "examples/febrl/test-incr.csv", schema)
 incrArgs.setIncrementalData(incrPipe)
 
 options = ClientOptions([ClientOptions.PHASE,"runIncremental",ClientOptions.LICENSE,<enterprise license file location>])
-
-#Zingg execution for the given phase
 zingg = EZingg(incrArgs, options)
-
 zingg.initAndExecute()
-
