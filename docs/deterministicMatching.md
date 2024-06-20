@@ -1,6 +1,6 @@
-# Deterministic Matching
+# Deterministic Matching - Zingg Enterprise Only Feature
 
-Zingg enterprise offers a new feature of deterministic matching along side already available probabilistic matching. In the entity resolution space, we refer to exact matching on attributes as deterministic matching. When used together this allows cases where user has given some sort of unique id in some rows to match accurately together due to deterministic matching and they will than match with others rows where id is missing via probabilistic matching.
+Zingg Enterprise allows the ability to plug rule based deterministic matching along with already Zingg AI's probabilistic matching. If the data contains sure identifiers like emails, SSNs, passport ids etc, we can use these attributes to resolve records. The deterministic matching flow is weaved into Zingg's flow to ensure that each record which has a match finds one, probabilistically, deterministcally or both. If the data has known identifiers, Zingg Enterprise's deterministic matching highly improves both matching accuracy and performance.
 
 Example for configuring it in json:
 
