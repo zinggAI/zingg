@@ -215,7 +215,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.repartition(nul));
     }
 
-    public ZFrame<Dataset<Row>, Row, Column> repartition(int nul, Column c){
+    public ZFrame<Dataset<Row>, Row, Column> repartition(int nul, Column... c){
         return new SparkFrame(df.repartition(nul, c));
     }
 

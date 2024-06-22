@@ -80,7 +80,7 @@ public interface ZFrame<D, R, C> {
 
     
     public ZFrame<D, R, C> repartition(int num);
-    public ZFrame<D, R, C> repartition(int num, C c);
+    public ZFrame<D, R, C> repartition(int num, C... c);
 
     public ZFrame<D, R, C> sample(boolean repartition, float num);
     public ZFrame<D, R, C> sample(boolean repartition, double num);
