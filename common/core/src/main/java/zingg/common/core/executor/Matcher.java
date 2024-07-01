@@ -53,10 +53,6 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return blocked1;
 	}
 	
-	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
-		return getPairs(blocked, bAll, new SelfPairBuilder<S, D, R, C> (getDSUtil(),args));
-	}
-	
 	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception{
 		return iPairBuilder.getPairs(blocked, bAll);
 	}
