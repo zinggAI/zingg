@@ -19,10 +19,12 @@ Zingg Enterprise allows the ability to plug rule based deterministic matching al
   
 ### Python code example:  
   
+```{python}
 detMatchNameAdd = DeterministicMatching('fname','stNo','add1')  
 detMatchNameDobSsn = DeterministicMatching('fname','dob','ssn')  
 detMatchNameEmail = DeterministicMatching('fname','email')  
 args.setDeterministicMatchingCondition(detMatchNameAdd,detMatchNameDobSsn,detMatchNameEmail)  
+```
   
 ### How will it work:  
   

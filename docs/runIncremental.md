@@ -29,6 +29,7 @@ Rerunning matching on entire datasets is wasteful, and we lose the lineage of ma
   
 ### Python code example:  
   
+```{python}
 #import the packages  
   
 from zingg.client import *  
@@ -94,3 +95,4 @@ incrArgs.setIncrementalData(incrPipe)
 options = ClientOptions([ClientOptions.PHASE,"runIncremental"])  
 zingg = EZingg(incrArgs, options)  
 zingg.initAndExecute()  
+```
