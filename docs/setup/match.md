@@ -14,7 +14,7 @@ As can be seen in the image below, matching records are given the same z_cluster
 
 ![Match results](/assets/match.gif)
 
-The match results in CSV format will be saved in /tmp/zinggOutput.
+The match results in CSV format will be saved in '/tmp/zinggOutput'.
 To view top 100 match results sorted by z_cluster in console, use
 ```
 $ pyspark
