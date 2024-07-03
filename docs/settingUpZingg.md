@@ -35,13 +35,13 @@ _**Note :-**_ It is suggested to fork the repository to your account and then cl
 
 ****
 
-_**Step 2 :  Install JDK 1.8 (Java Development Kit)**_
+_**Step 2 :  Install JDK 11 (Java Development Kit)**_
 
-* Follow this [tutorial](https://linuxize.com/post/install-java-on-ubuntu-20-04/) to install Java8 JDK1.8 in Ubuntu.&#x20;
+* Follow this [tutorial](https://linuxize.com/post/install-java-on-ubuntu-20-04/) to install Java11 JDK11 in Ubuntu.&#x20;
 
 * For example:
 ```
-sudo apt install openjdk-8-jdk openjdk-8-jre
+sudo apt install openjdk-11-jdk openjdk-11-jre
 javac -version
 java -version
 ```
@@ -79,6 +79,11 @@ rm -rf apache-maven-3.8.8-bin.tar.gz
 cd apache-maven-3.8.8/
 cd bin
 ./mvn --version
+
+Make sure that mvn -version should display correct java version as well(JAVA 11)
+Apache Maven 3.8.7
+Maven home: /usr/share/maven
+Java version: 11.0.23, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
 ```
 
 ****
@@ -92,9 +97,12 @@ vim ~/.bashrc
 export SPARK_HOME=/opt/spark
 export SPARK_MASTER=local[\*]
 export MAVEN_HOME=/home/ubuntu/apache-maven-3.8.8
-export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$MAVEN_HOME/bin
-export ZINGG_HOME=<path_to_zingg>/zingg/assembly/target
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export ZINGG_HOME=<path_of_zing_repo>/assembly/target
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$JAVA_HOME/bin
+
+<path_of_zing_repo> is a path where zingg repo has been cloned
+**Skip adding export MAVEN_HOME=/home/ubuntu/apache-maven-3.8.8, if multiple maven version are not required 
 
 Save/exit and do source .bashrc so that they reflect
 
