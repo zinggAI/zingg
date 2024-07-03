@@ -92,9 +92,11 @@ vim ~/.bashrc
 export SPARK_HOME=/opt/spark
 export SPARK_MASTER=local[\*]
 export MAVEN_HOME=/home/ubuntu/apache-maven-3.8.8
-export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$MAVEN_HOME/bin
-export ZINGG_HOME=<path_to_zingg>/zingg/assembly/target
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export ZINGG_HOME=/home/administrator/Zingg/zingg-Nitish/assembly/target
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$JAVA_HOME/bin
+
+Skip adding export MAVEN_HOME=/home/ubuntu/apache-maven-3.8.8, if multiple maven version are not required 
 
 Save/exit and do source .bashrc so that they reflect
 
