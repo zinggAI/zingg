@@ -92,11 +92,12 @@ vim ~/.bashrc
 export SPARK_HOME=/opt/spark
 export SPARK_MASTER=local[\*]
 export MAVEN_HOME=/home/ubuntu/apache-maven-3.8.8
-export ZINGG_HOME=/home/administrator/Zingg/zingg-Nitish/assembly/target
+export ZINGG_HOME=<path_of_zing_repo>/assembly/target
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$JAVA_HOME/bin
 
-Skip adding export MAVEN_HOME=/home/ubuntu/apache-maven-3.8.8, if multiple maven version are not required 
+<path_of_zing_repo> is a path where zingg repo has been cloned
+**Skip adding export MAVEN_HOME=/home/ubuntu/apache-maven-3.8.8, if multiple maven version are not required 
 
 Save/exit and do source .bashrc so that they reflect
 
