@@ -35,13 +35,13 @@ _**Note :-**_ It is suggested to fork the repository to your account and then cl
 
 ****
 
-_**Step 2 :  Install JDK 1.8 (Java Development Kit)**_
+_**Step 2 :  Install JDK 11 (Java Development Kit)**_
 
-* Follow this [tutorial](https://linuxize.com/post/install-java-on-ubuntu-20-04/) to install Java8 JDK1.8 in Ubuntu.&#x20;
+* Follow this [tutorial](https://linuxize.com/post/install-java-on-ubuntu-20-04/) to install Java11 JDK11 in Ubuntu.&#x20;
 
 * For example:
 ```
-sudo apt install openjdk-8-jdk openjdk-8-jre
+sudo apt install openjdk-11-jdk openjdk-11-jre
 javac -version
 java -version
 ```
