@@ -79,6 +79,11 @@ rm -rf apache-maven-3.8.8-bin.tar.gz
 cd apache-maven-3.8.8/
 cd bin
 ./mvn --version
+
+Make sure that mvn -version should display correct java version as well(JAVA 11)
+Apache Maven 3.8.7
+Maven home: /usr/share/maven
+Java version: 11.0.23, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
 ```
 
 ****
