@@ -1,13 +1,5 @@
-package zingg.client;
+package zingg.client.utility;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Arrays;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
@@ -16,23 +8,18 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-
-import zingg.common.client.Arguments;
-import zingg.common.client.IArguments;
-import zingg.common.client.ZFrame;
+import zingg.client.schema.Schema;
+import zingg.client.schema.SchemaWithMixedDataType;
 import zingg.common.client.util.ColName;
 import zingg.spark.client.SparkFrame;
 
-public class TestSparkFrameBase {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-	public static IArguments args;
-	public static JavaSparkContext ctx;
-	public static SparkSession spark;
+import static zingg.client.TestSparkDataFrame.setUpSpark;
 
-	public static final Log LOG = LogFactory.getLog(TestSparkFrameBase.class);
-
+public class Constant {
 	public static final String STR_RECID = "recid";
 	public static final String STR_GIVENNAME = "givenname";
 	public static final String STR_SURNAME = "surname";
@@ -40,46 +27,46 @@ public class TestSparkFrameBase {
 	public static final String STR_POSTCODE = "postcode";
 	public static final String STR_SUBURB = "suburb";
 
-	@BeforeAll
-	public static void setup() {
-		setUpSpark();
-	}
-
-	protected static void setUpSpark() {
-		try {
-			spark = SparkSession
-					.builder()
-					.master("local[*]")
-					.appName("Zingg" + "Junit")
-					.getOrCreate();
-			ctx = new JavaSparkContext(spark.sparkContext());
-			JavaSparkContext.jarOfClass(TestSparkFrameBase.class);
-			args = new Arguments();
-		} catch (Throwable e) {
-			if (LOG.isDebugEnabled())
-				e.printStackTrace();
-			LOG.info("Problem in spark env setup");
-		}
-	}
-
-	@AfterAll
-	public static void teardown() {
-		if (ctx != null) {
-			ctx.stop();
-			ctx = null;
-		}
-		if (spark != null) {
-			spark.stop();
-			spark = null;
-		}
-	}
-
-	public Dataset<Row> createSampleDataset() {
+	public static List<Schema> createSampleDataList() {
+		List<Schema> sample = new ArrayList<Schema>();
+		sample.add(new Schema("07317257", "erjc", "henson", "hendersonville", "2873g"));
+		sample.add(new Schema("03102490", "jhon", "kozak", "henders0nville", "28792"));
+		sample.add(new Schema("02890805", "david", "pisczek", "durham", "27717"));
+		sample.add(new Schema("04437063", "e5in", "bbrown", "greenville", "27858"));
+		sample.add(new Schema("03211564", "susan", "jones", "greenjboro", "274o7"));
 		
+		sample.add(new Schema("04155808", "jerome", "wilkins", "battleborn", "2780g"));
+		sample.add(new Schema("05723231", "clarinw", "pastoreus", "elizabeth city", "27909"));
+		sample.add(new Schema("06087743", "william", "craven", "greenshoro", "27405"));
+		sample.add(new Schema("00538491", "marh", "jackdon", "greensboro", "27406"));
+		sample.add(new Schema("01306702", "vonnell", "palmer", "siler sity", "273q4"));
+
+		return sample;
+	}
+
+	public static List<SchemaWithMixedDataType> createSampleDataListWithMixedDataType() {
+		List<SchemaWithMixedDataType> sample = new ArrayList<SchemaWithMixedDataType>();
+		sample.add(new SchemaWithMixedDataType(7317257, "erjc", "henson", 10.021, 2873));
+		sample.add(new SchemaWithMixedDataType(3102490, "jhon", "kozak", 3.2434, 28792));
+		sample.add(new SchemaWithMixedDataType(2890805, "david", "pisczek", 5436.0232, 27717));
+		sample.add(new SchemaWithMixedDataType(4437063, "e5in", "bbrown", 67.0, 27858));
+		sample.add(new SchemaWithMixedDataType(3211564, "susan", "jones", 7343.2324, 2747));
+
+		sample.add(new SchemaWithMixedDataType(4155808, "jerome", "wilkins", 50.34, 2780));
+		sample.add(new SchemaWithMixedDataType(5723231, "clarinw", "pastoreus", 87.2323, 27909));
+		sample.add(new SchemaWithMixedDataType(6087743, "william", "craven", 834.123, 27405));
+		sample.add(new SchemaWithMixedDataType(538491, "marh", "jackdon", 123.123, 27406));
+		sample.add(new SchemaWithMixedDataType(1306702, "vonnell", "palmer", 83.123, 2734));
+
+		return sample;
+	}
+
+	public static Dataset<Row> createSampleDataset(SparkSession spark) {
+
 		if (spark==null) {
 			setUpSpark();
 		}
-		
+
 		StructType schemaOfSample = new StructType(new StructField[] {
 				new StructField("recid", DataTypes.StringType, false, Metadata.empty()),
 				new StructField("givenname", DataTypes.StringType, false, Metadata.empty()),
@@ -103,11 +90,11 @@ public class TestSparkFrameBase {
 		return sample;
 	}
 
-	public Dataset<Row> createSampleDatasetHavingMixedDataTypes() {
+	public static Dataset<Row> createSampleDatasetHavingMixedDataTypes(SparkSession spark) {
 		if (spark==null) {
 			setUpSpark();
 		}
-		
+
 		StructType schemaOfSample = new StructType(new StructField[] {
 				new StructField(STR_RECID, DataTypes.IntegerType, false, Metadata.empty()),
 				new StructField(STR_GIVENNAME, DataTypes.StringType, false, Metadata.empty()),
@@ -121,13 +108,13 @@ public class TestSparkFrameBase {
 				RowFactory.create(3102, "jhon", "kozak", 99.009, 28792),
 				RowFactory.create(2890, "david", "pisczek", 58.456, 27717),
 				RowFactory.create(4437, "e5in", "bbrown", 128.45, 27858)
-				), schemaOfSample);
+		), schemaOfSample);
 
 		return sample;
 	}
 
-	protected SparkFrame getZScoreDF() {
-		Row[] rows = { 
+	public static SparkFrame getZScoreDF(SparkSession spark) {
+		Row[] rows = {
 				RowFactory.create( 0,100,900),
 				RowFactory.create( 1,100,1001),
 				RowFactory.create( 1,100,1002),
@@ -145,10 +132,10 @@ public class TestSparkFrameBase {
 				new StructField(ColName.SCORE_COL, DataTypes.IntegerType, false, Metadata.empty())});
 		SparkFrame df = new SparkFrame(spark.createDataFrame(Arrays.asList(rows), schema));
 		return df;
-	}	
+	}
 
-	protected SparkFrame getInputData() {
-		Row[] rows = { 
+	public static SparkFrame getInputData(SparkSession spark) {
+		Row[] rows = {
 				RowFactory.create( 1,"fname1","b"),
 				RowFactory.create( 2,"fname","a"),
 				RowFactory.create( 3,"fna","b"),
@@ -158,7 +145,7 @@ public class TestSparkFrameBase {
 				RowFactory.create( 22,"new12","a"),
 				RowFactory.create( 33,"new13","b"),
 				RowFactory.create( 44,"new14","c"),
-				RowFactory.create( 55,"new15","c")				
+				RowFactory.create( 55,"new15","c")
 		};
 		StructType schema = new StructType(new StructField[] {
 				new StructField(ColName.ID_COL, DataTypes.IntegerType, false, Metadata.empty()),
@@ -166,11 +153,11 @@ public class TestSparkFrameBase {
 				new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())});
 		SparkFrame df = new SparkFrame(spark.createDataFrame(Arrays.asList(rows), schema));
 		return df;
-	}	
-	
-	
-	protected SparkFrame getClusterData() {
-		Row[] rows = { 
+	}
+
+
+	public static SparkFrame getClusterData(SparkSession spark) {
+		Row[] rows = {
 				RowFactory.create( 1,100,1001,"b"),
 				RowFactory.create( 2,100,1002,"a"),
 				RowFactory.create( 3,100,2001,"b"),
@@ -184,10 +171,10 @@ public class TestSparkFrameBase {
 				new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())});
 		SparkFrame df = new SparkFrame(spark.createDataFrame(Arrays.asList(rows), schema));
 		return df;
-	}	
-	
-	protected SparkFrame getClusterDataWithNull() {
-		Row[] rows = { 
+	}
+
+	public static SparkFrame getClusterDataWithNull(SparkSession spark) {
+		Row[] rows = {
 				RowFactory.create( 1,100,1001,"b"),
 				RowFactory.create( 2,100,1002,"a"),
 				RowFactory.create( 3,100,2001,null),
@@ -201,15 +188,5 @@ public class TestSparkFrameBase {
 				new StructField(ColName.SOURCE_COL, DataTypes.StringType, true, Metadata.empty())});
 		SparkFrame df = new SparkFrame(spark.createDataFrame(Arrays.asList(rows), schema));
 		return df;
-	}	
-	
-	protected void assertTrueCheckingExceptOutput(ZFrame<Dataset<Row>, Row, Column> sf1, ZFrame<Dataset<Row>, Row, Column> sf2, String message) {
-		assertTrue(sf1.except(sf2).isEmpty(), message);
-	}
-	
-	
-	protected void assertTrueCheckingExceptOutput(ZFrame<Dataset<Row>, Row, Column> sf1, Dataset<Row> df2, String message) {
-		SparkFrame sf2 = new SparkFrame(df2);
-		assertTrue(sf1.except(sf2).isEmpty(), message);
 	}
 }

@@ -21,6 +21,5 @@ public class TestSparkClient {
 
 		assertEquals("columnName", client.getArguments().getColumn());
 	}
-
 	
 }

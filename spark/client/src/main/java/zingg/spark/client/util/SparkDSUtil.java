@@ -21,9 +21,9 @@ public class SparkDSUtil extends DSUtil<SparkSession, Dataset<Row>, Row, Column>
 
 
 
-    public static final Log LOG = LogFactory.getLog(SparkDSUtil.class);	
+    public static final Log LOG = LogFactory.getLog(SparkDSUtil.class);
 
-    
+
 
     @Override
     public ZFrame<Dataset<Row>, Row, Column> addClusterRowNumber(ZFrame<Dataset<Row>, Row, Column> ds) {
@@ -40,10 +40,10 @@ public class SparkDSUtil extends DSUtil<SparkSession, Dataset<Row>, Row, Column>
         return new SparkFrame(DFUtil.addRowNumber(((Dataset<Row>)ds.df()), getSession()));
     }
 
-	
 
-	
-	
 
-	
+
+
+
+
 }
