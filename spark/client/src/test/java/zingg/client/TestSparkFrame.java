@@ -4,7 +4,6 @@ import static org.apache.spark.sql.functions.col;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,12 +14,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import scala.collection.JavaConverters;
 import zingg.common.client.Arguments;
 import zingg.common.client.IArguments;
-import zingg.common.client.ZFrame;
-import zingg.common.client.util.ColName;
-import zingg.common.client.util.DFObjectUtil;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.client.util.SparkDFObjectUtil;
 

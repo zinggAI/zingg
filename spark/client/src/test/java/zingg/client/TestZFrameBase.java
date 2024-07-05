@@ -7,24 +7,14 @@ import java.util.Optional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.*;
 import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema;
-import org.apache.spark.sql.types.DataTypes;
-import org.apache.spark.sql.types.Metadata;
-import org.apache.spark.sql.types.StructField;
-import org.apache.spark.sql.types.StructType;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 
 import org.junit.jupiter.api.Test;
-import zingg.common.client.Arguments;
-import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.client.util.PojoToArrayConverter;
-import zingg.spark.client.SparkFrame;
 
 import static org.apache.spark.sql.functions.col;
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,11 +27,6 @@ public abstract class TestZFrameBase<S,D,R,C,T> {
 	public static final Log LOG = LogFactory.getLog(TestZFrameBase.class);
 	public static final String NEW_COLUMN = "newColumn";
 	public static final String STR_RECID = "recid";
-	public static final String STR_GIVENNAME = "givenname";
-	public static final String STR_SURNAME = "surname";
-	public static final String STR_COST = "cost";
-	public static final String STR_POSTCODE = "postcode";
-	public static final String STR_SUBURB = "suburb";
 
 	public TestZFrameBase(DFObjectUtil<S, D, R, C> dfObjectUtil) {
 		this.dfObjectUtil = dfObjectUtil;
