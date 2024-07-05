@@ -1,7 +1,5 @@
 package zingg.client;
 
-import static org.apache.spark.sql.functions.col;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 
@@ -19,7 +17,6 @@ import zingg.common.client.IArguments;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.client.util.SparkDFObjectUtil;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestSparkFrame extends TestZFrameBase<SparkSession, Dataset<Row>, Row, Column, DataType> {
 	public static final Log LOG = LogFactory.getLog(TestSparkFrame.class);
 	public static IArguments args;
