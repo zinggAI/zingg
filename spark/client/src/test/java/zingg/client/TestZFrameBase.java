@@ -25,13 +25,13 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.spark.client.SparkFrame;
 
-public class TestSparkFrameBase {
+public class TestZFrameBase {
 
 	public static IArguments args;
 	public static JavaSparkContext ctx;
 	public static SparkSession spark;
 
-	public static final Log LOG = LogFactory.getLog(TestSparkFrameBase.class);
+	public static final Log LOG = LogFactory.getLog(TestZFrameBase.class);
 
 	public static final String STR_RECID = "recid";
 	public static final String STR_GIVENNAME = "givenname";
@@ -53,7 +53,7 @@ public class TestSparkFrameBase {
 					.appName("Zingg" + "Junit")
 					.getOrCreate();
 			ctx = new JavaSparkContext(spark.sparkContext());
-			JavaSparkContext.jarOfClass(TestSparkFrameBase.class);
+			JavaSparkContext.jarOfClass(TestZFrameBase.class);
 			args = new Arguments();
 		} catch (Throwable e) {
 			if (LOG.isDebugEnabled())

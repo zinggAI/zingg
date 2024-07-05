@@ -4,7 +4,6 @@ import static org.apache.spark.sql.functions.col;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -12,21 +11,15 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.functions;
-import org.apache.spark.sql.types.DataTypes;
-import org.apache.spark.sql.types.Metadata;
-import org.apache.spark.sql.types.StructField;
-import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
 import scala.collection.JavaConverters;
 import zingg.common.client.ZFrame;
-import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.spark.client.SparkFrame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-public class TestSparkFrame extends TestSparkFrameBase {
+public class TestSparkFrame extends TestZFrameBase {
 	public static final Log LOG = LogFactory.getLog(TestSparkFrame.class);
 
 	public static final String NEW_COLUMN = "newColumn";
