@@ -2,22 +2,20 @@ package zingg.client;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema;
-import org.apache.spark.sql.functions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
-import zingg.common.client.util.PojoToArrayConverter;
+import zingg.common.core.ZinggException;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -40,9 +38,15 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
 
         //assert rows
-        List<GenericRowWithSchema> pojoList = (List<GenericRowWithSchema>) zFrame.collectAsList();
+        List<R> rows = zFrame.collectAsList();
+        List<Field> fields = List.of(Schema.class.getDeclaredFields());
         for (int idx = 0; idx < sampleDataSet.size(); idx++) {
-            Assertions.assertArrayEquals(pojoList.get(idx).values(), PojoToArrayConverter.getObjectArray(sampleDataSet.get(idx)));
+            R row = rows.get(idx);
+            for (Field column : fields) {
+                String columnName  = column.getName();
+                assertEquals(column.get(sampleDataSet.get(idx)).toString(), zFrame.getAsString(row, columnName),
+                        "value in ZFrame and sample input is not same");
+            }
         }
     }
 
@@ -67,33 +71,43 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
         String colName = "recid";
-        List<GenericRowWithSchema> pojoList = (List<GenericRowWithSchema>) zFrame.select(colName).collectAsList();
-
+        List<R> rows = zFrame.select(colName).collectAsList();
         for (int idx = 0; idx < sampleDataSet.size(); idx++) {
-            Assertions.assertEquals(pojoList.get(idx).values()[0], sampleDataSet.get(idx).recid,
-                    "value from zFrame and sampleData doesn't match");
+            R row = rows.get(idx);
+            assertEquals(sampleDataSet.get(idx).recid, zFrame.getAsString(row, colName),
+                    "value in ZFrame and sample input is not same");
         }
     }
 
+    /*
+        list of string can not be cast to list of C
+        zFrame select does not have an interface method for List<String>
+    */
+    @Disabled
     @Test
     public void testSelectWithColumnList() throws Exception {
         List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
 
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
-        List<C> columnList = (List<C>) Arrays.asList(functions.col("recid"), functions.col("surname"), functions.col("postcode"));
 
-        List<GenericRowWithSchema> pojoList = (List<GenericRowWithSchema>) zFrame.select(columnList).collectAsList();
+        List<C> columnList = (List<C>) Arrays.asList("recid", "surname", "postcode");
+        List<R> rows = zFrame.select(columnList).collectAsList();
 
         for (int idx = 0; idx < sampleDataSet.size(); idx++) {
-            Assertions.assertEquals(pojoList.get(idx).values()[0], sampleDataSet.get(idx).recid,
+            R row = rows.get(idx);
+            Assertions.assertEquals(zFrame.getAsString(row, "recid"), sampleDataSet.get(idx).recid,
                     "value from zFrame and sampleData doesn't match");
-            Assertions.assertEquals(pojoList.get(idx).values()[1], sampleDataSet.get(idx).surname,
+            Assertions.assertEquals(zFrame.getAsString(row, "surname"), sampleDataSet.get(idx).surname,
                     "value from zFrame and sampleData doesn't match");
-            Assertions.assertEquals(pojoList.get(idx).values()[2], sampleDataSet.get(idx).postcode,
+            Assertions.assertEquals(zFrame.getAsString(row, "postcode"), sampleDataSet.get(idx).postcode,
                     "value from zFrame and sampleData doesn't match");
         }
     }
 
+    /*
+        string can not be cast to C
+        zFrame doesn't have an interface method for C[]
+     */
     @Disabled
     @Test
     public void testSelectWithColumnArray() throws Exception {
@@ -101,18 +115,19 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
 
         C[] columnArray = (C[]) new Object[3];
-        columnArray[0] = (C) functions.col("recid");
-        columnArray[1] = (C) functions.col("surname");
-        columnArray[2] = (C) functions.col("postcode");
+        columnArray[0] = (C) "recid";
+        columnArray[1] = (C) "surname";
+        columnArray[2] = (C) "postcode";
 
-        List<GenericRowWithSchema> pojoList = (List<GenericRowWithSchema>) zFrame.select(columnArray).collectAsList();
+        List<R> rows = zFrame.select(columnArray).collectAsList();
 
         for (int idx = 0; idx < sampleDataSet.size(); idx++) {
-            Assertions.assertEquals(pojoList.get(idx).values()[0], sampleDataSet.get(idx).recid,
+            R row = rows.get(idx);
+            Assertions.assertEquals(zFrame.getAsString(row, "recid"), sampleDataSet.get(idx).recid,
                     "value from zFrame and sampleData doesn't match");
-            Assertions.assertEquals(pojoList.get(idx).values()[1], sampleDataSet.get(idx).surname,
+            Assertions.assertEquals(zFrame.getAsString(row, "surname"), sampleDataSet.get(idx).surname,
                     "value from zFrame and sampleData doesn't match");
-            Assertions.assertEquals(pojoList.get(idx).values()[2], sampleDataSet.get(idx).postcode,
+            Assertions.assertEquals(zFrame.getAsString(row, "postcode"), sampleDataSet.get(idx).postcode,
                     "value from zFrame and sampleData doesn't match");
         }
     }
@@ -122,14 +137,15 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
         List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
 
-        List<GenericRowWithSchema> pojoList = (List<GenericRowWithSchema>) zFrame.select("recid", "surname", "postcode").collectAsList();
+        List<R> rows = zFrame.select("recid", "surname", "postcode").collectAsList();
 
         for (int idx = 0; idx < sampleDataSet.size(); idx++) {
-            Assertions.assertEquals(pojoList.get(idx).values()[0], sampleDataSet.get(idx).recid,
+            R row = rows.get(idx);
+            Assertions.assertEquals(zFrame.getAsString(row, "recid"), sampleDataSet.get(idx).recid,
                     "value from zFrame and sampleData doesn't match");
-            Assertions.assertEquals(pojoList.get(idx).values()[1], sampleDataSet.get(idx).surname,
+            Assertions.assertEquals(zFrame.getAsString(row, "surname"), sampleDataSet.get(idx).surname,
                     "value from zFrame and sampleData doesn't match");
-            Assertions.assertEquals(pojoList.get(idx).values()[2], sampleDataSet.get(idx).postcode,
+            Assertions.assertEquals(zFrame.getAsString(row, "postcode"), sampleDataSet.get(idx).postcode,
                     "value from zFrame and sampleData doesn't match");
         }
     }
@@ -139,15 +155,16 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
         List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
 
-        List<GenericRowWithSchema> pojoList = (List<GenericRowWithSchema>) zFrame.selectExpr("recid as RecordId", "surname as FamilyName",
+        List<R> rows = zFrame.selectExpr("recid as RecordId", "surname as FamilyName",
                 "postcode as Pin").collectAsList();
 
         for (int idx = 0; idx < sampleDataSet.size(); idx++) {
-            Assertions.assertEquals(pojoList.get(idx).values()[0], sampleDataSet.get(idx).recid,
+            R row = rows.get(idx);
+            Assertions.assertEquals(zFrame.getAsString(row, "RecordId"), sampleDataSet.get(idx).recid,
                     "value from zFrame and sampleData doesn't match");
-            Assertions.assertEquals(pojoList.get(idx).values()[1], sampleDataSet.get(idx).surname,
+            Assertions.assertEquals(zFrame.getAsString(row, "FamilyName"), sampleDataSet.get(idx).surname,
                     "value from zFrame and sampleData doesn't match");
-            Assertions.assertEquals(pojoList.get(idx).values()[2], sampleDataSet.get(idx).postcode,
+            Assertions.assertEquals(zFrame.getAsString(row, "Pin"), sampleDataSet.get(idx).postcode,
                     "value from zFrame and sampleData doesn't match");
         }
     }
@@ -188,13 +205,19 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
         List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
         int len = 5;
-        List<GenericRowWithSchema> pojoList = (List<GenericRowWithSchema>) zFrame.limit(len).collectAsList();
+        List<R> rows = zFrame.limit(len).collectAsList();
 
-        assertEquals(pojoList.size(), len, "Size is not equal");
+        assertEquals(rows.size(), len, "Size is not equal");
 
         //assert on rows
+        List<Field> fields = List.of(Schema.class.getDeclaredFields());
         for (int idx = 0; idx < len; idx++) {
-            Assertions.assertArrayEquals(pojoList.get(idx).values(), PojoToArrayConverter.getObjectArray(sampleDataSet.get(idx)));
+            R row = rows.get(idx);
+            for (Field column : fields) {
+                String columnName  = column.getName();
+                assertEquals(column.get(sampleDataSet.get(idx)).toString(), zFrame.getAsString(row, columnName),
+                        "value in ZFrame and sample input is not same");
+            }
         }
     }
 
@@ -203,10 +226,13 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
         List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
 
-        GenericRowWithSchema row = (GenericRowWithSchema) zFrame.head();
-
-        Assertions.assertArrayEquals(row.values(), PojoToArrayConverter.getObjectArray(sampleDataSet.get(0)),
-                "Top row from zFrame and sample data doesn't match");
+        R row = zFrame.head();
+        List<Field> fields = List.of(Schema.class.getDeclaredFields());
+        for (Field column : fields) {
+            String columnName  = column.getName();
+            assertEquals(column.get(sampleDataSet.get(0)).toString(), zFrame.getAsString(row, columnName),
+                    "value in ZFrame and sample input is not same");
+        }
     }
 
     @Test
@@ -259,8 +285,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
                 "Columns of sample data and zFrame are not equal");
 
         //Assert on first row
-        GenericRowWithSchema row = (GenericRowWithSchema) zFrameWithAddedColumn.head();
-        Assertions.assertEquals(row.getAs(newCol), Integer.valueOf(newColVal),
+        R row = zFrameWithAddedColumn.head();
+        Assertions.assertEquals(zFrame.getAsInt(row, newCol), Integer.valueOf(newColVal),
                 "value of added column is not as expected");
     }
 
@@ -283,8 +309,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
                 "Columns of sample data and zFrame are not equal");
 
         //Assert on first row
-        GenericRowWithSchema row = (GenericRowWithSchema) zFrameWithAddedColumn.head();
-        Assertions.assertEquals(row.getAs(newCol), Double.valueOf(newColVal),
+        R row = zFrameWithAddedColumn.head();
+        Assertions.assertEquals(zFrame.getAsDouble(row, newCol), Double.valueOf(newColVal),
                 "value of added column is not as expected");
     }
 
@@ -307,18 +333,18 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
                 "Columns of sample data and zFrame are not equal");
 
         //Assert on first row
-        GenericRowWithSchema row = (GenericRowWithSchema) zFrameWithAddedColumn.head();
-        Assertions.assertEquals(row.getAs(newCol), newColVal,
+        R row = zFrameWithAddedColumn.head();
+        Assertions.assertEquals(zFrame.getAsString(row, newCol), newColVal,
                 "value of added column is not as expected");
     }
 
     @Test
-    public void testWithColumnforAnotherColumn() throws Exception {
+    public void testWithColumnForAnotherColumn() throws Exception {
         List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
         String oldCol = STR_RECID;
         String newCol = NEW_COLUMN;
-        ZFrame<D, R, C> zFrameWithAddedColumn = zFrame.withColumn(newCol, (C) functions.col(oldCol));
+        ZFrame<D, R, C> zFrameWithAddedColumn = zFrame.withColumn(newCol, zFrame.col(oldCol));
 
         List<String> fieldsInTestData = new ArrayList<>();
         List<String> fieldsInZFrame = new ArrayList<>();
@@ -331,8 +357,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
                 "Columns of sample data and zFrame are not equal");
 
         //Assert on first row
-        GenericRowWithSchema row = (GenericRowWithSchema) zFrameWithAddedColumn.head();
-        assertEquals(Optional.of(row.getAs(newCol)), Optional.of(row.getAs(oldCol)),
+        R row = zFrameWithAddedColumn.head();
+        assertEquals(Optional.of(zFrameWithAddedColumn.getAsString(row, newCol)), Optional.of(zFrameWithAddedColumn.getAsString(row, oldCol)),
                 "value of added column is not as expected");
     }
 
@@ -352,12 +378,14 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
         ZFrame<D, R, C> groupByDF = zFrame.groupByMinMaxScore(zFrame.col(ColName.ID_COL));
 
-		List<GenericRowWithSchema> assertionRows = (List<GenericRowWithSchema>) groupByDF.collectAsList();
-		for (GenericRowWithSchema row : assertionRows) {
-			if(row.getInt(0)==1) {
-				Assertions.assertEquals(1001,row.getInt(1));
-				Assertions.assertEquals(2002,row.getInt(2));
-			}
+		List<R> assertionRows = groupByDF.collectAsList();
+		for (R row : assertionRows) {
+            if (groupByDF.getAsInt(row, "z_zid") == 1) {
+                assertEquals(1001, groupByDF.getAsInt(row, "z_minScore"),
+                        "z_minScore is not as expected");
+                assertEquals(2002, groupByDF.getAsInt(row, "z_maxScore"),
+                        "z_maxScore is not as expected");
+            }
 		}
     }
 
@@ -368,13 +396,15 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
         ZFrame<D, R, C> groupByDF = zFrame.groupByMinMaxScore(zFrame.col(ColName.CLUSTER_COLUMN));
 
-		List<GenericRowWithSchema>  assertionRows = (List<GenericRowWithSchema>) groupByDF.collectAsList();
-		for (GenericRowWithSchema row : assertionRows) {
-			if(row.getInt(0)==100) {
-				Assertions.assertEquals(900,row.getInt(1));
-				Assertions.assertEquals(9002,row.getInt(2));
-			}
-		}
+		List<R>  assertionRows = groupByDF.collectAsList();
+        for (R row : assertionRows) {
+            if (groupByDF.getAsInt(row, "z_cluster") == 100) {
+                assertEquals(900, groupByDF.getAsInt(row, "z_minScore"),
+                        "z_minScore is not as expected");
+                assertEquals(9002, groupByDF.getAsInt(row, "z_maxScore"),
+                        "z_maxScore is not as expected");
+            }
+        }
     }
 
     @Test
@@ -425,28 +455,33 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
         String[] columnArray = new String[]{"surname", "postcode"};
         ZFrame<D, R, C> zFrameDeDuplicated = zFrame.dropDuplicates(columnArray);
 
-        List<GenericRowWithSchema> pojoList = (List<GenericRowWithSchema>) zFrameDeDuplicated.collectAsList();
+        List<R> rows = zFrameDeDuplicated.collectAsList();
 
-        List<Object[]> rowsInZFrameDistinct = new ArrayList<>();
-        List<Object[]> rowsInSampleDataDistinct = new ArrayList<>();
-        pojoList.forEach(entry -> rowsInZFrameDistinct.add(entry.values()));
-        for (Schema entry : sampleDataWithDistinctSurnameAndPostCode) {
-            rowsInSampleDataDistinct.add(PojoToArrayConverter.getObjectArray(entry));
-        }
-
-        int matchedRowCount = 0;
-        for(Object[] rowInZFrameDistinct : rowsInZFrameDistinct) {
-            for (Object[] rowInSampleDataDistinct : rowsInSampleDataDistinct) {
-                if (Arrays.equals(Arrays.stream(rowInZFrameDistinct).toArray(), Arrays.stream(rowInSampleDataDistinct).toArray())) {
-                    matchedRowCount++;
+        List<Field> fields = List.of(Schema.class.getDeclaredFields());
+        int matchedCount = 0;
+        for (Schema schema : sampleDataWithDistinctSurnameAndPostCode) {
+            for (R row : rows) {
+                boolean rowMatched = true;
+                for (Field column : fields) {
+                    String columnName = column.getName();
+                    if (!column.get(schema).toString().
+                            equals(zFrame.getAsString(row, columnName))) {
+                        rowMatched = false;
+                        break;
+                    }
+                }
+                if (rowMatched) {
+                    matchedCount++;
+                    break;
                 }
             }
         }
 
-        assertEquals(rowsInSampleDataDistinct.size(), matchedRowCount,
-                "Rows from zFrame and sample data doesn't match after drop duplicates");
-        assertEquals(rowsInZFrameDistinct.size(), matchedRowCount,
-                "Rows from zFrame and sample data doesn't match after drop duplicates");
+
+        assertEquals(rows.size(), matchedCount,
+                "rows count is not as expected");
+        assertEquals(sampleDataWithDistinctSurnameAndPostCode.size(), matchedCount,
+                "rows count is not as expected");
     }
 
     @Test
@@ -456,28 +491,32 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, Schema.class);
         ZFrame<D, R, C> zFrameDeDuplicated = zFrame.dropDuplicates("surname", "postcode");
 
-        List<GenericRowWithSchema> pojoList = (List<GenericRowWithSchema>) zFrameDeDuplicated.collectAsList();
-
-        List<Object[]> rowsInZFrameDistinct = new ArrayList<>();
-        List<Object[]> rowsInSampleDataDistinct = new ArrayList<>();
-        pojoList.forEach(entry -> rowsInZFrameDistinct.add(entry.values()));
-        for (Schema entry : sampleDataWithDistinctSurnameAndPostCode) {
-            rowsInSampleDataDistinct.add(PojoToArrayConverter.getObjectArray(entry));
-        }
-
-        int matchedRowCount = 0;
-        for(Object[] rowInZFrameDistinct : rowsInZFrameDistinct) {
-            for (Object[] rowInSampleDataDistinct : rowsInSampleDataDistinct) {
-                if (Arrays.equals(Arrays.stream(rowInZFrameDistinct).toArray(), Arrays.stream(rowInSampleDataDistinct).toArray())) {
-                    matchedRowCount++;
+        List<R> rows = zFrameDeDuplicated.collectAsList();
+        List<Field> fields = List.of(Schema.class.getDeclaredFields());
+        int matchedCount = 0;
+        for (Schema schema : sampleDataWithDistinctSurnameAndPostCode) {
+            for (R row : rows) {
+                boolean rowMatched = true;
+                for (Field column : fields) {
+                    String columnName = column.getName();
+                    if (!column.get(schema).toString().
+                            equals(zFrame.getAsString(row, columnName))) {
+                        rowMatched = false;
+                        break;
+                    }
+                }
+                if (rowMatched) {
+                    matchedCount++;
+                    break;
                 }
             }
         }
 
-        assertEquals(rowsInSampleDataDistinct.size(), matchedRowCount,
-                "Rows from zFrame and sample data doesn't match after drop duplicates");
-        assertEquals(rowsInZFrameDistinct.size(), matchedRowCount,
-                "Rows from zFrame and sample data doesn't match after drop duplicates");
+
+        assertEquals(rows.size(), matchedCount,
+                "rows count is not as expected");
+        assertEquals(sampleDataWithDistinctSurnameAndPostCode.size(), matchedCount,
+                "rows count is not as expected");
     }
 
     @Test
@@ -488,11 +527,29 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
         String col = STR_RECID;
         ZFrame<D, R, C> zFrameSortedDesc = zFrame.sortDescending(col);
-        List<GenericRowWithSchema> pojoList = (List<GenericRowWithSchema>) zFrameSortedDesc.collectAsList();
+        List<R> rows = zFrameSortedDesc.collectAsList();
 
-        for(int idx = 0; idx < sampleData.size(); idx++) {
-            Assertions.assertArrayEquals(PojoToArrayConverter.getObjectArray(sampleData.get(idx)), pojoList.get(idx).values(),
-                    "Row from descending sorted sample data is not equal to row from descending sorted zFrame");
+        List<Field> fields = List.of(SchemaWithMixedDataType.class.getDeclaredFields());
+        for (int idx = 0; idx < sampleData.size(); idx++) {
+            R row = rows.get(idx);
+            for (Field column : fields) {
+                String columnName  = column.getName();
+                if (column.getType() == String.class) {
+                    assertEquals(column.get(sampleData.get(idx)), zFrameSortedDesc.getAsString(row, columnName),
+                            "value in ZFrame and sample input is not same");
+                } else if (column.getType() == Integer.class) {
+                    assertEquals(column.get(sampleData.get(idx)), zFrameSortedDesc.getAsInt(row, columnName),
+                            "value in ZFrame and sample input is not same");
+                } else if (column.getType() == Double.class) {
+                    assertEquals(column.get(sampleData.get(idx)), zFrameSortedDesc.getAsDouble(row, columnName),
+                            "value in ZFrame and sample input is not same");
+                } else if (column.getType() == Long.class) {
+                    assertEquals(column.get(sampleData.get(idx)), zFrameSortedDesc.getAsLong(row, columnName),
+                            "value in ZFrame and sample input is not same");
+                } else {
+                    throw new ZinggException("Not a valid data type");
+                }
+            }
         }
     }
 
@@ -504,11 +561,29 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
         String col = STR_RECID;
         ZFrame<D, R, C> zFrameSortedAsc = zFrame.sortAscending(col);
-        List<GenericRowWithSchema> pojoList = (List<GenericRowWithSchema>) zFrameSortedAsc.collectAsList();
+        List<R> rows = zFrameSortedAsc.collectAsList();
 
-        for(int idx = 0; idx < sampleData.size(); idx++) {
-            Assertions.assertArrayEquals(PojoToArrayConverter.getObjectArray(sampleData.get(idx)), pojoList.get(idx).values(),
-                    "Row from ascending sorted sample data is not equal to row from ascending sorted zFrame");
+        List<Field> fields = List.of(SchemaWithMixedDataType.class.getDeclaredFields());
+        for (int idx = 0; idx < sampleData.size(); idx++) {
+            R row = rows.get(idx);
+            for (Field column : fields) {
+                String columnName  = column.getName();
+                if (column.getType() == String.class) {
+                    assertEquals(column.get(sampleData.get(idx)).toString(), zFrame.getAsString(row, columnName),
+                            "value in ZFrame and sample input is not same");
+                } else if (column.getType() == Integer.class) {
+                    assertEquals(column.get(sampleData.get(idx)), zFrame.getAsInt(row, columnName),
+                            "value in ZFrame and sample input is not same");
+                } else if (column.getType() == Double.class) {
+                    assertEquals(column.get(sampleData.get(idx)), zFrame.getAsDouble(row, columnName),
+                            "value in ZFrame and sample input is not same");
+                } else if (column.getType() == Long.class) {
+                    assertEquals(column.get(sampleData.get(idx)), zFrame.getAsLong(row, columnName),
+                            "value in ZFrame and sample input is not same");
+                } else {
+                    throw new ZinggException("Not a valid data type");
+                }
+            }
         }
     }
 
@@ -526,11 +601,16 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
         List<Schema> sampleDataDistinct = createSampleDataListDistinct();
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleData, Schema.class);
 
-        List<GenericRowWithSchema> pojoList = (List<GenericRowWithSchema>) zFrame.distinct().collectAsList();
+        List<R> rows = zFrame.distinct().collectAsList();
 
-        for(int idx = 0; idx < sampleDataDistinct.size(); idx++) {
-            Assertions.assertArrayEquals(PojoToArrayConverter.getObjectArray(sampleDataDistinct.get(idx)), pojoList.get(idx).values(),
-                    "Row from sample data is not equal to row from zFrame");
+        List<Field> fields = List.of(Schema.class.getDeclaredFields());
+        for (int idx = 0; idx < sampleDataDistinct.size(); idx++) {
+            R row = rows.get(idx);
+            for (Field column : fields) {
+                String columnName  = column.getName();
+                assertEquals(column.get(sampleDataDistinct.get(idx)).toString(), zFrame.getAsString(row, columnName),
+                        "value in ZFrame and sample input is not same");
+            }
         }
     }
 

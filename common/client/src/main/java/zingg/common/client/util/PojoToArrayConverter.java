@@ -4,8 +4,8 @@ import java.lang.reflect.Field;
 
 public class PojoToArrayConverter {
 
-    public static Object[] getObjectArray(Object person) throws IllegalAccessException {
-        Field[] fields = person.getClass().getDeclaredFields();
+    public static Object[] getObjectArray(Object object) throws IllegalAccessException {
+        Field[] fields = object.getClass().getDeclaredFields();
         int fieldCount = fields.length;
         Object[] objArr = new Object[fieldCount];
 
@@ -13,7 +13,7 @@ public class PojoToArrayConverter {
             Field field = fields[i];
             field.setAccessible(true);
 
-            objArr[i] = field.get(person);
+            objArr[i] = field.get(object);
         }
 
         return objArr;
