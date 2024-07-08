@@ -39,6 +39,14 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>${fasterxml.jackson.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>zingg-common-client</artifactId>
+			<version>${zingg.version}</version>
+			<classifier>tests</classifier>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
