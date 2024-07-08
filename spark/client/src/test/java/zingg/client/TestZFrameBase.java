@@ -9,12 +9,12 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.ZinggException;
-import zingg.common.client.schema.Schema;
-import zingg.common.client.schema.SchemaWithMixedDataType;
-import zingg.common.client.schema.SchemaZScore;
-import zingg.common.client.schema.SchemaInput;
-import zingg.common.client.schema.SchemaCluster;
-import zingg.common.client.schema.SchemaClusterNull;
+import zingg.common.client.model.Person;
+import zingg.common.client.model.PersonMixed;
+import zingg.common.client.model.ClusterZScore;
+import zingg.common.client.model.ClusterSource;
+import zingg.common.client.model.ClusterPairOne;
+import zingg.common.client.model.ClusterPairTwo;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -48,13 +48,13 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testCreateSparkDataFrameAndGetDF() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList();
+        List<Person> sampleDataSet = createSampleDataList();
 
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
 
         //assert rows
         List<R> rows = zFrame.collectAsList();
-        List<Field> fields = List.of(Schema.class.getDeclaredFields());
+        List<Field> fields = List.of(Person.class.getDeclaredFields());
         for (int idx = 0; idx < sampleDataSet.size(); idx++) {
             R row = rows.get(idx);
             for (Field column : fields) {
@@ -67,14 +67,14 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testColumnsNamesandCount() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList();
+        List<Person> sampleDataSet = createSampleDataList();
 
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
 
         //assert on fields
         List<String> fieldsInTestData = new ArrayList<>();
         List<String> fieldsInZFrame = new ArrayList<>();
-        Arrays.stream(Schema.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
+        Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         Arrays.stream(zFrame.fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
         assertEquals(fieldsInTestData, fieldsInZFrame,
                 "Columns of sample data and zFrame are not equal");
@@ -82,9 +82,9 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testSelectWithSingleColumnName() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
+        List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
 
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
         String colName = "recid";
         List<R> rows = zFrame.select(colName).collectAsList();
         for (int idx = 0; idx < sampleDataSet.size(); idx++) {
@@ -101,9 +101,9 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
     @Disabled
     @Test
     public void testSelectWithColumnList() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
+        List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
 
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
 
         List<C> columnList = (List<C>) Arrays.asList("recid", "surname", "postcode");
         List<R> rows = zFrame.select(columnList).collectAsList();
@@ -126,8 +126,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
     @Disabled
     @Test
     public void testSelectWithColumnArray() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
 
         C[] columnArray = (C[]) new Object[3];
         columnArray[0] = (C) "recid";
@@ -149,8 +149,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testSelectWithMultipleColumnNamesAsString() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
 
         List<R> rows = zFrame.select("recid", "surname", "postcode").collectAsList();
 
@@ -167,8 +167,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testSelectExprByPassingColumnStringsAsInSQLStatement() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
 
         List<R> rows = zFrame.selectExpr("recid as RecordId", "surname as FamilyName",
                 "postcode as Pin").collectAsList();
@@ -186,13 +186,13 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testDropSingleColumn() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
 
         List<String> fieldsInZFrame = new ArrayList<>();
         List<String> fieldsInTestData = new ArrayList<>();
         Arrays.stream(zFrame.drop("recid").fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
-        Arrays.stream(Schema.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
+        Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         fieldsInTestData.remove("recid");
 
         assertEquals(fieldsInTestData, fieldsInZFrame, "Fields in zFrame and sample data doesn't match");
@@ -200,13 +200,13 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testDropColumnsAsStringArray() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
 
         List<String> fieldsInZFrame = new ArrayList<>();
         List<String> fieldsInTestData = new ArrayList<>();
         Arrays.stream(zFrame.drop("recid", "surname", "postcode").fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
-        Arrays.stream(Schema.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
+        Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         fieldsInTestData.remove("recid");
         fieldsInTestData.remove("surname");
         fieldsInTestData.remove("postcode");
@@ -217,15 +217,15 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testLimit() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
         int len = 5;
         List<R> rows = zFrame.limit(len).collectAsList();
 
         assertEquals(rows.size(), len, "Size is not equal");
 
         //assert on rows
-        List<Field> fields = List.of(Schema.class.getDeclaredFields());
+        List<Field> fields = List.of(Person.class.getDeclaredFields());
         for (int idx = 0; idx < len; idx++) {
             R row = rows.get(idx);
             for (Field column : fields) {
@@ -238,11 +238,11 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testHead() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
 
         R row = zFrame.head();
-        List<Field> fields = List.of(Schema.class.getDeclaredFields());
+        List<Field> fields = List.of(Person.class.getDeclaredFields());
         for (Field column : fields) {
             String columnName  = column.getName();
             assertEquals(column.get(sampleDataSet.get(0)).toString(), zFrame.getAsString(row, columnName),
@@ -252,8 +252,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testGetAsInt() throws Exception {
-        List<SchemaWithMixedDataType> sampleDataSet = createSampleDataListWithMixedDataType(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, SchemaWithMixedDataType.class);
+        List<PersonMixed> sampleDataSet = createSampleDataListWithMixedDataType(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, PersonMixed.class);
 
         R row = zFrame.head();
         assertTrue(zFrame.getAsInt(row, "recid") == sampleDataSet.get(0).recid,
@@ -262,8 +262,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testGetAsString() throws Exception {
-        List<SchemaWithMixedDataType> sampleDataSet = createSampleDataListWithMixedDataType(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, SchemaWithMixedDataType.class);
+        List<PersonMixed> sampleDataSet = createSampleDataListWithMixedDataType(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, PersonMixed.class);
 
         R row = zFrame.head();
         assertEquals(zFrame.getAsString(row, "surname"), sampleDataSet.get(0).surname,
@@ -272,8 +272,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testGetAsDouble() throws Exception {
-        List<SchemaWithMixedDataType> sampleDataSet = createSampleDataListWithMixedDataType(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, SchemaWithMixedDataType.class);
+        List<PersonMixed> sampleDataSet = createSampleDataListWithMixedDataType(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, PersonMixed.class);
 
         R row = zFrame.head();
         assertEquals(zFrame.getAsDouble(row, "cost"), sampleDataSet.get(0).cost,
@@ -282,8 +282,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testWithColumnForIntegerValue() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
 
         String newCol = NEW_COLUMN;
         int newColVal = 36;
@@ -292,7 +292,7 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
         List<String> fieldsInTestData = new ArrayList<>();
         List<String> fieldsInZFrame = new ArrayList<>();
         Arrays.stream(zFrameWithAddedColumn.fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
-        Arrays.stream(Schema.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
+        Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         fieldsInTestData.add(newCol);
 
         //Assert on columns
@@ -307,8 +307,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testWithColumnForDoubleValue() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
         String newCol = NEW_COLUMN;
         double newColVal = 3.14;
         ZFrame<D, R, C> zFrameWithAddedColumn = zFrame.withColumn(newCol, newColVal);
@@ -316,7 +316,7 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
         List<String> fieldsInTestData = new ArrayList<>();
         List<String> fieldsInZFrame = new ArrayList<>();
         Arrays.stream(zFrameWithAddedColumn.fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
-        Arrays.stream(Schema.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
+        Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         fieldsInTestData.add(newCol);
 
         //Assert on columns
@@ -331,8 +331,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testWithColumnForStringValue() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
         String newCol = NEW_COLUMN;
         String newColVal = "zingg";
         ZFrame<D, R, C> zFrameWithAddedColumn = zFrame.withColumn(newCol, newColVal);
@@ -340,7 +340,7 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
         List<String> fieldsInTestData = new ArrayList<>();
         List<String> fieldsInZFrame = new ArrayList<>();
         Arrays.stream(zFrameWithAddedColumn.fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
-        Arrays.stream(Schema.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
+        Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         fieldsInTestData.add(newCol);
 
         //Assert on columns
@@ -355,8 +355,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testWithColumnForAnotherColumn() throws Exception {
-        List<Schema> sampleDataSet = createSampleDataList(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Schema.class);
+        List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
         String oldCol = STR_RECID;
         String newCol = NEW_COLUMN;
         ZFrame<D, R, C> zFrameWithAddedColumn = zFrame.withColumn(newCol, zFrame.col(oldCol));
@@ -364,7 +364,7 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
         List<String> fieldsInTestData = new ArrayList<>();
         List<String> fieldsInZFrame = new ArrayList<>();
         Arrays.stream(zFrameWithAddedColumn.fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
-        Arrays.stream(Schema.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
+        Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         fieldsInTestData.add(newCol);
 
         //Assert on columns
@@ -379,26 +379,26 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testGetMaxVal() throws Exception {
-        List<SchemaZScore> sampleDataSet = createSampleDataZScore(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, SchemaZScore.class);
+        List<ClusterZScore> sampleDataSet = createSampleDataZScore(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, ClusterZScore.class);
 
-        assertEquals(400, zFrame.getMaxVal(ColName.CLUSTER_COLUMN),
+        assertEquals("400", zFrame.getMaxVal(ColName.CLUSTER_COLUMN),
                 "Max value is not as expected");
     }
 
     @Test
     public void testGroupByMinMax() throws Exception {
-        List<SchemaZScore> sampleDataSet = createSampleDataZScore(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, SchemaZScore.class);
+        List<ClusterZScore> sampleDataSet = createSampleDataZScore(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, ClusterZScore.class);
 
         ZFrame<D, R, C> groupByDF = zFrame.groupByMinMaxScore(zFrame.col(ColName.ID_COL));
 
 		List<R> assertionRows = groupByDF.collectAsList();
 		for (R row : assertionRows) {
-            if (groupByDF.getAsInt(row, "z_zid") == 1) {
-                assertEquals(1001, groupByDF.getAsInt(row, "z_minScore"),
+            if (groupByDF.getAsLong(row, "z_zid") == 1.0) {
+                assertEquals(1001.0, groupByDF.getAsDouble(row, "z_minScore"),
                         "z_minScore is not as expected");
-                assertEquals(2002, groupByDF.getAsInt(row, "z_maxScore"),
+                assertEquals(2002.0, groupByDF.getAsDouble(row, "z_maxScore"),
                         "z_maxScore is not as expected");
             }
 		}
@@ -406,17 +406,17 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testGroupByMinMax2() throws Exception {
-        List<SchemaZScore> sampleDataSet = createSampleDataZScore(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, SchemaZScore.class);
+        List<ClusterZScore> sampleDataSet = createSampleDataZScore(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, ClusterZScore.class);
 
         ZFrame<D, R, C> groupByDF = zFrame.groupByMinMaxScore(zFrame.col(ColName.CLUSTER_COLUMN));
 
 		List<R>  assertionRows = groupByDF.collectAsList();
         for (R row : assertionRows) {
-            if (groupByDF.getAsInt(row, "z_cluster") == 100) {
-                assertEquals(900, groupByDF.getAsInt(row, "z_minScore"),
+            if ("100".equals(groupByDF.getAsString(row, "z_cluster"))) {
+                assertEquals(900.0, groupByDF.getAsDouble(row, "z_minScore"),
                         "z_minScore is not as expected");
-                assertEquals(9002, groupByDF.getAsInt(row, "z_maxScore"),
+                assertEquals(9002.0, groupByDF.getAsDouble(row, "z_maxScore"),
                         "z_maxScore is not as expected");
             }
         }
@@ -424,10 +424,10 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testRightJoinMultiCol() throws Exception {
-        List<SchemaInput> sampleDataSetInput = createSampleDataInput(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrameInput = dfObjectUtil.getDFFromObjectList(sampleDataSetInput, SchemaInput.class);
-        List<SchemaCluster> sampleDataSetCluster = createSampleDataCluster(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, SchemaCluster.class);
+        List<ClusterSource> sampleDataSetInput = createSampleDataInput(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrameInput = dfObjectUtil.getDFFromObjectList(sampleDataSetInput, ClusterSource.class);
+        List<ClusterPairOne> sampleDataSetCluster = createSampleDataCluster(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, ClusterPairOne.class);
 
         ZFrame<D, R, C> joinedData = zFrameCluster.join(zFrameInput, ColName.ID_COL, ColName.SOURCE_COL, ZFrame.RIGHT_JOIN);
         assertEquals(10, joinedData.count());
@@ -435,18 +435,18 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testFilterInCond() throws Exception {
-        List<SchemaInput> sampleDataSetInput = createSampleDataInput(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrameInput = dfObjectUtil.getDFFromObjectList(sampleDataSetInput, SchemaInput.class);
-        List<SchemaClusterNull> sampleDataSetCluster = createSampleDataClusterWithNull(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, SchemaClusterNull.class);
+        List<ClusterSource> sampleDataSetInput = createSampleDataInput(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrameInput = dfObjectUtil.getDFFromObjectList(sampleDataSetInput, ClusterSource.class);
+        List<ClusterPairTwo> sampleDataSetCluster = createSampleDataClusterWithNull(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, ClusterPairTwo.class);
         ZFrame<D, R, C> filteredData = zFrameInput.filterInCond(ColName.ID_COL, zFrameCluster, ColName.COL_PREFIX + ColName.ID_COL);
         assertEquals(5, filteredData.count());
     }
 
     @Test
     public void testFilterNotNullCond() throws Exception {
-        List<SchemaClusterNull> sampleDataSetCluster = createSampleDataClusterWithNull(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, SchemaClusterNull.class);
+        List<ClusterPairTwo> sampleDataSetCluster = createSampleDataClusterWithNull(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, ClusterPairTwo.class);
 
         ZFrame<D, R, C> filteredData = zFrameCluster.filterNotNullCond(ColName.SOURCE_COL);
         assertEquals(3, filteredData.count());
@@ -454,8 +454,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testFilterNullCond() throws Exception {
-        List<SchemaClusterNull> sampleDataSetCluster = createSampleDataClusterWithNull(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, SchemaClusterNull.class);
+        List<ClusterPairTwo> sampleDataSetCluster = createSampleDataClusterWithNull(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, ClusterPairTwo.class);
 
         ZFrame<D, R, C> filteredData = zFrameCluster.filterNullCond(ColName.SOURCE_COL);
         assertEquals(2, filteredData.count());
@@ -463,18 +463,18 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testDropDuplicatesConsideringGivenColumnsAsStringArray() throws Exception {
-        List<Schema> sampleData = createSampleDataList();
-        List<Schema> sampleDataWithDistinctSurnameAndPostCode = createSampleDataListWithDistinctSurnameAndPostcode();
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleData, Schema.class);
+        List<Person> sampleData = createSampleDataList();
+        List<Person> sampleDataWithDistinctSurnameAndPostCode = createSampleDataListWithDistinctSurnameAndPostcode();
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleData, Person.class);
 
         String[] columnArray = new String[]{"surname", "postcode"};
         ZFrame<D, R, C> zFrameDeDuplicated = zFrame.dropDuplicates(columnArray);
 
         List<R> rows = zFrameDeDuplicated.collectAsList();
 
-        List<Field> fields = List.of(Schema.class.getDeclaredFields());
+        List<Field> fields = List.of(Person.class.getDeclaredFields());
         int matchedCount = 0;
-        for (Schema schema : sampleDataWithDistinctSurnameAndPostCode) {
+        for (Person schema : sampleDataWithDistinctSurnameAndPostCode) {
             for (R row : rows) {
                 boolean rowMatched = true;
                 for (Field column : fields) {
@@ -501,20 +501,20 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testDropDuplicatesConsideringGivenIndividualColumnsAsString() throws Exception {
-        List<Schema> sampleDataSetCluster = createSampleDataList();
-        List<Schema> sampleDataWithDistinctSurnameAndPostCode = createSampleDataListWithDistinctSurnameAndPostcode();
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, Schema.class);
+        List<Person> sampleDataSetCluster = createSampleDataList();
+        List<Person> sampleDataWithDistinctSurnameAndPostCode = createSampleDataListWithDistinctSurnameAndPostcode();
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, Person.class);
         ZFrame<D, R, C> zFrameDeDuplicated = zFrame.dropDuplicates("surname", "postcode");
 
         List<R> rows = zFrameDeDuplicated.collectAsList();
-        List<Field> fields = List.of(Schema.class.getDeclaredFields());
+        List<Field> fields = List.of(Person.class.getDeclaredFields());
         int matchedCount = 0;
-        for (Schema schema : sampleDataWithDistinctSurnameAndPostCode) {
+        for (Person person : sampleDataWithDistinctSurnameAndPostCode) {
             for (R row : rows) {
                 boolean rowMatched = true;
                 for (Field column : fields) {
                     String columnName = column.getName();
-                    if (!column.get(schema).toString().
+                    if (!column.get(person).toString().
                             equals(zFrame.getAsString(row, columnName))) {
                         rowMatched = false;
                         break;
@@ -536,15 +536,15 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testSortDescending() throws Exception {
-        List<SchemaWithMixedDataType> sampleData = createSampleDataListWithMixedDataType();
+        List<PersonMixed> sampleData = createSampleDataListWithMixedDataType();
         sampleData.sort((a, b) -> a.recid > b.recid ? -1 : 1);
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleData, SchemaWithMixedDataType.class);
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleData, PersonMixed.class);
 
         String col = STR_RECID;
         ZFrame<D, R, C> zFrameSortedDesc = zFrame.sortDescending(col);
         List<R> rows = zFrameSortedDesc.collectAsList();
 
-        List<Field> fields = List.of(SchemaWithMixedDataType.class.getDeclaredFields());
+        List<Field> fields = List.of(PersonMixed.class.getDeclaredFields());
         for (int idx = 0; idx < sampleData.size(); idx++) {
             R row = rows.get(idx);
             for (Field column : fields) {
@@ -570,15 +570,15 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testSortAscending() throws Exception {
-        List<SchemaWithMixedDataType> sampleData = createSampleDataListWithMixedDataType();
+        List<PersonMixed> sampleData = createSampleDataListWithMixedDataType();
         sampleData.sort((a, b) -> a.recid < b.recid ? -1 : 1);
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleData, SchemaWithMixedDataType.class);
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleData, PersonMixed.class);
 
         String col = STR_RECID;
         ZFrame<D, R, C> zFrameSortedAsc = zFrame.sortAscending(col);
         List<R> rows = zFrameSortedAsc.collectAsList();
 
-        List<Field> fields = List.of(SchemaWithMixedDataType.class.getDeclaredFields());
+        List<Field> fields = List.of(PersonMixed.class.getDeclaredFields());
         for (int idx = 0; idx < sampleData.size(); idx++) {
             R row = rows.get(idx);
             for (Field column : fields) {
@@ -604,21 +604,21 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testIsEmpty() throws Exception {
-        List<Schema> emptySampleData = createEmptySampleData();
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(emptySampleData, Schema.class);
+        List<Person> emptySampleData = createEmptySampleData();
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(emptySampleData, Person.class);
 
         assertTrue(zFrame.isEmpty(), "zFrame is not empty");
     }
 
     @Test
     public void testDistinct() throws Exception {
-        List<Schema> sampleData = createSampleDataList();
-        List<Schema> sampleDataDistinct = createSampleDataListDistinct();
-        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleData, Schema.class);
+        List<Person> sampleData = createSampleDataList();
+        List<Person> sampleDataDistinct = createSampleDataListDistinct();
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleData, Person.class);
 
         List<R> rows = zFrame.distinct().collectAsList();
 
-        List<Field> fields = List.of(Schema.class.getDeclaredFields());
+        List<Field> fields = List.of(Person.class.getDeclaredFields());
         for (int idx = 0; idx < sampleDataDistinct.size(); idx++) {
             R row = rows.get(idx);
             for (Field column : fields) {

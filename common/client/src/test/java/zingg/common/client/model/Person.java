@@ -1,13 +1,13 @@
-package zingg.common.client.schema;
+package zingg.common.client.model;
 
-public class Schema {
+public class Person {
     public final String recid;
     public final String givenname;
     public final String surname;
     public final String suburb;
     public final String postcode;
 
-    public Schema(String recid, String givename, String surname, String suburb, String postcode) {
+    public Person(String recid, String givename, String surname, String suburb, String postcode) {
         this.recid = recid;
         this.givenname = givename;
         this.surname = surname;
