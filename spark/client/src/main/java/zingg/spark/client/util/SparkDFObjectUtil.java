@@ -11,24 +11,26 @@ import org.apache.spark.sql.types.StructType;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.DFObjectUtil;
+import zingg.common.client.util.WithSession;
 import zingg.spark.client.SparkFrame;
 
 public class SparkDFObjectUtil extends DFObjectUtil<SparkSession, Dataset<Row>, Row, Column> {
 
-    public SparkDFObjectUtil(SparkSession s) {
-        super(s);
+    private final WithSession<SparkSession> withSparkSession;
+
+    public SparkDFObjectUtil(WithSession<SparkSession> withSparkSession) {
+        this.withSparkSession = withSparkSession;
     }
 
     @Override
     public ZFrame<Dataset<Row>, Row, Column> getDFFromObjectList(List objList, Class objClass) throws Exception {
-        if(objList==null || objClass==null) return null;
+        if(objList == null || objClass == null) return null;
 
         SparkStructTypeFromPojoClass stpc = new SparkStructTypeFromPojoClass();
 
         List<Row> rows = Arrays.asList(RowsFromObjectList.getRows(objList));
         StructType structType = stpc.getStructType(objClass);
-        return new SparkFrame(getSession().createDataFrame(rows, structType));
+        return new SparkFrame(withSparkSession.getSession().createDataFrame(rows, structType));
     }
-
 
 }
