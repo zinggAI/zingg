@@ -1,14 +1,12 @@
-package zingg.client;
+package zingg.common.client;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
-import zingg.common.core.ZinggException;
 import zingg.common.client.model.Person;
 import zingg.common.client.model.PersonMixed;
 import zingg.common.client.model.ClusterZScore;
@@ -562,7 +560,7 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
                     assertEquals(column.get(sampleData.get(idx)), zFrameSortedDesc.getAsLong(row, columnName),
                             "value in ZFrame and sample input is not same");
                 } else {
-                    throw new ZinggException("Not a valid data type");
+                    throw new Exception("Not a valid data type");
                 }
             }
         }
@@ -596,7 +594,7 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
                     assertEquals(column.get(sampleData.get(idx)), zFrame.getAsLong(row, columnName),
                             "value in ZFrame and sample input is not same");
                 } else {
-                    throw new ZinggException("Not a valid data type");
+                    throw new Exception("Not a valid data type");
                 }
             }
         }

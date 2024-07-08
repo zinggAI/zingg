@@ -18,6 +18,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import zingg.common.client.IArguments;
+import zingg.common.client.TestZFrameBase;
 import zingg.common.client.ZFrame;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.client.util.SparkDFObjectUtil;
