@@ -28,15 +28,14 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	}
 	
 	@Override
-	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
-		return getPairs(blocked, bAll, new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args));
-	}	
-
-	@Override
 	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
 		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
-		SelfPairBuilderSourceSensitive<S, D, R, C> iPairBuilder = new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args);
+		SelfPairBuilderSourceSensitive<S, D, R, C> iPairBuilder = getPairBuilderSourceSensitive();
 		return getActualDupes(blocked, testData,predictionFilter, iPairBuilder, null);
+	}
+
+	protected SelfPairBuilderSourceSensitive<S, D, R, C> getPairBuilderSourceSensitive() {
+		return new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args);
 	}
 		
 	@Override
