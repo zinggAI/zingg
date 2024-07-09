@@ -27,284 +27,98 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
+import zingg.common.core.context.Context;
 import zingg.common.core.data.Constant;
 import zingg.common.core.model.Event;
 import zingg.common.core.model.Schema;
+import zingg.common.core.model.SchemaActual;
 import zingg.common.core.model.SchemaOriginal;
 import zingg.spark.client.SparkFrame;
+import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.executor.ZinggSparkTester;
 import zingg.spark.core.preprocess.SparkStopWordsRemover;
 
-public class TestStopWords<S, D, R, C, T>{
+public abstract class TestStopWords<S, D, R, C, T> {
 
 	public static final Log LOG = LogFactory.getLog(TestStopWords.class);
-	public final DFObjectUtil<S, D, R, C> dfObjectUtil;
-	public final StopWordsRemover<S, D, R, C, T> stopWordsRemover;
-	public IArguments args = new Arguments();
+	private final DFObjectUtil<S, D, R, C> dfObjectUtil;
+	private final List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers;
+	private final Context<S, D, R, C, T> context;
 
-	public TestStopWords(DFObjectUtil<S, D, R, C> dfObjectUtil, StopWordsRemover<S, D, R, C, T> stopWordsRemover) {
+	public TestStopWords(DFObjectUtil<S, D, R, C> dfObjectUtil, List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers,
+						 Context<S, D, R, C, T> context) {
 		this.dfObjectUtil = dfObjectUtil;
-		this.stopWordsRemover = stopWordsRemover;
+		this.stopWordsRemovers = stopWordsRemovers;
+		this.context = context;
 	}
 
 	@DisplayName ("Test Stop Words removal from Single column dataset")
 	@Test
 	public void testStopWordsSingleColumn() throws ZinggClientException, Exception {
-		
-//			StructType schema = new StructType(new StructField[] {
-//					new StructField("statement", DataTypes.StringType, false, Metadata.empty())
-//			});
-//
-//			Dataset<Row> datasetOriginal = spark.createDataFrame(
-//					Arrays.asList(
-//							RowFactory.create("The zingg is a Spark application"),
-//							RowFactory.create("It is very popular in data Science"),
-//							RowFactory.create("It is written in Java and Scala"),
-//							RowFactory.create("Best of luck to zingg")),
-//					schema);
 
 			String stopWords = "\\b(a|an|the|is|It|of|yes|no|I|has|have|you)\\b\\s?".toLowerCase();
 
-//			Dataset<Row> datasetExpected = spark.createDataFrame(
-//				Arrays.asList(
-//						RowFactory.create("zingg spark application"),
-//						RowFactory.create("very popular in data science"),
-//						RowFactory.create("written in java and scala"),
-//						RowFactory.create("best luck to zingg")),
-//				schema);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(Constant.getData1Original(), Schema.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(Constant.getData1Expected(), Schema.class);
 
-		ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(Constant.getData1Original(), Schema.class);
-		ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(Constant.getData1Expected(), Schema.class);
-			
-			List<FieldDefinition> fdList = new ArrayList<FieldDefinition>(4);
-			
-			ArrayList<MatchType> matchTypelistFuzzy = new ArrayList<MatchType>();
-			matchTypelistFuzzy.add(MatchType.FUZZY);
-
-			FieldDefinition eventFD = new FieldDefinition();
-			eventFD.setDataType("string");
-			eventFD.setFieldName("statement");
-			eventFD.setMatchType(matchTypelistFuzzy);
-			fdList.add(eventFD);
-
-			IArguments stmtArgs = new Arguments();
-			stmtArgs.setFieldDefinition(fdList);
-			
-//			StopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,stmtArgs);
+			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(0);
 			
 			stopWordsRemover.preprocessForStopWords(zFrameOriginal);
-			System.out.println("datasetOriginal.show() : ");
-			zFrameOriginal.show();
-			ZFrame<D, R, C> zFrameWithoutStopWords = stopWordsRemover.removeStopWordsFromDF(zFrameOriginal,"statement",stopWords);
-			System.out.println("datasetWithoutStopWords.show() : ");
-			zFrameWithoutStopWords.show();
-			
-// 			assertTrue(zFrameExpected.except(datasetWithoutStopWords.df()).isEmpty());
-//			assertTrue(datasetWithoutStopWords.df().except(datasetExpected).isEmpty());
+			ZFrame<D, R, C> newZFrame = stopWordsRemover.removeStopWordsFromDF(zFrameOriginal,"statement",stopWords);
+
+ 			assertTrue(zFrameExpected.except(newZFrame).isEmpty());
+			assertTrue(newZFrame.except(zFrameExpected).isEmpty());
 	}
 
 	@Test
 	public void testRemoveStopWordsFromDataset() throws ZinggClientException, Exception {
-//			StructType schemaOriginal = new StructType(new StructField[] {
-//					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
-//					new StructField("field1", DataTypes.StringType, false, Metadata.empty()),
-//					new StructField("field2", DataTypes.StringType, false, Metadata.empty()),
-//					new StructField("field3", DataTypes.StringType, false, Metadata.empty()),
-//					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
-//			});
 
-//			Dataset<Row> original = spark.createDataFrame(
-//					Arrays.asList(
-//							RowFactory.create("10", "The zingg is a spark application", "two",
-//									"Yes. a good application", "test"),
-//							RowFactory.create("20", "It is very popular in Data Science", "Three", "true indeed",
-//									"test"),
-//							RowFactory.create("30", "It is written in java and scala", "four", "", "test"),
-//							RowFactory.create("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test")),
-//					schemaOriginal);
-
-//			Dataset<Row> datasetExpected = spark.createDataFrame(
-//				Arrays.asList(
-//						RowFactory.create("10", "zingg spark application", "two", "Yes. a good application", "test"),
-//						RowFactory.create("20", "very popular data science", "Three", "true indeed", "test"),
-//						RowFactory.create("30", "written java scala", "four", "", "test"),
-//						RowFactory.create("40", "best luck to zingg ", "Five", "thank you", "test")),
-//				schemaOriginal);
 			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(Constant.getData2Original(), SchemaOriginal.class);
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(Constant.getData2Expected(), SchemaOriginal.class);
-			
-  			String stopWordsFileName = getClass().getResource("../../../../preProcess/stopWords.csv").getFile();
- 			FieldDefinition fd = new FieldDefinition();
-			fd.setStopWords(stopWordsFileName);
-			fd.setFieldName("field1");
 
-			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
-//			args.setFieldDefinition(fieldDefinitionList);
-
-//			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,args);
-
-			ZFrame<D, R, C> zFrameNew = stopWordsRemover.preprocessForStopWords(zFrameOriginal);
+			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(1);
+			ZFrame<D, R, C> newZFrame = stopWordsRemover.preprocessForStopWords(zFrameOriginal);
 				
-// 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsRemover.preprocessForStopWords(new SparkFrame(original)))).df();
-// 			assertTrue(datasetExpected.except(newDataSet).isEmpty());
-//			assertTrue(newDataSet.except(datasetExpected).isEmpty());
+ 			assertTrue(zFrameExpected.except(newZFrame).isEmpty());
+			assertTrue(newZFrame.except(zFrameExpected).isEmpty());
 	}
 
 	@Test
 	public void testStopWordColumnMissingFromStopWordFile() throws ZinggClientException, Exception {
-			StructType schemaOriginal = new StructType(new StructField[] {
-					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field1", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field2", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field3", DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
-			});
-
-//			Dataset<Row> original = spark.createDataFrame(
-//					Arrays.asList(
-//							RowFactory.create("10", "The zingg is a spark application", "two",
-//									"Yes. a good application", "test"),
-//							RowFactory.create("20", "It is very popular in Data Science", "Three", "true indeed",
-//									"test"),
-//							RowFactory.create("30", "It is written in java and scala", "four", "", "test"),
-//							RowFactory.create("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test")),
-//					schemaOriginal);
-//
-//			Dataset<Row> datasetExpected = spark.createDataFrame(
-//				Arrays.asList(
-//						RowFactory.create("10", "zingg spark application", "two", "Yes. a good application", "test"),
-//						RowFactory.create("20", "very popular data science", "Three", "true indeed", "test"),
-//						RowFactory.create("30", "written java scala", "four", "", "test"),
-//						RowFactory.create("40", "best luck to zingg ", "Five", "thank you", "test")),
-//				schemaOriginal);
 
 			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(Constant.getData3Original(), SchemaOriginal.class);
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(Constant.getData3Expected(), SchemaOriginal.class);
 
-  			String stopWordsFileName = getClass().getResource("../../../../preProcess/stopWordsWithoutHeader.csv").getFile();
- 			FieldDefinition fd = new FieldDefinition();
-			fd.setStopWords(stopWordsFileName);
-			fd.setFieldName("field1");
+			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(2);
+ 			ZFrame<D, R, C> newDataSet = stopWordsRemover.preprocessForStopWords(zFrameOriginal);
 
-			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
-			args.setFieldDefinition(fieldDefinitionList);
-			
-			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,args);
-			
-			System.out.println("testStopWordColumnMissingFromStopWordFile : orginal ");			
-			original.show(200);
- 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocessForStopWords(new SparkFrame(original)))).df();
- 			System.out.println("testStopWordColumnMissingFromStopWordFile : newDataSet ");		
- 			newDataSet.show(200);
- 			System.out.println("testStopWordColumnMissingFromStopWordFile : datasetExpected ");	
- 			datasetExpected.show(200);
- 			assertTrue(datasetExpected.except(newDataSet).isEmpty());
-			assertTrue(newDataSet.except(datasetExpected).isEmpty());
+ 			assertTrue(zFrameExpected.except(newDataSet).isEmpty());
+			assertTrue(newDataSet.except(zFrameExpected).isEmpty());
 	}
 	
 
 	@Test
-	public void testForOriginalDataAfterPostprocess() {
-			StructType schemaActual = new StructType(new StructField[] {
-					new StructField(ColName.CLUSTER_COLUMN, DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.PREDICTION_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.SCORE_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.MATCH_FLAG_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field1", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field2", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field3", DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
-			});
+	public void testForOriginalDataAfterPostProcess() throws Exception {
 
-			StructType schemaOriginal = new StructType(new StructField[] {
-					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field1", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field2", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field3", DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
-			});
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(Constant.getData4original(), SchemaOriginal.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(Constant.getData4Expected(), SchemaActual.class);
 
-			Dataset<Row> original = spark.createDataFrame(
-					Arrays.asList(
-							RowFactory.create("10", "The zingg is a spark application", "two",
-									"Yes. a good application", "test"),
-							RowFactory.create("20", "It is very popular in data science", "Three", "true indeed",
-									"test"),
-							RowFactory.create("30", "It is written in java and scala", "four", "", "test"),
-							RowFactory.create("40", "Best of luck to zingg", "Five", "thank you", "test")),
-					schemaOriginal);
+			ZFrame<D, R, C> newZFrame = context.getDSUtil().postprocess(zFrameExpected, zFrameOriginal);
 
-			Dataset<Row> actual = spark.createDataFrame(
-					Arrays.asList(
-							RowFactory.create("1648811730857:10", "10", "1.0", "0.555555", "-1",
-									"The zingg spark application", "two", "Yes. good application", "test"),
-							RowFactory.create("1648811730857:20", "20", "1.0", "1.0", "-1",
-									"It very popular data science", "Three", "true indeed", "test"),
-							RowFactory.create("1648811730857:30", "30", "1.0", "0.999995", "-1",
-									"It written java scala", "four", "", "test"),
-							RowFactory.create("1648811730857:40", "40", "1.0", "1.0", "-1", "Best luck zingg", "Five",
-									"thank", "test")),
-					schemaActual);
-
-			Dataset<Row> newDataset = ((SparkFrame)(zsCTX.getDSUtil().postprocess(new SparkFrame(actual), new SparkFrame(original)))).df();
-			assertTrue(newDataset.select(ColName.ID_COL, "field1", "field2", "field3", ColName.SOURCE_COL).except(original).isEmpty());
-			assertTrue(original.except(newDataset.select(ColName.ID_COL, "field1", "field2", "field3", ColName.SOURCE_COL)).isEmpty());
+			assertTrue(newZFrame.select(ColName.ID_COL, "field1", "field2", "field3", ColName.SOURCE_COL).except(zFrameOriginal).isEmpty());
+			assertTrue(zFrameOriginal.except(newZFrame.select(ColName.ID_COL, "field1", "field2", "field3", ColName.SOURCE_COL)).isEmpty());
 	}
 
 	@Test
-	public void testOriginalDataAfterPostprocessLinked() {
-			StructType schemaActual = new StructType(new StructField[] {
-					new StructField(ColName.CLUSTER_COLUMN, DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.PREDICTION_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.SCORE_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.MATCH_FLAG_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field1", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field2", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field3", DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
-			});
+	public void testOriginalDataAfterPostProcessLinked() throws Exception {
 
-			StructType schemaOriginal = new StructType(new StructField[] {
-					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field1", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field2", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field3", DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
-			});
-
-			Dataset<Row> original = spark.createDataFrame(
-					Arrays.asList(
-							RowFactory.create("10", "The zingg is a spark application", "two",
-									"Yes. a good application", "test"),
-							RowFactory.create("20", "It is very popular in data science", "Three", "true indeed",
-									"test"),
-							RowFactory.create("30", "It is written in java and scala", "four", "", "test"),
-							RowFactory.create("40", "Best of luck to zingg", "Five", "thank you", "test")),
-					schemaOriginal);
-
-			Dataset<Row> actual = spark.createDataFrame(
-					Arrays.asList(
-							RowFactory.create("1648811730857:10", "10", "1.0", "0.555555", "-1",
-									"The zingg spark application", "two", "Yes. good application", "test"),
-							RowFactory.create("1648811730857:20", "20", "1.0", "1.0", "-1",
-									"It very popular data science", "Three", "true indeed", "test"),
-							RowFactory.create("1648811730857:30", "30", "1.0", "0.999995", "-1",
-									"It written java scala", "four", "", "test"),
-							RowFactory.create("1648811730857:40", "40", "1.0", "1.0", "-1", "Best luck zingg", "Five",
-									"thank", "test")),
-					schemaActual);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(Constant.getData5Original(), SchemaOriginal.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(Constant.getData5Actual(), SchemaActual.class);
 			
-			System.out.println("testOriginalDataAfterPostprocessLinked original :");
-			original.show(200);
+			ZFrame<D, R, C> newZFrame = context.getDSUtil().postprocessLinked(zFrameExpected, zFrameOriginal);
 			
-			Dataset<Row> newDataset = ((SparkFrame)(zsCTX.getDSUtil().postprocessLinked(new SparkFrame(actual), new SparkFrame(original)))).df();
-			
-			System.out.println("testOriginalDataAfterPostprocessLinked newDataset :");
-			newDataset.show(200);
-			
-			assertTrue(newDataset.select("field1", "field2", "field3").except(original.select("field1", "field2", "field3")).isEmpty());
-			assertTrue(original.select("field1", "field2", "field3").except(newDataset.select("field1", "field2", "field3")).isEmpty());
+			assertTrue(newZFrame.select("field1", "field2", "field3").except(zFrameOriginal.select("field1", "field2", "field3")).isEmpty());
+			assertTrue(zFrameOriginal.select("field1", "field2", "field3").except(newZFrame.select("field1", "field2", "field3")).isEmpty());
 	}
+
 }
