@@ -1,9 +1,15 @@
 package zingg.common.client.util;
 
-public interface WithSession<S> {
+public class WithSession<S> implements IWithSession<S> {
 
-    public void setSession(S s);
+    S session;
+    @Override
+    public void setSession(S session) {
+        this.session = session;
+    }
 
-    public S getSession();
-
+    @Override
+    public S getSession() {
+        return session;
+    }
 }

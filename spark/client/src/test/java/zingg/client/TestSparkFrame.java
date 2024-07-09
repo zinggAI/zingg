@@ -20,10 +20,10 @@ import org.junit.jupiter.api.Test;
 import zingg.common.client.IArguments;
 import zingg.common.client.TestZFrameBase;
 import zingg.common.client.ZFrame;
+import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.WithSession;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.client.util.SparkDFObjectUtil;
-import zingg.spark.client.util.WithSparkSession;
 
 import java.util.Arrays;
 
@@ -34,10 +34,10 @@ public class TestSparkFrame extends TestZFrameBase<SparkSession, Dataset<Row>, R
     public static IArguments args;
     public static JavaSparkContext ctx;
     public static SparkSession spark;
-    public static WithSession<SparkSession> withSession;
+    public static IWithSession<SparkSession> iWithSession;
 
     public TestSparkFrame() {
-        super(new SparkDFObjectUtil(withSession));
+        super(new SparkDFObjectUtil(iWithSession));
     }
 
     @BeforeAll
@@ -53,8 +53,8 @@ public class TestSparkFrame extends TestZFrameBase<SparkSession, Dataset<Row>, R
                     .appName("Zingg" + "Junit")
                     .getOrCreate();
             ctx = new JavaSparkContext(spark.sparkContext());
-            withSession = new WithSparkSession();
-            withSession.setSession(spark);
+            iWithSession = new WithSession<>();
+            iWithSession.setSession(spark);
         } catch (Throwable e) {
             if (LOG.isDebugEnabled())
                 e.printStackTrace();

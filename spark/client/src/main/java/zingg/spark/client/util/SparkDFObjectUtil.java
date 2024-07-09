@@ -11,14 +11,14 @@ import org.apache.spark.sql.types.StructType;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.DFObjectUtil;
-import zingg.common.client.util.WithSession;
+import zingg.common.client.util.IWithSession;
 import zingg.spark.client.SparkFrame;
 
 public class SparkDFObjectUtil extends DFObjectUtil<SparkSession, Dataset<Row>, Row, Column> {
 
-    private final WithSession<SparkSession> withSparkSession;
+    private final IWithSession<SparkSession> withSparkSession;
 
-    public SparkDFObjectUtil(WithSession<SparkSession> withSparkSession) {
+    public SparkDFObjectUtil(IWithSession<SparkSession> withSparkSession) {
         this.withSparkSession = withSparkSession;
     }
 
