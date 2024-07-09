@@ -2,51 +2,32 @@ package zingg.common.core.preprocess;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.RowFactory;
-import org.apache.spark.sql.types.DataTypes;
-import org.apache.spark.sql.types.Metadata;
-import org.apache.spark.sql.types.StructField;
-import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import zingg.common.client.Arguments;
-import zingg.common.client.ArgumentsUtil;
-import zingg.common.client.FieldDefinition;
-import zingg.common.client.IArguments;
-import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
 import zingg.common.core.data.Constant;
-import zingg.common.core.model.Event;
 import zingg.common.core.model.Schema;
 import zingg.common.core.model.SchemaActual;
 import zingg.common.core.model.SchemaOriginal;
-import zingg.spark.client.SparkFrame;
-import zingg.spark.core.context.ZinggSparkContext;
-import zingg.spark.core.executor.ZinggSparkTester;
-import zingg.spark.core.preprocess.SparkStopWordsRemover;
 
-public abstract class TestStopWords<S, D, R, C, T> {
+public abstract class TestStopWordsBase<S, D, R, C, T> {
 
-	public static final Log LOG = LogFactory.getLog(TestStopWords.class);
+	public static final Log LOG = LogFactory.getLog(TestStopWordsBase.class);
 	private final DFObjectUtil<S, D, R, C> dfObjectUtil;
 	private final List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers;
 	private final Context<S, D, R, C, T> context;
 
-	public TestStopWords(DFObjectUtil<S, D, R, C> dfObjectUtil, List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers,
-						 Context<S, D, R, C, T> context) {
+	public TestStopWordsBase(DFObjectUtil<S, D, R, C> dfObjectUtil, List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers,
+							 Context<S, D, R, C, T> context) {
 		this.dfObjectUtil = dfObjectUtil;
 		this.stopWordsRemovers = stopWordsRemovers;
 		this.context = context;
