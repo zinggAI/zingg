@@ -1,4 +1,4 @@
-package zingg.model;
+package zingg.common.core.model;
 
 public class Event {
     public final Integer id;

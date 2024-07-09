@@ -1,7 +1,7 @@
-package zingg.data;
+package zingg.common.core.data;
 
-import zingg.model.Event;
-import zingg.model.EventCluster;
+import zingg.common.core.model.Event;
+import zingg.common.core.model.EventCluster;
 
 import java.util.ArrayList;
 import java.util.List;
