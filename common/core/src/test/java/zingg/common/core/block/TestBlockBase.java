@@ -1,4 +1,4 @@
-package zingg.block;
+package zingg.common.core.block;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,8 +14,6 @@ import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.DFObjectUtil;
-import zingg.common.core.block.Canopy;
-import zingg.common.core.block.Tree;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.HashUtil;
 import zingg.model.Event;
