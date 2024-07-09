@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import zingg.common.client.Arguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
@@ -18,6 +19,7 @@ import zingg.common.core.data.Constant;
 import zingg.common.core.model.Schema;
 import zingg.common.core.model.SchemaActual;
 import zingg.common.core.model.SchemaOriginal;
+import zingg.common.core.util.StopWordRemoverUtility;
 
 public abstract class TestStopWordsBase<S, D, R, C, T> {
 
@@ -26,10 +28,11 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	private final List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers;
 	private final Context<S, D, R, C, T> context;
 
-	public TestStopWordsBase(DFObjectUtil<S, D, R, C> dfObjectUtil, List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers,
-							 Context<S, D, R, C, T> context) {
+
+	public TestStopWordsBase(DFObjectUtil<S, D, R, C> dfObjectUtil, StopWordRemoverUtility<S, D, R, C, T> stopWordRemoverUtility,
+							 Context<S, D, R, C, T> context) throws ZinggClientException {
 		this.dfObjectUtil = dfObjectUtil;
-		this.stopWordsRemovers = stopWordsRemovers;
+		this.stopWordsRemovers = stopWordRemoverUtility.getStopWordRemovers(context, new Arguments());
 		this.context = context;
 	}
 
