@@ -1,6 +1,6 @@
 package zingg.common.core.model;
 
-public class SchemaActual {
+public class PostStopWordProcess {
     public final String z_cluster;
     public final String z_zid;
     public final String z_prediction;
@@ -11,8 +11,8 @@ public class SchemaActual {
     public final String field3;
     public final String z_zsource;
 
-    public SchemaActual(String z_cluster, String z_zid, String z_prediction, String z_score, String z_isMatch,
-                        String field1, String field2, String field3, String z_zsource) {
+    public PostStopWordProcess(String z_cluster, String z_zid, String z_prediction, String z_score, String z_isMatch,
+                               String field1, String field2, String field3, String z_zsource) {
         this.z_cluster = z_cluster;
         this.z_zid = z_zid;
         this.z_prediction = z_prediction;
