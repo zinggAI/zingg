@@ -1,7 +1,9 @@
-package zingg.data;
+package zingg.common.core.data;
 
-import zingg.model.Event;
-import zingg.model.EventCluster;
+import zingg.common.core.model.Event;
+import zingg.common.core.model.EventCluster;
+import zingg.common.core.model.SchemaActual;
+import zingg.common.core.model.SchemaOriginal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,6 +131,62 @@ public class Constant {
         sample.add(new EventCluster(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
         sample.add(new EventCluster(row_id++, 1942, "quit Natin", "Mahaatma", 1942, "quit Natin", "Mahaatma", 1L));
         sample.add(new EventCluster(row_id, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+
+        return sample;
+    }
+
+    public static List<SchemaOriginal> getData1Original() {
+
+        List<SchemaOriginal> sample = new ArrayList<>();
+        sample.add(new SchemaOriginal("10", "The zingg is a spark application", "two",
+                "Yes. a good application", "test"));
+        sample.add(new SchemaOriginal("20", "It is very popular in data science", "Three", "true indeed",
+                "test"));
+        sample.add(new SchemaOriginal("30", "It is written in java and scala", "four", "", "test"));
+        sample.add(new SchemaOriginal("40", "Best of luck to zingg", "Five", "thank you", "test"));
+
+        return sample;
+    }
+
+    public static List<SchemaActual> getData1Actual() {
+
+        List<SchemaActual> sample = new ArrayList<>();
+        sample.add(new SchemaActual("1648811730857:10", "10", "1.0", "0.555555", "-1",
+                "The zingg spark application", "two", "Yes. good application", "test"));
+        sample.add(new SchemaActual("1648811730857:20", "20", "1.0", "1.0", "-1",
+                "It very popular data science", "Three", "true indeed", "test"));
+        sample.add(new SchemaActual("1648811730857:30", "30", "1.0", "0.999995", "-1",
+                "It written java scala", "four", "", "test"));
+        sample.add(new SchemaActual("1648811730857:40", "40", "1.0", "1.0", "-1", "Best luck zingg", "Five",
+                "thank", "test"));
+
+        return sample;
+    }
+
+    public static List<SchemaOriginal> getData2original() {
+
+        List<SchemaOriginal> sample = new ArrayList<>();
+        sample.add(new SchemaOriginal("10", "The zingg is a spark application", "two",
+                "Yes. a good application", "test"));
+        sample.add(new SchemaOriginal("20", "It is very popular in data science", "Three", "true indeed",
+                "test"));
+        sample.add(new SchemaOriginal("30", "It is written in java and scala", "four", "", "test"));
+        sample.add(new SchemaOriginal("40", "Best of luck to zingg", "Five", "thank you", "test"));
+
+        return sample;
+    }
+
+    public static List<SchemaActual> getData2Actual() {
+
+        List<SchemaActual> sample = new ArrayList<>();
+        sample.add(new SchemaActual("1648811730857:10", "10", "1.0", "0.555555", "-1",
+                "The zingg spark application", "two", "Yes. good application", "test"));
+        sample.add(new SchemaActual("1648811730857:20", "20", "1.0", "1.0", "-1",
+                "It very popular data science", "Three", "true indeed", "test"));
+        sample.add(new SchemaActual("1648811730857:30", "30", "1.0", "0.999995", "-1",
+                "It written java scala", "four", "", "test"));
+        sample.add(new SchemaActual("1648811730857:40", "40", "1.0", "1.0", "-1", "Best luck zingg", "Five",
+                "thank", "test"));
 
         return sample;
     }

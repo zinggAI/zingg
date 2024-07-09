@@ -16,9 +16,9 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.HashUtil;
-import zingg.model.Event;
-import zingg.model.EventCluster;
-import zingg.data.Constant;
+import zingg.common.core.model.Event;
+import zingg.common.core.model.EventCluster;
+import zingg.common.core.data.Constant;
 
 public abstract class TestBlockBase<S, D, R, C, T> {
 
