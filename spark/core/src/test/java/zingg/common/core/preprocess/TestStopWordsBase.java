@@ -9,15 +9,17 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import zingg.common.client.Arguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
-import zingg.common.core.data.Constant;
-import zingg.common.core.model.Schema;
-import zingg.common.core.model.SchemaActual;
-import zingg.common.core.model.SchemaOriginal;
+import zingg.common.core.data.TestData;
+import zingg.common.core.model.Statement;
+import zingg.common.core.model.PostStopWordProcess;
+import zingg.common.core.model.PriorStopWordProcess;
+import zingg.common.core.util.StopWordRemoverUtility;
 
 public abstract class TestStopWordsBase<S, D, R, C, T> {
 
@@ -26,10 +28,11 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	private final List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers;
 	private final Context<S, D, R, C, T> context;
 
-	public TestStopWordsBase(DFObjectUtil<S, D, R, C> dfObjectUtil, List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers,
-							 Context<S, D, R, C, T> context) {
+
+	public TestStopWordsBase(DFObjectUtil<S, D, R, C> dfObjectUtil, StopWordRemoverUtility<S, D, R, C, T> stopWordRemoverUtility,
+							 Context<S, D, R, C, T> context) throws ZinggClientException {
 		this.dfObjectUtil = dfObjectUtil;
-		this.stopWordsRemovers = stopWordsRemovers;
+		this.stopWordsRemovers = stopWordRemoverUtility.getStopWordRemovers(context, new Arguments());
 		this.context = context;
 	}
 
@@ -39,8 +42,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 
 			String stopWords = "\\b(a|an|the|is|It|of|yes|no|I|has|have|you)\\b\\s?".toLowerCase();
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(Constant.getData1Original(), Schema.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(Constant.getData1Expected(), Schema.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(TestData.getData1Original(), Statement.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(TestData.getData1Expected(), Statement.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(0);
 			
@@ -54,8 +57,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testRemoveStopWordsFromDataset() throws ZinggClientException, Exception {
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(Constant.getData2Original(), SchemaOriginal.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(Constant.getData2Expected(), SchemaOriginal.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(TestData.getData2Original(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(TestData.getData2Expected(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(1);
 			ZFrame<D, R, C> newZFrame = stopWordsRemover.preprocessForStopWords(zFrameOriginal);
@@ -67,8 +70,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testStopWordColumnMissingFromStopWordFile() throws ZinggClientException, Exception {
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(Constant.getData3Original(), SchemaOriginal.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(Constant.getData3Expected(), SchemaOriginal.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(TestData.getData3Original(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(TestData.getData3Expected(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(2);
  			ZFrame<D, R, C> newDataSet = stopWordsRemover.preprocessForStopWords(zFrameOriginal);
@@ -81,8 +84,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testForOriginalDataAfterPostProcess() throws Exception {
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(Constant.getData4original(), SchemaOriginal.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(Constant.getData4Expected(), SchemaActual.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(TestData.getData4original(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(TestData.getData4Expected(), PostStopWordProcess.class);
 
 			ZFrame<D, R, C> newZFrame = context.getDSUtil().postprocess(zFrameExpected, zFrameOriginal);
 
@@ -93,8 +96,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testOriginalDataAfterPostProcessLinked() throws Exception {
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(Constant.getData5Original(), SchemaOriginal.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(Constant.getData5Actual(), SchemaActual.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(TestData.getData5Original(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(TestData.getData5Actual(), PostStopWordProcess.class);
 			
 			ZFrame<D, R, C> newZFrame = context.getDSUtil().postprocessLinked(zFrameExpected, zFrameOriginal);
 			

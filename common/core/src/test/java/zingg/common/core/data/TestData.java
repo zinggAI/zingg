@@ -2,14 +2,14 @@ package zingg.common.core.data;
 
 import zingg.common.core.model.Event;
 import zingg.common.core.model.EventCluster;
-import zingg.common.core.model.Schema;
-import zingg.common.core.model.SchemaActual;
-import zingg.common.core.model.SchemaOriginal;
+import zingg.common.core.model.Statement;
+import zingg.common.core.model.PostStopWordProcess;
+import zingg.common.core.model.PriorStopWordProcess;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Constant {
+public class TestData {
     public static List<Event> createSampleEventData() {
 
         int row_id = 1;
@@ -136,127 +136,127 @@ public class Constant {
         return sample;
     }
 
-    public static List<Schema> getData1Original() {
+    public static List<Statement> getData1Original() {
 
-        List<Schema> sample = new ArrayList<>();
-        sample.add(new Schema("The zingg is a Spark application"));
-        sample.add(new Schema("It is very popular in data Science"));
-        sample.add(new Schema("It is written in Java and Scala"));
-        sample.add(new Schema("Best of luck to zingg"));
-
-        return sample;
-    }
-
-    public static List<Schema> getData1Expected() {
-
-        List<Schema> sample = new ArrayList<>();
-        sample.add(new Schema("zingg spark application"));
-        sample.add(new Schema("very popular in data science"));
-        sample.add(new Schema("written in java and scala"));
-        sample.add(new Schema("best luck to zingg"));
+        List<Statement> sample = new ArrayList<>();
+        sample.add(new Statement("The zingg is a Spark application"));
+        sample.add(new Statement("It is very popular in data Science"));
+        sample.add(new Statement("It is written in Java and Scala"));
+        sample.add(new Statement("Best of luck to zingg"));
 
         return sample;
     }
 
-    public static List<SchemaOriginal> getData2Original() {
+    public static List<Statement> getData1Expected() {
 
-        List<SchemaOriginal> sample = new ArrayList<>();
-        sample.add(new SchemaOriginal("10", "The zingg is a spark application", "two",
+        List<Statement> sample = new ArrayList<>();
+        sample.add(new Statement("zingg spark application"));
+        sample.add(new Statement("very popular in data science"));
+        sample.add(new Statement("written in java and scala"));
+        sample.add(new Statement("best luck to zingg"));
+
+        return sample;
+    }
+
+    public static List<PriorStopWordProcess> getData2Original() {
+
+        List<PriorStopWordProcess> sample = new ArrayList<>();
+        sample.add(new PriorStopWordProcess("10", "The zingg is a spark application", "two",
                 "Yes. a good application", "test"));
-        sample.add(new SchemaOriginal("20", "It is very popular in Data Science", "Three", "true indeed",
+        sample.add(new PriorStopWordProcess("20", "It is very popular in Data Science", "Three", "true indeed",
                 "test"));
-        sample.add(new SchemaOriginal("30", "It is written in java and scala", "four", "", "test"));
-        sample.add(new SchemaOriginal("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test"));
+        sample.add(new PriorStopWordProcess("30", "It is written in java and scala", "four", "", "test"));
+        sample.add(new PriorStopWordProcess("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test"));
 
         return sample;
     }
 
-    public static List<SchemaOriginal> getData2Expected() {
+    public static List<PriorStopWordProcess> getData2Expected() {
 
-        List<SchemaOriginal> sample = new ArrayList<>();
-        sample.add(new SchemaOriginal("10", "zingg spark application", "two", "Yes. a good application", "test"));
-        sample.add(new SchemaOriginal("20", "very popular data science", "Three", "true indeed", "test"));
-        sample.add(new SchemaOriginal("30", "written java scala", "four", "", "test"));
-        sample.add(new SchemaOriginal("40", "best luck to zingg ", "Five", "thank you", "test"));
+        List<PriorStopWordProcess> sample = new ArrayList<>();
+        sample.add(new PriorStopWordProcess("10", "zingg spark application", "two", "Yes. a good application", "test"));
+        sample.add(new PriorStopWordProcess("20", "very popular data science", "Three", "true indeed", "test"));
+        sample.add(new PriorStopWordProcess("30", "written java scala", "four", "", "test"));
+        sample.add(new PriorStopWordProcess("40", "best luck to zingg ", "Five", "thank you", "test"));
 
         return sample;
     }
 
-    public static List<SchemaOriginal> getData3Original() {
+    public static List<PriorStopWordProcess> getData3Original() {
 
-        List<SchemaOriginal> sample = new ArrayList<>();
-        sample.add(new SchemaOriginal("10", "The zingg is a spark application", "two",
+        List<PriorStopWordProcess> sample = new ArrayList<>();
+        sample.add(new PriorStopWordProcess("10", "The zingg is a spark application", "two",
                 "Yes. a good application", "test"));
-        sample.add(new SchemaOriginal("20", "It is very popular in Data Science", "Three", "true indeed",
+        sample.add(new PriorStopWordProcess("20", "It is very popular in Data Science", "Three", "true indeed",
                 "test"));
-        sample.add(new SchemaOriginal("30", "It is written in java and scala", "four", "", "test"));
-        sample.add(new SchemaOriginal("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test"));
+        sample.add(new PriorStopWordProcess("30", "It is written in java and scala", "four", "", "test"));
+        sample.add(new PriorStopWordProcess("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test"));
 
         return sample;
     }
 
-    public static List<SchemaOriginal> getData3Expected() {
+    public static List<PriorStopWordProcess> getData3Expected() {
 
-        List<SchemaOriginal> sample = new ArrayList<>();
-        sample.add(new SchemaOriginal("10", "zingg spark application", "two", "Yes. a good application", "test"));
-        sample.add(new SchemaOriginal("20", "very popular data science", "Three", "true indeed", "test"));
-        sample.add(new SchemaOriginal("30", "written java scala", "four", "", "test"));
-        sample.add(new SchemaOriginal("40", "best luck to zingg ", "Five", "thank you", "test"));
+        List<PriorStopWordProcess> sample = new ArrayList<>();
+        sample.add(new PriorStopWordProcess("10", "zingg spark application", "two", "Yes. a good application", "test"));
+        sample.add(new PriorStopWordProcess("20", "very popular data science", "Three", "true indeed", "test"));
+        sample.add(new PriorStopWordProcess("30", "written java scala", "four", "", "test"));
+        sample.add(new PriorStopWordProcess("40", "best luck to zingg ", "Five", "thank you", "test"));
 
         return sample;
     }
 
-    public static List<SchemaOriginal> getData4original() {
+    public static List<PriorStopWordProcess> getData4original() {
 
-        List<SchemaOriginal> sample = new ArrayList<>();
-        sample.add(new SchemaOriginal("10", "The zingg is a spark application", "two",
+        List<PriorStopWordProcess> sample = new ArrayList<>();
+        sample.add(new PriorStopWordProcess("10", "The zingg is a spark application", "two",
                 "Yes. a good application", "test"));
-        sample.add(new SchemaOriginal("20", "It is very popular in data science", "Three", "true indeed",
+        sample.add(new PriorStopWordProcess("20", "It is very popular in data science", "Three", "true indeed",
                 "test"));
-        sample.add(new SchemaOriginal("30", "It is written in java and scala", "four", "", "test"));
-        sample.add(new SchemaOriginal("40", "Best of luck to zingg", "Five", "thank you", "test"));
+        sample.add(new PriorStopWordProcess("30", "It is written in java and scala", "four", "", "test"));
+        sample.add(new PriorStopWordProcess("40", "Best of luck to zingg", "Five", "thank you", "test"));
 
         return sample;
     }
 
-    public static List<SchemaActual> getData4Expected() {
+    public static List<PostStopWordProcess> getData4Expected() {
 
-        List<SchemaActual> sample = new ArrayList<>();
-        sample.add(new SchemaActual("1648811730857:10", "10", "1.0", "0.555555", "-1",
+        List<PostStopWordProcess> sample = new ArrayList<>();
+        sample.add(new PostStopWordProcess("1648811730857:10", "10", "1.0", "0.555555", "-1",
                 "The zingg spark application", "two", "Yes. good application", "test"));
-        sample.add(new SchemaActual("1648811730857:20", "20", "1.0", "1.0", "-1",
+        sample.add(new PostStopWordProcess("1648811730857:20", "20", "1.0", "1.0", "-1",
                 "It very popular data science", "Three", "true indeed", "test"));
-        sample.add(new SchemaActual("1648811730857:30", "30", "1.0", "0.999995", "-1",
+        sample.add(new PostStopWordProcess("1648811730857:30", "30", "1.0", "0.999995", "-1",
                 "It written java scala", "four", "", "test"));
-        sample.add(new SchemaActual("1648811730857:40", "40", "1.0", "1.0", "-1", "Best luck zingg", "Five",
+        sample.add(new PostStopWordProcess("1648811730857:40", "40", "1.0", "1.0", "-1", "Best luck zingg", "Five",
                 "thank", "test"));
 
         return sample;
     }
 
-    public static List<SchemaOriginal> getData5Original() {
+    public static List<PriorStopWordProcess> getData5Original() {
 
-        List<SchemaOriginal> sample = new ArrayList<>();
-        sample.add(new SchemaOriginal("10", "The zingg is a spark application", "two",
+        List<PriorStopWordProcess> sample = new ArrayList<>();
+        sample.add(new PriorStopWordProcess("10", "The zingg is a spark application", "two",
                 "Yes. a good application", "test"));
-        sample.add(new SchemaOriginal("20", "It is very popular in data science", "Three", "true indeed",
+        sample.add(new PriorStopWordProcess("20", "It is very popular in data science", "Three", "true indeed",
                 "test"));
-        sample.add(new SchemaOriginal("30", "It is written in java and scala", "four", "", "test"));
-        sample.add(new SchemaOriginal("40", "Best of luck to zingg", "Five", "thank you", "test"));
+        sample.add(new PriorStopWordProcess("30", "It is written in java and scala", "four", "", "test"));
+        sample.add(new PriorStopWordProcess("40", "Best of luck to zingg", "Five", "thank you", "test"));
 
         return sample;
     }
 
-    public static List<SchemaActual> getData5Actual() {
+    public static List<PostStopWordProcess> getData5Actual() {
 
-        List<SchemaActual> sample = new ArrayList<>();
-        sample.add(new SchemaActual("1648811730857:10", "10", "1.0", "0.555555", "-1",
+        List<PostStopWordProcess> sample = new ArrayList<>();
+        sample.add(new PostStopWordProcess("1648811730857:10", "10", "1.0", "0.555555", "-1",
                 "The zingg spark application", "two", "Yes. good application", "test"));
-        sample.add(new SchemaActual("1648811730857:20", "20", "1.0", "1.0", "-1",
+        sample.add(new PostStopWordProcess("1648811730857:20", "20", "1.0", "1.0", "-1",
                 "It very popular data science", "Three", "true indeed", "test"));
-        sample.add(new SchemaActual("1648811730857:30", "30", "1.0", "0.999995", "-1",
+        sample.add(new PostStopWordProcess("1648811730857:30", "30", "1.0", "0.999995", "-1",
                 "It written java scala", "four", "", "test"));
-        sample.add(new SchemaActual("1648811730857:40", "40", "1.0", "1.0", "-1", "Best luck zingg", "Five",
+        sample.add(new PostStopWordProcess("1648811730857:40", "40", "1.0", "1.0", "-1", "Best luck zingg", "Five",
                 "thank", "test"));
 
         return sample;
