@@ -2,16 +2,16 @@ package zingg.common.client.data;
 
 
 import zingg.common.client.model.Person;
-import zingg.common.client.model.ClusterPairOne;
-import zingg.common.client.model.ClusterPairTwo;
-import zingg.common.client.model.ClusterSource;
+import zingg.common.client.model.PairPartOne;
+import zingg.common.client.model.PairPartTwo;
+import zingg.common.client.model.InputWithZidAndSource;
 import zingg.common.client.model.PersonMixed;
 import zingg.common.client.model.ClusterZScore;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Constant {
+public class TestData {
 
     //sample data classes to be used for testing
     public static List<Person> createEmptySampleData() {
@@ -105,43 +105,43 @@ public class Constant {
         return sample;
     }
 
-    public static List<ClusterPairOne> createSampleDataCluster() {
+    public static List<PairPartOne> createSampleDataCluster() {
 
-        List<ClusterPairOne> sample = new ArrayList<>();
-        sample.add(new ClusterPairOne(1L, "100", 1001.0, "b"));
-        sample.add(new ClusterPairOne(2L, "100", 1002.0, "a"));
-        sample.add(new ClusterPairOne(3L, "100", 2001.0, "b"));
-        sample.add(new ClusterPairOne(4L, "900", 2002.0, "c"));
-        sample.add(new ClusterPairOne(5L, "111", 9002.0, "c"));
-
-        return sample;
-    }
-
-    public static List<ClusterPairTwo> createSampleDataClusterWithNull() {
-
-        List<ClusterPairTwo> sample = new ArrayList<>();
-        sample.add(new ClusterPairTwo(1L, "100", 1001.0, "b"));
-        sample.add(new ClusterPairTwo(2L, "100", 1002.0, "a"));
-        sample.add(new ClusterPairTwo(3L, "100", 2001.0, null));
-        sample.add(new ClusterPairTwo(4L, "900", 2002.0, "c"));
-        sample.add(new ClusterPairTwo(5L, "111", 9002.0, null));
+        List<PairPartOne> sample = new ArrayList<>();
+        sample.add(new PairPartOne(1L, "100", 1001.0, "b"));
+        sample.add(new PairPartOne(2L, "100", 1002.0, "a"));
+        sample.add(new PairPartOne(3L, "100", 2001.0, "b"));
+        sample.add(new PairPartOne(4L, "900", 2002.0, "c"));
+        sample.add(new PairPartOne(5L, "111", 9002.0, "c"));
 
         return sample;
     }
 
-    public static List<ClusterSource> createSampleDataInput() {
+    public static List<PairPartTwo> createSampleDataClusterWithNull() {
 
-        List<ClusterSource> sample = new ArrayList<>();
-        sample.add(new ClusterSource(1L, "fname1", "b"));
-        sample.add(new ClusterSource(2L, "fname", "a"));
-        sample.add(new ClusterSource(3L, "fna", "b"));
-        sample.add((new ClusterSource(4L, "x", "c")));
-        sample.add(new ClusterSource(5L, "y", "c"));
-        sample.add(new ClusterSource(11L, "new1", "b"));
-        sample.add(new ClusterSource(22L, "new12", "a"));
-        sample.add(new ClusterSource(33L, "new13", "b"));
-        sample.add(new ClusterSource(44L, "new14", "c"));
-        sample.add(new ClusterSource(55L, "new15", "c"));
+        List<PairPartTwo> sample = new ArrayList<>();
+        sample.add(new PairPartTwo(1L, "100", 1001.0, "b"));
+        sample.add(new PairPartTwo(2L, "100", 1002.0, "a"));
+        sample.add(new PairPartTwo(3L, "100", 2001.0, null));
+        sample.add(new PairPartTwo(4L, "900", 2002.0, "c"));
+        sample.add(new PairPartTwo(5L, "111", 9002.0, null));
+
+        return sample;
+    }
+
+    public static List<InputWithZidAndSource> createSampleDataInput() {
+
+        List<InputWithZidAndSource> sample = new ArrayList<>();
+        sample.add(new InputWithZidAndSource(1L, "fname1", "b"));
+        sample.add(new InputWithZidAndSource(2L, "fname", "a"));
+        sample.add(new InputWithZidAndSource(3L, "fna", "b"));
+        sample.add((new InputWithZidAndSource(4L, "x", "c")));
+        sample.add(new InputWithZidAndSource(5L, "y", "c"));
+        sample.add(new InputWithZidAndSource(11L, "new1", "b"));
+        sample.add(new InputWithZidAndSource(22L, "new12", "a"));
+        sample.add(new InputWithZidAndSource(33L, "new13", "b"));
+        sample.add(new InputWithZidAndSource(44L, "new14", "c"));
+        sample.add(new InputWithZidAndSource(55L, "new15", "c"));
 
         return sample;
     }
