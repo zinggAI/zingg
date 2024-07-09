@@ -1,4 +1,4 @@
-package zingg.block;
+package zingg.common.core.block;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
