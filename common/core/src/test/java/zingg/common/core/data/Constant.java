@@ -2,6 +2,7 @@ package zingg.common.core.data;
 
 import zingg.common.core.model.Event;
 import zingg.common.core.model.EventCluster;
+import zingg.common.core.model.Schema;
 import zingg.common.core.model.SchemaActual;
 import zingg.common.core.model.SchemaOriginal;
 
@@ -135,7 +136,77 @@ public class Constant {
         return sample;
     }
 
-    public static List<SchemaOriginal> getData1Original() {
+    public static List<Schema> getData1Original() {
+
+        List<Schema> sample = new ArrayList<>();
+        sample.add(new Schema("The zingg is a Spark application"));
+        sample.add(new Schema("It is very popular in data Science"));
+        sample.add(new Schema("It is written in Java and Scala"));
+        sample.add(new Schema("Best of luck to zingg"));
+
+        return sample;
+    }
+
+    public static List<Schema> getData1Expected() {
+
+        List<Schema> sample = new ArrayList<>();
+        sample.add(new Schema("zingg spark application"));
+        sample.add(new Schema("very popular in data science"));
+        sample.add(new Schema("written in java and scala"));
+        sample.add(new Schema("best luck to zingg"));
+
+        return sample;
+    }
+
+    public static List<SchemaOriginal> getData2Original() {
+
+        List<SchemaOriginal> sample = new ArrayList<>();
+        sample.add(new SchemaOriginal("10", "The zingg is a spark application", "two",
+                "Yes. a good application", "test"));
+        sample.add(new SchemaOriginal("20", "It is very popular in Data Science", "Three", "true indeed",
+                "test"));
+        sample.add(new SchemaOriginal("30", "It is written in java and scala", "four", "", "test"));
+        sample.add(new SchemaOriginal("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test"));
+
+        return sample;
+    }
+
+    public static List<SchemaOriginal> getData2Expected() {
+
+        List<SchemaOriginal> sample = new ArrayList<>();
+        sample.add(new SchemaOriginal("10", "zingg spark application", "two", "Yes. a good application", "test"));
+        sample.add(new SchemaOriginal("20", "very popular data science", "Three", "true indeed", "test"));
+        sample.add(new SchemaOriginal("30", "written java scala", "four", "", "test"));
+        sample.add(new SchemaOriginal("40", "best luck to zingg ", "Five", "thank you", "test"));
+
+        return sample;
+    }
+
+    public static List<SchemaOriginal> getData3Original() {
+
+        List<SchemaOriginal> sample = new ArrayList<>();
+        sample.add(new SchemaOriginal("10", "The zingg is a spark application", "two",
+                "Yes. a good application", "test"));
+        sample.add(new SchemaOriginal("20", "It is very popular in Data Science", "Three", "true indeed",
+                "test"));
+        sample.add(new SchemaOriginal("30", "It is written in java and scala", "four", "", "test"));
+        sample.add(new SchemaOriginal("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test"));
+
+        return sample;
+    }
+
+    public static List<SchemaOriginal> getData3Expected() {
+
+        List<SchemaOriginal> sample = new ArrayList<>();
+        sample.add(new SchemaOriginal("10", "zingg spark application", "two", "Yes. a good application", "test"));
+        sample.add(new SchemaOriginal("20", "very popular data science", "Three", "true indeed", "test"));
+        sample.add(new SchemaOriginal("30", "written java scala", "four", "", "test"));
+        sample.add(new SchemaOriginal("40", "best luck to zingg ", "Five", "thank you", "test"));
+
+        return sample;
+    }
+
+    public static List<SchemaOriginal> getData4original() {
 
         List<SchemaOriginal> sample = new ArrayList<>();
         sample.add(new SchemaOriginal("10", "The zingg is a spark application", "two",
@@ -148,7 +219,7 @@ public class Constant {
         return sample;
     }
 
-    public static List<SchemaActual> getData1Actual() {
+    public static List<SchemaActual> getData4Expected() {
 
         List<SchemaActual> sample = new ArrayList<>();
         sample.add(new SchemaActual("1648811730857:10", "10", "1.0", "0.555555", "-1",
@@ -163,7 +234,7 @@ public class Constant {
         return sample;
     }
 
-    public static List<SchemaOriginal> getData2original() {
+    public static List<SchemaOriginal> getData5Original() {
 
         List<SchemaOriginal> sample = new ArrayList<>();
         sample.add(new SchemaOriginal("10", "The zingg is a spark application", "two",
@@ -176,7 +247,7 @@ public class Constant {
         return sample;
     }
 
-    public static List<SchemaActual> getData2Actual() {
+    public static List<SchemaActual> getData5Actual() {
 
         List<SchemaActual> sample = new ArrayList<>();
         sample.add(new SchemaActual("1648811730857:10", "10", "1.0", "0.555555", "-1",
