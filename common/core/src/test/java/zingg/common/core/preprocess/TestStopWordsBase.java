@@ -19,7 +19,7 @@ import zingg.common.core.data.TestData;
 import zingg.common.core.model.Statement;
 import zingg.common.core.model.PostStopWordProcess;
 import zingg.common.core.model.PriorStopWordProcess;
-import zingg.common.core.util.StopWordRemoverUtility;
+import zingg.common.core.util.IStopWordRemoverUtility;
 
 public abstract class TestStopWordsBase<S, D, R, C, T> {
 
@@ -29,10 +29,10 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	private final Context<S, D, R, C, T> context;
 
 
-	public TestStopWordsBase(DFObjectUtil<S, D, R, C> dfObjectUtil, StopWordRemoverUtility<S, D, R, C, T> stopWordRemoverUtility,
+	public TestStopWordsBase(DFObjectUtil<S, D, R, C> dfObjectUtil, IStopWordRemoverUtility<S, D, R, C, T> IStopWordRemoverUtility,
 							 Context<S, D, R, C, T> context) throws ZinggClientException {
 		this.dfObjectUtil = dfObjectUtil;
-		this.stopWordsRemovers = stopWordRemoverUtility.getStopWordRemovers(context, new Arguments());
+		this.stopWordsRemovers = IStopWordRemoverUtility.getStopWordRemovers(context, new Arguments());
 		this.context = context;
 	}
 
@@ -74,10 +74,10 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(TestData.getData3Expected(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(2);
- 			ZFrame<D, R, C> newDataSet = stopWordsRemover.preprocessForStopWords(zFrameOriginal);
+ 			ZFrame<D, R, C> newZFrame = stopWordsRemover.preprocessForStopWords(zFrameOriginal);
 
- 			assertTrue(zFrameExpected.except(newDataSet).isEmpty());
-			assertTrue(newDataSet.except(zFrameExpected).isEmpty());
+ 			assertTrue(zFrameExpected.except(newZFrame).isEmpty());
+			assertTrue(newZFrame.except(zFrameExpected).isEmpty());
 	}
 	
 

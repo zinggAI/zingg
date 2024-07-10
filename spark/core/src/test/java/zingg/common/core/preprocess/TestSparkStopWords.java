@@ -11,10 +11,10 @@ import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.WithSession;
 import zingg.common.core.util.SparkStopWordRemoverUtility;
 import zingg.spark.client.util.SparkDFObjectUtil;
-import zingg.spark.client.util.WithSparkSession;
 import zingg.spark.core.context.ZinggSparkContext;
 
 public class TestSparkStopWords extends TestStopWordsBase<SparkSession, Dataset<Row>, Row, Column, DataType> {
@@ -23,7 +23,7 @@ public class TestSparkStopWords extends TestStopWordsBase<SparkSession, Dataset<
     public static JavaSparkContext ctx;
     public static SparkSession spark;
     public static ZinggSparkContext zsCTX;
-    public static WithSession<SparkSession> withSession;
+    public static IWithSession<SparkSession> iWithSession;
 
     @BeforeAll
     public static void setup() {
@@ -31,7 +31,7 @@ public class TestSparkStopWords extends TestStopWordsBase<SparkSession, Dataset<
     }
 
     public TestSparkStopWords() throws ZinggClientException {
-        super(new SparkDFObjectUtil(withSession), new SparkStopWordRemoverUtility(), zsCTX);
+        super(new SparkDFObjectUtil(iWithSession), new SparkStopWordRemoverUtility(), zsCTX);
     }
 
     protected static void setUpSpark() {
@@ -42,8 +42,8 @@ public class TestSparkStopWords extends TestStopWordsBase<SparkSession, Dataset<
                     .appName("Zingg" + "Junit")
                     .getOrCreate();
             ctx = new JavaSparkContext(spark.sparkContext());
-            withSession = new WithSparkSession();
-            withSession.setSession(spark);
+            iWithSession = new WithSession<>();
+            iWithSession.setSession(spark);
             zsCTX = new ZinggSparkContext();
             zsCTX.init(spark);
         } catch (Throwable e) {

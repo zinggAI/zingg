@@ -7,7 +7,7 @@ import zingg.common.core.preprocess.StopWordsRemover;
 
 import java.util.List;
 
-public interface StopWordRemoverUtility<S, D, R, C, T> {
+public interface IStopWordRemoverUtility<S, D, R, C, T> {
 
     List<StopWordsRemover<S, D, R, C, T>> getStopWordRemovers(Context<S, D, R, C, T> context, IArguments arguments) throws ZinggClientException;
 }

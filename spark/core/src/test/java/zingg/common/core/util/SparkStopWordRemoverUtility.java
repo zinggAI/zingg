@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SparkStopWordRemoverUtility implements StopWordRemoverUtility<SparkSession, Dataset<Row>, Row, Column, DataType> {
+public class SparkStopWordRemoverUtility implements IStopWordRemoverUtility<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
     @Override
     public List<StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType>> getStopWordRemovers(Context<SparkSession, Dataset<Row>, Row, Column, DataType> context, IArguments arguments) throws ZinggClientException {
@@ -40,7 +40,7 @@ public class SparkStopWordRemoverUtility implements StopWordRemoverUtility<Spark
 
         //add second stopWordRemover
         String stopWordsFileName1 = Objects.requireNonNull(
-                StopWordRemoverUtility.class.getResource("../../../../preProcess/stopWords.csv")).getFile();
+                IStopWordRemoverUtility.class.getResource("../../../../preProcess/stopWords.csv")).getFile();
         FieldDefinition fieldDefinition1 = new FieldDefinition();
         fieldDefinition1.setStopWords(stopWordsFileName1);
         fieldDefinition1.setFieldName("field1");
@@ -50,7 +50,7 @@ public class SparkStopWordRemoverUtility implements StopWordRemoverUtility<Spark
 
         //add third stopWordRemover
         String stopWordsFileName2 = Objects.requireNonNull(
-                StopWordRemoverUtility.class.getResource("../../../../preProcess/stopWordsWithoutHeader.csv")).getFile();
+                IStopWordRemoverUtility.class.getResource("../../../../preProcess/stopWordsWithoutHeader.csv")).getFile();
         FieldDefinition fieldDefinition2 = new FieldDefinition();
         fieldDefinition2.setStopWords(stopWordsFileName2);
         fieldDefinition2.setFieldName("field1");
