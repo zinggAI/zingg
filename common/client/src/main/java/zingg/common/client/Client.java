@@ -212,10 +212,21 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			}
 
 			client = getClient(arguments, options);
-			client.init();
+
+			//do client.init() for executor task(label, match, train etc)
+			//rest of the task are driven using python scripts so its not needed
+			if (isExecutorTask(client)) {
+				client.init();
+			}else {
+				client.zingg.setClientOptions(options);
+			}
 			// after setting arguments etc. as some of the listeners need it
 			client.execute();
-			client.postMetrics();
+
+			//skip client.postMetrics() for export model phase since it is driven through python script
+			if (!ZinggOptions.EXPORT_MODEL.getName().equals(client.options.get(ClientOptions.PHASE).getValue())) {
+				client.postMetrics();
+			}
 			LOG.warn("Zingg processing has completed");				
 		} 
 		catch(ZinggClientException e) {
@@ -245,7 +256,11 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 				EventsListener.getInstance().fireEvent(new ZinggStopEvent());
 				if (client != null) {
 					//client.postMetrics();
-					client.stop();
+
+					if (isExecutorTask(client)) {
+						//client.init() was done so needs to stop it
+						client.stop();
+					}
 				}
 			}
 			catch(ZinggClientException e) {
@@ -354,6 +369,13 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 
 	public void setPipeUtil(PipeUtilBase<S, D, R, C> pipeUtil) {
 		this.pipeUtil = pipeUtil;
+	}
+
+	/*
+			Returns true if client is for an executor task(label, match, train etc)
+	 */
+	private boolean isExecutorTask(Client<S,D,R,C,T> client) {
+		return !ZinggOptions.EXPORT_MODEL.getName().equals(client.options.get(ClientOptions.PHASE).getValue());
 	}
     
 }
