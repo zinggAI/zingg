@@ -74,10 +74,10 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(TestData.getData3Expected(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(2);
- 			ZFrame<D, R, C> newDataSet = stopWordsRemover.preprocessForStopWords(zFrameOriginal);
+ 			ZFrame<D, R, C> newZFrame = stopWordsRemover.preprocessForStopWords(zFrameOriginal);
 
- 			assertTrue(zFrameExpected.except(newDataSet).isEmpty());
-			assertTrue(newDataSet.except(zFrameExpected).isEmpty());
+ 			assertTrue(zFrameExpected.except(newZFrame).isEmpty());
+			assertTrue(newZFrame.except(zFrameExpected).isEmpty());
 	}
 	
 
