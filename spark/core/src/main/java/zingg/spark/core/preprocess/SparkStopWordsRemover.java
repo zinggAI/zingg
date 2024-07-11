@@ -48,7 +48,7 @@ public class SparkStopWordsRemover extends StopWordsRemover<SparkSession,Dataset
 		// register the UDF
 		SparkSession zSession = getContext().getSession();
 
-		SparkFnRegistrar.registerSparkFunctionUDF2(zSession, udfName, removeStopWordsUDF, DataTypes.StringType);
+		SparkFnRegistrar.registerUDF2(zSession, udfName, removeStopWordsUDF, DataTypes.StringType);
 		return udfName;
 	}
 

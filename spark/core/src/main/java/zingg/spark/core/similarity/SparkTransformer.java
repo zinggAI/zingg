@@ -2,7 +2,6 @@ package zingg.spark.core.similarity;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.api.java.UDF2;
 import org.apache.spark.sql.types.DataTypes;
 
 import org.apache.spark.sql.SparkSession;
@@ -28,7 +27,7 @@ public class SparkTransformer extends SparkBaseTransformer {
 	 
     public void register(SparkSession spark) {
 
-        SparkFnRegistrar.registerSparkFunctionUDF2(spark, getUid(), function, DataTypes.DoubleType);
+        SparkFnRegistrar.registerUDF2(spark, getUid(), function, DataTypes.DoubleType);
     }
    
 
