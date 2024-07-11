@@ -19,6 +19,7 @@ import zingg.common.core.context.Context;
 import zingg.common.core.preprocess.StopWordsRemover;
 import zingg.spark.client.SparkFrame;
 import org.apache.spark.sql.SparkSession;
+import zingg.spark.core.util.SparkFnRegistrar;
 
 public class SparkStopWordsRemover extends StopWordsRemover<SparkSession,Dataset<Row>,Row,Column,DataType>  implements Serializable {
 
@@ -46,7 +47,8 @@ public class SparkStopWordsRemover extends StopWordsRemover<SparkSession,Dataset
 		String udfName = removeStopWordsUDF.getName();
 		// register the UDF
 		SparkSession zSession = getContext().getSession();
-		zSession.udf().register(udfName, removeStopWordsUDF, DataTypes.StringType);
+
+		SparkFnRegistrar.registerSparkFunctionUDF2(zSession, udfName, removeStopWordsUDF, DataTypes.StringType);
 		return udfName;
 	}
 
