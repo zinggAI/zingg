@@ -9,6 +9,7 @@ import org.apache.spark.sql.types.DataTypes;
 
 import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.similarity.SparkBaseTransformer;
+import zingg.spark.core.util.SparkFnRegistrar;
 
 public class VectorValueExtractor extends SparkBaseTransformer implements UDF1<Vector, Double>{
 
@@ -27,10 +28,7 @@ public class VectorValueExtractor extends SparkBaseTransformer implements UDF1<V
 	@Override
 	public void register(SparkSession spark) {
 
-		//only register udf if it is not registered already
-		if (!spark.catalog().functionExists(uid)) {
-			spark.udf().register(uid, (UDF1) this, DataTypes.DoubleType);
-		}
+		SparkFnRegistrar.registerSparkFunctionUDF1(spark, uid, this, DataTypes.DoubleType);
     }
 	
 	/*@Override
