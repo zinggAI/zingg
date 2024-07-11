@@ -28,7 +28,7 @@ public class VectorValueExtractor extends SparkBaseTransformer implements UDF1<V
 	@Override
 	public void register(SparkSession spark) {
 
-		SparkFnRegistrar.registerSparkFunctionUDF1(spark, uid, this, DataTypes.DoubleType);
+		SparkFnRegistrar.registerUDF1(spark, uid, this, DataTypes.DoubleType);
     }
 	
 	/*@Override
