@@ -26,7 +26,11 @@ public class SparkTransformer extends SparkBaseTransformer {
 
 	 
     public void register(SparkSession spark) {
-    	spark.udf().register(getUid(), (UDF2) function, DataTypes.DoubleType);
+
+        //only register udf if it is not registered already
+        if (!spark.catalog().functionExists(getUid())) {
+            spark.udf().register(getUid(), (UDF2) function, DataTypes.DoubleType);
+        }
     }
    
 

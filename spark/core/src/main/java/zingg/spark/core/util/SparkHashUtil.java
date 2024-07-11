@@ -21,7 +21,11 @@ public class SparkHashUtil extends BaseHashUtil<SparkSession,Dataset<Row>, Row, 
 	
     public HashFunction<Dataset<Row>, Row, Column,DataType> registerHashFunction(HashFnFromConf scriptArg) {
         HashFunction<Dataset<Row>, Row, Column,DataType> fn = new SparkHashFunctionRegistry().getFunction(scriptArg.getName());
-        getSessionObj().udf().register(fn.getName(), (UDF1) fn, fn.getReturnType());
+
+        //register udf only if it is not registered already
+        if (!getSessionObj().catalog().functionExists(fn.getName())) {
+            getSessionObj().udf().register(fn.getName(), (UDF1) fn, fn.getReturnType());
+        }
         return fn;
     }
     
