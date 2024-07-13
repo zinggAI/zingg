@@ -8,8 +8,8 @@
 	<artifactId>zingg-spark-client</artifactId>
 	<packaging>jar</packaging>
 	<properties>
-		<fasterxml.jackson.version>2.15.2</fasterxml.jackson.version>
-		<fasterxml.jackson.databind.version>2.15.2</fasterxml.jackson.databind.version>
+		<fasterxml.jackson.version>2.12.0</fasterxml.jackson.version>
+		<fasterxml.jackson.databind.version>2.12.0</fasterxml.jackson.databind.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -39,6 +39,14 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>${fasterxml.jackson.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>zingg-common-client</artifactId>
+			<version>${zingg.version}</version>
+			<classifier>tests</classifier>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -46,7 +54,7 @@
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>scala-maven-plugin</artifactId>
-				<version>4.8.0</version>
+				<version>4.9.2</version>
 				<executions>
 					<execution>
 						<id>scala-compile-first</id>
