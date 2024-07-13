@@ -5,15 +5,34 @@ import java.lang.reflect.Field;
 public class PojoToArrayConverter {
 
     public static Object[] getObjectArray(Object object) throws IllegalAccessException {
-        Field[] fields = object.getClass().getDeclaredFields();
-        int fieldCount = fields.length;
+        Field[] fieldsInChildClass = object.getClass().getDeclaredFields();
+        Field[] fieldsInParentClass = null;
+
+        int fieldCountInChildClass = fieldsInChildClass.length;
+        int fieldCount = fieldCountInChildClass;
+
+        if (object.getClass().getSuperclass() != null) {
+            fieldCount += object.getClass().getSuperclass().getDeclaredFields().length;
+            fieldsInParentClass = object.getClass().getSuperclass().getDeclaredFields();
+        }
+
+        //fieldCount = fieldCountChild + fieldCountParent
         Object[] objArr = new Object[fieldCount];
 
-        for (int i = 0; i < objArr.length; i++) {
-            Field field = fields[i];
-            field.setAccessible(true);
+        int idx = 0;
 
-            objArr[i] = field.get(object);
+        //iterate through child class fields
+        for (; idx < fieldCountInChildClass; idx++) {
+            Field field = fieldsInChildClass[idx];
+            field.setAccessible(true);
+            objArr[idx] = field.get(object);
+        }
+
+        //iterate through super class fields
+        for (; idx < fieldCount; idx++) {
+            Field field = fieldsInParentClass[idx - fieldCountInChildClass];
+            field.setAccessible(true);
+            objArr[idx] = field.get(object);
         }
 
         return objArr;

@@ -11,9 +11,9 @@ import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import zingg.common.client.IArguments;
+import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.WithSession;
 import zingg.spark.client.util.SparkDFObjectUtil;
-import zingg.spark.client.util.WithSparkSession;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.util.SparkBlockingTreeUtil;
 import zingg.spark.core.util.SparkHashUtil;
@@ -25,10 +25,10 @@ public class TestSparkBlock extends TestBlockBase<SparkSession, Dataset<Row>, Ro
     public static JavaSparkContext ctx;
     public static ZinggSparkContext zsCTX;
     public static SparkSession spark;
-    public static WithSession<SparkSession> withSession;
+    public static IWithSession<SparkSession> iWithSession;
 
     public TestSparkBlock() {
-        super(new SparkDFObjectUtil(withSession), new SparkHashUtil(spark), new SparkBlockingTreeUtil(spark, zsCTX.getPipeUtil()));
+        super(new SparkDFObjectUtil(iWithSession), new SparkHashUtil(spark), new SparkBlockingTreeUtil(spark, zsCTX.getPipeUtil()));
     }
 
     @BeforeAll
@@ -44,8 +44,8 @@ public class TestSparkBlock extends TestBlockBase<SparkSession, Dataset<Row>, Ro
                     .appName("Zingg" + "Junit")
                     .getOrCreate();
             ctx = new JavaSparkContext(spark.sparkContext());
-            withSession = new WithSparkSession();
-            withSession.setSession(spark);
+            iWithSession = new WithSession<>();
+            iWithSession.setSession(spark);
             zsCTX = new ZinggSparkContext();
             zsCTX.init(spark);
         } catch (Throwable e) {

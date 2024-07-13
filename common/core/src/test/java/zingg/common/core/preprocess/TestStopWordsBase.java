@@ -19,7 +19,7 @@ import zingg.common.core.data.TestData;
 import zingg.common.core.model.Statement;
 import zingg.common.core.model.PostStopWordProcess;
 import zingg.common.core.model.PriorStopWordProcess;
-import zingg.common.core.util.StopWordRemoverUtility;
+import zingg.common.core.util.IStopWordRemoverUtility;
 
 public abstract class TestStopWordsBase<S, D, R, C, T> {
 
@@ -29,10 +29,10 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	private final Context<S, D, R, C, T> context;
 
 
-	public TestStopWordsBase(DFObjectUtil<S, D, R, C> dfObjectUtil, StopWordRemoverUtility<S, D, R, C, T> stopWordRemoverUtility,
+	public TestStopWordsBase(DFObjectUtil<S, D, R, C> dfObjectUtil, IStopWordRemoverUtility<S, D, R, C, T> IStopWordRemoverUtility,
 							 Context<S, D, R, C, T> context) throws ZinggClientException {
 		this.dfObjectUtil = dfObjectUtil;
-		this.stopWordsRemovers = stopWordRemoverUtility.getStopWordRemovers(context, new Arguments());
+		this.stopWordsRemovers = IStopWordRemoverUtility.getStopWordRemovers(context, new Arguments());
 		this.context = context;
 	}
 

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +52,6 @@ public abstract class TestBlockBase<S, D, R, C, T> {
 	}
 
 	private IArguments getArguments() throws ZinggClientException {
-		String configFilePath = getClass().getResource("../../testFebrl/config.json").getFile();
 		
 		IArguments args = argumentsUtil.createArgumentsFromJSON(configFilePath, "trainMatch");
 
