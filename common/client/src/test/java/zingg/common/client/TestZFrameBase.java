@@ -10,9 +10,9 @@ import zingg.common.client.util.DFObjectUtil;
 import zingg.common.client.model.Person;
 import zingg.common.client.model.PersonMixed;
 import zingg.common.client.model.ClusterZScore;
-import zingg.common.client.model.ClusterSource;
-import zingg.common.client.model.ClusterPairOne;
-import zingg.common.client.model.ClusterPairTwo;
+import zingg.common.client.model.InputWithZidAndSource;
+import zingg.common.client.model.PairPartOne;
+import zingg.common.client.model.PairPartTwo;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -422,10 +422,10 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testRightJoinMultiCol() throws Exception {
-        List<ClusterSource> sampleDataSetInput = createSampleDataInput(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrameInput = dfObjectUtil.getDFFromObjectList(sampleDataSetInput, ClusterSource.class);
-        List<ClusterPairOne> sampleDataSetCluster = createSampleDataCluster(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, ClusterPairOne.class);
+        List<InputWithZidAndSource> sampleDataSetInput = createSampleDataInput(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrameInput = dfObjectUtil.getDFFromObjectList(sampleDataSetInput, InputWithZidAndSource.class);
+        List<PairPartOne> sampleDataSetCluster = createSampleDataCluster(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, PairPartOne.class);
 
         ZFrame<D, R, C> joinedData = zFrameCluster.join(zFrameInput, ColName.ID_COL, ColName.SOURCE_COL, ZFrame.RIGHT_JOIN);
         assertEquals(10, joinedData.count());
@@ -433,18 +433,18 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testFilterInCond() throws Exception {
-        List<ClusterSource> sampleDataSetInput = createSampleDataInput(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrameInput = dfObjectUtil.getDFFromObjectList(sampleDataSetInput, ClusterSource.class);
-        List<ClusterPairTwo> sampleDataSetCluster = createSampleDataClusterWithNull(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, ClusterPairTwo.class);
+        List<InputWithZidAndSource> sampleDataSetInput = createSampleDataInput(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrameInput = dfObjectUtil.getDFFromObjectList(sampleDataSetInput, InputWithZidAndSource.class);
+        List<PairPartTwo> sampleDataSetCluster = createSampleDataClusterWithNull(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, PairPartTwo.class);
         ZFrame<D, R, C> filteredData = zFrameInput.filterInCond(ColName.ID_COL, zFrameCluster, ColName.COL_PREFIX + ColName.ID_COL);
         assertEquals(5, filteredData.count());
     }
 
     @Test
     public void testFilterNotNullCond() throws Exception {
-        List<ClusterPairTwo> sampleDataSetCluster = createSampleDataClusterWithNull(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, ClusterPairTwo.class);
+        List<PairPartTwo> sampleDataSetCluster = createSampleDataClusterWithNull(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, PairPartTwo.class);
 
         ZFrame<D, R, C> filteredData = zFrameCluster.filterNotNullCond(ColName.SOURCE_COL);
         assertEquals(3, filteredData.count());
@@ -452,8 +452,8 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     @Test
     public void testFilterNullCond() throws Exception {
-        List<ClusterPairTwo> sampleDataSetCluster = createSampleDataClusterWithNull(); //List<TestPOJO>
-        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, ClusterPairTwo.class);
+        List<PairPartTwo> sampleDataSetCluster = createSampleDataClusterWithNull(); //List<TestPOJO>
+        ZFrame<D, R, C> zFrameCluster = dfObjectUtil.getDFFromObjectList(sampleDataSetCluster, PairPartTwo.class);
 
         ZFrame<D, R, C> filteredData = zFrameCluster.filterNullCond(ColName.SOURCE_COL);
         assertEquals(2, filteredData.count());
