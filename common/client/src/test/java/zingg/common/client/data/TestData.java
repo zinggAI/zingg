@@ -11,7 +11,7 @@ import zingg.common.client.model.ClusterZScore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Constant {
+public class TestData {
 
     //sample data classes to be used for testing
     public static List<Person> createEmptySampleData() {

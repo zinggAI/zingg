@@ -16,10 +16,9 @@ import zingg.spark.client.SparkFrame;
 
 public class SparkDFObjectUtil extends DFObjectUtil<SparkSession, Dataset<Row>, Row, Column> {
 
-    private final IWithSession<SparkSession> withSparkSession;
 
     public SparkDFObjectUtil(IWithSession<SparkSession> withSparkSession) {
-        this.withSparkSession = withSparkSession;
+        super(withSparkSession);
     }
 
     @Override
@@ -30,7 +29,7 @@ public class SparkDFObjectUtil extends DFObjectUtil<SparkSession, Dataset<Row>, 
 
         List<Row> rows = Arrays.asList(RowsFromObjectList.getRows(objList));
         StructType structType = stpc.getStructType(objClass);
-        return new SparkFrame(withSparkSession.getSession().createDataFrame(rows, structType));
+        return new SparkFrame(iWithSession.getSession().createDataFrame(rows, structType));
     }
 
 }

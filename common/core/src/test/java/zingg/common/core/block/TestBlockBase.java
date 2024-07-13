@@ -52,7 +52,8 @@ public abstract class TestBlockBase<S, D, R, C, T> {
 	}
 
 	private IArguments getArguments() throws ZinggClientException {
-		
+		String configFilePath = Objects.requireNonNull(getClass().getResource("../../../../testFebrl/config.json")).getFile();
+
 		IArguments args = argumentsUtil.createArgumentsFromJSON(configFilePath, "trainMatch");
 
 		List<FieldDefinition> fdList = getFieldDefList();

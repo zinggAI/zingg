@@ -22,15 +22,15 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static zingg.common.client.data.Constant.createEmptySampleData;
-import static zingg.common.client.data.Constant.createSampleDataCluster;
-import static zingg.common.client.data.Constant.createSampleDataClusterWithNull;
-import static zingg.common.client.data.Constant.createSampleDataInput;
-import static zingg.common.client.data.Constant.createSampleDataList;
-import static zingg.common.client.data.Constant.createSampleDataListDistinct;
-import static zingg.common.client.data.Constant.createSampleDataListWithDistinctSurnameAndPostcode;
-import static zingg.common.client.data.Constant.createSampleDataListWithMixedDataType;
-import static zingg.common.client.data.Constant.createSampleDataZScore;
+import static zingg.common.client.data.TestData.createEmptySampleData;
+import static zingg.common.client.data.TestData.createSampleDataCluster;
+import static zingg.common.client.data.TestData.createSampleDataClusterWithNull;
+import static zingg.common.client.data.TestData.createSampleDataInput;
+import static zingg.common.client.data.TestData.createSampleDataList;
+import static zingg.common.client.data.TestData.createSampleDataListDistinct;
+import static zingg.common.client.data.TestData.createSampleDataListWithDistinctSurnameAndPostcode;
+import static zingg.common.client.data.TestData.createSampleDataListWithMixedDataType;
+import static zingg.common.client.data.TestData.createSampleDataZScore;
 
 public abstract class TestZFrameBase<S, D, R, C, T> {
 
