@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import zingg.common.client.pipe.Pipe;
+import zingg.common.client.util.JsonStringify;
 
 
 /**
@@ -309,18 +310,7 @@ public class Arguments implements Serializable, IArguments {
 	
 	@Override
 	public String toString() {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS,
-				true);
-		//mapper.configure(JsonParser.Feature.FAIL_ON_EMPTY_BEANS, true)
-		try {
-			StringWriter writer = new StringWriter();
-			return mapper.writeValueAsString(this);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+		return JsonStringify.toString(this);
 	}
 	
 	/**
