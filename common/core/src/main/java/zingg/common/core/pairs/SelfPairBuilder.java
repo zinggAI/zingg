@@ -27,7 +27,7 @@ public class SelfPairBuilder<S, D, R, C> implements IPairBuilder<S, D, R, C> {
 		*/
 		//joinH.show();
 		joinH = joinH.filter(joinH.gt(ColName.ID_COL));	
-		LOG.warn("Num comparisons " + joinH.count());
+		if (LOG.isDebugEnabled()) LOG.debug("Num comparisons " + joinH.count());
 		joinH = joinH.repartition(args.getNumPartitions(), joinH.col(ColName.ID_COL));
 		bAll = bAll.repartition(args.getNumPartitions(), bAll.col(ColName.ID_COL));
 		joinH = joinH.joinOnCol(bAll, ColName.ID_COL);

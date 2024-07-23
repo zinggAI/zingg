@@ -223,6 +223,10 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
          return new SparkFrame(df.repartition(num, partitionExprs));
     }
 
+    public ZFrame<Dataset<Row>, Row, Column> repartition(scala.collection.Seq<Column> partitionExprs){
+        return new SparkFrame(df.repartition(partitionExprs));
+   }
+
     @Override
     public Column gt(String c) {
 		return gt(this,c);
