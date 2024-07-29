@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 import zingg.common.client.pipe.Pipe;
+import zingg.common.client.util.JsonStringify;
 
 
 /**
@@ -270,6 +271,10 @@ public class Arguments extends ZArgs implements Serializable, IArguments {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return JsonStringify.toString(this);
+	}
 	
 	
 	
