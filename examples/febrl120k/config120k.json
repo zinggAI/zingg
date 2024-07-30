@@ -2,7 +2,7 @@
 	"fieldDefinition":[
 		{
 			"fieldName" : "fname",
-			"matchType" : "email",
+			"matchType" : "fuzzy",
 			"fields" : "fname",
 			"dataType": "string" 
 		},

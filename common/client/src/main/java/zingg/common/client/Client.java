@@ -184,6 +184,10 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public abstract Client<S,D,R,C,T> getClient(IArguments args, ClientOptions options) throws ZinggClientException;
+
+	public ClientOptions getClientOptions(String ... args){
+		return new ClientOptions(args);
+	}
 	
 	public void mainMethod(String... args) {
 		printBanner();
@@ -192,7 +196,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		try {
 			
 			for (String a: args) LOG.debug("args " + a);
-			options = new ClientOptions(args);
+			options = getClientOptions(args);
 			setOptions(options);
 
 			if (options.has(options.HELP) || options.has(options.HELP1) || options.get(ClientOptions.PHASE) == null) {
