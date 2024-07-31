@@ -43,7 +43,7 @@ public class ClientOptions {
 
 	protected String[] commandLineArgs;
 	
-	protected static Map<String, Option> optionMaster = new HashMap<String, Option>();
+	protected Map<String, Option> optionMaster = new HashMap<String, Option>();
 	/*
 	 * String optionName;
 		  //String alias;
@@ -52,7 +52,7 @@ public class ClientOptions {
 		  boolean isExit;
 		  boolean isMandatory;
 	 */
-	static {	//This is the canonical list of Zingg options.
+	protected void loadOptions() {	//This is the canonical list of Zingg options.
 		optionMaster.put(CONF, new Option(CONF, true, "JSON configuration with data input output locations and field definitions", false, true));
 		optionMaster.put(PHASE, new Option(PHASE, true, Util.join(ZinggOptions.getAllZinggOptions(), "|"), false, true, ZinggOptions.getAllZinggOptions()));
 		optionMaster.put(LICENSE, new Option(LICENSE, true, "location of license file", false, true));
@@ -76,13 +76,19 @@ public class ClientOptions {
 	}
 	
 	protected Map<String, OptionWithVal> options = new HashMap<String, OptionWithVal> ();
+
+	public ClientOptions(){
+		loadOptions();
+	}
 	
 	public ClientOptions(String... args) {
+		this();
 		this.commandLineArgs = args;
 		parse(Arrays.asList(args));
 	}
 	
 	public ClientOptions(List<String> args) {
+		this();
 		this.commandLineArgs = args.toArray(new String[args.size()]);
 		parse(args);
 	}
@@ -90,8 +96,15 @@ public class ClientOptions {
 	public String[] getCommandLineArgs() {
 		return this.commandLineArgs;
 	}
+
+	public Map<String, Option> getOptionMaster(){
+			return optionMaster;
+	}
 	
-	
+	public void setOptionMaster(Map<String, Option> optionMaster) {
+        this.optionMaster = optionMaster;
+    }
+
 	  /**
 	   * Parse a list of Zingg command line options.
 	   * <p>
@@ -250,12 +263,13 @@ public class ClientOptions {
 		s.append("options\n");
 
 		int maxlo = 0;
-		for (Option o: optionMaster.values()){
+		ClientOptions co = new ClientOptions();
+		for (Option o: co.optionMaster.values()){
 			maxlo=Math.max(maxlo,o.optionName.length());
 		}
 
 		int maxld = 0;
-		for (Option o: optionMaster.values()){
+		for (Option o: co.optionMaster.values()){
 			maxld=Math.max(maxld,o.desc.length());
 		}
 		
@@ -263,7 +277,7 @@ public class ClientOptions {
 		formatBuilder.append("\t").append("%-").append(maxlo + 5).append("s").append(": ").append("%-").append(maxld + 5).append("s").append("\n");
 		String format = formatBuilder.toString();
 		
-		for (Option o: optionMaster.values()) {
+		for (Option o: co.optionMaster.values()) {
 			s.append(String.format(format,o.optionName, o.desc));
 		}
 		return s.toString();
