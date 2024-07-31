@@ -10,11 +10,11 @@ Zingg learns two models from the data.
 
 ## 1. Blocking Model
 
-One fundamental problem with scaling data mastering is that the number of comparisons increases quadratically as the number of input records increases.
+One fundamental problem with scaling data mastering is that the number of comparisons increases **quadratically** as the number of input records increases.
 
 ![Data Mastering At Scale](../assets/fuzzymatchingcomparisons.jpg)
 
-Zingg learns a clustering/blocking model which indexes near similar records. This means that Zingg does not compare every record with every other record. Typical Zingg comparisons are 0.05-1% of the possible problem space.
+Zingg learns a clustering/blocking model which indexes near similar records. This means that Zingg does not compare every record with every other record. Typical Zingg comparisons are **0.05-1%** of the possible problem space.
 
 ## 2. Similarity Model
 

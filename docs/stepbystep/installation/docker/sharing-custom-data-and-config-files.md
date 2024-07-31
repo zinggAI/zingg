@@ -2,9 +2,9 @@
 description: Using custom data to save data files on host machine
 ---
 
-# Sharing custom data and config files
+# Sharing Custom Data And Config Files
 
-However, note that once the docker container is stopped, all the work done in that session is lost. If we want to use custom data or persist the generated model or data files, we have to use **Volumes** or **Bind mount** to share files between the two.
+However, note that once the docker container is stopped, all the work done in that session is lost. If we want to use custom data or persist the generated model or data files, we have to use **Volumes** or **Bind Mount** to share files between the two.
 
 ```
 docker run -v <local-location>:<container-location> -it zingg/zingg:0.4.0 bash

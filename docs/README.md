@@ -2,7 +2,7 @@
 description: Hope you find us useful :-)
 ---
 
-# Welcome to Zingg
+# Welcome To Zingg
 
 ![](https://static.scarf.sh/a.png?x-pxid=d6dda06e-06c7-4e4a-99c9-ed9f6364dfeb)
 
@@ -24,4 +24,4 @@ Zingg is a quick and scalable way to build a single source of truth for core bus
 
 ## Book Office Hours
 
-If you want to schedule a 30-min call with our team to help you get set up, please select some time directly [here](https://calendly.com/sonalgoyal/30min).
+If you want to schedule a 30-min call with our team to help you get set up, please select a slot directly [here](https://calendly.com/sonalgoyal/30min).

@@ -14,7 +14,7 @@ In addition, the following property needs to be set
 spark.hadoop.fs.gs.impl=com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem                                                      
 ```
 
-If Zingg is run from outside the Google cloud, it requires authentication, please set the following env variable to the location of the file containing the service account key. A service account key can be created and downloaded in JSON format from the [Google Cloud console](https://cloud.google.com/docs/authentication/getting-started).
+If Zingg is run from outside the Google cloud, it requires authentication, please set the following _environment variable_ to the location of the file containing the _service account key_. A service account key can be created and downloaded in JSON format from the [Google Cloud console](https://cloud.google.com/docs/authentication/getting-started).
 
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS=path to google service account key file
@@ -24,7 +24,7 @@ Connection properties for BigQuery as a data source and data sink are given belo
 
 ## Properties for reading data from BigQuery:
 
-The property **"credentialsFile"** should point to the google service account key file location. This is the same path that is used to set variable **GOOGLE\_APPLICATION\_CREDENTIALS**. The **"table"** property should point to a BigQuery table that contains source data. The property **"viewsEnabled"** must be set to true only.
+The property `credentialsFile` should point to the Google service account key file location. This is the same path that is used to set variable `GOOGLE_APPLICATION_CREDENTIALS`. The `table` property should point to a BigQuery table that contains source data. The property `viewsEnabled` must be set to **true** only.
 
 ```json
     "data" : [{
@@ -38,9 +38,9 @@ The property **"credentialsFile"** should point to the google service account ke
     }],
 ```
 
-## Properties for writing data to BigQuery:
+## Properties For Writing Data To BigQuery:
 
-To write to BigQuery, a bucket needs to be created and assigned to the **"temporaryGcsBucket"** property.
+To write to BigQuery, a bucket needs to be created and assigned to the `temporaryGcsBucket` property.
 
 ```json
     "output" : [{
@@ -57,7 +57,7 @@ To write to BigQuery, a bucket needs to be created and assigned to the **"tempor
 ## Notes:
 
 * The library **"gcs-connector-hadoop2-latest.jar"** can be downloaded from [Google](https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop2-latest.jar) and the library **"spark-bigquery-with-dependencies\_2.12-0.24.2"** from the [maven repo](https://repo1.maven.org/maven2/com/google/cloud/spark/spark-bigquery-with-dependencies\_2.12/0.24.2/spark-bigquery-with-dependencies\_2.12-0.24.2.jar).
-* A typical service account key file looks like the below. The format of the file is JSON.
+* A typical service account key file looks like below (JSON).
 
 ```json
 {

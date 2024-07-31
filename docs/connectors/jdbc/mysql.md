@@ -1,6 +1,6 @@
 # MySQL
 
-## Reading from MySQL database:
+## Reading From MySQL Database:
 
 ```json
     "data" : [{
@@ -16,4 +16,4 @@
     }],
 ```
 
-Please replace \<db\_name> with the name of the database in addition to other props. For more details, refer to the [spark documentation](https://spark.apache.org/docs/latest/sql-data-sources-jdbc.html).
+Please replace `<db_name>` with the _name_ of the database in addition to other props. For more details, refer to the [Spark documentation](https://spark.apache.org/docs/latest/sql-data-sources-jdbc.html).

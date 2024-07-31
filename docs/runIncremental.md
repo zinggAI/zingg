@@ -1,14 +1,16 @@
+# Add Incremental Data
 
-## Run Incremental Loads For New and Updated Records - *Zingg Enterprise Feature*  
-  
-Rerunning matching on entire datasets is wasteful, and we lose the lineage of matched records against a persistent identifier. Using Zingg Enterprise, incremental loads can be run to match existing pre resolved entities. The new and updated records are matched to existing clusters, and new persistent ZINGG_IDs generated for records which do not find a match. If a record gets updated and Zingg Enterprise discovers that it is a more suitable match with another cluster, it will be reassigned. Cluster assignment, merge and unmerge happens automatically in the flow. Zingg Enterprise also takes care of human feedback on previously matched data to ensure that it does not override the approved records.   
-  
-## The incremental phase is run as follows:  
-`./scripts/zingg.sh --phase runIncremental --conf <location to incrementalConf.json>`  
-  
-## Example incrementalConf.json:  
+### Run Incremental Loads For New and Updated Records - _Zingg Enterprise Feature_
 
-```json  
+Rerunning matching on entire datasets is wasteful, and we lose the lineage of matched records against a persistent identifier. Using Zingg Enterprise, incremental loads can be run to match existing pre-resolved entities. The new and updated records are matched to existing clusters, and new persistent **ZINGG\_IDs** are generated for records that do not find a match. If a record gets updated and Zingg Enterprise discovers that it is a more suitable match with another cluster, it will be reassigned. Cluster assignment, merge, and unmerge happens automatically in the flow. Zingg Enterprise also takes care of human feedback on previously matched data to ensure that it does not override the approved records.
+
+### The incremental phase is run as follows:
+
+`./scripts/zingg.sh --phase runIncremental --conf <location to incrementalConf.json>`
+
+### Example incrementalConf.json:
+
+```json
 {      
     "config" : "config.json",  
     "incrementalData": [{  
@@ -24,12 +26,13 @@ Rerunning matching on entire datasets is wasteful, and we lose the lineage of ma
     ]   
 }  
 ```
-  
-## runIncremental can also be triggered using python by invoking:  
-`./scripts/zingg.sh --run examples/FebrlExample.py`  
-  
-### Python code example:  
-  
+
+### runIncremental can also be triggered using Python by invoking:
+
+`./scripts/zingg.sh --run examples/FebrlExample.py`
+
+#### Python Code Example:
+
 ```{python}
 #import the packages  
   

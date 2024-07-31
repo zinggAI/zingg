@@ -4,7 +4,7 @@ description: Passing Configuration value through the system environment variable
 
 # Configuring Through Environment Variables
 
-If a user does not want to pass the value of any JSON parameter through the config file for security reasons or otherwise, they can configure that value through the system environment variable. The system variable name needs to be put in the config file in place of its JSON value. At runtime, the config file gets updated with the value of the environment variable.
+If a user does not want to pass the value of any JSON parameter through the config file for security reasons or otherwise, they can configure that value through the _system environment variable_. The system variable name needs to be put in the config file in place of its JSON value. At runtime, the config file gets updated with the value of the environment variable.
 
 Below is the config file snippet that references a few environment variables.
 
@@ -27,4 +27,4 @@ Below is the config file snippet that references a few environment variables.
 "collectMetrics": $collectMetrics$
 ```
 
-Environment variables must be enclosed within dollar signs **$var$** to take effect. Also, the config file name must be suffixed with \***.env**. As usual, String variables need to be put within quotes **"$var$"**, Boolean and Numeric values should be put without quotes **$var$**.
+Environment variables must be enclosed within dollar signs **$var$** to take effect. Also, the config file name must be _suffixed_ with \***.env**. As usual, `String`variables need to be put _within_ quotes **"$var$"**, `Boolean` and `Numeric` values should be put _without_ quotes **$var$**.
