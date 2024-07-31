@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import zingg.common.core.similarity.function.ArrayDoubleSimilarityFunction;
 import zingg.spark.core.executor.ZinggSparkTester;
+import zingg.spark.core.util.SparkFnRegistrar;
 
 public class TestImageType extends ZinggSparkTester{
 	
@@ -90,7 +91,7 @@ public class TestImageType extends ZinggSparkTester{
 			df.printSchema();
 			// register ArrayDoubleSimilarityFunction as a UDF
 			TestUDFDoubleArr testUDFDoubleArr = new TestUDFDoubleArr();
-			spark.udf().register("testUDFDoubleArr", testUDFDoubleArr, DataTypes.DoubleType);
+			SparkFnRegistrar.registerUDF2(spark, "testUDFDoubleArr", testUDFDoubleArr, DataTypes.DoubleType);
 			// call the UDF from select clause of DF
 			df = df.withColumn("cosine",
 					callUDF("testUDFDoubleArr", df.col("image_embedding"), df.col("image_embedding")));
@@ -116,8 +117,8 @@ public class TestImageType extends ZinggSparkTester{
 			
 			// register ArrayDoubleSimilarityFunction as a UDF
 			TestUDFDoubleList testUDFDoubleList = new TestUDFDoubleList();
-			spark.udf().register("testUDFDoubleList", testUDFDoubleList, DataTypes.DoubleType);
-			
+			SparkFnRegistrar.registerUDF2(spark, "testUDFDoubleList", testUDFDoubleList, DataTypes.DoubleType);
+
 			// call the UDF from select clause of DF
 			df = df.withColumn("cosine", callUDF("testUDFDoubleList",df.col("image_embedding"),df.col("image_embedding")));
 			// see if error is reproduced
@@ -142,8 +143,8 @@ public class TestImageType extends ZinggSparkTester{
 			
 			// register ArrayDoubleSimilarityFunction as a UDF
 			TestUDFDoubleSeq testUDFDoubleSeq = new TestUDFDoubleSeq();
-			spark.udf().register("testUDFDoubleSeq", testUDFDoubleSeq, DataTypes.DoubleType);
-			
+			SparkFnRegistrar.registerUDF2(spark, "testUDFDoubleSeq", testUDFDoubleSeq, DataTypes.DoubleType);
+
 			// call the UDF from select clause of DF
 			df = df.withColumn("cosine", callUDF("testUDFDoubleSeq",df.col("image_embedding"),df.col("image_embedding")));
 			// see if error is reproduced
@@ -168,8 +169,8 @@ public class TestImageType extends ZinggSparkTester{
 		
 		// register ArrayDoubleSimilarityFunction as a UDF
 		TestUDFDoubleWrappedArr testUDFDoubleWrappedArr = new TestUDFDoubleWrappedArr();
-		spark.udf().register("testUDFDoubleWrappedArr", testUDFDoubleWrappedArr, DataTypes.DoubleType);
-		
+		SparkFnRegistrar.registerUDF2(spark, "testUDFDoubleWrappedArr", testUDFDoubleWrappedArr, DataTypes.DoubleType);
+
 		// call the UDF from select clause of DF
 		df = df.withColumn("cosine", callUDF("testUDFDoubleWrappedArr",df.col("image_embedding"),df.col("image_embedding")));
 		// see if error is reproduced
@@ -197,8 +198,8 @@ public class TestImageType extends ZinggSparkTester{
 		
 		// register ArrayDoubleSimilarityFunction as a UDF
 		TestUDFDoubleObj testUDFDoubleObj = new TestUDFDoubleObj();
-		spark.udf().register("testUDFDoubleObj", testUDFDoubleObj, DataTypes.DoubleType);
-		
+		SparkFnRegistrar.registerUDF2(spark, "testUDFDoubleObj", testUDFDoubleObj, DataTypes.DoubleType);
+
 		// call the UDF from select clause of DF
 		df = df.withColumn("cosine", callUDF("testUDFDoubleObj",df.col("image_embedding"),df.col("image_embedding")));
 		// see if error is reproduced

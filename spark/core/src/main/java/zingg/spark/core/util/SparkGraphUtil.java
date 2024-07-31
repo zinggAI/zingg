@@ -20,6 +20,7 @@ public class SparkGraphUtil implements GraphUtil<Dataset<Row>, Row, Column> {
 		// we need to transform the input here by using stop words
 		//rename id field which is a common field in data to another field as it 
 		//clashes with graphframes :-(
+		vOrig = vOrig.cache();
 		Dataset<Row> vertices = vOrig.df();	
 		Dataset<Row> edges = ed.df();
 		vertices = vertices.withColumnRenamed(ColName.ID_EXTERNAL_ORIG_COL, ColName.ID_EXTERNAL_COL);

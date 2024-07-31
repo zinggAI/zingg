@@ -112,7 +112,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		//LOG.debug("Blocking model file location is " + getModelHelper().getBlockFile(args));
 		Tree<Canopy<R>> tree = getBlockingTreeUtil().readBlockingTree(args, getModelHelper());
 		ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(testData, tree);		
-		ZFrame<D,R,C> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)); //.cache();
+		ZFrame<D,R,C> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
 		return blocked1;
 	}
 
@@ -125,10 +125,6 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	public void setIPairbuilder(IPairBuilder<S, D, R, C> p){
 		this.iPairBuilder = p;
-	}
-	
-	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception{
-		return getPairs(blocked, bAll, getIPairBuilder());
 	}
 	
 	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception{
