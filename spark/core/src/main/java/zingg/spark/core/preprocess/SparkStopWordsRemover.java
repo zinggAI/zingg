@@ -15,7 +15,7 @@ import org.apache.spark.sql.types.DataTypes;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
-import zingg.common.core.context.Context;
+import zingg.common.core.context.IContext;
 import zingg.common.core.preprocess.StopWordsRemover;
 import zingg.spark.client.SparkFrame;
 import org.apache.spark.sql.SparkSession;
@@ -29,7 +29,7 @@ public class SparkStopWordsRemover extends StopWordsRemover<SparkSession,Dataset
 	
 	private String udfName;
 	
-	public SparkStopWordsRemover(Context<SparkSession, Dataset<Row>, Row, Column,DataType> context, IArguments args) {
+	public SparkStopWordsRemover(IContext<SparkSession, Dataset<Row>, Row, Column,DataType> context, IArguments args) {
 		super(context,args);
 		this.udfName = registerUDF();
 	}

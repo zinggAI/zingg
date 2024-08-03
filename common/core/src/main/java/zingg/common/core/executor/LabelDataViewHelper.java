@@ -11,7 +11,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
-import zingg.common.core.context.Context;
+import zingg.common.core.context.IContext;
 import zingg.common.core.util.LabelMatchType;
 
 public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> implements ILabelDataViewHelper<S, D, R, C> {
@@ -19,7 +19,7 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	private static final long serialVersionUID = 1L;
 	public static final Log LOG = LogFactory.getLog(LabelDataViewHelper.class);
 	
-	public LabelDataViewHelper(Context<S,D,R,C,T> context, ClientOptions clientOptions) {
+	public LabelDataViewHelper(IContext<S,D,R,C,T> context, ClientOptions clientOptions) {
 		setContext(context);
 		setClientOptions(clientOptions);
 		setName(this.getClass().getName());

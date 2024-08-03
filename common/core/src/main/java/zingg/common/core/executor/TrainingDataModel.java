@@ -12,7 +12,7 @@ import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
-import zingg.common.core.context.Context;
+import zingg.common.core.context.IContext;
 
 public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> implements ITrainingDataModel<S, D, R, C>{
 
@@ -21,7 +21,7 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 	private long positivePairsCount, negativePairsCount, notSurePairsCount;
 	private long totalCount;
 	
-	public TrainingDataModel(Context<S,D,R,C,T> context, ClientOptions clientOptions) {
+	public TrainingDataModel(IContext<S,D,R,C,T> context, ClientOptions clientOptions) {
 		setContext(context);
 		setClientOptions(clientOptions);
 		setName(this.getClass().getName());
