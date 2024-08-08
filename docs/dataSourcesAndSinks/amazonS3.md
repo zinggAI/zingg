@@ -26,5 +26,5 @@ Zingg can use AWS S3 as a source and sink
  ```
 
  ## Model location
-Models etc. would get saved in 
-Amazon S3 > Buckets > zingg28032023 >zingg > 100
+	Models etc. would get saved in 
+	Amazon S3 > Buckets > zingg28032023 >zingg > 100
