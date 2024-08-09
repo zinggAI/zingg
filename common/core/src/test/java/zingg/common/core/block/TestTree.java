@@ -1,10 +1,6 @@
-package zingg.block;
+package zingg.common.core.block;
 
 import org.junit.jupiter.api.*;
-
-import zingg.common.core.block.Tree;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class TestTree {
 
