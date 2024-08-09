@@ -72,7 +72,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	
 		Trainer<S, D, R, C, T> trainer = getTrainer();
 		trainer.init(args,session);
-		TrainerTester<S, D, R, C, T> tt = new TrainerTester<S, D, R, C, T>(trainer);
+		TrainerTester<S, D, R, C, T> tt = getTrainerTester(trainer);
 		executorTesterList.add(tt);
 
 		Matcher<S, D, R, C, T> matcher = getMatcher();
@@ -82,6 +82,8 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 		
 		testExecutors(executorTesterList);
 	}
+
+	protected abstract TrainerTester<S, D, R, C, T> getTrainerTester(Trainer<S, D, R, C, T> trainer);
 	
 	
 	public void testExecutors(List<ExecutorTester<S, D, R, C, T>> executorTesterList) throws ZinggClientException {

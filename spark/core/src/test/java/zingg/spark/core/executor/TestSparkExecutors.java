@@ -15,6 +15,8 @@ import org.junit.jupiter.api.AfterEach;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.Labeller;
 import zingg.common.core.executor.TestExecutorsGeneric;
+import zingg.common.core.executor.Trainer;
+import zingg.common.core.executor.TrainerTester;
 import zingg.spark.core.context.ZinggSparkContext;
 
 public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Dataset<Row>,Row,Column,DataType> {
@@ -73,6 +75,11 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 		// correct the location of test data
 		args.getData()[0].setProp("location", testFile);
 		return configFile;
+	}
+	
+	@Override
+	protected SparkTrainerTester getTrainerTester(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
+		return new SparkTrainerTester(trainer,args);
 	}
 	
 	@Override
