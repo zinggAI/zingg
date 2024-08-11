@@ -1,15 +1,8 @@
 package zingg.common.core.model;
 
-public class Event {
-    public final Integer id;
-    public final Integer year;
-    public final String event;
-    public final String comment;
+public class Event extends EventBase{
 
     public Event(Integer id, Integer year, String event, String comment) {
-        this.id = id;
-        this.year = year;
-        this.event = event;
-        this.comment = comment;
+        super(id, year, event, comment);
     }
 }

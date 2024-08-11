@@ -1,7 +1,7 @@
 package zingg.common.core.data;
 
 import zingg.common.core.model.Event;
-import zingg.common.core.model.EventCluster;
+import zingg.common.core.model.EventPair;
 import zingg.common.core.model.Statement;
 import zingg.common.core.model.PostStopWordProcess;
 import zingg.common.core.model.PriorStopWordProcess;
@@ -88,50 +88,50 @@ public class TestData {
         return sample;
     }
 
-    public static List<EventCluster> createSampleClusterEventData() {
+    public static List<EventPair> createSampleClusterEventData() {
 
         int row_id = 1;
-        List<EventCluster> sample = new ArrayList<>();
-        sample.add(new EventCluster(row_id++, 1942, "quit Nation", "Mahatma",1942, "quit Nation", "Mahatma", 1L));
-        sample.add(new EventCluster(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
-        sample.add(new EventCluster(row_id++, 1942, "quit N", "Mahatma", 1942, "quit N", "Mahatma", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit N", "Mahatma",1942, "quit N", "Mahatma", 1L));
-        sample.add(new EventCluster(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
-        sample.add(new EventCluster(row_id++, 1942, "quit ", "Mahatm", 1942, "quit ", "Mahatm", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit Natin", "Mahaatma", 1942, "quit Natin", "Mahaatma", 1L));
-        sample.add(new EventCluster(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
-        sample.add(new EventCluster(row_id++, 1942, "quit N", "Mahatma", 1942, "quit N", "Mahatma", 1L));
-        sample.add(new EventCluster(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
-        sample.add(new EventCluster(row_id++, 1942, "quit ", "Mahatm", 1942, "quit ", "Mahatm", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit Natin", "Mahaatma", 1942, "quit Natin", "Mahaatma", 1L));
-        sample.add(new EventCluster(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
-        sample.add(new EventCluster(row_id++, 1942, "quit N", "Mahatma", 1942, "quit N", "Mahatma", 1L));
-        sample.add(new EventCluster(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
-        sample.add(new EventCluster(row_id++, 1942, "quit ", "Mahatm", 1942, "quit ", "Mahatm", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit Natin", "Mahaatma", 1942, "quit Natin", "Mahaatma", 1L));
-        sample.add(new EventCluster(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
-        sample.add(new EventCluster(row_id++, 1942, "quit N", "Mahatma", 1942, "quit N", "Mahatma", 1L));
-        sample.add(new EventCluster(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
-        sample.add(new EventCluster(row_id++, 1942, "quit ", "Mahatm", 1942, "quit ", "Mahatm", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit Natin", "Mahaatma", 1942, "quit Natin", "Mahaatma", 1L));
-        sample.add(new EventCluster(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
-        sample.add(new EventCluster(row_id++, 1942, "quit N", "Mahatma", 1942, "quit N", "Mahatma", 1L));
-        sample.add(new EventCluster(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
-        sample.add(new EventCluster(row_id++, 1942, "quit ", "Mahatm", 1942, "quit ", "Mahatm", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit Natin", "Mahaatma", 1942, "quit Natin", "Mahaatma", 1L));
-        sample.add(new EventCluster(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
-        sample.add(new EventCluster(row_id++, 1942, "quit N", "Mahatma", 1942, "quit N", "Mahatma", 1L));
-        sample.add(new EventCluster(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
-        sample.add(new EventCluster(row_id++, 1942, "quit ", "Mahatm", 1942, "quit ", "Mahatm", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
-        sample.add(new EventCluster(row_id++, 1942, "quit Natin", "Mahaatma", 1942, "quit Natin", "Mahaatma", 1L));
-        sample.add(new EventCluster(row_id, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+        List<EventPair> sample = new ArrayList<>();
+        sample.add(new EventPair(row_id++, 1942, "quit Nation", "Mahatma",1942, "quit Nation", "Mahatma", 1L));
+        sample.add(new EventPair(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+        sample.add(new EventPair(row_id++, 1942, "quit N", "Mahatma", 1942, "quit N", "Mahatma", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit N", "Mahatma",1942, "quit N", "Mahatma", 1L));
+        sample.add(new EventPair(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+        sample.add(new EventPair(row_id++, 1942, "quit ", "Mahatm", 1942, "quit ", "Mahatm", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit Natin", "Mahaatma", 1942, "quit Natin", "Mahaatma", 1L));
+        sample.add(new EventPair(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+        sample.add(new EventPair(row_id++, 1942, "quit N", "Mahatma", 1942, "quit N", "Mahatma", 1L));
+        sample.add(new EventPair(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+        sample.add(new EventPair(row_id++, 1942, "quit ", "Mahatm", 1942, "quit ", "Mahatm", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit Natin", "Mahaatma", 1942, "quit Natin", "Mahaatma", 1L));
+        sample.add(new EventPair(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+        sample.add(new EventPair(row_id++, 1942, "quit N", "Mahatma", 1942, "quit N", "Mahatma", 1L));
+        sample.add(new EventPair(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+        sample.add(new EventPair(row_id++, 1942, "quit ", "Mahatm", 1942, "quit ", "Mahatm", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit Natin", "Mahaatma", 1942, "quit Natin", "Mahaatma", 1L));
+        sample.add(new EventPair(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+        sample.add(new EventPair(row_id++, 1942, "quit N", "Mahatma", 1942, "quit N", "Mahatma", 1L));
+        sample.add(new EventPair(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+        sample.add(new EventPair(row_id++, 1942, "quit ", "Mahatm", 1942, "quit ", "Mahatm", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit Natin", "Mahaatma", 1942, "quit Natin", "Mahaatma", 1L));
+        sample.add(new EventPair(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+        sample.add(new EventPair(row_id++, 1942, "quit N", "Mahatma", 1942, "quit N", "Mahatma", 1L));
+        sample.add(new EventPair(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+        sample.add(new EventPair(row_id++, 1942, "quit ", "Mahatm", 1942, "quit ", "Mahatm", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit Natin", "Mahaatma", 1942, "quit Natin", "Mahaatma", 1L));
+        sample.add(new EventPair(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+        sample.add(new EventPair(row_id++, 1942, "quit N", "Mahatma", 1942, "quit N", "Mahatma", 1L));
+        sample.add(new EventPair(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
+        sample.add(new EventPair(row_id++, 1942, "quit ", "Mahatm", 1942, "quit ", "Mahatm", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit Ntn", "Mahama", 1942, "quit Ntn", "Mahama", 1L));
+        sample.add(new EventPair(row_id++, 1942, "quit Natin", "Mahaatma", 1942, "quit Natin", "Mahaatma", 1L));
+        sample.add(new EventPair(row_id, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
 
         return sample;
     }
