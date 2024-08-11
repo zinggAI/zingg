@@ -40,7 +40,7 @@ public class TestSparkBlock extends TestBlockBase<SparkSession, Dataset<Row>, Ro
     protected static void setUpSpark() {
         try {
 
-            if(spark == null && ZinggSparkTester.spark == null) {
+            if(spark == null) {
                 ZinggSparkTester.setup();
             }
             spark = ZinggSparkTester.spark;
