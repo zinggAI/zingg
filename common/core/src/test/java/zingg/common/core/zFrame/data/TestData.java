@@ -1,12 +1,12 @@
-package zingg.common.client.data;
+package zingg.common.core.zFrame.data;
 
 
-import zingg.common.client.model.Person;
-import zingg.common.client.model.PairPartOne;
-import zingg.common.client.model.PairPartTwo;
-import zingg.common.client.model.InputWithZidAndSource;
-import zingg.common.client.model.PersonMixed;
-import zingg.common.client.model.ClusterZScore;
+import zingg.common.core.zFrame.model.ClusterZScore;
+import zingg.common.core.zFrame.model.InputWithZidAndSource;
+import zingg.common.core.zFrame.model.PairPartOne;
+import zingg.common.core.zFrame.model.PairPartTwo;
+import zingg.common.core.zFrame.model.Person;
+import zingg.common.core.zFrame.model.PersonMixed;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class TestData {
     //sample data classes to be used for testing
     public static List<Person> createEmptySampleData() {
 
-        return new ArrayList<>();
+        return new ArrayList<Person>();
     }
 
     public static List<Person> createSampleDataList() {

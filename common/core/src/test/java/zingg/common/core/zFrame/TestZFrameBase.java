@@ -1,18 +1,19 @@
-package zingg.common.client;
+package zingg.common.core.zFrame;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
-import zingg.common.client.model.Person;
-import zingg.common.client.model.PersonMixed;
-import zingg.common.client.model.ClusterZScore;
-import zingg.common.client.model.InputWithZidAndSource;
-import zingg.common.client.model.PairPartOne;
-import zingg.common.client.model.PairPartTwo;
+import zingg.common.core.zFrame.model.ClusterZScore;
+import zingg.common.core.zFrame.model.InputWithZidAndSource;
+import zingg.common.core.zFrame.model.PairPartOne;
+import zingg.common.core.zFrame.model.PairPartTwo;
+import zingg.common.core.zFrame.model.Person;
+import zingg.common.core.zFrame.model.PersonMixed;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -22,17 +23,17 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static zingg.common.client.data.TestData.createEmptySampleData;
-import static zingg.common.client.data.TestData.createSampleDataCluster;
-import static zingg.common.client.data.TestData.createSampleDataClusterWithNull;
-import static zingg.common.client.data.TestData.createSampleDataInput;
-import static zingg.common.client.data.TestData.createSampleDataList;
-import static zingg.common.client.data.TestData.createSampleDataListDistinct;
-import static zingg.common.client.data.TestData.createSampleDataListWithDistinctSurnameAndPostcode;
-import static zingg.common.client.data.TestData.createSampleDataListWithMixedDataType;
-import static zingg.common.client.data.TestData.createSampleDataZScore;
+import static zingg.common.core.zFrame.data.TestData.createEmptySampleData;
+import static zingg.common.core.zFrame.data.TestData.createSampleDataCluster;
+import static zingg.common.core.zFrame.data.TestData.createSampleDataClusterWithNull;
+import static zingg.common.core.zFrame.data.TestData.createSampleDataInput;
+import static zingg.common.core.zFrame.data.TestData.createSampleDataList;
+import static zingg.common.core.zFrame.data.TestData.createSampleDataListDistinct;
+import static zingg.common.core.zFrame.data.TestData.createSampleDataListWithDistinctSurnameAndPostcode;
+import static zingg.common.core.zFrame.data.TestData.createSampleDataListWithMixedDataType;
+import static zingg.common.core.zFrame.data.TestData.createSampleDataZScore;
 
-public abstract class TestZFrameBase<S, D, R, C, T> {
+public abstract class TestZFrameBase<S, D, R, C> {
 
     public static final Log LOG = LogFactory.getLog(TestZFrameBase.class);
     public static final String NEW_COLUMN = "newColumn";
@@ -41,6 +42,16 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
     public TestZFrameBase(DFObjectUtil<S, D, R, C> dfObjectUtil) {
         this.dfObjectUtil = dfObjectUtil;
+    }
+
+    @Test
+    public void testAliasOfZFrame() throws Exception {
+        List<Person> sampleDataSet = createSampleDataList();
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
+
+        String aliasName = "AnotherName";
+        zFrame.as(aliasName);
+        assertTrueCheckingExceptOutput(zFrame.as(aliasName), zFrame, "Dataframe and its alias are not same");
     }
 
 
@@ -625,5 +636,9 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
                         "value in ZFrame and sample input is not same");
             }
         }
+    }
+
+    protected void assertTrueCheckingExceptOutput(ZFrame<D, R, C> sf1, ZFrame<D, R, C> sf2, String message) {
+        assertTrue(sf1.except(sf2).isEmpty(), message);
     }
 }

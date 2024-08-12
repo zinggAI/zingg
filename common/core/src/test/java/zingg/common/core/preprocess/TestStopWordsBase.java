@@ -9,7 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
@@ -19,20 +18,19 @@ import zingg.common.core.data.EventTestData;
 import zingg.common.core.model.Statement;
 import zingg.common.core.model.PostStopWordProcess;
 import zingg.common.core.model.PriorStopWordProcess;
-import zingg.common.core.util.IStopWordRemoverUtility;
+import zingg.common.core.util.StopWordRemoverUtility;
 
 public abstract class TestStopWordsBase<S, D, R, C, T> {
 
 	public static final Log LOG = LogFactory.getLog(TestStopWordsBase.class);
 	private final DFObjectUtil<S, D, R, C> dfObjectUtil;
-	private final List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers;
+	private final StopWordRemoverUtility<S, D, R, C, T> stopWordRemoverUtility;
 	private final Context<S, D, R, C, T> context;
 
 
-	public TestStopWordsBase(DFObjectUtil<S, D, R, C> dfObjectUtil, IStopWordRemoverUtility<S, D, R, C, T> IStopWordRemoverUtility,
-							 Context<S, D, R, C, T> context) throws ZinggClientException {
+	public TestStopWordsBase(DFObjectUtil<S, D, R, C> dfObjectUtil, StopWordRemoverUtility<S, D, R, C, T> stopWordRemoverUtility, Context<S, D, R, C, T> context) {
 		this.dfObjectUtil = dfObjectUtil;
-		this.stopWordsRemovers = IStopWordRemoverUtility.getStopWordRemovers(context, new Arguments());
+		this.stopWordRemoverUtility = stopWordRemoverUtility;
 		this.context = context;
 	}
 
@@ -40,6 +38,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testStopWordsSingleColumn() throws ZinggClientException, Exception {
 
+			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 			String stopWords = "\\b(a|an|the|is|It|of|yes|no|I|has|have|you)\\b\\s?".toLowerCase();
 
 			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(EventTestData.getData1Original(), Statement.class);
@@ -57,6 +56,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testRemoveStopWordsFromDataset() throws ZinggClientException, Exception {
 
+			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Original(), PriorStopWordProcess.class);
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Expected(), PriorStopWordProcess.class);
 
@@ -69,6 +69,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 
 	@Test
 	public void testStopWordColumnMissingFromStopWordFile() throws ZinggClientException, Exception {
+
+			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 
 			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(EventTestData.getData3Original(), PriorStopWordProcess.class);
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData3Expected(), PriorStopWordProcess.class);
@@ -103,6 +105,11 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			
 			assertTrue(newZFrame.select("field1", "field2", "field3").except(zFrameOriginal.select("field1", "field2", "field3")).isEmpty());
 			assertTrue(zFrameOriginal.select("field1", "field2", "field3").except(newZFrame.select("field1", "field2", "field3")).isEmpty());
+	}
+
+	private List<StopWordsRemover<S, D, R, C, T>> getStopWordsRemovers() throws ZinggClientException {
+		stopWordRemoverUtility.buildStopWordRemovers();
+		return stopWordRemoverUtility.getStopWordsRemovers();
 	}
 
 }

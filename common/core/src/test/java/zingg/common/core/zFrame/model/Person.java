@@ -1,4 +1,4 @@
-package zingg.common.client.model;
+package zingg.common.core.zFrame.model;
 
 public class Person {
     public final String recid;
