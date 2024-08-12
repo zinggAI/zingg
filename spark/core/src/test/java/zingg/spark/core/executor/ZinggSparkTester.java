@@ -48,14 +48,14 @@ public class ZinggSparkTester {
     		spark = SparkSession
     				.builder()
     				.master("local[*]")
-    				.appName("Zingg" + "Junit")
+    				.appName("ZinggJunit")
+					.config("spark.debug.maxToStringFields", 100)
     				.getOrCreate();
     		ctx = new JavaSparkContext(spark.sparkContext());
     		JavaSparkContext.jarOfClass(IZingg.class);    
 			args = new Arguments();
 			zsCTX = new ZinggSparkContext();
 			zsCTX.init(spark);
-			
     	} catch (Throwable e) {
     		if (LOG.isDebugEnabled())
     			e.printStackTrace();
