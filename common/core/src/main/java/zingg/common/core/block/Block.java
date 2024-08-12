@@ -13,9 +13,12 @@ import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ListMap;
+import zingg.common.core.feature.FeatureFactory;
 import zingg.common.core.hash.HashFunction;
 
 public abstract class Block<D,R,C,T> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public static final Log LOG = LogFactory.getLog(Block.class);
 
@@ -117,24 +120,21 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		c.estimateElimCount();
 	}
 
-	public abstract T getDataTypeFromString(String t);
-
 	public Canopy<R>getBestNode(Tree<Canopy<R>> tree, Canopy<R>parent, Canopy<R>node,
 			List<FieldDefinition> fieldsOfInterest) throws Exception {
 		long least = Long.MAX_VALUE;
 		int maxElimination = 0;
 		Canopy<R>best = null;
-
 		for (FieldDefinition field : fieldsOfInterest) {
 			if (LOG.isDebugEnabled()){
 				LOG.debug("Trying for " + field + " with data type " + field.getDataType() + " and real dt " 
-					+ getDataTypeFromString(field.getDataType()));
+					+ getFeatureFactory().getDataTypeFromString(field.getDataType()));
 			}
 			//Class type = FieldClass.getFieldClassClass(field.getFieldClass());
 			FieldDefinition context = field;
 			if (least ==0) break;//how much better can it get?
 			// applicable functions
-			List<HashFunction<D,R,C,T>> functions = functionsMap.get(getDataTypeFromString(field.getDataType()));
+			List<HashFunction<D,R,C,T>> functions = functionsMap.get(getFeatureFactory().getDataTypeFromString(field.getDataType()));
 			if (LOG.isDebugEnabled()){
 				LOG.debug("functions are " + functions);
 			}
@@ -404,7 +404,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		}			
 	}
 
-	
+	public abstract FeatureFactory<T> getFeatureFactory();
 	
 	
 }
