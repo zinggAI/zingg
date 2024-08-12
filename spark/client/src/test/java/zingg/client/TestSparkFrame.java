@@ -17,7 +17,6 @@ import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import zingg.common.client.IArguments;
 import zingg.common.client.TestZFrameBase;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.IWithSession;
@@ -31,7 +30,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestSparkFrame extends TestZFrameBase<SparkSession, Dataset<Row>, Row, Column, DataType> {
     public static final Log LOG = LogFactory.getLog(TestSparkFrame.class);
-    public static IArguments args;
     public static JavaSparkContext ctx;
     public static SparkSession spark;
     public static IWithSession<SparkSession> iWithSession;

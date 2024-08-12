@@ -9,7 +9,7 @@ import zingg.common.core.model.PriorStopWordProcess;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestData {
+public class EventTestData {
     public static List<Event> createSampleEventData() {
 
         int row_id = 1;

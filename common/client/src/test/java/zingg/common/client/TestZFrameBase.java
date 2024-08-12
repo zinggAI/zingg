@@ -45,7 +45,7 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
 
 
     @Test
-    public void testCreateSparkDataFrameAndGetDF() throws Exception {
+    public void testCreateZFrameAndGetDF() throws Exception {
         List<Person> sampleDataSet = createSampleDataList();
 
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
@@ -64,7 +64,7 @@ public abstract class TestZFrameBase<S, D, R, C, T> {
     }
 
     @Test
-    public void testColumnsNamesandCount() throws Exception {
+    public void testColumnsNamesAndCount() throws Exception {
         List<Person> sampleDataSet = createSampleDataList();
 
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
