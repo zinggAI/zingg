@@ -13,7 +13,7 @@ public class EventTestData {
     public static List<Event> createSampleEventData() {
 
         int row_id = 1;
-        List<Event> sample = new ArrayList<>();
+        List<Event> sample = new ArrayList<Event>();
         sample.add(new Event(row_id++, 1942, "quit India", "Mahatma Gandhi"));
         sample.add(new Event(row_id++, 1919, "JallianWala", "Punjab"));
         sample.add(new Event(row_id++, 1930, "Civil Disob", "India"));
@@ -91,7 +91,7 @@ public class EventTestData {
     public static List<EventPair> createSampleClusterEventData() {
 
         int row_id = 1;
-        List<EventPair> sample = new ArrayList<>();
+        List<EventPair> sample = new ArrayList<EventPair>();
         sample.add(new EventPair(row_id++, 1942, "quit Nation", "Mahatma",1942, "quit Nation", "Mahatma", 1L));
         sample.add(new EventPair(row_id++, 1919, "JallianWal", "Punjb", 1919, "JallianWal", "Punjb", 2L));
         sample.add(new EventPair(row_id++, 1942, "quit N", "Mahatma", 1942, "quit N", "Mahatma", 1L));
@@ -138,7 +138,7 @@ public class EventTestData {
 
     public static List<Statement> getData1Original() {
 
-        List<Statement> sample = new ArrayList<>();
+        List<Statement> sample = new ArrayList<Statement>();
         sample.add(new Statement("The zingg is a Spark application"));
         sample.add(new Statement("It is very popular in data Science"));
         sample.add(new Statement("It is written in Java and Scala"));
@@ -149,7 +149,7 @@ public class EventTestData {
 
     public static List<Statement> getData1Expected() {
 
-        List<Statement> sample = new ArrayList<>();
+        List<Statement> sample = new ArrayList<Statement>();
         sample.add(new Statement("zingg spark application"));
         sample.add(new Statement("very popular in data science"));
         sample.add(new Statement("written in java and scala"));
@@ -160,7 +160,7 @@ public class EventTestData {
 
     public static List<PriorStopWordProcess> getData2Original() {
 
-        List<PriorStopWordProcess> sample = new ArrayList<>();
+        List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
         sample.add(new PriorStopWordProcess("10", "The zingg is a spark application", "two",
                 "Yes. a good application", "test"));
         sample.add(new PriorStopWordProcess("20", "It is very popular in Data Science", "Three", "true indeed",
@@ -173,7 +173,7 @@ public class EventTestData {
 
     public static List<PriorStopWordProcess> getData2Expected() {
 
-        List<PriorStopWordProcess> sample = new ArrayList<>();
+        List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
         sample.add(new PriorStopWordProcess("10", "zingg spark application", "two", "Yes. a good application", "test"));
         sample.add(new PriorStopWordProcess("20", "very popular data science", "Three", "true indeed", "test"));
         sample.add(new PriorStopWordProcess("30", "written java scala", "four", "", "test"));
@@ -184,7 +184,7 @@ public class EventTestData {
 
     public static List<PriorStopWordProcess> getData3Original() {
 
-        List<PriorStopWordProcess> sample = new ArrayList<>();
+        List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
         sample.add(new PriorStopWordProcess("10", "The zingg is a spark application", "two",
                 "Yes. a good application", "test"));
         sample.add(new PriorStopWordProcess("20", "It is very popular in Data Science", "Three", "true indeed",
@@ -197,7 +197,7 @@ public class EventTestData {
 
     public static List<PriorStopWordProcess> getData3Expected() {
 
-        List<PriorStopWordProcess> sample = new ArrayList<>();
+        List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
         sample.add(new PriorStopWordProcess("10", "zingg spark application", "two", "Yes. a good application", "test"));
         sample.add(new PriorStopWordProcess("20", "very popular data science", "Three", "true indeed", "test"));
         sample.add(new PriorStopWordProcess("30", "written java scala", "four", "", "test"));
@@ -208,7 +208,7 @@ public class EventTestData {
 
     public static List<PriorStopWordProcess> getData4original() {
 
-        List<PriorStopWordProcess> sample = new ArrayList<>();
+        List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
         sample.add(new PriorStopWordProcess("10", "The zingg is a spark application", "two",
                 "Yes. a good application", "test"));
         sample.add(new PriorStopWordProcess("20", "It is very popular in data science", "Three", "true indeed",
@@ -221,7 +221,7 @@ public class EventTestData {
 
     public static List<PostStopWordProcess> getData4Expected() {
 
-        List<PostStopWordProcess> sample = new ArrayList<>();
+        List<PostStopWordProcess> sample = new ArrayList<PostStopWordProcess>();
         sample.add(new PostStopWordProcess("1648811730857:10", "10", "1.0", "0.555555", "-1",
                 "The zingg spark application", "two", "Yes. good application", "test"));
         sample.add(new PostStopWordProcess("1648811730857:20", "20", "1.0", "1.0", "-1",
@@ -236,7 +236,7 @@ public class EventTestData {
 
     public static List<PriorStopWordProcess> getData5Original() {
 
-        List<PriorStopWordProcess> sample = new ArrayList<>();
+        List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
         sample.add(new PriorStopWordProcess("10", "The zingg is a spark application", "two",
                 "Yes. a good application", "test"));
         sample.add(new PriorStopWordProcess("20", "It is very popular in data science", "Three", "true indeed",
@@ -249,7 +249,7 @@ public class EventTestData {
 
     public static List<PostStopWordProcess> getData5Actual() {
 
-        List<PostStopWordProcess> sample = new ArrayList<>();
+        List<PostStopWordProcess> sample = new ArrayList<PostStopWordProcess>();
         sample.add(new PostStopWordProcess("1648811730857:10", "10", "1.0", "0.555555", "-1",
                 "The zingg spark application", "two", "Yes. good application", "test"));
         sample.add(new PostStopWordProcess("1648811730857:20", "20", "1.0", "1.0", "-1",

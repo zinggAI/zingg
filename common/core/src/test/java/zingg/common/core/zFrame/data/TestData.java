@@ -90,7 +90,7 @@ public class TestData {
 
     public static List<ClusterZScore> createSampleDataZScore() {
 
-        List<ClusterZScore> sample = new ArrayList<>();
+        List<ClusterZScore> sample = new ArrayList<ClusterZScore>();
         sample.add(new ClusterZScore(0L, "100", 900.0));
         sample.add(new ClusterZScore(1L, "100", 1001.0));
         sample.add(new ClusterZScore(1L, "100", 1002.0));
@@ -107,7 +107,7 @@ public class TestData {
 
     public static List<PairPartOne> createSampleDataCluster() {
 
-        List<PairPartOne> sample = new ArrayList<>();
+        List<PairPartOne> sample = new ArrayList<PairPartOne>();
         sample.add(new PairPartOne(1L, "100", 1001.0, "b"));
         sample.add(new PairPartOne(2L, "100", 1002.0, "a"));
         sample.add(new PairPartOne(3L, "100", 2001.0, "b"));
@@ -119,7 +119,7 @@ public class TestData {
 
     public static List<PairPartTwo> createSampleDataClusterWithNull() {
 
-        List<PairPartTwo> sample = new ArrayList<>();
+        List<PairPartTwo> sample = new ArrayList<PairPartTwo>();
         sample.add(new PairPartTwo(1L, "100", 1001.0, "b"));
         sample.add(new PairPartTwo(2L, "100", 1002.0, "a"));
         sample.add(new PairPartTwo(3L, "100", 2001.0, null));
@@ -131,7 +131,7 @@ public class TestData {
 
     public static List<InputWithZidAndSource> createSampleDataInput() {
 
-        List<InputWithZidAndSource> sample = new ArrayList<>();
+        List<InputWithZidAndSource> sample = new ArrayList<InputWithZidAndSource>();
         sample.add(new InputWithZidAndSource(1L, "fname1", "b"));
         sample.add(new InputWithZidAndSource(2L, "fname", "a"));
         sample.add(new InputWithZidAndSource(3L, "fna", "b"));

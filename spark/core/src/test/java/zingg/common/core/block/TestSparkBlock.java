@@ -19,7 +19,7 @@ import zingg.spark.core.util.SparkHashUtil;
 public class TestSparkBlock extends TestBlockBase<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
     public static ZinggSparkContext zsCTX = new ZinggSparkContext();
-    public static IWithSession<SparkSession> iWithSession = new WithSession<>();
+    public static IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
 
     public TestSparkBlock(SparkSession sparkSession) throws ZinggClientException {
         super(new SparkDFObjectUtil(iWithSession), new SparkHashUtil(sparkSession), new SparkBlockingTreeUtil(sparkSession, zsCTX.getPipeUtil()));

@@ -81,8 +81,8 @@ public abstract class TestZFrameBase<S, D, R, C> {
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
 
         //assert on fields
-        List<String> fieldsInTestData = new ArrayList<>();
-        List<String> fieldsInZFrame = new ArrayList<>();
+        List<String> fieldsInTestData = new ArrayList<String>();
+        List<String> fieldsInZFrame = new ArrayList<String>();
         Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         Arrays.stream(zFrame.fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
         assertEquals(fieldsInTestData, fieldsInZFrame,
@@ -198,8 +198,8 @@ public abstract class TestZFrameBase<S, D, R, C> {
         List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
 
-        List<String> fieldsInZFrame = new ArrayList<>();
-        List<String> fieldsInTestData = new ArrayList<>();
+        List<String> fieldsInZFrame = new ArrayList<String>();
+        List<String> fieldsInTestData = new ArrayList<String>();
         Arrays.stream(zFrame.drop("recid").fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
         Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         fieldsInTestData.remove("recid");
@@ -212,8 +212,8 @@ public abstract class TestZFrameBase<S, D, R, C> {
         List<Person> sampleDataSet = createSampleDataList(); //List<TestPOJO>
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleDataSet, Person.class);
 
-        List<String> fieldsInZFrame = new ArrayList<>();
-        List<String> fieldsInTestData = new ArrayList<>();
+        List<String> fieldsInZFrame = new ArrayList<String>();
+        List<String> fieldsInTestData = new ArrayList<String>();
         Arrays.stream(zFrame.drop("recid", "surname", "postcode").fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
         Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         fieldsInTestData.remove("recid");
@@ -298,8 +298,8 @@ public abstract class TestZFrameBase<S, D, R, C> {
         int newColVal = 36;
         ZFrame<D, R, C> zFrameWithAddedColumn = zFrame.withColumn(newCol, newColVal);
 
-        List<String> fieldsInTestData = new ArrayList<>();
-        List<String> fieldsInZFrame = new ArrayList<>();
+        List<String> fieldsInTestData = new ArrayList<String>();
+        List<String> fieldsInZFrame = new ArrayList<String>();
         Arrays.stream(zFrameWithAddedColumn.fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
         Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         fieldsInTestData.add(newCol);
@@ -322,8 +322,8 @@ public abstract class TestZFrameBase<S, D, R, C> {
         double newColVal = 3.14;
         ZFrame<D, R, C> zFrameWithAddedColumn = zFrame.withColumn(newCol, newColVal);
 
-        List<String> fieldsInTestData = new ArrayList<>();
-        List<String> fieldsInZFrame = new ArrayList<>();
+        List<String> fieldsInTestData = new ArrayList<String>();
+        List<String> fieldsInZFrame = new ArrayList<String>();
         Arrays.stream(zFrameWithAddedColumn.fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
         Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         fieldsInTestData.add(newCol);
@@ -346,8 +346,8 @@ public abstract class TestZFrameBase<S, D, R, C> {
         String newColVal = "zingg";
         ZFrame<D, R, C> zFrameWithAddedColumn = zFrame.withColumn(newCol, newColVal);
 
-        List<String> fieldsInTestData = new ArrayList<>();
-        List<String> fieldsInZFrame = new ArrayList<>();
+        List<String> fieldsInTestData = new ArrayList<String>();
+        List<String> fieldsInZFrame = new ArrayList<String>();
         Arrays.stream(zFrameWithAddedColumn.fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
         Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         fieldsInTestData.add(newCol);
@@ -370,8 +370,8 @@ public abstract class TestZFrameBase<S, D, R, C> {
         String newCol = NEW_COLUMN;
         ZFrame<D, R, C> zFrameWithAddedColumn = zFrame.withColumn(newCol, zFrame.col(oldCol));
 
-        List<String> fieldsInTestData = new ArrayList<>();
-        List<String> fieldsInZFrame = new ArrayList<>();
+        List<String> fieldsInTestData = new ArrayList<String>();
+        List<String> fieldsInZFrame = new ArrayList<String>();
         Arrays.stream(zFrameWithAddedColumn.fields()).iterator().forEachRemaining(fieldZ -> fieldsInZFrame.add(fieldZ.getName()));
         Arrays.stream(Person.class.getFields()).sequential().forEach(fieldS -> fieldsInTestData.add(fieldS.getName()));
         fieldsInTestData.add(newCol);
