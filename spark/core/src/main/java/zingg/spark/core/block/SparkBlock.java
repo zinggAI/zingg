@@ -8,7 +8,9 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ListMap;
 import zingg.common.core.block.Block;
+import zingg.common.core.feature.FeatureFactory;
 import zingg.common.core.hash.HashFunction;
+import zingg.spark.core.feature.SparkFeatureFactory;
 
 public class SparkBlock extends Block<Dataset<Row>, Row, Column, DataType> {
 
@@ -22,11 +24,10 @@ public class SparkBlock extends Block<Dataset<Row>, Row, Column, DataType> {
     ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> functionsMap, long maxSize) {
 		super(training, dupes, functionsMap, maxSize);
 	}
-
-
+    
     @Override
-    public DataType getDataTypeFromString(String t) {
-        return DataType.fromDDL(t);
-    }
+    public FeatureFactory<DataType> getFeatureFactory() {
+        return new SparkFeatureFactory();
+    }    
 
 }
