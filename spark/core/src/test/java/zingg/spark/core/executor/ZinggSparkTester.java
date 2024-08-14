@@ -20,15 +20,8 @@ import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IArguments;
 import zingg.common.client.IZingg;
-import org.apache.spark.sql.SparkSession;
 
-import zingg.spark.client.util.SparkDSUtil;
-import zingg.spark.client.util.SparkPipeUtil;
 import zingg.spark.core.context.ZinggSparkContext;
-import zingg.spark.core.util.SparkBlockingTreeUtil;
-import zingg.spark.core.util.SparkGraphUtil;
-import zingg.spark.core.util.SparkHashUtil;
-import zingg.spark.core.util.SparkModelUtil;
 
 public class ZinggSparkTester {
 
@@ -91,10 +84,5 @@ public class ZinggSparkTester {
 
 
 		return spark.createDataFrame(nums, structType);
-
-
-
-
-
 	}
 }
