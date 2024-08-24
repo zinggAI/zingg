@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ public class TestArguments {
 
 	public static final Log LOG = LogFactory.getLog(TestArguments.class);
 	protected ArgumentsUtil argsUtil = new ArgumentsUtil();
+	
 	@Test
 	public void testSubstituteVariablesWithAllEnvVarSet() {
 		try {
@@ -242,8 +244,33 @@ public class TestArguments {
 			
 		
 	}
-	
-	
-	
+
+	@Test
+	public void testJsonStringify(){
+		IArguments argsFromJsonFile;  
+		try{
+			//Converting to JSON using toString()
+			argsFromJsonFile = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
+			String strFromJsonFile = argsFromJsonFile.toString();
+
+			IArguments argsFullCycle = argsUtil.createArgumentsFromJSONString(strFromJsonFile, "");
+
+			assertEquals(argsFullCycle.getFieldDefinition().get(0), argsFromJsonFile.getFieldDefinition().get(0));
+			assertEquals(argsFullCycle.getFieldDefinition().get(2), argsFromJsonFile.getFieldDefinition().get(2));
+			assertEquals(argsFullCycle.getModelId(), argsFromJsonFile.getModelId());
+			assertEquals(argsFullCycle.getZinggModelDir(), argsFromJsonFile.getZinggModelDir());
+			assertEquals(argsFullCycle.getNumPartitions(), argsFromJsonFile.getNumPartitions());
+			assertEquals(argsFullCycle.getLabelDataSampleSize() ,argsFromJsonFile.getLabelDataSampleSize());
+			assertEquals(argsFullCycle.getTrainingSamples(),argsFromJsonFile.getTrainingSamples());
+			assertEquals(argsFullCycle.getOutput(),argsFromJsonFile.getOutput());
+			assertEquals(argsFullCycle.getData(),argsFromJsonFile.getData());
+			assertEquals(argsFullCycle.getZinggDir(),argsFromJsonFile.getZinggDir());
+			assertEquals(argsFullCycle.getJobId(),argsFromJsonFile.getJobId());
+
+		} catch (Exception | ZinggClientException e) {
+			e.printStackTrace();
+		}
+
+	}		
 	
 }

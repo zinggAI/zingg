@@ -22,11 +22,13 @@ Very much! Zingg uses Spark and ML under the hood so that you don't have to worr
 
 ## Is Zingg an MDM?
 
-No, Zingg is not an MDM. An MDM is the system of record, it has its own store where linked and mastered records are saved. Zingg enables MDM but is not a system of record. You can build an MDM in a data store of your choice using Zingg however.
+An MDM is the system of record, it has its own store where linked and mastered records are saved. Zingg Community Version is not a complete MDM but it can be sed to build an MDM. You can build an MDM in a data store of your choice using Zingg Community Version. Zingg Enterprise Version is a lakehouse/warehouse native MDM. 
 
 ## Is Zingg a CDP ?
 
-No, Zingg is not a CDP, as it does not stream events or customer data through different channels. Zingg does overlap with the CDPs identity resolution and building customer 360 views. Here is an [article](https://hightouch.com/blog/warehouse-identity-resolution/) describing how you can build your own CDP on the warehouse with Zingg.
+No, Zingg is not a CDP, as it does not stream events or customer data through different channels. However, if you want to base your customer platform off your warehouse or datalake, Zing gis a great fit. You can leverage existing ETL, observability and other tools which are part of your data stack and use Zingg for identity. 
+Zingg Comminity Version can be used to build a composable CDP by identity resolution natively on the warehouse and datalake and building customer 360 views. Zingg's identity resolution is far more powerful than what is offered by any out of the box CDP. 
+Zingg Enterprise's probabilistic and deterministic matching take this further beyond. Here is an [article](https://hightouch.com/blog/warehouse-identity-resolution/) describing how you can build your own CDP on the warehouse with Zingg.
 
 ## I can do Entity Resolution using a graph database like TigerGraph/Neo4J, why do I need Zingg ?
 

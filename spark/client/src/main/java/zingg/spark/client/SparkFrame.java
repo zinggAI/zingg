@@ -87,7 +87,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return df.collectAsList();
     }
 
-    public List<String> collectAsListOfStrings() {
+    public List<String> collectFirstColumn() {
         return df.as(Encoders.STRING()).collectAsList();
     }
     
@@ -218,6 +218,14 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     public ZFrame<Dataset<Row>, Row, Column> repartition(int nul, Column c){
         return new SparkFrame(df.repartition(nul, c));
     }
+
+    public ZFrame<Dataset<Row>, Row, Column> repartition(int num,scala.collection.Seq<Column> partitionExprs){
+         return new SparkFrame(df.repartition(num, partitionExprs));
+    }
+
+    public ZFrame<Dataset<Row>, Row, Column> repartition(scala.collection.Seq<Column> partitionExprs){
+        return new SparkFrame(df.repartition(partitionExprs));
+   }
 
     @Override
     public Column gt(String c) {
@@ -448,7 +456,20 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     }
 
 
+	@Override
+	public ZFrame<Dataset<Row>, Row, Column> intersect(ZFrame<Dataset<Row>, Row, Column> other) {
+		return new SparkFrame(df.intersect(other.df())); 
+	}
 
+	@Override
+	public Column substr(Column col, int startPos, int len) {
+		return col.substr(startPos, len);
+	}
+	
+    @Override
+    public Column gt(Column column1, Column column2) {
+		return column1.gt(column2);
+	}
 	
 }
 	

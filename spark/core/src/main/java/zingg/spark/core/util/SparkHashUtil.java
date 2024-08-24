@@ -9,19 +9,20 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.core.hash.HashFnFromConf;
 import zingg.common.core.hash.HashFunction;
 import zingg.common.core.util.BaseHashUtil;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.hash.SparkHashFunctionRegistry;
 
 
-public class SparkHashUtil extends BaseHashUtil<ZSparkSession,Dataset<Row>, Row, Column,DataType>{
+public class SparkHashUtil extends BaseHashUtil<SparkSession,Dataset<Row>, Row, Column,DataType>{
 
-	public SparkHashUtil(ZSparkSession spark) {
+	public SparkHashUtil(SparkSession spark) {
 		super(spark);
 	}
 	
     public HashFunction<Dataset<Row>, Row, Column,DataType> registerHashFunction(HashFnFromConf scriptArg) {
         HashFunction<Dataset<Row>, Row, Column,DataType> fn = new SparkHashFunctionRegistry().getFunction(scriptArg.getName());
-        getSessionObj().getSession().udf().register(fn.getName(), (UDF1) fn, fn.getReturnType());
+
+        SparkFnRegistrar.registerUDF1(getSessionObj(), fn.getName(), (UDF1) fn, fn.getReturnType());
         return fn;
     }
     

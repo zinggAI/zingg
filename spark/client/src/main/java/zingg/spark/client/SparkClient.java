@@ -1,42 +1,39 @@
 package zingg.spark.client;
 
-import java.io.Serializable;
-
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.Client;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
-import zingg.common.client.IZinggFactory;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.license.IZinggLicense;
-
+import zingg.common.client.util.PipeUtilBase;
+import zingg.spark.client.util.SparkPipeUtil;
 /**
  * This is the main point of interface with the Zingg matching product.
  * 
  * @author sgoyal
  *
  */
-public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column, DataType>  implements Serializable {
+public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column, DataType> {
 	
 	private static final long serialVersionUID = 1L;
+	protected static final String zFactoryClassName = "zingg.spark.core.executor.SparkZFactory";
 
 	public SparkClient(IArguments args, ClientOptions options) throws ZinggClientException {
-		super(args, options);
+		super(args, options, zFactoryClassName);
 		
 	}
-
-	public SparkClient(IArguments args, ClientOptions options, ZSparkSession s) throws ZinggClientException {
-		super(args, options, s);
-	}
+		
+	
 
 	public SparkClient(IArguments args, ClientOptions options, SparkSession s) throws ZinggClientException {
-		this(args, options, new ZSparkSession(s,null));
+		super(args, options, s, zFactoryClassName);
 	}
+
 	
 	public SparkClient() {
 		/*SparkSession session = SparkSession
@@ -45,18 +42,15 @@ public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column
                 .getOrCreate();
 		JavaSparkContext ctx = JavaSparkContext.fromSparkContext(session.sparkContext());
         JavaSparkContext.jarOfClass(IZingg.class);
+		
 		*/
+		super(zFactoryClassName);
 
 	}
 
-	@Override
-	public IZinggFactory getZinggFactory() throws InstantiationException, IllegalAccessException, ClassNotFoundException{
-		return (IZinggFactory) Class.forName("zingg.spark.core.executor.SparkZFactory").newInstance();
-	}
-	
 
 	@Override
-	public Client<ZSparkSession, Dataset<Row>, Row, Column, DataType> getClient(IArguments args, 
+	public Client<SparkSession, Dataset<Row>, Row, Column, DataType> getClient(IArguments args, 
 		ClientOptions options) throws ZinggClientException {
 		// TODO Auto-generated method stub
 		SparkClient client = null;
@@ -77,9 +71,29 @@ public class SparkClient extends Client<ZSparkSession, Dataset<Row>, Row, Column
 	}
 
 	@Override
-	protected IZinggLicense getLicense(String license) throws ZinggClientException {
-		return null;
+	public SparkSession getSession() {
+		if (session!=null) {
+			return session;
+		} else {
+			SparkSession s = SparkSession
+                    .builder()
+                    .appName("Zingg")
+                    .getOrCreate();	
+			setSession(s);
+			return s;
+		}
+		
 	}
 	
+	@Override
+	public PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> getPipeUtil() {
+		if (pipeUtil!=null) {
+			return pipeUtil;
+		} else {
+			PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> p = new SparkPipeUtil(session);
+			setPipeUtil(p);
+			return p;
+		}
+	}
 	
 }

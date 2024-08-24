@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ruleset name="PMD-Rules">
+    <description>lafaspot PMD rules.</description>
+    <!-- String Instantiation -->
+    <rule ref="rulesets/java/strings.xml/StringInstantiation"><priority>1</priority></rule>
+    <!-- String Instantiation -->
+    <rule ref="rulesets/java/logging-java.xml/GuardLogStatementJavaUtil"><priority>1</priority></rule>
+    <!-- Cyclomatic Complexity -->
+    <!-- <rule ref="rulesets/java/codesize.xml/CyclomaticComplexity"><priority>1</priority></rule> -->
+</ruleset>

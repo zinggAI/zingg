@@ -22,6 +22,7 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
@@ -30,11 +31,11 @@ import zingg.common.core.feature.Feature;
 import zingg.common.core.model.Model;
 import zingg.common.core.similarity.function.SimFunction;
 import zingg.spark.client.SparkFrame;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.similarity.SparkSimFunction;
 import zingg.spark.core.similarity.SparkTransformer;
 
-public class SparkModel extends Model<ZSparkSession, DataType, Dataset<Row>, Row, Column>{
+public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row, Column>{
 	
 	public static final Log LOG = LogFactory.getLog(SparkModel.class);
 	//private Map<FieldDefinition, Feature> featurers;
@@ -43,19 +44,20 @@ public class SparkModel extends Model<ZSparkSession, DataType, Dataset<Row>, Row
 	LogisticRegression lr;
 	Transformer transformer;
 	BinaryClassificationEvaluator binaryClassificationEvaluator;
-	List<String> columnsAdded;
+	
 	VectorValueExtractor vve;
 	
-	public SparkModel(Map<FieldDefinition, Feature<DataType>> f) {
+	public SparkModel(SparkSession s, Map<FieldDefinition, Feature<DataType>> f) {
+		super(s);
 		featureCreators = new ArrayList<SparkTransformer>();
 		pipelineStage = new ArrayList<PipelineStage> ();
-		columnsAdded = new ArrayList<String> ();
 		int count = 0;
 		for (FieldDefinition fd : f.keySet()) {
 			Feature fea = f.get(fd);
 			List<SimFunction> sfList = fea.getSimFunctions();
 			for (SimFunction sf : sfList) {
-				String outputCol = ColName.SIM_COL + count;
+				
+				String outputCol = getColumnName(fd.fieldName, sf.getName(), count);
 				columnsAdded.add(outputCol);	
 				SparkTransformer st = new SparkTransformer(fd.fieldName, new SparkSimFunction(sf), outputCol);
 				count++;
@@ -92,9 +94,11 @@ public class SparkModel extends Model<ZSparkSession, DataType, Dataset<Row>, Row
 		columnsAdded.add(ColName.RAW_PREDICTION);	
 	}
 	
-	
-	
 	public void fit(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
+		fitCore(pos, neg);
+	}
+	
+	protected ZFrame<Dataset<Row>,Row,Column> fitCore(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
 		//transform
 		ZFrame<Dataset<Row>,Row,Column> input = transform(pos.union(neg)).coalesce(1).cache();
 		//if (LOG.isDebugEnabled()) input.write().csv("/tmp/input/" + System.currentTimeMillis());
@@ -119,6 +123,7 @@ public class SparkModel extends Model<ZSparkSession, DataType, Dataset<Row>, Row
 		CrossValidatorModel cvModel = cv.fit(input.df());
 		transformer = cvModel;
 		LOG.debug("threshold after fitting is " + lr.getThreshold());
+		return input;
 	}
 	
 	
@@ -126,13 +131,20 @@ public class SparkModel extends Model<ZSparkSession, DataType, Dataset<Row>, Row
 		transformer =  CrossValidatorModel.load(path);
 	}
 	
-	
 	public ZFrame<Dataset<Row>,Row,Column> predict(ZFrame<Dataset<Row>,Row,Column> data) {
 		return predict(data, true);
 	}
 	
 	@Override
 	public ZFrame<Dataset<Row>,Row,Column> predict(ZFrame<Dataset<Row>,Row,Column> data, boolean isDrop) {
+		return dropFeatureCols(predictCore(data), isDrop);
+	}
+
+
+	
+	
+	@Override
+	protected ZFrame<Dataset<Row>,Row,Column> predictCore(ZFrame<Dataset<Row>,Row,Column> data) {
 		//create features
 		LOG.info("threshold while predicting is " + lr.getThreshold());
 		//lr.setThreshold(0.95);
@@ -142,11 +154,7 @@ public class SparkModel extends Model<ZSparkSession, DataType, Dataset<Row>, Row
 		//LOG.debug(predictWithFeatures.schema());
 		predictWithFeatures = vve.transform(predictWithFeatures);
 		//LOG.debug("Original schema is " + predictWithFeatures.schema());
-		if (isDrop) {
-			Dataset<Row> returnDS = predictWithFeatures.drop(columnsAdded.toArray(new String[columnsAdded.size()]));
-			//LOG.debug("Return schema after dropping additional columns is " + returnDS.schema());
-			return new SparkFrame(returnDS);
-		}
+		
 		LOG.debug("Return schema is " + predictWithFeatures.schema());
 		return new SparkFrame(predictWithFeatures);
 		
@@ -170,13 +178,13 @@ public class SparkModel extends Model<ZSparkSession, DataType, Dataset<Row>, Row
 
 
 	@Override
-	public void register(ZSparkSession spark) {
+	public void register() {
 		if (featureCreators != null) {
 			for (SparkTransformer bsf: featureCreators) {
-				bsf.register(spark);
+				bsf.register(session);
 			}
 		}
-		vve.register(spark);
+		vve.register(session);
 		
 	}
 	

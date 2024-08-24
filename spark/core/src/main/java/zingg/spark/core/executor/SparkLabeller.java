@@ -6,20 +6,22 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
+import zingg.common.client.options.ZinggOptions;
+
+import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.Labeller;
-import zingg.spark.client.ZSparkSession;
+
 
 /**
  * Spark specific implementation of Labeller
  * 
  *
  */
-public class SparkLabeller extends Labeller<ZSparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkLabeller";
@@ -30,14 +32,14 @@ public class SparkLabeller extends Labeller<ZSparkSession, Dataset<Row>, Row, Co
 	}
 
 	public SparkLabeller(ZinggSparkContext sparkContext) {
-		setZinggOptions(ZinggOptions.LABEL);
+		setZinggOption(ZinggOptions.LABEL);
 		setContext(sparkContext);
 	}
 
   @Override
-  public void init(IArguments args, IZinggLicense license)  throws ZinggClientException {
-    super.init(args, license);
-    getContext().init(license);
+  public void init(IArguments args, SparkSession s)  throws ZinggClientException {
+    super.init(args,s);
+    getContext().init(s);
   }
 	
 	

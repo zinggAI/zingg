@@ -54,6 +54,13 @@
 			<groupId>graphframes</groupId>
 			<artifactId>graphframes</artifactId>
 			<version>${graphframes.version}</version>
+			<exclusions>
+				<exclusion>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>	
 		</dependency>
 		<dependency>
 			<groupId>com.google.protobuf</groupId>

@@ -32,7 +32,7 @@ public class FirstChars extends BaseHash<String,String>{
 				r = field.trim().substring(0, endIndex);
 			}
 			}
-			LOG.debug("Applying " + this.getName() + " on " + field + " and returning " + r);
+			//LOG.debug("Applying " + this.getName() + " on " + field + " and returning " + r);
 			return r;
 	 }
 

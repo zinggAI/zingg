@@ -4,7 +4,8 @@ import java.util.HashMap;
 
 import zingg.common.client.IZingg;
 import zingg.common.client.IZinggFactory;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOption;
+import zingg.common.client.options.ZinggOptions;
 import zingg.spark.core.executor.SparkDocumenter;
 import zingg.spark.core.executor.SparkFindAndLabeller;
 import zingg.spark.core.executor.SparkLabelUpdater;
@@ -20,7 +21,7 @@ public class SparkZFactory implements IZinggFactory{
 
     public SparkZFactory() {}
 
-    public static HashMap<ZinggOptions, String> zinggers = new  HashMap<ZinggOptions, String>();
+    public static HashMap<ZinggOption, String> zinggers = new  HashMap<ZinggOption, String>();
 
     static {
         zinggers.put(ZinggOptions.TRAIN, SparkTrainer.name);
@@ -36,7 +37,7 @@ public class SparkZFactory implements IZinggFactory{
         zinggers.put(ZinggOptions.PEEK_MODEL, SparkPeekModel.name);
     }
 
-    public IZingg get(ZinggOptions z) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public IZingg get(ZinggOption z) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
         return (IZingg) Class.forName(zinggers.get(z)).newInstance();
     }
 
