@@ -20,6 +20,31 @@ public final class ConnectPlugins {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_SubmitZinggJob_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_FieldDefinition_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_FieldDefinition_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Pipe_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Pipe_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Pipe_PropsEntry_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Pipe_PropsEntry_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Arguments_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Arguments_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ClientOptions_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ClientOptions_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -29,10 +54,65 @@ public final class ConnectPlugins {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\025connect_plugins.proto\">\n\016SubmitZinggJo" +
-      "b\022\022\n\004args\030\001 \001(\tR\004args\022\030\n\007options\030\002 \001(\tR\007" +
-      "optionsB\035\n\031zingg.spark.connect.protoP\001b\006" +
-      "proto3"
+      "\n\025connect_plugins.proto\"\251\001\n\016SubmitZinggJ" +
+      "ob\022(\n\targumnets\030\001 \001(\0132\n.ArgumentsR\targum" +
+      "nets\022/\n\013cli_options\030\002 \001(\0132\016.ClientOption" +
+      "sR\ncliOptions\022)\n\016in_memory_date\030\003 \001(\014H\000R" +
+      "\014inMemoryDate\210\001\001B\021\n\017_in_memory_date\"\200\002\n\017" +
+      "FieldDefinition\022)\n\nmatch_type\030\001 \001(\0162\n.Ma" +
+      "tchTypeR\tmatchType\022\033\n\tdata_type\030\002 \001(\tR\010d" +
+      "ataType\022\035\n\nfield_name\030\003 \001(\tR\tfieldName\022\026" +
+      "\n\006fields\030\004 \001(\tR\006fields\022\"\n\nstop_words\030\005 \001" +
+      "(\tH\000R\tstopWords\210\001\001\022)\n\rabbreviations\030\006 \001(" +
+      "\tH\001R\rabbreviations\210\001\001B\r\n\013_stop_wordsB\020\n\016" +
+      "_abbreviations\"\374\001\n\004Pipe\022\022\n\004name\030\001 \001(\tR\004n" +
+      "ame\022#\n\006format\030\002 \001(\0162\013.DataFormatR\006format" +
+      "\022&\n\005props\030\003 \003(\0132\020.Pipe.PropsEntryR\005props" +
+      "\022&\n\014schema_field\030\004 \001(\tH\000R\013schemaField\210\001\001" +
+      "\022\027\n\004mode\030\005 \001(\tH\001R\004mode\210\001\001\0328\n\nPropsEntry\022" +
+      "\020\n\003key\030\001 \001(\tR\003key\022\024\n\005value\030\002 \001(\tR\005value:" +
+      "\0028\001B\017\n\r_schema_fieldB\007\n\005_mode\"\276\004\n\tArgume" +
+      "nts\022\035\n\006output\030\001 \003(\0132\005.PipeR\006output\022\031\n\004da" +
+      "ta\030\002 \003(\0132\005.PipeR\004data\022\033\n\tzingg_dir\030\003 \001(\t" +
+      "R\010zinggDir\0220\n\020training_samples\030\004 \003(\0132\005.P" +
+      "ipeR\017trainingSamples\022=\n\021fiield_definitio" +
+      "n\030\005 \003(\0132\020.FieldDefinitionR\020fiieldDefinit" +
+      "ion\022%\n\016num_partitions\030\006 \001(\005R\rnumPartitio" +
+      "ns\0223\n\026label_data_sample_size\030\007 \001(\002R\023labe" +
+      "lDataSampleSize\022\031\n\010model_id\030\010 \001(\tR\007model" +
+      "Id\022\034\n\tthreshold\030\t \001(\002R\tthreshold\022\025\n\006job_" +
+      "id\030\n \001(\005R\005jobId\022\'\n\017collect_metrics\030\013 \001(\010" +
+      "R\016collectMetrics\022!\n\014show_concise\030\014 \001(\010R\013" +
+      "showConcise\022*\n\021stop_words_cutoff\030\r \001(\002R\017" +
+      "stopWordsCutoff\022\035\n\nblock_size\030\016 \001(\005R\tblo" +
+      "ckSize\022\033\n\006column\030\017 \001(\tH\000R\006column\210\001\001B\t\n\007_" +
+      "column\"\302\004\n\rClientOptions\022\024\n\005phase\030\001 \001(\tR" +
+      "\005phase\022\030\n\007license\030\002 \001(\tR\007license\022\024\n\005emai" +
+      "l\030\003 \001(\tR\005email\022\022\n\004conf\030\004 \001(\tR\004conf\022#\n\npr" +
+      "eprocess\030\005 \001(\tH\000R\npreprocess\210\001\001\022\032\n\006job_i" +
+      "d\030\006 \001(\tH\001R\005jobId\210\001\001\022\033\n\006format\030\007 \001(\tH\002R\006f" +
+      "ormat\210\001\001\022 \n\tzingg_dir\030\010 \001(\tH\003R\010zinggDir\210" +
+      "\001\001\022\036\n\010model_id\030\t \001(\tH\004R\007modelId\210\001\001\022,\n\017co" +
+      "llect_metrics\030\n \001(\tH\005R\016collectMetrics\210\001\001" +
+      "\022&\n\014show_concise\030\013 \001(\tH\006R\013showConcise\210\001\001" +
+      "\022\037\n\010location\030\014 \001(\tH\007R\010location\210\001\001\022\033\n\006col" +
+      "umn\030\r \001(\tH\010R\006column\210\001\001\022\033\n\006remote\030\016 \001(\tH\t" +
+      "R\006remote\210\001\001B\r\n\013_preprocessB\t\n\007_job_idB\t\n" +
+      "\007_formatB\014\n\n_zingg_dirB\013\n\t_model_idB\022\n\020_" +
+      "collect_metricsB\017\n\r_show_conciseB\013\n\t_loc" +
+      "ationB\t\n\007_columnB\t\n\007_remote*\336\001\n\tMatchTyp" +
+      "e\022\014\n\010MT_FUZZY\020\000\022\014\n\010MT_EXACT\020\001\022\017\n\013MT_DONT" +
+      "_USE\020\002\022\014\n\010MT_EMAIL\020\003\022\016\n\nMT_PINCODE\020\004\022\024\n\020" +
+      "MT_NULL_OR_BLANK\020\005\022\013\n\007MT_TEXT\020\006\022\016\n\nMT_NU" +
+      "MERIC\020\007\022\031\n\025MT_NUMERIC_WITH_UNITS\020\010\022\033\n\027MT" +
+      "_ONLY_ALPHABETS_EXACT\020\t\022\033\n\027MT_ONLY_ALPHA" +
+      "BETS_FUZZY\020\n*\314\001\n\nDataFormat\022\n\n\006DF_CSV\020\000\022" +
+      "\016\n\nDF_PARQUET\020\001\022\013\n\007DF_JSON\020\002\022\013\n\007DF_TEXT\020" +
+      "\003\022\n\n\006DF_XLS\020\004\022\013\n\007DF_AVRO\020\005\022\013\n\007DF_JDBC\020\006\022" +
+      "\020\n\014DF_CASSANDRA\020\007\022\020\n\014DF_SNOWFLAKE\020\010\022\016\n\nD" +
+      "F_ELASTIC\020\t\022\r\n\tDF_EXACOL\020\n\022\016\n\nDF_BIGQUEY" +
+      "\020\013\022\017\n\013DF_INMEMORY\020\014B\035\n\031zingg.spark.conne" +
+      "ct.protoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -43,7 +123,37 @@ public final class ConnectPlugins {
     internal_static_SubmitZinggJob_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_SubmitZinggJob_descriptor,
-        new java.lang.String[] { "Args", "Options", });
+        new java.lang.String[] { "Argumnets", "CliOptions", "InMemoryDate", });
+    internal_static_FieldDefinition_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_FieldDefinition_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_FieldDefinition_descriptor,
+        new java.lang.String[] { "MatchType", "DataType", "FieldName", "Fields", "StopWords", "Abbreviations", });
+    internal_static_Pipe_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_Pipe_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Pipe_descriptor,
+        new java.lang.String[] { "Name", "Format", "Props", "SchemaField", "Mode", });
+    internal_static_Pipe_PropsEntry_descriptor =
+      internal_static_Pipe_descriptor.getNestedTypes().get(0);
+    internal_static_Pipe_PropsEntry_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Pipe_PropsEntry_descriptor,
+        new java.lang.String[] { "Key", "Value", });
+    internal_static_Arguments_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_Arguments_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Arguments_descriptor,
+        new java.lang.String[] { "Output", "Data", "ZinggDir", "TrainingSamples", "FiieldDefinition", "NumPartitions", "LabelDataSampleSize", "ModelId", "Threshold", "JobId", "CollectMetrics", "ShowConcise", "StopWordsCutoff", "BlockSize", "Column", });
+    internal_static_ClientOptions_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_ClientOptions_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ClientOptions_descriptor,
+        new java.lang.String[] { "Phase", "License", "Email", "Conf", "Preprocess", "JobId", "Format", "ZinggDir", "ModelId", "CollectMetrics", "ShowConcise", "Location", "Column", "Remote", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

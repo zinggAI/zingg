@@ -3,31 +3,335 @@
 isort:skip_file
 """
 import builtins
+import collections.abc
 import google.protobuf.descriptor
+import google.protobuf.internal.containers
+import google.protobuf.internal.enum_type_wrapper
 import google.protobuf.message
 import sys
+import typing
 
-if sys.version_info >= (3, 8):
+if sys.version_info >= (3, 10):
     import typing as typing_extensions
 else:
     import typing_extensions
 
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
+class _MatchType:
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: typing_extensions.TypeAlias = ValueType
+
+class _MatchTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_MatchType.ValueType], builtins.type):
+    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    MT_FUZZY: _MatchType.ValueType  # 0
+    MT_EXACT: _MatchType.ValueType  # 1
+    MT_DONT_USE: _MatchType.ValueType  # 2
+    MT_EMAIL: _MatchType.ValueType  # 3
+    MT_PINCODE: _MatchType.ValueType  # 4
+    MT_NULL_OR_BLANK: _MatchType.ValueType  # 5
+    MT_TEXT: _MatchType.ValueType  # 6
+    MT_NUMERIC: _MatchType.ValueType  # 7
+    MT_NUMERIC_WITH_UNITS: _MatchType.ValueType  # 8
+    MT_ONLY_ALPHABETS_EXACT: _MatchType.ValueType  # 9
+    MT_ONLY_ALPHABETS_FUZZY: _MatchType.ValueType  # 10
+
+class MatchType(_MatchType, metaclass=_MatchTypeEnumTypeWrapper): ...
+
+MT_FUZZY: MatchType.ValueType  # 0
+MT_EXACT: MatchType.ValueType  # 1
+MT_DONT_USE: MatchType.ValueType  # 2
+MT_EMAIL: MatchType.ValueType  # 3
+MT_PINCODE: MatchType.ValueType  # 4
+MT_NULL_OR_BLANK: MatchType.ValueType  # 5
+MT_TEXT: MatchType.ValueType  # 6
+MT_NUMERIC: MatchType.ValueType  # 7
+MT_NUMERIC_WITH_UNITS: MatchType.ValueType  # 8
+MT_ONLY_ALPHABETS_EXACT: MatchType.ValueType  # 9
+MT_ONLY_ALPHABETS_FUZZY: MatchType.ValueType  # 10
+global___MatchType = MatchType
+
+class _DataFormat:
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: typing_extensions.TypeAlias = ValueType
+
+class _DataFormatEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_DataFormat.ValueType], builtins.type):
+    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    DF_CSV: _DataFormat.ValueType  # 0
+    DF_PARQUET: _DataFormat.ValueType  # 1
+    DF_JSON: _DataFormat.ValueType  # 2
+    DF_TEXT: _DataFormat.ValueType  # 3
+    DF_XLS: _DataFormat.ValueType  # 4
+    DF_AVRO: _DataFormat.ValueType  # 5
+    DF_JDBC: _DataFormat.ValueType  # 6
+    DF_CASSANDRA: _DataFormat.ValueType  # 7
+    DF_SNOWFLAKE: _DataFormat.ValueType  # 8
+    DF_ELASTIC: _DataFormat.ValueType  # 9
+    DF_EXACOL: _DataFormat.ValueType  # 10
+    DF_BIGQUEY: _DataFormat.ValueType  # 11
+    DF_INMEMORY: _DataFormat.ValueType  # 12
+
+class DataFormat(_DataFormat, metaclass=_DataFormatEnumTypeWrapper): ...
+
+DF_CSV: DataFormat.ValueType  # 0
+DF_PARQUET: DataFormat.ValueType  # 1
+DF_JSON: DataFormat.ValueType  # 2
+DF_TEXT: DataFormat.ValueType  # 3
+DF_XLS: DataFormat.ValueType  # 4
+DF_AVRO: DataFormat.ValueType  # 5
+DF_JDBC: DataFormat.ValueType  # 6
+DF_CASSANDRA: DataFormat.ValueType  # 7
+DF_SNOWFLAKE: DataFormat.ValueType  # 8
+DF_ELASTIC: DataFormat.ValueType  # 9
+DF_EXACOL: DataFormat.ValueType  # 10
+DF_BIGQUEY: DataFormat.ValueType  # 11
+DF_INMEMORY: DataFormat.ValueType  # 12
+global___DataFormat = DataFormat
+
 @typing_extensions.final
 class SubmitZinggJob(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    ARGS_FIELD_NUMBER: builtins.int
-    OPTIONS_FIELD_NUMBER: builtins.int
-    args: builtins.str
-    options: builtins.str
+    ARGUMNETS_FIELD_NUMBER: builtins.int
+    CLI_OPTIONS_FIELD_NUMBER: builtins.int
+    IN_MEMORY_DATE_FIELD_NUMBER: builtins.int
+    @property
+    def argumnets(self) -> global___Arguments: ...
+    @property
+    def cli_options(self) -> global___ClientOptions: ...
+    in_memory_date: builtins.bytes
+    """The next message is a serialized LogicalPlan"""
     def __init__(
         self,
         *,
-        args: builtins.str = ...,
-        options: builtins.str = ...,
+        argumnets: global___Arguments | None = ...,
+        cli_options: global___ClientOptions | None = ...,
+        in_memory_date: builtins.bytes | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["args", b"args", "options", b"options"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_in_memory_date", b"_in_memory_date", "argumnets", b"argumnets", "cli_options", b"cli_options", "in_memory_date", b"in_memory_date"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_in_memory_date", b"_in_memory_date", "argumnets", b"argumnets", "cli_options", b"cli_options", "in_memory_date", b"in_memory_date"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_in_memory_date", b"_in_memory_date"]) -> typing_extensions.Literal["in_memory_date"] | None: ...
 
 global___SubmitZinggJob = SubmitZinggJob
+
+@typing_extensions.final
+class FieldDefinition(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    MATCH_TYPE_FIELD_NUMBER: builtins.int
+    DATA_TYPE_FIELD_NUMBER: builtins.int
+    FIELD_NAME_FIELD_NUMBER: builtins.int
+    FIELDS_FIELD_NUMBER: builtins.int
+    STOP_WORDS_FIELD_NUMBER: builtins.int
+    ABBREVIATIONS_FIELD_NUMBER: builtins.int
+    match_type: global___MatchType.ValueType
+    data_type: builtins.str
+    field_name: builtins.str
+    fields: builtins.str
+    stop_words: builtins.str
+    abbreviations: builtins.str
+    def __init__(
+        self,
+        *,
+        match_type: global___MatchType.ValueType = ...,
+        data_type: builtins.str = ...,
+        field_name: builtins.str = ...,
+        fields: builtins.str = ...,
+        stop_words: builtins.str | None = ...,
+        abbreviations: builtins.str | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_abbreviations", b"_abbreviations", "_stop_words", b"_stop_words", "abbreviations", b"abbreviations", "stop_words", b"stop_words"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_abbreviations", b"_abbreviations", "_stop_words", b"_stop_words", "abbreviations", b"abbreviations", "data_type", b"data_type", "field_name", b"field_name", "fields", b"fields", "match_type", b"match_type", "stop_words", b"stop_words"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_abbreviations", b"_abbreviations"]) -> typing_extensions.Literal["abbreviations"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_stop_words", b"_stop_words"]) -> typing_extensions.Literal["stop_words"] | None: ...
+
+global___FieldDefinition = FieldDefinition
+
+@typing_extensions.final
+class Pipe(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    @typing_extensions.final
+    class PropsEntry(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        KEY_FIELD_NUMBER: builtins.int
+        VALUE_FIELD_NUMBER: builtins.int
+        key: builtins.str
+        value: builtins.str
+        def __init__(
+            self,
+            *,
+            key: builtins.str = ...,
+            value: builtins.str = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+
+    NAME_FIELD_NUMBER: builtins.int
+    FORMAT_FIELD_NUMBER: builtins.int
+    PROPS_FIELD_NUMBER: builtins.int
+    SCHEMA_FIELD_FIELD_NUMBER: builtins.int
+    MODE_FIELD_NUMBER: builtins.int
+    name: builtins.str
+    format: global___DataFormat.ValueType
+    @property
+    def props(self) -> google.protobuf.internal.containers.ScalarMap[builtins.str, builtins.str]: ...
+    schema_field: builtins.str
+    mode: builtins.str
+    def __init__(
+        self,
+        *,
+        name: builtins.str = ...,
+        format: global___DataFormat.ValueType = ...,
+        props: collections.abc.Mapping[builtins.str, builtins.str] | None = ...,
+        schema_field: builtins.str | None = ...,
+        mode: builtins.str | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_mode", b"_mode", "_schema_field", b"_schema_field", "mode", b"mode", "schema_field", b"schema_field"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_mode", b"_mode", "_schema_field", b"_schema_field", "format", b"format", "mode", b"mode", "name", b"name", "props", b"props", "schema_field", b"schema_field"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_mode", b"_mode"]) -> typing_extensions.Literal["mode"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_schema_field", b"_schema_field"]) -> typing_extensions.Literal["schema_field"] | None: ...
+
+global___Pipe = Pipe
+
+@typing_extensions.final
+class Arguments(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    OUTPUT_FIELD_NUMBER: builtins.int
+    DATA_FIELD_NUMBER: builtins.int
+    ZINGG_DIR_FIELD_NUMBER: builtins.int
+    TRAINING_SAMPLES_FIELD_NUMBER: builtins.int
+    FIIELD_DEFINITION_FIELD_NUMBER: builtins.int
+    NUM_PARTITIONS_FIELD_NUMBER: builtins.int
+    LABEL_DATA_SAMPLE_SIZE_FIELD_NUMBER: builtins.int
+    MODEL_ID_FIELD_NUMBER: builtins.int
+    THRESHOLD_FIELD_NUMBER: builtins.int
+    JOB_ID_FIELD_NUMBER: builtins.int
+    COLLECT_METRICS_FIELD_NUMBER: builtins.int
+    SHOW_CONCISE_FIELD_NUMBER: builtins.int
+    STOP_WORDS_CUTOFF_FIELD_NUMBER: builtins.int
+    BLOCK_SIZE_FIELD_NUMBER: builtins.int
+    COLUMN_FIELD_NUMBER: builtins.int
+    @property
+    def output(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Pipe]: ...
+    @property
+    def data(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Pipe]: ...
+    zingg_dir: builtins.str
+    @property
+    def training_samples(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Pipe]: ...
+    @property
+    def fiield_definition(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___FieldDefinition]: ...
+    num_partitions: builtins.int
+    label_data_sample_size: builtins.float
+    model_id: builtins.str
+    threshold: builtins.float
+    job_id: builtins.int
+    collect_metrics: builtins.bool
+    show_concise: builtins.bool
+    stop_words_cutoff: builtins.float
+    block_size: builtins.int
+    column: builtins.str
+    def __init__(
+        self,
+        *,
+        output: collections.abc.Iterable[global___Pipe] | None = ...,
+        data: collections.abc.Iterable[global___Pipe] | None = ...,
+        zingg_dir: builtins.str = ...,
+        training_samples: collections.abc.Iterable[global___Pipe] | None = ...,
+        fiield_definition: collections.abc.Iterable[global___FieldDefinition] | None = ...,
+        num_partitions: builtins.int = ...,
+        label_data_sample_size: builtins.float = ...,
+        model_id: builtins.str = ...,
+        threshold: builtins.float = ...,
+        job_id: builtins.int = ...,
+        collect_metrics: builtins.bool = ...,
+        show_concise: builtins.bool = ...,
+        stop_words_cutoff: builtins.float = ...,
+        block_size: builtins.int = ...,
+        column: builtins.str | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_column", b"_column", "column", b"column"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_column", b"_column", "block_size", b"block_size", "collect_metrics", b"collect_metrics", "column", b"column", "data", b"data", "fiield_definition", b"fiield_definition", "job_id", b"job_id", "label_data_sample_size", b"label_data_sample_size", "model_id", b"model_id", "num_partitions", b"num_partitions", "output", b"output", "show_concise", b"show_concise", "stop_words_cutoff", b"stop_words_cutoff", "threshold", b"threshold", "training_samples", b"training_samples", "zingg_dir", b"zingg_dir"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_column", b"_column"]) -> typing_extensions.Literal["column"] | None: ...
+
+global___Arguments = Arguments
+
+@typing_extensions.final
+class ClientOptions(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    PHASE_FIELD_NUMBER: builtins.int
+    LICENSE_FIELD_NUMBER: builtins.int
+    EMAIL_FIELD_NUMBER: builtins.int
+    CONF_FIELD_NUMBER: builtins.int
+    PREPROCESS_FIELD_NUMBER: builtins.int
+    JOB_ID_FIELD_NUMBER: builtins.int
+    FORMAT_FIELD_NUMBER: builtins.int
+    ZINGG_DIR_FIELD_NUMBER: builtins.int
+    MODEL_ID_FIELD_NUMBER: builtins.int
+    COLLECT_METRICS_FIELD_NUMBER: builtins.int
+    SHOW_CONCISE_FIELD_NUMBER: builtins.int
+    LOCATION_FIELD_NUMBER: builtins.int
+    COLUMN_FIELD_NUMBER: builtins.int
+    REMOTE_FIELD_NUMBER: builtins.int
+    phase: builtins.str
+    license: builtins.str
+    email: builtins.str
+    conf: builtins.str
+    preprocess: builtins.str
+    job_id: builtins.str
+    format: builtins.str
+    zingg_dir: builtins.str
+    model_id: builtins.str
+    collect_metrics: builtins.str
+    show_concise: builtins.str
+    location: builtins.str
+    column: builtins.str
+    remote: builtins.str
+    def __init__(
+        self,
+        *,
+        phase: builtins.str = ...,
+        license: builtins.str = ...,
+        email: builtins.str = ...,
+        conf: builtins.str = ...,
+        preprocess: builtins.str | None = ...,
+        job_id: builtins.str | None = ...,
+        format: builtins.str | None = ...,
+        zingg_dir: builtins.str | None = ...,
+        model_id: builtins.str | None = ...,
+        collect_metrics: builtins.str | None = ...,
+        show_concise: builtins.str | None = ...,
+        location: builtins.str | None = ...,
+        column: builtins.str | None = ...,
+        remote: builtins.str | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_collect_metrics", b"_collect_metrics", "_column", b"_column", "_format", b"_format", "_job_id", b"_job_id", "_location", b"_location", "_model_id", b"_model_id", "_preprocess", b"_preprocess", "_remote", b"_remote", "_show_concise", b"_show_concise", "_zingg_dir", b"_zingg_dir", "collect_metrics", b"collect_metrics", "column", b"column", "format", b"format", "job_id", b"job_id", "location", b"location", "model_id", b"model_id", "preprocess", b"preprocess", "remote", b"remote", "show_concise", b"show_concise", "zingg_dir", b"zingg_dir"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_collect_metrics", b"_collect_metrics", "_column", b"_column", "_format", b"_format", "_job_id", b"_job_id", "_location", b"_location", "_model_id", b"_model_id", "_preprocess", b"_preprocess", "_remote", b"_remote", "_show_concise", b"_show_concise", "_zingg_dir", b"_zingg_dir", "collect_metrics", b"collect_metrics", "column", b"column", "conf", b"conf", "email", b"email", "format", b"format", "job_id", b"job_id", "license", b"license", "location", b"location", "model_id", b"model_id", "phase", b"phase", "preprocess", b"preprocess", "remote", b"remote", "show_concise", b"show_concise", "zingg_dir", b"zingg_dir"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_collect_metrics", b"_collect_metrics"]) -> typing_extensions.Literal["collect_metrics"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_column", b"_column"]) -> typing_extensions.Literal["column"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_format", b"_format"]) -> typing_extensions.Literal["format"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_job_id", b"_job_id"]) -> typing_extensions.Literal["job_id"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_location", b"_location"]) -> typing_extensions.Literal["location"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_model_id", b"_model_id"]) -> typing_extensions.Literal["model_id"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_preprocess", b"_preprocess"]) -> typing_extensions.Literal["preprocess"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_remote", b"_remote"]) -> typing_extensions.Literal["remote"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_show_concise", b"_show_concise"]) -> typing_extensions.Literal["show_concise"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_zingg_dir", b"_zingg_dir"]) -> typing_extensions.Literal["zingg_dir"] | None: ...
+
+global___ClientOptions = ClientOptions

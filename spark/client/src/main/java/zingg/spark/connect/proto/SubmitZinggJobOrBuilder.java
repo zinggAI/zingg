@@ -9,26 +9,51 @@ public interface SubmitZinggJobOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string args = 1 [json_name = "args"];</code>
-   * @return The args.
+   * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
+   * @return Whether the argumnets field is set.
    */
-  java.lang.String getArgs();
+  boolean hasArgumnets();
   /**
-   * <code>string args = 1 [json_name = "args"];</code>
-   * @return The bytes for args.
+   * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
+   * @return The argumnets.
    */
-  com.google.protobuf.ByteString
-      getArgsBytes();
+  zingg.spark.connect.proto.Arguments getArgumnets();
+  /**
+   * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
+   */
+  zingg.spark.connect.proto.ArgumentsOrBuilder getArgumnetsOrBuilder();
 
   /**
-   * <code>string options = 2 [json_name = "options"];</code>
-   * @return The options.
+   * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
+   * @return Whether the cliOptions field is set.
    */
-  java.lang.String getOptions();
+  boolean hasCliOptions();
   /**
-   * <code>string options = 2 [json_name = "options"];</code>
-   * @return The bytes for options.
+   * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
+   * @return The cliOptions.
    */
-  com.google.protobuf.ByteString
-      getOptionsBytes();
+  zingg.spark.connect.proto.ClientOptions getCliOptions();
+  /**
+   * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
+   */
+  zingg.spark.connect.proto.ClientOptionsOrBuilder getCliOptionsOrBuilder();
+
+  /**
+   * <pre>
+   * The next message is a serialized LogicalPlan
+   * </pre>
+   *
+   * <code>optional bytes in_memory_date = 3 [json_name = "inMemoryDate"];</code>
+   * @return Whether the inMemoryDate field is set.
+   */
+  boolean hasInMemoryDate();
+  /**
+   * <pre>
+   * The next message is a serialized LogicalPlan
+   * </pre>
+   *
+   * <code>optional bytes in_memory_date = 3 [json_name = "inMemoryDate"];</code>
+   * @return The inMemoryDate.
+   */
+  com.google.protobuf.ByteString getInMemoryDate();
 }

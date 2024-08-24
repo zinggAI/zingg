@@ -4,6 +4,90 @@ option java_multiple_files = true;
 option java_package = "zingg.spark.connect.proto";
 
 message SubmitZinggJob {
-	string args = 1;
-	string options = 2;
+	Arguments argumnets = 1;
+  ClientOptions cli_options = 2;
+  // The next message is a serialized LogicalPlan
+  optional bytes in_memory_date = 3;
+}
+
+enum MatchType {
+  MT_FUZZY = 0;
+  MT_EXACT = 1;
+  MT_DONT_USE = 2;
+  MT_EMAIL = 3;
+  MT_PINCODE = 4;
+  MT_NULL_OR_BLANK = 5;
+  MT_TEXT = 6;
+  MT_NUMERIC = 7;
+  MT_NUMERIC_WITH_UNITS = 8;
+  MT_ONLY_ALPHABETS_EXACT = 9;
+  MT_ONLY_ALPHABETS_FUZZY = 10;
+}
+
+enum DataFormat {
+  DF_CSV = 0;
+  DF_PARQUET = 1;
+  DF_JSON = 2;
+  DF_TEXT = 3;
+  DF_XLS = 4;
+  DF_AVRO = 5;
+  DF_JDBC = 6;
+  DF_CASSANDRA = 7;
+  DF_SNOWFLAKE = 8;
+  DF_ELASTIC = 9;
+  DF_EXACOL = 10;
+  DF_BIGQUEY = 11;
+  DF_INMEMORY = 12;
+}
+
+message FieldDefinition {
+  MatchType match_type = 1;
+  string data_type = 2;
+  string field_name = 3;
+  string fields = 4;
+  optional string stop_words = 5;
+  optional string abbreviations = 6;
+}
+
+message Pipe {
+  string name = 1;
+  DataFormat format = 2;
+  map<string, string> props = 3;
+  optional string schema_field = 4;
+  optional string mode = 5;
+}
+
+message Arguments {
+  repeated Pipe output = 1;
+  repeated Pipe data = 2;
+  string zingg_dir = 3;
+  repeated Pipe training_samples = 4;
+  repeated FieldDefinition fiield_definition = 5;
+  int32 num_partitions = 6;
+  float label_data_sample_size = 7;
+  string model_id = 8;
+  float threshold = 9;
+  int32 job_id = 10;
+  bool collect_metrics = 11;
+  bool show_concise = 12;
+  float stop_words_cutoff = 13;
+  int64 block_size = 14;
+  optional string column = 15;
+}
+
+message ClientOptions {
+  string phase = 1;
+  string license = 2;
+  string email = 3;
+  string conf = 4;
+  optional string preprocess = 5;
+  optional string job_id = 6;
+  optional string format = 7;
+  optional string zingg_dir = 8;
+  optional string model_id = 9;
+  optional string collect_metrics = 10;
+  optional string show_concise = 11;
+  optional string location = 12;
+  optional string column = 13;
+  optional string remote = 14;
 }

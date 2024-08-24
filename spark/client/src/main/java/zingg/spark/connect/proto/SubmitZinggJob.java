@@ -17,8 +17,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private SubmitZinggJob() {
-    args_ = "";
-    options_ = "";
+    inMemoryDate_ = com.google.protobuf.ByteString.EMPTY;
   }
 
   @java.lang.Override
@@ -41,82 +40,84 @@ private static final long serialVersionUID = 0L;
             zingg.spark.connect.proto.SubmitZinggJob.class, zingg.spark.connect.proto.SubmitZinggJob.Builder.class);
   }
 
-  public static final int ARGS_FIELD_NUMBER = 1;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object args_ = "";
+  private int bitField0_;
+  public static final int ARGUMNETS_FIELD_NUMBER = 1;
+  private zingg.spark.connect.proto.Arguments argumnets_;
   /**
-   * <code>string args = 1 [json_name = "args"];</code>
-   * @return The args.
+   * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
+   * @return Whether the argumnets field is set.
    */
   @java.lang.Override
-  public java.lang.String getArgs() {
-    java.lang.Object ref = args_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      args_ = s;
-      return s;
-    }
+  public boolean hasArgumnets() {
+    return ((bitField0_ & 0x00000001) != 0);
   }
   /**
-   * <code>string args = 1 [json_name = "args"];</code>
-   * @return The bytes for args.
+   * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
+   * @return The argumnets.
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString
-      getArgsBytes() {
-    java.lang.Object ref = args_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      args_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public zingg.spark.connect.proto.Arguments getArgumnets() {
+    return argumnets_ == null ? zingg.spark.connect.proto.Arguments.getDefaultInstance() : argumnets_;
+  }
+  /**
+   * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
+   */
+  @java.lang.Override
+  public zingg.spark.connect.proto.ArgumentsOrBuilder getArgumnetsOrBuilder() {
+    return argumnets_ == null ? zingg.spark.connect.proto.Arguments.getDefaultInstance() : argumnets_;
   }
 
-  public static final int OPTIONS_FIELD_NUMBER = 2;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object options_ = "";
+  public static final int CLI_OPTIONS_FIELD_NUMBER = 2;
+  private zingg.spark.connect.proto.ClientOptions cliOptions_;
   /**
-   * <code>string options = 2 [json_name = "options"];</code>
-   * @return The options.
+   * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
+   * @return Whether the cliOptions field is set.
    */
   @java.lang.Override
-  public java.lang.String getOptions() {
-    java.lang.Object ref = options_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      options_ = s;
-      return s;
-    }
+  public boolean hasCliOptions() {
+    return ((bitField0_ & 0x00000002) != 0);
   }
   /**
-   * <code>string options = 2 [json_name = "options"];</code>
-   * @return The bytes for options.
+   * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
+   * @return The cliOptions.
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString
-      getOptionsBytes() {
-    java.lang.Object ref = options_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      options_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public zingg.spark.connect.proto.ClientOptions getCliOptions() {
+    return cliOptions_ == null ? zingg.spark.connect.proto.ClientOptions.getDefaultInstance() : cliOptions_;
+  }
+  /**
+   * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
+   */
+  @java.lang.Override
+  public zingg.spark.connect.proto.ClientOptionsOrBuilder getCliOptionsOrBuilder() {
+    return cliOptions_ == null ? zingg.spark.connect.proto.ClientOptions.getDefaultInstance() : cliOptions_;
+  }
+
+  public static final int IN_MEMORY_DATE_FIELD_NUMBER = 3;
+  private com.google.protobuf.ByteString inMemoryDate_ = com.google.protobuf.ByteString.EMPTY;
+  /**
+   * <pre>
+   * The next message is a serialized LogicalPlan
+   * </pre>
+   *
+   * <code>optional bytes in_memory_date = 3 [json_name = "inMemoryDate"];</code>
+   * @return Whether the inMemoryDate field is set.
+   */
+  @java.lang.Override
+  public boolean hasInMemoryDate() {
+    return ((bitField0_ & 0x00000004) != 0);
+  }
+  /**
+   * <pre>
+   * The next message is a serialized LogicalPlan
+   * </pre>
+   *
+   * <code>optional bytes in_memory_date = 3 [json_name = "inMemoryDate"];</code>
+   * @return The inMemoryDate.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString getInMemoryDate() {
+    return inMemoryDate_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -133,11 +134,14 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(args_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, args_);
+    if (((bitField0_ & 0x00000001) != 0)) {
+      output.writeMessage(1, getArgumnets());
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(options_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, options_);
+    if (((bitField0_ & 0x00000002) != 0)) {
+      output.writeMessage(2, getCliOptions());
+    }
+    if (((bitField0_ & 0x00000004) != 0)) {
+      output.writeBytes(3, inMemoryDate_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -148,11 +152,17 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(args_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, args_);
+    if (((bitField0_ & 0x00000001) != 0)) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(1, getArgumnets());
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(options_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, options_);
+    if (((bitField0_ & 0x00000002) != 0)) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(2, getCliOptions());
+    }
+    if (((bitField0_ & 0x00000004) != 0)) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBytesSize(3, inMemoryDate_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -169,10 +179,21 @@ private static final long serialVersionUID = 0L;
     }
     zingg.spark.connect.proto.SubmitZinggJob other = (zingg.spark.connect.proto.SubmitZinggJob) obj;
 
-    if (!getArgs()
-        .equals(other.getArgs())) return false;
-    if (!getOptions()
-        .equals(other.getOptions())) return false;
+    if (hasArgumnets() != other.hasArgumnets()) return false;
+    if (hasArgumnets()) {
+      if (!getArgumnets()
+          .equals(other.getArgumnets())) return false;
+    }
+    if (hasCliOptions() != other.hasCliOptions()) return false;
+    if (hasCliOptions()) {
+      if (!getCliOptions()
+          .equals(other.getCliOptions())) return false;
+    }
+    if (hasInMemoryDate() != other.hasInMemoryDate()) return false;
+    if (hasInMemoryDate()) {
+      if (!getInMemoryDate()
+          .equals(other.getInMemoryDate())) return false;
+    }
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -184,10 +205,18 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + ARGS_FIELD_NUMBER;
-    hash = (53 * hash) + getArgs().hashCode();
-    hash = (37 * hash) + OPTIONS_FIELD_NUMBER;
-    hash = (53 * hash) + getOptions().hashCode();
+    if (hasArgumnets()) {
+      hash = (37 * hash) + ARGUMNETS_FIELD_NUMBER;
+      hash = (53 * hash) + getArgumnets().hashCode();
+    }
+    if (hasCliOptions()) {
+      hash = (37 * hash) + CLI_OPTIONS_FIELD_NUMBER;
+      hash = (53 * hash) + getCliOptions().hashCode();
+    }
+    if (hasInMemoryDate()) {
+      hash = (37 * hash) + IN_MEMORY_DATE_FIELD_NUMBER;
+      hash = (53 * hash) + getInMemoryDate().hashCode();
+    }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -307,20 +336,36 @@ private static final long serialVersionUID = 0L;
 
     // Construct using zingg.spark.connect.proto.SubmitZinggJob.newBuilder()
     private Builder() {
-
+      maybeForceBuilderInitialization();
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
-
+      maybeForceBuilderInitialization();
+    }
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3
+              .alwaysUseFieldBuilders) {
+        getArgumnetsFieldBuilder();
+        getCliOptionsFieldBuilder();
+      }
     }
     @java.lang.Override
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      args_ = "";
-      options_ = "";
+      argumnets_ = null;
+      if (argumnetsBuilder_ != null) {
+        argumnetsBuilder_.dispose();
+        argumnetsBuilder_ = null;
+      }
+      cliOptions_ = null;
+      if (cliOptionsBuilder_ != null) {
+        cliOptionsBuilder_.dispose();
+        cliOptionsBuilder_ = null;
+      }
+      inMemoryDate_ = com.google.protobuf.ByteString.EMPTY;
       return this;
     }
 
@@ -354,12 +399,24 @@ private static final long serialVersionUID = 0L;
 
     private void buildPartial0(zingg.spark.connect.proto.SubmitZinggJob result) {
       int from_bitField0_ = bitField0_;
+      int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.args_ = args_;
+        result.argumnets_ = argumnetsBuilder_ == null
+            ? argumnets_
+            : argumnetsBuilder_.build();
+        to_bitField0_ |= 0x00000001;
       }
       if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.options_ = options_;
+        result.cliOptions_ = cliOptionsBuilder_ == null
+            ? cliOptions_
+            : cliOptionsBuilder_.build();
+        to_bitField0_ |= 0x00000002;
       }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.inMemoryDate_ = inMemoryDate_;
+        to_bitField0_ |= 0x00000004;
+      }
+      result.bitField0_ |= to_bitField0_;
     }
 
     @java.lang.Override
@@ -406,15 +463,14 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(zingg.spark.connect.proto.SubmitZinggJob other) {
       if (other == zingg.spark.connect.proto.SubmitZinggJob.getDefaultInstance()) return this;
-      if (!other.getArgs().isEmpty()) {
-        args_ = other.args_;
-        bitField0_ |= 0x00000001;
-        onChanged();
+      if (other.hasArgumnets()) {
+        mergeArgumnets(other.getArgumnets());
       }
-      if (!other.getOptions().isEmpty()) {
-        options_ = other.options_;
-        bitField0_ |= 0x00000002;
-        onChanged();
+      if (other.hasCliOptions()) {
+        mergeCliOptions(other.getCliOptions());
+      }
+      if (other.hasInMemoryDate()) {
+        setInMemoryDate(other.getInMemoryDate());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -443,15 +499,24 @@ private static final long serialVersionUID = 0L;
               done = true;
               break;
             case 10: {
-              args_ = input.readStringRequireUtf8();
+              input.readMessage(
+                  getArgumnetsFieldBuilder().getBuilder(),
+                  extensionRegistry);
               bitField0_ |= 0x00000001;
               break;
             } // case 10
             case 18: {
-              options_ = input.readStringRequireUtf8();
+              input.readMessage(
+                  getCliOptionsFieldBuilder().getBuilder(),
+                  extensionRegistry);
               bitField0_ |= 0x00000002;
               break;
             } // case 18
+            case 26: {
+              inMemoryDate_ = input.readBytes();
+              bitField0_ |= 0x00000004;
+              break;
+            } // case 26
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -469,146 +534,300 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object args_ = "";
+    private zingg.spark.connect.proto.Arguments argumnets_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        zingg.spark.connect.proto.Arguments, zingg.spark.connect.proto.Arguments.Builder, zingg.spark.connect.proto.ArgumentsOrBuilder> argumnetsBuilder_;
     /**
-     * <code>string args = 1 [json_name = "args"];</code>
-     * @return The args.
+     * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
+     * @return Whether the argumnets field is set.
      */
-    public java.lang.String getArgs() {
-      java.lang.Object ref = args_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        args_ = s;
-        return s;
+    public boolean hasArgumnets() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
+     * @return The argumnets.
+     */
+    public zingg.spark.connect.proto.Arguments getArgumnets() {
+      if (argumnetsBuilder_ == null) {
+        return argumnets_ == null ? zingg.spark.connect.proto.Arguments.getDefaultInstance() : argumnets_;
       } else {
-        return (java.lang.String) ref;
+        return argumnetsBuilder_.getMessage();
       }
     }
     /**
-     * <code>string args = 1 [json_name = "args"];</code>
-     * @return The bytes for args.
+     * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
      */
-    public com.google.protobuf.ByteString
-        getArgsBytes() {
-      java.lang.Object ref = args_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        args_ = b;
-        return b;
+    public Builder setArgumnets(zingg.spark.connect.proto.Arguments value) {
+      if (argumnetsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        argumnets_ = value;
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        argumnetsBuilder_.setMessage(value);
       }
-    }
-    /**
-     * <code>string args = 1 [json_name = "args"];</code>
-     * @param value The args to set.
-     * @return This builder for chaining.
-     */
-    public Builder setArgs(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      args_ = value;
       bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
     /**
-     * <code>string args = 1 [json_name = "args"];</code>
-     * @return This builder for chaining.
+     * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
      */
-    public Builder clearArgs() {
-      args_ = getDefaultInstance().getArgs();
+    public Builder setArgumnets(
+        zingg.spark.connect.proto.Arguments.Builder builderForValue) {
+      if (argumnetsBuilder_ == null) {
+        argumnets_ = builderForValue.build();
+      } else {
+        argumnetsBuilder_.setMessage(builderForValue.build());
+      }
+      bitField0_ |= 0x00000001;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
+     */
+    public Builder mergeArgumnets(zingg.spark.connect.proto.Arguments value) {
+      if (argumnetsBuilder_ == null) {
+        if (((bitField0_ & 0x00000001) != 0) &&
+          argumnets_ != null &&
+          argumnets_ != zingg.spark.connect.proto.Arguments.getDefaultInstance()) {
+          getArgumnetsBuilder().mergeFrom(value);
+        } else {
+          argumnets_ = value;
+        }
+      } else {
+        argumnetsBuilder_.mergeFrom(value);
+      }
+      if (argumnets_ != null) {
+        bitField0_ |= 0x00000001;
+        onChanged();
+      }
+      return this;
+    }
+    /**
+     * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
+     */
+    public Builder clearArgumnets() {
       bitField0_ = (bitField0_ & ~0x00000001);
+      argumnets_ = null;
+      if (argumnetsBuilder_ != null) {
+        argumnetsBuilder_.dispose();
+        argumnetsBuilder_ = null;
+      }
       onChanged();
       return this;
     }
     /**
-     * <code>string args = 1 [json_name = "args"];</code>
-     * @param value The bytes for args to set.
-     * @return This builder for chaining.
+     * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
      */
-    public Builder setArgsBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      args_ = value;
+    public zingg.spark.connect.proto.Arguments.Builder getArgumnetsBuilder() {
       bitField0_ |= 0x00000001;
       onChanged();
-      return this;
+      return getArgumnetsFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
+     */
+    public zingg.spark.connect.proto.ArgumentsOrBuilder getArgumnetsOrBuilder() {
+      if (argumnetsBuilder_ != null) {
+        return argumnetsBuilder_.getMessageOrBuilder();
+      } else {
+        return argumnets_ == null ?
+            zingg.spark.connect.proto.Arguments.getDefaultInstance() : argumnets_;
+      }
+    }
+    /**
+     * <code>.Arguments argumnets = 1 [json_name = "argumnets"];</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        zingg.spark.connect.proto.Arguments, zingg.spark.connect.proto.Arguments.Builder, zingg.spark.connect.proto.ArgumentsOrBuilder> 
+        getArgumnetsFieldBuilder() {
+      if (argumnetsBuilder_ == null) {
+        argumnetsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            zingg.spark.connect.proto.Arguments, zingg.spark.connect.proto.Arguments.Builder, zingg.spark.connect.proto.ArgumentsOrBuilder>(
+                getArgumnets(),
+                getParentForChildren(),
+                isClean());
+        argumnets_ = null;
+      }
+      return argumnetsBuilder_;
     }
 
-    private java.lang.Object options_ = "";
+    private zingg.spark.connect.proto.ClientOptions cliOptions_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        zingg.spark.connect.proto.ClientOptions, zingg.spark.connect.proto.ClientOptions.Builder, zingg.spark.connect.proto.ClientOptionsOrBuilder> cliOptionsBuilder_;
     /**
-     * <code>string options = 2 [json_name = "options"];</code>
-     * @return The options.
+     * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
+     * @return Whether the cliOptions field is set.
      */
-    public java.lang.String getOptions() {
-      java.lang.Object ref = options_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        options_ = s;
-        return s;
+    public boolean hasCliOptions() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
+     * @return The cliOptions.
+     */
+    public zingg.spark.connect.proto.ClientOptions getCliOptions() {
+      if (cliOptionsBuilder_ == null) {
+        return cliOptions_ == null ? zingg.spark.connect.proto.ClientOptions.getDefaultInstance() : cliOptions_;
       } else {
-        return (java.lang.String) ref;
+        return cliOptionsBuilder_.getMessage();
       }
     }
     /**
-     * <code>string options = 2 [json_name = "options"];</code>
-     * @return The bytes for options.
+     * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
      */
-    public com.google.protobuf.ByteString
-        getOptionsBytes() {
-      java.lang.Object ref = options_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        options_ = b;
-        return b;
+    public Builder setCliOptions(zingg.spark.connect.proto.ClientOptions value) {
+      if (cliOptionsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        cliOptions_ = value;
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        cliOptionsBuilder_.setMessage(value);
       }
-    }
-    /**
-     * <code>string options = 2 [json_name = "options"];</code>
-     * @param value The options to set.
-     * @return This builder for chaining.
-     */
-    public Builder setOptions(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      options_ = value;
       bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
     /**
-     * <code>string options = 2 [json_name = "options"];</code>
-     * @return This builder for chaining.
+     * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
      */
-    public Builder clearOptions() {
-      options_ = getDefaultInstance().getOptions();
+    public Builder setCliOptions(
+        zingg.spark.connect.proto.ClientOptions.Builder builderForValue) {
+      if (cliOptionsBuilder_ == null) {
+        cliOptions_ = builderForValue.build();
+      } else {
+        cliOptionsBuilder_.setMessage(builderForValue.build());
+      }
+      bitField0_ |= 0x00000002;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
+     */
+    public Builder mergeCliOptions(zingg.spark.connect.proto.ClientOptions value) {
+      if (cliOptionsBuilder_ == null) {
+        if (((bitField0_ & 0x00000002) != 0) &&
+          cliOptions_ != null &&
+          cliOptions_ != zingg.spark.connect.proto.ClientOptions.getDefaultInstance()) {
+          getCliOptionsBuilder().mergeFrom(value);
+        } else {
+          cliOptions_ = value;
+        }
+      } else {
+        cliOptionsBuilder_.mergeFrom(value);
+      }
+      if (cliOptions_ != null) {
+        bitField0_ |= 0x00000002;
+        onChanged();
+      }
+      return this;
+    }
+    /**
+     * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
+     */
+    public Builder clearCliOptions() {
       bitField0_ = (bitField0_ & ~0x00000002);
+      cliOptions_ = null;
+      if (cliOptionsBuilder_ != null) {
+        cliOptionsBuilder_.dispose();
+        cliOptionsBuilder_ = null;
+      }
       onChanged();
       return this;
     }
     /**
-     * <code>string options = 2 [json_name = "options"];</code>
-     * @param value The bytes for options to set.
+     * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
+     */
+    public zingg.spark.connect.proto.ClientOptions.Builder getCliOptionsBuilder() {
+      bitField0_ |= 0x00000002;
+      onChanged();
+      return getCliOptionsFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
+     */
+    public zingg.spark.connect.proto.ClientOptionsOrBuilder getCliOptionsOrBuilder() {
+      if (cliOptionsBuilder_ != null) {
+        return cliOptionsBuilder_.getMessageOrBuilder();
+      } else {
+        return cliOptions_ == null ?
+            zingg.spark.connect.proto.ClientOptions.getDefaultInstance() : cliOptions_;
+      }
+    }
+    /**
+     * <code>.ClientOptions cli_options = 2 [json_name = "cliOptions"];</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        zingg.spark.connect.proto.ClientOptions, zingg.spark.connect.proto.ClientOptions.Builder, zingg.spark.connect.proto.ClientOptionsOrBuilder> 
+        getCliOptionsFieldBuilder() {
+      if (cliOptionsBuilder_ == null) {
+        cliOptionsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            zingg.spark.connect.proto.ClientOptions, zingg.spark.connect.proto.ClientOptions.Builder, zingg.spark.connect.proto.ClientOptionsOrBuilder>(
+                getCliOptions(),
+                getParentForChildren(),
+                isClean());
+        cliOptions_ = null;
+      }
+      return cliOptionsBuilder_;
+    }
+
+    private com.google.protobuf.ByteString inMemoryDate_ = com.google.protobuf.ByteString.EMPTY;
+    /**
+     * <pre>
+     * The next message is a serialized LogicalPlan
+     * </pre>
+     *
+     * <code>optional bytes in_memory_date = 3 [json_name = "inMemoryDate"];</code>
+     * @return Whether the inMemoryDate field is set.
+     */
+    @java.lang.Override
+    public boolean hasInMemoryDate() {
+      return ((bitField0_ & 0x00000004) != 0);
+    }
+    /**
+     * <pre>
+     * The next message is a serialized LogicalPlan
+     * </pre>
+     *
+     * <code>optional bytes in_memory_date = 3 [json_name = "inMemoryDate"];</code>
+     * @return The inMemoryDate.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getInMemoryDate() {
+      return inMemoryDate_;
+    }
+    /**
+     * <pre>
+     * The next message is a serialized LogicalPlan
+     * </pre>
+     *
+     * <code>optional bytes in_memory_date = 3 [json_name = "inMemoryDate"];</code>
+     * @param value The inMemoryDate to set.
      * @return This builder for chaining.
      */
-    public Builder setOptionsBytes(
-        com.google.protobuf.ByteString value) {
+    public Builder setInMemoryDate(com.google.protobuf.ByteString value) {
       if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      options_ = value;
-      bitField0_ |= 0x00000002;
+      inMemoryDate_ = value;
+      bitField0_ |= 0x00000004;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * The next message is a serialized LogicalPlan
+     * </pre>
+     *
+     * <code>optional bytes in_memory_date = 3 [json_name = "inMemoryDate"];</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearInMemoryDate() {
+      bitField0_ = (bitField0_ & ~0x00000004);
+      inMemoryDate_ = getDefaultInstance().getInMemoryDate();
       onChanged();
       return this;
     }
