@@ -1,7 +1,10 @@
 package zingg.spark.connect;
 
+import java.util.List;
+import java.util.Map;
+
 import com.google.protobuf.Any;
-import com.google.protobuf.InvalidProtocolBufferException;
+
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
@@ -14,19 +17,16 @@ import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 
 import scala.Option;
-import zingg.common.client.*;
 import zingg.common.client.Arguments;
+import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.ClientOptions;
-import zingg.spark.connect.*;
-import zingg.spark.connect.proto.*;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.IArguments;
 import zingg.common.client.pipe.Pipe;
-import zingg.spark.client.SparkClient;
 import zingg.spark.client.pipe.SparkPipe;
-
-import java.util.Map;
-import java.util.Optional;
-import java.util.HashMap;
-import java.util.List;
+import zingg.spark.connect.proto.DataFormat;
+import zingg.spark.connect.proto.MatchType;
+import zingg.spark.connect.proto.SubmitZinggJob;
 
 public class ZinggConnectPlugin implements RelationPlugin {
     private SparkPipe parsePipe(zingg.spark.connect.proto.Pipe protoPipe) {
@@ -85,6 +85,49 @@ public class ZinggConnectPlugin implements RelationPlugin {
         return protoPipes.stream().map(protoPipe -> parsePipe(protoPipe)).toArray(SparkPipe[]::new);
     }
 
+    private FieldDefinition parseFieldDefinition(zingg.spark.connect.proto.FieldDefinition fieldDefinitionProto) {
+        FieldDefinition fieldDefinition = new FieldDefinition();
+        fieldDefinition.setMatchType(fieldDefinitionProto.getMatchTypeList().stream().map(mt -> {
+            if (mt == MatchType.MT_FUZZY) {
+                return zingg.common.client.MatchType.FUZZY;
+            } else if (mt == MatchType.MT_EXACT) {
+                return zingg.common.client.MatchType.EXACT;
+            } else if (mt == MatchType.MT_DONT_USE) {
+                return zingg.common.client.MatchType.DONT_USE;
+            } else if (mt == MatchType.MT_EMAIL) {
+                return zingg.common.client.MatchType.EMAIL;
+            } else if (mt == MatchType.MT_PINCODE) {
+                return zingg.common.client.MatchType.PINCODE;
+            } else if (mt == MatchType.MT_NULL_OR_BLANK) {
+                return zingg.common.client.MatchType.NULL_OR_BLANK;
+            } else if (mt == MatchType.MT_TEXT) {
+                return zingg.common.client.MatchType.TEXT;
+            } else if (mt == MatchType.MT_NUMERIC) {
+                return zingg.common.client.MatchType.NUMERIC;
+            } else if (mt == MatchType.MT_NUMERIC_WITH_UNITS) {
+                return zingg.common.client.MatchType.NUMERIC_WITH_UNITS;
+            } else if (mt == MatchType.MT_ONLY_ALPHABETS_EXACT) {
+                return zingg.common.client.MatchType.ONLY_ALPHABETS_EXACT;
+            } else if (mt == MatchType.MT_ONLY_ALPHABETS_FUZZY) {
+                return zingg.common.client.MatchType.ONLY_ALPHABETS_FUZZY;
+            } else {
+                throw new RuntimeException(String.format("Unknown type %s", mt.name()));
+            }
+        }).toList());
+
+        fieldDefinition.setDataType(fieldDefinitionProto.getDataType());
+        fieldDefinition.setFieldName(fieldDefinitionProto.getFieldName());
+        fieldDefinition.setFields(fieldDefinitionProto.getFields());
+        if (fieldDefinitionProto.hasStopWords()) {
+            fieldDefinition.setStopWords(fieldDefinitionProto.getStopWords());
+        }
+        if (fieldDefinitionProto.hasAbbreviations()) {
+            fieldDefinition.setAbbreviations(fieldDefinitionProto.getAbbreviations());
+        }
+
+        return fieldDefinition;
+    }
+
     // 3.5.2 behaviour
     // Because of shading rules this method may be marked as wrongly overriden
     @Override
@@ -102,6 +145,9 @@ public class ZinggConnectPlugin implements RelationPlugin {
             arguments.setData(parsePipes(zinggJobProto.getArgumnets().getDataList()));
             // Training samples
             arguments.setTrainingSamples(parsePipes(zinggJobProto.getArgumnets().getTrainingSamplesList()));
+            // Field definitions
+            arguments.setFieldDefinition(zinggJobProto.getArgumnets().getFiieldDefinitionList().stream()
+                    .map(fd -> parseFieldDefinition(fd)).toList());
 
             // Arguments
             arguments.setZinggDir(zinggJobProto.getArgumnets().getZinggDir());
@@ -120,44 +166,57 @@ public class ZinggConnectPlugin implements RelationPlugin {
 
             // Options
             zingg.spark.connect.proto.ClientOptions clientOptionsProto = zinggJobProto.getCliOptions();
-        }
-    }
+            ClientOptions clientOptions = new ClientOptions();
 
-    public Optional<LogicalPlan> transform(byte[] bytes, SparkConnectPlanner sparkConnectPlanner) {
-        Any command;
-        try {
-            command = Any.parseFrom(bytes);
-            if (!command.is(SubmitZinggJob.class)) {
-                return Optional.empty();
-            } else {
-                try (SparkSession session = sparkConnectPlanner.sessionHolder().session()) {
-                    SubmitZinggJob request = command.unpack(SubmitZinggJob.class);
-                    String options = request.getOptions();
-                    String args = request.getArgs();
-                    ClientOptions clientOptions = new ClientOptions(options);
-                    IArguments arguments = new ArgumentsUtil()
-                            .createArgumentsFromJSONString(args, clientOptions.getOptionValue(ClientOptions.PHASE));
-                    SparkClient client = new SparkClient(arguments, clientOptions, session);
-                    client.init();
-                    client.execute();
-                    client.postMetrics();
-
-                    Dataset<Row> outDF = session.createDataFrame(
-                            List.of(
-                                    RowFactory.create(
-                                            "SUCCESS",
-                                            new ArgumentsUtil().writeArgumentstoJSONString(client.getArguments()))),
-                            new StructType(new StructField[] {
-                                    DataTypes.createStructField("status", DataTypes.StringType, false),
-                                    DataTypes.createStructField("newArgs", DataTypes.StringType, false)
-                            }));
-                    return Optional.of(outDF.logicalPlan());
-                }
+            if (clientOptionsProto.hasPhase()) {
+                clientOptions.setOptionValue(ClientOptions.PHASE, clientOptionsProto.getPhase());
             }
-        } catch (InvalidProtocolBufferException e) {
-            throw new RuntimeException("Protobuf exception in SparkConnect", e);
-        } catch (ZinggClientException e) {
-            throw new RuntimeException("Zingg Internal Error", e);
+            if (clientOptionsProto.hasLicense()) {
+                clientOptions.setOptionValue(ClientOptions.LICENSE, clientOptionsProto.getLicense());
+            }
+            if (clientOptionsProto.hasEmail()) {
+                clientOptions.setOptionValue(ClientOptions.EMAIL, clientOptionsProto.getEmail());
+            }
+            if (clientOptionsProto.hasConf()) {
+                clientOptions.setOptionValue(ClientOptions.CONF, clientOptionsProto.getConf());
+            }
+            if (clientOptionsProto.hasPreprocess()) {
+                clientOptions.setOptionValue(ClientOptions.PREPROCESS, clientOptionsProto.getPreprocess());
+            }
+            if (clientOptionsProto.hasJobId()) {
+                clientOptions.setOptionValue(ClientOptions.JOBID, clientOptionsProto.getJobId());
+            }
+            if (clientOptionsProto.hasFormat()) {
+                clientOptions.setOptionValue(ClientOptions.FORMAT, clientOptionsProto.getFormat());
+            }
+            if (clientOptionsProto.hasZinggDir()) {
+                clientOptions.setOptionValue(ClientOptions.ZINGG_DIR, clientOptionsProto.getZinggDir());
+            }
+            if (clientOptionsProto.hasModelId()) {
+                clientOptions.setOptionValue(ClientOptions.MODEL_ID, clientOptionsProto.getModelId());
+            }
+            if (clientOptionsProto.hasCollectMetrics()) {
+                clientOptions.setOptionValue(ClientOptions.COLLECT_METRICS, clientOptionsProto.getCollectMetrics());
+            }
+            if (clientOptionsProto.hasShowConcise()) {
+                clientOptions.setOptionValue(ClientOptions.SHOW_CONCISE, clientOptionsProto.getShowConcise());
+            }
+            if (clientOptionsProto.hasLocation()) {
+                clientOptions.setOptionValue(ClientOptions.LOCATION, clientOptionsProto.getLocation());
+            }
+            if (clientOptionsProto.hasColumn()) {
+                clientOptions.setOptionValue(ClientOptions.COLUMN, clientOptionsProto.getColumn());
+            }
+            if (clientOptionsProto.hasRemote()) {
+                clientOptions.setOptionValue(ClientOptions.REMOTE, clientOptionsProto.getRemote());
+            }
+
+            Dataset<Row> outDF = spark.createDataFrame(
+                    List.of(RowFactory.create(new ArgumentsUtil().writeArgumentstoJSONString(arguments),
+                            String.join(" ", clientOptions.getCommandLineArgs()))),
+                    new StructType(new StructField[] { DataTypes.createStructField("args", DataTypes.StringType, false),
+                            DataTypes.createStructField("cliopts", DataTypes.StringType, false) }));
+            return Option.apply(outDF.logicalPlan());
         }
     }
 }

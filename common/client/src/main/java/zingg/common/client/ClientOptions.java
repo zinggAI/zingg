@@ -299,9 +299,13 @@ public class ClientOptions {
 		  return get(a).getValue();
 		  //throw new IllegalArgumentException("Wrong argument");
 	  }
-	  
 
-
-
-
+    /** A helper that allows to modify ClientOptions by changing values */
+    public void setOptionValue(String key, String value) {
+        if (has(key)) {
+            OptionWithVal optionWithVal = get(key);
+            optionWithVal.setValue(value);
+            options.put(key, optionWithVal);
+        }
+    }
 }

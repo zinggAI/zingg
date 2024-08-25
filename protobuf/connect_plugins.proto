@@ -41,7 +41,7 @@ enum DataFormat {
 }
 
 message FieldDefinition {
-  MatchType match_type = 1;
+  repeated MatchType match_type = 1;
   string data_type = 2;
   string field_name = 3;
   string fields = 4;
@@ -76,10 +76,10 @@ message Arguments {
 }
 
 message ClientOptions {
-  string phase = 1;
-  string license = 2;
-  string email = 3;
-  string conf = 4;
+  optional string phase = 1;
+  optional string license = 2;
+  optional string email = 3;
+  optional string conf = 4;
   optional string preprocess = 5;
   optional string job_id = 6;
   optional string format = 7;

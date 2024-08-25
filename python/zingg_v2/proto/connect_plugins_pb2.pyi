@@ -124,7 +124,8 @@ class FieldDefinition(google.protobuf.message.Message):
     FIELDS_FIELD_NUMBER: builtins.int
     STOP_WORDS_FIELD_NUMBER: builtins.int
     ABBREVIATIONS_FIELD_NUMBER: builtins.int
-    match_type: global___MatchType.ValueType
+    @property
+    def match_type(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___MatchType.ValueType]: ...
     data_type: builtins.str
     field_name: builtins.str
     fields: builtins.str
@@ -133,7 +134,7 @@ class FieldDefinition(google.protobuf.message.Message):
     def __init__(
         self,
         *,
-        match_type: global___MatchType.ValueType = ...,
+        match_type: collections.abc.Iterable[global___MatchType.ValueType] | None = ...,
         data_type: builtins.str = ...,
         field_name: builtins.str = ...,
         fields: builtins.str = ...,
@@ -296,10 +297,10 @@ class ClientOptions(google.protobuf.message.Message):
     def __init__(
         self,
         *,
-        phase: builtins.str = ...,
-        license: builtins.str = ...,
-        email: builtins.str = ...,
-        conf: builtins.str = ...,
+        phase: builtins.str | None = ...,
+        license: builtins.str | None = ...,
+        email: builtins.str | None = ...,
+        conf: builtins.str | None = ...,
         preprocess: builtins.str | None = ...,
         job_id: builtins.str | None = ...,
         format: builtins.str | None = ...,
@@ -311,20 +312,28 @@ class ClientOptions(google.protobuf.message.Message):
         column: builtins.str | None = ...,
         remote: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_collect_metrics", b"_collect_metrics", "_column", b"_column", "_format", b"_format", "_job_id", b"_job_id", "_location", b"_location", "_model_id", b"_model_id", "_preprocess", b"_preprocess", "_remote", b"_remote", "_show_concise", b"_show_concise", "_zingg_dir", b"_zingg_dir", "collect_metrics", b"collect_metrics", "column", b"column", "format", b"format", "job_id", b"job_id", "location", b"location", "model_id", b"model_id", "preprocess", b"preprocess", "remote", b"remote", "show_concise", b"show_concise", "zingg_dir", b"zingg_dir"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_collect_metrics", b"_collect_metrics", "_column", b"_column", "_format", b"_format", "_job_id", b"_job_id", "_location", b"_location", "_model_id", b"_model_id", "_preprocess", b"_preprocess", "_remote", b"_remote", "_show_concise", b"_show_concise", "_zingg_dir", b"_zingg_dir", "collect_metrics", b"collect_metrics", "column", b"column", "conf", b"conf", "email", b"email", "format", b"format", "job_id", b"job_id", "license", b"license", "location", b"location", "model_id", b"model_id", "phase", b"phase", "preprocess", b"preprocess", "remote", b"remote", "show_concise", b"show_concise", "zingg_dir", b"zingg_dir"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_collect_metrics", b"_collect_metrics", "_column", b"_column", "_conf", b"_conf", "_email", b"_email", "_format", b"_format", "_job_id", b"_job_id", "_license", b"_license", "_location", b"_location", "_model_id", b"_model_id", "_phase", b"_phase", "_preprocess", b"_preprocess", "_remote", b"_remote", "_show_concise", b"_show_concise", "_zingg_dir", b"_zingg_dir", "collect_metrics", b"collect_metrics", "column", b"column", "conf", b"conf", "email", b"email", "format", b"format", "job_id", b"job_id", "license", b"license", "location", b"location", "model_id", b"model_id", "phase", b"phase", "preprocess", b"preprocess", "remote", b"remote", "show_concise", b"show_concise", "zingg_dir", b"zingg_dir"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_collect_metrics", b"_collect_metrics", "_column", b"_column", "_conf", b"_conf", "_email", b"_email", "_format", b"_format", "_job_id", b"_job_id", "_license", b"_license", "_location", b"_location", "_model_id", b"_model_id", "_phase", b"_phase", "_preprocess", b"_preprocess", "_remote", b"_remote", "_show_concise", b"_show_concise", "_zingg_dir", b"_zingg_dir", "collect_metrics", b"collect_metrics", "column", b"column", "conf", b"conf", "email", b"email", "format", b"format", "job_id", b"job_id", "license", b"license", "location", b"location", "model_id", b"model_id", "phase", b"phase", "preprocess", b"preprocess", "remote", b"remote", "show_concise", b"show_concise", "zingg_dir", b"zingg_dir"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_collect_metrics", b"_collect_metrics"]) -> typing_extensions.Literal["collect_metrics"] | None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_column", b"_column"]) -> typing_extensions.Literal["column"] | None: ...
     @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_conf", b"_conf"]) -> typing_extensions.Literal["conf"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_email", b"_email"]) -> typing_extensions.Literal["email"] | None: ...
+    @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_format", b"_format"]) -> typing_extensions.Literal["format"] | None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_job_id", b"_job_id"]) -> typing_extensions.Literal["job_id"] | None: ...
     @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_license", b"_license"]) -> typing_extensions.Literal["license"] | None: ...
+    @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_location", b"_location"]) -> typing_extensions.Literal["location"] | None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_model_id", b"_model_id"]) -> typing_extensions.Literal["model_id"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_phase", b"_phase"]) -> typing_extensions.Literal["phase"] | None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_preprocess", b"_preprocess"]) -> typing_extensions.Literal["preprocess"] | None: ...
     @typing.overload

@@ -59,7 +59,7 @@ public final class ConnectPlugins {
       "nets\022/\n\013cli_options\030\002 \001(\0132\016.ClientOption" +
       "sR\ncliOptions\022)\n\016in_memory_date\030\003 \001(\014H\000R" +
       "\014inMemoryDate\210\001\001B\021\n\017_in_memory_date\"\200\002\n\017" +
-      "FieldDefinition\022)\n\nmatch_type\030\001 \001(\0162\n.Ma" +
+      "FieldDefinition\022)\n\nmatch_type\030\001 \003(\0162\n.Ma" +
       "tchTypeR\tmatchType\022\033\n\tdata_type\030\002 \001(\tR\010d" +
       "ataType\022\035\n\nfield_name\030\003 \001(\tR\tfieldName\022\026" +
       "\n\006fields\030\004 \001(\tR\006fields\022\"\n\nstop_words\030\005 \001" +
@@ -84,35 +84,36 @@ public final class ConnectPlugins {
       "id\030\n \001(\005R\005jobId\022\'\n\017collect_metrics\030\013 \001(\010" +
       "R\016collectMetrics\022!\n\014show_concise\030\014 \001(\010R\013" +
       "showConcise\022*\n\021stop_words_cutoff\030\r \001(\002R\017" +
-      "stopWordsCutoff\022\035\n\nblock_size\030\016 \001(\005R\tblo" +
+      "stopWordsCutoff\022\035\n\nblock_size\030\016 \001(\003R\tblo" +
       "ckSize\022\033\n\006column\030\017 \001(\tH\000R\006column\210\001\001B\t\n\007_" +
-      "column\"\302\004\n\rClientOptions\022\024\n\005phase\030\001 \001(\tR" +
-      "\005phase\022\030\n\007license\030\002 \001(\tR\007license\022\024\n\005emai" +
-      "l\030\003 \001(\tR\005email\022\022\n\004conf\030\004 \001(\tR\004conf\022#\n\npr" +
-      "eprocess\030\005 \001(\tH\000R\npreprocess\210\001\001\022\032\n\006job_i" +
-      "d\030\006 \001(\tH\001R\005jobId\210\001\001\022\033\n\006format\030\007 \001(\tH\002R\006f" +
-      "ormat\210\001\001\022 \n\tzingg_dir\030\010 \001(\tH\003R\010zinggDir\210" +
-      "\001\001\022\036\n\010model_id\030\t \001(\tH\004R\007modelId\210\001\001\022,\n\017co" +
-      "llect_metrics\030\n \001(\tH\005R\016collectMetrics\210\001\001" +
-      "\022&\n\014show_concise\030\013 \001(\tH\006R\013showConcise\210\001\001" +
-      "\022\037\n\010location\030\014 \001(\tH\007R\010location\210\001\001\022\033\n\006col" +
-      "umn\030\r \001(\tH\010R\006column\210\001\001\022\033\n\006remote\030\016 \001(\tH\t" +
-      "R\006remote\210\001\001B\r\n\013_preprocessB\t\n\007_job_idB\t\n" +
-      "\007_formatB\014\n\n_zingg_dirB\013\n\t_model_idB\022\n\020_" +
-      "collect_metricsB\017\n\r_show_conciseB\013\n\t_loc" +
-      "ationB\t\n\007_columnB\t\n\007_remote*\336\001\n\tMatchTyp" +
-      "e\022\014\n\010MT_FUZZY\020\000\022\014\n\010MT_EXACT\020\001\022\017\n\013MT_DONT" +
-      "_USE\020\002\022\014\n\010MT_EMAIL\020\003\022\016\n\nMT_PINCODE\020\004\022\024\n\020" +
-      "MT_NULL_OR_BLANK\020\005\022\013\n\007MT_TEXT\020\006\022\016\n\nMT_NU" +
-      "MERIC\020\007\022\031\n\025MT_NUMERIC_WITH_UNITS\020\010\022\033\n\027MT" +
-      "_ONLY_ALPHABETS_EXACT\020\t\022\033\n\027MT_ONLY_ALPHA" +
-      "BETS_FUZZY\020\n*\314\001\n\nDataFormat\022\n\n\006DF_CSV\020\000\022" +
-      "\016\n\nDF_PARQUET\020\001\022\013\n\007DF_JSON\020\002\022\013\n\007DF_TEXT\020" +
-      "\003\022\n\n\006DF_XLS\020\004\022\013\n\007DF_AVRO\020\005\022\013\n\007DF_JDBC\020\006\022" +
-      "\020\n\014DF_CASSANDRA\020\007\022\020\n\014DF_SNOWFLAKE\020\010\022\016\n\nD" +
-      "F_ELASTIC\020\t\022\r\n\tDF_EXACOL\020\n\022\016\n\nDF_BIGQUEY" +
-      "\020\013\022\017\n\013DF_INMEMORY\020\014B\035\n\031zingg.spark.conne" +
-      "ct.protoP\001b\006proto3"
+      "column\"\377\004\n\rClientOptions\022\031\n\005phase\030\001 \001(\tH" +
+      "\000R\005phase\210\001\001\022\035\n\007license\030\002 \001(\tH\001R\007license\210" +
+      "\001\001\022\031\n\005email\030\003 \001(\tH\002R\005email\210\001\001\022\027\n\004conf\030\004 " +
+      "\001(\tH\003R\004conf\210\001\001\022#\n\npreprocess\030\005 \001(\tH\004R\npr" +
+      "eprocess\210\001\001\022\032\n\006job_id\030\006 \001(\tH\005R\005jobId\210\001\001\022" +
+      "\033\n\006format\030\007 \001(\tH\006R\006format\210\001\001\022 \n\tzingg_di" +
+      "r\030\010 \001(\tH\007R\010zinggDir\210\001\001\022\036\n\010model_id\030\t \001(\t" +
+      "H\010R\007modelId\210\001\001\022,\n\017collect_metrics\030\n \001(\tH" +
+      "\tR\016collectMetrics\210\001\001\022&\n\014show_concise\030\013 \001" +
+      "(\tH\nR\013showConcise\210\001\001\022\037\n\010location\030\014 \001(\tH\013" +
+      "R\010location\210\001\001\022\033\n\006column\030\r \001(\tH\014R\006column\210" +
+      "\001\001\022\033\n\006remote\030\016 \001(\tH\rR\006remote\210\001\001B\010\n\006_phas" +
+      "eB\n\n\010_licenseB\010\n\006_emailB\007\n\005_confB\r\n\013_pre" +
+      "processB\t\n\007_job_idB\t\n\007_formatB\014\n\n_zingg_" +
+      "dirB\013\n\t_model_idB\022\n\020_collect_metricsB\017\n\r" +
+      "_show_conciseB\013\n\t_locationB\t\n\007_columnB\t\n" +
+      "\007_remote*\336\001\n\tMatchType\022\014\n\010MT_FUZZY\020\000\022\014\n\010" +
+      "MT_EXACT\020\001\022\017\n\013MT_DONT_USE\020\002\022\014\n\010MT_EMAIL\020" +
+      "\003\022\016\n\nMT_PINCODE\020\004\022\024\n\020MT_NULL_OR_BLANK\020\005\022" +
+      "\013\n\007MT_TEXT\020\006\022\016\n\nMT_NUMERIC\020\007\022\031\n\025MT_NUMER" +
+      "IC_WITH_UNITS\020\010\022\033\n\027MT_ONLY_ALPHABETS_EXA" +
+      "CT\020\t\022\033\n\027MT_ONLY_ALPHABETS_FUZZY\020\n*\314\001\n\nDa" +
+      "taFormat\022\n\n\006DF_CSV\020\000\022\016\n\nDF_PARQUET\020\001\022\013\n\007" +
+      "DF_JSON\020\002\022\013\n\007DF_TEXT\020\003\022\n\n\006DF_XLS\020\004\022\013\n\007DF" +
+      "_AVRO\020\005\022\013\n\007DF_JDBC\020\006\022\020\n\014DF_CASSANDRA\020\007\022\020" +
+      "\n\014DF_SNOWFLAKE\020\010\022\016\n\nDF_ELASTIC\020\t\022\r\n\tDF_E" +
+      "XACOL\020\n\022\016\n\nDF_BIGQUEY\020\013\022\017\n\013DF_INMEMORY\020\014" +
+      "B\035\n\031zingg.spark.connect.protoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
