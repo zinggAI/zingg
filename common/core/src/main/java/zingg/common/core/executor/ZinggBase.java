@@ -19,7 +19,7 @@ import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.client.util.DSUtil;
 import zingg.common.client.util.PipeUtilBase;
-import zingg.common.core.context.Context;
+import zingg.common.core.context.IContext;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.GraphUtil;
@@ -32,7 +32,7 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
 
     protected IArguments args;
 	
-    protected Context<S,D,R,C,T> context;
+    protected IContext<S,D,R,C,T> context;
     protected String name;
     protected ZinggOption zinggOption;
     protected long startTime;
@@ -112,11 +112,11 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
    
     
     
-    public Context<S,D,R,C,T> getContext() {
+    public IContext<S,D,R,C,T> getContext() {
         return this.context;
     }
 
-    public void setContext(Context<S,D,R,C,T> source) {
+    public void setContext(IContext<S,D,R,C,T> source) {
         this.context = source;
     }
     public void setName(String name) {
