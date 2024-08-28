@@ -18,6 +18,7 @@ import zingg.common.core.zFrame.model.PersonMixed;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -623,10 +624,13 @@ public abstract class TestZFrameBase<S, D, R, C> {
     public void testDistinct() throws Exception {
         List<Person> sampleData = createSampleDataList();
         List<Person> sampleDataDistinct = createSampleDataListDistinct();
+        //sort input data set
+        sampleDataDistinct.sort(Comparator.comparing(a -> a.recid));
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(sampleData, Person.class);
 
-        List<R> rows = zFrame.distinct().collectAsList();
-
+        //sort zFrame
+        ZFrame<D, R, C> zFrameDistinct = zFrame.distinct().sortAscending("recid");
+        List<R> rows = zFrameDistinct.collectAsList();
         List<Field> fields = List.of(Person.class.getDeclaredFields());
         for (int idx = 0; idx < sampleDataDistinct.size(); idx++) {
             R row = rows.get(idx);
