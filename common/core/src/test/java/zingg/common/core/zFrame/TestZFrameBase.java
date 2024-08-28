@@ -483,30 +483,8 @@ public abstract class TestZFrameBase<S, D, R, C> {
         List<R> rows = zFrameDeDuplicated.collectAsList();
 
         List<Field> fields = List.of(Person.class.getDeclaredFields());
-        int matchedCount = 0;
-        for (Person schema : sampleDataWithDistinctSurnameAndPostCode) {
-            for (R row : rows) {
-                boolean rowMatched = true;
-                for (Field column : fields) {
-                    String columnName = column.getName();
-                    if (!column.get(schema).toString().
-                            equals(zFrame.getAsString(row, columnName))) {
-                        rowMatched = false;
-                        break;
-                    }
-                }
-                if (rowMatched) {
-                    matchedCount++;
-                    break;
-                }
-            }
-        }
 
-
-        assertEquals(rows.size(), matchedCount,
-                "rows count is not as expected");
-        assertEquals(sampleDataWithDistinctSurnameAndPostCode.size(), matchedCount,
-                "rows count is not as expected");
+        validateRows(sampleDataWithDistinctSurnameAndPostCode, rows, fields, zFrame);
     }
 
     @Test
@@ -518,30 +496,8 @@ public abstract class TestZFrameBase<S, D, R, C> {
 
         List<R> rows = zFrameDeDuplicated.collectAsList();
         List<Field> fields = List.of(Person.class.getDeclaredFields());
-        int matchedCount = 0;
-        for (Person person : sampleDataWithDistinctSurnameAndPostCode) {
-            for (R row : rows) {
-                boolean rowMatched = true;
-                for (Field column : fields) {
-                    String columnName = column.getName();
-                    if (!column.get(person).toString().
-                            equals(zFrame.getAsString(row, columnName))) {
-                        rowMatched = false;
-                        break;
-                    }
-                }
-                if (rowMatched) {
-                    matchedCount++;
-                    break;
-                }
-            }
-        }
 
-
-        assertEquals(rows.size(), matchedCount,
-                "rows count is not as expected");
-        assertEquals(sampleDataWithDistinctSurnameAndPostCode.size(), matchedCount,
-                "rows count is not as expected");
+        validateRows(sampleDataWithDistinctSurnameAndPostCode, rows, fields, zFrame);
     }
 
     @Test
@@ -555,27 +511,7 @@ public abstract class TestZFrameBase<S, D, R, C> {
         List<R> rows = zFrameSortedDesc.collectAsList();
 
         List<Field> fields = List.of(PersonMixed.class.getDeclaredFields());
-        for (int idx = 0; idx < sampleData.size(); idx++) {
-            R row = rows.get(idx);
-            for (Field column : fields) {
-                String columnName  = column.getName();
-                if (column.getType() == String.class) {
-                    assertEquals(column.get(sampleData.get(idx)), zFrameSortedDesc.getAsString(row, columnName),
-                            "value in ZFrame and sample input is not same");
-                } else if (column.getType() == Integer.class) {
-                    assertEquals(column.get(sampleData.get(idx)), zFrameSortedDesc.getAsInt(row, columnName),
-                            "value in ZFrame and sample input is not same");
-                } else if (column.getType() == Double.class) {
-                    assertEquals(column.get(sampleData.get(idx)), zFrameSortedDesc.getAsDouble(row, columnName),
-                            "value in ZFrame and sample input is not same");
-                } else if (column.getType() == Long.class) {
-                    assertEquals(column.get(sampleData.get(idx)), zFrameSortedDesc.getAsLong(row, columnName),
-                            "value in ZFrame and sample input is not same");
-                } else {
-                    throw new Exception("Not a valid data type");
-                }
-            }
-        }
+        validateRowsRowsBasedOnColType(sampleData, rows, fields, zFrame);
     }
 
     @Test
@@ -589,27 +525,7 @@ public abstract class TestZFrameBase<S, D, R, C> {
         List<R> rows = zFrameSortedAsc.collectAsList();
 
         List<Field> fields = List.of(PersonMixed.class.getDeclaredFields());
-        for (int idx = 0; idx < sampleData.size(); idx++) {
-            R row = rows.get(idx);
-            for (Field column : fields) {
-                String columnName  = column.getName();
-                if (column.getType() == String.class) {
-                    assertEquals(column.get(sampleData.get(idx)).toString(), zFrame.getAsString(row, columnName),
-                            "value in ZFrame and sample input is not same");
-                } else if (column.getType() == Integer.class) {
-                    assertEquals(column.get(sampleData.get(idx)), zFrame.getAsInt(row, columnName),
-                            "value in ZFrame and sample input is not same");
-                } else if (column.getType() == Double.class) {
-                    assertEquals(column.get(sampleData.get(idx)), zFrame.getAsDouble(row, columnName),
-                            "value in ZFrame and sample input is not same");
-                } else if (column.getType() == Long.class) {
-                    assertEquals(column.get(sampleData.get(idx)), zFrame.getAsLong(row, columnName),
-                            "value in ZFrame and sample input is not same");
-                } else {
-                    throw new Exception("Not a valid data type");
-                }
-            }
-        }
+        validateRowsRowsBasedOnColType(sampleData, rows, fields, zFrame);
     }
 
     @Test
@@ -640,6 +556,58 @@ public abstract class TestZFrameBase<S, D, R, C> {
                         "value in ZFrame and sample input is not same");
             }
         }
+    }
+
+    private void validateRowsRowsBasedOnColType(List<PersonMixed> sampleData, List<R> rows, List<Field> fields, ZFrame<D, R, C> zFrame) throws Exception {
+        for (int idx = 0; idx < sampleData.size(); idx++) {
+            R row = rows.get(idx);
+            for (Field column : fields) {
+                String columnName  = column.getName();
+                if (column.getType() == String.class) {
+                    assertEquals(column.get(sampleData.get(idx)).toString(), zFrame.getAsString(row, columnName),
+                            "value in ZFrame and sample input is not same");
+                } else if (column.getType() == Integer.class) {
+                    assertEquals(column.get(sampleData.get(idx)), zFrame.getAsInt(row, columnName),
+                            "value in ZFrame and sample input is not same");
+                } else if (column.getType() == Double.class) {
+                    assertEquals(column.get(sampleData.get(idx)), zFrame.getAsDouble(row, columnName),
+                            "value in ZFrame and sample input is not same");
+                } else if (column.getType() == Long.class) {
+                    assertEquals(column.get(sampleData.get(idx)), zFrame.getAsLong(row, columnName),
+                            "value in ZFrame and sample input is not same");
+                } else {
+                    throw new Exception("Not a valid data type");
+                }
+            }
+        }
+    }
+
+    private void validateRows(List<Person> sampleData, List<R> rows, List<Field> fields, ZFrame<D, R, C> zFrame)
+            throws IllegalAccessException {
+
+        int matchedCount = 0;
+        for (Person person : sampleData) {
+            for (R row : rows) {
+                boolean rowMatched = true;
+                for (Field column : fields) {
+                    String columnName = column.getName();
+                    if (!column.get(person).toString().
+                            equals(zFrame.getAsString(row, columnName))) {
+                        rowMatched = false;
+                        break;
+                    }
+                }
+                if (rowMatched) {
+                    matchedCount++;
+                    break;
+                }
+            }
+        }
+
+        assertEquals(rows.size(), matchedCount,
+                "rows count is not as expected");
+        assertEquals(sampleData.size(), matchedCount,
+                "rows count is not as expected");
     }
 
     protected void assertTrueCheckingExceptOutput(ZFrame<D, R, C> sf1, ZFrame<D, R, C> sf2, String message) {
