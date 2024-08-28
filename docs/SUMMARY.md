@@ -36,7 +36,7 @@
     * [Exporting Labeled Data](setup/training/exportLabeledData.md)
   * [Building And Saving The Model](setup/train.md)
   * [Finding The Matches](setup/match.md)
-  * [Add Incremental Data](runIncremental.md)
+  * [Adding Incremental Data](runIncremental.md)
   * [Linking Across Datasets](setup/link.md)
 * [Data Sources and Sinks](dataSourcesAndSinks/connectors.md)
   * [Zingg Pipes](dataSourcesAndSinks/pipes.md)

@@ -1,8 +1,14 @@
-# Add Incremental Data
+---
+description: >-
+  Building a continuosly updated identity graph with new, updated and deleted
+  records
+---
 
-### Run Incremental Loads For New and Updated Records - _Zingg Enterprise Feature_
+# Adding Incremental Data
 
-Rerunning matching on entire datasets is wasteful, and we lose the lineage of matched records against a persistent identifier. Using Zingg Enterprise, incremental loads can be run to match existing pre-resolved entities. The new and updated records are matched to existing clusters, and new persistent **ZINGG\_IDs** are generated for records that do not find a match. If a record gets updated and Zingg Enterprise discovers that it is a more suitable match with another cluster, it will be reassigned. Cluster assignment, merge, and unmerge happens automatically in the flow. Zingg Enterprise also takes care of human feedback on previously matched data to ensure that it does not override the approved records.
+[Zingg Enterprise Feature](#user-content-fn-1)[^1]
+
+Rerunning matching on entire datasets is wasteful, and we lose the lineage of matched records against a persistent identifier. Using the[ incremental flow](https://www.learningfromdata.zingg.ai/p/zingg-incremental-flow) feature in [Zingg Enterprise](https://www.zingg.ai/company/zingg-enterprise), incremental loads can be run to match existing pre-resolved entities. The new and updated records are matched to existing clusters, and new persistent [**ZINGG\_IDs**](https://www.learningfromdata.zingg.ai/p/hello-zingg-id) are generated for records that do not find a match. If a record gets updated and Zingg Enterprise discovers that it is a more suitable match with another cluster, it will be reassigned. Cluster assignment, merge, and unmerge happens automatically in the flow. Zingg Enterprise also takes care of human feedback on previously matched data to ensure that it does not override the approved records.
 
 ### The incremental phase is run as follows:
 
@@ -100,3 +106,5 @@ options = ClientOptions([ClientOptions.PHASE,"runIncremental"])
 zingg = EZingg(incrArgs, options)  
 zingg.initAndExecute()  
 ```
+
+[^1]: Zingg Enterprise is an advance version of Zingg Community with production grade features
