@@ -6,9 +6,8 @@ description: For a different Spark version or compiling latest code
 
 If you need to compile the latest code or build for a different Spark version, you can clone this repo and
 
-* Install maven
-* Install JDK 11
-* Set JAVA\_HOME to JDK base directory
+* Install **maven**
+* Install **JDK 1.8**
+* Set `JAVA_HOME` to JDK base directory
+
 * Run the following: `mvn initialize` and then `mvn clean compile package`
-
-

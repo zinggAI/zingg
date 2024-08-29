@@ -26,7 +26,7 @@ For example:
 spark.jars=spark-connector_2.12-1.3.0-spark-3.3.2-assembly.jar
 ```
 
-If there are more than one jar files, please use comma as separator. Additionally, please change the version accordingly so that it matches your Zingg and Spark versions.
+If there are more than one jar files, please use _comma_ as separator. Additionally, please change the version accordingly so that it matches your Zingg and Spark versions.
 
 ## Connector Settings
 
@@ -52,28 +52,28 @@ For example:
  ...
 ```
 
- Similarly, for output:
+Similarly, for output:
 
- ```json
- ...
+```json
+...
 "output": [
-    {
-        "name": "output",
-        "format": "com.exasol.spark",
-        "props": {
-            "host": "10.11.0.2",
-            "port": "8563",
-            "username": "sys",
-            "password": "exasol",
-            "create_table": "true",
-            "table": "DB_SCHEMA.ENTITY_RESOLUTION",
-        },
-        "mode": "Append"
-    }
+   {
+       "name": "output",
+       "format": "com.exasol.spark",
+       "props": {
+           "host": "10.11.0.2",
+           "port": "8563",
+           "username": "sys",
+           "password": "exasol",
+           "create_table": "true",
+           "table": "DB_SCHEMA.ENTITY_RESOLUTION",
+       },
+       "mode": "Append"
+   }
 ],
 ...
 ```
 
-Please note that, the `host` parameter should be the first internal node's IPv4 address.
+Please note that, the `host` parameter should be the first internal node's **IPv4** **address**.
 
-As Zingg uses [Exasol Spark connector](https://github.com/exasol/spark-connector) underneath, please also check out the [user guide](https://github.com/exasol/spark-connector/blob/main/doc/user_guide/user_guide.md) and [configuration options](https://github.com/exasol/spark-connector/blob/main/doc/user_guide/user_guide.md#configuration-options) for more information.
+As Zingg uses [Exasol Spark connector](https://github.com/exasol/spark-connector) underneath, please also check out the [user guide](https://github.com/exasol/spark-connector/blob/main/doc/user\_guide/user\_guide.md) and [configuration options](https://github.com/exasol/spark-connector/blob/main/doc/user\_guide/user\_guide.md#configuration-options) for more information.

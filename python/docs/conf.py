@@ -18,12 +18,13 @@ print("path is ")
 print(os.path.abspath('../zingg/'))
 # -- Project information -----------------------------------------------------
 
-project = 'Zingg'
+project = 'Zingg Entity Resolution'
 copyright = '2024, Zingg.AI'
 author = 'Zingg.AI'
 
 # The full version, including alpha/beta/rc tags
 release = '0.4.1-SNAPSHOT'
+version = '0.4.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -39,6 +40,8 @@ extensions = [
     'sphinx.ext.coverage'
 ]
 
+
+
 # Add any paths that contain templates here, relative to this directory.
 #templates_path = ['_templates']
 
@@ -53,7 +56,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'classic'
+html_theme = 'sphinx_rtd_theme'
 
 
 # Add any paths that contain custom static files (such as style sheets) here,

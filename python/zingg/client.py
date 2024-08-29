@@ -20,7 +20,9 @@ LOG = logging.getLogger("zingg")
 _spark_ctxt = None
 _sqlContext = None
 _spark = None
+<<<<<<< HEAD
 _zingg_jar = 'zingg-0.4.1-SNAPSHOT.jar'
+
 
 def initSparkClient():
     global _spark_ctxt
@@ -468,7 +470,6 @@ class ZinggWithSpark(Zingg):
     :type options: ClientOptions
 
     """
-
     def __init__(self, args, options):
         self.client = getJVM().zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions(), getSparkSession()._jsparkSession)
 

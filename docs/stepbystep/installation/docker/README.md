@@ -4,7 +4,7 @@ description: From pre-built Docker image with all dependencies included
 
 # Docker
 
-## Running from Docker image from Docker hub
+## Running From Docker Image From Docker Hub
 
 The easiest way to get started is to pull the Docker image with the last release of Zingg.
 
@@ -17,6 +17,6 @@ In case of permission denied, try mapping /tmp of docker with user's machine /tm
 docker run -v /tmp:/tmp -it zingg/zingg:0.4.0 bash
 ```
 
-To know more about Docker, please refer to the official [docker documentation](https://docs.docker.com/).
+To know more about Docker, please refer to the official [Docker documentation](https://docs.docker.com/).
 
 ##
