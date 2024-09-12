@@ -250,10 +250,10 @@ public class Canopy<R> implements Serializable {
 			}
 			else if (hash1 != null && hash2 != null && hash1.equals(hash2)) {
 				dupeRemaining.add(r);
-				LOG.debug("NOT eliminatin " );	
+				LOG.debug("NOT eliminating " );	
 			}
 			else {
-				LOG.debug("eliminatin " + r);		
+				LOG.debug("eliminating " + r);		
 			}
 		}			
 		elimCount = dupeN.size() - dupeRemaining.size();
