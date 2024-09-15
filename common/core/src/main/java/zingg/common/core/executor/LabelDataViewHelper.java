@@ -18,6 +18,10 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 
 	private static final long serialVersionUID = 1L;
 	public static final Log LOG = LogFactory.getLog(LabelDataViewHelper.class);
+	public static String PIVOT_COLUMN = "field";
+	public static String VALUE_1 = "value1";
+	public static String VALUE_2 = "value2";
+	public static String ORDER = "order";
 	
 	public LabelDataViewHelper(IContext<S,D,R,C,T> context, ClientOptions clientOptions) {
 		setContext(context);
@@ -87,7 +91,8 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	public void displayRecords(ZFrame<D, R, C> records, String preMessage, String postMessage) {
 		//System.out.println();
 		System.out.println(preMessage);
-		records.show(false);
+//		showHorizontal(records);
+		showVertical(records);
 		System.out.println(postMessage);
 		System.out.println("\tWhat do you think? Your choices are: ");
 		System.out.println();
@@ -125,6 +130,32 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 		return this;
 	}
 
-	
-	
+	public void showHorizontal(ZFrame<D, R, C> records) {
+		records.show(false);
+	}
+
+	public void showVertical(ZFrame<D, R, C> records) {
+		ZFrame<D, R, C> headerIncludedFrame = getHeaderIncludedDataFrame(records);
+		ZFrame<D, R, C> vertical = headerIncludedFrame.transpose(PIVOT_COLUMN);
+		vertical.sortAscending(ORDER).drop(ORDER).show();
+	}
+
+	/***
+	 * return new ZFrame with new Column added as PIVOT used for transposing the matrix
+	 * @param records
+	 * @return header included zFrame
+	 */
+	private ZFrame<D, R, C> getHeaderIncludedDataFrame(ZFrame<D, R, C> records) {
+		ZFrame<D, R, C> orderedRowAdded = records.addAutoIncrementalRow();
+
+		ZFrame<D, R, C> firstRecord = orderedRowAdded.limit(1);
+		ZFrame<D, R, C> secondRecord = orderedRowAdded.except(firstRecord).limit(1);
+		ZFrame<D, R, C> thirdRecord = orderedRowAdded.except(firstRecord.union(secondRecord));
+
+		//return new ZFrame with Field column added to be used as pivot
+		return firstRecord.withColumn(PIVOT_COLUMN, VALUE_1).
+				union(secondRecord.withColumn(PIVOT_COLUMN, VALUE_2)).
+				union(thirdRecord.withColumn(PIVOT_COLUMN, ORDER));
+	}
+
 }

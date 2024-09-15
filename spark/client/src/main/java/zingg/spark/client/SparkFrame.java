@@ -1,8 +1,9 @@
 package zingg.spark.client;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.apache.spark.internal.config.R;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
@@ -14,6 +15,8 @@ import scala.collection.JavaConverters;
 import zingg.common.client.FieldData;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
+import zingg.common.core.util.ListHelper;
+import zingg.spark.client.util.ExtendedFunction;
 
 //Dataset, Row, column
 public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
@@ -458,7 +461,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 
 	@Override
 	public ZFrame<Dataset<Row>, Row, Column> intersect(ZFrame<Dataset<Row>, Row, Column> other) {
-		return new SparkFrame(df.intersect(other.df())); 
+		return new SparkFrame(df.intersect(other.df()));
 	}
 
 	@Override
@@ -470,6 +473,36 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     public Column gt(Column column1, Column column2) {
 		return column1.gt(column2);
 	}
-	
+
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> transpose(String pivotColumn) {
+        ExtendedFunction extendedFunction = new ExtendedFunction();
+        List<String> columnsExceptPivot = new ArrayList<>(List.of(df.columns()));
+        columnsExceptPivot.remove(pivotColumn);
+        Dataset<Row> r = extendedFunction.TransposeDF(df, ListHelper.convertListToSeq(columnsExceptPivot), pivotColumn);
+        return new SparkFrame(r);
+    }
+
+    /***
+     * Add auto incremental row like {1, 2, 3, 4, 5} to the dataframe
+     * @return ZFrame
+     */
+
+    @Override
+    public ZFrame<Dataset<Row>, Row, Column> addAutoIncrementalRow() {
+        String[] columns = df.columns();
+        Dataset<Row> temporaryDF = df.limit(1);
+        List<String> monotonicIncreasing = new ArrayList<>();
+        for (int idx = 0; idx < columns.length; idx++) {
+            monotonicIncreasing.add(String.valueOf(idx));
+        }
+        Collections.sort(monotonicIncreasing);
+        for (int idx = 0; idx < columns.length; idx++) {
+            temporaryDF = temporaryDF.withColumn(columns[idx], functions.lit(monotonicIncreasing.get(idx)));
+        }
+        return new SparkFrame(df.union(temporaryDF));
+    }
+
+
 }
 	
