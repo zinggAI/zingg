@@ -185,26 +185,5 @@ public interface ZFrame<D, R, C> {
 
     public ZFrame<D, R, C> transpose(String pivotColumn);
 
-    public ZFrame<D, R, C> addAutoIncrementalRow();
-
     public void showVertical();
-
-    /***
-     * return new ZFrame with new Column added as PIVOT used for transposing the matrix
-     * @param records
-     * @return header included zFrame
-     */
-    default ZFrame<D, R, C> getHeaderIncludedDataFrame(ZFrame<D, R, C> records) {
-        ZFrame<D, R, C> orderedRowAdded = records.addAutoIncrementalRow();
-
-        ZFrame<D, R, C> firstRecord = orderedRowAdded.limit(1);
-        ZFrame<D, R, C> secondRecord = orderedRowAdded.except(firstRecord).limit(1);
-        ZFrame<D, R, C> thirdRecord = orderedRowAdded.except(firstRecord.union(secondRecord));
-
-        //return new ZFrame with Field column added to be used as pivot
-        return firstRecord.withColumn(PIVOT_COLUMN, VALUE_1).
-                union(secondRecord.withColumn(PIVOT_COLUMN, VALUE_2)).
-                union(thirdRecord.withColumn(PIVOT_COLUMN, ORDER));
-    }
-
 }

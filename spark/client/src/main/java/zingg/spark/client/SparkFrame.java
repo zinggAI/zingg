@@ -489,8 +489,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
      * @return ZFrame
      */
 
-    @Override
-    public ZFrame<Dataset<Row>, Row, Column> addAutoIncrementalRow() {
+    private ZFrame<Dataset<Row>, Row, Column> addAutoIncrementalRow() {
         String[] columns = df.columns();
         Dataset<Row> temporaryDF = df.limit(1);
         List<String> monotonicIncreasing = new ArrayList<>();
@@ -508,9 +507,26 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     public void showVertical() {
         ZFrame<Dataset<Row>, Row, Column> headerIncludedFrame = getHeaderIncludedDataFrame(new SparkFrame(df));
         ZFrame<Dataset<Row>, Row, Column> vertical = headerIncludedFrame.transpose(PIVOT_COLUMN);
-        vertical.sortAscending(ORDER).drop(ORDER).show();
+        vertical.sortAscending(ORDER).drop(ORDER).show(1000);
     }
 
+    /***
+     * return new ZFrame with new Column added as PIVOT used for transposing the matrix
+     * @param records
+     * @return header included zFrame
+     */
+    private ZFrame<Dataset<Row>, Row, Column> getHeaderIncludedDataFrame(ZFrame<Dataset<Row>, Row, Column> records) {
+        ZFrame<Dataset<Row>, Row, Column> orderedRowAdded = addAutoIncrementalRow();
+
+        ZFrame<Dataset<Row>, Row, Column> firstRecord = orderedRowAdded.limit(1);
+        ZFrame<Dataset<Row>, Row, Column> secondRecord = orderedRowAdded.except(firstRecord).limit(1);
+        ZFrame<Dataset<Row>, Row, Column> thirdRecord = orderedRowAdded.except(firstRecord.union(secondRecord));
+
+        //return new ZFrame with Field column added to be used as pivot
+        return firstRecord.withColumn(PIVOT_COLUMN, VALUE_1).
+                union(secondRecord.withColumn(PIVOT_COLUMN, VALUE_2)).
+                union(thirdRecord.withColumn(PIVOT_COLUMN, ORDER));
+    }
 
 }
 	
