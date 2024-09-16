@@ -15,7 +15,7 @@ import scala.collection.JavaConverters;
 import zingg.common.client.FieldData;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
-import zingg.common.core.util.ListHelper;
+import zingg.common.core.util.ListConverter;
 import zingg.spark.client.util.ExtendedFunction;
 
 //Dataset, Row, column
@@ -479,7 +479,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         ExtendedFunction extendedFunction = new ExtendedFunction();
         List<String> columnsExceptPivot = new ArrayList<>(List.of(df.columns()));
         columnsExceptPivot.remove(pivotColumn);
-        Dataset<Row> r = extendedFunction.TransposeDF(df, ListHelper.convertListToSeq(columnsExceptPivot), pivotColumn);
+        Dataset<Row> r = extendedFunction.TransposeDF(df, ListConverter.convertListToSeq(columnsExceptPivot), pivotColumn);
         return new SparkFrame(r);
     }
 
@@ -501,6 +501,13 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
             temporaryDF = temporaryDF.withColumn(columns[idx], functions.lit(monotonicIncreasing.get(idx)));
         }
         return new SparkFrame(df.union(temporaryDF));
+    }
+
+    @Override
+    public void showVertical() {
+        ZFrame<Dataset<Row>, Row, Column> headerIncludedFrame = getHeaderIncludedDataFrame(new SparkFrame(df));
+        ZFrame<Dataset<Row>, Row, Column> vertical = headerIncludedFrame.transpose(PIVOT_COLUMN);
+        vertical.sortAscending(ORDER).drop(ORDER).show();
     }
 
 
