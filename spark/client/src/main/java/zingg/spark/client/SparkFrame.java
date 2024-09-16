@@ -479,7 +479,8 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         ExtendedFunction extendedFunction = new ExtendedFunction();
         List<String> columnsExceptPivot = new ArrayList<>(List.of(df.columns()));
         columnsExceptPivot.remove(pivotColumn);
-        Dataset<Row> r = extendedFunction.TransposeDF(df, ListConverter.convertListToSeq(columnsExceptPivot), pivotColumn);
+        ListConverter<String> listConverter = new ListConverter<String>();
+        Dataset<Row> r = extendedFunction.TransposeDF(df, listConverter.convertListToSeq(columnsExceptPivot), pivotColumn);
         return new SparkFrame(r);
     }
 

@@ -5,8 +5,8 @@ import scala.collection.Seq;
 
 import java.util.List;
 
-public class ListConverter {
-    public static Seq<String> convertListToSeq(List<String> inputList) {
+public class ListConverter<C> {
+    public Seq<C> convertListToSeq(List<C> inputList) {
         return JavaConverters.asScalaIteratorConverter(inputList.iterator())
                 .asScala()
                 .toSeq();
