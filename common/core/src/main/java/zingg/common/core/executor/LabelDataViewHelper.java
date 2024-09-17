@@ -87,8 +87,7 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	public void displayRecords(ZFrame<D, R, C> records, String preMessage, String postMessage) {
 		//System.out.println();
 		System.out.println(preMessage);
-//		showHorizontal(records);
-		records.showVertical();
+		records.show(false);
 		System.out.println(postMessage);
 		System.out.println("\tWhat do you think? Your choices are: ");
 		System.out.println();
@@ -126,4 +125,6 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 		return this;
 	}
 
+	
+	
 }
