@@ -264,7 +264,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 
 	public void init() throws ZinggClientException {
 		zingg.setClientOptions(getOptions());
-		zingg.init(getArguments(), getSession());
+		zingg.init(getArguments(), getSession(),getOptions());
 		if (session != null) zingg.setSession(session);
 		initializeListeners();
 		EventsListener.getInstance().fireEvent(new ZinggStartEvent());					
