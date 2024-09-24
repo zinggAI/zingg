@@ -55,12 +55,19 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 				dupesActual = getDSUtil().addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN);
 				ZFrame<D,R,C>dupes2 =  getDSUtil().alignLinked(dupesActual, args);
 				dupes2 =  getDSUtil().postprocessLinked(dupes2, sampleOrginal);
-				LOG.debug("uncertain output schema is " + dupes2.showSchema());
-				getPipeUtil().write(dupes2, args.getOutput());
+				ZFrame<D, R, C> clusterAdjustedDF = getClusterAdjustedDF(dupes2);
+				LOG.debug("uncertain output schema is " + clusterAdjustedDF.showSchema());
+				getPipeUtil().write(clusterAdjustedDF, args.getOutput());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public ZFrame<D,R,C> getClusterAdjustedDF(ZFrame<D, R, C> dupes) {
+		//no adjustment required here
+		//some class extending it may adjust cluster like adding guid etc
+		return dupes;
 	}
 
 }
