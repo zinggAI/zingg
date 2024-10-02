@@ -79,6 +79,11 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 		matcher.init(args,session);
 		MatcherTester<S, D, R, C, T> mt = new MatcherTester(matcher);
 		executorTesterList.add(mt);
+
+		//Linker<S, D, R, C, T> linker = getLinker();
+		//linker.init(args,session);
+		//LinkerTester<S, D, R, C, T> lkt = new LinkerTester(linker);
+		//executorTesterList.add(lkt);
 		
 		testExecutors(executorTesterList);
 	}
@@ -102,5 +107,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	protected abstract Trainer<S, D, R, C, T> getTrainer() throws ZinggClientException;
 
 	protected abstract Matcher<S, D, R, C, T> getMatcher() throws ZinggClientException;	
+
+	//protected abstract Linker<S, D, R, C, T> getLinker() throws ZinggClientException;	
 	
 }

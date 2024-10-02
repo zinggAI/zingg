@@ -15,6 +15,7 @@ import org.junit.jupiter.api.AfterEach;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.Labeller;
 import zingg.common.core.executor.TestExecutorsGeneric;
+import zingg.common.core.executor.TestExecutorsCompoundPhase;
 import zingg.common.core.executor.Trainer;
 import zingg.common.core.executor.TrainerTester;
 import zingg.spark.core.context.ZinggSparkContext;
@@ -51,23 +52,43 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 		SparkTrainingDataFinder stdf = new SparkTrainingDataFinder(ctx);
 		return stdf;
 	}
+
 	@Override
 	protected Labeller<SparkSession,Dataset<Row>,Row,Column,DataType> getLabeller() throws ZinggClientException {
 		JunitSparkLabeller jlbl = new JunitSparkLabeller(ctx);
 		return jlbl;
 	}
+
 	@Override
 	protected SparkTrainer getTrainer() throws ZinggClientException {
 		SparkTrainer st = new SparkTrainer(ctx);
 		return st;
 	}
+
 	@Override
 	protected SparkMatcher getMatcher() throws ZinggClientException {
 		SparkMatcher sm = new SparkMatcher(ctx);
 		return sm;
 	}
+
+	//@Override
+	//protected SparkLinker getLinker() throws ZinggClientException {
+	//	SparkLinker sl = new SparkLinker(ctx);
+	//	return sl;
+	//}
 	
-	
+	@Override
+	protected SparkFindAndLabeller getFindAndLabeller() throws ZinggClientException {
+		SparkFindAndLabeller sfad = new SparkFindAndLabeller(ctx);
+		return sfad;
+	}
+
+	@Override
+	protected SparkTrainMatcher getTrainMatcher() throws ZinggClientException {
+		SparkTrainMatcher stm = new SparkTrainMatcher(ctx);
+		return stm;
+	}
+
 	@Override
 	public String setupArgs() throws ZinggClientException, IOException {
 		String configFile = super.setupArgs();
@@ -81,6 +102,8 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 	protected SparkTrainerTester getTrainerTester(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
 		return new SparkTrainerTester(trainer,args);
 	}
+
+	
 	
 	@Override
 	@AfterEach
