@@ -15,9 +15,9 @@ import org.junit.jupiter.api.AfterEach;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.Labeller;
 import zingg.common.core.executor.TestExecutorsGeneric;
-import zingg.common.core.executor.TestExecutorsCompoundPhase;
+import zingg.common.core.executor.TrainMatcher;
 import zingg.common.core.executor.Trainer;
-import zingg.common.core.executor.TrainerTester;
+import zingg.common.core.executor.TrainerValidator;
 import zingg.spark.core.context.ZinggSparkContext;
 
 public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Dataset<Row>,Row,Column,DataType> {
@@ -55,7 +55,7 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 
 	@Override
 	protected Labeller<SparkSession,Dataset<Row>,Row,Column,DataType> getLabeller() throws ZinggClientException {
-		JunitSparkLabeller jlbl = new JunitSparkLabeller(ctx);
+		ProgrammaticSparkLabeller jlbl = new ProgrammaticSparkLabeller(ctx);
 		return jlbl;
 	}
 
@@ -78,6 +78,25 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 	//}
 
 	@Override
+	protected SparkFindAndLabeller getFindAndLabeller() throws ZinggClientException {
+		SparkFindAndLabeller sfal = new SparkFindAndLabeller(ctx);
+        sfal.setLabeller(new ProgrammaticSparkLabeller(ctx));
+		return sfal;
+	}
+
+	@Override
+	protected SparkTrainMatcher getTrainMatcher() throws ZinggClientException {
+		SparkTrainMatcher stm = new SparkTrainMatcher(ctx);
+		return stm;
+	}
+
+    @Override
+	protected SparkTrainMatchTester getTrainMatchValidator(TrainMatcher<SparkSession,Dataset<Row>,Row,Column,DataType> trainMatch) {
+		return new SparkTrainMatchTester(trainMatch,args);
+	}
+
+
+	@Override
 	public String setupArgs() throws ZinggClientException, IOException {
 		String configFile = super.setupArgs();
 		String testFile = getClass().getClassLoader().getResource(TEST_DATA_FILE).getFile();
@@ -87,7 +106,7 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 	}
 	
 	@Override
-	protected SparkTrainerTester getTrainerTester(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
+	protected SparkTrainerTester getTrainerValidator(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
 		return new SparkTrainerTester(trainer,args);
 	}
 

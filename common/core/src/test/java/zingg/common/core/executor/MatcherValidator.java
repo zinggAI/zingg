@@ -9,12 +9,12 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 
-public class MatcherTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> {
+public class MatcherValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
 
-	public static final Log LOG = LogFactory.getLog(MatcherTester.class);
+	public static final Log LOG = LogFactory.getLog(MatcherValidator.class);
 	
-	public MatcherTester(Matcher<S, D, R, C, T> executor) {
-		super(executor);
+	public MatcherValidator(Matcher<S, D, R, C, T> validator) {
+		super(validator);
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class MatcherTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> 
 	}
 
 	public ZFrame<D, R, C> getOutputData() throws ZinggClientException {
-		ZFrame<D, R, C> output = executor.getContext().getPipeUtil().read(false, false, executor.getArgs().getOutput()[0]);
+		ZFrame<D, R, C> output = validator.getContext().getPipeUtil().read(false, false, validator.getArgs().getOutput()[0]);
 		return output;
 	}
 	

@@ -14,10 +14,10 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.core.executor.TrainMatchTester;
+import zingg.common.core.executor.TrainMatchValidator;
 import zingg.common.core.executor.TrainMatcher;
 
-public class SparkTrainMatchTester extends TrainMatchTester<SparkSession,Dataset<Row>,Row,Column,DataType> {
+public class SparkTrainMatchTester extends TrainMatchValidator<SparkSession,Dataset<Row>,Row,Column,DataType> {
     
     public static final Log LOG = LogFactory.getLog(SparkTrainMatchTester.class);
 
