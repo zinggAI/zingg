@@ -1,7 +1,5 @@
 package zingg.common.core.executor;
 
-import static org.mockito.Answers.valueOf;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

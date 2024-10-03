@@ -21,17 +21,15 @@ public class SparkTrainMatchTester extends TrainMatchValidator<SparkSession,Data
     
     public static final Log LOG = LogFactory.getLog(SparkTrainMatchTester.class);
 
+	SparkTrainerTester stt;
+	
 	public SparkTrainMatchTester(TrainMatcher<SparkSession,Dataset<Row>,Row,Column,DataType> executor,IArguments args) {
 		super(executor,args);
 	}
 
     @Override
 	public void validateResults() throws ZinggClientException {
-		// check that model is created
-		LOG.info("Zingg Model Dir : "+args.getZinggModelDir());
-		
-		File modelDir = new File(args.getZinggModelDir());
-		assertTrue(modelDir.exists(),"check if model has been created");
+		stt.validateResults();
 	}
 
 }
