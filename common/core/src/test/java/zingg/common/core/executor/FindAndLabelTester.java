@@ -15,7 +15,7 @@ public class FindAndLabelTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C
 	
 	public FindAndLabelTester(FindAndLabeller<S, D, R, C, T> executor) {
 		super(executor);
-	}
+    }
 
     @Override
     public void validateResults() throws ZinggClientException {

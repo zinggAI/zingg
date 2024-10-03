@@ -13,9 +13,12 @@ import zingg.common.client.util.ColName;
 public class TrainMatchTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> {
 
     public static final Log LOG = LogFactory.getLog(TrainMatchTester.class);
+
+    protected IArguments args;
 	
-	public TrainMatchTester(TrainMatcher<S, D, R, C, T> executor) {
+	public TrainMatchTester(TrainMatcher<S, D, R, C, T> executor, IArguments args) {
 		super(executor);
+        this.args = args;
 	}
     
     @Override

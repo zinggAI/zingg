@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.spark.internal.config.R;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -13,24 +14,23 @@ import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.AfterEach;
 
 import zingg.common.client.ZinggClientException;
-import zingg.common.core.executor.Labeller;
-import zingg.common.core.executor.TestExecutorsGeneric;
 import zingg.common.core.executor.TestExecutorsCompoundPhase;
+import zingg.common.core.executor.TestExecutorsGeneric;
+import zingg.common.core.executor.TrainMatcher;
 import zingg.common.core.executor.Trainer;
-import zingg.common.core.executor.TrainerTester;
 import zingg.spark.core.context.ZinggSparkContext;
 
-public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Dataset<Row>,Row,Column,DataType> {
-	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
+public class TestSparkExecutorsCompound extends TestExecutorsCompoundPhase<SparkSession,Dataset<Row>,Row,Column,DataType>{
+
+    protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
 	
 	protected static final String TEST_DATA_FILE = "zingg/spark/core/executor/test.csv";
 
-	public static final Log LOG = LogFactory.getLog(TestSparkExecutors.class);
+	public static final Log LOG = LogFactory.getLog(TestSparkExecutorsCompound.class);
 	
 	protected ZinggSparkContext ctx;
-	
 
-	public TestSparkExecutors() throws IOException, ZinggClientException {	
+    public TestSparkExecutorsCompound() throws IOException, ZinggClientException {	
 		SparkSession spark = SparkSession
 				.builder()
 				.master("local[*]")
@@ -42,42 +42,29 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 		init(spark);
 	}
 
-	@Override
+    @Override
 	public String getConfigFile() {
 		return CONFIG_FILE;
 	}
-	
-	@Override
-	protected SparkTrainingDataFinder getTrainingDataFinder() throws ZinggClientException {
-		SparkTrainingDataFinder stdf = new SparkTrainingDataFinder(ctx);
-		return stdf;
+
+    @Override
+	protected SparkFindAndLabeller getFindAndLabeller() throws ZinggClientException {
+		SparkFindAndLabeller sfad = new SparkFindAndLabeller(ctx);
+		return sfad;
 	}
 
 	@Override
-	protected Labeller<SparkSession,Dataset<Row>,Row,Column,DataType> getLabeller() throws ZinggClientException {
-		JunitSparkLabeller jlbl = new JunitSparkLabeller(ctx);
-		return jlbl;
+	protected SparkTrainMatcher getTrainMatcher() throws ZinggClientException {
+		SparkTrainMatcher stm = new SparkTrainMatcher(ctx);
+		return stm;
 	}
 
-	@Override
-	protected SparkTrainer getTrainer() throws ZinggClientException {
-		SparkTrainer st = new SparkTrainer(ctx);
-		return st;
+    @Override
+	protected SparkTrainMatchTester getTrainMatchTester(TrainMatcher<SparkSession,Dataset<Row>,Row,Column,DataType> trainMatch) {
+		return new SparkTrainMatchTester(trainMatch,args);
 	}
 
-	@Override
-	protected SparkMatcher getMatcher() throws ZinggClientException {
-		SparkMatcher sm = new SparkMatcher(ctx);
-		return sm;
-	}
-
-	//@Override
-	//protected SparkLinker getLinker() throws ZinggClientException {
-	//	SparkLinker sl = new SparkLinker(ctx);
-	//	return sl;
-	//}
-
-	@Override
+    @Override
 	public String setupArgs() throws ZinggClientException, IOException {
 		String configFile = super.setupArgs();
 		String testFile = getClass().getClassLoader().getResource(TEST_DATA_FILE).getFile();
@@ -85,15 +72,8 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 		args.getData()[0].setProp("location", testFile);
 		return configFile;
 	}
-	
-	@Override
-	protected SparkTrainerTester getTrainerTester(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
-		return new SparkTrainerTester(trainer,args);
-	}
 
-
-	
-	@Override
+    @Override
 	@AfterEach
 	public void tearDown() {
 		// just rename, would be removed automatically as it's in /tmp
@@ -101,5 +81,5 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 	    File newDir = new File(dir.getParent() + "/zingg_junit_" + System.currentTimeMillis());
 	    dir.renameTo(newDir);
 	}
-
+    
 }
