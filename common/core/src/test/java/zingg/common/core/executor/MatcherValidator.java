@@ -39,6 +39,11 @@ public class MatcherValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 		ZFrame<D, R, C> gold = joinAndFilter("dupeFnameId", df, df1).cache();
 		ZFrame<D, R, C> result = joinAndFilter(getClusterColName(), df, df1).cache();
 
+		testAccuracy(gold, result);
+	}
+
+	protected void testAccuracy(ZFrame<D, R, C> gold, ZFrame<D, R, C> result) throws ZinggClientException{
+
 		ZFrame<D, R, C> fn = gold.except(result);
 		ZFrame<D, R, C> tp = gold.intersect(result);
 		ZFrame<D, R, C> fp = result.except(gold);
@@ -62,6 +67,7 @@ public class MatcherValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 		assertTrue(0.8 <= score1);
 		assertTrue(0.8 <= score2);
 	}
+
 
 	public ZFrame<D, R, C> getOutputData() throws ZinggClientException {
 		ZFrame<D, R, C> output = validator.getContext().getPipeUtil().read(false, false, validator.getArgs().getOutput()[0]);
