@@ -1,4 +1,5 @@
 package zingg.common.core.executor;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,10 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	}
 	
 	public TestExecutorsGeneric(S s) throws ZinggClientException, IOException {
-		initAndExecute(s);					
+		init(s);					
 	}
 
-	public void initAndExecute(S s) throws ZinggClientException, IOException {
+	public void init(S s) throws ZinggClientException, IOException {
 		this.session = s;
 		// set up args
 		setupArgs();					
@@ -45,12 +46,12 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	List<ExecutorTester<S, D, R, C, T>> executorTesterList = new ArrayList<ExecutorTester<S, D, R, C, T>>();
 
 	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException{
-		executorTesterList.add(new ExecutorTester<>(getTrainingDataFinder(), new TrainingDataFinderValidator<S, D, R, C, T>(getTrainingDataFinder())));
-		executorTesterList.add(new ExecutorTester<>(getLabeller(), new LabellerValidator<S, D, R, C, T>(getLabeller())));
-		executorTesterList.add(new ExecutorTester<>(getTrainingDataFinder(), new TrainingDataFinderValidator<S, D, R, C, T>(getTrainingDataFinder())));
-		executorTesterList.add(new ExecutorTester<>(getLabeller(), new LabellerValidator<S, D, R, C, T>(getLabeller())));
-		executorTesterList.add(new ExecutorTester<>(getTrainer(),getTrainerValidator(getTrainer())));
-		executorTesterList.add(new ExecutorTester<>(getMatcher(),new MatcherValidator(getMatcher())));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getTrainingDataFinder(), new TrainingDataFinderValidator<S, D, R, C, T>(getTrainingDataFinder())));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getLabeller(), new LabellerValidator<S, D, R, C, T>(getLabeller())));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getTrainingDataFinder(), new TrainingDataFinderValidator<S, D, R, C, T>(getTrainingDataFinder())));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getLabeller(), new LabellerValidator<S, D, R, C, T>(getLabeller())));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getTrainer(),getTrainerValidator(getTrainer())));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getMatcher(),new MatcherValidator(getMatcher())));
 		//executorTesterList.add(new ExecutorTester<>(getLinker(),new LinkerValidator(getLinker())));
 		return executorTesterList;
 	}
@@ -83,10 +84,4 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
 	//protected abstract Linker<S, D, R, C, T> getLinker() throws ZinggClientException;	
 
-	protected abstract FindAndLabeller<S, D, R, C, T> getFindAndLabeller() throws ZinggClientException;
-
-	protected abstract TrainMatchValidator<S, D, R, C, T> getTrainMatchValidator(TrainMatcher<S, D, R, C, T> trainMatch);
-
-	protected abstract TrainMatcher<S, D, R, C, T> getTrainMatcher() throws ZinggClientException;
-	
 }

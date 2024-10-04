@@ -29,7 +29,6 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 	
 	protected ZinggSparkContext ctx;
 	
-
 	public TestSparkExecutors() throws IOException, ZinggClientException {	
 		SparkSession spark = SparkSession
 				.builder()
@@ -78,23 +77,9 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 	//}
 
 	@Override
-	protected SparkFindAndLabeller getFindAndLabeller() throws ZinggClientException {
-		SparkFindAndLabeller sfal = new SparkFindAndLabeller(ctx);
-        sfal.setLabeller(new ProgrammaticSparkLabeller(ctx));
-		return sfal;
+	protected SparkTrainerTester getTrainerValidator(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
+		return new SparkTrainerTester(trainer,args);
 	}
-
-	@Override
-	protected SparkTrainMatcher getTrainMatcher() throws ZinggClientException {
-		SparkTrainMatcher stm = new SparkTrainMatcher(ctx);
-		return stm;
-	}
-
-    @Override
-	protected SparkTrainMatchTester getTrainMatchValidator(TrainMatcher<SparkSession,Dataset<Row>,Row,Column,DataType> trainMatch) {
-		return new SparkTrainMatchTester(trainMatch,args);
-	}
-
 
 	@Override
 	public String setupArgs() throws ZinggClientException, IOException {
@@ -104,13 +89,6 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 		args.getData()[0].setProp("location", testFile);
 		return configFile;
 	}
-	
-	@Override
-	protected SparkTrainerTester getTrainerValidator(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
-		return new SparkTrainerTester(trainer,args);
-	}
-
-
 	
 	@Override
 	@AfterEach
