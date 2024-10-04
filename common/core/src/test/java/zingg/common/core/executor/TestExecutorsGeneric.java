@@ -52,7 +52,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getLabeller(), new LabellerValidator<S, D, R, C, T>(getLabeller())));
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getTrainer(),getTrainerValidator(getTrainer())));
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getMatcher(),new MatcherValidator(getMatcher())));
-		//executorTesterList.add(new ExecutorTester<>(getLinker(),new LinkerValidator(getLinker())));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getLinker(),new LinkerValidator(getLinker())));
 		return executorTesterList;
 	}
 	
@@ -82,6 +82,6 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
 	protected abstract Matcher<S, D, R, C, T> getMatcher() throws ZinggClientException;	
 
-	//protected abstract Linker<S, D, R, C, T> getLinker() throws ZinggClientException;	
+	protected abstract Linker<S, D, R, C, T> getLinker() throws ZinggClientException;	
 
 }
