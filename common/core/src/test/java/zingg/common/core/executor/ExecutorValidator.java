@@ -9,10 +9,10 @@ public abstract class ExecutorValidator<S, D, R, C, T> {
 
     public static final Log LOG = LogFactory.getLog(ExecutorValidator.class);
 	
-	public ZinggBase<S,D, R, C, T> validator;
+	public ZinggBase<S,D, R, C, T> executorObj;
 	
-	public ExecutorValidator(ZinggBase<S, D, R, C, T> validator) {
-		this.validator = validator;
+	public ExecutorValidator(ZinggBase<S, D, R, C, T> executorObj) {
+		this.executorObj = executorObj;
 	}
 
     public abstract void validateResults() throws ZinggClientException;
