@@ -23,8 +23,11 @@ import zingg.spark.core.context.ZinggSparkContext;
 
 public class TestSparkExecutors extends TestExecutorsCompound<SparkSession,Dataset<Row>,Row,Column,DataType> {
 	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
-	
 	protected static final String TEST_DATA_FILE = "zingg/spark/core/executor/test.csv";
+
+	protected static final String CONFIGLINK_FILE = "ingg/spark/core/executor/configSparkLinkTest.json";
+	protected static final String TEST1_DATA_FILE = "zingg/spark/core/executor/test1.csv";
+	protected static final String TEST2_DATA_FILE = "zingg/spark/core/executor/test2.csv";
 
 	public static final Log LOG = LogFactory.getLog(TestSparkExecutors.class);
 	
