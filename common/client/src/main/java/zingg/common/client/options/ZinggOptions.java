@@ -13,6 +13,7 @@ public class ZinggOptions {
     public final static ZinggOption TRAIN_MATCH = new ZinggOption("trainMatch");
     public final static ZinggOption FIND_TRAINING_DATA = new ZinggOption("findTrainingData");
     public final static ZinggOption LABEL = new ZinggOption("label");
+    public final static ZinggOption DEBUG_BLOCKING = new ZinggOption("debugBlocking");
     public final static ZinggOption LINK = new ZinggOption("link");
     public final static ZinggOption GENERATE_DOCS = new ZinggOption("generateDocs");
     public final static ZinggOption RECOMMEND = new ZinggOption("recommend");
