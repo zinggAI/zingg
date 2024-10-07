@@ -9,14 +9,15 @@ import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
+import zingg.common.core.sink.TableOutput;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
 
 public class Blocker<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
     private static final long serialVersionUID = 1L;
-	protected static String name = "zingg.Matcher";
-	public static final Log LOG = LogFactory.getLog(Matcher.class);    
+	protected static String name = "zingg.Blocker";
+	public static final Log LOG = LogFactory.getLog(Blocker.class);    
 	
     public Blocker() {
         setZinggOption(ZinggOptions.DEBUG_BLOCKING);
@@ -53,7 +54,7 @@ public class Blocker<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 		//all clusters consolidated in one place
 		if (args.getOutput() != null) {
 			ZFrame<D, R, C> graphWithScores = getOutput(blocked, dupesActual);
-			getPipeUtil().write(blocked.select(ColName.HASH_COL).groupByCount(ColName.HASH_COL, ColName.HASH_COL + "_count"), getPipeForDebugBlockingLocation(timestamp));
+			getPipeUtil().write(blocked.select(ColName.HASH_COL).groupByCount(ColName.HASH_COL, ColName.HASH_COL + "_count"), getPipeForDebugBlockingLocation(getTimestamp()));
 		}
 		}
 		catch(Exception e) {
