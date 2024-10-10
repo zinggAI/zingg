@@ -132,7 +132,9 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 		for (Pipe p : pipes) {
 			if (input == null) {
 				input = readInternal(p, addSource);
-				LOG.debug("input size is " + input.count());				
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("input size is " + input.count());		
+				}		
 			} else {
 				if(!addExtraCol) {
 					input = input.union(readInternal(p, addSource));
