@@ -63,10 +63,11 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
 
    
     @Override
-    public void init(IArguments args, S session)
+    public void init(IArguments args, S session, ClientOptions options)
         throws ZinggClientException {
             startTime = System.currentTimeMillis();
             this.args = args;
+            this.clientOptions = options;
     }
 
 

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
+import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
@@ -50,7 +51,7 @@ public class TestFebrlDataset extends ZinggSparkTester{
 	public void testModelAccuracy(){
 		TrainMatcher tm = new SparkTrainMatcher();
 		try {
-			tm.init(args,spark);
+			tm.init(args,spark,null);
 //			tm.setSpark(spark);
 //			tm.setCtx(ctx);
 			tm.setArgs(args);
