@@ -15,9 +15,8 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.Trainer;
-import zingg.common.core.executor.TrainerTester;
-
-public class SparkTrainerTester extends TrainerTester<SparkSession,Dataset<Row>,Row,Column,DataType> {
+import zingg.common.core.executor.TrainerValidator;
+public class SparkTrainerTester extends TrainerValidator<SparkSession,Dataset<Row>,Row,Column,DataType> {
 	
 	public static final Log LOG = LogFactory.getLog(SparkTrainerTester.class);
 

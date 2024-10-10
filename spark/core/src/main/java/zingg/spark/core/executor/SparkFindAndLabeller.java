@@ -38,7 +38,6 @@ public class SparkFindAndLabeller extends FindAndLabeller<SparkSession, Dataset<
 	public void init(IArguments args, SparkSession s) throws ZinggClientException {
 		super.init(args,s);
 		getContext().init(s);
-	}	
-	
+	}
 
 }

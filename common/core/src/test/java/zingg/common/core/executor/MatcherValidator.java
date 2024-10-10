@@ -9,12 +9,12 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 
-public class MatcherTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> {
+public class MatcherValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
 
-	public static final Log LOG = LogFactory.getLog(MatcherTester.class);
+	public static final Log LOG = LogFactory.getLog(MatcherValidator.class);
 	
-	public MatcherTester(Matcher<S, D, R, C, T> executor) {
-		super(executor);
+	public MatcherValidator(Matcher<S, D, R, C, T> validator) {
+		super(validator);
 	}
 
 	@Override
@@ -38,6 +38,11 @@ public class MatcherTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> 
 		
 		ZFrame<D, R, C> gold = joinAndFilter("dupeFnameId", df, df1).cache();
 		ZFrame<D, R, C> result = joinAndFilter(getClusterColName(), df, df1).cache();
+
+		testAccuracy(gold, result);
+	}
+
+	protected void testAccuracy(ZFrame<D, R, C> gold, ZFrame<D, R, C> result) throws ZinggClientException{
 
 		ZFrame<D, R, C> fn = gold.except(result);
 		ZFrame<D, R, C> tp = gold.intersect(result);
@@ -63,8 +68,9 @@ public class MatcherTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> 
 		assertTrue(0.8 <= score2);
 	}
 
+
 	public ZFrame<D, R, C> getOutputData() throws ZinggClientException {
-		ZFrame<D, R, C> output = executor.getContext().getPipeUtil().read(false, false, executor.getArgs().getOutput()[0]);
+		ZFrame<D, R, C> output = validator.getContext().getPipeUtil().read(false, false, validator.getArgs().getOutput()[0]);
 		return output;
 	}
 	

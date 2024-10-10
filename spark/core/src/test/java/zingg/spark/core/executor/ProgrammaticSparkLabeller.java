@@ -10,35 +10,35 @@ import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
-import zingg.common.core.executor.JunitLabeller;
+import zingg.common.core.executor.ProgrammaticLabeller;
 import zingg.spark.core.context.ZinggSparkContext;
 
-public class JunitSparkLabeller extends SparkLabeller {
+public class ProgrammaticSparkLabeller extends SparkLabeller {
 
 	private static final long serialVersionUID = 1L;
 
-	JunitLabeller<SparkSession,Dataset<Row>,Row,Column,DataType> junitLabeller;
+	ProgrammaticLabeller<SparkSession,Dataset<Row>,Row,Column,DataType> programmaticLabeller;
 	
-	public JunitSparkLabeller() {
+	public ProgrammaticSparkLabeller() {
 		this(new ZinggSparkContext());
 	}
 
-	public JunitSparkLabeller(ZinggSparkContext sparkContext) {
+	public ProgrammaticSparkLabeller(ZinggSparkContext sparkContext) {
 		setZinggOption(ZinggOptions.LABEL);
 		setContext(sparkContext);
-		junitLabeller = new JunitLabeller<SparkSession,Dataset<Row>,Row,Column,DataType>(sparkContext);
+		programmaticLabeller = new ProgrammaticLabeller<SparkSession,Dataset<Row>,Row,Column,DataType>(sparkContext);
 	}
 	
 	@Override
 	public void setArgs(IArguments args) {
 		super.setArgs(args);
-		junitLabeller.setArgs(args);
+		programmaticLabeller.setArgs(args);
 	}
 	
 	@Override
 	public ZFrame<Dataset<Row>,Row,Column> processRecordsCli(ZFrame<Dataset<Row>,Row,Column> lines)
 			throws ZinggClientException {
-		return junitLabeller.processRecordsCli(lines);
+		return programmaticLabeller.processRecordsCli(lines);
 	}
 }
 
