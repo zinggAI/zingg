@@ -20,7 +20,6 @@ on:
     paths-ignore:
       - '**/*.md'
       - '**/*.txt'
->>>>>>> 0.4.0
   schedule:
     - cron: '22 3 * * 5'
 
