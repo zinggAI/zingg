@@ -14,6 +14,6 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
       - name: mvn init
-         run: mvn initialize
+        run: mvn initialize
       - name: Build with Maven
         run: mvn clean compile package 
