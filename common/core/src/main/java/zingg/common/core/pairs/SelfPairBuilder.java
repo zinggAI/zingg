@@ -21,12 +21,14 @@ public class SelfPairBuilder<S, D, R, C> implements IPairBuilder<S, D, R, C> {
 	
 	@Override
 	public ZFrame<D, R, C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception {
-		ZFrame<D,R,C>joinH =  getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true).cache();
+		blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
+		ZFrame<D,R,C>joinH =  getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
+		joinH = joinH.filter(joinH.gt(ColName.ID_COL));
 		/*ZFrame<D,R,C>joinH = blocked.as("first").joinOnCol(blocked.as("second"), ColName.HASH_COL)
 			.selectExpr("first.z_zid as z_zid", "second.z_zid as z_z_zid");
 		*/
 		//joinH.show();
-		joinH = joinH.filter(joinH.gt(ColName.ID_COL));	
+		/*joinH = joinH.filter(joinH.gt(ColName.ID_COL));	
 		if (LOG.isDebugEnabled()) LOG.debug("Num comparisons " + joinH.count());
 		joinH = joinH.repartition(args.getNumPartitions(), joinH.col(ColName.ID_COL));
 		bAll = bAll.repartition(args.getNumPartitions(), bAll.col(ColName.ID_COL));
@@ -38,6 +40,7 @@ public class SelfPairBuilder<S, D, R, C> implements IPairBuilder<S, D, R, C> {
 		joinH = joinH.repartition(args.getNumPartitions(), joinH.col(ColName.COL_PREFIX + ColName.ID_COL));
 		joinH = joinH.joinOnCol(bAll, ColName.COL_PREFIX + ColName.ID_COL);
 		LOG.warn("Joining again with actual values");
+		*/
 		//joinH.show();
 		return joinH;
 	}

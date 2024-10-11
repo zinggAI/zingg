@@ -113,7 +113,7 @@ public abstract class DSUtil<S, D, R, C> {
 	
 	public  ZFrame<D, R, C> joinWithItselfSourceSensitive(ZFrame<D, R, C> lines, String joinColumn, IArguments args) throws Exception {
 		
-		ZFrame<D, R, C> lines1 = getPrefixedColumnsDS(lines).cache();
+		ZFrame<D, R, C> lines1 = getPrefixedColumnsDS(lines);
 		
 		String[] sourceNames = args.getPipeNames();
 		lines = lines.filter(lines.equalTo(ColName.SOURCE_COL, sourceNames[0]));
