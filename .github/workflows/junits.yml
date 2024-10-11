@@ -16,4 +16,4 @@ jobs:
       - name: mvn init
         run: mvn initialize
       - name: Build with Maven
-        run: mvn clean compile package 
+        run: mvn clean package --also-make 
