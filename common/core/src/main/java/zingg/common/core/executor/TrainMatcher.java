@@ -35,5 +35,23 @@ public abstract class TrainMatcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		trainer.execute();
 		matcher.execute();
 	}
+
+	public Trainer<S, D, R, C, T> getTrainer() {
+		return trainer;
+	}
+
+	public void setTrainer(Trainer<S, D, R, C, T> trainer) {
+		this.trainer = trainer;
+	}
+
+	public Matcher<S, D, R, C, T> getMatcher() {
+		return matcher;
+	}
+
+	public void setMatcher(Matcher<S, D, R, C, T> matcher) {
+		this.matcher = matcher;
+	}
+
+	
 	    
 }

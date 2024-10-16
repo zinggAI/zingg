@@ -1,5 +1,6 @@
 package zingg.spark.client;
 
+import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -9,6 +10,7 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.Client;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
+import zingg.common.client.IZingg;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.spark.client.util.SparkPipeUtil;
@@ -79,6 +81,11 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
                     .builder()
                     .appName("Zingg")
                     .getOrCreate();	
+			JavaSparkContext ctx = JavaSparkContext.fromSparkContext(session.sparkContext());
+					JavaSparkContext.jarOfClass(IZingg.class);
+					LOG.debug("Context " + ctx.toString());
+					//initHashFns();
+			ctx.setCheckpointDir("/tmp/checkpoint");
 			setSession(s);
 			return s;
 		}

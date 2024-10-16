@@ -8,11 +8,11 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 
-public class TrainingDataFinderTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> {
+public class TrainingDataFinderValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
 
-	public static final Log LOG = LogFactory.getLog(TrainingDataFinderTester.class);
+	public static final Log LOG = LogFactory.getLog(TrainingDataFinderValidator.class);
 	
-	public TrainingDataFinderTester(TrainingDataFinder<S, D, R, C, T> executor) {
+	public TrainingDataFinderValidator(TrainingDataFinder<S, D, R, C, T> executor) {
 		super(executor);
 	}
 
