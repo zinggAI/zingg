@@ -19,7 +19,8 @@ public class TrainingDataFinderValidator<S, D, R, C, T> extends ExecutorValidato
 	@Override
 	public void validateResults() throws ZinggClientException {
 		// check that unmarked data has at least 10 rows
-		ZFrame<D, R, C> df = executor.getContext().getPipeUtil().read(false, false, executor.getContext().getPipeUtil().getTrainingDataUnmarkedPipe(executor.getArgs()));
+		ZFrame<D, R, C> df = executor.getContext().getPipeUtil().read(false, false, 
+			((TrainingDataFinder<S, D, R, C, T>) executor).getUnmarkedLocation());
 		
 		long trainingDataCount = df.count();
 		assertTrue(trainingDataCount > 10);

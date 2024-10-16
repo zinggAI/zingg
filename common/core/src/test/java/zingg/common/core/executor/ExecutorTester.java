@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.IArguments;
+import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
 
 public class ExecutorTester<S, D, R, C, T>{
@@ -18,8 +19,8 @@ public class ExecutorTester<S, D, R, C, T>{
 		this.validator = validator;
 	}
 	
-	public void initAndExecute(IArguments args, S session) throws ZinggClientException {
-		executor.init(args,session);
+	public void initAndExecute(IArguments args, S session, ClientOptions c) throws ZinggClientException {
+		executor.init(args,session, c);
 		executor.execute();
 	}
 	
