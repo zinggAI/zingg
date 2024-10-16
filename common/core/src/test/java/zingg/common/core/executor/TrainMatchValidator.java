@@ -18,9 +18,11 @@ public class TrainMatchValidator<S, D, R, C, T> extends ExecutorValidator<S, D, 
 	TrainerValidator<S, D, R, C, T> tv;
 	MatcherValidator<S, D, R, C, T> mv;
 	
-	public TrainMatchValidator(TrainMatcher<S, D, R, C, T> validator, IArguments args) {
-		super(validator);
+	public TrainMatchValidator(TrainMatcher<S, D, R, C, T> executor, IArguments args) {
+		super(executor);
         this.args = args;
+		tv = new TrainerValidator<S, D, R, C, T>(executor.getTrainer(), args);
+		mv = new MatcherValidator<S, D, R, C, T>(executor.getMatcher());
 	}
     
     @Override

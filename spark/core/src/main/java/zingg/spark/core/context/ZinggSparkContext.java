@@ -35,46 +35,12 @@ public class ZinggSparkContext extends Context<SparkSession, Dataset<Row>, Row,C
     public static final Log LOG = LogFactory.getLog(ZinggSparkContext.class);
 
 	
-<<<<<<< HEAD
-    public void initSessionAndContext(SparkSession session)
-        throws ZinggClientException {
-        try{
-//            if (session==null) {
-//            	session = SparkSession
-//                    .builder()
-//                    .appName("Zingg")
-//                    .getOrCreate();
-//            	
-//            	//session = new SparkSession(spark, license);
-//            }
-        	this.session = session;
-            if (ctx==null) {
-				ctx = JavaSparkContext.fromSparkContext(session.sparkContext());
-				JavaSparkContext.jarOfClass(IZingg.class);
-				LOG.debug("Context " + ctx.toString());
-				//initHashFns();
-				ctx.setCheckpointDir("/tmp/checkpoint");
-			}
-        }
-        catch(Throwable e) {
-            if (LOG.isDebugEnabled()) e.printStackTrace();
-            throw new ZinggClientException(e.getMessage());
-        }
-=======
     @Override
     public void init(SparkSession session)
         throws ZinggClientException {
 			this.session = session;
         	setUtils();
 		
->>>>>>> 622a907d (init changes to spark)
-    }
-
-    @Override
-    public void init(SparkSession session)
-        throws ZinggClientException {
-        initSessionAndContext(session);
-		setUtils();
     }
 
 	@Override

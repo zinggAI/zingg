@@ -13,8 +13,8 @@ public class MatcherValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 
 	public static final Log LOG = LogFactory.getLog(MatcherValidator.class);
 	
-	public MatcherValidator(Matcher<S, D, R, C, T> validator) {
-		super(validator);
+	public MatcherValidator(Matcher<S, D, R, C, T> executor) {
+		super(executor);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class MatcherValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 
 
 	public ZFrame<D, R, C> getOutputData() throws ZinggClientException {
-		ZFrame<D, R, C> output = validator.getContext().getPipeUtil().read(false, false, validator.getArgs().getOutput()[0]);
+		ZFrame<D, R, C> output = executor.getContext().getPipeUtil().read(false, false, executor.getArgs().getOutput()[0]);
 		return output;
 	}
 	

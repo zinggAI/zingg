@@ -13,8 +13,8 @@ public class LinkerValidator<S, D, R, C, T> extends MatcherValidator<S, D, R, C,
 
     public static final Log LOG = LogFactory.getLog(LinkerValidator.class);
 	
-	public LinkerValidator(Matcher<S, D, R, C, T> validator) {
-		super(validator);
+	public LinkerValidator(Matcher<S, D, R, C, T> executor) {
+		super(executor);
 	}
 
 	@Override

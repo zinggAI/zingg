@@ -13,15 +13,15 @@ public class LabellerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R,
 
 	public static final Log LOG = LogFactory.getLog(LabellerValidator.class);
 	
-	public LabellerValidator(Labeller<S, D, R, C, T> validator) {
-		super(validator);
+	public LabellerValidator(Labeller<S, D, R, C, T> executor) {
+		super(executor);
 	}
 
 	@Override
 	public void validateResults() throws ZinggClientException {
 		// check that marked data has at least 1 match row and 1 unmatch row
-		ZFrame<D, R, C> dfMarked = validator.getContext().getPipeUtil().
-				read(false, false, validator.getContext().getPipeUtil().getTrainingDataMarkedPipe(validator.getArgs()));
+		ZFrame<D, R, C> dfMarked = executor.getContext().getPipeUtil().
+				read(false, false, executor.getContext().getPipeUtil().getTrainingDataMarkedPipe(executor.getArgs()));
 		
 		C matchCond = dfMarked.equalTo(ColName.MATCH_FLAG_COL, 1);
 		C notMatchCond = dfMarked.equalTo(ColName.MATCH_FLAG_COL, 0);

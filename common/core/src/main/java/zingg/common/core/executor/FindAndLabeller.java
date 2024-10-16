@@ -40,4 +40,14 @@ public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S, D, R, 
 		return this.labeller;
 	}
 
+	public TrainingDataFinder<S, D, R, C, T> getFinder() {
+		return finder;
+	}
+
+	public void setFinder(TrainingDataFinder<S, D, R, C, T> finder) {
+		this.finder = finder;
+	}
+
+	
+
 }

@@ -12,14 +12,14 @@ public class TrainingDataFinderValidator<S, D, R, C, T> extends ExecutorValidato
 
 	public static final Log LOG = LogFactory.getLog(TrainingDataFinderValidator.class);
 	
-	public TrainingDataFinderValidator(TrainingDataFinder<S, D, R, C, T> validator) {
-		super(validator);
+	public TrainingDataFinderValidator(TrainingDataFinder<S, D, R, C, T> executor) {
+		super(executor);
 	}
 
 	@Override
 	public void validateResults() throws ZinggClientException {
 		// check that unmarked data has at least 10 rows
-		ZFrame<D, R, C> df = validator.getContext().getPipeUtil().read(false, false, validator.getContext().getPipeUtil().getTrainingDataUnmarkedPipe(validator.getArgs()));
+		ZFrame<D, R, C> df = executor.getContext().getPipeUtil().read(false, false, executor.getContext().getPipeUtil().getTrainingDataUnmarkedPipe(executor.getArgs()));
 		
 		long trainingDataCount = df.count();
 		assertTrue(trainingDataCount > 10);

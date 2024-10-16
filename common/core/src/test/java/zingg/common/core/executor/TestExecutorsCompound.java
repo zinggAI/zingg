@@ -19,8 +19,11 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 
 	@Override
 	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException{
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getFindAndLabeller(), new FindAndLabelValidator<S, D, R, C, T>(getFindAndLabeller())));
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getFindAndLabeller(), new FindAndLabelValidator<S, D, R, C, T>(getFindAndLabeller())));
+		FindAndLabeller<S, D, R, C, T> findAndLabel = getFindAndLabeller();
+		FindAndLabelValidator<S, D, R, C, T> falValidator = new FindAndLabelValidator<S, D, R, C, T>(findAndLabel);
+		ExecutorTester<S, D, R, C, T> et = new ExecutorTester<S, D, R, C, T>(findAndLabel, falValidator);
+		executorTesterList.add(et);
+		executorTesterList.add(et);
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getTrainMatcher(),getTrainMatchValidator(getTrainMatcher())));
 		return executorTesterList;
 	}

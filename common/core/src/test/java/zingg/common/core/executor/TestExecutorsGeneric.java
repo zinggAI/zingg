@@ -50,9 +50,11 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getLabeller(), new LabellerValidator<S, D, R, C, T>(getLabeller())));
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getTrainingDataFinder(), new TrainingDataFinderValidator<S, D, R, C, T>(getTrainingDataFinder())));
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getLabeller(), new LabellerValidator<S, D, R, C, T>(getLabeller())));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getTrainingDataFinder(), new TrainingDataFinderValidator<S, D, R, C, T>(getTrainingDataFinder())));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getLabeller(), new LabellerValidator<S, D, R, C, T>(getLabeller())));
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getTrainer(),getTrainerValidator(getTrainer())));
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getMatcher(),new MatcherValidator(getMatcher())));
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getLinker(),new LinkerValidator(getLinker())));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getMatcher(),new MatcherValidator<S, D, R, C, T>(getMatcher())));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getLinker(),new LinkerValidator<S, D, R, C, T>(getLinker())));
 		return executorTesterList;
 	}
 	

@@ -16,8 +16,10 @@ public class FindAndLabelValidator<S, D, R, C, T> extends ExecutorValidator<S, D
     public TrainingDataFinderValidator<S, D, R, C, T> tdfv; 
     public LabellerValidator <S, D, R, C, T> lv; 
 	
-	  public FindAndLabelValidator(FindAndLabeller<S, D, R, C, T> validator) {
-		    super(validator);
+	  public FindAndLabelValidator(FindAndLabeller<S, D, R, C, T> executor) {
+		    super(executor);
+            this.tdfv = new TrainingDataFinderValidator<S, D, R, C, T>(executor.getFinder());
+            this.lv = new LabellerValidator <S, D, R, C, T>(executor.getLabeller());
     }
 
     @Override
