@@ -22,6 +22,10 @@ public abstract class ModelUtil<S,T, D,R,C> {
     public static final Log LOG = LogFactory.getLog(ModelUtil.class);
     protected Map<FieldDefinition, Feature<T>> featurers;
     protected S session;
+
+    public ModelUtil(S s) {
+        this.session = s;
+    }
     
     public abstract FeatureFactory<T> getFeatureFactory();
 
@@ -72,7 +76,7 @@ public abstract class ModelUtil<S,T, D,R,C> {
                     + negLabeledPointsWithLabel.count());
         }
         Model<S,T, D,R,C> model = getModel(isLabel, args);
-        model.register(session);
+        model.register();
         model.fit(posLabeledPointsWithLabel, negLabeledPointsWithLabel);
         return model;
     }

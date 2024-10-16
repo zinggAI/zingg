@@ -5,9 +5,17 @@ import java.io.Serializable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.license.IZinggLicense;
+import zingg.common.client.event.events.IEvent;
+import zingg.common.client.event.events.ZinggStartEvent;
+import zingg.common.client.event.events.ZinggStopEvent;
+import zingg.common.client.event.listeners.EventsListener;
+import zingg.common.client.event.listeners.IEventListener;
+import zingg.common.client.event.listeners.ZinggStartListener;
+import zingg.common.client.event.listeners.ZinggStopListener;
+import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.Email;
 import zingg.common.client.util.EmailBody;
+import zingg.common.client.util.PipeUtilBase;
 
 /**
  * This is the main point of interface with the Zingg matching product.
@@ -22,8 +30,10 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	protected IZingg<S,D,R,C> zingg;
 	protected ClientOptions options;
 	protected S session;
-
+	protected PipeUtilBase<S,D,R,C> pipeUtil;
 	public static final Log LOG = LogFactory.getLog(Client.class);
+
+	protected String zFactoryClassName;
 
 
 	/**
@@ -36,10 +46,14 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	 *             if issue connecting to master
 	 */
 	
-	public Client() {}
+	public Client(String zFactory) {
+		setZFactoryClassName(zFactory);
+	}
 
-	public Client(IArguments args, ClientOptions options) throws ZinggClientException {
-		setOptions(options);
+	public Client(IArguments args, ClientOptions options, String zFactory) throws ZinggClientException {
+		setZFactoryClassName(zFactory);
+		this.options = options;
+    	setOptions(options);
 		try {
 			buildAndSetArguments(args, options);
 			printAnalyticsBanner(arguments.getCollectMetrics());
@@ -51,14 +65,28 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 	}
 
-	public Client(IArguments args, ClientOptions options, S s) throws ZinggClientException {
-		this(args, options);
+
+    public String getZFactoryClassName() {
+        return zFactoryClassName;
+    }
+
+    public void setZFactoryClassName(String s) {
+        this.zFactoryClassName = s;
+    }
+
+	public Client(IArguments args, ClientOptions options, S s, String zFactory) throws ZinggClientException {
+		this(args, options, zFactory);
 		this.session = s;
 		LOG.debug("Session passed is " + s);
 		if (session != null) zingg.setSession(session);
 	}
 
-	public abstract IZinggFactory getZinggFactory() throws Exception;//(IZinggFactory) Class.forName("zingg.ZFactory").newInstance();
+
+	public IZinggFactory getZinggFactory() throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+        LOG.debug("z factory is " + getZFactoryClassName());
+		return (IZinggFactory) Class.forName(getZFactoryClassName()).newInstance();
+	}
+	
 	
 
 
@@ -70,9 +98,10 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		catch(Exception e) {
 			e.printStackTrace();
 			//set default
-			setZingg(zf.get(ZinggOptions.getByValue(ZinggOptions.PEEK_MODEL.getValue())));
+			setZingg(zf.get(ZinggOptions.getByValue(ZinggOptions.PEEK_MODEL.getName())));
 		}
 	}
+	
 
 	public void setZingg(IZingg<S,D,R,C> zingg) {
 		this.zingg = zingg; 
@@ -120,7 +149,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 	
 	public void printBanner() {
-		String versionStr = "0.4.0";
+		String versionStr = "0.4.1-SNAPSHOT";
 		LOG.info("");
 		LOG.info("********************************************************");
 		LOG.info("*                    Zingg AI                          *");
@@ -141,7 +170,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			LOG.info("*  runtime parameters. However, no user's personal data or application   *");
 			LOG.info("*  data is captured. If you want to switch off this feature, please      *");
 			LOG.info("*  set the flag collectMetrics to false in config. For details, please   *");
-			LOG.info("*  refer to the Zingg docs (https://docs.zingg.ai/docs/security.html)    *");
+			LOG.info("*  refer to the Zingg docs (https://docs.zingg.ai/zingg/security)        *");
 			LOG.info("**************************************************************************");
 			LOG.info("");
 		}
@@ -155,23 +184,27 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public abstract Client<S,D,R,C,T> getClient(IArguments args, ClientOptions options) throws ZinggClientException;
+
+	public ClientOptions getClientOptions(String ... args){
+		return new ClientOptions(args);
+	}
 	
 	public void mainMethod(String... args) {
 		printBanner();
 		Client<S,D,R,C,T> client = null;
 		ClientOptions options = null;
 		try {
+			
 			for (String a: args) LOG.debug("args " + a);
-			options = new ClientOptions(args);
+			options = getClientOptions(args);
 			setOptions(options);
-		
+
 			if (options.has(options.HELP) || options.has(options.HELP1) || options.get(ClientOptions.PHASE) == null) {
 				LOG.warn(options.getHelp());
 				System.exit(0);
 			}
 			String phase = options.get(ClientOptions.PHASE).value.trim();
 			ZinggOptions.verifyPhase(phase);
-			IArguments arguments = null;
 			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
 					arguments = getArgsUtil().createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
 			}
@@ -184,6 +217,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 
 			client = getClient(arguments, options);
 			client.init();
+			// after setting arguments etc. as some of the listeners need it
 			client.execute();
 			client.postMetrics();
 			LOG.warn("Zingg processing has completed");				
@@ -212,6 +246,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 		finally {
 			try {
+				EventsListener.getInstance().fireEvent(new ZinggStopEvent());
 				if (client != null) {
 					//client.postMetrics();
 					client.stop();
@@ -228,14 +263,13 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public void init() throws ZinggClientException {
-		zingg.setClientOptions(options);
-		zingg.init(getArguments(), getLicense(options.get(ClientOptions.LICENSE).value.trim()));
+		zingg.setClientOptions(getOptions());
+		zingg.init(getArguments(), getSession(),getOptions());
 		if (session != null) zingg.setSession(session);
-		
+		initializeListeners();
+		EventsListener.getInstance().fireEvent(new ZinggStartEvent());					
 	}
 
-	protected abstract IZinggLicense getLicense(String license)  throws ZinggClientException ;
-	
 	/**
 	 * Stop the Spark job running context
 	 */
@@ -305,5 +339,26 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 		return argsUtil;
 	}    
+
+	public void addListener(Class<? extends IEvent> eventClass, IEventListener listener) {
+        EventsListener.getInstance().addListener(eventClass, listener);
+    }
+
+    public void initializeListeners() {
+        addListener(ZinggStartEvent.class, new ZinggStartListener());
+        addListener(ZinggStopEvent.class, new ZinggStopListener());
+    }
+    
+    public abstract S getSession();
+    
+    public void setSession(S s) {
+    	this.session = s;
+    }
+
+	public abstract PipeUtilBase<S, D, R, C> getPipeUtil();
+
+	public void setPipeUtil(PipeUtilBase<S, D, R, C> pipeUtil) {
+		this.pipeUtil = pipeUtil;
+	}
     
 }

@@ -7,31 +7,37 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
+import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
+import zingg.common.client.options.ZinggOptions;
+
 import zingg.common.core.executor.TrainMatcher;
-import zingg.spark.client.ZSparkSession;
+import zingg.spark.core.context.ZinggSparkContext;
+import org.apache.spark.sql.SparkSession;
  
-public class SparkTrainMatcher extends TrainMatcher<ZSparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkTrainMatcher";
 	public static final Log LOG = LogFactory.getLog(SparkTrainMatcher.class);
 
 	public SparkTrainMatcher() {
-		setZinggOptions(ZinggOptions.TRAIN_MATCH);
-		ZinggSparkContext sparkContext = new ZinggSparkContext();
+		this(new ZinggSparkContext());
+	}
+	
+	
+	public SparkTrainMatcher(ZinggSparkContext sparkContext) {
+		setZinggOption(ZinggOptions.TRAIN_MATCH);
 		setContext(sparkContext);
 		trainer = new SparkTrainer(sparkContext);
 		matcher = new SparkMatcher(sparkContext);
 	}
 
     @Override
-    public void init(IArguments args, IZinggLicense license)  throws ZinggClientException {
-        super.init(args, license);
-        getContext().init(license);
+    public void init(IArguments args, SparkSession s, ClientOptions options)  throws ZinggClientException {
+        super.init(args,s,options);
+        getContext().init(s);
     }
         	
 }

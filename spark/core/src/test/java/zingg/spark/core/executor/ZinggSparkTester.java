@@ -20,13 +20,8 @@ import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IArguments;
 import zingg.common.client.IZingg;
-import zingg.spark.client.ZSparkSession;
-import zingg.spark.core.util.SparkBlockingTreeUtil;
-import zingg.spark.core.util.SparkDSUtil;
-import zingg.spark.core.util.SparkGraphUtil;
-import zingg.spark.core.util.SparkHashUtil;
-import zingg.spark.core.util.SparkModelUtil;
-import zingg.spark.core.util.SparkPipeUtil;
+
+import zingg.spark.core.context.ZinggSparkContext;
 
 public class ZinggSparkTester {
 
@@ -34,7 +29,6 @@ public class ZinggSparkTester {
     public static JavaSparkContext ctx;
     public static SparkSession spark;
     public static ZinggSparkContext zsCTX;
-    public static ZSparkSession zSession;
     public ArgumentsUtil argsUtil = new ArgumentsUtil();
     public static final Log LOG = LogFactory.getLog(ZinggSparkTester.class);
 
@@ -47,24 +41,15 @@ public class ZinggSparkTester {
     		spark = SparkSession
     				.builder()
     				.master("local[*]")
-    				.appName("Zingg" + "Junit")
+    				.appName("ZinggJunit")
+					.config("spark.debug.maxToStringFields", 100)
     				.getOrCreate();
     		ctx = new JavaSparkContext(spark.sparkContext());
     		JavaSparkContext.jarOfClass(IZingg.class);    
+			ctx.setCheckpointDir("/tmp/checkpoint");
 			args = new Arguments();
 			zsCTX = new ZinggSparkContext();
-			zsCTX.ctx = ctx;
-			zSession = new ZSparkSession(spark, null);
-			zsCTX.zSession = zSession;
-			
-            ctx.setCheckpointDir("/tmp/checkpoint");	
-            zsCTX.setPipeUtil(new SparkPipeUtil(zSession));
-            zsCTX.setDSUtil(new SparkDSUtil(zSession));
-            zsCTX.setHashUtil(new SparkHashUtil(zSession));
-            zsCTX.setGraphUtil(new SparkGraphUtil());
-            zsCTX.setModelUtil(new SparkModelUtil(zSession));
-            zsCTX.setBlockingTreeUtil(new SparkBlockingTreeUtil(zSession, zsCTX.getPipeUtil()));
-			
+			zsCTX.init(spark);
     	} catch (Throwable e) {
     		if (LOG.isDebugEnabled())
     			e.printStackTrace();
@@ -100,10 +85,5 @@ public class ZinggSparkTester {
 
 
 		return spark.createDataFrame(nums, structType);
-
-
-
-
-
 	}
 }

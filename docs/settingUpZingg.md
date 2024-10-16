@@ -8,8 +8,6 @@ Make sure to update your Ubuntu installation:
 
 `sudo apt update`
 
-***
-
 **Step 0: Install Ubuntu on WSL2 on Windows**
 
 * Install **wsl**: Type the following command in **Windows PowerShell**.
@@ -28,8 +26,6 @@ sudo apt update
 
 * Follow this [tutorial](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview) for more information.
 
-***
-
 **Step 1: Clone The Zingg Repository**
 
 * Install and SetUp Git: **sudo apt install git**
@@ -39,20 +35,16 @@ sudo apt update
 
 **Note:** It is suggested to fork the repository to your account and then clone the repository.
 
-***
-
 **Step 2: Install JDK 1.8 (Java Development Kit)**
 
 * Follow this [tutorial](https://linuxize.com/post/install-java-on-ubuntu-20-04/) to install Java8 JDK1.8 in Ubuntu.
 * For example:
 
 ```
-sudo apt install openjdk-8-jdk openjdk-8-jre
+sudo apt install openjdk-11-jdk openjdk-11-jre
 javac -version
 java -version
 ```
-
-***
 
 **Step 3: Install Apache Spark**
 
@@ -71,8 +63,6 @@ Make sure that Spark version you have installed is compatible with Java you have
 
 **Note**: Zingg supports Spark 3.5 and the corresponding Java version.
 
-***
-
 **Step 4: Install Apache Maven**
 
 * Install the latest **maven** package.
@@ -85,9 +75,12 @@ rm -rf apache-maven-3.8.8-bin.tar.gz
 cd apache-maven-3.8.8/
 cd bin
 ./mvn --version
-```
 
-***
+Make sure that mvn -version should display correct java version as well(JAVA 11)
+Apache Maven 3.8.7
+Maven home: /usr/share/maven
+Java version: 11.0.23, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
+```
 
 **Step 5: Update Environment Variables**
 
@@ -95,28 +88,31 @@ Open `.bashrc` and add env variables at the end of the file.
 
 ```
 vim ~/.bashrc
-
 export SPARK_HOME=/opt/spark
 export SPARK_MASTER=local[\*]
 export MAVEN_HOME=/home/ubuntu/apache-maven-3.8.8
-export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$MAVEN_HOME/bin
-export ZINGG_HOME=<path_to_zingg>/zingg/assembly/target
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export ZINGG_HOME=<path_to_zingg>/assembly/target
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$JAVA_HOME/bin
 
-Save/exit and do source .bashrc so that they reflect
+```
+\<path\_to\_zingg> will be a directory where you clone the repository of the Zingg. Similarly, if you have installed spark on a different directory you can set **SPARK\_HOME** accordingly.
 
+**Note :-** Skip exporting MAVEN_HOME if multiple maven version are not required
+
+* Save/exit and do source .bashrc so that they reflect
+```
 source ~/.bashrc
-
-Verify:
-echo $PATH
-mvn --version
 ```
 
-where `<path_to_zingg>` will be a directory where you clone the repository of the Zingg. Similarly, if you have installed spark on a different directory you can set **SPARK\_HOME** accordingly.
+* Verify:
+```
+echo $PATH
+mvn --version
+
+```
 
 **Note:** If you have already set up **JAVA\_HOME** and **SPARK\_HOME** in the steps before you don't need to do this again.
-
-***
 
 **Step 6: Compile The Zingg Repository**
 
@@ -124,31 +120,33 @@ where `<path_to_zingg>` will be a directory where you clone the repository of th
 
 ```
 git branch
-(Ensure you are on main branch)
+
+```
+
+* Run the following to Compile the Zingg Repository
+```
 mvn initialize
-* Run the following to Compile the Zingg Repository - **mvn initialize** and
-* **mvn clean compile package -Dspark=sparkVer**
+mvn clean compile package -Dspark=sparkVer
+```
+
+* Run the following to Compile while skipping tests
+```
+mvn initialize
+mvn clean compile package -Dspark=sparkVer -Dmaven.test.skip=true
 ```
 
 **Note:** Replace the `sparkVer` with the version of Spark you installed. \
 \
 For example, **-Dspark=3.5** you still face an error, include **-Dmaven.test.skip=true** with the above command.
 
-**Note:** Substitute 3.3 with the **profile** of the Spark version you have installed. This is based on profiles specified in **pom.xml**
-
-***
 
 **Step 7: If you have any issue with 'SPARK\_LOCAL\_IP'**
 
 * Install **net-tools** using **sudo apt-get install -y net-tools**
 * Run `ifconfig` in the terminal, find the **IP address** and paste the same in **/opt/hosts** IP address of your Pc-Name
 
-***
-
 **Step 8: Run Zingg To Find Training Data**
 
 * Run this script in the terminal opened in Zingg clones directory `./scripts/zingg.sh --phase findTrainingData --conf examples/febrl/config.json`
-
-***
 
 **If everything is right, it should show Zingg icon.**

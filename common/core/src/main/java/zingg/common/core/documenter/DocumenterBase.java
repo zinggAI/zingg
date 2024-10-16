@@ -12,14 +12,14 @@ import freemarker.template.Version;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
-import zingg.common.core.Context;
+import zingg.common.core.context.IContext;
 import zingg.common.core.executor.ZinggBase;
 
 public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	private static final long serialVersionUID = 1L;
 	protected static Configuration config;
 
-	public DocumenterBase(Context<S,D,R,C,T> context, IArguments args) {
+	public DocumenterBase(IContext<S, D, R, C, T> context, IArguments args) {
 		super.context = context;
 		super.args = args;
 		config = createConfigurationObject();

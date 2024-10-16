@@ -7,13 +7,15 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
+import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
+import zingg.common.client.options.ZinggOptions;
+
 import zingg.common.core.executor.Recommender;
 import zingg.common.core.recommender.StopWordsRecommender;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
+import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.recommender.SparkStopWordsRecommender;
 
 
@@ -21,26 +23,30 @@ import zingg.spark.core.recommender.SparkStopWordsRecommender;
  * Spark specific implementation of Recommender
  *
  */
-public class SparkRecommender extends Recommender<ZSparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkRecommender extends Recommender<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkRecommender";
 	public static final Log LOG = LogFactory.getLog(SparkRecommender.class);
 
 	public SparkRecommender() {
-		setZinggOptions(ZinggOptions.RECOMMEND);
-		setContext(new ZinggSparkContext());
+		this(new ZinggSparkContext());
 	}
 
+	public SparkRecommender(ZinggSparkContext sparkContext) {
+		setZinggOption(ZinggOptions.RECOMMEND);
+		setContext(sparkContext);
+	}	
+	
     @Override
-    public void init(IArguments args, IZinggLicense license)  throws ZinggClientException {
-        super.init(args, license);
-        getContext().init(license);
+    public void init(IArguments args, SparkSession s, ClientOptions options)  throws ZinggClientException {
+        super.init(args,s,options);
+        getContext().init(s);
     }	
 
     @Override
-    public StopWordsRecommender<ZSparkSession, Dataset<Row>, Row, Column, DataType> getStopWordsRecommender() {
-    	StopWordsRecommender<ZSparkSession, Dataset<Row>, Row, Column, DataType> stopWordsRecommender = new SparkStopWordsRecommender(getContext(),args);    	
+    public StopWordsRecommender<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWordsRecommender() {
+    	StopWordsRecommender<SparkSession, Dataset<Row>, Row, Column, DataType> stopWordsRecommender = new SparkStopWordsRecommender(getContext(),args);    	
     	return stopWordsRecommender;
     }
 	

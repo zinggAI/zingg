@@ -23,7 +23,7 @@ copyright = '2024, Zingg.AI'
 author = 'Zingg.AI'
 
 # The full version, including alpha/beta/rc tags
-release = '0.4.0'
+release = '0.4.1-SNAPSHOT'
 version = '0.4.0'
 
 

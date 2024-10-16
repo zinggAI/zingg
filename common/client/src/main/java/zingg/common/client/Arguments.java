@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import zingg.common.client.pipe.Pipe;
+import zingg.common.client.util.JsonStringify;
 
 
 /**
@@ -169,7 +171,7 @@ public class Arguments implements Serializable, IArguments {
 	public List<? extends FieldDefinition> getFieldDefinition() {
 		return fieldDefinition;
 	}
-
+	
 	/**
 	 * Set the field definitions consisting of match field indices, types and
 	 * classes
@@ -308,18 +310,7 @@ public class Arguments implements Serializable, IArguments {
 	
 	@Override
 	public String toString() {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS,
-				true);
-		//mapper.configure(JsonParser.Feature.FAIL_ON_EMPTY_BEANS, true)
-		try {
-			StringWriter writer = new StringWriter();
-			return mapper.writeValueAsString(this);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+		return JsonStringify.toString(this);
 	}
 	
 	/**

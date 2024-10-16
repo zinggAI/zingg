@@ -11,36 +11,36 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.core.feature.FeatureFactory;
 import zingg.common.core.model.Model;
 import zingg.common.core.util.ModelUtil;
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.feature.SparkFeatureFactory;
 import zingg.spark.core.model.SparkLabelModel;
 import zingg.spark.core.model.SparkModel;
 
 
-public class SparkModelUtil extends ModelUtil<ZSparkSession,DataType,Dataset<Row>, Row, Column> {
+public class SparkModelUtil extends ModelUtil<SparkSession,DataType,Dataset<Row>, Row, Column> {
 
     public static final Log LOG = LogFactory.getLog(SparkModelUtil.class);
     
 
-    public SparkModelUtil(ZSparkSession s) {
-        this.session = s;
+    public SparkModelUtil(SparkSession s) {
+        super(s);
     }
 
-	public Model<ZSparkSession,DataType,Dataset<Row>, Row, Column> getModel(boolean isLabel, IArguments args) throws ZinggClientException{
-        Model<ZSparkSession,DataType,Dataset<Row>, Row, Column> model = null;
+	public Model<SparkSession,DataType,Dataset<Row>, Row, Column> getModel(boolean isLabel, IArguments args) throws ZinggClientException{
+        Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = null;
         if (isLabel) {
-            model = new SparkLabelModel(getFeaturers(args));
+            model = new SparkLabelModel(session, getFeaturers(args));
         }
         else {
-            model = new SparkModel(getFeaturers(args));            
+            model = new SparkModel(session, getFeaturers(args));            
         }
         return model;
     }
 
     @Override
-    public Model<ZSparkSession,DataType,Dataset<Row>, Row, Column> loadModel(boolean isLabel,
+    public Model<SparkSession,DataType,Dataset<Row>, Row, Column> loadModel(boolean isLabel,
         IArguments args) throws ZinggClientException    {
-        Model<ZSparkSession,DataType,Dataset<Row>, Row, Column> model = getModel(isLabel, args);
+        Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = getModel(isLabel, args);
         model.load(args.getModel());
         return model;
      }

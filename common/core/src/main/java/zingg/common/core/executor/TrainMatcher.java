@@ -2,11 +2,12 @@ package zingg.common.core.executor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.impl.execchain.ClientExecChain;
 
+import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
+import zingg.common.client.options.ZinggOptions;
 
 public abstract class TrainMatcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
@@ -18,15 +19,15 @@ public abstract class TrainMatcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected Matcher<S,D,R,C,T> matcher;
 	
     public TrainMatcher() {
-        setZinggOptions(ZinggOptions.TRAIN_MATCH);		
+        setZinggOption(ZinggOptions.TRAIN_MATCH);		
     }
 
 	@Override
-	public void init(IArguments args, IZinggLicense license)
+	public void init(IArguments args, S s, ClientOptions options)
         throws ZinggClientException {
-			trainer.init(args, license);
-			matcher.init(args, license);
-			super.init(args, license);			
+			trainer.init(args,s,options);
+			matcher.init(args,s,options);
+			super.init(args,s,options);			
 	}
 
 	@Override
@@ -34,5 +35,23 @@ public abstract class TrainMatcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		trainer.execute();
 		matcher.execute();
 	}
+
+	public Trainer<S, D, R, C, T> getTrainer() {
+		return trainer;
+	}
+
+	public void setTrainer(Trainer<S, D, R, C, T> trainer) {
+		this.trainer = trainer;
+	}
+
+	public Matcher<S, D, R, C, T> getMatcher() {
+		return matcher;
+	}
+
+	public void setMatcher(Matcher<S, D, R, C, T> matcher) {
+		this.matcher = matcher;
+	}
+
+	
 	    
 }

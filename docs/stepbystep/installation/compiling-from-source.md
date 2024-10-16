@@ -9,4 +9,5 @@ If you need to compile the latest code or build for a different Spark version, y
 * Install **maven**
 * Install **JDK 1.8**
 * Set `JAVA_HOME` to JDK base directory
+
 * Run the following: `mvn initialize` and then `mvn clean compile package`

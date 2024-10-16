@@ -8,7 +8,7 @@ Zingg is prebuilt for common Spark versions so that you can use those directly. 
 
 ## Prerequisites
 
-A) Java JDK - version "1.8.0\_131"
+A) Java JDK - version "11.0.23"
 
 B) Apache Spark - version spark-3.5.0-bin-hadoop3
 

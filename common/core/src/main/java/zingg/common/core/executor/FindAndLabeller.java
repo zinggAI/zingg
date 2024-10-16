@@ -3,10 +3,10 @@ package zingg.common.core.executor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
+import zingg.common.client.options.ZinggOptions;
 
 public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S, D, R, C, T> {
 	private static final long serialVersionUID = 1L;
@@ -17,14 +17,14 @@ public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S, D, R, 
 	protected Labeller<S, D, R, C, T> labeller;
 
 	public FindAndLabeller() {
-		setZinggOptions(ZinggOptions.FIND_AND_LABEL);
+		setZinggOption(ZinggOptions.FIND_AND_LABEL);
 	}
 
 	@Override
-	public void init(IArguments args, IZinggLicense license) throws ZinggClientException {
-		finder.init(args, license);
-		labeller.init(args, license);
-		super.init(args, license);
+	public void init(IArguments args, S s, ClientOptions options) throws ZinggClientException {
+		finder.init(args,s,options);
+		labeller.init(args,s,options);
+		super.init(args,s,options);
 	}
 
 	@Override
@@ -32,5 +32,23 @@ public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S, D, R, 
 		finder.execute();
 		labeller.execute();
 	}
+
+	public void setLabeller(Labeller<S, D, R, C, T> labeller){
+		this.labeller = labeller;
+	}
+
+	public Labeller<S, D, R, C, T> getLabeller(){
+		return this.labeller;
+	}
+
+	public TrainingDataFinder<S, D, R, C, T> getFinder() {
+		return finder;
+	}
+
+	public void setFinder(TrainingDataFinder<S, D, R, C, T> finder) {
+		this.finder = finder;
+	}
+
+	
 
 }

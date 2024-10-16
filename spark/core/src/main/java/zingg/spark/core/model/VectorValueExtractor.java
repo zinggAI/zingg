@@ -7,8 +7,9 @@ import org.apache.spark.sql.functions;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataTypes;
 
-import zingg.spark.client.ZSparkSession;
+import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.similarity.SparkBaseTransformer;
+import zingg.spark.core.util.SparkFnRegistrar;
 
 public class VectorValueExtractor extends SparkBaseTransformer implements UDF1<Vector, Double>{
 
@@ -25,8 +26,9 @@ public class VectorValueExtractor extends SparkBaseTransformer implements UDF1<V
 	}
 	
 	@Override
-	public void register(ZSparkSession spark) {
-    	spark.getSession().udf().register(uid, (UDF1) this, DataTypes.DoubleType);
+	public void register(SparkSession spark) {
+
+		SparkFnRegistrar.registerUDF1(spark, uid, this, DataTypes.DoubleType);
     }
 	
 	/*@Override

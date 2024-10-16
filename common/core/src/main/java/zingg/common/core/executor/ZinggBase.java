@@ -13,28 +13,28 @@ import zingg.common.client.IZingg;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
+import zingg.common.client.options.ZinggOption;
+import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
-import zingg.common.core.Context;
+import zingg.common.client.util.DSUtil;
+import zingg.common.client.util.PipeUtilBase;
+import zingg.common.core.context.IContext;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.BlockingTreeUtil;
-import zingg.common.core.util.DSUtil;
 import zingg.common.core.util.GraphUtil;
 import zingg.common.core.util.HashUtil;
 import zingg.common.core.util.Metric;
 import zingg.common.core.util.ModelUtil;
-import zingg.common.core.util.PipeUtilBase;
 
 
 public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S, D, R, C> {
 
     protected IArguments args;
 	
-    protected Context<S,D,R,C,T> context;
+    protected IContext<S,D,R,C,T> context;
     protected String name;
-    protected ZinggOptions zinggOptions;
+    protected ZinggOption zinggOption;
     protected long startTime;
     protected ClientOptions clientOptions;
 
@@ -62,13 +62,13 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
     }
 
    
-    
-    public void init(IArguments args, IZinggLicense license)
+    @Override
+    public void init(IArguments args, S session, ClientOptions options)
         throws ZinggClientException {
             startTime = System.currentTimeMillis();
             this.args = args;
-            
-        }
+            this.clientOptions = options;
+    }
 
 
     public void setSession(S s) {
@@ -85,8 +85,10 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
                 collectMetrics);
 		Analytics.track(Metric.DATA_FORMAT, getPipeUtil().getPipesAsString(args.getData()), collectMetrics);
 		Analytics.track(Metric.OUTPUT_FORMAT, getPipeUtil().getPipesAsString(args.getOutput()), collectMetrics);
+
+		
         Analytics.track(Metric.MODEL_ID, args.getModelId(), collectMetrics);
-        Analytics.track(Metric.ZINGG_VERSION, "0.4.0", collectMetrics);
+        Analytics.track(Metric.ZINGG_VERSION, "0.4.1-SNAPSHOT", collectMetrics);
         Analytics.trackEnvProp(Metric.DATABRICKS_RUNTIME_VERSION, collectMetrics);
         Analytics.trackEnvProp(Metric.DB_INSTANCE_TYPE, collectMetrics);
         Analytics.trackEnvProp(Metric.JAVA_HOME, collectMetrics); 
@@ -96,8 +98,8 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
         //Analytics.trackEnvProp(Metric.USER_NAME, collectMetrics); 
         //Analytics.trackEnvProp(Metric.USER_HOME, collectMetrics); 
         Analytics.trackDomain(Metric.DOMAIN, collectMetrics);
-        Analytics.track(Metric.ZINGG_VERSION, "0.4.0", collectMetrics);
-        Analytics.postEvent(zinggOptions.getValue(), collectMetrics);
+        Analytics.track(Metric.ZINGG_VERSION, "0.4.1-SNAPSHOT", collectMetrics);
+        Analytics.postEvent(zinggOption.getName(), collectMetrics);
 	}
 
     public IArguments getArgs() {
@@ -111,27 +113,30 @@ public abstract class ZinggBase<S,D, R, C, T> implements Serializable, IZingg<S,
    
     
     
-    public Context<S,D,R,C,T> getContext() {
+    public IContext<S,D,R,C,T> getContext() {
         return this.context;
     }
 
-    public void setContext(Context<S,D,R,C,T> source) {
+    public void setContext(IContext<S,D,R,C,T> source) {
         this.context = source;
     }
     public void setName(String name) {
         this.name = name;
     }
-    public void setZinggOptions(ZinggOptions zinggOptions) {
-        this.zinggOptions = zinggOptions;
+    
+    public void setZinggOption(ZinggOption zinggOptions) {
+        this.zinggOption = zinggOptions;
     }
+    
 
 	public String getName() {
         return name;
     }
 
+    /* 
     public ZinggOptions getZinggOptions() {
         return zinggOptions;
-    }
+    }*/
 
     public ZFrame<D,R,C> getMarkedRecords() {
 		try {

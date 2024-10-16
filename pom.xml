@@ -64,11 +64,11 @@
 		</profile>
 	</profiles>
 	<properties>
-		<zingg.version>0.4.0</zingg.version>
+		<zingg.version>0.4.1-SNAPSHOT</zingg.version>
 		<skipTests>false</skipTests>
 		<failIfNoTests>false</failIfNoTests>
-		<maven.compiler.source>8</maven.compiler.source>
-		<maven.compiler.target>8</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mcheckstyle.version>2.10</mcheckstyle.version>
 		<mfindbugs.version>2.5.2</mfindbugs.version>
@@ -152,6 +152,18 @@
 	</dependencies>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven-jar-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
@@ -247,7 +259,6 @@
 						</execution>
 					</executions>
 				</plugin>
-		</plugins>
-		
+		</plugins>		
 	</build>
 </project>

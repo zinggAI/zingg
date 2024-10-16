@@ -20,7 +20,8 @@ LOG = logging.getLogger("zingg")
 _spark_ctxt = None
 _sqlContext = None
 _spark = None
-_zingg_jar = "zingg-0.4.0.jar"
+<<<<<<< HEAD
+_zingg_jar = 'zingg-0.4.1-SNAPSHOT.jar'
 
 
 def initSparkClient():

@@ -8,11 +8,11 @@ import zingg.common.client.IArguments;
 import zingg.common.client.ITrainingDataModel;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
+import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
-import zingg.common.core.Context;
+import zingg.common.core.context.IContext;
 
 public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> implements ITrainingDataModel<S, D, R, C>{
 
@@ -21,9 +21,8 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 	private long positivePairsCount, negativePairsCount, notSurePairsCount;
 	private long totalCount;
 	
-	public TrainingDataModel(Context<S,D,R,C,T> context, ZinggOptions zinggOptions, ClientOptions clientOptions) {
+	public TrainingDataModel(IContext<S,D,R,C,T> context, ClientOptions clientOptions) {
 		setContext(context);
-		setZinggOptions(zinggOptions);
 		setClientOptions(clientOptions);
 		setName(this.getClass().getName());
 	}
@@ -79,7 +78,7 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 			LOG.warn("No labelled records");
 			return;
 		}
-		getPipeUtil().write(records, args,p);
+		getPipeUtil().write(records, p);
 	}
 	
 	public Pipe getOutputPipe(IArguments args) {
@@ -117,6 +116,7 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 	public long getTotalCount() {
 		return totalCount;
 	}
+	
 	
 	
 	

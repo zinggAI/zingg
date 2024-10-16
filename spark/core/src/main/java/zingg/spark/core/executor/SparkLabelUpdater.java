@@ -8,13 +8,15 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.types.DataType;
 
+import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.ZinggOptions;
-import zingg.common.client.license.IZinggLicense;
+import zingg.common.client.options.ZinggOptions;
+
 import zingg.common.client.pipe.Pipe;
 import zingg.common.core.executor.LabelUpdater;
-import zingg.spark.client.ZSparkSession;
+import zingg.spark.core.context.ZinggSparkContext;
+import org.apache.spark.sql.SparkSession;
 
 
 /**
@@ -22,25 +24,28 @@ import zingg.spark.client.ZSparkSession;
  * 
  *
  */
-public class SparkLabelUpdater extends LabelUpdater<ZSparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkLabelUpdater";
 	public static final Log LOG = LogFactory.getLog(SparkLabelUpdater.class);
 
 	public SparkLabelUpdater() {
-		setZinggOptions(ZinggOptions.UPDATE_LABEL);
-		setContext(new ZinggSparkContext());
+		this(new ZinggSparkContext());
 	}
 
+	public SparkLabelUpdater(ZinggSparkContext sparkContext) {
+		setZinggOption(ZinggOptions.UPDATE_LABEL);
+		setContext(sparkContext);
+	}
 
     @Override
-    public void init(IArguments args, IZinggLicense license)  throws ZinggClientException {
-        super.init(args, license);
-        getContext().init(license);
+    public void init(IArguments args, SparkSession s, ClientOptions options)  throws ZinggClientException {
+        super.init(args,s,options);
+        getContext().init(s);
     }
     	
-	protected Pipe setSaveModeOnPipe(Pipe p) {
+    public Pipe setSaveModeOnPipe(Pipe p) {
 		p.setMode(SaveMode.Overwrite.toString());
 		return p;
 	}

@@ -13,8 +13,8 @@ import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
-import zingg.common.core.Context;
-import zingg.common.core.util.PipeUtilBase;
+import zingg.common.client.util.PipeUtilBase;
+import zingg.common.core.context.IContext;
 
 public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 
@@ -23,10 +23,10 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 	public static final Log LOG = LogFactory.getLog(StopWordsRemover.class);
 	protected static final int COLUMN_INDEX_DEFAULT = 0;
 	
-	protected Context<S,D,R,C,T> context;
+	protected IContext<S,D,R,C,T> context;
 	protected IArguments args;
 
-	public StopWordsRemover(Context<S, D, R, C, T> context,IArguments args) {
+	public StopWordsRemover(IContext<S, D, R, C, T> context,IArguments args) {
 		super();
 		this.context = context;
 		this.args = args;
@@ -65,7 +65,7 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 	}
 	
 	protected List<String> getWordList(ZFrame<D,R,C> stopWords, String stopWordColumn) {
-		return stopWords.select(stopWordColumn).collectAsListOfStrings();
+		return stopWords.select(stopWordColumn).collectFirstColumn();
 	}
 	
 	/**
@@ -82,11 +82,11 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 	// implementation specific as may require UDF
 	protected abstract ZFrame<D,R,C> removeStopWordsFromDF(ZFrame<D,R,C> ds,String fieldName, String pattern);
 	
-	public Context<S, D, R, C, T> getContext() {
+	public IContext<S, D, R, C, T> getContext() {
 		return context;
 	}
 
-	public void setContext(Context<S, D, R, C, T> context) {
+	public void setContext(IContext<S, D, R, C, T> context) {
 		this.context = context;
 	}
 

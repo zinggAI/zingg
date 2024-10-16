@@ -6,7 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.core.Context;
+import zingg.common.core.context.Context;
 
 public abstract class DataColDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 	protected static String name = "zingg.DataColDocumenter";

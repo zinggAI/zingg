@@ -10,6 +10,11 @@ public interface ZFrame<D, R, C> {
 	
 	public static final String COL_COUNT = "count";
 	public static final String COL_VALUE = "VALUE";
+
+    public static String PIVOT_COLUMN = "field";
+    public static String VALUE_1 = "value1";
+    public static String VALUE_2 = "value2";
+    public static String ORDER = "order";
 		
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
@@ -20,7 +25,7 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> selectExpr(String... col);
     public ZFrame <D, R, C> distinct();
     public List<R> collectAsList();
-    public List<String> collectAsListOfStrings();
+    public List<String> collectFirstColumn();
 
     public ZFrame<D, R, C> toDF(String[] cols);
     public ZFrame<D, R, C> toDF(String col1, String col2);
@@ -81,6 +86,9 @@ public interface ZFrame<D, R, C> {
     
     public ZFrame<D, R, C> repartition(int num);
     public ZFrame<D, R, C> repartition(int num, C c);
+    public ZFrame<D, R, C> repartition(int num,scala.collection.Seq<C> partitionExprs);
+    public ZFrame<D, R, C> repartition(scala.collection.Seq<C> partitionExprs);
+    
 
     public ZFrame<D, R, C> sample(boolean repartition, float num);
     public ZFrame<D, R, C> sample(boolean repartition, double num);
@@ -170,5 +178,13 @@ public interface ZFrame<D, R, C> {
 
     public ZFrame<D,R,C> groupByCount(String groupByCol1, String groupByCol2, String countColName);
 
-   
+    public ZFrame<D,R,C> intersect(ZFrame<D,R,C> other);
+	
+	public C substr(C col, int startPos, int len);
+
+	public C gt(C column1, C column2);
+
+    public ZFrame<D, R, C> transpose(String pivotColumn);
+
+    public void showVertical();
 }
