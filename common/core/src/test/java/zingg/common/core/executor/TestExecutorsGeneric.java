@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.ArgumentsUtil;
+import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 
@@ -18,6 +19,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	
 	protected IArguments args;
 	protected S session;
+	protected ClientOptions options;
 	
 	public TestExecutorsGeneric() {
 					

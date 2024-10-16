@@ -9,6 +9,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.SparkSession;
 
+import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
@@ -35,8 +36,8 @@ public class SparkFindAndLabeller extends FindAndLabeller<SparkSession, Dataset<
 	}	
 	
 	@Override
-	public void init(IArguments args, SparkSession s) throws ZinggClientException {
-		super.init(args,s);
+	public void init(IArguments args, SparkSession s, ClientOptions options) throws ZinggClientException {
+		super.init(args,s,options);
 		getContext().init(s);
 	}
 
