@@ -9,19 +9,19 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 
-public class LabellerTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> {
+public class LabellerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
 
-	public static final Log LOG = LogFactory.getLog(LabellerTester.class);
+	public static final Log LOG = LogFactory.getLog(LabellerValidator.class);
 	
-	public LabellerTester(Labeller<S, D, R, C, T> executor) {
-		super(executor);
+	public LabellerValidator(Labeller<S, D, R, C, T> validator) {
+		super(validator);
 	}
 
 	@Override
 	public void validateResults() throws ZinggClientException {
 		// check that marked data has at least 1 match row and 1 unmatch row
-		ZFrame<D, R, C> dfMarked = executor.getContext().getPipeUtil().
-				read(false, false, executor.getContext().getPipeUtil().getTrainingDataMarkedPipe(executor.getArgs()));
+		ZFrame<D, R, C> dfMarked = validator.getContext().getPipeUtil().
+				read(false, false, validator.getContext().getPipeUtil().getTrainingDataMarkedPipe(validator.getArgs()));
 		
 		C matchCond = dfMarked.equalTo(ColName.MATCH_FLAG_COL, 1);
 		C notMatchCond = dfMarked.equalTo(ColName.MATCH_FLAG_COL, 0);

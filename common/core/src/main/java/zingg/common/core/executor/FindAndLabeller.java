@@ -32,4 +32,12 @@ public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S, D, R, 
 		labeller.execute();
 	}
 
+	public void setLabeller(Labeller<S, D, R, C, T> labeller){
+		this.labeller = labeller;
+	}
+
+	public Labeller<S, D, R, C, T> getLabeller(){
+		return this.labeller;
+	}
+
 }

@@ -14,21 +14,25 @@ import org.junit.jupiter.api.AfterEach;
 
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.Labeller;
+import zingg.common.core.executor.TestExecutorsCompound;
 import zingg.common.core.executor.TestExecutorsGeneric;
+import zingg.common.core.executor.TrainMatcher;
 import zingg.common.core.executor.Trainer;
-import zingg.common.core.executor.TrainerTester;
+import zingg.common.core.executor.TrainerValidator;
 import zingg.spark.core.context.ZinggSparkContext;
 
-public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Dataset<Row>,Row,Column,DataType> {
+public class TestSparkExecutors extends TestExecutorsCompound<SparkSession,Dataset<Row>,Row,Column,DataType> {
 	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
-	
 	protected static final String TEST_DATA_FILE = "zingg/spark/core/executor/test.csv";
+
+	protected static final String CONFIGLINK_FILE = "ingg/spark/core/executor/configSparkLinkTest.json";
+	protected static final String TEST1_DATA_FILE = "zingg/spark/core/executor/test1.csv";
+	protected static final String TEST2_DATA_FILE = "zingg/spark/core/executor/test2.csv";
 
 	public static final Log LOG = LogFactory.getLog(TestSparkExecutors.class);
 	
 	protected ZinggSparkContext ctx;
 	
-
 	public TestSparkExecutors() throws IOException, ZinggClientException {	
 		SparkSession spark = SparkSession
 				.builder()
@@ -51,23 +55,54 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 		SparkTrainingDataFinder stdf = new SparkTrainingDataFinder(ctx);
 		return stdf;
 	}
+
 	@Override
 	protected Labeller<SparkSession,Dataset<Row>,Row,Column,DataType> getLabeller() throws ZinggClientException {
-		JunitSparkLabeller jlbl = new JunitSparkLabeller(ctx);
+		ProgrammaticSparkLabeller jlbl = new ProgrammaticSparkLabeller(ctx);
 		return jlbl;
 	}
+
 	@Override
 	protected SparkTrainer getTrainer() throws ZinggClientException {
 		SparkTrainer st = new SparkTrainer(ctx);
 		return st;
 	}
+
 	@Override
 	protected SparkMatcher getMatcher() throws ZinggClientException {
 		SparkMatcher sm = new SparkMatcher(ctx);
 		return sm;
 	}
-	
-	
+
+	@Override
+	protected SparkLinker getLinker() throws ZinggClientException {
+		SparkLinker sl = new SparkLinker(ctx);
+		return sl;
+	}
+
+	@Override
+	protected SparkTrainerTester getTrainerValidator(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
+		return new SparkTrainerTester(trainer,args);
+	}
+
+	@Override
+	protected SparkFindAndLabeller getFindAndLabeller() throws ZinggClientException {
+		SparkFindAndLabeller sfal = new SparkFindAndLabeller(ctx);
+        sfal.setLabeller(new ProgrammaticSparkLabeller(ctx));
+		return sfal;
+	}
+
+	@Override
+	protected SparkTrainMatcher getTrainMatcher() throws ZinggClientException {
+		SparkTrainMatcher stm = new SparkTrainMatcher(ctx);
+		return stm;
+	}
+
+	@Override
+	protected SparkTrainMatchTester getTrainMatchValidator(TrainMatcher<SparkSession,Dataset<Row>,Row,Column,DataType> trainMatch) {
+		return new SparkTrainMatchTester(trainMatch,args);
+	}
+
 	@Override
 	public String setupArgs() throws ZinggClientException, IOException {
 		String configFile = super.setupArgs();
@@ -75,11 +110,6 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 		// correct the location of test data
 		args.getData()[0].setProp("location", testFile);
 		return configFile;
-	}
-	
-	@Override
-	protected SparkTrainerTester getTrainerTester(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
-		return new SparkTrainerTester(trainer,args);
 	}
 	
 	@Override
