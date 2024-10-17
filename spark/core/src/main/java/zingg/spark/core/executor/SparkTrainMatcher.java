@@ -7,6 +7,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
+import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
@@ -34,8 +35,8 @@ public class SparkTrainMatcher extends TrainMatcher<SparkSession, Dataset<Row>, 
 	}
 
     @Override
-    public void init(IArguments args, SparkSession s)  throws ZinggClientException {
-        super.init(args,s);
+    public void init(IArguments args, SparkSession s, ClientOptions options)  throws ZinggClientException {
+        super.init(args,s,options);
         getContext().init(s);
     }
         	

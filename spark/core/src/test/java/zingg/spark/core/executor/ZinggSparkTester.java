@@ -46,6 +46,7 @@ public class ZinggSparkTester {
     				.getOrCreate();
     		ctx = new JavaSparkContext(spark.sparkContext());
     		JavaSparkContext.jarOfClass(IZingg.class);    
+			ctx.setCheckpointDir("/tmp/checkpoint");
 			args = new Arguments();
 			zsCTX = new ZinggSparkContext();
 			zsCTX.init(spark);

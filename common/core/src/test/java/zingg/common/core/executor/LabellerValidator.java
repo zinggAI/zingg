@@ -9,11 +9,11 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 
-public class LabellerTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> {
+public class LabellerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
 
-	public static final Log LOG = LogFactory.getLog(LabellerTester.class);
+	public static final Log LOG = LogFactory.getLog(LabellerValidator.class);
 	
-	public LabellerTester(Labeller<S, D, R, C, T> executor) {
+	public LabellerValidator(Labeller<S, D, R, C, T> executor) {
 		super(executor);
 	}
 
