@@ -34,34 +34,13 @@ public class ZinggSparkContext extends Context<SparkSession, Dataset<Row>, Row,C
 	protected JavaSparkContext ctx;
     public static final Log LOG = LogFactory.getLog(ZinggSparkContext.class);
 
-    
-
+	
     @Override
     public void init(SparkSession session)
         throws ZinggClientException {
-        try{
-//            if (session==null) {
-//            	session = SparkSession
-//                    .builder()
-//                    .appName("Zingg")
-//                    .getOrCreate();
-//            	
-//            	//session = new SparkSession(spark, license);
-//            }
-        	this.session = session;
-            if (ctx==null) {
-				ctx = JavaSparkContext.fromSparkContext(session.sparkContext());
-				JavaSparkContext.jarOfClass(IZingg.class);
-				LOG.debug("Context " + ctx.toString());
-				//initHashFns();
-				ctx.setCheckpointDir("/tmp/checkpoint");
-				setUtils();
-			}
-        }
-        catch(Throwable e) {
-            if (LOG.isDebugEnabled()) e.printStackTrace();
-            throw new ZinggClientException(e.getMessage());
-        }
+			this.session = session;
+        	setUtils();
+		
     }
 
 	@Override

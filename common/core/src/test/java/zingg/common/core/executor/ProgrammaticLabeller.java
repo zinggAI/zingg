@@ -7,11 +7,11 @@ import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.context.Context;
 
-public class JunitLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
+public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public JunitLabeller(Context<S,D,R,C,T> context) {
+	public ProgrammaticLabeller(Context<S,D,R,C,T> context) {
 		setZinggOption(ZinggOptions.LABEL);
 		setContext(context);
 	}

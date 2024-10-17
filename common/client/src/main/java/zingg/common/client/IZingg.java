@@ -2,7 +2,7 @@ package zingg.common.client;
 
 public interface IZingg<S,D,R,C> {
 
-	public void init(IArguments args, S session)
+	public void init(IArguments args, S session, ClientOptions options)
 			throws ZinggClientException;
 
 	public void execute() throws ZinggClientException;
@@ -31,7 +31,6 @@ public interface IZingg<S,D,R,C> {
 
     //public void setSession(S session); // method name will have to be changed in Client too
 
-	
 	public void setClientOptions(ClientOptions clientOptions);
 
 	public ClientOptions getClientOptions(); 

@@ -34,9 +34,9 @@ public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, C
 	}
 
 	@Override
-    public void init(IArguments args, SparkSession s)
+    public void init(IArguments args, SparkSession s, ClientOptions options)
         throws ZinggClientException {
-		super.init(args,s);
+		super.init(args,s,options);
 		getContext().setUtils();
 		//we wil not init here as we wnt py to drive
 		//the spark session etc
