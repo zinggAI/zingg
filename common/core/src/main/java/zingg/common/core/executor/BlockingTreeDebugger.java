@@ -11,7 +11,7 @@ import zingg.common.core.block.Blocker;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 
-public abstract class BlockingTreeDebugger<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
+public abstract class BlockingTreeDebugger<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
     private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.BlockingTreeDebugger";

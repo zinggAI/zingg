@@ -104,7 +104,7 @@ public class ArgumentsUtil {
 	}
 
 	public void checkValid(IArguments args, String phase) throws ZinggClientException {
-		if (phase.equals("train") || phase.equals("match") || phase.equals("trainMatch") || phase.equals("link")) {
+		if (phase.equals("train") || phase.equals("match") || phase.equals("trainMatch") || phase.equals("link") || phase.equals("verifyBlocking")) {
 			checkIsValid(args);
 		}
 		else if(phase.equals("seed") || phase.equals("seedDB")){
