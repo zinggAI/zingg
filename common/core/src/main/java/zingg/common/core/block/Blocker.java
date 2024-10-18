@@ -7,6 +7,7 @@ import scala.Serializable;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
@@ -26,11 +27,10 @@ public class Blocker<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
        return data;
    }
 
-
-    public ZFrame<D,R,C>  getBlocked(BlockingTreeUtil<S,D,R,C,T>  testData) throws Exception, ZinggClientException{
+    public ZFrame<D,R,C>  getBlocked(ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
 		LOG.debug("Blocking model file location is " + args.getBlockFile());
 		Tree<Canopy<R>> tree = getBlockingTreeUtil().readBlockingTree(args);
-		ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes((ZFrame<D, R, C>) testData, tree);		
+		ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(testData, tree);		
 		ZFrame<D,R,C> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
 		return blocked1;
 	}
@@ -53,8 +53,8 @@ public class Blocker<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
         try {
 			
 			ZFrame<D,R,C>  testDataOriginal = getTestData();
-			
-			ZFrame<D,R,C> blocked = getBlocked((BlockingTreeUtil<S,D,R,C,T>)testDataOriginal);
+			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
+			ZFrame<D,R,C> blocked = getBlocked(testDataOriginal);
 			LOG.info("Blocked");
 			
             getPipeUtil().write(blocked.select(ColName.HASH_COL).groupByCount(ColName.HASH_COL, ColName.HASH_COL + "_count").sortDescending(ColName.HASH_COL + "_count"), getPipeForDebugBlockingLocation(timestamp, "counts"));	
@@ -70,6 +70,12 @@ public class Blocker<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		}
     
     }
+
+	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
+		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
+		return testDataOriginal.select(zidAndFieldDefSelector.getCols());
+//		return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
+	}
 
     public long getTimestamp() {
 		return timestamp;

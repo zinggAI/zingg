@@ -24,7 +24,7 @@ public abstract class BlockingTreeDebugger<S,D,R,C,T> extends ZinggBase<S,D,R,C,
     public ZFrame<D,R,C>  getBlocked( ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
 		//for verifying blocking
 		Blocker<S,D,R,C,T> blocker = new Blocker<S,D,R,C,T>();
-        blocker.getBlocked(getBlockingTreeUtil());
+        blocker.getBlocked(testData);
 		LOG.debug("Blocking model file location is " + args.getBlockFile());
 		Tree<Canopy<R>> tree = getBlockingTreeUtil().readBlockingTree(args);
 		ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(testData, tree);		

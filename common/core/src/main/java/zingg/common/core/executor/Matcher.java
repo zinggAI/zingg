@@ -49,7 +49,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	public ZFrame<D,R,C>  getBlocked( ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
 		//for blocking
 		Blocker<S,D,R,C,T> blocker = new Blocker<S,D,R,C,T>();
-        blocker.getBlocked(blocker.getBlockingTreeUtil());
+        blocker.getBlocked(testData);
 		LOG.debug("Blocking model file location is " + args.getBlockFile());
 		Tree<Canopy<R>> tree = getBlockingTreeUtil().readBlockingTree(args);
 		ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(testData, tree);	
