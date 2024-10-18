@@ -62,7 +62,9 @@ public class Blocker<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
             getPipeUtil().write(blocked.sample(false, 0.1), getPipeForVerifyBlockingLocation(timestamp, "blockSamples"));	
 			
 		} catch (Exception e) {
-			if (LOG.isDebugEnabled()) e.printStackTrace();
+			if (LOG.isDebugEnabled()){
+				e.printStackTrace();
+			}
 			e.printStackTrace();
 			throw new ZinggClientException(e.getMessage());
 		}
