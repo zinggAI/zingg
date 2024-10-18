@@ -81,7 +81,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
                     .builder()
                     .appName("Zingg")
                     .getOrCreate();	
-			JavaSparkContext ctx = JavaSparkContext.fromSparkContext(session.sparkContext());
+			JavaSparkContext ctx = JavaSparkContext.fromSparkContext(s.sparkContext());
 					JavaSparkContext.jarOfClass(IZingg.class);
 					LOG.debug("Context " + ctx.toString());
 					//initHashFns();

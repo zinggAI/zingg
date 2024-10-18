@@ -258,6 +258,7 @@ public class ClientOptions {
 		s.append("zingg.sh --phase train --conf config.json\n");
 		s.append("zingg.sh --phase findTrainingData --conf config.json --zinggDir /location \n");
 		s.append("zingg.sh --phase label --conf config.json --zinggDir /location \n");
+		s.append("zingg.sh --phase verifyBlocking --conf config.json --zinggDir /location \n");
 		s.append("zingg.sh --phase trainMatch --conf config.json --email sendMe@email.com\n");
 		s.append("zingg.sh --phase findAndLabel --conf config.json --zinggDir /location\n");
 		s.append("options\n");
