@@ -14,10 +14,6 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.block.Blocker;
-import zingg.common.core.executor.Trainer;
-import zingg.common.core.preprocess.StopWordsRemover;
-
-import zingg.spark.core.preprocess.SparkStopWordsRemover;
 
 public class SparkBlocker extends Blocker<SparkSession,Dataset<Row>,Row,Column,DataType> {
 
