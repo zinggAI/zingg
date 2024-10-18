@@ -20,7 +20,7 @@ import zingg.common.core.util.Metric;
 public class Blocker<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	public static final Log LOG = LogFactory.getLog(Blocker.class);
-    public long timestamp; 
+    public long timestamp = System.currentTimeMillis(); 
     
     public ZFrame<D,R,C>  getTestData() throws ZinggClientException{
         ZFrame<D,R,C>  data = getPipeUtil().read(true, true, args.getNumPartitions(), true, args.getData());
@@ -56,7 +56,8 @@ public class Blocker<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
 			ZFrame<D,R,C> blocked = getBlocked(testDataOriginal);
 			LOG.info("Blocked");
-			
+			setTimestamp(timestamp);
+
             getPipeUtil().write(blocked.select(ColName.HASH_COL).groupByCount(ColName.HASH_COL, ColName.HASH_COL + "_count").sortDescending(ColName.HASH_COL + "_count"), getPipeForDebugBlockingLocation(timestamp, "counts"));	
 
             blocked.limit(3);
