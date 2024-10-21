@@ -1,13 +1,11 @@
 package zingg.common.core.block;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.IArguments;
-import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
@@ -81,7 +79,6 @@ public class Blocker<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	public void getBlockSamples(ZFrame<D, R, C> blocked, ZFrame<D, R, C> blockTopRec) throws ZinggClientException {
 		List<R> topRec = blockTopRec.collectAsList();
 		List<R> dataRec = blocked.collectAsList();
-		ZFrame<D,R,C> blockRecords = null;
 
 
 		for(R row: topRec) {
