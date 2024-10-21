@@ -98,7 +98,7 @@ public class Blocker<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 				}
 			}
 			
-			getPipeUtil().write(matchingRecords, getPipeForVerifyBlockingLocation(timestamp, "counts/" + hash));
+			getPipeUtil().write(matchingRecords, getPipeForVerifyBlockingLocation(timestamp, "blockSamples/" + hash));
 		}
 		
 	}
