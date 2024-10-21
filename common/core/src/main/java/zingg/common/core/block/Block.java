@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,6 +22,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final Log LOG = LogFactory.getLog(Block.class);
+	private Set<String> hashFunctionsInCurrentNodePath;
 
 	protected ZFrame<D,R,C> dupes;
 	// Class[] types;
@@ -287,8 +289,8 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		return false;
 	}
 
-	public boolean isFunctionUsed(Tree<Canopy<R>> tree, Canopy<R>node, String fieldName,
-			HashFunction function) {
+	public boolean isFunctionUsedDefault(Tree<Canopy<R>> tree, Canopy<R>node, String fieldName,
+										 HashFunction function) {
 		// //LOG.debug("Tree " + tree);
 		// //LOG.debug("Node  " + node);
 		// //LOG.debug("Index " + index);
@@ -317,6 +319,23 @@ public abstract class Block<D,R,C,T> implements Serializable {
 			}
 		}
 		return isUsed;
+	}
+
+	public boolean isFunctionUsed(Tree<Canopy<R>> tree, Canopy<R> node, String fieldName, HashFunction function) {
+
+		//default to original implementation
+		if (hashFunctionsInCurrentNodePath == null) {
+			return isFunctionUsedDefault(tree, node, fieldName, function);
+		}
+		return hashFunctionsInCurrentNodePath.contains(function.getName() + ":" + fieldName);
+	}
+
+	public void setHashFunctionsInCurrentNodePath(Set<String> hashFunctionsInCurrentNodePath) {
+		this.hashFunctionsInCurrentNodePath = hashFunctionsInCurrentNodePath;
+	}
+
+	public Set<String> getHashFunctionsInCurrentNodePath() {
+		return this.hashFunctionsInCurrentNodePath;
 	}
 	
 	
