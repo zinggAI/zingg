@@ -529,5 +529,23 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
                 union(thirdRecord.withColumn(PIVOT_COLUMN, ORDER));
     }
 
+    @Override
+    public Object get(Row r, String colName) {
+        return r.getAs(colName);
+    }
+	
+    public Column[] getCols(){
+        return getCols(this.df);
+    }
+
+    public static Column[] getCols(Dataset<Row> inpDf){
+        String[] colNames = inpDf.schema().names();
+        Column[] cols = new Column[colNames.length];
+        for (int idx=0;idx<colNames.length;idx++){
+        	cols[idx] = inpDf.col(colNames[idx]);
+        }
+        return cols;
+    }
+
 }
 	
