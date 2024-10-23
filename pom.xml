@@ -178,7 +178,6 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.2.2</version>
 				<configuration>
-					<argLine>-Xmx9216m</argLine>
 					<statelessTestsetReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
 						<disable>false</disable>
 						<version>3.0</version>
