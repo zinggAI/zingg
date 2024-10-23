@@ -291,6 +291,17 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		return hashFunctionsInCurrentNodePath.contains(getKey(fieldDefinition, function));
 	}
 
+	public List<Canopy<R>> getHashSuccessors(Collection<Canopy<R>> successors, Object hash) {
+		List<Canopy<R>> retCanopy = new ArrayList<Canopy<R>>();
+		for (Canopy<R>c: successors) {
+			if (hash == null && c!= null && c.getHash() == null) retCanopy.add(c);
+			if (c!= null && c.getHash() != null && c.getHash().equals(hash)) {
+				retCanopy.add(c);
+			}
+		}
+		return retCanopy;
+	}
+
 	/*public static StringBuilder applyTree(Row tuple, Tree<Canopy<R>> tree,
 			Canopy<R>root, StringBuilder result) {
 		LOG.debug("Applying root " + root + " on " + tuple);
