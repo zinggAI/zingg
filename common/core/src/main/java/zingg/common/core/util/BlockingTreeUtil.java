@@ -22,15 +22,12 @@ import zingg.common.core.hash.HashFunction;
 public abstract class BlockingTreeUtil<S, D,R,C,T> {
 
     public final Log LOG = LogFactory.getLog(BlockingTreeUtil.class);
-	
 
 	private PipeUtilBase<S, D, R, C> pipeUtil;
 
     public PipeUtilBase<S, D, R, C> getPipeUtil() {
 		return pipeUtil;
 	}
-
-
 
 
 	public void setPipeUtil(PipeUtilBase<S, D, R, C> pipeUtil) {
@@ -67,9 +64,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 				fd.add(def);	
 			}
 		}
-
-		Tree<Canopy<R>> blockingTree = cblock.getBlockingTree(null, null, root,
-				fd);
+		Tree<Canopy<R>> blockingTree =  cblock.getBlockingTree(null, null, root, fd);
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("The blocking tree is ");
 			blockingTree.print(2);
