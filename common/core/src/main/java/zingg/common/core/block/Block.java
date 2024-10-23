@@ -234,9 +234,9 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		if (size > maxSize && node.getDupeN() != null && node.getDupeN().size() > 0) {
 			LOG.debug("Size is bigger ");
 			Canopy<R>best = getBestNode(tree, parent, node, fieldsOfInterest);
-			//add function, context info for this best node in set
-			hashFunctionsInCurrentNodePath.add(getKey(best.getContext(), best.getFunction()));
 			if (best != null) {
+				//add function, context info for this best node in set
+				hashFunctionsInCurrentNodePath.add(getKey(best.getContext(), best.getFunction()));
 				if (LOG.isDebugEnabled()) {
 					LOG.debug(" HashFunction is " + best + " and node is " + node);
 				}
@@ -289,26 +289,6 @@ public abstract class Block<D,R,C,T> implements Serializable {
 
 	public boolean isFunctionUsed(FieldDefinition fieldDefinition, HashFunction<D, R, C, T> function) {
 		return hashFunctionsInCurrentNodePath.contains(getKey(fieldDefinition, function));
-	}
-
-	public void setHashFunctionsInCurrentNodePath(Set<String> hashFunctionsInCurrentNodePath) {
-		this.hashFunctionsInCurrentNodePath = hashFunctionsInCurrentNodePath;
-	}
-
-	public Set<String> getHashFunctionsInCurrentNodePath() {
-		return this.hashFunctionsInCurrentNodePath;
-	}
-	
-	
-	public List<Canopy<R>> getHashSuccessors(Collection<Canopy<R>> successors, Object hash) {
-		List<Canopy<R>> retCanopy = new ArrayList<Canopy<R>>();
-		for (Canopy<R>c: successors) {
-			if (hash == null && c!= null && c.getHash() == null) retCanopy.add(c);
-			if (c!= null && c.getHash() != null && c.getHash().equals(hash)) {
-				retCanopy.add(c);
-			}
-		}
-		return retCanopy;
 	}
 
 	/*public static StringBuilder applyTree(Row tuple, Tree<Canopy<R>> tree,
