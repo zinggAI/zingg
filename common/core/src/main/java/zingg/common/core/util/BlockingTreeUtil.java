@@ -17,25 +17,17 @@ import zingg.common.client.util.Util;
 import zingg.common.core.block.Block;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
-import zingg.common.core.block.blockingTree.IBlockingTreeBuilder;
 import zingg.common.core.hash.HashFunction;
 
 public abstract class BlockingTreeUtil<S, D,R,C,T> {
 
     public final Log LOG = LogFactory.getLog(BlockingTreeUtil.class);
-	private final IBlockingTreeBuilder<D, R, C, T> blockingTreeBuilder;
-
-	public BlockingTreeUtil(IBlockingTreeBuilder<D, R, C, T> blockingTreeBuilder) {
-		this.blockingTreeBuilder = blockingTreeBuilder;
-	}
 
 	private PipeUtilBase<S, D, R, C> pipeUtil;
 
     public PipeUtilBase<S, D, R, C> getPipeUtil() {
 		return pipeUtil;
 	}
-
-
 
 
 	public void setPipeUtil(PipeUtilBase<S, D, R, C> pipeUtil) {
@@ -72,7 +64,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 				fd.add(def);	
 			}
 		}
-		Tree<Canopy<R>> blockingTree =  blockingTreeBuilder.getBlockingTree(null, null, root, fd, cblock);
+		Tree<Canopy<R>> blockingTree =  cblock.getBlockingTree(null, null, root, fd);
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("The blocking tree is ");
 			blockingTree.print(2);

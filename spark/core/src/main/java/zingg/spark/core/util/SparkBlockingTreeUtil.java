@@ -24,7 +24,6 @@ import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.block.Block;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
-import zingg.common.core.block.blockingTree.IBlockingTreeBuilder;
 import zingg.common.core.hash.HashFunction;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.spark.client.SparkFrame;
@@ -37,8 +36,7 @@ public class SparkBlockingTreeUtil extends BlockingTreeUtil<SparkSession, Datase
     public static final Log LOG = LogFactory.getLog(SparkBlockingTreeUtil.class);
     protected SparkSession spark;
     
-    public SparkBlockingTreeUtil(SparkSession s, PipeUtilBase pipeUtil, IBlockingTreeBuilder<Dataset<Row>, Row, Column, DataType> iBlockingTreeBuilder) {
-        super(iBlockingTreeBuilder);
+    public SparkBlockingTreeUtil(SparkSession s, PipeUtilBase pipeUtil) {
         this.spark = s;
         setPipeUtil(pipeUtil);
     }

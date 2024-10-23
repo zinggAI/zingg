@@ -21,8 +21,6 @@ import zingg.common.core.util.HashUtil;
 import zingg.common.core.util.ModelUtil;
 import zingg.spark.client.util.SparkDSUtil;
 import zingg.spark.client.util.SparkPipeUtil;
-import zingg.spark.core.block.blockingTree.SparkDefaultBlockingTreeBuilder;
-import zingg.spark.core.block.blockingTree.SparkOptimizedBlockingTreeBuilder;
 import zingg.spark.core.util.SparkBlockingTreeUtil;
 import zingg.spark.core.util.SparkGraphUtil;
 import zingg.spark.core.util.SparkHashUtil;
@@ -70,7 +68,7 @@ public class ZinggSparkContext extends Context<SparkSession, Dataset<Row>, Row,C
         setHashUtil(new SparkHashUtil(session));
         setGraphUtil(new SparkGraphUtil());
         setModelUtil(new SparkModelUtil(session));
-        setBlockingTreeUtil(new SparkBlockingTreeUtil(session, getPipeUtil(), new SparkOptimizedBlockingTreeBuilder()));
+        setBlockingTreeUtil(new SparkBlockingTreeUtil(session, getPipeUtil()));
     }
 
     

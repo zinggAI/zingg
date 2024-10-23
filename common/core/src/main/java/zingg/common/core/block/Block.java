@@ -3,6 +3,7 @@ package zingg.common.core.block;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,6 +40,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		this.training = training;
 		this.dupes = dupes;
 		childless =  new ListMap<HashFunction<D,R,C,T>, String>();
+		hashFunctionsInCurrentNodePath = new HashSet<>();
 		// types = getSampleTypes();
 		/*
 		 * for (Class type : types) { LOG.info("Type is " + type); }
@@ -51,6 +53,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		this.functionsMap = functionsMap;
 		// functionsMap.prettyPrint();
 		this.maxSize = maxSize;
+		hashFunctionsInCurrentNodePath = new HashSet<>();
 	}
 
 	/**
@@ -146,7 +149,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 				for (HashFunction function : functions) {
 					// /if (!used.contains(field.getIndex(), function) &&
 					if (least ==0) break;//how much better can it get?
-					if (!isFunctionUsed(tree, node, field.fieldName, function) //&&
+					if (!isFunctionUsed(field, function) //&&
 							//!childless.contains(function, field.fieldName)
 							) 
 							{
@@ -231,6 +234,8 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		if (size > maxSize && node.getDupeN() != null && node.getDupeN().size() > 0) {
 			LOG.debug("Size is bigger ");
 			Canopy<R>best = getBestNode(tree, parent, node, fieldsOfInterest);
+			//add function, context info for this best node in set
+			hashFunctionsInCurrentNodePath.add(getKey(best.getContext(), best.getFunction()));
 			if (best != null) {
 				if (LOG.isDebugEnabled()) {
 					LOG.debug(" HashFunction is " + best + " and node is " + node);
@@ -259,6 +264,8 @@ public abstract class Block<D,R,C,T> implements Serializable {
 				
 					getBlockingTree(tree, node, n, fieldsOfInterest);
 				}
+				//remove function, context info for this best node as we are returning from best node
+				hashFunctionsInCurrentNodePath.remove(getKey(best.getContext(), best.getFunction()));
 			}
 			else {
 				node.clearBeforeSaving();
@@ -280,54 +287,8 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		return tree;
 	}
 
-	public boolean checkFunctionInNode(Canopy<R>node, String name,
-			HashFunction function) {
-		if (node.getFunction() != null && node.getFunction().equals(function)
-				&& node.context.fieldName.equals(name)) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean isFunctionUsedDefault(Tree<Canopy<R>> tree, Canopy<R>node, String fieldName,
-										 HashFunction function) {
-		// //LOG.debug("Tree " + tree);
-		// //LOG.debug("Node  " + node);
-		// //LOG.debug("Index " + index);
-		// //LOG.debug("Function " + function);
-		boolean isUsed = false;
-		if (node == null || tree == null)
-			return false;
-		if (checkFunctionInNode(node, fieldName, function))
-			return true;
-		Tree<Canopy<R>> nodeTree = tree.getTree(node);
-		if (nodeTree == null)
-			return false;
-
-		Tree<Canopy<R>> parent = nodeTree.getParent();
-		if (parent != null) {
-			Canopy<R>head = parent.getHead();
-			while (head != null) {
-				// check siblings of node
-				/*for (Tree<Canopy<R>> siblings : parent.getSubTrees()) {
-					Canopy<R>sibling = siblings.getHead();
-					if (checkFunctionInNode(sibling, index, function))
-						return true;
-				}*/
-				// check parent of node
-				return isFunctionUsed(tree, head, fieldName, function);
-			}
-		}
-		return isUsed;
-	}
-
-	public boolean isFunctionUsed(Tree<Canopy<R>> tree, Canopy<R> node, String fieldName, HashFunction function) {
-
-		//default to original implementation
-		if (hashFunctionsInCurrentNodePath == null) {
-			return isFunctionUsedDefault(tree, node, fieldName, function);
-		}
-		return hashFunctionsInCurrentNodePath.contains(function.getName() + ":" + fieldName);
+	public boolean isFunctionUsed(FieldDefinition fieldDefinition, HashFunction<D, R, C, T> function) {
+		return hashFunctionsInCurrentNodePath.contains(getKey(fieldDefinition, function));
 	}
 
 	public void setHashFunctionsInCurrentNodePath(Set<String> hashFunctionsInCurrentNodePath) {
@@ -421,6 +382,10 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		for (Canopy<R>c : tree.getSuccessors(root)) {
 			printTree(tree, c);
 		}			
+	}
+
+	private String getKey(FieldDefinition fieldDefinition, HashFunction<D, R, C, T> hashFunction) {
+		return fieldDefinition.getName() + ":" + hashFunction.getName();
 	}
 
 	public abstract FeatureFactory<T> getFeatureFactory();
