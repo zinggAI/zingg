@@ -6,6 +6,7 @@ public interface HashFunctionRegistry<D,R,C,T>  {
 		/*
 		init(new IdentityString());
 		init(new IdentityInteger());
+		init(new IdentityBoolean());
 		init(new First1Chars());
 		init(new First2Chars());
 		init(new First3Chars());
