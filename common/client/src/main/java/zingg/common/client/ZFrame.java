@@ -187,4 +187,8 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> transpose(String pivotColumn);
 
     public void showVertical();
+
+    public Object get(R r, String colName);
+
+    public C[] getCols();
 }
