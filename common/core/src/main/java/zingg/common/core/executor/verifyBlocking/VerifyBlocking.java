@@ -11,6 +11,7 @@ import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.Blocker;
+import zingg.common.core.block.InputDataGetter;
 import zingg.common.core.executor.ZinggBase;
 
 public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
@@ -18,28 +19,20 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.VerifyBlocking";
 	public static final Log LOG = LogFactory.getLog(VerifyBlocking.class);
-    public long timestamp = System.currentTimeMillis(); 
-	Blocker<S,D,R,C,T> blocker = new Blocker<S,D,R,C,T>();  
+    public long timestamp = System.currentTimeMillis();   
     VerifyBlockingPipes<S,D,R,C> getPipe = new VerifyBlockingPipes<S,D,R,C>();
 
 	public VerifyBlocking() {
         setZinggOption(ZinggOptions.VERIFY_BLOCKING);
     }
 
-    
-    public ZFrame<D,R,C>  getTestData() throws ZinggClientException{
-        ZFrame<D,R,C>  data = getPipeUtil().read(true, true, args.getNumPartitions(), true, args.getData());
-       return data;
-   }
-    
-
     @Override
     public void execute() throws ZinggClientException {
         try {
 			setTimestamp(timestamp);
-			ZFrame<D,R,C>  testDataOriginal = getTestData();
+			ZFrame<D,R,C>  testDataOriginal = new InputDataGetter<S,D,R,C>().getTestData(getPipeUtil(),args);
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
-			ZFrame<D,R,C> blocked = blocker.getBlocked(testDataOriginal,args,getBlockingTreeUtil());
+			ZFrame<D,R,C> blocked = new Blocker<S,D,R,C,T>().getBlocked(testDataOriginal,args,getBlockingTreeUtil());
 			LOG.info("Blocked");
 
 			ZFrame<D,R,C> blockCounts = blocked.select(ColName.HASH_COL).groupByCount(ColName.HASH_COL, ColName.HASH_COL + "_count").sortDescending(ColName.HASH_COL + "_count");

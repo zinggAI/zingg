@@ -13,6 +13,7 @@ import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.Blocker;
+import zingg.common.core.block.InputDataGetter;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.model.Model;
@@ -32,11 +33,6 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     public Matcher() {
         setZinggOption(ZinggOptions.MATCH);
     }
-
-	public ZFrame<D,R,C>  getTestData() throws ZinggClientException{
-		 ZFrame<D,R,C>  data = getPipeUtil().read(true, true, args.getNumPartitions(), true, args.getData());
-		return data;
-	}
 
 	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
 		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
@@ -87,7 +83,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     public void execute() throws ZinggClientException {
         try {
 			// read input, filter, remove self joins
-			ZFrame<D,R,C>  testDataOriginal = getTestData();
+			ZFrame<D,R,C>  testDataOriginal = new InputDataGetter<S,D,R,C>().getTestData(getPipeUtil(),args);
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
 			ZFrame<D,R,C>  testData = getStopWords().preprocessForStopWords(testDataOriginal);
 			//testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
