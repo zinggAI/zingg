@@ -13,9 +13,9 @@ import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.spark.core.context.ZinggSparkContext;
-import zingg.common.core.block.Blocker;
+import zingg.common.core.executor.verifyBlocking.VerifyBlocking;
 
-public class SparkBlocker extends Blocker<SparkSession,Dataset<Row>,Row,Column,DataType> {
+public class SparkBlocker extends VerifyBlocking<SparkSession,Dataset<Row>,Row,Column,DataType> {
 
     private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkBlocker";

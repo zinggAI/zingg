@@ -13,8 +13,6 @@ import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.Blocker;
-import zingg.common.core.block.Canopy;
-import zingg.common.core.block.Tree;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.model.Model;
@@ -28,7 +26,8 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.Matcher";
-	public static final Log LOG = LogFactory.getLog(Matcher.class);    
+	public static final Log LOG = LogFactory.getLog(Matcher.class);  
+	Blocker<S,D,R,C,T> blocker = new Blocker<S,D,R,C,T>();  
 	
     public Matcher() {
         setZinggOption(ZinggOptions.MATCH);
@@ -42,18 +41,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
 		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
 		return testDataOriginal.select(zidAndFieldDefSelector.getCols());
-//		return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
-	}
-
-
-	public ZFrame<D,R,C>  getBlocked( ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
-		//for blocking
-		Blocker<S,D,R,C,T> blocker = new Blocker<S,D,R,C,T>();
-        blocker.getBlocked(testData);
-		LOG.debug("Blocking model file location is " + args.getBlockFile());
-		Tree<Canopy<R>> tree = getBlockingTreeUtil().readBlockingTree(args);
-		ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(testData, tree);	
-		return blocked;
+		//return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
 	}
 	
 	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception{
@@ -108,7 +96,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			LOG.info("Read " + count);
 			Analytics.track(Metric.DATA_COUNT, count, args.getCollectMetrics());
 
-			ZFrame<D,R,C>blocked = getBlocked(testData);
+			ZFrame<D,R,C>blocked = blocker.getBlocked(testData,args,getBlockingTreeUtil());
 			LOG.info("Blocked ");
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Num distinct hashes " + blocked.select(ColName.HASH_COL).distinct().count());
