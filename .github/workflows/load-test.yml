@@ -3,7 +3,6 @@ name: load-test
 on:
   schedule:
     - cron: "*/5 * * * *"
-  push:
 
 jobs:
   load-test:
