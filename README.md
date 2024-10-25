@@ -1,4 +1,6 @@
-## 0.4.0 release of Zingg is out!
+[![Junits](https://github.com/zinggAI/zingg/actions/workflows/junits.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/junits.yml)
+
+## 0.5.0 release of Zingg is coming soon!
 
 ## The Problem
 
