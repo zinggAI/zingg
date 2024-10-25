@@ -22,4 +22,4 @@ jobs:
       - name: Install secondstring and thirdparty
         run: mvn initialize
       - name: Build ${{ matrix.profile }} profile with Maven
-        run: mvn --batch-mode ${{ matrix.profile }} package
+        run: mvn --batch-mode ${{ matrix.profile }} install
