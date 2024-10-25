@@ -1,7 +1,6 @@
 name: Java CI
 
-on:
-  workflow_call:
+on: [push]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
