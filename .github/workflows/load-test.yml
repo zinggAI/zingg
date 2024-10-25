@@ -1,0 +1,26 @@
+name: load-test
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  push:
+
+jobs:
+  load-test:
+    name: load-test-spark
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v3 # checkout the repository content to github runner.
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12.7 #install the python needed
+      - name: execute py script
+        run: |
+          python loadTest.py
+          git config user.name nitish
+          git config user.email nitish1814@github.com
+          git add .
+          git commit -m "report generated"
+          git push
