@@ -1,4 +1,4 @@
-[![Junits](https://github.com/zinggAI/zingg/actions/workflows/junits.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/junits.yml)
+[![Java CI](https://github.com/zinggAI/zingg/actions/workflows/build.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/build.yml)
 [![pages-build-deployment](https://github.com/zinggAI/zingg/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/pages/pages-build-deployment)
 [![CodeQL](https://github.com/zinggAI/zingg/actions/workflows/codeql.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/codeql.yml)
 [![PMD](https://github.com/zinggAI/zingg/actions/workflows/pmd.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/pmd.yml)
