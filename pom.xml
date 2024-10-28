@@ -227,7 +227,7 @@
 					<executions>
 						<execution>
 							<id>install-external-ss</id>
-							<phase>initialize</phase>
+							<phase>validate</phase>
 							<configuration>
 								<file>${project.basedir}/thirdParty/lib/secondstring.jar</file>
 								<repositoryLayout>default</repositoryLayout>
@@ -243,7 +243,7 @@
 						</execution>
 						<execution>
 							<id>install-external-py4j</id>
-							<phase>initialize</phase>
+							<phase>validate</phase>
 							<configuration>
 								<file>${project.basedir}/thirdParty/lib/py4j0.10.9.jar</file>
 								<repositoryLayout>default</repositoryLayout>

@@ -10,7 +10,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>infra</module>
-		<module>core</module>
 		<module>client</module>
+		<module>core</module>
 	</modules>
 </project>
