@@ -18,7 +18,7 @@ public class Blocker<S,D,R,C,T> {
     }
 
     public ZFrame<D,R,C> getBlocked(ZFrame<D,R,C> testData, IArguments args, BlockingTreeUtil<S,D,R,C,T> inputTree ) throws Exception, ZinggClientException{
-		LOG.warn("Blocking model file location is " + args.getBlockFile());
+		LOG.warn("Blocking model location is " + args.getBlockFile());
 		Tree<Canopy<R>> tree = inputTree.readBlockingTree(args);
 		ZFrame<D,R,C> blocked = inputTree.getBlockHashes(testData, tree);
 		ZFrame<D,R,C> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
