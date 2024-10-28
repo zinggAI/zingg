@@ -1,7 +1,6 @@
 name: Java CI
 
-on:
-  workflow_call:
+on: [push]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -12,17 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        profile: []
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 8
+      - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
-          java-version: '8'
+          java-version: '11'
           distribution: 'adopt'
           cache: maven
-      - name: Install secondstring and thirdparty
-        run: mvn initialize
-      - name: Build ${{ matrix.profile }} profile with Maven
-        run: mvn --batch-mode ${{ matrix.profile }} clean compile package
+      - name: Build 
+        run: mvn install
