@@ -3,6 +3,7 @@ package zingg.common.core.executor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 
@@ -19,7 +20,7 @@ public class ExecutorTester<S, D, R, C, T>{
 	}
 	
 	public void initAndExecute(IArguments args, S session) throws ZinggClientException {
-		executor.init(args,session);
+		executor.init(args,session, new ClientOptions());
 		executor.execute();
 	}
 	

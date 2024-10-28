@@ -29,39 +29,55 @@
 		<module>assembly</module>
 	</modules>
 	<profiles>
+<!--		<profile>-->
+<!--			<id>spark-3.4</id>-->
+<!--			<activation>-->
+<!--				<property>-->
+<!--					<name>spark</name>-->
+<!--					<value>3.4</value>-->
+<!--				</property>-->
+<!--			</activation>-->
+<!--			<properties>-->
+<!--				<spark.version>3.4.0</spark.version>-->
+<!--				<scala.version>2.12.17</scala.version>-->
+<!--				<spark.binary.version>3.4</spark.binary.version>-->
+<!--				<scala.binary.version>2.12</scala.binary.version>-->
+<!--				<graphframes.version>0.8.3-spark3.4-s_2.12</graphframes.version>-->
+<!--			</properties>-->
+<!--		</profile>-->
 		<profile>
-			<id>spark-3.4</id>
-			<activation>
-				<property>
-					<name>spark</name>
-					<value>3.4</value>
-				</property>
-			</activation>
-			<properties>
-				<spark.version>3.4.0</spark.version>
-				<scala.version>2.12.17</scala.version>
-				<spark.binary.version>3.4</spark.binary.version>
-				<scala.binary.version>2.12</scala.binary.version>
-				<graphframes.version>0.8.3-spark3.4-s_2.12</graphframes.version>
-			</properties>
-		</profile>
-		<profile>
-			<id>spark-3.5</id>
+			<id>spark-3.3</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 				<property>
 					<name>spark</name>
-					<value>3.5</value>
+					<value>3.3</value>
 				</property>
 			</activation>
 			<properties>
-				<spark.version>3.5.0</spark.version>
-				<scala.version>2.12.10</scala.version>
-				<spark.binary.version>3.5</spark.binary.version>
+				<spark.version>3.3.1</spark.version>
+				<scala.version>2.12.17</scala.version>
+				<spark.binary.version>3.3</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
-				<graphframes.version>0.8.3-spark3.5-s_2.12</graphframes.version>
+				<graphframes.version>0.8.1-spark3.0-s_2.12</graphframes.version>
 			</properties>
 		</profile>
+<!--		<profile>-->
+<!--			<id>spark-3.5</id>-->
+<!--			<activation>-->
+<!--				<property>-->
+<!--					<name>spark</name>-->
+<!--					<value>3.5</value>-->
+<!--				</property>-->
+<!--			</activation>-->
+<!--			<properties>-->
+<!--				<spark.version>3.5.0</spark.version>-->
+<!--				<scala.version>2.12.10</scala.version>-->
+<!--				<spark.binary.version>3.5</spark.binary.version>-->
+<!--				<scala.binary.version>2.12</scala.binary.version>-->
+<!--				<graphframes.version>0.8.3-spark3.5-s_2.12</graphframes.version>-->
+<!--			</properties>-->
+<!--		</profile>-->
 	</profiles>
 	<properties>
 		<zingg.version>0.4.1-SNAPSHOT</zingg.version>
@@ -111,7 +127,7 @@
 			<version>5.8.1</version>
 			<scope>test</scope>
 		</dependency>
-  		<dependency>
+		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.8.4</version>
@@ -219,46 +235,46 @@
         				</execution>
     				</executions>
 			</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-install-plugin</artifactId>
-					<version>2.5.2</version>
-					<inherited>false</inherited>
-					<executions>
-						<execution>
-							<id>install-external-ss</id>
-							<phase>initialize</phase>
-							<configuration>
-								<file>${project.basedir}/thirdParty/lib/secondstring.jar</file>
-								<repositoryLayout>default</repositoryLayout>
-								<groupId>com.wcohen.ss</groupId>
-								<artifactId>secondstring</artifactId>
-								<version>2021</version>
-								<packaging>jar</packaging>
-								<generatePom>true</generatePom>
-							</configuration>
-							<goals>
-								<goal>install-file</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>install-external-py4j</id>
-							<phase>initialize</phase>
-							<configuration>
-								<file>${project.basedir}/thirdParty/lib/py4j0.10.9.jar</file>
-								<repositoryLayout>default</repositoryLayout>
-								<groupId>py4j</groupId>
-								<artifactId>py4j</artifactId>
-								<version>0.10.9</version>
-								<packaging>jar</packaging>
-								<generatePom>true</generatePom>
-							</configuration>
-							<goals>
-								<goal>install-file</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-		</plugins>		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5.2</version>
+				<inherited>false</inherited>
+				<executions>
+					<execution>
+						<id>install-external-ss</id>
+						<phase>validate</phase>
+						<configuration>
+							<file>${project.basedir}/thirdParty/lib/secondstring.jar</file>
+							<repositoryLayout>default</repositoryLayout>
+							<groupId>com.wcohen.ss</groupId>
+							<artifactId>secondstring</artifactId>
+							<version>2021</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>install-external-py4j</id>
+						<phase>validate</phase>
+						<configuration>
+							<file>${project.basedir}/thirdParty/lib/py4j0.10.9.jar</file>
+							<repositoryLayout>default</repositoryLayout>
+							<groupId>py4j</groupId>
+							<artifactId>py4j</artifactId>
+							<version>0.10.9</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 </project>

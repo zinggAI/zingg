@@ -44,7 +44,7 @@ public class SparkBlockingTreeUtil extends BlockingTreeUtil<SparkSession, Datase
     @Override
     public ZFrame<Dataset<Row>, Row, Column> getBlockHashes(ZFrame<Dataset<Row>, Row, Column> testData,
             Tree<Canopy<Row>> tree) {
-            Dataset<Row> retDF = testData.df().map(new SparkBlockFunction(tree), Encoders.row(
+            Dataset<Row> retDF = testData.df().map(new SparkBlockFunction(tree), RowEncoder.apply(
                     appendHashCol(testData.df().schema())));
             return new SparkFrame(retDF);
     }
