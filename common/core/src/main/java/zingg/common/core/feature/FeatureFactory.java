@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import zingg.common.core.ZinggException;
 
 public abstract class FeatureFactory<T> implements Serializable {
 
@@ -17,10 +18,15 @@ public abstract class FeatureFactory<T> implements Serializable {
 	public abstract T getDataTypeFromString(String t) ;
 
 	public Object get(String dataType) throws Exception {
-		if (map == null) {
-			init();
-		} 
-		return map.get(getDataTypeFromString(dataType)).newInstance();
+		try {
+			if (map == null) {
+				init();
+			}
+			return map.get(getDataTypeFromString(dataType)).newInstance();
+		} catch (Throwable exception) {
+			LOG.error("can not get feature for given data type, " + exception.getMessage());
+			throw new ZinggException("DataType not supported, please check!");
+		}
 	}
 
 }
