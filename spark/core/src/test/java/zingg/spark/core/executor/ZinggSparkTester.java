@@ -21,6 +21,7 @@ import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IArguments;
 import zingg.common.client.IZingg;
 
+import zingg.session.SparkSessionProvider;
 import zingg.spark.core.context.ZinggSparkContext;
 
 public class ZinggSparkTester {
@@ -37,33 +38,11 @@ public class ZinggSparkTester {
 
     @BeforeAll
     public static void setup() {
-    	try {
-    		spark = SparkSession
-    				.builder()
-    				.master("local[*]")
-    				.appName("ZinggJunit")
-					.config("spark.debug.maxToStringFields", 100)
-    				.getOrCreate();
-    		ctx = new JavaSparkContext(spark.sparkContext());
-    		JavaSparkContext.jarOfClass(IZingg.class);    
-			ctx.setCheckpointDir("/tmp/checkpoint");
-			args = new Arguments();
-			zsCTX = new ZinggSparkContext();
-			zsCTX.init(spark);
-    	} catch (Throwable e) {
-    		if (LOG.isDebugEnabled())
-    			e.printStackTrace();
-    		LOG.info("Problem in spark env setup");
-    	}
-    }
-
-    @AfterAll
-    public static void teardown() {
-    	if (ctx != null)
-    		ctx.stop();
-
-    	if (spark != null)
-    		spark.stop();
+		SparkSessionProvider sparkSessionProvider = SparkSessionProvider.getInstance();
+		spark = sparkSessionProvider.getSparkSession();
+		ctx = sparkSessionProvider.getJavaSparkContext();
+		args = sparkSessionProvider.getArgs();
+		zsCTX = sparkSessionProvider.getZinggSparkContext();
     }
 
 	public Dataset<Row> createDFWithDoubles(int numRows, int numCols) {

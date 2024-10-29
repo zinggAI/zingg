@@ -21,6 +21,7 @@ import zingg.common.core.executor.TestExecutorsGeneric;
 import zingg.common.core.executor.TrainMatcher;
 import zingg.common.core.executor.Trainer;
 import zingg.common.core.executor.TrainerValidator;
+import zingg.session.SparkSessionProvider;
 import zingg.spark.core.context.ZinggSparkContext;
 
 public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Dataset<Row>,Row,Column,DataType> {
@@ -35,21 +36,11 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 	
 	protected ZinggSparkContext ctx;
 	
-	public TestSparkExecutors() throws IOException, ZinggClientException {	
-		SparkSession spark = SparkSession
-				.builder()
-				.master("local[*]")
-				.appName("Zingg" + "Junit")
-				.getOrCreate();
-		
-		JavaSparkContext ctx1 = new JavaSparkContext(spark.sparkContext());
-    	JavaSparkContext.jarOfClass(IZingg.class);    
-		ctx1.setCheckpointDir("/tmp/checkpoint");
-
-		this.ctx = new ZinggSparkContext();
-		this.ctx.setSession(spark);
-		this.ctx.setUtils();
-		init(spark);
+	public TestSparkExecutors() throws IOException, ZinggClientException {
+		SparkSessionProvider sparkSessionProvider = SparkSessionProvider.getInstance();
+		ctx = sparkSessionProvider.getZinggSparkContext();
+		ctx.setSession(sparkSessionProvider.getSparkSession());
+		init(sparkSessionProvider.getSparkSession());
 	}
 
 	@Override
