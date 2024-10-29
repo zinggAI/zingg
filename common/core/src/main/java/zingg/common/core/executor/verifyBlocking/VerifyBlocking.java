@@ -60,17 +60,13 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	public void getBlockSamples(ZFrame<D, R, C> blocked, ZFrame<D, R, C> blockTopRec) throws ZinggClientException {
 		List<R> topRec = blockTopRec.collectAsList();
-		//List<R> dataRec = blocked.collectAsList();
-		blocked = blocked.orderBy(ColName.HASH_COL).sortDescending(ColName.HASH_COL);
-		blocked.show();
 
 		for(R row: topRec) {
 			int hash = (int) blockTopRec.getAsInt(row, ColName.HASH_COL);
 			long count = (long) blockTopRec.getAsLong(row, ColName.HASH_COL + "_count");
 			int sampleSize = Math.max(1, (int) Math.ceil(count * percentageOfBlockedRecords));
 			ZFrame<D,R,C> matchingRecords = null;
-			matchingRecords = blocked.limit(sampleSize);
-			matchingRecords.show();
+			matchingRecords = blocked.filter(blocked.equalTo(ColName.HASH_COL,String.valueOf(hash))).limit(sampleSize);
 			getPipeUtil().write(matchingRecords, getPipeForVerifyBlockingLocation(args, getPipeUtil(),timestamp, "blockSamples/" + hash));
 		}
 		
