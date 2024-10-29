@@ -26,5 +26,16 @@ public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
             //input data has z_hash also as a column
             //find the counts in input data and arrange in desc order
             //asserts true on input and output
+			ZFrame<D, R, C> df  = getOutputData();
+			
+			long blockCount = df.count();
+			assertTrue(blockCount == 3);
+			LOG.info("blockCount : " + blockCount);
+
     }
+
+	public ZFrame<D, R, C> getOutputData() throws ZinggClientException {
+		ZFrame<D, R, C> output = executor.getContext().getPipeUtil().read(false, false, executor.getArgs().getOutput()[0]);
+		return output;
+	}
 }
