@@ -49,10 +49,7 @@ public class DefaultHashFunctionUtility<D, R, C, T> implements IHashFunctionUtil
 
     private boolean checkFunctionInNode(Canopy<R>node, String name,
                                        HashFunction<D, R, C, T> function) {
-        if (node.getFunction() != null && node.getFunction().equals(function)
-                && node.context.fieldName.equals(name)) {
-            return true;
-        }
-        return false;
+        return node.getFunction() != null && node.getFunction().equals(function)
+                && node.context.fieldName.equals(name);
     }
 }
