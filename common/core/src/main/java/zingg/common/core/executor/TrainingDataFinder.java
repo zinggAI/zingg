@@ -13,6 +13,7 @@ import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.block.Canopy;
+import zingg.common.core.block.HashUtility;
 import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
 import zingg.common.core.preprocess.StopWordsRemover;
@@ -87,7 +88,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 
 				ZFrame<D,R,C> sample = getStopWords().preprocessForStopWords(sampleOrginal);
 
-				Tree<Canopy<R>> tree = getBlockingTreeUtil().createBlockingTree(sample, posPairs, 1, -1, args, getHashUtil().getHashFunctionList());		
+				Tree<Canopy<R>> tree = getBlockingTreeUtil().createBlockingTree(sample, posPairs, 1, -1, args, getHashUtil().getHashFunctionList(), HashUtility.CACHED);
 				//tree.print(2);	
 				ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(sample, tree); 
 				

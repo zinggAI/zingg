@@ -8,6 +8,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.block.Canopy;
+import zingg.common.core.block.HashUtility;
 import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
 import zingg.common.core.util.Analytics;
@@ -42,7 +43,7 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			ZFrame<D,R,C> testData = getStopWords().preprocessForStopWords(testDataOriginal);
 
 			Tree<Canopy<R>> blockingTree = getBlockingTreeUtil().createBlockingTreeFromSample(testData,  positives, 0.5,
-					-1, args, getHashUtil().getHashFunctionList());
+					-1, args, getHashUtil().getHashFunctionList(), HashUtility.CACHED);
 			if (blockingTree == null || blockingTree.getSubTrees() == null) {
 				LOG.warn("Seems like no indexing rules have been learnt");
 			}

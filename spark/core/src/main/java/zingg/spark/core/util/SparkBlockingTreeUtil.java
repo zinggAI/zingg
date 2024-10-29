@@ -23,6 +23,7 @@ import zingg.common.client.util.ListMap;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.block.Block;
 import zingg.common.core.block.Canopy;
+import zingg.common.core.block.HashUtility;
 import zingg.common.core.block.Tree;
 import zingg.common.core.hash.HashFunction;
 import zingg.common.core.util.BlockingTreeUtil;
@@ -85,9 +86,10 @@ public Tree<Canopy<Row>> readBlockingTree(Arguments args) throws Exception, Zing
 
 @Override
 public Block<Dataset<Row>, Row, Column, DataType> getBlock(ZFrame<Dataset<Row>, Row, Column> sample,
-                ZFrame<Dataset<Row>, Row, Column> positives,
-                ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions, long blockSize) {
+                                                           ZFrame<Dataset<Row>, Row, Column> positives,
+                                                           ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions,
+                                                           long blockSize, HashUtility hashUtility) {
         // TODO Auto-generated method stub
-        return new SparkBlock(sample, positives, hashFunctions, blockSize);
+        return new SparkBlock(sample, positives, hashFunctions, blockSize, hashUtility);
 }
 }
