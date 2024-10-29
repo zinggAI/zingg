@@ -7,13 +7,16 @@ public class DefaultHashFunctionUtility<D, R, C, T> implements IHashFunctionUtil
     @Override
     public boolean isHashFunctionUsed(FieldDefinition fieldDefinition, HashFunction<D, R, C, T> hashFunction, Tree<Canopy<R>> tree, Canopy<R> node) {
         boolean isUsed = false;
-        if (node == null || tree == null)
+        if (node == null || tree == null) {
             return false;
-        if (checkFunctionInNode(node, fieldDefinition.fieldName, hashFunction))
+        }
+        if (checkFunctionInNode(node, fieldDefinition.fieldName, hashFunction)) {
             return true;
+        }
         Tree<Canopy<R>> nodeTree = tree.getTree(node);
-        if (nodeTree == null)
+        if (nodeTree == null) {
             return false;
+        }
 
         Tree<Canopy<R>> parent = nodeTree.getParent();
         if (parent != null) {

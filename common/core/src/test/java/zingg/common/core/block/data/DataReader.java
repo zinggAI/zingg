@@ -1,4 +1,4 @@
-package zingg.common.core.block.dataUtility;
+package zingg.common.core.block.data;
 
 import com.opencsv.exceptions.CsvException;
 

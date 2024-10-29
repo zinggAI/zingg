@@ -1,4 +1,4 @@
-package zingg.common.core.block.dataUtility;
+package zingg.common.core.block.data;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -19,11 +19,12 @@ public class CsvReader implements DataReader{
     }
 
 
-    private CSVReader getCSVReader(String source) throws FileNotFoundException {
+    private CSVReader getCSVReader(String source) throws IOException {
         FileReader filereader = new FileReader(source);
         com.opencsv.CSVReader csvReader = new CSVReaderBuilder(filereader)
                 .withSkipLines(1)
                 .build();
+        filereader.close();
         return csvReader;
     }
 

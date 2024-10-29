@@ -8,8 +8,8 @@ import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.DFObjectUtil;
-import zingg.common.core.block.dataUtility.CsvReader;
-import zingg.common.core.block.dataUtility.DataUtility;
+import zingg.common.core.block.data.CsvReader;
+import zingg.common.core.block.data.DataUtility;
 import zingg.common.core.block.model.Customer;
 import zingg.common.core.block.model.CustomerDupe;
 import zingg.common.core.util.BlockingTreeUtil;
@@ -24,7 +24,8 @@ import static java.lang.Math.max;
 public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
 
     protected String TEST_DATA_BASE_LOCATION;
-    private int maxDepth = 1, totalNodes = 0;
+    private int maxDepth = 1;
+    private int totalNodes = 0;
     private static String TEST_FILE = "test.csv";
     private static String CONFIG_FILE = "config.json";
     private final DataUtility dataUtility;
