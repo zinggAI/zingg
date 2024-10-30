@@ -20,8 +20,6 @@ import zingg.common.core.executor.TrainMatcher;
 public class SparkTrainMatchTester extends TrainMatchValidator<SparkSession,Dataset<Row>,Row,Column,DataType> {
     
     public static final Log LOG = LogFactory.getLog(SparkTrainMatchTester.class);
-
-	SparkTrainerTester stt;
 	
 	public SparkTrainMatchTester(TrainMatcher<SparkSession,Dataset<Row>,Row,Column,DataType> executor,IArguments args) {
 		super(executor,args);
@@ -29,7 +27,11 @@ public class SparkTrainMatchTester extends TrainMatchValidator<SparkSession,Data
 
     @Override
 	public void validateResults() throws ZinggClientException {
-		stt.validateResults();
+		// check that model is created
+		LOG.info("Zingg Model Dir : "+args.getZinggModelDir());
+		
+		File modelDir = new File(args.getZinggModelDir());
+		assertTrue(modelDir.exists(),"check if model has been created");
 	}
 
 }

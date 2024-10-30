@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.ArgumentsUtil;
+import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
 
 public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutorsGeneric<S, D, R, C, T> {
@@ -15,6 +16,15 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 	public static final Log LOG = LogFactory.getLog(TestExecutorsCompound.class);
 	
 	public TestExecutorsCompound() {	
+	}
+
+	@Override
+	public String setupArgs() throws ZinggClientException, IOException {
+		String configFile = getClass().getClassLoader().getResource(getConfigFile()).getFile();
+		args = new ArgumentsUtil().createArgumentsFromJSON(
+			configFile, 
+			"findAndLabel");
+		return configFile;
 	}
 
 	@Override
@@ -28,13 +38,16 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 		return executorTesterList;
 	}
 
-	@Override
-	public String setupArgs() throws ZinggClientException, IOException {
-		String configFile = getClass().getClassLoader().getResource(getConfigFile()).getFile();
-		args = new ArgumentsUtil().createArgumentsFromJSON(
-			configFile, 
-			"findAndLabel");
-		return configFile;
+	@Test
+	public void testExecutors() throws ZinggClientException {	
+
+		List<ExecutorTester<S, D, R, C, T>> executorTesterList = getExecutors();
+
+		for (ExecutorTester<S, D, R, C, T> executorTester : executorTesterList) {
+			executorTester.initAndExecute(args,session, new ClientOptions());
+			executorTester.validateResults();
+		}
+		
 	}
 	
 
