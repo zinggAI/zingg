@@ -43,7 +43,7 @@ public abstract class TestBlockBase<S, D, R, C, T> {
 		IArguments args = getArguments();
 
 		Tree<Canopy<R>> blockingTree = blockingTreeUtil.createBlockingTreeFromSample(zFrameEvent, zFrameEventCluster, 0.5, -1,
-				args, hashUtil.getHashFunctionList(), HashUtility.CACHED);
+				args, hashUtil.getHashFunctionList());
 				
 		// primary deciding is unique year so identityInteger should have been picked
 		Canopy<R> head = blockingTree.getHead();

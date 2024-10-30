@@ -1,12 +1,12 @@
 package zingg.common.core.block;
 
-public class HashFunctionUtilityFactory<D, R, C, T> {
+public class HashFunctionUtilityFactory {
 
-    public IHashFunctionUtility<D, R, C, T> getHashFunctionUtility(HashUtility hashUtility) {
+    public static IHashFunctionUtility getHashFunctionUtility(HashUtility hashUtility) {
 
         if (HashUtility.DEFAULT.equals(hashUtility)) {
-            return new DefaultHashFunctionUtility<D, R, C, T>();
+            return new DefaultHashFunctionUtility();
         }
-        return new CacheBasedHashFunctionUtility<D, R, C, T>();
+        return new CacheBasedHashFunctionUtility();
     }
 }

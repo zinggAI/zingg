@@ -30,14 +30,12 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	ZFrame<D,R,C> training;
 	protected ListMap<HashFunction<D,R,C,T>, String> childless;
 
-	public Block(HashUtility hashUtility) {
-		HashFunctionUtilityFactory<D, R, C, T> hashFunctionUtilityFactory = new HashFunctionUtilityFactory<D, R, C, T>();
-		this.hashFunctionUtility = hashFunctionUtilityFactory.getHashFunctionUtility(hashUtility);
+	public Block() {
+		this.hashFunctionUtility = HashFunctionUtilityFactory.getHashFunctionUtility(HashUtility.CACHED);
 	}
 
-	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes, HashUtility hashUtility) {
-		HashFunctionUtilityFactory<D, R, C, T> hashFunctionUtilityFactory = new HashFunctionUtilityFactory<D, R, C, T>();
-		this.hashFunctionUtility = hashFunctionUtilityFactory.getHashFunctionUtility(hashUtility);
+	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes) {
+		this.hashFunctionUtility = HashFunctionUtilityFactory.getHashFunctionUtility(HashUtility.CACHED);
 		this.training = training;
 		this.dupes = dupes;
 		childless =  new ListMap<HashFunction<D,R,C,T>, String>();
@@ -48,8 +46,8 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	}
 
 	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes,
-		ListMap<T, HashFunction<D, R, C, T>> functionsMap, long maxSize, HashUtility hashUtility) {
-		this(training, dupes, hashUtility);
+		ListMap<T, HashFunction<D, R, C, T>> functionsMap, long maxSize) {
+		this(training, dupes);
 		this.functionsMap = functionsMap;
 		// functionsMap.prettyPrint();
 		this.maxSize = maxSize;

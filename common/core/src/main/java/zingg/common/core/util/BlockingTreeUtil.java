@@ -16,7 +16,6 @@ import zingg.common.client.util.PipeUtilBase;
 import zingg.common.client.util.Util;
 import zingg.common.core.block.Block;
 import zingg.common.core.block.Canopy;
-import zingg.common.core.block.HashUtility;
 import zingg.common.core.block.Tree;
 import zingg.common.core.hash.HashFunction;
 
@@ -37,13 +36,13 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 
 
 	public abstract Block<D,R,C,T> getBlock(ZFrame<D,R,C> sample, ZFrame<D,R,C> positives, 
-		ListMap<T, HashFunction<D,R,C,T>>hashFunctions, long blockSize, HashUtility hashUtility);
+		ListMap<T, HashFunction<D,R,C,T>>hashFunctions, long blockSize);
 
 
 	public Tree<Canopy<R>> createBlockingTree(ZFrame<D,R,C> testData,
 											  ZFrame<D,R,C> positives, double sampleFraction, long blockSize,
 											  IArguments args,
-											  ListMap<T, HashFunction<D,R,C,T>> hashFunctions, HashUtility hashUtility) throws Exception, ZinggClientException {
+											  ListMap<T, HashFunction<D,R,C,T>> hashFunctions) throws Exception, ZinggClientException {
 		ZFrame<D,R,C> sample = testData.sample(false, sampleFraction);
 		sample = sample.cache();
 		long totalCount = sample.count();
@@ -55,7 +54,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 		LOG.info("Learning indexing rules for block size " + blockSize);
        
 		positives = positives.coalesce(1); 
-		Block<D,R,C,T> cblock = getBlock(sample, positives, hashFunctions, blockSize, hashUtility);
+		Block<D,R,C,T> cblock = getBlock(sample, positives, hashFunctions, blockSize);
 		Canopy<R> root = new Canopy<R>(sample.collectAsList(), positives.collectAsList());
 
 		List<FieldDefinition> fd = new ArrayList<FieldDefinition> ();
@@ -79,9 +78,9 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 	
 	public  Tree<Canopy<R>> createBlockingTreeFromSample(ZFrame<D,R,C> testData,  
 			ZFrame<D,R,C> positives, double sampleFraction, long blockSize, IArguments args, 
-            ListMap hashFunctions, HashUtility hashUtility) throws Exception, ZinggClientException {
+            ListMap hashFunctions) throws Exception, ZinggClientException {
 		ZFrame<D,R,C> sample = testData.sample(false, sampleFraction); 
-		return createBlockingTree(sample, positives, sampleFraction, blockSize, args, hashFunctions, hashUtility);
+		return createBlockingTree(sample, positives, sampleFraction, blockSize, args, hashFunctions);
 	}
 	
 	public void writeBlockingTree(Tree<Canopy<R>> blockingTree, IArguments args) throws Exception, ZinggClientException {

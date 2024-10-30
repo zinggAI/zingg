@@ -18,14 +18,14 @@ public class SparkBlock extends Block<Dataset<Row>, Row, Column, DataType> {
     private static final long serialVersionUID = 1L;
 
 
-	public SparkBlock(HashUtility hashUtility){
-        super(hashUtility);
+	public SparkBlock(){
+        super();
     }
     
 
     public SparkBlock(ZFrame<Dataset<Row>, Row, Column> training, ZFrame<Dataset<Row>, Row, Column> dupes,
-                      ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> functionsMap, long maxSize, HashUtility hashUtility) {
-		super(training, dupes, functionsMap, maxSize, hashUtility);
+                      ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> functionsMap, long maxSize) {
+		super(training, dupes, functionsMap, maxSize);
 	}
     
     @Override
