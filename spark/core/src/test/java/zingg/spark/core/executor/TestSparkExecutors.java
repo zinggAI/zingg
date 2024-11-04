@@ -53,6 +53,11 @@ public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset
 	public String getConfigFile() {
 		return CONFIG_FILE;
 	}
+
+	@Override
+	public String getLinkerConfigFile(){
+		return CONFIGLINK_FILE;
+	}
 	
 	@Override
 	protected SparkTrainingDataFinder getTrainingDataFinder() throws ZinggClientException {
@@ -103,6 +108,18 @@ public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset
 		String testFile = getClass().getClassLoader().getResource(TEST_DATA_FILE).getFile();
 		// correct the location of test data
 		args.getData()[0].setProp("location", testFile);
+		return configFile;
+	}
+
+	@Override
+	public String setupLinkerArgs() throws ZinggClientException, IOException {
+		String configFile = super.setupLinkerArgs();
+		String testOneFile = getClass().getClassLoader().getResource(TEST1_DATA_FILE).getFile();
+		// correct the location of test data
+		args.getData()[0].setProp("location", testOneFile);
+		String testTwoFile = getClass().getClassLoader().getResource(TEST2_DATA_FILE).getFile();
+		// correct the location of test data
+		args.getData()[0].setProp("location", testTwoFile);
 		return configFile;
 	}
 	

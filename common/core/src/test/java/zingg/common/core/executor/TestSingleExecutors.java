@@ -39,8 +39,8 @@ public abstract class TestSingleExecutors<S, D, R, C, T> extends TestExecutorsGe
 		Matcher<S, D, R, C, T> matcher = getMatcher();
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher)));
 
-		//Linker<S, D, R, C, T> linker = getLinker();
-		//executorTesterList.add(new ExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker)));
+		Linker<S, D, R, C, T> linker = getLinker();
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker)));
 
 		return executorTesterList;
 	}
@@ -56,6 +56,8 @@ public abstract class TestSingleExecutors<S, D, R, C, T> extends TestExecutorsGe
 		}
 		
 	}
+
+	public abstract String getLinkerConfigFile();
 
     protected abstract TrainingDataFinder<S, D, R, C, T> getTrainingDataFinder() throws ZinggClientException;
 	

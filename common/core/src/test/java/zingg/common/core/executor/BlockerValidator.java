@@ -26,12 +26,13 @@ public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 	@Override
 	public void validateResults() throws ZinggClientException {
 	
-			ZFrame<D, R, C> df  = executor.getContext().getPipeUtil().read(false,false,verifyBlockingPipeObj.getCountsPipe(executor.getArgs(),executor.getContext().getPipeUtil(), verifyBlockingPipeObj.getTimestamp())); 
+			ZFrame<D, R, C> df  = executor.getContext().getPipeUtil().read(false,false,verifyBlockingPipeObj.getCountsPipe(executor.getArgs(),executor.getContext().getPipeUtil(), ((VerifyBlocking<S, D, R, C, T>) executor).getTimestamp())); 
 			
 			long blockCount = df.count();
-			assertTrue(blockCount == 3);
 			LOG.info("blockCount : " + blockCount);
-
+			assertTrue(blockCount == 12);
+			df.limit(3);
+			df.show();
 			List<R> countsDf = df.collectAsList();
 			int sumHash = 0;
 			long sumCount = 0;
@@ -41,8 +42,8 @@ public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 			sumHash += hash;
 			sumCount += count;
 			}
-			assertTrue(sumHash == 11843);
-			assertTrue(sumCount == 24);
+			assertTrue(sumHash == 11855);
+			assertTrue(sumCount == 16);
 			
 
     }

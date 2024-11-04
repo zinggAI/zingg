@@ -16,10 +16,6 @@ public interface IVerifyBlockingPipes<S,D,R,C>  {
 
     public void setBlockSamplesPipe(Pipe<D, R, C> blockSamplesPipe);
 
-    public long getTimestamp();
-
-    public void setTimestamp(long timestamp);
-
 }
 
 

@@ -32,7 +32,8 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	public void init(S s) throws ZinggClientException, IOException {
 		this.session = s;
 		// set up args
-		setupArgs();					
+		setupArgs();	
+		setupLinkerArgs();				
 	}
 
 	public String setupArgs() throws ZinggClientException, IOException {
@@ -40,6 +41,14 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 		args = new ArgumentsUtil().createArgumentsFromJSON(
 			configFile, 
 			"findTrainingData");
+		return configFile;
+	}
+
+	public String setupLinkerArgs() throws ZinggClientException, IOException {
+		String configFile = getClass().getClassLoader().getResource(getConfigFile()).getFile();
+		args = new ArgumentsUtil().createArgumentsFromJSON(
+			configFile, 
+			"link");
 		return configFile;
 	}
 

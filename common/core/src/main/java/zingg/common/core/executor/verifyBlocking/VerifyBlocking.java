@@ -31,7 +31,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     @Override
     public void execute() throws ZinggClientException {
         try {
-			verifyBlockingPipeObj.setTimestamp(timestamp);
+			setTimestamp(timestamp);
 			ZFrame<D,R,C>  testDataOriginal = new InputDataGetter<S,D,R,C>().getTestData(getPipeUtil(),args);
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
 			ZFrame<D,R,C> blocked = new Blocker<S,D,R,C,T>().getBlocked(testDataOriginal,args,getBlockingTreeUtil());
@@ -73,6 +73,14 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
 		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
 		return testDataOriginal.select(zidAndFieldDefSelector.getCols());
+	}
+
+	public long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
 	}
 
     

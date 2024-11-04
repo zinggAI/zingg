@@ -7,7 +7,6 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.util.ColName;
 
 public class LinkerValidator<S, D, R, C, T> extends MatcherValidator<S, D, R, C, T> {
 

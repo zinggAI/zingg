@@ -49,12 +49,5 @@ public class VerifyBlockingPipes<S,D,R,C> implements IVerifyBlockingPipes<S,D,R,
         return args.getZinggModelDir() + "/blocks/" + timestamp + "/" + type;
     }
 
-    public long getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(long timestamp) {
-		this.timestamp = timestamp;
-	}
     
 }
