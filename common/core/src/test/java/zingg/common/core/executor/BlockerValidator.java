@@ -31,9 +31,8 @@ public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 			long blockCount = df.count();
 			LOG.info("blockCount : " + blockCount);
 			assertTrue(blockCount == 12);
-			df.limit(3);
-			df.show();
-			List<R> countsDf = df.collectAsList();
+			ZFrame<D, R, C> topDf = df.select(ColName.HASH_COL,ColName.HASH_COL + "_count").limit(3);
+			List<R> countsDf = topDf.collectAsList();
 			int sumHash = 0;
 			long sumCount = 0;
 			for(R row: countsDf) {
