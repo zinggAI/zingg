@@ -50,6 +50,13 @@ public class TestSparkExecutorsCompound extends TestExecutorsCompound<SparkSessi
 	}
 
 	@Override
+	public String getLinkerConfigFile() {
+		//dummy method
+		return CONFIG_FILE;
+	}
+
+
+	@Override
 	protected SparkFindAndLabeller getFindAndLabeller() throws ZinggClientException {
 		SparkFindAndLabeller sfal = new SparkFindAndLabeller(ctx);
         sfal.setLabeller(new ProgrammaticSparkLabeller(ctx));
@@ -85,4 +92,5 @@ public class TestSparkExecutorsCompound extends TestExecutorsCompound<SparkSessi
 	    dir.renameTo(newDir);
 	}
 
+	
 }

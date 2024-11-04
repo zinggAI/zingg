@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.jupiter.api.Test;
 
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.ClientOptions;
@@ -57,6 +56,8 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	public abstract List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException;
 
 	public abstract String getConfigFile();
+
+	public abstract String getLinkerConfigFile();
 
 	public abstract void tearDown();	
 	

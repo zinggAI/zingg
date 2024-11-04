@@ -60,8 +60,6 @@ public abstract class TestSingleExecutors<S, D, R, C, T> extends TestExecutorsGe
 		
 	}
 
-	public abstract String getLinkerConfigFile();
-
     protected abstract TrainingDataFinder<S, D, R, C, T> getTrainingDataFinder() throws ZinggClientException;
 	
 	protected abstract Labeller<S, D, R, C, T> getLabeller() throws ZinggClientException;
