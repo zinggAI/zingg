@@ -9,7 +9,6 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
-import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.Blocker;
 import zingg.common.core.block.InputDataGetter;
@@ -24,8 +23,6 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	public static final int noOfBlockedRecords = 3 ;
 	public static final double percentageOfBlockedRecords = 0.1 ;
 	IVerifyBlockingPipes verifyBlockingPipeObj = new VerifyBlockingPipes<S,D,R,C>();
-	Pipe<D,R,C> countsPipe;
-	Pipe<D,R,C> blockSamplesPipe;
 
 	public VerifyBlocking() {
         setZinggOption(ZinggOptions.VERIFY_BLOCKING);
@@ -34,7 +31,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     @Override
     public void execute() throws ZinggClientException {
         try {
-			setTimestamp(timestamp);
+			verifyBlockingPipeObj.setTimestamp(timestamp);
 			ZFrame<D,R,C>  testDataOriginal = new InputDataGetter<S,D,R,C>().getTestData(getPipeUtil(),args);
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
 			ZFrame<D,R,C> blocked = new Blocker<S,D,R,C,T>().getBlocked(testDataOriginal,args,getBlockingTreeUtil());
@@ -42,9 +39,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 			ZFrame<D,R,C> blockCounts = blocked.select(ColName.HASH_COL).groupByCount(ColName.HASH_COL, ColName.HASH_COL + "_count").sortDescending(ColName.HASH_COL + "_count");
 
-			countsPipe = verifyBlockingPipeObj.getPipeForVerifyBlockingLocation(args, getPipeUtil(), timestamp, "counts");
-
-            getPipeUtil().write(blockCounts,countsPipe);	
+            getPipeUtil().write(blockCounts,verifyBlockingPipeObj.getCountsPipe(args, getPipeUtil(), timestamp));	
 
 			ZFrame<D,R,C> blockTopRec = blockCounts.select(ColName.HASH_COL,ColName.HASH_COL + "_count").limit(noOfBlockedRecords);
 
@@ -70,8 +65,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			int sampleSize = Math.max(1, (int) Math.ceil(count * percentageOfBlockedRecords));
 			ZFrame<D,R,C> matchingRecords = null;
 			matchingRecords = blocked.filter(blocked.equalTo(ColName.HASH_COL,String.valueOf(hash))).limit(sampleSize);
-			blockSamplesPipe = verifyBlockingPipeObj.getPipeForVerifyBlockingLocation(args, getPipeUtil(),timestamp, "blockSamples/" + hash);
-			getPipeUtil().write(matchingRecords, blockSamplesPipe);
+			getPipeUtil().write(matchingRecords, verifyBlockingPipeObj.getBlockSamplesPipe(args, getPipeUtil(),timestamp, "blockSamples/" + hash));
 		}
 		
 	}
@@ -81,13 +75,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return testDataOriginal.select(zidAndFieldDefSelector.getCols());
 	}
 
-    public long getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(long timestamp) {
-		this.timestamp = timestamp;
-	}
+    
 
 }
 

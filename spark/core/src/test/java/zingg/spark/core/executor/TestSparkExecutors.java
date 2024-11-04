@@ -73,9 +73,9 @@ public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset
 	}
 
 	@Override
-	protected SparkBlocker getVerifyBlocker() throws ZinggClientException {
-		SparkBlocker sb = new SparkBlocker(ctx);
-		return sb;
+	protected SparkVerifyBlocker getVerifyBlocker() throws ZinggClientException {
+		SparkVerifyBlocker svb = new SparkVerifyBlocker(ctx);
+		return svb;
 	}
 
 	@Override

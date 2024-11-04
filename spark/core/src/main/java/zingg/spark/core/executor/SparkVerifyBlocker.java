@@ -15,17 +15,17 @@ import zingg.common.client.options.ZinggOptions;
 import zingg.common.core.executor.verifyblocking.VerifyBlocking;
 import zingg.spark.core.context.ZinggSparkContext;
 
-public class SparkBlocker extends VerifyBlocking<SparkSession,Dataset<Row>,Row,Column,DataType> {
+public class SparkVerifyBlocker extends VerifyBlocking<SparkSession,Dataset<Row>,Row,Column,DataType> {
 
     private static final long serialVersionUID = 1L;
-	public static String name = "zingg.spark.core.executor.SparkBlocker";
-	public static final Log LOG = LogFactory.getLog(SparkBlocker.class);    
+	public static String name = "zingg.spark.core.executor.SparkVerifyBlocker";
+	public static final Log LOG = LogFactory.getLog(SparkVerifyBlocker.class);    
 
-    public SparkBlocker() {
+    public SparkVerifyBlocker() {
         this(new ZinggSparkContext());
     }
 
-    public SparkBlocker(ZinggSparkContext sparkContext) {
+    public SparkVerifyBlocker(ZinggSparkContext sparkContext) {
         setZinggOption(ZinggOptions.VERIFY_BLOCKING);
 		setContext(sparkContext);
     }
