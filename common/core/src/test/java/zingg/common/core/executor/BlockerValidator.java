@@ -7,7 +7,6 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.util.ColName;
 import zingg.common.core.executor.verifyblocking.VerifyBlocking;
 
 public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
@@ -20,13 +19,8 @@ public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 
 	@Override
 	public void validateResults() throws ZinggClientException {
-			//test counts are same in test output and given set input which has only z_hash also based on example test
-            
-            //read output pipe - counts
-            //input data has z_hash also as a column
-            //find the counts in input data and arrange in desc order
-            //asserts true on input and output
-			ZFrame<D, R, C> df  = getOutputData();
+	
+			ZFrame<D, R, C> df  = null; 
 			
 			long blockCount = df.count();
 			assertTrue(blockCount == 3);
@@ -34,8 +28,4 @@ public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 
     }
 
-	public ZFrame<D, R, C> getOutputData() throws ZinggClientException {
-		ZFrame<D, R, C> output = executor.getContext().getPipeUtil().read(false, false, executor.getArgs().getOutput()[0]);
-		return output;
-	}
 }

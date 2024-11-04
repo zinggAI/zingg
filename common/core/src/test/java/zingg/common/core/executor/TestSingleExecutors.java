@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.executor.verifyblocking.VerifyBlocking;
 
 public abstract class TestSingleExecutors<S, D, R, C, T> extends TestExecutorsGeneric<S, D, R, C, T> {
 
@@ -31,6 +32,9 @@ public abstract class TestSingleExecutors<S, D, R, C, T> extends TestExecutorsGe
 
 		Trainer<S, D, R, C, T> trainer = getTrainer();
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer)));
+
+        VerifyBlocking<S, D, R, C, T> verifyBlocker = getVerifyBlocker();
+        executorTesterList.add(new ExecutorTester<S, D, R, C, T>(verifyBlocker, new BlockerValidator<S, D, R, C, T>(verifyBlocker)));
 
 		Matcher<S, D, R, C, T> matcher = getMatcher();
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher)));
@@ -61,7 +65,9 @@ public abstract class TestSingleExecutors<S, D, R, C, T> extends TestExecutorsGe
 
 	protected abstract TrainerValidator<S, D, R, C, T> getTrainerValidator(Trainer<S, D, R, C, T> trainer);
 
-	protected abstract Matcher<S, D, R, C, T> getMatcher() throws ZinggClientException;	
+	protected abstract VerifyBlocking<S, D, R, C, T> getVerifyBlocker() throws ZinggClientException;
+    
+    protected abstract Matcher<S, D, R, C, T> getMatcher() throws ZinggClientException;	
 
 	protected abstract Linker<S, D, R, C, T> getLinker() throws ZinggClientException;	
 

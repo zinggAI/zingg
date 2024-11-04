@@ -5,14 +5,12 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
-import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.block.Blocker;
 import zingg.common.core.block.InputDataGetter;
 import zingg.common.core.executor.ZinggBase;
@@ -25,6 +23,9 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     public long timestamp = System.currentTimeMillis();   
 	public static final int noOfBlockedRecords = 3 ;
 	public static final double percentageOfBlockedRecords = 0.1 ;
+	IVerifyBlockingPipes verifyBlockingPipeObj = new VerifyBlockingPipes<S,D,R,C>();
+	Pipe<D,R,C> countsPipe;
+	Pipe<D,R,C> blockSamplesPipe;
 
 	public VerifyBlocking() {
         setZinggOption(ZinggOptions.VERIFY_BLOCKING);
@@ -41,7 +42,9 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 			ZFrame<D,R,C> blockCounts = blocked.select(ColName.HASH_COL).groupByCount(ColName.HASH_COL, ColName.HASH_COL + "_count").sortDescending(ColName.HASH_COL + "_count");
 
-            getPipeUtil().write(blockCounts, getPipeForVerifyBlockingLocation(args, getPipeUtil(), timestamp, "counts"));	
+			countsPipe = verifyBlockingPipeObj.getPipeForVerifyBlockingLocation(args, getPipeUtil(), timestamp, "counts");
+
+            getPipeUtil().write(blockCounts,countsPipe);	
 
 			ZFrame<D,R,C> blockTopRec = blockCounts.select(ColName.HASH_COL,ColName.HASH_COL + "_count").limit(noOfBlockedRecords);
 
@@ -67,13 +70,11 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			int sampleSize = Math.max(1, (int) Math.ceil(count * percentageOfBlockedRecords));
 			ZFrame<D,R,C> matchingRecords = null;
 			matchingRecords = blocked.filter(blocked.equalTo(ColName.HASH_COL,String.valueOf(hash))).limit(sampleSize);
-			getPipeUtil().write(matchingRecords, getPipeForVerifyBlockingLocation(args, getPipeUtil(),timestamp, "blockSamples/" + hash));
+			blockSamplesPipe = verifyBlockingPipeObj.getPipeForVerifyBlockingLocation(args, getPipeUtil(),timestamp, "blockSamples/" + hash);
+			getPipeUtil().write(matchingRecords, blockSamplesPipe);
 		}
 		
 	}
-
-	protected abstract Pipe<D, R, C> getPipeForVerifyBlockingLocation(IArguments args,
-			PipeUtilBase<S, D, R, C> pipeUtil, long timestamp, String string);
 
 	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
 		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
