@@ -17,6 +17,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	public static final Log LOG = LogFactory.getLog(TestExecutorsGeneric.class);
 	
 	protected IArguments args;
+	protected IArguments linkerArgs;
 	protected S session;
 	protected ClientOptions options;
 	
@@ -44,8 +45,8 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	}
 
 	public String setupLinkerArgs() throws ZinggClientException, IOException {
-		String configFile = getClass().getClassLoader().getResource(getConfigFile()).getFile();
-		args = new ArgumentsUtil().createArgumentsFromJSON(
+		String configFile = getClass().getClassLoader().getResource(getLinkerConfigFile()).getFile();
+		linkerArgs = new ArgumentsUtil().createArgumentsFromJSON(
 			configFile, 
 			"link");
 		return configFile;
