@@ -50,7 +50,6 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 		
 	}
 	
-
 	protected abstract FindAndLabeller<S, D, R, C, T> getFindAndLabeller() throws ZinggClientException;
 
 	protected abstract TrainMatchValidator<S, D, R, C, T> getTrainMatchValidator(TrainMatcher<S, D, R, C, T> trainMatch);
