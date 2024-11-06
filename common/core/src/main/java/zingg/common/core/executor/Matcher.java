@@ -13,6 +13,7 @@ import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.Blocker;
+import zingg.common.core.block.Canopy;
 import zingg.common.core.block.InputDataGetter;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
@@ -27,18 +28,28 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.Matcher";
-	public static final Log LOG = LogFactory.getLog(Matcher.class);  
-	Blocker<S,D,R,C,T> blocker = new Blocker<S,D,R,C,T>();  
+	public static final Log LOG = LogFactory.getLog(Matcher.class);    
 	
     public Matcher() {
         setZinggOption(ZinggOptions.MATCH);
     }
+
+	public ZFrame<D,R,C>  getTestData() throws ZinggClientException{
+		ZFrame<D,R,C>  data = new InputDataGetter<S,D,R,C>().getTestData(getPipeUtil(),args);
+	   return data;
+   }
 
 	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
 		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
 		return testDataOriginal.select(zidAndFieldDefSelector.getCols());
 		//return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
 	}
+
+	public ZFrame<D,R,C>  getBlocked(ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
+		ZFrame<D,R,C> blocked = new Blocker<S,D,R,C,T>().getBlocked(testData,args,getBlockingTreeUtil());	
+		return blocked;
+	}
+
 	
 	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception{
 		return iPairBuilder.getPairs(blocked, bAll);
@@ -83,7 +94,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     public void execute() throws ZinggClientException {
         try {
 			// read input, filter, remove self joins
-			ZFrame<D,R,C>  testDataOriginal = new InputDataGetter<S,D,R,C>().getTestData(getPipeUtil(),args);
+			ZFrame<D,R,C>  testDataOriginal = getTestData();
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
 			ZFrame<D,R,C>  testData = getStopWords().preprocessForStopWords(testDataOriginal);
 			//testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
@@ -92,7 +103,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			LOG.info("Read " + count);
 			Analytics.track(Metric.DATA_COUNT, count, args.getCollectMetrics());
 
-			ZFrame<D,R,C>blocked = blocker.getBlocked(testData,args,getBlockingTreeUtil());
+			ZFrame<D,R,C>blocked = getBlocked(testData);
 			LOG.info("Blocked ");
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Num distinct hashes " + blocked.select(ColName.HASH_COL).distinct().count());
