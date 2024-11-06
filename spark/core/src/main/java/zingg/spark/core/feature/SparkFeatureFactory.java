@@ -6,6 +6,7 @@ import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 
 import zingg.common.core.feature.ArrayDoubleFeature;
+import zingg.common.core.feature.BooleanFeature;
 import zingg.common.core.feature.DateFeature;
 import zingg.common.core.feature.DoubleFeature;
 import zingg.common.core.feature.FeatureFactory;
@@ -28,6 +29,7 @@ public class SparkFeatureFactory extends FeatureFactory<DataType>{
             map.put(DataTypes.FloatType, FloatFeature.class);
             map.put(DataTypes.LongType, LongFeature.class);
             map.put(DataTypes.createArrayType(DataTypes.DoubleType), ArrayDoubleFeature.class);
+            map.put(DataTypes.BooleanType,BooleanFeature.class);
     }
 
     @Override

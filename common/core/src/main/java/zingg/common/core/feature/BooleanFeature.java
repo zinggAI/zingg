@@ -2,7 +2,6 @@ package zingg.common.core.feature;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.MatchType;
-import zingg.common.core.similarity.function.BooleanSimilarityFunction;
 import zingg.common.core.similarity.function.CheckNullFunction;
 import zingg.common.core.similarity.function.SimilarityFunctionExact;
 
@@ -15,9 +14,6 @@ public class BooleanFeature extends BaseFeature<Boolean> {
 
     public void init(FieldDefinition f){
         setFieldDefinition(f);
-        if (f.getMatchType().contains(MatchType.FUZZY)) {
-			addSimFunction(new BooleanSimilarityFunction());
-		} 
         if (f.getMatchType().contains(MatchType.EXACT)) {
 			addSimFunction(new SimilarityFunctionExact<Boolean>("BooleanSimilarityFunctionExact"));
 		} 
