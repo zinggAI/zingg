@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import zingg.spark.core.executor.ZinggSparkTester;
 
-public class TestDataType extends ZinggSparkTester{
+public class TestDataType {
 	
 	@Test
 	public void testDataType() {

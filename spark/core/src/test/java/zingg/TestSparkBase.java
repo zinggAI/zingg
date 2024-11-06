@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import zingg.spark.core.executor.ZinggSparkTester;
 
-public class TestSparkBase extends ZinggSparkTester implements BeforeAllCallback, AfterAllCallback, ParameterResolver{
+public class TestSparkBase implements BeforeAllCallback, AfterAllCallback, ParameterResolver{
 
     public SparkSession sparkSession;
 

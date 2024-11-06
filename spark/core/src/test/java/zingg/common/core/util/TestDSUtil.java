@@ -12,12 +12,15 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
+import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.api.extension.ExtendWith;
+import zingg.TestSparkBase;
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
@@ -27,7 +30,14 @@ import zingg.common.client.util.ColName;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.executor.ZinggSparkTester;
 
-public class TestDSUtil extends ZinggSparkTester{
+@ExtendWith(TestSparkBase.class)
+public class TestDSUtil {
+
+	private final SparkSession sparkSession;
+
+	public TestDSUtil(SparkSession sparkSession) {
+		this.sparkSession = sparkSession;
+	}
 	public static final Log LOG = LogFactory.getLog(TestDSUtil.class);
 
 	@Test
@@ -70,7 +80,7 @@ public class TestDSUtil extends ZinggSparkTester{
 		});
 		List<Row> list = Arrays.asList(RowFactory.create("1", "first", "one", "Junit"), RowFactory.create("2", "second", "two", "Junit"), 
 				RowFactory.create("3", "third", "three", "Junit"), RowFactory.create("4", "forth", "Four", "Junit"));
-		Dataset<Row> ds = spark.createDataFrame(list, schema);
+		Dataset<Row> ds = sparkSession.createDataFrame(list, schema);
 
 		List<String> expectedColumns = new ArrayList<String>();
 		expectedColumns.add("field_fuzzy");
@@ -121,7 +131,7 @@ public class TestDSUtil extends ZinggSparkTester{
 		});
 		List<Row> list = Arrays.asList(RowFactory.create("1", "first", "one", "Junit"), RowFactory.create("2", "second", "two", "Junit"), 
 				RowFactory.create("3", "third", "three", "Junit"), RowFactory.create("4", "forth", "Four", "Junit"));
-		Dataset<Row> ds = spark.createDataFrame(list, schema);
+		Dataset<Row> ds = sparkSession.createDataFrame(list, schema);
 
 		List<Column> colListTest2 = zsCTX.getDSUtil().getFieldDefColumns (new SparkFrame(ds), args, false, false);
 		List<String> expectedColumnsTest2 = new ArrayList<String>();

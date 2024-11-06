@@ -13,14 +13,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.api.extension.ExtendWith;
+import zingg.TestSparkBase;
 import zingg.common.client.Arguments;
+import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IArguments;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
 import zingg.spark.core.documenter.SparkDataDocumenter;
 import zingg.spark.core.executor.ZinggSparkTester;
 
-public class TestDataDocumenter extends ZinggSparkTester {
+@ExtendWith(TestSparkBase.class)
+public class TestDataDocumenter {
+
 	public static final Log LOG = LogFactory.getLog(TestDataDocumenter.class);
 
 	private IArguments docArguments = new Arguments();
@@ -28,6 +33,7 @@ public class TestDataDocumenter extends ZinggSparkTester {
 	public void setUp(){
 		try {
 			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
+			ArgumentsUtil argsUtil = new ArgumentsUtil();
 			docArguments = argsUtil.createArgumentsFromJSON(configPath);
 		} catch (Throwable e) {
 			e.printStackTrace();

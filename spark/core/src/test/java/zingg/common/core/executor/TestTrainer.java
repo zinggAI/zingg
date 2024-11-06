@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.util.DataFrameUtility;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.executor.SparkTrainer;
 import zingg.spark.core.executor.ZinggSparkTester;
@@ -21,8 +22,8 @@ public class TestTrainer extends ZinggSparkTester{
 
     @BeforeAll
     public void setupDF() {
-        tenRowsDF = createDFWithDoubles(10,1);
-        oneRowsDF = createDFWithDoubles(1,1);
+        tenRowsDF = DataFrameUtility.createDFWithDoubles(10,1, spark);
+        oneRowsDF = DataFrameUtility.createDFWithDoubles(1,1, spark);
     }
 
     @Test

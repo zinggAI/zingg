@@ -44,25 +44,4 @@ public class ZinggSparkTester {
 		args = sparkSessionProvider.getArgs();
 		zsCTX = sparkSessionProvider.getZinggSparkContext();
     }
-
-	public Dataset<Row> createDFWithDoubles(int numRows, int numCols) {
-	
-		StructType structType = new StructType();
-
-		List<Double> rowValues = new ArrayList<Double>();
-
-		for (int n = 0; n < numCols; ++n) {
-			structType = structType.add("col" + n, DataTypes.DoubleType, false);
-			rowValues.add(0d);
-		};
-		
-		List<Row> nums = new ArrayList<Row>();
-
-		IntStream.range(0, numRows).forEachOrdered(n -> {
-			nums.add(RowFactory.create(rowValues));
-		});
-
-
-		return spark.createDataFrame(nums, structType);
-	}
 }
