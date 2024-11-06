@@ -21,13 +21,13 @@ import zingg.common.core.executor.ZinggBase;
 import zingg.spark.core.context.ZinggSparkContext;
 
 
-public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, Column, DataType>{
+public class SparkPythonPhaseRunner extends ZinggBase<SparkSession, Dataset<Row>, Row, Column, DataType>{
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.spark.core.executor.SparkPeekModel";
-	public static final Log LOG = LogFactory.getLog(SparkPeekModel.class); 
+	public static final Log LOG = LogFactory.getLog(SparkPythonPhaseRunner.class);
 	
-	public SparkPeekModel() {
+	public SparkPythonPhaseRunner() {
 		setZinggOption(ZinggOptions.PEEK_MODEL);
 		setContext(new ZinggSparkContext());
 		
@@ -49,7 +49,8 @@ public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, C
 			LOG.info("Generic Python phase starts");
 			//LOG.info(this.getClass().getClassLoader().getResource("python/phases/assessModel.py").getFile());
 			List<String> pyArgs = new ArrayList<String>();
-			pyArgs.add("python/phases/"+clientOptions.get(ClientOptions.PHASE).getValue() + ".py");
+			String phase = clientOptions.get(ClientOptions.PHASE).getValue();
+			pyArgs.add("python/phases/" + phase + ".py");
 			pyArgs.add("");
 			for (String c: clientOptions.getCommandLineArgs()) {
 				pyArgs.add(c);
@@ -57,9 +58,8 @@ public class SparkPeekModel extends ZinggBase<SparkSession, Dataset<Row>, Row, C
 			PythonRunner.main(pyArgs.toArray(new String[pyArgs.size()]));
 
 			LOG.info("Generic Python phase ends");
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ZinggClientException(e.getMessage());
+		} catch (Exception exception) {
+			throw new ZinggClientException("Error occurred while executing python phase, " + exception.getMessage());
 		}
 	}
 
