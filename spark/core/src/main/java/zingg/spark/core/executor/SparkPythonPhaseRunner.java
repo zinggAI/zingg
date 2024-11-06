@@ -24,7 +24,7 @@ import zingg.spark.core.context.ZinggSparkContext;
 public class SparkPythonPhaseRunner extends ZinggBase<SparkSession, Dataset<Row>, Row, Column, DataType>{
 
 	private static final long serialVersionUID = 1L;
-	protected static String name = "zingg.spark.core.executor.SparkPeekModel";
+	protected static String name = "zingg.spark.core.executor.SparkPythonPhaseRunner";
 	public static final Log LOG = LogFactory.getLog(SparkPythonPhaseRunner.class);
 	
 	public SparkPythonPhaseRunner() {
