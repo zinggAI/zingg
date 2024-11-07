@@ -141,4 +141,4 @@ _**Step 8 :  Run Zingg to Find Training Data**_
 
 ****
 
-**If everything is right, it should show Zingg Icon.**
+**If everything is right, it should show Zingg Banner.**
