@@ -13,7 +13,6 @@ import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.Blocker;
-import zingg.common.core.block.Canopy;
 import zingg.common.core.block.InputDataGetter;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
@@ -35,7 +34,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     }
 
 	public ZFrame<D,R,C>  getTestData() throws ZinggClientException{
-		ZFrame<D,R,C>  data = new InputDataGetter<S,D,R,C>().getTestData(getPipeUtil(),args);
+		ZFrame<D,R,C>  data = new InputDataGetter<S,D,R,C>(getPipeUtil()).getTestData(args);
 	   return data;
    }
 
@@ -46,7 +45,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	public ZFrame<D,R,C>  getBlocked(ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
-		ZFrame<D,R,C> blocked = new Blocker<S,D,R,C,T>().getBlocked(testData,args,getBlockingTreeUtil());	
+		ZFrame<D,R,C> blocked = new Blocker<S,D,R,C,T>(getBlockingTreeUtil()).getBlocked(testData,args);	
 		return blocked;
 	}
 

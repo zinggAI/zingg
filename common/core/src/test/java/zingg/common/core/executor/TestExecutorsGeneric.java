@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
@@ -30,35 +29,12 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	}
 
 	public void init(S s) throws ZinggClientException, IOException {
-		this.session = s;
-		// set up args
-		setupArgs();	
-		setupLinkerArgs();				
-	}
-
-	public String setupArgs() throws ZinggClientException, IOException {
-		String configFile = getClass().getClassLoader().getResource(getConfigFile()).getFile();
-		args = new ArgumentsUtil().createArgumentsFromJSON(
-			configFile, 
-			"findTrainingData");
-		return configFile;
-	}
-
-	public String setupLinkerArgs() throws ZinggClientException, IOException {
-		String configFile = getClass().getClassLoader().getResource(getLinkerConfigFile()).getFile();
-		linkerArgs = new ArgumentsUtil().createArgumentsFromJSON(
-			configFile, 
-			"link");
-		return configFile;
+		this.session = s;		
 	}
 
 	List<ExecutorTester<S, D, R, C, T>> executorTesterList = new ArrayList<ExecutorTester<S, D, R, C, T>>();
 
-	public abstract List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException;
-
-	public abstract String getConfigFile();
-
-	public abstract String getLinkerConfigFile();
+	public abstract List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException;
 
 	public abstract void tearDown();	
 	

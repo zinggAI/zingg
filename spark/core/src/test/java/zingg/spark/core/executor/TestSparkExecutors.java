@@ -13,6 +13,7 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.AfterEach;
 
+import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IZingg;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.Labeller;
@@ -47,6 +48,8 @@ public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset
 		this.ctx.setSession(spark);
 		this.ctx.setUtils();
 		init(spark);
+		setupArgs();
+		setupLinkerArgs();
 	}
 
 	@Override
@@ -100,20 +103,19 @@ public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset
 	protected SparkTrainerTester getTrainerValidator(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
 		return new SparkTrainerTester(trainer,args);
 	}
-	
 
-	@Override
 	public String setupArgs() throws ZinggClientException, IOException {
-		String configFile = super.setupArgs();
+		String configFile = getClass().getClassLoader().getResource(getConfigFile()).getFile();
+		args = new ArgumentsUtil().createArgumentsFromJSON(configFile, "findTrainingData");
 		String testFile = getClass().getClassLoader().getResource(TEST_DATA_FILE).getFile();
 		// correct the location of test data
 		args.getData()[0].setProp("location", testFile);
 		return configFile;
 	}
 
-	@Override
 	public String setupLinkerArgs() throws ZinggClientException, IOException {
-		String configFile = super.setupLinkerArgs();
+		String configFile = getClass().getClassLoader().getResource(getLinkerConfigFile()).getFile();
+		linkerArgs = new ArgumentsUtil().createArgumentsFromJSON(configFile, "link");
 		String testOneFile = getClass().getClassLoader().getResource(TEST1_DATA_FILE).getFile();
 		// correct the location of test data
 		args.getData()[0].setProp("location", testOneFile);
@@ -121,7 +123,7 @@ public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset
 		// correct the location of test data
 		args.getData()[0].setProp("location", testTwoFile);
 		return configFile;
-	}
+	} 
 	
 	@Override
 	@AfterEach

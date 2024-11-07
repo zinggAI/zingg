@@ -13,8 +13,12 @@ import zingg.common.core.executor.verifyblocking.VerifyBlockingPipes;
 
 public class SparkVerifyBlockingPipes extends VerifyBlockingPipes<SparkSession,Dataset<Row>,Row,Column>{
 
+    public SparkVerifyBlockingPipes(PipeUtilBase<SparkSession,Dataset<Row>,Row,Column> pipeUtil, long timestamp){
+        super(pipeUtil,timestamp);
+    }
+
     @Override
-    public Pipe<Dataset<Row>,Row,Column> getPipeForVerifyBlockingLocation(IArguments args, PipeUtilBase<SparkSession,Dataset<Row>,Row,Column> pipeUtil, long timestamp, String type){
+    public Pipe<Dataset<Row>,Row,Column> getPipeForVerifyBlockingLocation(IArguments args, String type){
         Pipe<Dataset<Row>,Row,Column> p = new Pipe<Dataset<Row>,Row,Column>();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, getName(args,timestamp,type));

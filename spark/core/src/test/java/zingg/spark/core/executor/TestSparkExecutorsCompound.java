@@ -13,6 +13,7 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.AfterEach;
 
+import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IZingg;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.TestExecutorsCompound;
@@ -42,16 +43,11 @@ public class TestSparkExecutorsCompound extends TestExecutorsCompound<SparkSessi
 		this.ctx.setSession(spark);
 		this.ctx.setUtils();
 		init(spark);
+		setupArgs();
 	}
 
 	@Override
 	public String getConfigFile() {
-		return CONFIG_FILE;
-	}
-
-	@Override
-	public String getLinkerConfigFile() {
-		//dummy method
 		return CONFIG_FILE;
 	}
 
@@ -74,15 +70,15 @@ public class TestSparkExecutorsCompound extends TestExecutorsCompound<SparkSessi
 		return new SparkTrainMatchTester(trainMatch,args);
 	}
 
-	@Override
 	public String setupArgs() throws ZinggClientException, IOException {
-		String configFile = super.setupArgs();
+		String configFile = getClass().getClassLoader().getResource(getConfigFile()).getFile();
+		args = new ArgumentsUtil().createArgumentsFromJSON(configFile, "findAndLabel");
 		String testFile = getClass().getClassLoader().getResource(TEST_DATA_FILE).getFile();
 		// correct the location of test data
 		args.getData()[0].setProp("location", testFile);
 		return configFile;
 	}
-	
+
 	@Override
 	@AfterEach
 	public void tearDown() {

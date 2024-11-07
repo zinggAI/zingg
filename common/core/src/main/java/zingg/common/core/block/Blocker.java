@@ -14,13 +14,16 @@ public class Blocker<S,D,R,C,T> {
     private static final long serialVersionUID = 1L;
 	private static final Log LOG = LogFactory.getLog(Blocker.class);
 
-    public Blocker(){
+	BlockingTreeUtil<S,D,R,C,T> blockingTree;
+
+    public Blocker(BlockingTreeUtil<S,D,R,C,T> blockingTree){
+		this.blockingTree = blockingTree;
     }
 
-    public ZFrame<D,R,C> getBlocked(ZFrame<D,R,C> testData, IArguments args, BlockingTreeUtil<S,D,R,C,T> inputTree ) throws Exception, ZinggClientException{
+    public ZFrame<D,R,C> getBlocked(ZFrame<D,R,C> testData, IArguments args) throws Exception, ZinggClientException{
 		LOG.warn("Blocking model location is " + args.getBlockFile());
-		Tree<Canopy<R>> tree = inputTree.readBlockingTree(args);
-		ZFrame<D,R,C> blocked = inputTree.getBlockHashes(testData, tree);
+		Tree<Canopy<R>> tree = blockingTree.readBlockingTree(args);
+		ZFrame<D,R,C> blocked = blockingTree.getBlockHashes(testData, tree);
 		ZFrame<D,R,C> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
 		return blocked1;
 	}

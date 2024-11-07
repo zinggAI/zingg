@@ -1,5 +1,6 @@
 package zingg.common.core.executor;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -13,40 +14,43 @@ import zingg.common.core.executor.verifyblocking.VerifyBlocking;
 public abstract class TestSingleExecutors<S, D, R, C, T> extends TestExecutorsGeneric<S, D, R, C, T> {
 
 
-    public static final Log LOG = LogFactory.getLog(TestSingleExecutors.class);
+	public static final Log LOG = LogFactory.getLog(TestSingleExecutors.class);
 
-    public TestSingleExecutors(){
+	public TestSingleExecutors(){
 
-    }
+	}
 
-    @Override
-    public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException{
+	@Override
+	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException{
 	    TrainingDataFinder<S, D, R, C, T> tdf = getTrainingDataFinder();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf)));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),args,getConfigFile(),"findTrainingData"));
 
 		Labeller<S, D, R, C, T> labeler = getLabeller();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler)));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),args,getConfigFile(),"label"));
 
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf)));
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler)));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),args,getConfigFile(),"findTrainingData"));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),args,getConfigFile(),"label"));
+
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),args,getConfigFile(),"findTrainingData"));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),args,getConfigFile(),"label"));
 
 		Trainer<S, D, R, C, T> trainer = getTrainer();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer)));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer),args,getConfigFile(),"train"));
 
         VerifyBlocking<S, D, R, C, T> verifyBlocker = getVerifyBlocker();
-        executorTesterList.add(new ExecutorTester<S, D, R, C, T>(verifyBlocker, new BlockerValidator<S, D, R, C, T>(verifyBlocker)));
+        executorTesterList.add(new ExecutorTester<S, D, R, C, T>(verifyBlocker, new BlockerValidator<S, D, R, C, T>(verifyBlocker),args,getConfigFile(),"verifyBlocking"));
 
 		Matcher<S, D, R, C, T> matcher = getMatcher();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher)));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher),args,getConfigFile(),"match"));
 
 		Linker<S, D, R, C, T> linker = getLinker();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker)));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker),linkerArgs,getLinkerConfigFile(),"link"));
 
 		return executorTesterList;
 	}
 
     @Test
-	public void testExecutors() throws ZinggClientException {	
+	public void testExecutors() throws ZinggClientException, IOException {	
 
 		List<ExecutorTester<S, D, R, C, T>> executorTesterList = getExecutors();
 
@@ -56,6 +60,10 @@ public abstract class TestSingleExecutors<S, D, R, C, T> extends TestExecutorsGe
 		}
 		
 	}
+
+	public abstract String getConfigFile();
+
+	public abstract String getLinkerConfigFile();
 
     protected abstract TrainingDataFinder<S, D, R, C, T> getTrainingDataFinder() throws ZinggClientException;
 	

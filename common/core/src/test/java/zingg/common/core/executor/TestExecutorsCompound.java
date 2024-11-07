@@ -7,7 +7,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
-import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
 
@@ -19,27 +18,18 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 	}
 
 	@Override
-	public String setupArgs() throws ZinggClientException, IOException {
-		String configFile = getClass().getClassLoader().getResource(getConfigFile()).getFile();
-		args = new ArgumentsUtil().createArgumentsFromJSON(
-			configFile, 
-			"findAndLabel");
-		return configFile;
-	}
-
-	@Override
-	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException{
+	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException{
 		FindAndLabeller<S, D, R, C, T> findAndLabel = getFindAndLabeller();
 		FindAndLabelValidator<S, D, R, C, T> falValidator = new FindAndLabelValidator<S, D, R, C, T>(findAndLabel);
-		ExecutorTester<S, D, R, C, T> et = new ExecutorTester<S, D, R, C, T>(findAndLabel, falValidator);
+		ExecutorTester<S, D, R, C, T> et = new ExecutorTester<S, D, R, C, T>(findAndLabel, falValidator, args, getConfigFile(), "findAndLabel");
 		executorTesterList.add(et);
 		executorTesterList.add(et);
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getTrainMatcher(),getTrainMatchValidator(getTrainMatcher())));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getTrainMatcher(),getTrainMatchValidator(getTrainMatcher()), args, getConfigFile(), "trainMatch"));
 		return executorTesterList;
 	}
 
 	@Test
-	public void testExecutors() throws ZinggClientException {	
+	public void testExecutors() throws ZinggClientException, IOException {	
 
 		List<ExecutorTester<S, D, R, C, T>> executorTesterList = getExecutors();
 
@@ -50,6 +40,8 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 		
 	}
 	
+	public abstract String getConfigFile();
+
 	protected abstract FindAndLabeller<S, D, R, C, T> getFindAndLabeller() throws ZinggClientException;
 
 	protected abstract TrainMatchValidator<S, D, R, C, T> getTrainMatchValidator(TrainMatcher<S, D, R, C, T> trainMatch);
