@@ -7,14 +7,21 @@ import zingg.common.client.util.PipeUtilBase;
 
 public class VerifyBlockingPipes<S,D,R,C> implements IVerifyBlockingPipes<S,D,R,C> {
 
+    protected PipeUtilBase<S,D,R,C> pipeUtil;
+    protected long timestamp;
     Pipe<D,R,C> countsPipe;
     Pipe<D,R,C> blockSamplesPipe; 
-    long timestamp;
+    
+    public VerifyBlockingPipes(PipeUtilBase<S,D,R,C> pipeUtil, long timestamp) {
+    	setPipeUtil(pipeUtil);
+        setTimestamp(timestamp);
+    }
+
 
     @Override
-    public Pipe<D, R, C> getCountsPipe(IArguments args, PipeUtilBase<S,D,R,C> pipeUtil, long timestamp) {
+    public Pipe<D, R, C> getCountsPipe(IArguments args) {
         if(countsPipe == null) {
-        countsPipe = getPipeForVerifyBlockingLocation(args, pipeUtil, timestamp, "counts");
+        countsPipe = getPipeForVerifyBlockingLocation(args, "counts");
         }
         return countsPipe;
     }
@@ -25,8 +32,8 @@ public class VerifyBlockingPipes<S,D,R,C> implements IVerifyBlockingPipes<S,D,R,
     }
 
     @Override
-    public Pipe<D, R, C> getBlockSamplesPipe(IArguments args, PipeUtilBase<S,D,R,C> pipeUtil, long timestamp, String type) {
-        blockSamplesPipe = getPipeForVerifyBlockingLocation(args, pipeUtil, timestamp, type);
+    public Pipe<D, R, C> getBlockSamplesPipe(IArguments args, String type) {
+        blockSamplesPipe = getPipeForVerifyBlockingLocation(args, type);
         return blockSamplesPipe;
     }
 
@@ -37,7 +44,7 @@ public class VerifyBlockingPipes<S,D,R,C> implements IVerifyBlockingPipes<S,D,R,
     }
 
     @Override
-    public Pipe<D,R,C> getPipeForVerifyBlockingLocation(IArguments args, PipeUtilBase<S,D,R,C> pipeUtil, long timestamp, String type){
+    public Pipe<D,R,C> getPipeForVerifyBlockingLocation(IArguments args, String type){
         Pipe<D,R,C> p = new Pipe<D,R,C>();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, getName(args,timestamp,type));
@@ -47,6 +54,18 @@ public class VerifyBlockingPipes<S,D,R,C> implements IVerifyBlockingPipes<S,D,R,
 
     private String getName(IArguments args, long timestamp, String type){
         return args.getZinggModelDir() + "/blocks/" + timestamp + "/" + type;
+    }
+
+
+    @Override
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+
+    @Override
+    public void setPipeUtil(PipeUtilBase<S, D, R, C> pipeUtil) {
+        this.pipeUtil = pipeUtil;
     }
 
     
