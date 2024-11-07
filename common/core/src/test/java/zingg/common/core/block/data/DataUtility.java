@@ -5,6 +5,7 @@ import zingg.common.core.block.model.Customer;
 import zingg.common.core.block.model.CustomerDupe;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class DataUtility {
         this.dataReader = dataReader;
     }
 
-    public List<CustomerDupe> getCustomerDupes(String source, boolean varianceAdded) throws IOException, CsvException {
+    public List<CustomerDupe> getCustomerDupes(String source, boolean varianceAdded) throws IOException, CsvException, URISyntaxException {
 
         List<CustomerDupe> testCustomerDupes = new ArrayList<>();
 
@@ -37,7 +38,7 @@ public class DataUtility {
     }
 
 
-    public List<Customer> getCustomers(String source) throws IOException, CsvException {
+    public List<Customer> getCustomers(String source) throws IOException, CsvException, URISyntaxException {
 
         List<Customer> testCustomers = new ArrayList<>();
 

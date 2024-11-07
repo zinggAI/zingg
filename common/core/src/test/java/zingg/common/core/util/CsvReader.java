@@ -9,8 +9,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class CsvReader implements ICsvReader {
@@ -27,7 +29,7 @@ public class CsvReader implements ICsvReader {
 
     }
 
-    public List<String[]> readDataFromSource(String source) throws IOException, CsvException {
+    public List<String[]> readDataFromSource(String source) throws IOException, CsvException, URISyntaxException {
         CSVReader csvReader = getCSVReader(source);
         List<String[]> allData = csvReader.readAll();
         return allData;
@@ -43,8 +45,9 @@ public class CsvReader implements ICsvReader {
         return records;
     }
 
-    private CSVReader getCSVReader(String source) throws IOException {
-        FileReader filereader = new FileReader(source);
+    private CSVReader getCSVReader(String source) throws IOException, URISyntaxException {
+        File file = new File(Objects.requireNonNull(this.getClass().getClassLoader().getResource(source)).toURI());
+        FileReader filereader = new FileReader(file);
         CSVReader csvReader = new CSVReaderBuilder(filereader)
                 .withSkipLines(1)
                 .build();

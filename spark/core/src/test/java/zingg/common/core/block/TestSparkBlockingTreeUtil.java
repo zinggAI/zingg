@@ -48,7 +48,7 @@ public class TestSparkBlockingTreeUtil extends TestBlockingTreeUtil<SparkSession
 
     @Override
     protected void setTestDataBaseLocation() {
-        TEST_DATA_BASE_LOCATION = "/home/administrator/zingg/zinggOSS/examples/febrl";
+        TEST_DATA_BASE_LOCATION = "testFebrl";
     }
 
     @Override

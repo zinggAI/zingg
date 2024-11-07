@@ -74,9 +74,9 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
     public void testSameBlockingTree(ZFrame<D, R, C> zFrameTest, ZFrame<D, R, C> zFramePositives) throws Exception, ZinggClientException {
         setTestDataBaseLocation();
         HashUtil<S, D, R, C, T> hashUtil = getHashUtil();
-
+        String configFile = Objects.requireNonNull(getClass().getClassLoader().getResource(TEST_DATA_BASE_LOCATION + "/" + CONFIG_FILE)).getFile();
         IArguments args = new ArgumentsUtil(Arguments.class).createArgumentsFromJSON(
-                TEST_DATA_BASE_LOCATION + "/" + CONFIG_FILE,
+                configFile,
                 "");
         args.setBlockSize(8);
 
