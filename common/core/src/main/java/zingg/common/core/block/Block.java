@@ -21,6 +21,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final Log LOG = LogFactory.getLog(Block.class);
+	private final BlockUtility<R> blockUtility;
 
 	protected ZFrame<D,R,C> dupes;
 	// Class[] types;
@@ -30,13 +31,14 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	protected ListMap<HashFunction<D,R,C,T>, String> childless;
 
 	public Block() {
-		
-	}
+		blockUtility = new BlockUtility<R>();
+    }
 
 	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes) {
 		this.training = training;
 		this.dupes = dupes;
 		childless =  new ListMap<HashFunction<D,R,C,T>, String>();
+		blockUtility = new BlockUtility<R>();
 		// types = getSampleTypes();
 		/*
 		 * for (Class type : types) { LOG.info("Type is " + type); }
@@ -121,11 +123,13 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	}
 
 	public Canopy<R>getBestNode(Tree<Canopy<R>> tree, Canopy<R>parent, Canopy<R>node,
-			List<FieldDefinition> fieldsOfInterest) throws Exception {
+			List<FieldDefinition> fieldsOfInterest, int startIndexToIterate) throws Exception {
 		long least = Long.MAX_VALUE;
 		int maxElimination = 0;
+		int numberOfFields = fieldsOfInterest.size();
 		Canopy<R>best = null;
-		for (FieldDefinition field : fieldsOfInterest) {
+		for (int fieldsToExplore = 0; fieldsToExplore < numberOfFields; startIndexToIterate = (startIndexToIterate + 1) % numberOfFields, fieldsToExplore++) {
+			FieldDefinition field = fieldsOfInterest.get(startIndexToIterate);
 			if (LOG.isDebugEnabled()){
 				LOG.debug("Trying for " + field + " with data type " + field.getDataType() + " and real dt " 
 					+ getFeatureFactory().getDataTypeFromString(field.getDataType()));
@@ -217,7 +221,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	 * @throws ZinggClientException 
 	 */
 	public Tree<Canopy<R>> getBlockingTree(Tree<Canopy<R>> tree, Canopy<R>parent,
-			Canopy<R>node, List<FieldDefinition> fieldsOfInterest) throws Exception, ZinggClientException {
+			Canopy<R>node, List<FieldDefinition> fieldsOfInterest, int startIndexToIterate) throws Exception, ZinggClientException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Tree so far ");
 			LOG.debug(tree);
@@ -228,8 +232,11 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		}
 		if (size > maxSize && node.getDupeN() != null && node.getDupeN().size() > 0) {
 			LOG.debug("Size is bigger ");
-			Canopy<R>best = getBestNode(tree, parent, node, fieldsOfInterest);
+			Canopy<R>best = getBestNode(tree, parent, node, fieldsOfInterest, startIndexToIterate == -1 ? 0 : startIndexToIterate);
 			if (best != null) {
+				if (startIndexToIterate != -1) {
+					startIndexToIterate = blockUtility.getStartIndexToIterateOverFields(best, fieldsOfInterest);
+				}
 				if (LOG.isDebugEnabled()) {
 					LOG.debug(" HashFunction is " + best + " and node is " + node);
 				}
@@ -255,7 +262,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 						LOG.debug(" Finding for " + n);
 					}
 				
-					getBlockingTree(tree, node, n, fieldsOfInterest);
+					getBlockingTree(tree, node, n, fieldsOfInterest, startIndexToIterate);
 				}
 			}
 			else {

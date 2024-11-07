@@ -16,6 +16,8 @@ import zingg.common.client.util.PipeUtilBase;
 import zingg.common.client.util.Util;
 import zingg.common.core.block.Block;
 import zingg.common.core.block.Canopy;
+import zingg.common.core.block.FieldIteratorType;
+import zingg.common.core.block.StartIndexProvider;
 import zingg.common.core.block.Tree;
 import zingg.common.core.hash.HashFunction;
 
@@ -67,9 +69,12 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 				fd.add(def);	
 			}
 		}
-
+		//set this value as
+		//DEFAULT: default
+		//NEXT_FIELD: start from next field definition for every bestNode call
+		//in child
 		Tree<Canopy<R>> blockingTree = cblock.getBlockingTree(null, null, root,
-				fd);
+				fd, StartIndexProvider.getStartIndex(FieldIteratorType.NEXT_FIELD));
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("The blocking tree is ");
 			blockingTree.print(2);
