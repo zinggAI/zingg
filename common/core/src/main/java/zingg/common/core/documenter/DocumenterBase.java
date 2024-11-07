@@ -53,7 +53,7 @@ public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return cfg;
 	}
 
-	protected void writeDocument(String template, Map<String, Object> root, String fileName)
+	public void writeDocument(String template, Map<String, Object> root, String fileName)
 			throws ZinggClientException {
 		try {
 			Configuration cfg = getTemplateConfig();
@@ -67,7 +67,7 @@ public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		}
 	}
 
-	protected void checkAndCreateDir(String dirName) {
+	public void checkAndCreateDir(String dirName) {
 		File directory = new File(dirName);
 		if (!directory.exists()) {
 			directory.mkdirs();

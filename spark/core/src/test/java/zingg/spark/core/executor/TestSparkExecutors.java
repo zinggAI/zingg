@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -13,15 +12,11 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.AfterEach;
 
-import zingg.common.client.IZingg;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.Labeller;
-import zingg.common.core.executor.TestExecutorsCompound;
 import zingg.common.core.executor.TestExecutorsGeneric;
-import zingg.common.core.executor.TrainMatcher;
 import zingg.common.core.executor.Trainer;
-import zingg.common.core.executor.TrainerValidator;
-import zingg.session.SparkSessionProvider;
+import zingg.spark.core.session.SparkSessionProvider;
 import zingg.spark.core.context.ZinggSparkContext;
 
 public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Dataset<Row>,Row,Column,DataType> {
