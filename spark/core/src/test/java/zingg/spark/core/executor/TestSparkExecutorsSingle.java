@@ -23,15 +23,15 @@ import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.executor.labeller.ProgrammaticSparkLabeller;
 import zingg.spark.core.executor.validate.SparkTrainerValidator;
 
-public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset<Row>,Row,Column,DataType> {
+public class TestSparkExecutorsSingle extends TestSingleExecutors<SparkSession,Dataset<Row>,Row,Column,DataType> {
 	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
 	protected static final String CONFIGLINK_FILE = "zingg/spark/core/executor/configSparkLinkTest.json";
 	
-	public static final Log LOG = LogFactory.getLog(TestSparkExecutors.class);
+	public static final Log LOG = LogFactory.getLog(TestSparkExecutorsSingle.class);
 	
 	protected ZinggSparkContext ctx;
 	
-	public TestSparkExecutors() throws IOException, ZinggClientException {	
+	public TestSparkExecutorsSingle() throws IOException, ZinggClientException {	
 		SparkSession spark = SparkSession
 				.builder()
 				.master("local[*]")
