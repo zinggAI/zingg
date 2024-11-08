@@ -25,12 +25,8 @@ import zingg.spark.core.executor.validate.SparkTrainerValidator;
 
 public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset<Row>,Row,Column,DataType> {
 	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
-	protected static final String TEST_DATA_FILE = "zingg/spark/core/executor/test.csv";
-
 	protected static final String CONFIGLINK_FILE = "zingg/spark/core/executor/configSparkLinkTest.json";
-	protected static final String TEST1_DATA_FILE = "zingg/spark/core/executor/test1.csv";
-	protected static final String TEST2_DATA_FILE = "zingg/spark/core/executor/test2.csv";
-
+	
 	public static final Log LOG = LogFactory.getLog(TestSparkExecutors.class);
 	
 	protected ZinggSparkContext ctx;
@@ -104,29 +100,5 @@ public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset
 		return new SparkTrainerValidator(trainer);
 	}
 
-	/* 
 	
-
-	public String setupLinkerArgs() throws ZinggClientException, IOException {
-		String configFile = getClass().getClassLoader().getResource(getLinkerConfigFile()).getFile();
-		linkerArgs = new ArgumentsUtil().createArgumentsFromJSON(configFile, "link");
-		String testOneFile = getClass().getClassLoader().getResource(TEST1_DATA_FILE).getFile();
-		// correct the location of test data
-		args.getData()[0].setProp("location", testOneFile);
-		String testTwoFile = getClass().getClassLoader().getResource(TEST2_DATA_FILE).getFile();
-		// correct the location of test data
-		args.getData()[0].setProp("location", testTwoFile);
-		return configFile;
-	} 
-		
-	
-	@Override
-	@AfterEach
-	public void tearDown() {
-		// just rename, would be removed automatically as it's in /tmp
-		File dir = new File(args.getZinggDir());
-	    File newDir = new File(dir.getParent() + "/zingg_junit_" + System.currentTimeMillis());
-	    dir.renameTo(newDir);
-	}
-*/
 }
