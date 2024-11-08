@@ -24,6 +24,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	public double percentageOfBlockedRecords = 0.1 ;
 	public static final String hashColumn = ColName.HASH_COL;
 	public static final String hashCountsColumn = ColName.HASH_COL + "_count";
+	IVerifyBlockingPipes verifyBlockingPipe;
 
 	public VerifyBlocking() {
     	setZinggOption(ZinggOptions.VERIFY_BLOCKING);
@@ -37,10 +38,10 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
 			ZFrame<D,R,C> blocked = new Blocker<S,D,R,C,T>(getBlockingTreeUtil()).getBlocked(testDataOriginal,args);
 			LOG.info("Blocked");
-			IVerifyBlockingPipes verifyBlockingPipe = new VerifyBlockingPipes<S,D,R,C>(getPipeUtil(), timestamp);
+			
 			ZFrame<D,R,C> blockCounts = blocked.select(hashColumn).groupByCount(hashColumn, hashCountsColumn).sortDescending(hashCountsColumn);
 
-            getPipeUtil().write(blockCounts,verifyBlockingPipe.getCountsPipe(args));	
+            getPipeUtil().write(blockCounts,getVerifyBlockingPipe().getCountsPipe(args));	
 
 			ZFrame<D,R,C> blockTopRec = blockCounts.select(hashColumn,hashCountsColumn).limit(noOfBlocks);
 
@@ -66,7 +67,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			int sampleSize = Math.max(1, (int) Math.ceil(count * percentageOfBlockedRecords));
 			ZFrame<D,R,C> matchingRecords = null;
 			matchingRecords = blocked.filter(blocked.equalTo(hashColumn,String.valueOf(hash))).limit(sampleSize);
-			getPipeUtil().write(matchingRecords, verifyBlockingPipe.getBlockSamplesPipe(args, "blockSamples/" + hash));
+			getPipeUtil().write(matchingRecords, getVerifyBlockingPipe().getBlockSamplesPipe(args, "blockSamples/" + hash));
 		}
 		
 	}
@@ -84,7 +85,16 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		this.timestamp = timestamp;
 	}
 
-    
+	public IVerifyBlockingPipes<S,D,R,C> getVerifyBlockingPipe(){
+		if(verifyBlockingPipe == null){
+			verifyBlockingPipe = new VerifyBlockingPipes<S,D,R,C>(getPipeUtil(), timestamp);
+		}
+		return verifyBlockingPipe;
+	}
+
+    public void setVerifyBlockingPipe(IVerifyBlockingPipes<S,D,R,C> verifyBlockingPipe){
+		this.verifyBlockingPipe = verifyBlockingPipe;
+	}
 
 }
 
