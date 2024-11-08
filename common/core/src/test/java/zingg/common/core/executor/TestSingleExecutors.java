@@ -50,7 +50,7 @@ public abstract class TestSingleExecutors<S, D, R, C, T> extends TestExecutorsGe
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher),getConfigFile()));
 
 		Linker<S, D, R, C, T> linker = getLinker();
-		//executorTesterList.add(new LinkerExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker),getLinkerConfigFile()));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker),getLinkerConfigFile()));
 
 		return executorTesterList;
 	}
