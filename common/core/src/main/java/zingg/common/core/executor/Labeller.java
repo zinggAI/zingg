@@ -137,7 +137,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 	}
 
 	
-	protected int displayRecordsAndGetUserInput(ZFrame<D,R,C> records, String preMessage, String postMessage) {
+	protected int displayRecordsAndGetUserInput(ZFrame<D,R,C> records, String preMessage, String postMessage) throws ZinggClientException {
 		getLabelDataViewHelper().displayRecords(records, preMessage, postMessage);
 		int selection = readCliInput();
 		return selection;

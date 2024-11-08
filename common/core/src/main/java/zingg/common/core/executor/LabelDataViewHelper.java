@@ -84,7 +84,7 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	
 	
 	@Override
-	public void displayRecords(ZFrame<D, R, C> records, String preMessage, String postMessage) {
+	public void displayRecords(ZFrame<D, R, C> records, String preMessage, String postMessage) throws ZinggClientException {
 		//System.out.println();
 		System.out.println(preMessage);
 //		records.show(false);

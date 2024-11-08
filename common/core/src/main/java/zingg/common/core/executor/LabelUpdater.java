@@ -124,7 +124,7 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 		return updatedRecords;
 	}
 
-	protected int getUserInput(ZFrame<D,R,C> lines,ZFrame<D,R,C> currentPair,String cluster_id) {
+	protected int getUserInput(ZFrame<D,R,C> lines,ZFrame<D,R,C> currentPair,String cluster_id) throws ZinggClientException {
 //		List<C> displayCols = getDSUtil().getFieldDefColumns(lines, args, false, args.getShowConcise());
 		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition(), false, args.getShowConcise());
 		int matchFlag = currentPair.getAsInt(currentPair.head(),ColName.MATCH_FLAG_COL);
