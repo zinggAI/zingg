@@ -1,4 +1,4 @@
-package zingg.common.core.executor;
+package zingg.common.core.executor.validate;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.executor.TrainingDataFinder;
 
 public class TrainingDataFinderValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
 

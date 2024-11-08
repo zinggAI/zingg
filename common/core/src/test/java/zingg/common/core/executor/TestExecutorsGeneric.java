@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.jupiter.api.Test;
 
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
@@ -14,11 +15,9 @@ import zingg.common.client.ZinggClientException;
 public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
 	public static final Log LOG = LogFactory.getLog(TestExecutorsGeneric.class);
-	
-	protected IArguments args;
-	protected IArguments linkerArgs;
+
 	protected S session;
-	protected ClientOptions options;
+	List<ExecutorTester<S, D, R, C, T>> executorTesterList = new ArrayList<ExecutorTester<S, D, R, C, T>>();
 	
 	public TestExecutorsGeneric() {
 					
@@ -32,11 +31,24 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 		this.session = s;		
 	}
 
-	List<ExecutorTester<S, D, R, C, T>> executorTesterList = new ArrayList<ExecutorTester<S, D, R, C, T>>();
+	
 
 	public abstract List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException;
 
-	public abstract void tearDown();	
+	//public abstract void tearDown();	
+
+	 @Test
+	public void testExecutors() throws ZinggClientException, IOException {	
+
+		List<ExecutorTester<S, D, R, C, T>> executorTesterList = getExecutors();
+
+		for (ExecutorTester<S, D, R, C, T> executorTester : executorTesterList) {
+			executorTester.setupArgs();
+			executorTester.initAndExecute(session);
+			executorTester.validateResults();
+		}
+		
+	}
 	
 
 }

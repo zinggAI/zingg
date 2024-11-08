@@ -20,6 +20,8 @@ import zingg.common.core.executor.Labeller;
 import zingg.common.core.executor.TestSingleExecutors;
 import zingg.common.core.executor.Trainer;
 import zingg.spark.core.context.ZinggSparkContext;
+import zingg.spark.core.executor.labeller.ProgrammaticSparkLabeller;
+import zingg.spark.core.executor.validate.SparkTrainerValidator;
 
 public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset<Row>,Row,Column,DataType> {
 	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
@@ -48,8 +50,6 @@ public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset
 		this.ctx.setSession(spark);
 		this.ctx.setUtils();
 		init(spark);
-		setupArgs();
-		setupLinkerArgs();
 	}
 
 	@Override
@@ -100,18 +100,12 @@ public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset
 	} 
 
 	@Override
-	protected SparkTrainerTester getTrainerValidator(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
-		return new SparkTrainerTester(trainer,args);
+	protected SparkTrainerValidator getTrainerValidator(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
+		return new SparkTrainerValidator(trainer);
 	}
 
-	public String setupArgs() throws ZinggClientException, IOException {
-		String configFile = getClass().getClassLoader().getResource(getConfigFile()).getFile();
-		args = new ArgumentsUtil().createArgumentsFromJSON(configFile, "findTrainingData");
-		String testFile = getClass().getClassLoader().getResource(TEST_DATA_FILE).getFile();
-		// correct the location of test data
-		args.getData()[0].setProp("location", testFile);
-		return configFile;
-	}
+	/* 
+	
 
 	public String setupLinkerArgs() throws ZinggClientException, IOException {
 		String configFile = getClass().getClassLoader().getResource(getLinkerConfigFile()).getFile();
@@ -124,6 +118,7 @@ public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset
 		args.getData()[0].setProp("location", testTwoFile);
 		return configFile;
 	} 
+		
 	
 	@Override
 	@AfterEach
@@ -133,5 +128,5 @@ public class TestSparkExecutors extends TestSingleExecutors<SparkSession,Dataset
 	    File newDir = new File(dir.getParent() + "/zingg_junit_" + System.currentTimeMillis());
 	    dir.renameTo(newDir);
 	}
-
+*/
 }

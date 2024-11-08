@@ -9,6 +9,8 @@ import zingg.common.client.IArguments;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.pipe.Pipe;
+import zingg.common.core.executor.validate.ExecutorValidator;
 
 public class ExecutorTester<S, D, R, C, T>{
 
@@ -18,28 +20,32 @@ public class ExecutorTester<S, D, R, C, T>{
 	public ExecutorValidator<S, D, R, C, T> validator;
 	protected IArguments args;
 	protected String configFile;
-	protected String phase;
 	
-	public ExecutorTester(ZinggBase<S, D, R, C, T> executor,ExecutorValidator<S, D, R, C, T> validator, IArguments args, String configFile, String phase) throws ZinggClientException, IOException {
+	public ExecutorTester(ZinggBase<S, D, R, C, T> executor,ExecutorValidator<S, D, R, C, T> validator, String configFile) throws ZinggClientException, IOException {
 		this.executor = executor;
 		this.validator = validator;
-		this.args = setupArgs(configFile, phase);
-		this.configFile = setupConfigFile(configFile, phase);
+		this.configFile = configFile;
+		setupArgs();
 	}
 
 	public IArguments setupArgs(String configFile, String phase) throws ZinggClientException, IOException {
 		args = new ArgumentsUtil().createArgumentsFromJSON(getClass().getClassLoader().getResource(configFile).getFile(), phase);
+		for (Pipe p: args.getData()) {
+			if (p.getProps().containsKey("location")) {
+				String testOneFile = getClass().getClassLoader().getResource(p.get("location")).getFile();
+				// correct the location of test data
+				p.setProp("location", testOneFile);
+			}
+		}
 		return args;
 	}
 
-	public String setupConfigFile(String configFile, String phase) throws ZinggClientException, IOException {
-		String config = getClass().getClassLoader().getResource(configFile).getFile();
-		args = new ArgumentsUtil().createArgumentsFromJSON(config, phase);
-		return config;
+	public void setupArgs() throws ZinggClientException, IOException{
+		this.args = setupArgs(configFile, "");
 	}
 
-	public void initAndExecute(IArguments args, S session, ClientOptions c) throws ZinggClientException {
-		executor.init(args,session, c);
+	public void initAndExecute(S session) throws ZinggClientException {
+		executor.init(args,session, new ClientOptions());
 		executor.execute();
 	}
 	

@@ -19,6 +19,8 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.TestExecutorsCompound;
 import zingg.common.core.executor.TrainMatcher;
 import zingg.spark.core.context.ZinggSparkContext;
+import zingg.spark.core.executor.labeller.ProgrammaticSparkLabeller;
+import zingg.spark.core.executor.validate.SparkTrainMatchValidator;
 
 public class TestSparkExecutorsCompound extends TestExecutorsCompound<SparkSession,Dataset<Row>,Row,Column,DataType> {
 	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
@@ -43,7 +45,7 @@ public class TestSparkExecutorsCompound extends TestExecutorsCompound<SparkSessi
 		this.ctx.setSession(spark);
 		this.ctx.setUtils();
 		init(spark);
-		setupArgs();
+		//setupArgs();
 	}
 
 	@Override
@@ -66,19 +68,11 @@ public class TestSparkExecutorsCompound extends TestExecutorsCompound<SparkSessi
 	}
 
 	@Override
-	protected SparkTrainMatchTester getTrainMatchValidator(TrainMatcher<SparkSession,Dataset<Row>,Row,Column,DataType> trainMatch) {
-		return new SparkTrainMatchTester(trainMatch,args);
+	protected SparkTrainMatchValidator getTrainMatchValidator(TrainMatcher<SparkSession,Dataset<Row>,Row,Column,DataType> trainMatch) {
+		return new SparkTrainMatchValidator(trainMatch);
 	}
 
-	public String setupArgs() throws ZinggClientException, IOException {
-		String configFile = getClass().getClassLoader().getResource(getConfigFile()).getFile();
-		args = new ArgumentsUtil().createArgumentsFromJSON(configFile, "findAndLabel");
-		String testFile = getClass().getClassLoader().getResource(TEST_DATA_FILE).getFile();
-		// correct the location of test data
-		args.getData()[0].setProp("location", testFile);
-		return configFile;
-	}
-
+	/* 
 	@Override
 	@AfterEach
 	public void tearDown() {
@@ -87,6 +81,6 @@ public class TestSparkExecutorsCompound extends TestExecutorsCompound<SparkSessi
 	    File newDir = new File(dir.getParent() + "/zingg_junit_" + System.currentTimeMillis());
 	    dir.renameTo(newDir);
 	}
-
+*/
 	
 }
