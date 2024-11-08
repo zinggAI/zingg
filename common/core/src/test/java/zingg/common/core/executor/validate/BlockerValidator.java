@@ -1,4 +1,4 @@
-package zingg.common.core.executor;
+package zingg.common.core.executor.validate;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

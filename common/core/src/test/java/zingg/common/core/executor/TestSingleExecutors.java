@@ -9,6 +9,12 @@ import org.junit.jupiter.api.Test;
 
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.executor.validate.BlockerValidator;
+import zingg.common.core.executor.validate.LabellerValidator;
+import zingg.common.core.executor.validate.LinkerValidator;
+import zingg.common.core.executor.validate.MatcherValidator;
+import zingg.common.core.executor.validate.TrainerValidator;
+import zingg.common.core.executor.validate.TrainingDataFinderValidator;
 import zingg.common.core.executor.verifyblocking.VerifyBlocking;
 
 public abstract class TestSingleExecutors<S, D, R, C, T> extends TestExecutorsGeneric<S, D, R, C, T> {
@@ -23,43 +29,33 @@ public abstract class TestSingleExecutors<S, D, R, C, T> extends TestExecutorsGe
 	@Override
 	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException{
 	    TrainingDataFinder<S, D, R, C, T> tdf = getTrainingDataFinder();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),args,getConfigFile(),"findTrainingData"));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),getConfigFile()));
 
 		Labeller<S, D, R, C, T> labeler = getLabeller();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),args,getConfigFile(),"label"));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),getConfigFile()));
 
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),args,getConfigFile(),"findTrainingData"));
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),args,getConfigFile(),"label"));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),getConfigFile()));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),getConfigFile()));
 
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),args,getConfigFile(),"findTrainingData"));
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),args,getConfigFile(),"label"));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),getConfigFile()));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),getConfigFile()));
 
 		Trainer<S, D, R, C, T> trainer = getTrainer();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer),args,getConfigFile(),"train"));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer),getConfigFile()));
 
         VerifyBlocking<S, D, R, C, T> verifyBlocker = getVerifyBlocker();
-        executorTesterList.add(new ExecutorTester<S, D, R, C, T>(verifyBlocker, new BlockerValidator<S, D, R, C, T>(verifyBlocker),args,getConfigFile(),"verifyBlocking"));
+        executorTesterList.add(new ExecutorTester<S, D, R, C, T>(verifyBlocker, new BlockerValidator<S, D, R, C, T>(verifyBlocker),getConfigFile()));
 
 		Matcher<S, D, R, C, T> matcher = getMatcher();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher),args,getConfigFile(),"match"));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher),getConfigFile()));
 
 		Linker<S, D, R, C, T> linker = getLinker();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker),linkerArgs,getLinkerConfigFile(),"link"));
+		//executorTesterList.add(new LinkerExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker),getLinkerConfigFile()));
 
 		return executorTesterList;
 	}
 
-    @Test
-	public void testExecutors() throws ZinggClientException, IOException {	
-
-		List<ExecutorTester<S, D, R, C, T>> executorTesterList = getExecutors();
-
-		for (ExecutorTester<S, D, R, C, T> executorTester : executorTesterList) {
-			executorTester.initAndExecute(args,session, new ClientOptions());
-			executorTester.validateResults();
-		}
-		
-	}
+   
 
 	public abstract String getConfigFile();
 

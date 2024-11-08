@@ -1,10 +1,11 @@
-package zingg.common.core.executor;
+package zingg.common.core.executor.validate;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.executor.Matcher;
 
 public class LinkerValidator<S, D, R, C, T> extends MatcherValidator<S, D, R, C, T> {
 

@@ -1,20 +1,19 @@
-package zingg.common.core.executor;
+package zingg.common.core.executor.validate;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.executor.Trainer;
 
 public class TrainerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
 
 	public static final Log LOG = LogFactory.getLog(TrainerValidator.class);
 	
-	protected IArguments args;
 	
-	public TrainerValidator(Trainer<S, D, R, C, T> executor,IArguments args) {
+	public TrainerValidator(Trainer<S, D, R, C, T> executor) {
 		super(executor);
-		this.args = args;
 	}
 
 	@Override
