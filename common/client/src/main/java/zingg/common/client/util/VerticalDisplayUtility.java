@@ -11,6 +11,8 @@ public abstract class VerticalDisplayUtility<D, R, C> {
     public static String HEADER_COL_2 = "Value1";
     public static String HEADER_COL_3 = "Value2";
     public static String ORDER_COL = "order";
+    //set these value to > 1000
+    //if more than 1000 columns are there
     public static Integer MAX_COLUMNS = 1000;
 
     public void showVertical(D df) throws ZinggClientException {
@@ -24,7 +26,7 @@ public abstract class VerticalDisplayUtility<D, R, C> {
         return getZFrame(dataFrame);
     }
 
-    public D transposeDF(D df, List<String> columns) throws ZinggClientException {
+    private D transposeDF(D df, List<String> columns) throws ZinggClientException {
 
         try {
             List<Pair<String, String>> comparison_pairs = getComparisonPairs(df);
