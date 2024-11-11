@@ -7,8 +7,8 @@ jobs:
     name: load-test-spark
     runs-on: ubuntu-latest
     env:
-      - SPARK_MASTER=local[*]
-      - /home/administrator/zingg/zinggOSS/assembly/target
+      - SPARK_MASTER: local[*]
+      - ZINGG_HOME: /home/administrator/zingg/zinggOSS/assembly/target
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content to github runner.
