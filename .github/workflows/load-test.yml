@@ -31,8 +31,6 @@ jobs:
         run: mvn clean
       - name: Build with Maven
         run: mvn clean compile package -DskipTests=true
-      - name: list current directory
-        run: ls assembly/target
       - name: execute py script
         run: |
           python loadTest.py
