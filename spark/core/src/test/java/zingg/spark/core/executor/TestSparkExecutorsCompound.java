@@ -1,6 +1,5 @@
 package zingg.spark.core.executor;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.logging.Log;
@@ -11,9 +10,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
-import org.junit.jupiter.api.AfterEach;
 
-import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IZingg;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.TestExecutorsCompound;

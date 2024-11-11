@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.jupiter.api.Test;
 
-import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.validate.BlockerValidator;
 import zingg.common.core.executor.validate.LabellerValidator;
@@ -17,12 +15,12 @@ import zingg.common.core.executor.validate.TrainerValidator;
 import zingg.common.core.executor.validate.TrainingDataFinderValidator;
 import zingg.common.core.executor.verifyblocking.VerifyBlocking;
 
-public abstract class TestSingleExecutors<S, D, R, C, T> extends TestExecutorsGeneric<S, D, R, C, T> {
+public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGeneric<S, D, R, C, T> {
 
 
-	public static final Log LOG = LogFactory.getLog(TestSingleExecutors.class);
+	public static final Log LOG = LogFactory.getLog(TestExecutorsSingle.class);
 
-	public TestSingleExecutors(){
+	public TestExecutorsSingle(){
 
 	}
 
