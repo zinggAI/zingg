@@ -1,8 +1,8 @@
 package zingg.common.core.util;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import zingg.common.client.ZFrame;
-import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.client.util.VerticalDisplayUtility;
 
@@ -18,31 +18,35 @@ public abstract class TestVerticalDisplayUtility<S, D, R, C> {
     }
 
     @Test
-    public void testWithoutNulls() throws Exception, ZinggClientException {
+    public void testWithoutNulls() throws Exception {
         VerticalDisplayUtility<D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getDataWithoutNulls(), Customer.class);
-        verticalDisplayUtility.showVertical(zFrame.df());
+
+        Assertions.assertDoesNotThrow(() -> verticalDisplayUtility.showVertical(zFrame.df()));
     }
 
     @Test
-    public void testWithNulls() throws Exception, ZinggClientException {
+    public void testWithNulls() throws Exception {
         VerticalDisplayUtility<D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getDataWithNulls(), Customer.class);
-        verticalDisplayUtility.showVertical(zFrame.df());
+
+        Assertions.assertDoesNotThrow(() -> verticalDisplayUtility.showVertical(zFrame.df()));
     }
 
     @Test
-    public void testWithFullRowNullExceptPrimaryKey() throws Exception, ZinggClientException {
+    public void testWithFullRowNullExceptPrimaryKey() throws Exception {
         VerticalDisplayUtility<D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getDataWithFullRowNullExceptPrimaryKey(), Customer.class);
-        verticalDisplayUtility.showVertical(zFrame.df());
+
+        Assertions.assertDoesNotThrow(() -> verticalDisplayUtility.showVertical(zFrame.df()));
     }
 
     @Test
-    public void testWithFullRowNull() throws Exception, ZinggClientException {
+    public void testWithFullRowNull() throws Exception {
         VerticalDisplayUtility<D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getDataWithFullRowNull(), Customer.class);
-        verticalDisplayUtility.showVertical(zFrame.df());
+
+        Assertions.assertDoesNotThrow(() -> verticalDisplayUtility.showVertical(zFrame.df()));
     }
 
 
