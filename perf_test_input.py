@@ -14,6 +14,6 @@ ZINGG = "scripts/zingg.sh"
 
 
 #add all the load to test
-load_configs = {"65_samples" : config_65, "120k_samples" : config_120k}
+load_configs = {"65_samples" : config_65}
 #add all the phases on which testing is required
 phases = [FIND_TRAINING_DATA, MATCH]

@@ -1,8 +1,6 @@
 name: load-test
 
-on:
-  schedule:
-    - cron: "0 0 */3 * *"
+on: [push]
 
 jobs:
   load-test:
@@ -15,6 +13,19 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.12.7 #install the python needed
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: temurin
+      - name: setup spark
+        uses: vemonet/setup-spark@v1
+        with:
+          spark-version: '3.5.3'
+          hadoop-version: '3'
+      - name: mvn init
+        run: mvn initialize
+      - name: Build with Maven
+        run: mvn clean package
       - name: execute py script
         run: |
           python loadTest.py
