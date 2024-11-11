@@ -1,6 +1,8 @@
 name: load-test
 
-on: [push]
+on:
+  schedule:
+    - cron: "0 0 */3 * *"
 
 jobs:
   load-test:
