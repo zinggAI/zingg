@@ -19,7 +19,7 @@ def perf_test_small_all():
 
 def run_phase(phase, conf):
     print("Running phase - " + phase)
-    return subprocess.run(ZINGG + " %s %s %s %s" % ("--phase", phase, "--conf", conf), stderr=PIPE, stdout=PIPE, shell=True)
+    return subprocess.call(ZINGG + " %s %s %s %s" % ("--phase", phase, "--conf", conf), shell=True)
 
 def perf_test_small(phase):
     return "small_test_running"
@@ -30,7 +30,7 @@ def write_on_start():
     f.write("******************************** perf test report, " + str(date.today()) + " ********************************\n\n");
     f.write("--------- Test bed details ---------\n")
     f.write("Load samples: ")
-    for config, load in load_configs.items():
+    for load, config in load_configs.items():
         f.write(str(load) + " ")
     f.write("\n")
     f.write("Phases: ")
@@ -47,11 +47,13 @@ def write_on_complete():
 
 
 
-def write_success_stats(phase_time):
+def write_success_stats(phase_time, load):
     f = open("loadTestReport_" + str(start_time), "a+")
-    f.write("PHASE\t\t\t\t\tTIME_TAKEN_IN_MINUTES\n")
+    f.write("{:>50}".format("capturing for " + load) + "\n")
+    f.write("PHASE {:>65}".format("TIME_TAKEN_IN_MINUTES") + "\n")
     for phase, time in phase_time.items():
-        f.write(success_message(phase, time/60) + "\n\n")
+        f.write(success_message(phase, time/60) + "\n")
+    f.write("\n")
     f.close()
 
 def write_failure_stats(phase_error):
@@ -75,7 +77,7 @@ def perform_load_test():
         for phase in phases_to_test:
             try:
                 t1 = time.time()
-                run_phase(phase, config)
+                r = run_phase(phase, config)
                 t2 = time.time()
                 phase_time[phase] = t2 - t1
             except Exception as e:
@@ -84,14 +86,14 @@ def perform_load_test():
 
         #write success data to file
         if phase_time:
-            write_success_stats(phase_time)
+            write_success_stats(phase_time, load)
         #write failure data to file
         if phase_error:
             write_failure_stats(phase_error)
 
 
 def success_message(phase, time):
-    return phase + "        " + str(time)
+    return "{:<20} {:>50}".format(phase, str(time))
 
 def error_message(phase, error):
     return phase + " failed with error " + str(error) + "\n"
