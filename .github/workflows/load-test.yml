@@ -22,6 +22,8 @@ jobs:
         with:
           spark-version: '3.5.3'
           hadoop-version: '3'
+      - name: check spark
+        run: spark-submit --version
       - name: mvn clean
         run: mvn clean
       - name: Build with Maven
