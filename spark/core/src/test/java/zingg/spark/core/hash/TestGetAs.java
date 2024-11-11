@@ -5,9 +5,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.io.input.TeeInputStream;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructField;
@@ -22,9 +24,11 @@ public class TestGetAs {
 
 	protected static final String FIELD_DOUBLE = "fieldDouble";
 	protected static final String FIELD_INTEGER = "fieldInteger";
-	Dataset<Row> df;
-	List<Row> rows;
-	StructType schema = new StructType();
+	private final SparkSession sparkSession;
+
+	public TestGetAs(SparkSession sparkSession) {
+		this.sparkSession = sparkSession;
+	}
 
 	/*test values: 0.5 gbp/gbp<blank> etc. and that are expected to be converted to nulls*/
 	@Test
@@ -123,9 +127,9 @@ public class TestGetAs {
 	}
 
 
-	private static List<Row> createDFWithSampleNumerics(String a[], StructType schema) {
-		Dataset<String> dsStr = TestSparkBase.spark.createDataset(Arrays.asList(a), Encoders.STRING());
-		Dataset<Row> df = TestSparkBase.spark.read().schema(schema).csv(dsStr);
+	private List<Row> createDFWithSampleNumerics(String a[], StructType schema) {
+		Dataset<String> dsStr = sparkSession.createDataset(Arrays.asList(a), Encoders.STRING());
+		Dataset<Row> df = sparkSession.read().schema(schema).csv(dsStr);
 		List<Row> row = df.collectAsList();
 		return row;
 	}

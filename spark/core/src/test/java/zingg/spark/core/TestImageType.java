@@ -10,6 +10,7 @@ import java.util.Arrays;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
+import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.Metadata;
@@ -26,6 +27,11 @@ public class TestImageType {
 	
 	
 	private static final double SMALL_DELTA = 0.0000000001;
+	private final SparkSession sparkSession;
+
+	public TestImageType(SparkSession sparkSession) {
+		this.sparkSession = sparkSession;
+	}
 
 
 	@Test
@@ -92,7 +98,7 @@ public class TestImageType {
 			df.printSchema();
 			// register ArrayDoubleSimilarityFunction as a UDF
 			TestUDFDoubleArr testUDFDoubleArr = new TestUDFDoubleArr();
-			SparkFnRegistrar.registerUDF2(TestSparkBase.spark, "testUDFDoubleArr", testUDFDoubleArr, DataTypes.DoubleType);
+			SparkFnRegistrar.registerUDF2(sparkSession, "testUDFDoubleArr", testUDFDoubleArr, DataTypes.DoubleType);
 			// call the UDF from select clause of DF
 			df = df.withColumn("cosine",
 					callUDF("testUDFDoubleArr", df.col("image_embedding"), df.col("image_embedding")));
@@ -118,7 +124,7 @@ public class TestImageType {
 			
 			// register ArrayDoubleSimilarityFunction as a UDF
 			TestUDFDoubleList testUDFDoubleList = new TestUDFDoubleList();
-			SparkFnRegistrar.registerUDF2(TestSparkBase.spark, "testUDFDoubleList", testUDFDoubleList, DataTypes.DoubleType);
+			SparkFnRegistrar.registerUDF2(sparkSession, "testUDFDoubleList", testUDFDoubleList, DataTypes.DoubleType);
 
 			// call the UDF from select clause of DF
 			df = df.withColumn("cosine", callUDF("testUDFDoubleList",df.col("image_embedding"),df.col("image_embedding")));
@@ -144,7 +150,7 @@ public class TestImageType {
 			
 			// register ArrayDoubleSimilarityFunction as a UDF
 			TestUDFDoubleSeq testUDFDoubleSeq = new TestUDFDoubleSeq();
-			SparkFnRegistrar.registerUDF2(TestSparkBase.spark, "testUDFDoubleSeq", testUDFDoubleSeq, DataTypes.DoubleType);
+			SparkFnRegistrar.registerUDF2(sparkSession, "testUDFDoubleSeq", testUDFDoubleSeq, DataTypes.DoubleType);
 
 			// call the UDF from select clause of DF
 			df = df.withColumn("cosine", callUDF("testUDFDoubleSeq",df.col("image_embedding"),df.col("image_embedding")));
@@ -170,7 +176,7 @@ public class TestImageType {
 		
 		// register ArrayDoubleSimilarityFunction as a UDF
 		TestUDFDoubleWrappedArr testUDFDoubleWrappedArr = new TestUDFDoubleWrappedArr();
-		SparkFnRegistrar.registerUDF2(TestSparkBase.spark, "testUDFDoubleWrappedArr", testUDFDoubleWrappedArr, DataTypes.DoubleType);
+		SparkFnRegistrar.registerUDF2(sparkSession, "testUDFDoubleWrappedArr", testUDFDoubleWrappedArr, DataTypes.DoubleType);
 
 		// call the UDF from select clause of DF
 		df = df.withColumn("cosine", callUDF("testUDFDoubleWrappedArr",df.col("image_embedding"),df.col("image_embedding")));
@@ -199,7 +205,7 @@ public class TestImageType {
 		
 		// register ArrayDoubleSimilarityFunction as a UDF
 		TestUDFDoubleObj testUDFDoubleObj = new TestUDFDoubleObj();
-		SparkFnRegistrar.registerUDF2(TestSparkBase.spark, "testUDFDoubleObj", testUDFDoubleObj, DataTypes.DoubleType);
+		SparkFnRegistrar.registerUDF2(sparkSession, "testUDFDoubleObj", testUDFDoubleObj, DataTypes.DoubleType);
 
 		// call the UDF from select clause of DF
 		df = df.withColumn("cosine", callUDF("testUDFDoubleObj",df.col("image_embedding"),df.col("image_embedding")));
@@ -228,7 +234,7 @@ public class TestImageType {
 		});
 
 		
-		Dataset<Row> sample = TestSparkBase.spark.createDataFrame(Arrays.asList(
+		Dataset<Row> sample = sparkSession.createDataFrame(Arrays.asList(
 				RowFactory.create("07317257", "erjc", "henson", "hendersonville", "2873g",new Double[]{0.1123,10.456,110.789}),
 				RowFactory.create("03102490", "jhon", "kozak", "henders0nville", "28792",new Double[]{0.2123,20.456,220.789}),
 				RowFactory.create("02890805", "david", "pisczek", "durham", "27717",new Double[]{0.3123,30.456,330.789}),

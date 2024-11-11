@@ -12,13 +12,15 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.AfterEach;
 
+import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.Labeller;
 import zingg.common.core.executor.TestExecutorsGeneric;
 import zingg.common.core.executor.Trainer;
-import zingg.spark.core.session.SparkSessionProvider;
+import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
 
+@ExtendWith(TestSparkBase.class)
 public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Dataset<Row>,Row,Column,DataType> {
 	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
 	protected static final String TEST_DATA_FILE = "zingg/spark/core/executor/test.csv";
@@ -26,16 +28,16 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 	protected static final String CONFIGLINK_FILE = "zingg/spark/core/executor/configSparkLinkTest.json";
 	protected static final String TEST1_DATA_FILE = "zingg/spark/core/executor/test1.csv";
 	protected static final String TEST2_DATA_FILE = "zingg/spark/core/executor/test2.csv";
-
+	private final SparkSession sparkSession;
 	public static final Log LOG = LogFactory.getLog(TestSparkExecutors.class);
 	
 	protected ZinggSparkContext ctx;
 	
-	public TestSparkExecutors() throws IOException, ZinggClientException {
-		SparkSessionProvider sparkSessionProvider = SparkSessionProvider.getInstance();
-		ctx = sparkSessionProvider.getZinggSparkContext();
-		ctx.setSession(sparkSessionProvider.getSparkSession());
-		init(sparkSessionProvider.getSparkSession());
+	public TestSparkExecutors(SparkSession sparkSession) throws IOException, ZinggClientException {
+		this.sparkSession = sparkSession;
+		ctx = new ZinggSparkContext();
+		ctx.init(sparkSession);
+		init(this.sparkSession);
 	}
 
 	@Override

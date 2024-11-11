@@ -12,7 +12,7 @@ import zingg.common.client.IArguments;
 import zingg.spark.core.session.SparkSessionProvider;
 import zingg.spark.core.context.ZinggSparkContext;
 
-public class TestSparkBase implements BeforeAllCallback, AfterAllCallback, ParameterResolver{
+public class TestSparkBase implements BeforeAllCallback, AfterAllCallback, ParameterResolver {
     public static IArguments args;
     public static JavaSparkContext ctx;
     public static SparkSession spark;
