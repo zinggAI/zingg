@@ -93,7 +93,7 @@ public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,D
 	} 
 
 	@Override
-	public SparkTrainerValidator getTrainerValidator(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
+	protected SparkTrainerValidator getTrainerValidator(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
 		return new SparkTrainerValidator(trainer);
 	}
 
