@@ -24,7 +24,8 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 		ExecutorTester<S, D, R, C, T> et = new ExecutorTester<S, D, R, C, T>(findAndLabel, falValidator,getConfigFile());
 		executorTesterList.add(et);
 		executorTesterList.add(et);
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getTrainMatcher(),getTrainMatchValidator(getTrainMatcher()), getConfigFile()));
+		TrainMatcher<S, D, R, C, T> tmValidator = getTrainMatcher();
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tmValidator,getTrainMatchValidator(tmValidator), getConfigFile()));
 		return executorTesterList;
 	}
 

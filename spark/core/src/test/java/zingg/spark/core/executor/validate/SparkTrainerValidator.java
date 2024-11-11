@@ -12,7 +12,6 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.Trainer;
 import zingg.common.core.executor.validate.TrainerValidator;
