@@ -29,7 +29,7 @@ public abstract class VerticalDisplayUtility<D, R, C> {
     private D transposeDF(D df, List<String> columns) throws ZinggClientException {
 
         try {
-            List<Pair<String, String>> comparison_pairs = getComparisonPairs(df);
+            List<Pair<Object, Object>> comparison_pairs = getComparisonPairs(df);
             D transposedDf = getTransformedDFInitial(df);
 
             for(int idx = 0; idx < columns.size(); idx++){
@@ -41,10 +41,10 @@ public abstract class VerticalDisplayUtility<D, R, C> {
         }
     }
 
-    protected abstract List<Pair<String, String>> getComparisonPairs(D df);
+    protected abstract List<Pair<Object, Object>> getComparisonPairs(D df);
     protected abstract ZFrame<D, R, C> getZFrame(D df);
     protected abstract D getTransformedDFInitial(D df);
-    protected abstract D getTransformedDfAtIteration(D transformedDf, D df, List<Pair<String, String>> comparison_pairs, List<String> columns, int iteration);
+    protected abstract D getTransformedDfAtIteration(D transformedDf, D df, List<Pair<Object, Object>> comparison_pairs, List<String> columns, int iteration);
     protected abstract D getTransformedDFFinal(D df, int totalNumberOfColumns);
     protected abstract List<String> getColumns(D df);
 

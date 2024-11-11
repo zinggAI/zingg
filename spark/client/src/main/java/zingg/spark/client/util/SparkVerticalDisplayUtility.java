@@ -16,17 +16,17 @@ import java.util.Map;
 public class SparkVerticalDisplayUtility extends VerticalDisplayUtility<Dataset<Row>, Row, Column> {
 
     @Override
-    protected List<Pair<String, String>> getComparisonPairs(Dataset<Row> df) {
+    protected List<Pair<Object, Object>> getComparisonPairs(Dataset<Row> df) {
         Dataset<Row> df1 = df.limit(1);
         Dataset<Row> df2 = df.except(df1);
 
         Row row1 = df.toLocalIterator().next();
         Row row2 = df2.toLocalIterator().next();
 
-        List<Pair<String, String>> comparison_pairs = new ArrayList<>();
+        List<Pair<Object, Object>> comparison_pairs = new ArrayList<>();
         int idx = 0;
         while(idx < row1.size()) {
-            comparison_pairs.add(new Pair<String, String>(row1.get(idx).toString(), row2.get(idx).toString()));
+            comparison_pairs.add(new Pair<Object, Object>(row1.get(idx), row2.get(idx)));
             idx++;
         }
 
@@ -48,7 +48,7 @@ public class SparkVerticalDisplayUtility extends VerticalDisplayUtility<Dataset<
 
 
     @Override
-    protected Dataset<Row> getTransformedDfAtIteration(Dataset<Row> transformedDf, Dataset<Row> df, List<Pair<String, String>> comparison_pairs, List<String> columns, int iteration) {
+    protected Dataset<Row> getTransformedDfAtIteration(Dataset<Row> transformedDf, Dataset<Row> df, List<Pair<Object, Object>> comparison_pairs, List<String> columns, int iteration) {
         Map<String, Column> columnMap = Map.of(HEADER_COL_1, functions.lit(columns.get(iteration)), HEADER_COL_2,
                 functions.lit(comparison_pairs.get(iteration).getFirst()), HEADER_COL_3, functions.lit(comparison_pairs.get(iteration).getSecond()),
                 ORDER_COL, functions.lit(iteration));
@@ -58,7 +58,7 @@ public class SparkVerticalDisplayUtility extends VerticalDisplayUtility<Dataset<
     @Override
     protected Dataset<Row> getTransformedDFFinal(Dataset<Row> df, int totalNumberOfColumns) {
         return df.select(HEADER_COL_1, HEADER_COL_2, HEADER_COL_3, ORDER_COL).distinct().
-                sort(df.col(ORDER_COL)).drop(df.col(ORDER_COL)).limit(totalNumberOfColumns - 1);
+                sort(df.col(ORDER_COL)).drop(df.col(ORDER_COL)).limit(totalNumberOfColumns);
     }
 
     @Override
