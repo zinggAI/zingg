@@ -11,6 +11,7 @@ import java.util.List;
 public class VerticalDisplayUtility<S, D, R, C> {
 
     private final DFObjectUtil<S, D, R, C> dfObjectUtil;
+    private static final int MAX_COLUMNS = 1000;
 
     public VerticalDisplayUtility(DFObjectUtil<S, D, R, C> dfObjectUtil) {
         this.dfObjectUtil = dfObjectUtil;
@@ -18,7 +19,7 @@ public class VerticalDisplayUtility<S, D, R, C> {
 
     public void showVertical(ZFrame<D, R, C> zFrame) throws ZinggClientException {
         ZFrame<D, R, C> verticalZFrame = convertVertical(zFrame);
-        verticalZFrame.show(1000);
+        verticalZFrame.show(MAX_COLUMNS);
     }
 
     public ZFrame<D, R, C> convertVertical(ZFrame<D, R, C> zFrame) throws ZinggClientException {
