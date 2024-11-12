@@ -127,10 +127,5 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException {
 		return this;
 	}
-
-	@Override
-	public void setVerticalDisplayUtilityNew(VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility) {
-		this.verticalDisplayUtility = verticalDisplayUtility;
-	}
 	
 }

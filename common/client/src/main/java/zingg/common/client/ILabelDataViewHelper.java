@@ -26,6 +26,4 @@ public interface ILabelDataViewHelper<S, D, R, C> {
 
 	void printMarkedRecordsStat(long positivePairsCount, long negativePairsCount, long notSurePairsCount,
 			long totalCount);
-
-	void setVerticalDisplayUtilityNew(VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility);
 }
