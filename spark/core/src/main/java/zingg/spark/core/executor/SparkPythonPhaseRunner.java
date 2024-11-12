@@ -46,6 +46,11 @@ public class SparkPythonPhaseRunner extends ZinggBase<SparkSession, Dataset<Row>
 	@Override
 	public void execute() throws ZinggClientException {
 		try {
+			//closing session here
+			//as pyspark will further create it
+			//TODO getOrCreate not working in pyspark
+			SparkSession sparkSession = context.getSession();
+			sparkSession.stop();
 			LOG.info("Generic Python phase starts");
 			//LOG.info(this.getClass().getClassLoader().getResource("python/phases/assessModel.py").getFile());
 			List<String> pyArgs = new ArrayList<String>();
