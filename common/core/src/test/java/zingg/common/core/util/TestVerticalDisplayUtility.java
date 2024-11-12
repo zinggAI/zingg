@@ -20,7 +20,7 @@ public abstract class TestVerticalDisplayUtility<S, D, R, C> {
 
     @Test
     public void testWithoutNulls() throws Exception, ZinggClientException {
-        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
+        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = new VerticalDisplayUtility<S, D, R, C>(dfObjectUtil);
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getDataWithoutNulls(), Customer.class);
         ZFrame<D, R, C> zFrameVertical = verticalDisplayUtility.convertVertical(zFrame);
 
@@ -36,7 +36,7 @@ public abstract class TestVerticalDisplayUtility<S, D, R, C> {
 
     @Test
     public void testWithNulls() throws Exception, ZinggClientException {
-        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
+        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = new VerticalDisplayUtility<S, D, R, C>(dfObjectUtil);
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getDataWithNulls(), Customer.class);
         ZFrame<D, R, C> zFrameVertical = verticalDisplayUtility.convertVertical(zFrame);
 
@@ -52,7 +52,7 @@ public abstract class TestVerticalDisplayUtility<S, D, R, C> {
 
     @Test
     public void testWithFullRowNullExceptPrimaryKey() throws Exception, ZinggClientException {
-        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
+        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = new VerticalDisplayUtility<S, D, R, C>(dfObjectUtil);
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getDataWithFullRowNullExceptPrimaryKey(), Customer.class);
         ZFrame<D, R, C> zFrameVertical = verticalDisplayUtility.convertVertical(zFrame);
 
@@ -68,7 +68,7 @@ public abstract class TestVerticalDisplayUtility<S, D, R, C> {
 
     @Test
     public void testWithFullRowNull() throws Exception, ZinggClientException {
-        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
+        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = new VerticalDisplayUtility<S, D, R, C>(dfObjectUtil);
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getDataWithFullRowNull(), Customer.class);
         ZFrame<D, R, C> zFrameVertical = verticalDisplayUtility.convertVertical(zFrame);
 
@@ -130,5 +130,4 @@ public abstract class TestVerticalDisplayUtility<S, D, R, C> {
         }
     }
 
-    protected abstract VerticalDisplayUtility<S, D, R, C> getVerticalDisplayUtility();
 }

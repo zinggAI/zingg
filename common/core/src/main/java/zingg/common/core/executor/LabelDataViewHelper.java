@@ -11,6 +11,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
+import zingg.common.client.util.DFObjectUtil;
 import zingg.common.client.util.verticalDisplay.VerticalDisplayUtility;
 import zingg.common.core.context.IContext;
 import zingg.common.core.util.LabelMatchType;
@@ -127,5 +128,9 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException {
 		return this;
 	}
-	
+
+	@Override
+	public void initVerticalDisplayUtility(DFObjectUtil<S, D, R, C> dfObjectUtil) {
+		this.verticalDisplayUtility = new VerticalDisplayUtility<>(dfObjectUtil);
+	}
 }

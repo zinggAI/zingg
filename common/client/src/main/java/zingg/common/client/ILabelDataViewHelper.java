@@ -1,6 +1,6 @@
 package zingg.common.client;
 
-import zingg.common.client.util.verticalDisplay.VerticalDisplayUtility;
+import zingg.common.client.util.DFObjectUtil;
 
 import java.util.List;
 
@@ -26,4 +26,6 @@ public interface ILabelDataViewHelper<S, D, R, C> {
 
 	void printMarkedRecordsStat(long positivePairsCount, long negativePairsCount, long notSurePairsCount,
 			long totalCount);
+
+	void initVerticalDisplayUtility(DFObjectUtil<S, D, R, C> dfObjectUtil);
 }

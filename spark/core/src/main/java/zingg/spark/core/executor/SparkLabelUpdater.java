@@ -14,7 +14,11 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 
 import zingg.common.client.pipe.Pipe;
+import zingg.common.client.util.DFObjectUtil;
+import zingg.common.client.util.IWithSession;
+import zingg.common.client.util.WithSession;
 import zingg.common.core.executor.LabelUpdater;
+import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.core.context.ZinggSparkContext;
 import org.apache.spark.sql.SparkSession;
 
@@ -32,6 +36,13 @@ public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, 
 
 	public SparkLabelUpdater() {
 		this(new ZinggSparkContext());
+	}
+
+	@Override
+	protected DFObjectUtil<SparkSession, Dataset<Row>, Row, Column> getDfObjectUtil() {
+		IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
+		iWithSession.setSession(getContext().getSession());
+		return new SparkDFObjectUtil(iWithSession);
 	}
 
 	public SparkLabelUpdater(ZinggSparkContext sparkContext) {

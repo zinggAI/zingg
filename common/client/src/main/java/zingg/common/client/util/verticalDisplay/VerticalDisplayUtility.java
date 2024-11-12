@@ -8,7 +8,7 @@ import zingg.common.client.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class VerticalDisplayUtility<S, D, R, C> {
+public class VerticalDisplayUtility<S, D, R, C> {
 
     private final DFObjectUtil<S, D, R, C> dfObjectUtil;
 
@@ -24,7 +24,7 @@ public abstract class VerticalDisplayUtility<S, D, R, C> {
     public ZFrame<D, R, C> convertVertical(ZFrame<D, R, C> zFrame) throws ZinggClientException {
         try {
             String[] columns = zFrame.columns();
-            List<Pair<String, String>> comparison_pairs = getComparisonPairs(zFrame);
+            List<Pair<String, String>> comparison_pairs = getComparisonPairs(zFrame, columns);
             List<VerticalDisplayModel> rowList = getList(comparison_pairs, columns);
             return dfObjectUtil.getDFFromObjectList(rowList, VerticalDisplayTwoRowModel.class);
         } catch (Exception exception) {
@@ -41,5 +41,24 @@ public abstract class VerticalDisplayUtility<S, D, R, C> {
         return samples;
     }
 
-    protected abstract List<Pair<String, String>> getComparisonPairs(ZFrame<D, R, C> zFrame);
+    private List<Pair<String, String>> getComparisonPairs(ZFrame<D, R, C> zFrame, String[] columns) {
+
+        ZFrame<D, R, C> zFrame1 = zFrame.limit(1);
+        ZFrame<D, R, C> zFrame2 = zFrame.except(zFrame1);
+
+        R row1 = zFrame.head();
+        R row2 = zFrame2.head();
+
+        List<Pair<String, String>> comparison_pairs = new ArrayList<>();
+        for (String column : columns) {
+            comparison_pairs.add(new Pair<String, String>(getString(zFrame.getAsString(row1, column)), getString(zFrame2.getAsString(row2, column))));
+        }
+
+        return comparison_pairs;
+    }
+
+    private String getString(Object object) {
+        return object == null ? null : object.toString();
+    }
+
 }
