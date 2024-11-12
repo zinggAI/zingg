@@ -1,12 +1,15 @@
 import subprocess
 from perf_test_input import phases, load_configs, ZINGG
 import time
-from datetime import date
+from datetime import date, datetime
 from subprocess import PIPE
 
 ZINGG = ZINGG           
 #phases to run: ftd, match
 phases_to_test = phases
+
+now = datetime.now()
+current_time = now.strftime("%H:%M:%S")
 
 #load to test: 65, 120k, 5m
 load = load_configs
@@ -26,9 +29,9 @@ def perf_test_small(phase):
 
 
 def write_on_start():
-    f = open("loadTestReport_" + str(start_time), "w+")
-    f.write("******************************** perf test report, " + str(date.today()) + " ********************************\n\n");
-    f.write("--------- Test bed details ---------\n")
+    f = open("./perfTestReport/loadTestReport_" + str(date.today()), "w+")
+    f.write("******************************** perf test report, " + str(date.today()) + ", " + current_time + " ********************************\n\n");
+    f.write("------------ Test bed details ------------\n")
     f.write("Load samples: ")
     for load, config in load_configs.items():
         f.write(str(load) + " ")
@@ -37,18 +40,18 @@ def write_on_start():
     for phase in phases:
         f.write(phase + " ")
     f.write("\n")
-    f.write("------------------------------------\n\n")
+    f.write("------------------------------------------\n\n")
     f.close()
 
 def write_on_complete():
-    f = open("loadTestReport_" + str(start_time), "a+")
-    f.write("***********************************************************************************************\n\n\n\n\n\n")
+    f = open("./perfTestReport/loadTestReport_" + str(date.today()), "a+")
+    f.write("********************************************************************************************************\n\n\n\n\n\n")
 
 
 
 
 def write_success_stats(phase_time, load):
-    f = open("loadTestReport_" + str(start_time), "a+")
+    f = open("./perfTestReport/loadTestReport_" + str(date.today()), "a+")
     f.write("{:>50}".format("capturing for " + load) + "\n")
     f.write("PHASE {:>65}".format("TIME_TAKEN_IN_MINUTES") + "\n")
     for phase, time in phase_time.items():
@@ -57,7 +60,7 @@ def write_success_stats(phase_time, load):
     f.close()
 
 def write_failure_stats(phase_error):
-    f = open("loadTestReport_" + str(start_time), "a+")
+    f = open("./perfTestReport/loadTestReport_" + str(date.today()), "a+")
     for phase, error in phase_error.items():
         f.write(error_message(phase, error) + "\n\n")
     f.close()
