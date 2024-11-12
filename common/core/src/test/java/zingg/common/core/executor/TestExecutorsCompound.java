@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.jupiter.api.Test;
 
-import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.validate.FindAndLabelValidator;
 import zingg.common.core.executor.validate.TrainMatchValidator;
@@ -26,7 +24,8 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 		ExecutorTester<S, D, R, C, T> et = new ExecutorTester<S, D, R, C, T>(findAndLabel, falValidator,getConfigFile());
 		executorTesterList.add(et);
 		executorTesterList.add(et);
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(getTrainMatcher(),getTrainMatchValidator(getTrainMatcher()), getConfigFile()));
+		TrainMatcher<S, D, R, C, T> trainMatch = getTrainMatcher();
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainMatch,getTrainMatchValidator(trainMatch), getConfigFile()));
 		return executorTesterList;
 	}
 
