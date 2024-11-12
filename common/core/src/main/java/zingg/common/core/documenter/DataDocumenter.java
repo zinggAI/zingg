@@ -16,7 +16,7 @@ import zingg.common.core.context.IContext;
 
 public abstract class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 	protected static String name = "zingg.DataDocumenter";
-	protected static String TEMPLATE_TITLE = "Data Documentation";
+	public static String TEMPLATE_TITLE = "Data Documentation";
 	private final String DATA_DOC_TEMPLATE = "dataDocTemplate.ftlh";
 
 	public static final Log LOG = LogFactory.getLog(DataDocumenter.class);
@@ -61,7 +61,7 @@ public abstract class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T
 		writeDocument(DATA_DOC_TEMPLATE, root, args.getZinggDataDocFile());
 	}
 
-	protected Map<String, Object> populateTemplateData() {
+	public Map<String, Object> populateTemplateData() {
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put(TemplateFields.TITLE, TEMPLATE_TITLE);
 		root.put(TemplateFields.MODEL_ID, args.getModelId());
@@ -82,6 +82,14 @@ public abstract class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T
 			list.add(row);
 		}
 		return list;
+	}
+
+	public ZFrame<D,R,C> getData() {
+		return this.data;
+	}
+
+	public void setData(ZFrame<D, R, C> data) {
+		this.data = data;
 	}
 
 	@Override
