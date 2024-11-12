@@ -15,7 +15,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	public static final Log LOG = LogFactory.getLog(TestExecutorsGeneric.class);
 
 	protected S session;
-	List<ExecutorTester<S, D, R, C, T>> executorTesterList = new ArrayList<ExecutorTester<S, D, R, C, T>>();
+	protected List<ExecutorTester<S, D, R, C, T>> executorTesterList = new ArrayList<ExecutorTester<S, D, R, C, T>>();
 	
 	public TestExecutorsGeneric() {
 					
