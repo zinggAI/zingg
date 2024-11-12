@@ -13,6 +13,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
+import zingg.common.client.util.verticalDisplay.VerticalDisplayUtility;
 
 public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
@@ -174,6 +175,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() {
 		if(labelDataViewHelper==null) {
 			labelDataViewHelper = new LabelDataViewHelper<S,D,R,C,T>(getContext(), getClientOptions());
+			labelDataViewHelper.setVerticalDisplayUtilityNew(getVerticalDisplayUtilityNew());
 		}
     	return labelDataViewHelper;
     }
@@ -182,6 +184,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 		this.labelDataViewHelper = labelDataViewHelper;
 	}
 
+	protected abstract VerticalDisplayUtility<S, D, R, C> getVerticalDisplayUtilityNew();
 }
 
 

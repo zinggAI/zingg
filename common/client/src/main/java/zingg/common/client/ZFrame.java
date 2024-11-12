@@ -184,5 +184,4 @@ public interface ZFrame<D, R, C> {
 
 	public C gt(C column1, C column2);
 
-    public void showVertical() throws ZinggClientException;
 }

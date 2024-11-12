@@ -11,6 +11,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
+import zingg.common.client.util.verticalDisplay.VerticalDisplayUtility;
 import zingg.common.core.context.IContext;
 import zingg.common.core.util.LabelMatchType;
 
@@ -18,6 +19,7 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 
 	private static final long serialVersionUID = 1L;
 	public static final Log LOG = LogFactory.getLog(LabelDataViewHelper.class);
+	private VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility;
 	
 	public LabelDataViewHelper(IContext<S,D,R,C,T> context, ClientOptions clientOptions) {
 		setContext(context);
@@ -88,7 +90,7 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 		//System.out.println();
 		System.out.println(preMessage);
 //		records.show(false);
-		records.showVertical();
+		verticalDisplayUtility.showVertical(records);
 		System.out.println(postMessage);
 		System.out.println("\tWhat do you think? Your choices are: ");
 		System.out.println();
@@ -126,6 +128,9 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 		return this;
 	}
 
-	
+	@Override
+	public void setVerticalDisplayUtilityNew(VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility) {
+		this.verticalDisplayUtility = verticalDisplayUtility;
+	}
 	
 }

@@ -12,10 +12,7 @@ import org.apache.spark.sql.types.StructField;
 import scala.collection.JavaConverters;
 import zingg.common.client.FieldData;
 import zingg.common.client.ZFrame;
-import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
-import zingg.common.client.util.VerticalDisplayUtility;
-import zingg.spark.client.util.SparkVerticalDisplayUtility;
 
 //Dataset, Row, column
 public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
@@ -472,12 +469,6 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     public Column gt(Column column1, Column column2) {
 		return column1.gt(column2);
 	}
-
-    @Override
-    public void showVertical() throws ZinggClientException {
-        VerticalDisplayUtility<Dataset<Row>, Row, Column> verticalDisplayUtility = new SparkVerticalDisplayUtility();
-        verticalDisplayUtility.showVertical(df);
-    }
 
 }
 	

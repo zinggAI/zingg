@@ -3,8 +3,9 @@ package zingg.common.core.util;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.DFObjectUtil;
-import zingg.common.client.util.VerticalDisplayUtility;
+import zingg.common.client.util.verticalDisplay.VerticalDisplayUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,35 +19,67 @@ public abstract class TestVerticalDisplayUtility<S, D, R, C> {
     }
 
     @Test
-    public void testWithoutNulls() throws Exception {
-        VerticalDisplayUtility<D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
+    public void testWithoutNulls() throws Exception, ZinggClientException {
+        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getDataWithoutNulls(), Customer.class);
+        ZFrame<D, R, C> zFrameVertical = verticalDisplayUtility.convertVertical(zFrame);
 
-        Assertions.assertDoesNotThrow(() -> verticalDisplayUtility.showVertical(zFrame.df()));
+        //Assert on total number of rows
+        Assertions.assertEquals(5, zFrameVertical.count(), "Count is not as expected");
+
+        //Assert on first row
+        R row = zFrameVertical.head();
+        Assertions.assertEquals("fname", zFrameVertical.getAsString(row, "Field"));
+        Assertions.assertEquals("Nitish", zFrameVertical.getAsString(row, "Value1"));
+        Assertions.assertEquals("Nitis", zFrameVertical.getAsString(row, "Value2"));
     }
 
     @Test
-    public void testWithNulls() throws Exception {
-        VerticalDisplayUtility<D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
+    public void testWithNulls() throws Exception, ZinggClientException {
+        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getDataWithNulls(), Customer.class);
+        ZFrame<D, R, C> zFrameVertical = verticalDisplayUtility.convertVertical(zFrame);
 
-        Assertions.assertDoesNotThrow(() -> verticalDisplayUtility.showVertical(zFrame.df()));
+        //Assert on total number of rows
+        Assertions.assertEquals(5, zFrameVertical.count(), "Count is not as expected");
+
+        //Assert on first row
+        R row = zFrameVertical.head();
+        Assertions.assertEquals("fname", zFrameVertical.getAsString(row, "Field"));
+        Assertions.assertEquals("Nitish", zFrameVertical.getAsString(row, "Value1"));
+        Assertions.assertNull(zFrameVertical.getAsString(row, "Value2"));
     }
 
     @Test
-    public void testWithFullRowNullExceptPrimaryKey() throws Exception {
-        VerticalDisplayUtility<D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
+    public void testWithFullRowNullExceptPrimaryKey() throws Exception, ZinggClientException {
+        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getDataWithFullRowNullExceptPrimaryKey(), Customer.class);
+        ZFrame<D, R, C> zFrameVertical = verticalDisplayUtility.convertVertical(zFrame);
 
-        Assertions.assertDoesNotThrow(() -> verticalDisplayUtility.showVertical(zFrame.df()));
+        //Assert on total number of rows
+        Assertions.assertEquals(5, zFrameVertical.count(), "Count is not as expected");
+
+        //Assert on first row
+        R row = zFrameVertical.head();
+        Assertions.assertEquals("fname", zFrameVertical.getAsString(row, "Field"));
+        Assertions.assertEquals("Nitish", zFrameVertical.getAsString(row, "Value1"));
+        Assertions.assertNull(zFrameVertical.getAsString(row, "Value2"));
     }
 
     @Test
-    public void testWithFullRowNull() throws Exception {
-        VerticalDisplayUtility<D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
+    public void testWithFullRowNull() throws Exception, ZinggClientException {
+        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = getVerticalDisplayUtility();
         ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getDataWithFullRowNull(), Customer.class);
+        ZFrame<D, R, C> zFrameVertical = verticalDisplayUtility.convertVertical(zFrame);
 
-        Assertions.assertDoesNotThrow(() -> verticalDisplayUtility.showVertical(zFrame.df()));
+        //Assert on total number of rows
+        Assertions.assertEquals(5, zFrameVertical.count(), "Count is not as expected");
+
+        //Assert on first row
+        R row = zFrameVertical.head();
+        Assertions.assertEquals("fname", zFrameVertical.getAsString(row, "Field"));
+        Assertions.assertEquals("Nitish", zFrameVertical.getAsString(row, "Value1"));
+        Assertions.assertNull(zFrameVertical.getAsString(row, "Value2"));
     }
 
 
@@ -62,7 +95,7 @@ public abstract class TestVerticalDisplayUtility<S, D, R, C> {
     public static List<Customer> getDataWithNulls() {
         List<Customer> sample = new ArrayList<Customer>();
         sample.add(new Customer("Nitish", "Joshi", "123", null, "1"));
-        sample.add(new Customer("Nitis", null, "123", "0000", "2"));
+        sample.add(new Customer(null, null, "123", "0000", "2"));
         return sample;
     }
 
@@ -97,5 +130,5 @@ public abstract class TestVerticalDisplayUtility<S, D, R, C> {
         }
     }
 
-    protected abstract VerticalDisplayUtility<D, R, C> getVerticalDisplayUtility();
+    protected abstract VerticalDisplayUtility<S, D, R, C> getVerticalDisplayUtility();
 }

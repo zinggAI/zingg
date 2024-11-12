@@ -7,8 +7,8 @@ import org.apache.spark.sql.SparkSession;
 import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.TestSparkBase;
 import zingg.common.client.util.IWithSession;
-import zingg.common.client.util.VerticalDisplayUtility;
 import zingg.common.client.util.WithSession;
+import zingg.common.client.util.verticalDisplay.VerticalDisplayUtility;
 import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.client.util.SparkVerticalDisplayUtility;
 
@@ -17,14 +17,16 @@ import zingg.spark.client.util.SparkVerticalDisplayUtility;
 public class TestSparkVerticalDisplayUtility extends TestVerticalDisplayUtility<SparkSession, Dataset<Row>, Row, Column> {
 
     private static final IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
+    private SparkSession sparkSession;
 
     public TestSparkVerticalDisplayUtility(SparkSession sparkSession) {
         super(new SparkDFObjectUtil(iWithSession));
         iWithSession.setSession(sparkSession);
+        this.sparkSession = sparkSession;
     }
 
     @Override
-    protected VerticalDisplayUtility<Dataset<Row>, Row, Column> getVerticalDisplayUtility() {
-        return new SparkVerticalDisplayUtility();
+    protected VerticalDisplayUtility<SparkSession, Dataset<Row>, Row, Column> getVerticalDisplayUtility() {
+        return new SparkVerticalDisplayUtility(sparkSession);
     }
 }
