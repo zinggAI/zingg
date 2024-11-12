@@ -26,9 +26,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IArguments;
+import zingg.common.client.ZinggClientException;
 import zingg.common.core.documenter.DocumenterBase;
 import zingg.common.core.documenter.TemplateFields;
 import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.context.ZinggSparkContext;
 
 
 @ExtendWith(TestSparkBase.class)
@@ -37,11 +39,22 @@ public class TestDocumenterBase {
 	private final String TEST_DOC_TEMPLATE = "documenter/testDocumenterTemplate.ftlh";
 	public ArgumentsUtil argsUtil = new ArgumentsUtil();
 	private IArguments docArguments = new Arguments();
+	private final SparkSession sparkSession;
+	private final ZinggSparkContext zinggSparkContext;
+	private final IArguments args;
+
+
+	public TestDocumenterBase(SparkSession sparkSession) throws ZinggClientException {
+		this.sparkSession = sparkSession;
+		zinggSparkContext = new ZinggSparkContext();
+		zinggSparkContext.init(sparkSession);
+		args = new Arguments();
+	}
 
 	@DisplayName ("Test Column is a Z column or not")
 	@Test
 	public void testIfColumnIsZColumn() throws Throwable {
-		DocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType> base = new SparkModelDocumenter(TestSparkBase.zsCTX, docArguments);
+		DocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType> base = new SparkModelDocumenter(zinggSparkContext, docArguments);
 		String aZColumn = "z_sampleColumn";
 		
 		assertTrue(base.isZColumn(aZColumn), "Column is not a Z column");
@@ -53,9 +66,9 @@ public class TestDocumenterBase {
 	@DisplayName ("Test if a directory already exists else it is created")
 	@Test
 	public void testIfDirectoryAlreadyExistsElseCreate() throws Throwable {
-		DocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType> base = new SparkModelDocumenter(TestSparkBase.zsCTX, TestSparkBase.args);
-		base.checkAndCreateDir(TestSparkBase.args.getZinggDir());
-		assertTrue(Files.exists(Paths.get(TestSparkBase.args.getZinggDir())), "The directory doesn't exist");
+		DocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType> base = new SparkModelDocumenter(zinggSparkContext, args);
+		base.checkAndCreateDir(args.getZinggDir());
+		assertTrue(Files.exists(Paths.get(args.getZinggDir())), "The directory doesn't exist");
 		base.checkAndCreateDir("/an/invalid/dir");
 		assertFalse(Files.exists(Paths.get("/a/invalid/dir")), "The directory does exist");
 	}
@@ -64,8 +77,8 @@ public class TestDocumenterBase {
 	@Test
 	public void testProcessTemplateToMakeDocument() throws Throwable {
 		
-		DocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType> base = new SparkModelDocumenter(TestSparkBase.zsCTX, TestSparkBase.args);
-		base.checkAndCreateDir(TestSparkBase.args.getZinggDir());
+		DocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType> base = new SparkModelDocumenter(zinggSparkContext, args);
+		base.checkAndCreateDir(args.getZinggDir());
 
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put(TemplateFields.TITLE, "template test");
@@ -76,7 +89,7 @@ public class TestDocumenterBase {
 		root.put(TemplateFields.FIELD_DEFINITION_COUNT, 2); 
 		root.put(TemplateFields.ISMATCH_COLUMN_INDEX, 0);
 		root.put(TemplateFields.CLUSTER_COLUMN_INDEX, 1);; 
-		String fileName = TestSparkBase.args.getZinggDir() + "/testDoc.html";
+		String fileName = args.getZinggDir() + "/testDoc.html";
 		base.writeDocument(TEST_DOC_TEMPLATE, root, fileName);
 		
 		String content = Files.lines(Paths.get(fileName), StandardCharsets.UTF_8)

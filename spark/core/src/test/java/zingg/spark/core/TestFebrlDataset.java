@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,6 +28,11 @@ import zingg.spark.core.executor.SparkTrainMatcher;
 public class TestFebrlDataset {
 	public static final Log LOG = LogFactory.getLog(TestFebrlDataset.class);
 
+	private final SparkSession sparkSession;
+
+	public TestFebrlDataset(SparkSession sparkSession) {
+		this.sparkSession = sparkSession;
+	}
 	
 	SparkPipe outputPipe;
 	ArgumentsUtil argsUtil = new ArgumentsUtil();
@@ -55,7 +61,7 @@ public class TestFebrlDataset {
 	public void testModelAccuracy(){
 		TrainMatcher tm = new SparkTrainMatcher();
 		try {
-			tm.init(args,TestSparkBase.spark,null);
+			tm.init(args,sparkSession,null);
 //			tm.setSpark(spark);
 //			tm.setCtx(ctx);
 			tm.setArgs(args);

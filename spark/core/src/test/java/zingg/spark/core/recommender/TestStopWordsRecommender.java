@@ -13,28 +13,47 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
+import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
+import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.recommender.StopWordsRecommender;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.context.ZinggSparkContext;
 
 @ExtendWith(TestSparkBase.class)
 public class TestStopWordsRecommender {
 
+	private final IArguments arguments;
+	private final SparkSession sparkSession;
+	private final ZinggSparkContext zinggSparkContext;
+	private final StopWordsRecommender recommender;
 	private static final int NO_OF_RECORDS = 5;
+	private final Dataset<Row> dataset;
+	private List<Row> stopwordRow;
+	private List<String> stopwordList;
+	private Dataset<Row> stopWords;
 	private static final String COL_STOPWORDS = "stopwords";
 	public static final Log LOG = LogFactory.getLog(TestStopWordsRecommender.class);
 
-	StopWordsRecommender recommender = new SparkStopWordsRecommender(TestSparkBase.zsCTX, TestSparkBase.args);
-	Dataset<Row> dataset = createDFWithGivenStopWords();
-	List<Row> stopwordRow= new ArrayList<Row>();
-	List<String> stopwordList = new ArrayList<String>();
-	Dataset<Row> stopWords;
+
+	public TestStopWordsRecommender(SparkSession sparkSession) throws ZinggClientException {
+		this.sparkSession = sparkSession;
+		this.zinggSparkContext = new ZinggSparkContext();
+		this.zinggSparkContext.init(sparkSession);
+		this.arguments = new Arguments();
+		this.recommender = new SparkStopWordsRecommender(zinggSparkContext, arguments);
+		this.dataset = createDFWithGivenStopWords();
+		this.stopwordRow= new ArrayList<Row>();
+		this.stopwordList = new ArrayList<String>();
+	}
+
 
 	@Test
     public void testWithNegativefCuttoff() throws Throwable{
@@ -124,7 +143,7 @@ public class TestStopWordsRecommender {
 	/* creates list of string countaining recommended stopwords based on stopWordsCutoff */
 	public List<String> getStopWordList(float cutoff ) throws Throwable {
 		//create stopwords dataset and display according to stopWordsCutoff
-		TestSparkBase.args.setStopWordsCutoff(cutoff);
+		arguments.setStopWordsCutoff(cutoff);
 		stopWords = ((SparkFrame)(recommender.findStopWords(new SparkFrame(dataset), COL_STOPWORDS))).df();
 		//stopWords.show();
 
@@ -179,7 +198,7 @@ public class TestStopWordsRecommender {
 		StructType structType = new StructType();
 		structType = structType.add(DataTypes.createStructField(COL_STOPWORDS, DataTypes.StringType, false));
 		//create dataframe with given records and schema
-		Dataset<Row> recordDF = TestSparkBase.spark.createDataFrame(records, structType);
+		Dataset<Row> recordDF = sparkSession.createDataFrame(records, structType);
 		return recordDF;
 	}
 	/* WordByCount class containing word,count variable*/

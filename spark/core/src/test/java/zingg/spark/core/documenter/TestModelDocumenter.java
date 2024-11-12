@@ -25,16 +25,27 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IArguments;
+import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.core.documenter.ModelDocumenter;
 import zingg.common.core.documenter.TemplateFields;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.context.ZinggSparkContext;
 
 
 @ExtendWith(TestSparkBase.class)
 public class TestModelDocumenter {
 	public static final Log LOG = LogFactory.getLog(TestModelDocumenter.class);
+
+	private final SparkSession sparkSession;
+	private final ZinggSparkContext zinggSparkContext;
+
+	public TestModelDocumenter(SparkSession sparkSession) throws ZinggClientException {
+		this.sparkSession = sparkSession;
+		this.zinggSparkContext = new ZinggSparkContext();
+		this.zinggSparkContext.init(sparkSession);
+	}
 
 	IArguments docArguments = new Arguments();
 	
@@ -62,7 +73,7 @@ public class TestModelDocumenter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		ModelDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> modelDoc = new SparkModelDocumenter(TestSparkBase.zsCTX, docArguments);
+		ModelDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> modelDoc = new SparkModelDocumenter(zinggSparkContext, docArguments);
 		modelDoc.createModelDocument();
 
 		assertTrue(Files.exists(Paths.get(docArguments.getZinggModelDocFile())), "Model documentation file is not generated");
@@ -71,8 +82,8 @@ public class TestModelDocumenter {
 	@Test
 	public void testPopulateTemplateDataWhenMarkedRecordsAreAvailable() throws Throwable {
 		
-		ModelDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> modelDoc = new SparkModelDocumenter(TestSparkBase.zsCTX, docArguments);
-		modelDoc.setMarkedRecords(TestSparkBase.zsCTX.getPipeUtil().read(false, false, TestSparkBase.zsCTX.getPipeUtil().getTrainingDataMarkedPipe(docArguments)));
+		ModelDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> modelDoc = new SparkModelDocumenter(zinggSparkContext, docArguments);
+		modelDoc.setMarkedRecords(zinggSparkContext.getPipeUtil().read(false, false, zinggSparkContext.getPipeUtil().getTrainingDataMarkedPipe(docArguments)));
 
 		Map<String, Object> root =  modelDoc.populateTemplateData();
 		Assertions.assertTrue(root.containsKey(TemplateFields.MODEL_ID), "The field does not exist - " + TemplateFields.MODEL_ID);
@@ -87,8 +98,8 @@ public class TestModelDocumenter {
 	@Test
 	public void testPopulateTemplateDataWhenMarkedRecordsAreNone() throws Throwable {
 		
-		SparkModelDocumenter modelDoc = new SparkModelDocumenter(TestSparkBase.zsCTX, docArguments);
-		modelDoc.setMarkedRecords(new SparkFrame(TestSparkBase.spark.emptyDataFrame()));
+		SparkModelDocumenter modelDoc = new SparkModelDocumenter(zinggSparkContext, docArguments);
+		modelDoc.setMarkedRecords(new SparkFrame(sparkSession.emptyDataFrame()));
 
 		Map<String, Object> root =  modelDoc.populateTemplateData();
 		assertTrue(root.containsKey(TemplateFields.MODEL_ID), "The field does not exist - " + TemplateFields.MODEL_ID);

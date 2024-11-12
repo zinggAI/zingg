@@ -28,14 +28,18 @@ import zingg.common.client.MatchType;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.spark.client.SparkFrame;
+import zingg.spark.core.context.ZinggSparkContext;
 
 @ExtendWith(TestSparkBase.class)
 public class TestDSUtil {
 
 	private final SparkSession sparkSession;
+	private final ZinggSparkContext zinggSparkContext;
 
-	public TestDSUtil(SparkSession sparkSession) {
+	public TestDSUtil(SparkSession sparkSession) throws ZinggClientException {
 		this.sparkSession = sparkSession;
+		this.zinggSparkContext = new ZinggSparkContext();
+		zinggSparkContext.init(sparkSession);
 	}
 	public static final Log LOG = LogFactory.getLog(TestDSUtil.class);
 
@@ -84,7 +88,7 @@ public class TestDSUtil {
 		List<String> expectedColumns = new ArrayList<String>();
 		expectedColumns.add("field_fuzzy");
 		expectedColumns.add(ColName.SOURCE_COL);
-		List<Column> colList = TestSparkBase.zsCTX.getDSUtil().getFieldDefColumns(new SparkFrame(ds), args, false, true);
+		List<Column> colList = zinggSparkContext.getDSUtil().getFieldDefColumns(new SparkFrame(ds), args, false, true);
 		assertTrue(expectedColumns.size() == colList.size());
 		for (int i = 0; i < expectedColumns.size(); i++) {
 			assertTrue(expectedColumns.get(i).equals(colList.get(i).toString()));
@@ -132,7 +136,7 @@ public class TestDSUtil {
 				RowFactory.create("3", "third", "three", "Junit"), RowFactory.create("4", "forth", "Four", "Junit"));
 		Dataset<Row> ds = sparkSession.createDataFrame(list, schema);
 
-		List<Column> colListTest2 = TestSparkBase.zsCTX.getDSUtil().getFieldDefColumns (new SparkFrame(ds), args, false, false);
+		List<Column> colListTest2 = zinggSparkContext.getDSUtil().getFieldDefColumns (new SparkFrame(ds), args, false, false);
 		List<String> expectedColumnsTest2 = new ArrayList<String>();
 		expectedColumnsTest2.add("field_fuzzy");
 		expectedColumnsTest2.add("field_match_type_DONT_USE");

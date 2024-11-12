@@ -25,9 +25,16 @@ import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IArguments;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
+import zingg.spark.core.context.ZinggSparkContext;
 
 @ExtendWith(TestSparkBase.class)
 public class TestDataDocumenter {
+
+	private final SparkSession sparkSession;
+
+	public TestDataDocumenter(SparkSession sparkSession) {
+		this.sparkSession = sparkSession;
+	}
 
 	public static final Log LOG = LogFactory.getLog(TestDataDocumenter.class);
 
@@ -47,16 +54,17 @@ public class TestDataDocumenter {
 
 	@Test
 	public void testPopulateTemplateData() throws Throwable {
-		
-		DataDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> dataDoc = new SparkDataDocumenter(TestSparkBase.zsCTX, docArguments);
+
+		ZinggSparkContext zinggSparkContext = new ZinggSparkContext();
+		zinggSparkContext.init(sparkSession);
+		DataDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> dataDoc = new SparkDataDocumenter(zinggSparkContext, docArguments);
 		Pipe[] dataPipeArr = docArguments.getData();
 		
 		for (int i = 0; i < dataPipeArr.length; i++) {
 			String file = getClass().getResource("../../../../documenter/test.csv").getFile();
 			dataPipeArr[i].setProp(FilePipe.LOCATION, file);
 		}
-
-		dataDoc.setData(TestSparkBase.zsCTX.getPipeUtil().read(false, false, dataPipeArr));
+		dataDoc.setData(zinggSparkContext.getPipeUtil().read(false, false, dataPipeArr));
 
 
 		Map<String, Object> root =  dataDoc.populateTemplateData();

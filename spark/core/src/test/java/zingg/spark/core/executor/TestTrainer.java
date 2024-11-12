@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,14 +19,20 @@ import zingg.spark.core.TestSparkBase;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(TestSparkBase.class)
 public class TestTrainer {
+
+    private final SparkSession sparkSession;
+
+    public TestTrainer(SparkSession sparkSession) {
+        this.sparkSession = sparkSession;
+    }
     
     public static Dataset<Row> tenRowsDF;
     public static Dataset<Row> oneRowsDF;
 
     @BeforeAll
     public void setupDF() {
-        tenRowsDF = DataFrameUtility.createDFWithDoubles(10,1, TestSparkBase.spark);
-        oneRowsDF = DataFrameUtility.createDFWithDoubles(1,1, TestSparkBase.spark);
+        tenRowsDF = DataFrameUtility.createDFWithDoubles(10,1, sparkSession);
+        oneRowsDF = DataFrameUtility.createDFWithDoubles(1,1, sparkSession);
     }
 
     @Test
