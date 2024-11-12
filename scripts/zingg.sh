@@ -63,5 +63,5 @@ if [[ $RUN_PYTHON_DB_CONNECT_PHASE -eq 1 ]]; then
 	python $EXECUTABLE
 else
 	# All the additional options must be added here
-	$SPARK_HOME/bin/spark-submit --master $SPARK_MASTER $PROPERTIES --files "./log4j2.properties" --conf spark.executor.extraJavaOptions="$log4j_setting -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+HeapDumpOnOutOfMemoryError -Xloggc:/tmp/memLog.txt -XX:+UseCompressedOops" --conf spark.driver.extraJavaOptions="$log4j_setting" $LOGGING --driver-class-path $ZINGG_JARS $EXECUTABLE $@ --email $EMAIL --license $LICENSE
+	$SPARK_HOME/bin/spark-submit --master $SPARK_MASTER $PROPERTIES --files "./log4j2.properties" --conf spark.driver.memory=10g --conf spark.executor.extraJavaOptions="$log4j_setting -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+HeapDumpOnOutOfMemoryError -Xloggc:/tmp/memLog.txt -XX:+UseCompressedOops" --conf spark.driver.extraJavaOptions="$log4j_setting" $LOGGING --driver-class-path $ZINGG_JARS $EXECUTABLE $@ --email $EMAIL --license $LICENSE
 fi
