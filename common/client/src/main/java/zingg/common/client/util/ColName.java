@@ -31,6 +31,7 @@ public interface ColName {
 	public static final String COL_COUNT = COL_PREFIX + "count";
 	public static final String COL_WORD = COL_PREFIX + "word";
 	public static final String COL_SPLIT = COL_PREFIX + "split";
+	public static final String HASHCOUNTSCOL = ColName.HASH_COL + "_count";
 	
 	
 }
