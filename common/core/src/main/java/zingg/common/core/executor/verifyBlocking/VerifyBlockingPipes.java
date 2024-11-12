@@ -5,7 +5,7 @@ import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.PipeUtilBase;
 
-public class VerifyBlockingPipes<S,D,R,C> implements IVerifyBlockingPipes<S,D,R,C> {
+public class VerifyBlockingPipes<S,D,R,C> implements IVerifyBlockingPipeUtil<S,D,R,C> {
 
     protected PipeUtilBase<S,D,R,C> pipeUtil;
     protected long timestamp;
