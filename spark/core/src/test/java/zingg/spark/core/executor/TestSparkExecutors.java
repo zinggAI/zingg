@@ -1,6 +1,5 @@
 package zingg.spark.core.executor;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.logging.Log;
@@ -10,21 +9,22 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
-import org.junit.jupiter.api.AfterEach;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.Labeller;
-import zingg.common.core.executor.TestExecutorsGeneric;
+import zingg.common.core.executor.TestExecutorsSingle;
 import zingg.common.core.executor.Trainer;
 import zingg.spark.core.TestSparkBase;
+import zingg.common.core.executor.TestExecutorsSingle;
+import zingg.common.core.executor.Trainer;
 import zingg.spark.core.context.ZinggSparkContext;
+import zingg.spark.core.executor.labeller.ProgrammaticSparkLabeller;
+import zingg.spark.core.executor.validate.SparkTrainerValidator;
 
 @ExtendWith(TestSparkBase.class)
-public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Dataset<Row>,Row,Column,DataType> {
+public class TestSparkExecutors extends TestExecutorsSingle<SparkSession,Dataset<Row>,Row,Column,DataType> {
 	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
-	protected static final String TEST_DATA_FILE = "zingg/spark/core/executor/test.csv";
-
 	protected static final String CONFIGLINK_FILE = "zingg/spark/core/executor/configSparkLinkTest.json";
 	protected static final String TEST1_DATA_FILE = "zingg/spark/core/executor/test1.csv";
 	protected static final String TEST2_DATA_FILE = "zingg/spark/core/executor/test2.csv";
@@ -43,6 +43,11 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 	@Override
 	public String getConfigFile() {
 		return CONFIG_FILE;
+	}
+
+	@Override
+	public String getLinkerConfigFile(){
+		return CONFIGLINK_FILE;
 	}
 	
 	@Override
@@ -64,58 +69,28 @@ public class TestSparkExecutors extends TestExecutorsGeneric<SparkSession,Datase
 	}
 
 	@Override
+	protected SparkVerifyBlocker getVerifyBlocker() throws ZinggClientException {
+		SparkVerifyBlocker svb = new SparkVerifyBlocker(ctx);
+		return svb;
+	}
+
+	@Override
 	protected SparkMatcher getMatcher() throws ZinggClientException {
 		SparkMatcher sm = new SparkMatcher(ctx);
 		return sm;
 	}
 
+	
 	@Override
 	protected SparkLinker getLinker() throws ZinggClientException {
 		SparkLinker sl = new SparkLinker(ctx);
 		return sl;
-	}
+	} 
 
 	@Override
-	protected SparkTrainerTester getTrainerValidator(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
-		return new SparkTrainerTester(trainer,args);
-	}
-	/* 
-
-	@Override
-	protected SparkFindAndLabeller getFindAndLabeller() throws ZinggClientException {
-		SparkFindAndLabeller sfal = new SparkFindAndLabeller(ctx);
-        sfal.setLabeller(new ProgrammaticSparkLabeller(ctx));
-		return sfal;
+	protected SparkTrainerValidator getTrainerValidator(Trainer<SparkSession,Dataset<Row>,Row,Column,DataType> trainer) {
+		return new SparkTrainerValidator(trainer);
 	}
 
-	@Override
-	protected SparkTrainMatcher getTrainMatcher() throws ZinggClientException {
-		SparkTrainMatcher stm = new SparkTrainMatcher(ctx);
-		return stm;
-	}
-
-	@Override
-	protected SparkTrainMatchTester getTrainMatchValidator(TrainMatcher<SparkSession,Dataset<Row>,Row,Column,DataType> trainMatch) {
-		return new SparkTrainMatchTester(trainMatch,args);
-	}
-		*/
-
-	@Override
-	public String setupArgs() throws ZinggClientException, IOException {
-		String configFile = super.setupArgs();
-		String testFile = getClass().getClassLoader().getResource(TEST_DATA_FILE).getFile();
-		// correct the location of test data
-		args.getData()[0].setProp("location", testFile);
-		return configFile;
-	}
 	
-	@Override
-	@AfterEach
-	public void tearDown() {
-		// just rename, would be removed automatically as it's in /tmp
-		File dir = new File(args.getZinggDir());
-	    File newDir = new File(dir.getParent() + "/zingg_junit_" + System.currentTimeMillis());
-	    dir.renameTo(newDir);
-	}
-
 }

@@ -12,8 +12,8 @@ import zingg.common.client.cols.PredictionColsSelector;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
-import zingg.common.core.block.Canopy;
-import zingg.common.core.block.Tree;
+import zingg.common.core.block.Blocker;
+import zingg.common.core.block.InputDataGetter;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.model.Model;
@@ -34,23 +34,21 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     }
 
 	public ZFrame<D,R,C>  getTestData() throws ZinggClientException{
-		 ZFrame<D,R,C>  data = getPipeUtil().read(true, true, args.getNumPartitions(), true, args.getData());
-		return data;
-	}
+		ZFrame<D,R,C>  data = new InputDataGetter<S,D,R,C>(getPipeUtil()).getTestData(args);
+	   return data;
+   }
 
 	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
 		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
 		return testDataOriginal.select(zidAndFieldDefSelector.getCols());
-//		return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
+		//return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
 	}
 
-
-	public ZFrame<D,R,C>  getBlocked( ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
-		LOG.debug("Blocking model file location is " + args.getBlockFile());
-		Tree<Canopy<R>> tree = getBlockingTreeUtil().readBlockingTree(args);
-		ZFrame<D,R,C> blocked = getBlockingTreeUtil().getBlockHashes(testData, tree);	
+	public ZFrame<D,R,C>  getBlocked(ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
+		ZFrame<D,R,C> blocked = new Blocker<S,D,R,C,T>(getBlockingTreeUtil()).getBlocked(testData,args);	
 		return blocked;
 	}
+
 	
 	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception{
 		return iPairBuilder.getPairs(blocked, bAll);

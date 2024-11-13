@@ -1,27 +1,21 @@
-package zingg.common.core.executor;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
+package zingg.common.core.executor.validate;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.IArguments;
-import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.util.ColName;
+import zingg.common.core.executor.TrainMatcher;
+import zingg.common.core.executor.Trainer;
 
-public class TrainMatchValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
+public abstract class TrainMatchValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
 
     public static final Log LOG = LogFactory.getLog(TrainMatchValidator.class);
-
-    protected IArguments args;
 	TrainerValidator<S, D, R, C, T> tv;
 	MatcherValidator<S, D, R, C, T> mv;
 	
-	public TrainMatchValidator(TrainMatcher<S, D, R, C, T> executor, IArguments args) {
+	public TrainMatchValidator(TrainMatcher<S, D, R, C, T> executor) {
 		super(executor);
-        this.args = args;
-		tv = new TrainerValidator<S, D, R, C, T>(executor.getTrainer(), args);
+		tv = getTrainerValidator(executor.getTrainer());
 		mv = new MatcherValidator<S, D, R, C, T>(executor.getMatcher());
 	}
     
@@ -30,5 +24,9 @@ public class TrainMatchValidator<S, D, R, C, T> extends ExecutorValidator<S, D, 
 		tv.validateResults();
 		mv.validateResults();	
 	}
+
+	protected abstract TrainerValidator<S, D, R, C, T> getTrainerValidator(Trainer<S, D, R, C, T> trainer);
+
+
 
 }

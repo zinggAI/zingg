@@ -184,4 +184,7 @@ public interface ZFrame<D, R, C> {
 
 	public C gt(C column1, C column2);
 
+    public Object get(R r, String colName);
+
+    public C[] getCols();
 }

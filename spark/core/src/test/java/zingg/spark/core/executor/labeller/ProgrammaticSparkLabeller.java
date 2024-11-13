@@ -1,4 +1,4 @@
-package zingg.spark.core.executor;
+package zingg.spark.core.executor.labeller;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
@@ -10,8 +10,9 @@ import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
-import zingg.common.core.executor.ProgrammaticLabeller;
+import zingg.common.core.executor.labeller.ProgrammaticLabeller;
 import zingg.spark.core.context.ZinggSparkContext;
+import zingg.spark.core.executor.SparkLabeller;
 
 public class ProgrammaticSparkLabeller extends SparkLabeller {
 

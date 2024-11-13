@@ -74,7 +74,7 @@
 			"name":"test1", 
 			"format":"csv", 
 			"props": {
-				"location": "test1.csv",
+				"location": "./zingg/spark/core/executor/test1.csv",
 				"delimiter": ",",
 				"header":false					
 			},
@@ -84,7 +84,7 @@
 			"name":"test2", 
 			"format":"csv", 
 			"props": {
-				"location": "test2.csv",
+				"location": "./zingg/spark/core/executor/test2.csv",
 				"delimiter": ",",
 				"header":false					
 			},

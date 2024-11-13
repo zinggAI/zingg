@@ -1,9 +1,10 @@
-package zingg.common.core.executor;
+package zingg.common.core.executor.validate;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.executor.ZinggBase;
 
 public abstract class ExecutorValidator<S, D, R, C, T> {
 
