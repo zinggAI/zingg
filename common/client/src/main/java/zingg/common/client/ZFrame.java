@@ -184,7 +184,4 @@ public interface ZFrame<D, R, C> {
 
 	public C gt(C column1, C column2);
 
-    public ZFrame<D, R, C> transpose(String pivotColumn);
-
-    public void showVertical();
 }

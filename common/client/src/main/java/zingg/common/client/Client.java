@@ -98,7 +98,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			setZingg(zf.get(ZinggOptions.getByValue(options.get(ClientOptions.PHASE).value.trim())));
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 			//set default
 			setZingg(zf.get(ZinggOptions.getByValue(ZinggOptions.PEEK_MODEL.getName())));
 		}
@@ -227,8 +226,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 					e.getMessage()));
 			}
 			LOG.warn("Apologies for this message. Zingg has encountered an error. "
-					+ e.getMessage());
-			e.printStackTrace();
+					+ e.getMessage());;
 			if (LOG.isDebugEnabled()) e.printStackTrace();
 		}
 		catch( Throwable e) {

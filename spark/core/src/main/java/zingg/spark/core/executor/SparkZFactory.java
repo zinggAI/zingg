@@ -34,7 +34,7 @@ public class SparkZFactory implements IZinggFactory{
         zinggers.put(ZinggOptions.UPDATE_LABEL, SparkLabelUpdater.name);
         zinggers.put(ZinggOptions.FIND_AND_LABEL, SparkFindAndLabeller.name);
         zinggers.put(ZinggOptions.RECOMMEND, SparkRecommender.name);
-        zinggers.put(ZinggOptions.PEEK_MODEL, SparkPeekModel.name);
+        zinggers.put(ZinggOptions.PEEK_MODEL, SparkPythonPhaseRunner.name);
     }
 
     public IZingg get(ZinggOption z) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
