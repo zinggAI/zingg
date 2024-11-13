@@ -20,11 +20,13 @@ public class ExecutorTester<S, D, R, C, T>{
 	public ExecutorValidator<S, D, R, C, T> validator;
 	protected IArguments args;
 	protected String configFile;
+	protected String modelId;
 	
-	public ExecutorTester(ZinggBase<S, D, R, C, T> executor,ExecutorValidator<S, D, R, C, T> validator, String configFile) throws ZinggClientException, IOException {
+	public ExecutorTester(ZinggBase<S, D, R, C, T> executor,ExecutorValidator<S, D, R, C, T> validator, String configFile, String modelId) throws ZinggClientException, IOException {
 		this.executor = executor;
 		this.validator = validator;
 		this.configFile = configFile;
+		this.modelId = modelId;
 		setupArgs();
 	}
 

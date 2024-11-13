@@ -15,6 +15,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	public static final Log LOG = LogFactory.getLog(TestExecutorsGeneric.class);
 
 	protected S session;
+	protected String modelId;
 	protected List<ExecutorTester<S, D, R, C, T>> executorTesterList = new ArrayList<ExecutorTester<S, D, R, C, T>>();
 	
 	public TestExecutorsGeneric() {
@@ -26,7 +27,8 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	}
 
 	public void init(S s) throws ZinggClientException, IOException {
-		this.session = s;		
+		this.session = s;
+		modelId = "j_"+System.currentTimeMillis();
 	}
 
 	
