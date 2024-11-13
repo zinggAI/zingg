@@ -1,4 +1,4 @@
-package zingg.common.core.executor;
+package zingg.common.core.executor.labeller;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -7,6 +7,7 @@ import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
+import zingg.common.core.executor.Labeller;
 
 public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	

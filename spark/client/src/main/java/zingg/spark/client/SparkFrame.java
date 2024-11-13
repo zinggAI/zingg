@@ -454,6 +454,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.groupBy(groupByCol1, groupByCol2).agg(functions.count(groupByCol1).as(countColName)));
     }
 
+    
 
 	@Override
 	public ZFrame<Dataset<Row>, Row, Column> intersect(ZFrame<Dataset<Row>, Row, Column> other) {
@@ -469,6 +470,24 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     public Column gt(Column column1, Column column2) {
 		return column1.gt(column2);
 	}
+
+    @Override
+    public Object get(Row r, String colName) {
+        return r.getAs(colName);
+    }
+	
+    public Column[] getCols(){
+        return getCols(this.df);
+    }
+
+    public static Column[] getCols(Dataset<Row> inpDf){
+        String[] colNames = inpDf.schema().names();
+        Column[] cols = new Column[colNames.length];
+        for (int idx=0;idx<colNames.length;idx++){
+        	cols[idx] = inpDf.col(colNames[idx]);
+        }
+        return cols;
+    }
 
 }
 	
