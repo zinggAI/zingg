@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.DFObjectUtil;
-import zingg.common.client.util.verticalDisplay.VerticalDisplayUtility;
+import zingg.common.client.util.vertical.VerticalDisplayUtility;
 
 import java.util.ArrayList;
 import java.util.List;

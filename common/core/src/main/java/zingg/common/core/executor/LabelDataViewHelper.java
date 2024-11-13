@@ -12,7 +12,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.client.util.DFObjectUtil;
-import zingg.common.client.util.verticalDisplay.VerticalDisplayUtility;
+import zingg.common.client.util.vertical.VerticalDisplayUtility;
 import zingg.common.core.context.IContext;
 import zingg.common.core.util.LabelMatchType;
 

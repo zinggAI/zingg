@@ -1,6 +1,6 @@
-package zingg.common.client.util.verticalDisplay;
+package zingg.common.client.util.vertical;
 
-public class VerticalDisplayTwoRowModel extends VerticalDisplayModel {
+public class VerticalDisplayTwoRowModel implements VerticalDisplayModel {
     private final String Field;
     private final String Value1;
     private final String Value2;

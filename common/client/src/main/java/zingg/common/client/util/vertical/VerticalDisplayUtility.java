@@ -1,4 +1,4 @@
-package zingg.common.client.util.verticalDisplay;
+package zingg.common.client.util.vertical;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
