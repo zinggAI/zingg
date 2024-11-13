@@ -5,7 +5,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.junit.jupiter.api.extension.ExtendWith;
-import zingg.TestSparkBase;
+import zingg.spark.core.TestSparkBase;
 import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.WithSession;
 import zingg.spark.client.util.SparkDFObjectUtil;
