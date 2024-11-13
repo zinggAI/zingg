@@ -5,6 +5,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
+import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
 
 public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
@@ -44,7 +45,13 @@ public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 		
 		return linesMatched;
 	}
-	
+
+	@Override
+	protected DFObjectUtil<S, D, R, C> getDfObjectUtil() {
+		// won't be needed during test runs
+		return null;
+	}
+
 	private C getJoinCondForCol(ZFrame<D, R, C> df1, ZFrame<D, R, C> dfToJoin,String colName, boolean equal) {
 		C column = df1.col(colName);
 		C columnWithPrefix = dfToJoin.col(ColName.COL_PREFIX + colName);

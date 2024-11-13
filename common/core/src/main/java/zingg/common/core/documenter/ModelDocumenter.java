@@ -46,7 +46,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		modelColDoc.process(markedRecords);
 	}
 
-	protected void createModelDocument() throws ZinggClientException {
+	public void createModelDocument() throws ZinggClientException {
 		try {
 			LOG.info("Model document generation starts");
 
@@ -68,7 +68,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		writeDocument(MODEL_TEMPLATE, root, args.getZinggModelDocFile());
 	}
 
-	protected Map<String, Object> populateTemplateData() {
+	public Map<String, Object> populateTemplateData() {
 		/* Create a data-model */
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put(TemplateFields.MODEL_ID, args.getModelId());
@@ -165,6 +165,14 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		root.put(TemplateFields.IDENTIFIED_PAIRS, identifiedPairs);
 		
 		
+	}
+
+	public void setMarkedRecords(ZFrame<D, R, C> markedRecords) {
+		this.markedRecords = markedRecords;
+	}
+
+	public void setUnmarkedRecords(ZFrame<D, R, C> unmarkedRecords) {
+		this.unmarkedRecords = unmarkedRecords;
 	}
 	
 	@Override
