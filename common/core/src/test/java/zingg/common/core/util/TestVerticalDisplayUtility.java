@@ -82,7 +82,28 @@ public abstract class TestVerticalDisplayUtility<S, D, R, C> {
         Assertions.assertNull(zFrameVertical.getAsString(row, "Value2"));
     }
 
+    @Test
+    public void testWithEmptyFrame() throws Exception, ZinggClientException {
+        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = new VerticalDisplayUtility<S, D, R, C>(dfObjectUtil);
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getEmptyData(), Customer.class);
+        ZFrame<D, R, C> zFrameVertical = verticalDisplayUtility.convertVertical(zFrame);
 
+        //Assert on total number of rows
+        Assertions.assertEquals(0, zFrameVertical.count(), "Count is not as expected");
+    }
+
+    @Test
+    public void testWithNullFrame() throws ZinggClientException {
+        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = new VerticalDisplayUtility<S, D, R, C>(dfObjectUtil);
+        ZFrame<D, R, C> zFrameVertical = verticalDisplayUtility.convertVertical(null);
+
+        //Assert on total number of rows
+        Assertions.assertEquals(0, zFrameVertical.count(), "Count is not as expected");
+    }
+
+    public static List<Customer> getEmptyData() {
+        return new ArrayList<Customer>();
+    }
 
 
     public static List<Customer> getDataWithoutNulls() {

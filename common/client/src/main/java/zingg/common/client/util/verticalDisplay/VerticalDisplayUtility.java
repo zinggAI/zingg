@@ -23,6 +23,9 @@ public class VerticalDisplayUtility<S, D, R, C> {
 
     public ZFrame<D, R, C> convertVertical(ZFrame<D, R, C> zFrame) throws ZinggClientException {
         try {
+            if (zFrame == null || zFrame.isEmpty()) {
+                return dfObjectUtil.getDFFromObjectList(new ArrayList<VerticalDisplayModel>(), VerticalDisplayTwoRowModel.class);
+            }
             String[] columns = zFrame.columns();
             ZFrame<D, R, C> zFrame1 = zFrame.limit(1);
             ZFrame<D, R, C> zFrame2 = zFrame.except(zFrame1);
