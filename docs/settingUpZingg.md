@@ -149,4 +149,4 @@ For example, **-Dspark=3.5** you still face an error, include **-Dmaven.test.ski
 
 * Run this script in the terminal opened in Zingg clones directory `./scripts/zingg.sh --phase findTrainingData --conf examples/febrl/config.json`
 
-**If everything is right, it should show Zingg icon.**
+**If everything is right, it should show Zingg banner.**
