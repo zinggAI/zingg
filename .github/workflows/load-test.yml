@@ -35,7 +35,7 @@ jobs:
         run: mvn clean compile package -DskipTests=true
       - name: execute py script
         run: |
-          python perfTest/perfTestRunner.py
+          python perf_test/perfTestRunner.py
           git config user.name nitish
           git config user.email nitish1814@github.com
           git add .

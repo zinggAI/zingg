@@ -5,13 +5,13 @@ MATCH = "match"
 INCREMENTAL = "runIncrement"
 
 #load file config to test on
-config_65 = "../examples/febrl120k/config.json"
-config_120k = "../examples/febrl120k/config120k.json"
-config_5m = "../examples/ncVoters5M/config.json"
+config_65 = "./examples/febrl120k/config.json"
+config_120k = "./examples/febrl120k/config120k.json"
+config_5m = "./examples/ncVoters5M/config.json"
 
 
 #bash script location
-ZINGG = "../scripts/zingg.sh"
+ZINGG = "./scripts/zingg.sh"
 
 
 #add all the load to test

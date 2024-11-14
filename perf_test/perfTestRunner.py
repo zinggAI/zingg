@@ -3,6 +3,10 @@ from perfTestInput import phases, load_configs, ZINGG
 import time
 from datetime import date, datetime
 from subprocess import PIPE
+import os
+
+#set working directory
+os.chdir(os.path.dirname("../"))
 
 ZINGG = ZINGG           
 #phases to run: ftd, match
@@ -16,20 +20,23 @@ load = load_configs
 
 start_time = time.time()
 
+reportFile = "./perf_test/perf_test_report/loadTestReport"
+
 def perf_test_small_all():
     return "small_test_running_all"
 
+propertyFile = "./config/zingg.conf"
 
 def run_phase(phase, conf):
     print("Running phase - " + phase)
-    return subprocess.call(ZINGG + " %s %s %s %s" % ("--phase", phase, "--conf", conf), shell=True)
+    return subprocess.call(ZINGG + " %s %s %s %s %s %s" % ("--phase", phase, "--conf", conf, "--properties-file", propertyFile), shell=True)
 
 def perf_test_small(phase):
     return "small_test_running"
 
 
 def write_on_start():
-    f = open("./perfTestReport/loadTestReport_" + str(date.today()), "w+")
+    f = open(reportFile, "w+")
     f.write("******************************** perf test report, " + str(date.today()) + ", " + current_time + " ********************************\n\n");
     f.write("------------ Test bed details ------------\n")
     f.write("Load samples: ")
@@ -44,23 +51,23 @@ def write_on_start():
     f.close()
 
 def write_on_complete():
-    f = open("./perfTestReport/loadTestReport_" + str(date.today()), "a+")
+    f = open(reportFile, "a+")
     f.write("********************************************************************************************************\n\n\n\n\n\n")
 
 
 
 
 def write_success_stats(phase_time, load):
-    f = open("./perfTestReport/loadTestReport_" + str(date.today()), "a+")
+    f = open(reportFile, "a+")
     f.write("{:>50}".format("capturing for " + load) + "\n")
     f.write("PHASE {:>65}".format("TIME_TAKEN_IN_MINUTES") + "\n")
     for phase, time in phase_time.items():
-        f.write(success_message(phase, time/60) + "\n")
+        f.write(success_message(phase, round(time/60, 1)) + "\n")
     f.write("\n")
     f.close()
 
 def write_failure_stats(phase_error):
-    f = open("./perfTestReport/loadTestReport_" + str(date.today()), "a+")
+    f = open(reportFile, "a+")
     for phase, error in phase_error.items():
         f.write(error_message(phase, error) + "\n\n")
     f.close()
