@@ -27,16 +27,9 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 	@Override
 	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException{
 	    TrainingDataFinder<S, D, R, C, T> tdf = getTrainingDataFinder();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),getConfigFile()));
-
 		Labeller<S, D, R, C, T> labeler = getLabeller();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),getConfigFile()));
-
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),getConfigFile()));
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),getConfigFile()));
-
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),getConfigFile()));
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),getConfigFile()));
+		executorTesterList.add(new FtdLabelCombinedExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf), getConfigFile(),
+				labeler, new LabellerValidator<S, D, R, C, T>(labeler)));
 
 		Trainer<S, D, R, C, T> trainer = getTrainer();
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer),getConfigFile()));
