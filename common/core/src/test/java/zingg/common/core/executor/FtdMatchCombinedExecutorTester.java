@@ -12,20 +12,20 @@ import java.io.IOException;
 public class FtdMatchCombinedExecutorTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> {
 
     private static final Log LOG = LogFactory.getLog(FtdMatchCombinedExecutorTester.class);
-    private final ZinggBase<S, D, R, C, T> matchExecutor;
-    private final ExecutorValidator<S, D, R, C, T> matchValidator;
+    private final ZinggBase<S, D, R, C, T> labelExecutor;
+    private final ExecutorValidator<S, D, R, C, T> labelValidator;
     //max how many times we want to run
     //to avoid infinite loops in rare cases
-    private int MAX_RUN_COUNT = 15;
+    private int MAX_RUN_COUNT = 5;
     private int REQUIRED_MATCH_COUNT = 10;
 
-    //setting matcher properties here
+    //setting labeller properties here
     //ftd properties are already set by super
     public FtdMatchCombinedExecutorTester(ZinggBase<S, D, R, C, T> ftdExecutor, ExecutorValidator<S, D, R, C, T> ftdValidator, String configFile,
-                                          ZinggBase<S, D, R, C, T> matchExecutor, ExecutorValidator<S, D, R, C, T> matchValidator) throws ZinggClientException, IOException {
+                                          ZinggBase<S, D, R, C, T> labelExecutor, ExecutorValidator<S, D, R, C, T> labelValidator) throws ZinggClientException, IOException {
         super(ftdExecutor, ftdValidator, configFile);
-        this.matchExecutor = matchExecutor;
-        this.matchValidator = matchValidator;
+        this.labelExecutor = labelExecutor;
+        this.labelValidator = labelValidator;
     }
 
     //need to execute until we get
@@ -33,14 +33,14 @@ public class FtdMatchCombinedExecutorTester<S, D, R, C, T> extends ExecutorTeste
     @Override
     public void initAndExecute(S session) throws ZinggClientException {
         executor.init(args,session, new ClientOptions());
-        matchExecutor.init(args, session, new ClientOptions());
+        labelExecutor.init(args, session, new ClientOptions());
         runUntilThreshold();
     }
 
     @Override
     public void validateResults() throws ZinggClientException {
         validator.validateResults();
-        matchValidator.validateResults();
+        labelValidator.validateResults();
     }
 
     //run until max run count reached or
@@ -50,8 +50,8 @@ public class FtdMatchCombinedExecutorTester<S, D, R, C, T> extends ExecutorTeste
         long matchCount = 0;
         while(MAX_RUN_COUNT > 0 && matchCount < REQUIRED_MATCH_COUNT) {
             executor.execute();
-            matchExecutor.execute();
-            ZFrame<D, R, C> markedRecords = matchExecutor.getMarkedRecords();
+            labelExecutor.execute();
+            ZFrame<D, R, C> markedRecords = labelExecutor.getMarkedRecords();
             matchCount = getMatchRecordCount(markedRecords);
             MAX_RUN_COUNT--;
         }
