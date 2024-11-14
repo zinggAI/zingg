@@ -28,7 +28,7 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException{
 	    TrainingDataFinder<S, D, R, C, T> tdf = getTrainingDataFinder();
 		Labeller<S, D, R, C, T> labeler = getLabeller();
-		executorTesterList.add(new FtdMatchCombinedExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf), getConfigFile(),
+		executorTesterList.add(new FtdLabelCombinedExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf), getConfigFile(),
 				labeler, new LabellerValidator<S, D, R, C, T>(labeler)));
 
 		Trainer<S, D, R, C, T> trainer = getTrainer();

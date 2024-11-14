@@ -9,9 +9,9 @@ import zingg.common.core.executor.validate.ExecutorValidator;
 
 import java.io.IOException;
 
-public class FtdMatchCombinedExecutorTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> {
+public class FtdLabelCombinedExecutorTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T> {
 
-    private static final Log LOG = LogFactory.getLog(FtdMatchCombinedExecutorTester.class);
+    private static final Log LOG = LogFactory.getLog(FtdLabelCombinedExecutorTester.class);
     private final ZinggBase<S, D, R, C, T> labelExecutor;
     private final ExecutorValidator<S, D, R, C, T> labelValidator;
     //max how many times we want to run
@@ -21,7 +21,7 @@ public class FtdMatchCombinedExecutorTester<S, D, R, C, T> extends ExecutorTeste
 
     //setting labeller properties here
     //ftd properties are already set by super
-    public FtdMatchCombinedExecutorTester(ZinggBase<S, D, R, C, T> ftdExecutor, ExecutorValidator<S, D, R, C, T> ftdValidator, String configFile,
+    public FtdLabelCombinedExecutorTester(ZinggBase<S, D, R, C, T> ftdExecutor, ExecutorValidator<S, D, R, C, T> ftdValidator, String configFile,
                                           ZinggBase<S, D, R, C, T> labelExecutor, ExecutorValidator<S, D, R, C, T> labelValidator) throws ZinggClientException, IOException {
         super(ftdExecutor, ftdValidator, configFile);
         this.labelExecutor = labelExecutor;
