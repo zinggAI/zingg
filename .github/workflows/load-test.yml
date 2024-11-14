@@ -1,7 +1,6 @@
 name: load-test
 
 on:
-  push:
   schedule:
     - cron: "0 0 */3 * *"
 
@@ -36,7 +35,7 @@ jobs:
         run: mvn clean compile package -DskipTests=true
       - name: execute py script
         run: |
-          python loadTest.py
+          python perfTest/perfTestRunner.py
           git config user.name nitish
           git config user.email nitish1814@github.com
           git add .

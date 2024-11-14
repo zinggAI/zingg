@@ -1,5 +1,5 @@
 import subprocess
-from perf_test_input import phases, load_configs, ZINGG
+from perfTestInput import phases, load_configs, ZINGG
 import time
 from datetime import date, datetime
 from subprocess import PIPE
