@@ -17,7 +17,7 @@ public class FtdLabelCombinedExecutorTester<S, D, R, C, T> extends ExecutorTeste
     //max how many times we want to run
     //to avoid infinite loops in rare cases
     private int MAX_RUN_COUNT = 5;
-    private int REQUIRED_MATCH_COUNT = 20;
+    private final static int REQUIRED_MATCH_COUNT = 20;
 
     //setting labeller properties here
     //ftd properties are already set by super
