@@ -52,7 +52,7 @@ public class FtdMatchCombinedExecutorTester<S, D, R, C, T> extends ExecutorTeste
             executor.execute();
             matchExecutor.execute();
             ZFrame<D, R, C> markedRecords = matchExecutor.getMarkedRecords();
-            matchCount += getMatchRecordCount(markedRecords);
+            matchCount = getMatchRecordCount(markedRecords);
             MAX_RUN_COUNT--;
         }
         LOG.info("total number of matches discovered, " + matchCount);
