@@ -16,8 +16,9 @@ public class FtdLabelCombinedExecutorTester<S, D, R, C, T> extends ExecutorTeste
     private final ExecutorValidator<S, D, R, C, T> labelValidator;
     //max how many times we want to run
     //to avoid infinite loops in rare cases
-    private int MAX_RUN_COUNT = 5;
+    private int MAX_RUN_COUNT = 6;
     private final static int REQUIRED_MATCH_COUNT = 20;
+    private final static int REQUIRED_NOT_A_MATCH_COUNT = 20;
 
     //setting labeller properties here
     //ftd properties are already set by super
@@ -48,18 +49,25 @@ public class FtdLabelCombinedExecutorTester<S, D, R, C, T> extends ExecutorTeste
     //reaches earlier
     private void runUntilThreshold() throws ZinggClientException {
         long matchCount = 0;
-        while(MAX_RUN_COUNT > 0 && matchCount < REQUIRED_MATCH_COUNT) {
+        long notAMatchCount = 0;
+        while(MAX_RUN_COUNT > 0 && (matchCount < REQUIRED_MATCH_COUNT || notAMatchCount < REQUIRED_NOT_A_MATCH_COUNT)) {
             executor.execute();
             labelExecutor.execute();
             ZFrame<D, R, C> markedRecords = labelExecutor.getMarkedRecords();
             matchCount = getMatchRecordCount(markedRecords);
+            notAMatchCount = getNotMatchRecordCount(markedRecords);
             MAX_RUN_COUNT--;
         }
         LOG.info("total number of matches discovered, " + matchCount);
+        LOG.info("total number of non-matches discovered, " + notAMatchCount);
     }
 
     private long getMatchRecordCount(ZFrame<D, R, C> markedRecords) {
         return markedRecords.filter(markedRecords.equalTo("z_isMatch", 1.0)).count();
+    }
+
+    private long getNotMatchRecordCount(ZFrame<D, R, C> markedRecords) {
+        return markedRecords.filter(markedRecords.equalTo("z_isMatch", 0.0)).count();
     }
 
 }

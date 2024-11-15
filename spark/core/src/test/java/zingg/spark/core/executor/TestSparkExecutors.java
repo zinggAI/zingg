@@ -16,8 +16,6 @@ import zingg.common.core.executor.Labeller;
 import zingg.common.core.executor.TestExecutorsSingle;
 import zingg.common.core.executor.Trainer;
 import zingg.spark.core.TestSparkBase;
-import zingg.common.core.executor.TestExecutorsSingle;
-import zingg.common.core.executor.Trainer;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.executor.labeller.ProgrammaticSparkLabeller;
 import zingg.spark.core.executor.validate.SparkTrainerValidator;
