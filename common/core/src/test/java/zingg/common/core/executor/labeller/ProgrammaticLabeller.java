@@ -12,6 +12,12 @@ import zingg.common.core.executor.Labeller;
 public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	
 	private static final long serialVersionUID = 1L;
+
+	//this defines how much
+	//prefix to be taken for fuzzy matching
+	//tune it accordingly
+	private static final int PREFIX_MATCH_LENGTH = 8;
+	private static final String FUZZY = "_fuzzy";
 	
 	public ProgrammaticLabeller(Context<S,D,R,C,T> context) {
 		setZinggOption(ZinggOptions.LABEL);
@@ -24,14 +30,19 @@ public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 		
 		// now get a list of all those rows which have same cluster and match due to fname => mark match
 		ZFrame<D, R, C> lines2 = getDSUtil().getPrefixedColumnsDS(lines);
-		
+
+		lines = addFuzzinessToColumn(lines, "ID", false);
+		lines2 = addFuzzinessToColumn(lines2, "ID", true);
 		// construct AND condition
 		C clusterCond = getJoinCondForCol(lines, lines2, ColName.CLUSTER_COLUMN,true);
-		C fnameCond = getJoinCondForCol(lines, lines2, "FNAME",true);
+		C idCondFuzzy = getJoinCondWithFuzzyMatch(lines, lines2, "ID",true);
 		C idCond = getJoinCondForCol(lines, lines2, "ID",false);
-		C filterCond = lines2.and(lines2.and(clusterCond,idCond),fnameCond);
+		C filterCond = lines2.and(lines2.and(clusterCond,idCond),idCondFuzzy);
 		
 		ZFrame<D, R, C> filtered = lines.joinOnCol(lines2, filterCond).cache();
+
+		filtered = clearFuzzyColumn(filtered, "ID", ColName.COL_PREFIX + "ID");
+		lines = clearFuzzyColumn(lines, "ID");
 		
 		ZFrame<D, R, C> matches = filtered.select(ColName.CLUSTER_COLUMN).distinct().withColumn(ColName.MATCH_FLAG_COL, ColValues.IS_MATCH_PREDICTION).cache();
 
@@ -64,5 +75,29 @@ public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 		}
 	}
 
-	
+	private ZFrame<D, R, C> addFuzzinessToColumn(ZFrame<D, R, C> zFrame, String colName, boolean isPrefix) {
+		if (isPrefix) {
+			return zFrame.withColumn(ColName.COL_PREFIX + colName + FUZZY, zFrame.substr(zFrame.col(ColName.COL_PREFIX + colName), 0, PREFIX_MATCH_LENGTH));
+		}
+		return zFrame.withColumn(colName + FUZZY, zFrame.substr(zFrame.col(colName), 0, PREFIX_MATCH_LENGTH));
+	}
+
+	private C getJoinCondWithFuzzyMatch(ZFrame<D, R, C> df1, ZFrame<D, R, C> dfToJoin,String colName, boolean equal) {
+		C column = df1.col(colName + FUZZY);
+		C columnWithPrefix = dfToJoin.col(ColName.COL_PREFIX + colName + FUZZY);
+		C equalTo = df1.equalTo(column,columnWithPrefix);
+		if (equal) {
+			return equalTo;
+		} else {
+			return df1.not(equalTo);
+		}
+	}
+
+	private ZFrame<D, R, C> clearFuzzyColumn(ZFrame<D, R, C> zFrame, String... colName) {
+		String [] fuzzyCols = new String[colName.length];
+		for (int idx = 0; idx < fuzzyCols.length; idx++) {
+			fuzzyCols[idx] = fuzzyCols[idx] + FUZZY;
+		}
+		return zFrame.drop(fuzzyCols);
+	}
 }

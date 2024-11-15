@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.ArgumentsUtil;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.validate.FindAndLabelValidator;
 import zingg.common.core.executor.validate.TrainMatchValidator;
@@ -27,6 +29,13 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 		TrainMatcher<S, D, R, C, T> trainMatch = getTrainMatcher();
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainMatch,getTrainMatchValidator(trainMatch), getConfigFile()));
 		return executorTesterList;
+	}
+
+	@Override
+	protected void setZinggDir() throws ZinggClientException {
+		String configFile = getConfigFile();
+		IArguments args = new ArgumentsUtil().createArgumentsFromJSON(getClass().getClassLoader().getResource(configFile).getFile(), "");
+		this.zinggDir = args.getZinggDir();
 	}
 
 	

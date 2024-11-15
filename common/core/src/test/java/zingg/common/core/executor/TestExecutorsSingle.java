@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.ArgumentsUtil;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.validate.BlockerValidator;
 import zingg.common.core.executor.validate.LabellerValidator;
@@ -25,7 +27,7 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 	}
 
 	@Override
-	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException{
+	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException {
 	    TrainingDataFinder<S, D, R, C, T> tdf = getTrainingDataFinder();
 		Labeller<S, D, R, C, T> labeler = getLabeller();
 		executorTesterList.add(new FtdLabelCombinedExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf), getConfigFile(),
@@ -46,7 +48,12 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 		return executorTesterList;
 	}
 
-   
+   @Override
+   protected void setZinggDir() throws ZinggClientException {
+		String configFile = getConfigFile();
+		IArguments args = new ArgumentsUtil().createArgumentsFromJSON(getClass().getClassLoader().getResource(configFile).getFile(), "");
+		this.zinggDir = args.getZinggDir();
+   }
 
 	public abstract String getConfigFile();
 
