@@ -3,7 +3,7 @@ package zingg.spark.core.executor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 /**end to end integration test*/
-public class TestPeekModel extends ZinggSparkTester{
+public class TestPeekModel {
 	public static final Log LOG = LogFactory.getLog(TestPeekModel.class);
 
 	/*

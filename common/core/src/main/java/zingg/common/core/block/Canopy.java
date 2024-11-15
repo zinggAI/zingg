@@ -16,6 +16,7 @@ import zingg.common.core.hash.HashFunction;
 
 
 public class Canopy<R> implements Serializable {
+	private static final long serialVersionUID = -229533781044789499L;
 
 	public static final Log LOG = LogFactory.getLog(Canopy.class);
 

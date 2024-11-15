@@ -13,6 +13,10 @@ import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 
+import zingg.common.client.util.DFObjectUtil;
+import zingg.common.client.util.IWithSession;
+import zingg.common.client.util.WithSession;
+import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.Labeller;
 
@@ -30,6 +34,13 @@ public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Col
 
 	public SparkLabeller() {
 		this(new ZinggSparkContext());
+	}
+
+	@Override
+	protected DFObjectUtil<SparkSession, Dataset<Row>, Row, Column> getDfObjectUtil() {
+		IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
+		iWithSession.setSession(getContext().getSession());
+		return new SparkDFObjectUtil(iWithSession);
 	}
 
 	public SparkLabeller(ZinggSparkContext sparkContext) {
