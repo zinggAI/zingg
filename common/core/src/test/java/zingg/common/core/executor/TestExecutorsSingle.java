@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.executor.validate.BlockerValidator;
 import zingg.common.core.executor.validate.LabellerValidator;
 import zingg.common.core.executor.validate.LinkerValidator;
@@ -27,33 +28,32 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 	@Override
 	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException{
 	    TrainingDataFinder<S, D, R, C, T> tdf = getTrainingDataFinder();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),getConfigFile(),modelId));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),getConfigFile(),modelId,getDFObjectUtil()));
 
 		Labeller<S, D, R, C, T> labeler = getLabeller();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),getConfigFile(),modelId));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),getConfigFile(),modelId,getDFObjectUtil()));
 
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),getConfigFile(),modelId));
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),getConfigFile(),modelId));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),getConfigFile(),modelId,getDFObjectUtil()));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),getConfigFile(),modelId,getDFObjectUtil()));
 
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),getConfigFile(),modelId));
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),getConfigFile(),modelId));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf),getConfigFile(),modelId,getDFObjectUtil()));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(labeler, new LabellerValidator<S, D, R, C, T>(labeler),getConfigFile(),modelId,getDFObjectUtil()));
 
 		Trainer<S, D, R, C, T> trainer = getTrainer();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer),getConfigFile(),modelId));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer),getConfigFile(),modelId,getDFObjectUtil()));
 
         VerifyBlocking<S, D, R, C, T> verifyBlocker = getVerifyBlocker();
-        executorTesterList.add(new ExecutorTester<S, D, R, C, T>(verifyBlocker, new BlockerValidator<S, D, R, C, T>(verifyBlocker),getConfigFile(),modelId));
+        executorTesterList.add(new ExecutorTester<S, D, R, C, T>(verifyBlocker, new BlockerValidator<S, D, R, C, T>(verifyBlocker),getConfigFile(),modelId,getDFObjectUtil()));
 
 		Matcher<S, D, R, C, T> matcher = getMatcher();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher),getConfigFile(),modelId));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher),getConfigFile(),modelId,getDFObjectUtil()));
 
 		Linker<S, D, R, C, T> linker = getLinker();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker),getLinkerConfigFile(),modelId));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker),getLinkerConfigFile(),modelId,getDFObjectUtil()));
 
 		return executorTesterList;
 	}
 
-   
 
 	public abstract String getConfigFile();
 

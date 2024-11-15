@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.DFObjectUtil;
 
 public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
@@ -31,7 +32,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 		modelId = "j_"+System.currentTimeMillis();
 	}
 
-	
+	protected abstract DFObjectUtil<S,D,R,C> getDFObjectUtil();
 
 	public abstract List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException;
 
