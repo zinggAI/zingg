@@ -1,5 +1,4 @@
 #!/bin/bash
-#ZINGG_HOME=./assembly/target
 ZINGG_JARS=$ZINGG_HOME/zingg-0.4.1-SNAPSHOT.jar
 EMAIL=zingg@zingg.ai
 LICENSE=zinggLicense.txt
