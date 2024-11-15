@@ -10,6 +10,7 @@ import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
+import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.executor.validate.ExecutorValidator;
 
 public class ExecutorTester<S, D, R, C, T>{
@@ -20,16 +21,26 @@ public class ExecutorTester<S, D, R, C, T>{
 	public ExecutorValidator<S, D, R, C, T> validator;
 	protected IArguments args;
 	protected String configFile;
+	protected String modelId;
+	protected DFObjectUtil<S,D,R,C> dfObjectUtil;
 	
-	public ExecutorTester(ZinggBase<S, D, R, C, T> executor,ExecutorValidator<S, D, R, C, T> validator, String configFile) throws ZinggClientException, IOException {
+	public ExecutorTester(ZinggBase<S, D, R, C, T> executor,ExecutorValidator<S, D, R, C, T> validator, String configFile, String modelId, DFObjectUtil<S,D,R,C> dfObjectUtil) throws ZinggClientException, IOException {
 		this.executor = executor;
 		this.validator = validator;
 		this.configFile = configFile;
+		this.modelId = modelId;
+		this.dfObjectUtil = dfObjectUtil;
 		setupArgs();
 	}
 
 	public IArguments setupArgs(String configFile, String phase) throws ZinggClientException, IOException {
 		args = new ArgumentsUtil().createArgumentsFromJSON(getClass().getClassLoader().getResource(configFile).getFile(), phase);
+		args = updateLocation(args);
+		args.setModelId(modelId);
+		return args;
+	}
+
+	public IArguments updateLocation(IArguments args){
 		for (Pipe p: args.getData()) {
 			if (p.getProps().containsKey("location")) {
 				String testOneFile = getClass().getClassLoader().getResource(p.get("location")).getFile();
