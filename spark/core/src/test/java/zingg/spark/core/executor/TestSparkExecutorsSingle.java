@@ -12,26 +12,31 @@ import org.apache.spark.sql.types.DataType;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.DFObjectUtil;
+import zingg.common.client.util.IWithSession;
+import zingg.common.client.util.WithSession;
 import zingg.common.core.executor.Labeller;
 import zingg.common.core.executor.TestExecutorsSingle;
 import zingg.common.core.executor.Trainer;
+import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.core.TestSparkBase;
+import zingg.common.core.executor.Trainer;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.executor.labeller.ProgrammaticSparkLabeller;
 import zingg.spark.core.executor.validate.SparkTrainerValidator;
 
 @ExtendWith(TestSparkBase.class)
-public class TestSparkExecutors extends TestExecutorsSingle<SparkSession,Dataset<Row>,Row,Column,DataType> {
+public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,Dataset<Row>,Row,Column,DataType> {
 	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
 	protected static final String CONFIGLINK_FILE = "zingg/spark/core/executor/configSparkLinkTest.json";
 	protected static final String TEST1_DATA_FILE = "zingg/spark/core/executor/test1.csv";
 	protected static final String TEST2_DATA_FILE = "zingg/spark/core/executor/test2.csv";
 	private final SparkSession sparkSession;
-	public static final Log LOG = LogFactory.getLog(TestSparkExecutors.class);
+	public static final Log LOG = LogFactory.getLog(TestSparkExecutorsSingle.class);
 	
 	protected ZinggSparkContext ctx;
 	
-	public TestSparkExecutors(SparkSession sparkSession) throws IOException, ZinggClientException {
+	public TestSparkExecutorsSingle(SparkSession sparkSession) throws IOException, ZinggClientException {
 		this.sparkSession = sparkSession;
 		ctx = new ZinggSparkContext();
 		ctx.init(sparkSession);
@@ -90,5 +95,12 @@ public class TestSparkExecutors extends TestExecutorsSingle<SparkSession,Dataset
 		return new SparkTrainerValidator(trainer);
 	}
 
-	
+	@Override
+	protected DFObjectUtil<SparkSession, Dataset<Row>, Row, Column> getDFObjectUtil() {
+		IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
+		iWithSession.setSession(session);
+		return new SparkDFObjectUtil(iWithSession);
+	}
+
+
 }

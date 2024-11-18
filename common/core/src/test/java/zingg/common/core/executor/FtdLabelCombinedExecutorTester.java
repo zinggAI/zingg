@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.executor.validate.ExecutorValidator;
 
 import java.io.IOException;
@@ -23,8 +24,8 @@ public class FtdLabelCombinedExecutorTester<S, D, R, C, T> extends ExecutorTeste
     //setting labeller properties here
     //ftd properties are already set by super
     public FtdLabelCombinedExecutorTester(ZinggBase<S, D, R, C, T> ftdExecutor, ExecutorValidator<S, D, R, C, T> ftdValidator, String configFile,
-                                          ZinggBase<S, D, R, C, T> labelExecutor, ExecutorValidator<S, D, R, C, T> labelValidator) throws ZinggClientException, IOException {
-        super(ftdExecutor, ftdValidator, configFile);
+                                          ZinggBase<S, D, R, C, T> labelExecutor, ExecutorValidator<S, D, R, C, T> labelValidator, String modelId, DFObjectUtil<S,D,R,C> dfObjectUtil) throws ZinggClientException, IOException {
+        super(ftdExecutor, ftdValidator,configFile,modelId,dfObjectUtil);
         this.labelExecutor = labelExecutor;
         this.labelValidator = labelValidator;
     }
