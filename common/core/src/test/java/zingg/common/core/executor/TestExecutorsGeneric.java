@@ -1,6 +1,5 @@
 package zingg.common.core.executor;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +41,6 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
 	 @Test
 	public void testExecutors() throws ZinggClientException, IOException {
-		 // set zingg Dir
-		 // to be cleaned up after run
-		 setZinggDir();
 		 try {
 			 List<ExecutorTester<S, D, R, C, T>> executorTesterList = getExecutors();
 			 for (ExecutorTester<S, D, R, C, T> executorTester : executorTesterList) {
@@ -54,27 +50,8 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 			 }
 		 } catch (Throwable throwable) {
 			 throw new ZinggClientException("Exception occurred while running one or more test executors, " + throwable.getMessage());
-		 } finally {
-			 //clear zingg directory created
-			 //during tests run
-			 clearZinggDir();
 		 }
 
 	}
-	private void clearZinggDir() {
-		 try {
-			 File index = new File(this.zinggDir);
-			 String[] entries = index.list();
-			 assert entries != null;
-			 for (String s : entries) {
-				 File currentFile = new File(index.getPath(), s);
-				 currentFile.delete();
-			 }
-			 index.delete();
-		 } catch (Exception exception) {
-			 LOG.error("Exception occurred while deleting Zingg directory");
-		 }
-	}
 
-	protected abstract void setZinggDir() throws ZinggClientException;
 }

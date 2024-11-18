@@ -13,6 +13,7 @@ import zingg.common.core.executor.Matcher;
 public class MatcherValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
 
 	public static final Log LOG = LogFactory.getLog(MatcherValidator.class);
+	protected int PREFIX_MATCH_LENGTH = 8;
 	
 	public MatcherValidator(Matcher<S, D, R, C, T> executor) {
 		super(executor);
@@ -32,7 +33,7 @@ public class MatcherValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 		
 		df = df.withColumn("fnameId",df.concat(df.col("fname"), df.col("id")));
 		df = df.select("fnameId", "id", getClusterColName());
-		df = df.withColumn("dupeRecIdFuzzyMatch",df.substr(df.col("id"),0,8)).cache();
+		df = df.withColumn("dupeRecIdFuzzyMatch",df.substr(df.col("id"),0,PREFIX_MATCH_LENGTH)).cache();
 		ZFrame<D, R, C> df1 = df.withColumnRenamed("fnameId", "fnameId1").withColumnRenamed("dupeRecIdFuzzyMatch", "dupeRecIdFuzzyMatch1")
 							.withColumnRenamed(getClusterColName(), getClusterColName() + "1").cache();
 					
@@ -84,5 +85,8 @@ public class MatcherValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 		ZFrame<D, R, C> joined = df.joinOnCol(df1, df.equalTo(col1, col2));
 		return joined.filter(joined.gt(joined.col("fnameId"), joined.col("fnameId1")));
 	}
-	
+
+	protected void setPrefixMatchLength(int length) {
+		this.PREFIX_MATCH_LENGTH = length;
+	}
 }

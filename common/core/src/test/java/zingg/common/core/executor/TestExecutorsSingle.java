@@ -6,8 +6,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.ArgumentsUtil;
-import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.validate.BlockerValidator;
 import zingg.common.core.executor.validate.LabellerValidator;
@@ -48,13 +46,6 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 
 		return executorTesterList;
 	}
-
-   @Override
-   protected void setZinggDir() throws ZinggClientException {
-		String configFile = getConfigFile();
-		IArguments args = new ArgumentsUtil().createArgumentsFromJSON(getClass().getClassLoader().getResource(configFile).getFile(), "");
-		this.zinggDir = args.getZinggDir();
-   }
 
 	public abstract String getConfigFile();
 
