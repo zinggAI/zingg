@@ -102,5 +102,4 @@ public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,D
 		return new SparkDFObjectUtil(iWithSession);
 	}
 
-	
 }
