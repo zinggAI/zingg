@@ -95,8 +95,8 @@ public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 
 	protected ZFrame<D, R, C> clearFuzzyColumn(ZFrame<D, R, C> zFrame, String... colName) {
 		String [] fuzzyCols = new String[colName.length];
-		for (int idx = 0; idx < fuzzyCols.length; idx++) {
-			fuzzyCols[idx] = fuzzyCols[idx] + FUZZY;
+		for (int idx = 0; idx < colName.length; idx++) {
+			fuzzyCols[idx] = colName[idx] + FUZZY;
 		}
 		return zFrame.drop(fuzzyCols);
 	}
