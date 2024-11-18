@@ -16,7 +16,7 @@ public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	//this defines how much
 	//prefix to be taken for fuzzy matching
 	//tune it accordingly
-	private static final int PREFIX_MATCH_LENGTH = 8;
+	private int PREFIX_MATCH_LENGTH = 8;
 	private static final String FUZZY = "_fuzzy";
 	
 	public ProgrammaticLabeller(Context<S,D,R,C,T> context) {
@@ -64,7 +64,7 @@ public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 		return null;
 	}
 
-	private C getJoinCondForCol(ZFrame<D, R, C> df1, ZFrame<D, R, C> dfToJoin,String colName, boolean equal) {
+	protected C getJoinCondForCol(ZFrame<D, R, C> df1, ZFrame<D, R, C> dfToJoin,String colName, boolean equal) {
 		C column = df1.col(colName);
 		C columnWithPrefix = dfToJoin.col(ColName.COL_PREFIX + colName);
 		C equalTo = df1.equalTo(column,columnWithPrefix);
@@ -75,14 +75,14 @@ public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 		}
 	}
 
-	private ZFrame<D, R, C> addFuzzinessToColumn(ZFrame<D, R, C> zFrame, String colName, boolean isPrefix) {
+	protected ZFrame<D, R, C> addFuzzinessToColumn(ZFrame<D, R, C> zFrame, String colName, boolean isPrefix) {
 		if (isPrefix) {
 			return zFrame.withColumn(ColName.COL_PREFIX + colName + FUZZY, zFrame.substr(zFrame.col(ColName.COL_PREFIX + colName), 0, PREFIX_MATCH_LENGTH));
 		}
 		return zFrame.withColumn(colName + FUZZY, zFrame.substr(zFrame.col(colName), 0, PREFIX_MATCH_LENGTH));
 	}
 
-	private C getJoinCondWithFuzzyMatch(ZFrame<D, R, C> df1, ZFrame<D, R, C> dfToJoin,String colName, boolean equal) {
+	protected C getJoinCondWithFuzzyMatch(ZFrame<D, R, C> df1, ZFrame<D, R, C> dfToJoin,String colName, boolean equal) {
 		C column = df1.col(colName + FUZZY);
 		C columnWithPrefix = dfToJoin.col(ColName.COL_PREFIX + colName + FUZZY);
 		C equalTo = df1.equalTo(column,columnWithPrefix);
@@ -93,11 +93,15 @@ public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 		}
 	}
 
-	private ZFrame<D, R, C> clearFuzzyColumn(ZFrame<D, R, C> zFrame, String... colName) {
+	protected ZFrame<D, R, C> clearFuzzyColumn(ZFrame<D, R, C> zFrame, String... colName) {
 		String [] fuzzyCols = new String[colName.length];
 		for (int idx = 0; idx < fuzzyCols.length; idx++) {
 			fuzzyCols[idx] = fuzzyCols[idx] + FUZZY;
 		}
 		return zFrame.drop(fuzzyCols);
 	}
-}
+
+	protected void setPrefixMatchLength(int length) {
+		this.PREFIX_MATCH_LENGTH = length;
+	}
+ }
