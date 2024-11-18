@@ -30,14 +30,6 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainMatch,getTrainMatchValidator(trainMatch), getConfigFile(),modelId,getDFObjectUtil()));
 		return executorTesterList;
 	}
-
-	@Override
-	protected void setZinggDir() throws ZinggClientException {
-		String configFile = getConfigFile();
-		IArguments args = new ArgumentsUtil().createArgumentsFromJSON(getClass().getClassLoader().getResource(configFile).getFile(), "");
-		this.zinggDir = args.getZinggDir();
-	}
-
 	
 	public abstract String getConfigFile();
 
