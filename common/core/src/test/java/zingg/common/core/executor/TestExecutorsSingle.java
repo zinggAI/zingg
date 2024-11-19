@@ -37,7 +37,7 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 
 		TrainingDataFinder<S, D, R, C, T> tdf = getTrainingDataFinder();
     	Labeller<S, D, R, C, T> labeler = getLabeller();
-		executorTesterList.add(new FtdLabelCombinedExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf), getConfigFile(),
+		executorTesterList.add(new FtdAndLabelCombinedExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf), getConfigFile(),
 				labeler, new LabellerValidator<S, D, R, C, T>(labeler), modelId, getDFObjectUtil()));
 
 
