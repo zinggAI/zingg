@@ -7,7 +7,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.executor.validate.BlockerValidator;
 import zingg.common.core.executor.validate.LabellerValidator;
 import zingg.common.core.executor.validate.LinkerValidator;
@@ -59,7 +58,6 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker),getLinkerConfigFile(),modelId,getDFObjectUtil()));
 	
 	}
-
 
 	public abstract String getConfigFile();
 

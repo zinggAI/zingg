@@ -23,12 +23,14 @@ public class LinkerValidator<S, D, R, C, T> extends MatcherValidator<S, D, R, C,
     @Override
 	protected void assessAccuracy() throws ZinggClientException {
 		ZFrame<D, R, C> df1  = getOutputData().withColumn("z_zsource", "test1");
-		df1 = df1.select("fname", getClusterColName());
+		df1 = df1.select("fname", "id", getClusterColName());
+		df1 = df1.withColumn("dupeRecIdFuzzyMatch",df1.substr(df1.col("id"),0,PREFIX_MATCH_LENGTH)).cache();
 		
 		ZFrame<D, R, C> df2 = getOutputData().withColumn("z_zsource", "test2");
-        df2 = df2.select("fname", getClusterColName());
+        df2 = df2.select("fname", "id", getClusterColName());
+		df2 = df2.withColumn("dupeRecIdFuzzyMatch",df2.substr(df2.col("id"),0,PREFIX_MATCH_LENGTH)).cache();
 					
-		ZFrame<D, R, C> gold = joinAndFilter("fname", df1, df2).cache();
+		ZFrame<D, R, C> gold = joinAndFilter("dupeRecIdFuzzyMatch", df1, df2).cache();
 		ZFrame<D, R, C> result = joinAndFilter(getClusterColName(), df1, df2).cache();
 
         testAccuracy(gold, result);	

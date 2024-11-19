@@ -21,14 +21,12 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException{
 		FindAndLabeller<S, D, R, C, T> findAndLabel = getFindAndLabeller();
 		FindAndLabelValidator<S, D, R, C, T> falValidator = new FindAndLabelValidator<S, D, R, C, T>(findAndLabel);
-		ExecutorTester<S, D, R, C, T> et = new ExecutorTester<S, D, R, C, T>(findAndLabel, falValidator,getConfigFile(),modelId,getDFObjectUtil());
-		executorTesterList.add(et);
+		ExecutorTester<S, D, R, C, T> et = new FindAndLabellerExecutorTester<>(findAndLabel, falValidator,getConfigFile(),modelId,getDFObjectUtil());
 		executorTesterList.add(et);
 		TrainMatcher<S, D, R, C, T> trainMatch = getTrainMatcher();
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainMatch,getTrainMatchValidator(trainMatch), getConfigFile(),modelId,getDFObjectUtil()));
 		return executorTesterList;
 	}
-
 	
 	public abstract String getConfigFile();
 
