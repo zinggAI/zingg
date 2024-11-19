@@ -1,13 +1,9 @@
 package zingg.common.core.executor.validate;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.util.ColName;
 import zingg.common.core.executor.FindAndLabeller;
 
 public class FindAndLabelValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
