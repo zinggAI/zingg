@@ -125,7 +125,8 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		long least = Long.MAX_VALUE;
 		int maxElimination = 0;
 		Canopy<R>best = null;
-		for (FieldDefinition field : fieldsOfInterest) {
+		List<FieldDefinition> adjustedFieldOfInterestList = getFieldOfInterestList(fieldsOfInterest, node);
+		for (FieldDefinition field : adjustedFieldOfInterestList) {
 			if (LOG.isDebugEnabled()){
 				LOG.debug("Trying for " + field + " with data type " + field.getDataType() + " and real dt " 
 					+ getFeatureFactory().getDataTypeFromString(field.getDataType()));
@@ -402,6 +403,11 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		for (Canopy<R>c : tree.getSuccessors(root)) {
 			printTree(tree, c);
 		}			
+	}
+
+	public List<FieldDefinition> getFieldOfInterestList(List<FieldDefinition> fieldDefinitions, Canopy<R> node) {
+		FieldDefinitionStrategy<R> fieldDefinitionStrategy = new DefaultFieldDefinitionStrategy<>();
+		return fieldDefinitionStrategy.getAdjustedFieldDefinitions(fieldDefinitions, node);
 	}
 
 	public abstract FeatureFactory<T> getFeatureFactory();
