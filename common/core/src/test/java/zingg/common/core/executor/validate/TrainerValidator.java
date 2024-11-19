@@ -3,7 +3,6 @@ package zingg.common.core.executor.validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.executor.Trainer;
 
