@@ -406,7 +406,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	}
 
 	public List<FieldDefinition> getFieldOfInterestList(List<FieldDefinition> fieldDefinitions, Canopy<R> node) {
-		FieldDefinitionStrategy<R> fieldDefinitionStrategy = new DefaultFieldDefinitionStrategy<>();
+		FieldDefinitionStrategy<R> fieldDefinitionStrategy = new DefaultFieldDefinitionStrategy<R>();
 		return fieldDefinitionStrategy.getAdjustedFieldDefinitions(fieldDefinitions, node);
 	}
 
