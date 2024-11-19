@@ -7,7 +7,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.executor.validate.BlockerValidator;
 import zingg.common.core.executor.validate.LabellerValidator;
 import zingg.common.core.executor.validate.LinkerValidator;
@@ -27,9 +26,9 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 
 	@Override
 	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException{
-	  	TrainingDataFinder<S, D, R, C, T> tdf = getTrainingDataFinder();
-    	Labeller<S, D, R, C, T> labeler = getLabeller();
-		executorTesterList.add(new FtdLabelCombinedExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf), getConfigFile(),
+	    TrainingDataFinder<S, D, R, C, T> tdf = getTrainingDataFinder();
+		Labeller<S, D, R, C, T> labeler = getLabeller();
+		executorTesterList.add(new FtdAndLabelCombinedExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf), getConfigFile(),
 				labeler, new LabellerValidator<S, D, R, C, T>(labeler), modelId, getDFObjectUtil()));
 
 
@@ -47,7 +46,6 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 
 		return executorTesterList;
 	}
-
 
 	public abstract String getConfigFile();
 
