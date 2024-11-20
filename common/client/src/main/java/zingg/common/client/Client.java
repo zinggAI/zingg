@@ -32,7 +32,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	protected S session;
 	protected PipeUtilBase<S,D,R,C> pipeUtil;
 	public static final Log LOG = LogFactory.getLog(Client.class);
-
 	protected String zFactoryClassName;
 
 
@@ -56,7 +55,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
     	setOptions(options);
 		try {
 			buildAndSetArguments(args, options);
-			printAnalyticsBanner(arguments.getCollectMetrics());
 			setZingg(args, options);					
 		}
 		catch (Exception e) {
@@ -147,41 +145,38 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		setArguments(args);
 	}
 	
-	public void printBanner() {
-		String versionStr = "0.4.1-SNAPSHOT";
+	public void printBanner(boolean collectMetrics) {
 		LOG.info("");
-		LOG.info("********************************************************");
-		LOG.info("*                    Zingg AI                          *");
-		LOG.info("*               (C) 2021 Zingg.AI                      *");
-		LOG.info("********************************************************");
-		LOG.info("");
-		LOG.info("using: Zingg v" + versionStr);
-		LOG.info("");
-	}
-	
-	public void printAnalyticsBanner(boolean collectMetrics) {
+		LOG.info("**************************************************************************");
+		LOG.info("*                                                                        *");
+		LOG.info("*                                "+getProductName()+"                                *");
+		LOG.info("*                        (C) 2021 Zingg Labs, Inc.                       *");
+		LOG.info("*                                                                        *");
+		LOG.info("*                          https://www.zingg.ai/                         *");
+		LOG.info("*                                                                        *");
+		LOG.info("*                        using: Zingg v"+getProductVersion()+"                    *");
+		LOG.info("*                                                                        *");
 		if(collectMetrics) {
-			LOG.info("");
-			LOG.info("**************************************************************************");
 			LOG.info("*            ** Note about analytics collection by Zingg AI **           *");
 			LOG.info("*                                                                        *");
 			LOG.info("*  Please note that Zingg captures a few metrics about application's     *");
-			LOG.info("*  runtime parameters. However, no user's personal data or application   *");
-			LOG.info("*  data is captured. If you want to switch off this feature, please      *");
-			LOG.info("*  set the flag collectMetrics to false in config. For details, please   *");
-			LOG.info("*  refer to the Zingg docs (https://docs.zingg.ai/zingg/security)        *");
+			LOG.info("*  runtime parameters. However, no personal data or application data     *");
+			LOG.info("*  is captured. If you want to switch off this feature, please set the   *");
+			LOG.info("*  flag collectMetrics to false in config. For details, please refer to  *");
+			LOG.info("*  the Zingg docs (https://docs.zingg.ai/zingg/security).                *");
+			LOG.info("*                                                                        *");
 			LOG.info("**************************************************************************");
 			LOG.info("");
 		}
 		else {
-			LOG.info("");
-			LOG.info("*************************************************************************************************************");
-			LOG.info("*    Zingg is not collecting any analytics data and will only log a blank event with the name of the phase  *");
-			LOG.info("*************************************************************************************************************");
+			LOG.info("*  Zingg is not collecting any analytics data and will only log a blank  *");
+			LOG.info("*                    event with name of the phase.                       *");
+			LOG.info("*                                                                        *");
+			LOG.info("**************************************************************************");
 			LOG.info("");
 		}
 	}
-
+	
 	public abstract Client<S,D,R,C,T> getClient(IArguments args, ClientOptions options) throws ZinggClientException;
 
 	public ClientOptions getClientOptions(String ... args){
@@ -189,9 +184,9 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 	
 	public void mainMethod(String... args) {
-		printBanner();
 		Client<S,D,R,C,T> client = null;
 		ClientOptions options = null;
+		
 		try {
 			
 			for (String a: args) LOG.debug("args " + a);
@@ -213,7 +208,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			else {
 				arguments = getArgsUtil().createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
-
+			printBanner(arguments.getCollectMetrics());
 			client = getClient(arguments, options);
 			client.init();
 			// after setting arguments etc. as some of the listeners need it
@@ -357,6 +352,14 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 
 	public void setPipeUtil(PipeUtilBase<S, D, R, C> pipeUtil) {
 		this.pipeUtil = pipeUtil;
+	}
+
+	public String getProductName(){
+		return "Zingg AI";
+	}
+
+	public String getProductVersion(){
+		return "0.4.1-SNAPSHOT";
 	}
     
 }

@@ -1,4 +1,4 @@
-package zingg.common.core.executor.verifyblocking;
+package zingg.common.core.executor.blockingverifier;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.pipe.Pipe;
@@ -21,5 +21,6 @@ public interface IVerifyBlockingPipeUtil<S,D,R,C>  {
     public void setPipeUtil(PipeUtilBase<S,D,R,C> pipeUtil);
 
 }
+
 
 

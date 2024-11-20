@@ -12,7 +12,7 @@ import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
-import zingg.common.core.executor.verifyblocking.VerifyBlocking;
+import zingg.common.core.executor.blockingverifier.VerifyBlocking;
 import zingg.spark.core.context.ZinggSparkContext;
 
 public class SparkVerifyBlocker extends VerifyBlocking<SparkSession,Dataset<Row>,Row,Column,DataType> {

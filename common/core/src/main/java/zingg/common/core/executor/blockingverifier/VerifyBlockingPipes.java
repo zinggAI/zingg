@@ -1,4 +1,4 @@
-package zingg.common.core.executor.verifyblocking;
+package zingg.common.core.executor.blockingverifier;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.pipe.FilePipe;
