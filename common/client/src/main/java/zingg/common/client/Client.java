@@ -32,7 +32,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	protected S session;
 	protected PipeUtilBase<S,D,R,C> pipeUtil;
 	public static final Log LOG = LogFactory.getLog(Client.class);
-	String versionStr;
 	protected String zFactoryClassName;
 
 
