@@ -38,24 +38,24 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 		TrainingDataFinder<S, D, R, C, T> tdf = getTrainingDataFinder();
     	Labeller<S, D, R, C, T> labeler = getLabeller();
 		executorTesterList.add(new FtdAndLabelCombinedExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf), getConfigFile(),
-				labeler, new LabellerValidator<S, D, R, C, T>(labeler), modelId, getDFObjectUtil()));
+				labeler, new LabellerValidator<S, D, R, C, T>(labeler), getModelId(), getDFObjectUtil()));
 
 
 		Trainer<S, D, R, C, T> trainer = getTrainer();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer),getConfigFile(),modelId,getDFObjectUtil()));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer),getConfigFile(),getModelId(),getDFObjectUtil()));
 
         VerifyBlocking<S, D, R, C, T> verifyBlocker = getVerifyBlocker();
-        executorTesterList.add(new ExecutorTester<S, D, R, C, T>(verifyBlocker, new BlockerValidator<S, D, R, C, T>(verifyBlocker),getConfigFile(),modelId,getDFObjectUtil()));
+        executorTesterList.add(new ExecutorTester<S, D, R, C, T>(verifyBlocker, new BlockerValidator<S, D, R, C, T>(verifyBlocker),getConfigFile(),getModelId(),getDFObjectUtil()));
 
 	}
 
 	public void getAdditionalExecutors() throws ZinggClientException, IOException{
 		
 		Matcher<S, D, R, C, T> matcher = getMatcher();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher),getConfigFile(),modelId,getDFObjectUtil()));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher),getConfigFile(),getModelId(),getDFObjectUtil()));
 
 		Linker<S, D, R, C, T> linker = getLinker();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker),getLinkerConfigFile(),modelId,getDFObjectUtil()));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker),getLinkerConfigFile(),getModelId(),getDFObjectUtil()));
 	
 	}
 
