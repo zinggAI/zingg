@@ -9,7 +9,7 @@ import zingg.common.client.IArguments;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.PipeUtilBase;
-import zingg.common.core.executor.verifyblocking.VerifyBlockingPipes;
+import zingg.common.core.executor.blockingverifier.VerifyBlockingPipes;
 
 public class SparkVerifyBlockingPipes extends VerifyBlockingPipes<SparkSession,Dataset<Row>,Row,Column>{
 

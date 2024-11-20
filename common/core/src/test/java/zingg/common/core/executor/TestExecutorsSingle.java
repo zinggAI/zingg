@@ -13,7 +13,7 @@ import zingg.common.core.executor.validate.LinkerValidator;
 import zingg.common.core.executor.validate.MatcherValidator;
 import zingg.common.core.executor.validate.TrainerValidator;
 import zingg.common.core.executor.validate.TrainingDataFinderValidator;
-import zingg.common.core.executor.verifyblocking.VerifyBlocking;
+import zingg.common.core.executor.blockingverifier.VerifyBlocking;
 
 public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGeneric<S, D, R, C, T> {
 

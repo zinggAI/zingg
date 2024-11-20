@@ -56,8 +56,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
     	setOptions(options);
 		try {
 			buildAndSetArguments(args, options);
-			setProductNameAndVersion("0.4.1-SNAPSHOT"); //14 char
-			printBanner(arguments.getCollectMetrics());
 			setZingg(args, options);					
 		}
 		catch (Exception e) {
@@ -152,12 +150,12 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		LOG.info("");
 		LOG.info("**************************************************************************");
 		LOG.info("*                                                                        *");
-		LOG.info("*                                Zingg AI                                *");
+		LOG.info("*                                "+getProductName()+"                                *");
 		LOG.info("*                        (C) 2021 Zingg Labs, Inc.                       *");
 		LOG.info("*                                                                        *");
 		LOG.info("*                          https://www.zingg.ai/                         *");
 		LOG.info("*                                                                        *");
-		LOG.info("*                        using: Zingg v"+getProductNameAndVersion()+"                    *");
+		LOG.info("*                        using: Zingg v"+getProductVersion()+"                    *");
 		LOG.info("*                                                                        *");
 		if(collectMetrics) {
 			LOG.info("*            ** Note about analytics collection by Zingg AI **           *");
@@ -189,6 +187,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public void mainMethod(String... args) {
 		Client<S,D,R,C,T> client = null;
 		ClientOptions options = null;
+		
 		try {
 			
 			for (String a: args) LOG.debug("args " + a);
@@ -210,7 +209,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			else {
 				arguments = getArgsUtil().createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
-
+			printBanner(arguments.getCollectMetrics());
 			client = getClient(arguments, options);
 			client.init();
 			// after setting arguments etc. as some of the listeners need it
@@ -356,12 +355,12 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		this.pipeUtil = pipeUtil;
 	}
 
-	public void setProductNameAndVersion(String versionStr){
-		this.versionStr = versionStr;
+	public String getProductName(){
+		return "Zingg AI";
 	}
 
-	public String getProductNameAndVersion(){
-		return versionStr;
+	public String getProductVersion(){
+		return "0.4.1-SNAPSHOT";
 	}
     
 }

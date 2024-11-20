@@ -10,9 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
-import zingg.common.core.executor.verifyblocking.IVerifyBlockingPipeUtil;
-import zingg.common.core.executor.verifyblocking.VerifyBlocking;
-import zingg.common.core.executor.verifyblocking.VerifyBlockingPipes;
+import zingg.common.core.executor.blockingverifier.*;
 
 public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
 

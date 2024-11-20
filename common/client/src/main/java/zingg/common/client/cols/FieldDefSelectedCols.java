@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.MatchType;
 
 public class FieldDefSelectedCols extends SelectedCols {
 
