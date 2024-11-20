@@ -14,9 +14,8 @@ import zingg.common.client.util.DFObjectUtil;
 public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
 	public static final Log LOG = LogFactory.getLog(TestExecutorsGeneric.class);
-
+	private String modelId;
 	protected S session;
-	protected String modelId;
 	protected List<ExecutorTester<S, D, R, C, T>> executorTesterList = new ArrayList<ExecutorTester<S, D, R, C, T>>();
 
 	public TestExecutorsGeneric() {
@@ -53,4 +52,8 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
 	}
 
+	//model id getter
+	public String getModelId() {
+		 return this.modelId;
+	}
 }
