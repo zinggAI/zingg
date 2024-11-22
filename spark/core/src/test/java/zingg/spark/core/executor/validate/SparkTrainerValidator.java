@@ -27,9 +27,9 @@ public class SparkTrainerValidator extends TrainerValidator<SparkSession,Dataset
 	@Override
 	public void validateResults() throws ZinggClientException {
 		// check that model is created
-		LOG.info("Zingg Model Dir : "+ executor.getArgs().getZinggModelDir());
+		LOG.info("Zingg Model Dir : "+ executor.getModelHelper().getModel(executor.getArgs()));
 		
-		File modelDir = new File(executor.getArgs().getZinggModelDir());
+		File modelDir = new File(executor.getModelHelper().getModel(executor.getArgs()));
 		assertTrue(modelDir.exists(),"check if model has been created");
 	}
 	

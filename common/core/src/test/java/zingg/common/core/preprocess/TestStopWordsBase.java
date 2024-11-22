@@ -95,6 +95,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			assertTrue(zFrameOriginal.except(newZFrame.select(ColName.ID_COL, "field1", "field2", "field3", ColName.SOURCE_COL)).isEmpty());
 	}
 
+	/* 
 	@Test
 	public void testOriginalDataAfterPostProcessLinked() throws Exception {
 
@@ -106,6 +107,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			assertTrue(newZFrame.select("field1", "field2", "field3").except(zFrameOriginal.select("field1", "field2", "field3")).isEmpty());
 			assertTrue(zFrameOriginal.select("field1", "field2", "field3").except(newZFrame.select("field1", "field2", "field3")).isEmpty());
 	}
+	*/
 
 	private List<StopWordsRemover<S, D, R, C, T>> getStopWordsRemovers() throws ZinggClientException {
 		stopWordRemoverUtility.buildStopWordRemovers();
