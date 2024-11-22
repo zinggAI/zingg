@@ -19,7 +19,6 @@ public class TestDocumenter {
         try {
             ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
 			IArguments args = argsUtil.createArgumentsFromJSON(getClass().getResource("/testDocumenter/config.json").getFile());
-			args = (IArguments) argsUtil.createArgumentsFromJSON(getClass().getResource("/testDocumenter/config.json").getFile());
            	//fail("Exception was expected for missing config file");
 		} catch (Throwable e) {
             e.printStackTrace();

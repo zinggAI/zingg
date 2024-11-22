@@ -44,7 +44,7 @@ public class TestDataDocumenter {
 	public void setUp(){
 		try {
 			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
-			ArgumentsUtil<IArguments> argsUtil = new ArgumentsUtil<IArguments>(IArguments.class);
+			ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
 			docArguments = argsUtil.createArgumentsFromJSON(configPath);
 		} catch (Throwable e) {
 			e.printStackTrace();

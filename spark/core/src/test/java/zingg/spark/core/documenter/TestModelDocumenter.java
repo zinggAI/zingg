@@ -55,7 +55,7 @@ public class TestModelDocumenter {
 
 		try {
 			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
-			ArgumentsUtil<IArguments> argsUtil = new ArgumentsUtil<IArguments>(IArguments.class);
+			ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
 			docArguments = argsUtil.createArgumentsFromJSON(configPath);
 			String zinggDirPath = getClass().getResource("../../../../"+docArguments.getZinggDir()).getFile();
 			docArguments.setZinggDir(zinggDirPath);
