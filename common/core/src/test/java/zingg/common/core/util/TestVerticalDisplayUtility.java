@@ -101,10 +101,26 @@ public abstract class TestVerticalDisplayUtility<S, D, R, C> {
         Assertions.assertEquals(0, zFrameVertical.count(), "Count is not as expected");
     }
 
+    @Test
+    public void testWithIdenticalRows() throws ZinggClientException, Exception {
+        VerticalDisplayUtility<S, D, R, C> verticalDisplayUtility = new VerticalDisplayUtility<S, D, R, C>(dfObjectUtil);
+        ZFrame<D, R, C> zFrame = dfObjectUtil.getDFFromObjectList(getDataWithIdenticalRows(), Customer.class);
+        ZFrame<D, R, C> zFrameVertical = verticalDisplayUtility.convertVertical(zFrame);
+
+        //Assert on total number of rows
+        Assertions.assertEquals(5, zFrameVertical.count(), "Count is not as expected");
+    }
+
     public static List<Customer> getEmptyData() {
         return new ArrayList<Customer>();
     }
 
+    public static List<Customer> getDataWithIdenticalRows() {
+        List<Customer> sample = new ArrayList<Customer>();
+        sample.add(new Customer("Nitish", "Joshi", "123", "0000", "1"));
+        sample.add(new Customer("Nitish", "Joshi", "123", "0000", "1"));
+        return sample;
+    }
 
     public static List<Customer> getDataWithoutNulls() {
         List<Customer> sample = new ArrayList<Customer>();
