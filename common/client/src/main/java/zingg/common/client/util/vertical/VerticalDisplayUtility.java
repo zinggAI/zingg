@@ -30,6 +30,12 @@ public class VerticalDisplayUtility<S, D, R, C> {
             ZFrame<D, R, C> zFrame1 = zFrame.limit(1);
             ZFrame<D, R, C> zFrame2 = zFrame.except(zFrame1);
 
+            //if both the rows are identical
+            //make zFrame2 = zFrame1
+            if (zFrame2.isEmpty()) {
+                zFrame2 = zFrame1;
+            }
+
             R row1 = zFrame.head();
             R row2 = zFrame2.head();
             //iterate through all the columns
