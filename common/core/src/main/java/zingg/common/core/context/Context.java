@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.DSUtil;
+import zingg.common.client.util.IModelHelper;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.GraphUtil;
@@ -20,8 +21,8 @@ public abstract class Context <S,D, R, C,T> implements Serializable, IContext<S,
     protected BlockingTreeUtil<S, D,R,C, T> blockingTreeUtil;
     
     public static final String hashFunctionFile = "hashFunctions.json";
-    
-    @Override
+    protected IModelHelper modelHelper;
+
     public HashUtil<S,D,R,C,T> getHashUtil() {
         return this.hashUtil;
     }
@@ -100,4 +101,21 @@ public abstract class Context <S,D, R, C,T> implements Serializable, IContext<S,
     public void setSession(S session){
         this.session = session;
     }
+
+    @Override
+    public IModelHelper getModelHelper() {
+        return modelHelper;
+    }
+
+    @Override
+    public void setModelHelper(IModelHelper modelHelper) {
+        this.modelHelper = modelHelper;
+    }
+
+
+  
  }
+
+
+    
+

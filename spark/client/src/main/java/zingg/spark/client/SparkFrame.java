@@ -199,14 +199,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.unionByName(other.df(), flag));
     }
 
-    public ZFrame<Dataset<Row>, Row, Column> withColumn(String s, int c){
-        return new SparkFrame(df.withColumn(s, functions.lit(c)));
-    }
-    public ZFrame<Dataset<Row>, Row, Column> withColumn(String s, double c){
-        return new SparkFrame(df.withColumn(s, functions.lit(c)));
-    }
-
-    public ZFrame<Dataset<Row>, Row, Column> withColumn(String s, String c){
+    public <A> ZFrame<Dataset<Row>, Row, Column> withColumn(String s, A c){
         return new SparkFrame(df.withColumn(s, functions.lit(c)));
     }
 

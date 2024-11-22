@@ -3,25 +3,38 @@ package zingg.common.core.executor.blockingverifier;
 import zingg.common.client.IArguments;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
+import zingg.common.client.util.IModelHelper;
 import zingg.common.client.util.PipeUtilBase;
 
-public class VerifyBlockingPipes<S,D,R,C> implements IVerifyBlockingPipeUtil<S,D,R,C> {
+public abstract class VerifyBlockingPipes<S,D,R,C> implements IVerifyBlockingPipes<S,D,R,C> {
 
     protected PipeUtilBase<S,D,R,C> pipeUtil;
     protected long timestamp;
     Pipe<D,R,C> countsPipe;
     Pipe<D,R,C> blockSamplesPipe; 
+    IModelHelper<D,R,C> modelHelper;
     
-    public VerifyBlockingPipes(PipeUtilBase<S,D,R,C> pipeUtil, long timestamp) {
+    public IModelHelper<D, R, C> getModelHelper() {
+        return this.modelHelper;
+    }
+
+
+    public void setModelHelper(IModelHelper<D, R, C> mh) {
+        this.modelHelper = mh;
+    }
+
+
+    public VerifyBlockingPipes(PipeUtilBase<S,D,R,C> pipeUtil, long timestamp, IModelHelper<D, R, C> mh) {
     	setPipeUtil(pipeUtil);
         setTimestamp(timestamp);
+        setModelHelper(mh);
     }
 
 
     @Override
     public Pipe<D, R, C> getCountsPipe(IArguments args) {
         if(countsPipe == null) {
-        countsPipe = getPipeForVerifyBlockingLocation(args, "counts");
+            countsPipe = getPipeForVerifyBlockingLocation(args, "counts");
         }
         return countsPipe;
     }
@@ -43,18 +56,7 @@ public class VerifyBlockingPipes<S,D,R,C> implements IVerifyBlockingPipeUtil<S,D
         this.blockSamplesPipe = blockSamplesPipe;
     }
 
-    @Override
-    public Pipe<D,R,C> getPipeForVerifyBlockingLocation(IArguments args, String type){
-        Pipe<D,R,C> p = new Pipe<D,R,C>();
-		p.setFormat(Pipe.FORMAT_PARQUET);
-		p.setProp(FilePipe.LOCATION, getName(args,timestamp,type));
-		p = pipeUtil.setOverwriteMode(p);
-		return p;
-    }
-
-    private String getName(IArguments args, long timestamp, String type){
-        return args.getZinggModelDir() + "/blocks/" + timestamp + "/" + type;
-    }
+   
 
 
     @Override

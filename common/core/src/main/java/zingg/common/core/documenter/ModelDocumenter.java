@@ -10,9 +10,11 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.ClientOptions;
 import zingg.common.client.FieldDefUtil;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
@@ -35,8 +37,8 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 	
 	protected FieldDefUtil fieldDefUtil;
 
-	public ModelDocumenter(IContext<S,D,R,C,T> context, IArguments args) {
-		super(context, args);
+	public ModelDocumenter(IContext<S,D,R,C,T> context, IArguments args, ClientOptions options) {
+		super(context, args, options);
 		markedRecords = getDSUtil().emptyDataFrame();
 		fieldDefUtil = new FieldDefUtil();
 	}
@@ -64,8 +66,8 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 	}
 
 	private void writeModelDocument(Map<String, Object> root) throws ZinggClientException {
-		checkAndCreateDir(args.getZinggDocDir());
-		writeDocument(MODEL_TEMPLATE, root, args.getZinggModelDocFile());
+		checkAndCreateDir(getModelHelper().getZinggDocDir(args));
+		writeDocument(MODEL_TEMPLATE, root, getModelHelper().getZinggModelDocFile(args));
 	}
 
 	public Map<String, Object> populateTemplateData() {
@@ -180,4 +182,6 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 }

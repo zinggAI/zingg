@@ -9,7 +9,9 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import freemarker.template.Version;
+import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.core.context.IContext;
@@ -19,9 +21,9 @@ public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	private static final long serialVersionUID = 1L;
 	protected static Configuration config;
 
-	public DocumenterBase(IContext<S, D, R, C, T> context, IArguments args) {
+	public DocumenterBase(IContext<S,D,R,C,T> context, IZArgs args, ClientOptions options) {
 		super.context = context;
-		super.args = args;
+		setArgs(args);
 		config = createConfigurationObject();
 	}
 
@@ -79,4 +81,6 @@ public abstract class DocumenterBase<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	public abstract RowWrapper<R> getRowWrapper(Version v) ;
+
+	
 }

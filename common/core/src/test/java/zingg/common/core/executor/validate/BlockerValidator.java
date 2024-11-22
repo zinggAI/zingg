@@ -15,7 +15,7 @@ import zingg.common.core.executor.blockingverifier.*;
 public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
 
 	public static final Log LOG = LogFactory.getLog(BlockerValidator.class);
-	IVerifyBlockingPipeUtil verifyBlockingPipeUtil = new VerifyBlockingPipes<S,D,R,C>(executor.getContext().getPipeUtil(), ((VerifyBlocking<S, D, R, C, T>) executor).getTimestamp());
+	IVerifyBlockingPipes verifyBlockingPipeUtil = new VerifyBlockingPipes<S,D,R,C>(executor.getContext().getPipeUtil(), ((VerifyBlocking<S, D, R, C, T>) executor).getTimestamp());
 	
 	public BlockerValidator(VerifyBlocking<S, D, R, C, T> executor) {
 		super(executor);

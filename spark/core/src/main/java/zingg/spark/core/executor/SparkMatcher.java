@@ -10,6 +10,7 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.spark.core.context.ZinggSparkContext;
@@ -41,7 +42,7 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
     }
 
     @Override
-    public void init(IArguments args, SparkSession s, ClientOptions options)  throws ZinggClientException {
+    public void init(IZArgs args, SparkSession s, ClientOptions options)  throws ZinggClientException {
         super.init(args,s,options);
         getContext().init(s);
     }
@@ -49,7 +50,7 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
 
 	@Override
 	public Model getModel() throws ZinggClientException {
-		Model model = getModelUtil().loadModel(false, args);
+		Model model = getModelUtil().loadModel(false, args, getModelHelper());
 		model.register();
 		return model;
 	}

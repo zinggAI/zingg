@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.IArguments;
+import zingg.common.client.Arguments;
+import zingg.common.client.IArguments;
+import zingg.spark.core.executor.ZinggSparkTester;
 
 public class TestDocumenter {
 
@@ -14,8 +17,9 @@ public class TestDocumenter {
     @BeforeEach
     public void setUp(){
         try {
-            ArgumentsUtil argsUtil = new ArgumentsUtil();
+            ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
 			IArguments args = argsUtil.createArgumentsFromJSON(getClass().getResource("/testDocumenter/config.json").getFile());
+			args = (IArguments) argsUtil.createArgumentsFromJSON(getClass().getResource("/testDocumenter/config.json").getFile());
            	//fail("Exception was expected for missing config file");
 		} catch (Throwable e) {
             e.printStackTrace();

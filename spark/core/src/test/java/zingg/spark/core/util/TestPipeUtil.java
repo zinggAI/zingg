@@ -32,7 +32,7 @@ public class TestPipeUtil {
 	public void testStopWordsPipe() {
 		IArguments args = new Arguments();
 		String fileName = args.getStopWordsDir() + "file";
-		Pipe p = zinggSparkContext.getPipeUtil().getStopWordsPipe(args, fileName);
+		Pipe p = zinggSparkContext.getModelHelper().getStopWordsPipe(fileName);
 
 		assertEquals(Pipe.FORMAT_CSV, p.getFormat(), "Format is not CSV");
 		assertEquals("true", p.get(FilePipe.HEADER).toLowerCase(), "Property 'header' is set to 'false'");

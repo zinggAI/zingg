@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.client.ArgumentsUtil;
+import zingg.common.client.Arguments;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
@@ -35,7 +36,7 @@ public class TestFebrlDataset {
 	}
 	
 	SparkPipe outputPipe;
-	ArgumentsUtil argsUtil = new ArgumentsUtil();
+	ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
 	IArguments args;
 
 	@BeforeEach

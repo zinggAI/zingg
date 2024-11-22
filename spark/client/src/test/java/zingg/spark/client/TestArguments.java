@@ -20,7 +20,7 @@ import zingg.spark.client.pipe.SparkPipe;
 public class TestArguments {
 
 	public static final Log LOG = LogFactory.getLog(TestArguments.class);
-	protected ArgumentsUtil argsUtil = new ArgumentsUtil();
+	protected ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
 	@Test
 	public void testWriteArgumentObjectToJSONFile() {
 			IArguments args = new Arguments();
@@ -56,7 +56,7 @@ public class TestArguments {
 				argsUtil.writeArgumentsToJSON("/tmp/configFromArgObject.json", args);
 
 				//reload the same config file to check if deserialization is successful
-				IArguments newArgs = argsUtil.createArgumentsFromJSON("/tmp/configFromArgObject.json", "test");
+				IArguments newArgs = (IArguments) argsUtil.createArgumentsFromJSON("/tmp/configFromArgObject.json", "test");
 				assertEquals(newArgs.getModelId(), "500", "Model id is different");
 				assertEquals(newArgs.getBlockSize(), 400L, "Block size is different");
 				assertEquals(newArgs.getFieldDefinition().get(0).getFieldName(), "fname", "Field Definition[0]'s name is different");
@@ -66,4 +66,4 @@ public class TestArguments {
 				e.printStackTrace();
 			}
 		}
-	}
+}

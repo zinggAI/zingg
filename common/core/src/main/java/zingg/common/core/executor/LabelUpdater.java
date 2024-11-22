@@ -25,7 +25,7 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	public void execute() throws ZinggClientException {
 		try {
 			LOG.info("Reading inputs for updateLabelling phase ...");
-			ZFrame<D,R,C> markedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
+			ZFrame<D,R,C> markedRecords = getPipeUtil().read(false, false, getModelHelper().getTrainingDataMarkedPipe(args));
 			processRecordsCli(markedRecords);
 			LOG.info("Finished updataLabelling phase");
 		} catch (Exception e) {
@@ -148,7 +148,7 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 
 
 	protected Pipe<D,R,C> getOutputPipe() {
-		Pipe<D,R,C> p = getPipeUtil().getTrainingDataMarkedPipe(args);
+		Pipe<D,R,C> p = getModelHelper().getTrainingDataMarkedPipe(args);
 		p = setSaveModeOnPipe(p);
 		return p;
 	}

@@ -14,6 +14,7 @@ import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 
@@ -34,7 +35,7 @@ public class SparkPythonPhaseRunner extends ZinggBase<SparkSession, Dataset<Row>
 	}
 
 	@Override
-    public void init(IArguments args, SparkSession s, ClientOptions options)
+    public void init(IZArgs args, SparkSession s, ClientOptions options)
         throws ZinggClientException {
 		super.init(args,s,options);
 		getContext().setUtils();

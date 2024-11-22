@@ -22,6 +22,7 @@ import zingg.common.core.documenter.TemplateFields;
 import zingg.spark.core.TestSparkBase;
 import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
+import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
@@ -43,7 +44,7 @@ public class TestDataDocumenter {
 	public void setUp(){
 		try {
 			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
-			ArgumentsUtil argsUtil = new ArgumentsUtil();
+			ArgumentsUtil<IArguments> argsUtil = new ArgumentsUtil<IArguments>(IArguments.class);
 			docArguments = argsUtil.createArgumentsFromJSON(configPath);
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -57,7 +58,7 @@ public class TestDataDocumenter {
 
 		ZinggSparkContext zinggSparkContext = new ZinggSparkContext();
 		zinggSparkContext.init(sparkSession);
-		DataDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> dataDoc = new SparkDataDocumenter(zinggSparkContext, docArguments);
+		DataDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> dataDoc = new SparkDataDocumenter(zinggSparkContext, docArguments, new ClientOptions());
 		Pipe[] dataPipeArr = docArguments.getData();
 		
 		for (int i = 0; i < dataPipeArr.length; i++) {

@@ -10,8 +10,10 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
+import zingg.common.core.executor.blockingverifier.IVerifyBlockingPipes;
 import zingg.common.core.executor.blockingverifier.VerifyBlocking;
 import zingg.spark.core.context.ZinggSparkContext;
 
@@ -31,9 +33,17 @@ public class SparkVerifyBlocker extends VerifyBlocking<SparkSession,Dataset<Row>
     }
 
     @Override
-    public void init(IArguments args, SparkSession s, ClientOptions options)  throws ZinggClientException {
+    public void init(IZArgs args, SparkSession s, ClientOptions options)  throws ZinggClientException {
         super.init(args,s,options);
         getContext().init(s);
+    }
+
+    @Override
+    public IVerifyBlockingPipes<SparkSession, Dataset<Row>, Row, Column> getVerifyBlockingPipeUtil() {
+        if (verifyBlockingPipeUtil == null) {
+            this.verifyBlockingPipeUtil = new SparkVerifyBlockingPipes(getPipeUtil(), timestamp, getModelHelper());
+        }
+        return verifyBlockingPipeUtil;
     }
     
 }

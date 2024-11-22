@@ -19,7 +19,7 @@ public class TestSparkClient {
 		Client client = new SparkClient();
 		client.buildAndSetArguments(arguments, options);
 
-		assertEquals("columnName", client.getArguments().getColumn());
+		assertEquals("columnName", ((IArguments)client.getArguments()).getColumn());
 	}
 
 	

@@ -124,7 +124,7 @@ public class LabelDataViewHelper<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imp
 		throw new UnsupportedOperationException();		
 	}
 
-	@Override
+	
 	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException {
 		return this;
 	}

@@ -17,12 +17,12 @@ import zingg.common.core.executor.ZinggBase;
 public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	private static final long serialVersionUID = 1L;
-	protected static String name = "zingg.VerifyBlocking";
+	protected static String name = "zingg.common.core.executor.blockingverifier.VerifyBlocking";
 	public static final Log LOG = LogFactory.getLog(VerifyBlocking.class);
     public long timestamp = System.currentTimeMillis();   
 	public int noOfBlocks = 3 ;
 	public double percentageOfBlockedRecords = 0.1 ;
-	IVerifyBlockingPipeUtil verifyBlockingPipeUtil;
+	protected IVerifyBlockingPipes<S,D,R,C> verifyBlockingPipeUtil;
 
 	public VerifyBlocking() {
     	setZinggOption(ZinggOptions.VERIFY_BLOCKING);
@@ -34,7 +34,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			setTimestamp(timestamp);
 			ZFrame<D,R,C>  testDataOriginal = new InputDataGetter<S,D,R,C>(getPipeUtil()).getTestData(args);
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
-			ZFrame<D,R,C> blocked = new Blocker<S,D,R,C,T>(getBlockingTreeUtil()).getBlocked(testDataOriginal,args);
+			ZFrame<D,R,C> blocked = new Blocker<S,D,R,C,T>(getBlockingTreeUtil()).getBlocked(testDataOriginal,args, getModelHelper());
 			LOG.info("Blocked");
 			
 			ZFrame<D,R,C> blockCounts = blocked.select(ColName.HASH_COL).groupByCount(ColName.HASH_COL, ColName.HASH_COUNTS_COL).sortDescending(ColName.HASH_COUNTS_COL);
@@ -56,7 +56,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     }
 
 
-	public void getBlockSamples(ZFrame<D, R, C> blocked, ZFrame<D, R, C> blockTopRec, IVerifyBlockingPipeUtil verifyBlockingPipeUtil) throws ZinggClientException {
+	public void getBlockSamples(ZFrame<D, R, C> blocked, ZFrame<D, R, C> blockTopRec, IVerifyBlockingPipes verifyBlockingPipeUtil) throws ZinggClientException {
 		List<R> topRec = blockTopRec.collectAsList();
 
 		for(R row: topRec) {
@@ -83,14 +83,9 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		this.timestamp = timestamp;
 	}
 
-	public IVerifyBlockingPipeUtil<S,D,R,C> getVerifyBlockingPipeUtil(){
-		if(verifyBlockingPipeUtil == null){
-			verifyBlockingPipeUtil = new VerifyBlockingPipes<S,D,R,C>(getPipeUtil(), timestamp);
-		}
-		return verifyBlockingPipeUtil;
-	}
+	public abstract IVerifyBlockingPipes<S,D,R,C> getVerifyBlockingPipeUtil();
 
-    public void setVerifyBlockingPipeUtil(IVerifyBlockingPipeUtil<S,D,R,C> verifyBlockingPipeUtil){
+    public void setVerifyBlockingPipeUtil(IVerifyBlockingPipes<S,D,R,C> verifyBlockingPipeUtil){
 		this.verifyBlockingPipeUtil = verifyBlockingPipeUtil;
 	}
 

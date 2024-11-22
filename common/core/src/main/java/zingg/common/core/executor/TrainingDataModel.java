@@ -82,7 +82,7 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 	}
 	
 	public Pipe getOutputPipe(IArguments args) {
-		return getPipeUtil().getTrainingDataMarkedPipe(args);
+		return getModelHelper().getTrainingDataMarkedPipe(args);
 	}
 	
 	
@@ -91,8 +91,6 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 		throw new UnsupportedOperationException();		
 	}
 
-
-	@Override
 	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException {
 		return this;
 	}
@@ -117,7 +115,49 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 		return totalCount;
 	}
 	
-	
+	public ZFrame<D,R,C> getMarkedRecords() {
+		try {
+            return getPipeUtil().read(false, false, getModelHelper().getTrainingDataMarkedPipe(args));
+        } catch (ZinggClientException e) {
+            return null;
+        }
+	}
+
+	public ZFrame<D,R,C> getUnmarkedRecords(){
+        try{
+            ZFrame<D,R,C> unmarkedRecords = null;
+            ZFrame<D,R,C> markedRecords = null;
+            unmarkedRecords = getPipeUtil().read(false, false, getModelHelper().getTrainingDataUnmarkedPipe(args));
+            markedRecords = getMarkedRecords();
+            if (markedRecords != null ) {
+                unmarkedRecords = unmarkedRecords.join(markedRecords,ColName.CLUSTER_COLUMN, false, "left_anti");
+            }
+            return unmarkedRecords;
+        }
+        catch(ZinggClientException e) {
+            return null;
+        }
+	}
+
+   
+    public Long getMarkedRecordsStat(ZFrame<D,R,C> markedRecords, long value) {
+        return markedRecords.filter(markedRecords.equalTo(ColName.MATCH_FLAG_COL, value)).count() / 2;
+    }
+
+    @Override
+    public Long getMatchedMarkedRecordsStat(ZFrame<D,R,C> markedRecords){
+        return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_MATCH);
+    }
+
+    @Override
+    public Long getUnmatchedMarkedRecordsStat(ZFrame<D,R,C> markedRecords){
+        return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_NOT_A_MATCH);
+    }
+
+    @Override
+    public Long getUnsureMarkedRecordsStat(ZFrame<D,R,C> markedRecords){
+        return getMarkedRecordsStat(markedRecords, ColValues.MATCH_TYPE_NOT_SURE);
+    }
 	
 	
 }

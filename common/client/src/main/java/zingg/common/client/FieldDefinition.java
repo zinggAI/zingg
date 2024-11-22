@@ -23,8 +23,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
-import zingg.common.client.cols.Named;
-
 
 /**
  * This class defines each field that we use in matching We can use this to

@@ -4,20 +4,19 @@ import java.io.IOException;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.types.StructType;
-
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import org.apache.spark.sql.SaveMode;
 
 import org.apache.spark.sql.Dataset;
 import zingg.common.client.pipe.Pipe;
-import zingg.spark.client.SparkFrame;
+
 
 public class SparkPipe extends Pipe<Dataset<Row>, Row, Column> {
+
+    public SparkPipe(){
+
+    }
     
+    /* 
     @JsonSerialize(using = CustomSchemaSerializer.class)
 	protected StructType schemaStruct;
 
@@ -48,5 +47,11 @@ public class SparkPipe extends Pipe<Dataset<Row>, Row, Column> {
 	public StructType getSchemaStruct() {
 		return schemaStruct;
 	}
+    */
+
+    public void setOverwriteMode() {
+		setMode(SaveMode.Overwrite.toString());
+    }
+
 	
 }

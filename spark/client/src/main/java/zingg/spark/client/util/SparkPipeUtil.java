@@ -12,6 +12,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.DFReader;
 import zingg.common.client.util.DFWriter;
+import zingg.common.client.util.IModelHelper;
 import zingg.common.client.util.PipeUtil;
 import zingg.spark.client.SparkFrame;
 import org.apache.spark.sql.SparkSession;
@@ -59,10 +60,6 @@ public class SparkPipeUtil extends PipeUtil<SparkSession, Dataset<Row>, Row, Col
 		return new SparkFrame(z.df());
 	}
 
-	public Pipe<Dataset<Row>, Row, Column> setOverwriteMode(Pipe<Dataset<Row>, Row, Column> p) {
-		p.setMode(SaveMode.Overwrite.toString());
-		return p;
-	}
-
+	
 	
 }
