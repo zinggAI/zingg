@@ -17,7 +17,7 @@ public class Blocker<S,D,R,C,T> {
 
 	BlockingTreeUtil<S,D,R,C,T> blockingTreeUtil;
 
-    public Blocker(BlockingTreeUtil<S,D,R,C,T> blockingTreeUtilUtil){
+    public Blocker(BlockingTreeUtil<S,D,R,C,T> blockingTreeUtil){
 		this.blockingTreeUtil = blockingTreeUtil;
     }
 
