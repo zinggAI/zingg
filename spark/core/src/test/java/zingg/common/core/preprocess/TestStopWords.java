@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
+import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructField;
@@ -18,6 +19,7 @@ import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
@@ -26,12 +28,25 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.core.match.output.LinkOutputBuilder;
 import zingg.spark.client.SparkFrame;
-import zingg.spark.core.executor.ZinggSparkTester;
+import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.preprocess.SparkStopWordsRemover;
 
-public class TestStopWords extends ZinggSparkTester{
+@ExtendWith(TestSparkBase.class)
+public class TestStopWords {
 
 	public static final Log LOG = LogFactory.getLog(TestStopWords.class);
+	private final SparkSession sparkSession;
+	private final ZinggSparkContext zinggSparkContext;
+	private final IArguments args;
+
+	public TestStopWords(SparkSession sparkSession) throws ZinggClientException {
+		this.sparkSession = sparkSession;
+		this.zinggSparkContext = new ZinggSparkContext();
+		zinggSparkContext.setSession(sparkSession);
+		zinggSparkContext.init(sparkSession);
+		args = new Arguments();
+	}
 
 	@DisplayName ("Test Stop Words removal from Single column dataset")
 	@Test
@@ -41,7 +56,7 @@ public class TestStopWords extends ZinggSparkTester{
 					new StructField("statement", DataTypes.StringType, false, Metadata.empty())
 			});
 
-			Dataset<Row> datasetOriginal = spark.createDataFrame(
+			Dataset<Row> datasetOriginal = sparkSession.createDataFrame(
 					Arrays.asList(
 							RowFactory.create("The zingg is a Spark application"),
 							RowFactory.create("It is very popular in data Science"),
@@ -51,7 +66,7 @@ public class TestStopWords extends ZinggSparkTester{
 
 			String stopWords = "\\b(a|an|the|is|It|of|yes|no|I|has|have|you)\\b\\s?".toLowerCase();
 
-			Dataset<Row> datasetExpected = spark.createDataFrame(
+			Dataset<Row> datasetExpected = sparkSession.createDataFrame(
 				Arrays.asList(
 						RowFactory.create("zingg spark application"),
 						RowFactory.create("very popular in data science"),
@@ -73,7 +88,7 @@ public class TestStopWords extends ZinggSparkTester{
 			IArguments stmtArgs = new Arguments();
 			stmtArgs.setFieldDefinition(fdList);
 			
-			StopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,stmtArgs);
+			StopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext,stmtArgs);
 			
 			stopWordsObj.preprocessForStopWords(new SparkFrame(datasetOriginal));
 			System.out.println("datasetOriginal.show() : ");
@@ -96,7 +111,7 @@ public class TestStopWords extends ZinggSparkTester{
 					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
 			});
 
-			Dataset<Row> original = spark.createDataFrame(
+			Dataset<Row> original = sparkSession.createDataFrame(
 					Arrays.asList(
 							RowFactory.create("10", "The zingg is a spark application", "two",
 									"Yes. a good application", "test"),
@@ -106,7 +121,7 @@ public class TestStopWords extends ZinggSparkTester{
 							RowFactory.create("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test")),
 					schemaOriginal);
 
-			Dataset<Row> datasetExpected = spark.createDataFrame(
+			Dataset<Row> datasetExpected = sparkSession.createDataFrame(
 				Arrays.asList(
 						RowFactory.create("10", "zingg spark application", "two", "Yes. a good application", "test"),
 						RowFactory.create("20", "very popular data science", "Three", "true indeed", "test"),
@@ -121,7 +136,7 @@ public class TestStopWords extends ZinggSparkTester{
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
 
-			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,args);
+			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext,args);
 				
  			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocessForStopWords(new SparkFrame(original)))).df();
  			assertTrue(datasetExpected.except(newDataSet).isEmpty());
@@ -138,7 +153,7 @@ public class TestStopWords extends ZinggSparkTester{
 					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
 			});
 
-			Dataset<Row> original = spark.createDataFrame(
+			Dataset<Row> original = sparkSession.createDataFrame(
 					Arrays.asList(
 							RowFactory.create("10", "The zingg is a spark application", "two",
 									"Yes. a good application", "test"),
@@ -148,7 +163,7 @@ public class TestStopWords extends ZinggSparkTester{
 							RowFactory.create("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test")),
 					schemaOriginal);
 
-			Dataset<Row> datasetExpected = spark.createDataFrame(
+			Dataset<Row> datasetExpected = sparkSession.createDataFrame(
 				Arrays.asList(
 						RowFactory.create("10", "zingg spark application", "two", "Yes. a good application", "test"),
 						RowFactory.create("20", "very popular data science", "Three", "true indeed", "test"),
@@ -163,7 +178,7 @@ public class TestStopWords extends ZinggSparkTester{
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
 			
-			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zsCTX,args);
+			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext,args);
 			
 			System.out.println("testStopWordColumnMissingFromStopWordFile : orginal ");			
 			original.show(200);
@@ -199,7 +214,7 @@ public class TestStopWords extends ZinggSparkTester{
 					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
 			});
 
-			Dataset<Row> original = spark.createDataFrame(
+			Dataset<Row> original = sparkSession.createDataFrame(
 					Arrays.asList(
 							RowFactory.create("10", "The zingg is a spark application", "two",
 									"Yes. a good application", "test"),
@@ -209,7 +224,7 @@ public class TestStopWords extends ZinggSparkTester{
 							RowFactory.create("40", "Best of luck to zingg", "Five", "thank you", "test")),
 					schemaOriginal);
 
-			Dataset<Row> actual = spark.createDataFrame(
+			Dataset<Row> actual = sparkSession.createDataFrame(
 					Arrays.asList(
 							RowFactory.create("1648811730857:10", "10", "1.0", "0.555555", "-1",
 									"The zingg spark application", "two", "Yes. good application", "test"),
@@ -221,7 +236,7 @@ public class TestStopWords extends ZinggSparkTester{
 									"thank", "test")),
 					schemaActual);
 
-			Dataset<Row> newDataset = ((SparkFrame)(zsCTX.getDSUtil().postprocess(new SparkFrame(actual), new SparkFrame(original)))).df();
+			Dataset<Row> newDataset = ((SparkFrame)(zinggSparkContext.getDSUtil().postprocess(new SparkFrame(actual), new SparkFrame(original)))).df();
 			assertTrue(newDataset.select(ColName.ID_COL, "field1", "field2", "field3", ColName.SOURCE_COL).except(original).isEmpty());
 			assertTrue(original.except(newDataset.select(ColName.ID_COL, "field1", "field2", "field3", ColName.SOURCE_COL)).isEmpty());
 	}
@@ -248,7 +263,7 @@ public class TestStopWords extends ZinggSparkTester{
 					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
 			});
 
-			Dataset<Row> original = spark.createDataFrame(
+			Dataset<Row> original = sparkSession.createDataFrame(
 					Arrays.asList(
 							RowFactory.create("10", "The zingg is a spark application", "two",
 									"Yes. a good application", "test"),
@@ -258,7 +273,7 @@ public class TestStopWords extends ZinggSparkTester{
 							RowFactory.create("40", "Best of luck to zingg", "Five", "thank you", "test")),
 					schemaOriginal);
 
-			Dataset<Row> actual = spark.createDataFrame(
+			Dataset<Row> actual = sparkSession.createDataFrame(
 					Arrays.asList(
 							RowFactory.create("1648811730857:10", "10", "1.0", "0.555555", "-1",
 									"The zingg spark application", "two", "Yes. good application", "test"),
@@ -273,7 +288,7 @@ public class TestStopWords extends ZinggSparkTester{
 			System.out.println("testOriginalDataAfterPostprocessLinked original :");
 			original.show(200);
 			
-			Dataset<Row> newDataset = ((SparkFrame)(new LinkOutputBuilder(zsCTX.getDSUtil(), args).postprocessLinked(new SparkFrame(actual), new SparkFrame(original)))).df();
+			Dataset<Row> newDataset = ((SparkFrame)(new LinkOutputBuilder(zinggSparkContext.getDSUtil(), args).postprocessLinked(new SparkFrame(actual), new SparkFrame(original)))).df();
 			
 			System.out.println("testOriginalDataAfterPostprocessLinked newDataset :");
 			newDataset.show(200);
