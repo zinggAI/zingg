@@ -15,16 +15,17 @@ import zingg.common.core.executor.blockingverifier.*;
 public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, C, T> {
 
 	public static final Log LOG = LogFactory.getLog(BlockerValidator.class);
-	IVerifyBlockingPipes verifyBlockingPipeUtil; // = new VerifyBlockingPipes<S,D,R,C>(executor.getContext().getPipeUtil(), ((VerifyBlocking<S, D, R, C, T>) executor).getTimestamp());
+	IVerifyBlockingPipes<S, D, R, C> verifyBlockingPipes; // = new VerifyBlockingPipes<S,D,R,C>(executor.getContext().getPipeUtil(), ((VerifyBlocking<S, D, R, C, T>) executor).getTimestamp());
 	
-	public BlockerValidator(VerifyBlocking<S, D, R, C, T> executor) {
+	public BlockerValidator(VerifyBlocking<S, D, R, C, T> executor, IVerifyBlockingPipes<S, D, R, C> verifyBlockingPipes) {
 		super(executor);
+		this.verifyBlockingPipes = verifyBlockingPipes;
 	}
 
 	@Override
 	public void validateResults() throws ZinggClientException {
 	
-			ZFrame<D, R, C> df  = executor.getContext().getPipeUtil().read(false,false,verifyBlockingPipeUtil.getCountsPipe(executor.getArgs())); 
+			ZFrame<D, R, C> df  = executor.getContext().getPipeUtil().read(false,false,verifyBlockingPipes.getCountsPipe(executor.getArgs()));
 			ZFrame<D, R, C> topDf = df.select(ColName.HASH_COL,ColName.HASH_COUNTS_COL).limit(3);
 			long blockCount = topDf.count();
 			LOG.info("blockCount : " + blockCount);

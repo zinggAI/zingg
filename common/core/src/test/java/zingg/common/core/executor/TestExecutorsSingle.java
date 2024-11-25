@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.executor.blockingverifier.IVerifyBlockingPipes;
 import zingg.common.core.executor.validate.BlockerValidator;
 import zingg.common.core.executor.validate.LabellerValidator;
 import zingg.common.core.executor.validate.LinkerValidator;
@@ -44,8 +45,10 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 		Trainer<S, D, R, C, T> trainer = getTrainer();
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer),getConfigFile(),getModelId(),getDFObjectUtil()));
 
-        VerifyBlocking<S, D, R, C, T> verifyBlocker = getVerifyBlocker();
-        executorTesterList.add(new ExecutorTester<S, D, R, C, T>(verifyBlocker, new BlockerValidator<S, D, R, C, T>(verifyBlocker),getConfigFile(),getModelId(),getDFObjectUtil()));
+		VerifyBlocking<S, D, R, C, T> verifyBlocker = getVerifyBlocker();
+		IVerifyBlockingPipes<S, D, R, C> verifyBlockingPipes = getVerifyBlockingPipes();
+		verifyBlockingPipes.setTimestamp(verifyBlocker.getTimestamp());
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(verifyBlocker, new BlockerValidator<S, D, R, C, T>(verifyBlocker, verifyBlockingPipes),getConfigFile(),getModelId(),getDFObjectUtil()));
 
 	}
 
@@ -77,5 +80,5 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 
 	protected abstract Linker<S, D, R, C, T> getLinker() throws ZinggClientException;	
 
-    
+	protected abstract IVerifyBlockingPipes<S, D, R, C> getVerifyBlockingPipes() throws ZinggClientException;
 }

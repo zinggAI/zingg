@@ -9,7 +9,6 @@ import zingg.common.client.IZArgs;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.options.ZinggOption;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
 import zingg.common.core.context.IContext;
@@ -20,9 +19,7 @@ import zingg.common.core.util.Metric;
 public abstract class ZinggBase<S,D, R, C, T> extends ZinggBaseCommon<S, D, R, C, T> {
 
     protected IArguments args;
-	protected IContext<S,D,R,C,T> context;
     protected String name;
-    protected ZinggOption zinggOption;
     protected long startTime;
     protected ClientOptions clientOptions;
 
