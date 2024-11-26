@@ -32,9 +32,9 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     public void execute() throws ZinggClientException {
         try {
 			setTimestamp(timestamp);
-			ZFrame<D,R,C>  testDataOriginal = new InputDataGetter<S,D,R,C>(getPipeUtil()).getTestData(args);
+			ZFrame<D,R,C>  testDataOriginal = getTestDataOriginal();
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
-			ZFrame<D,R,C> blocked = new Blocker<S,D,R,C,T>(getBlockingTreeUtil()).getBlocked(testDataOriginal,args, getModelHelper());
+			ZFrame<D,R,C> blocked = getBlockedData(testDataOriginal);
 			LOG.info("Blocked");
 			
 			ZFrame<D,R,C> blockCounts = blocked.select(ColName.HASH_COL).groupByCount(ColName.HASH_COL, ColName.HASH_COUNTS_COL).sortDescending(ColName.HASH_COUNTS_COL);
@@ -87,6 +87,16 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
     public void setVerifyBlockingPipeUtil(IVerifyBlockingPipes<S,D,R,C> verifyBlockingPipeUtil){
 		this.verifyBlockingPipeUtil = verifyBlockingPipeUtil;
+	}
+
+	public ZFrame<D,R,C> getTestDataOriginal() throws ZinggClientException{
+		ZFrame<D,R,C> testData = new InputDataGetter<S,D,R,C>(getPipeUtil()).getTestData(args);
+		return testData;
+	}
+
+	public ZFrame<D,R,C> getBlockedData(ZFrame<D,R,C> testDataOriginal) throws ZinggClientException, Exception{
+		ZFrame<D,R,C> blockedData = new Blocker<S,D,R,C,T>(getBlockingTreeUtil()).getBlocked(testDataOriginal,args, getModelHelper());
+		return blockedData;
 	}
 
 }
