@@ -1,7 +1,6 @@
 package zingg.common.core.executor.blockingverifier;
 
 import zingg.common.client.IArguments;
-import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.IModelHelper;
 import zingg.common.client.util.PipeUtilBase;

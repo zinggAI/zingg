@@ -1,8 +1,5 @@
 package zingg.common.core.executor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -17,13 +14,10 @@ import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.Blocker;
+import zingg.common.core.block.IBlocker;
 import zingg.common.core.block.InputDataGetter;
-import zingg.common.client.util.IModelHelper;
-import zingg.common.core.block.Canopy;
-import zingg.common.core.block.Tree;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
-import zingg.common.core.match.data.DataGetter;
 import zingg.common.core.match.data.IDataGetter;
 import zingg.common.core.match.output.GraphMatchOutputBuilder;
 import zingg.common.core.match.output.IMatchOutputBuilder;
@@ -46,6 +40,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected IDataGetter<S, D, R, C> dataGetter;
 	protected IPairBuilder<S, D, R, C> iPairBuilder;
 	protected IFilter<D, R, C> predictionFilter;
+	protected IBlocker<S,D,R,C,T> blocker;
 
 	
 	public Matcher() {
@@ -109,10 +104,15 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	public ZFrame<D,R,C>  getBlocked(ZFrame<D,R,C>  testData) throws Exception, ZinggClientException{
-		ZFrame<D,R,C> blocked = new Blocker<S,D,R,C,T>(getBlockingTreeUtil()).getBlocked(testData,args, getModelHelper());	
-		return blocked;
+		return getBlocker().getBlocked(testData,args, getModelHelper(),getBlockingTreeUtil());	
 	}
 
+	public IBlocker<S,D,R,C,T> getBlocker(){
+		if (blocker == null){
+			this.blocker = new Blocker<S,D,R,C,T>(getBlockingTreeUtil());
+		}
+		return blocker;
+	}
 
 	public IPairBuilder<S, D, R, C> getIPairBuilder(){
 		if (this.iPairBuilder == null){
@@ -162,8 +162,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		this.predictionColsSelector = s;
 	}
 
-	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData, 
-			IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder, ISelectedCols colsSelector) throws Exception, ZinggClientException{
+	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData, IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder, ISelectedCols colsSelector) throws Exception, ZinggClientException{
 		ZFrame<D,R,C> blocks = getPairs(blocked, testData, iPairBuilder);
 		ZFrame<D,R,C>dupesActual = predictOnBlocks(blocks); 
 		ZFrame<D, R, C> filteredData = predictionFilter.filter(dupesActual);
