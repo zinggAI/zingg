@@ -34,6 +34,7 @@
     * [Using Pre-existing Training Data](setup/training/addOwnTrainingData.md)
     * [Updating Labeled Pairs](updatingLabels.md)
     * [Exporting Labeled Data](setup/training/exportLabeledData.md)
+  * [Verification of Blocking Data](verifyBlocking.md)
   * [Building And Saving The Model](setup/train.md)
   * [Finding The Matches](setup/match.md)
   * [Adding Incremental Data](runIncremental.md)
