@@ -25,4 +25,4 @@ Once you have verified the above stop words, you can configure them in the JSON 
    	},
 ```
 
-For Enterprise Snowflake, we will be having tables with the names - zingg/modelId/stopWords/<columnname> where we can see the list of stopwords associated with the respective column name.
+For Enterprise Snowflake, we will be having tables with the names - zingg/stopWords/<columnname>/modelId where we can see the list of stopwords associated with the respective column name.
