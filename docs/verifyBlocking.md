@@ -24,4 +24,4 @@ For running verifyBlocking in **Zingg Enterprise Snowflake**,
 
 `./scripts/zingg.sh --phase verifyBlocking --conf <path to conf> --properties-file <path to Snowflake properties file> <optional --zinggDir <location of model>>`
 
-  This will generate tables with the names - zingg_modelId_blocks_timestamp_counts where we can see the counts per block and zingg_modelId_blocks_timestamp_blockSamples_hash where we can see the top 10% records associated with the top 3 blocks by counts in these tables respectively.
+This will generate tables with the names - zingg_modelId_blocks_timestamp_counts where we can see the counts per block and zingg_modelId_blocks_timestamp_blockSamples_hash where we can see the top 10% records associated with the top 3 blocks by counts in these tables respectively.
