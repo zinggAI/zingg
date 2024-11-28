@@ -6,7 +6,7 @@ description: Connection Details
 
 Zingg needs details about accessing Snowflake which can be provided through a properties file.
 
-`touch snowEnv.txt `
+> `touch snowEnv.txt `
 
 ### SnowEnv.txt format:
 
