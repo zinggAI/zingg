@@ -4,9 +4,9 @@ Common words like Mr, Pvt, Av, St, Street etc. do not add differential signals a
 
 The stopwords can be recommended by Zingg by invoking:
 
-`./scripts/zingg.sh --phase recommend --conf <conf.json> --columns <list of columns to generate stop word recommendations>`
+`./scripts/zingg.sh --phase recommend --conf <conf.json> --column <name of column to generate stop word recommendations>`
 
-By default, Zingg extracts 10% of the high-frequency unique words from a dataset. If the user wants a different selection, they should set up the following property in the config file:
+The stopwords generated are stored at the location - models/100/stopWords/<columnname>. By default, Zingg extracts 10% of the high-frequency unique words from a dataset. If the user wants a different selection, they should set up the following property in the config file:
 
 ```
 stopWordsCutoff: <a value between 0 and 1>
