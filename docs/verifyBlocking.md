@@ -1,4 +1,10 @@
 ---
+title: Verifying the blocked data
+parent: Step By Step Guide
+nav_order: 7
+---
+
+---
 description: >-
   Understanding how blocking is working before running match or link
 ---
