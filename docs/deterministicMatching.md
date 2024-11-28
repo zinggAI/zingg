@@ -1,3 +1,8 @@
+---
+description: >-
+  Ensuring higher matching accuracy and performance
+---
+
 # Deterministic Matching
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
