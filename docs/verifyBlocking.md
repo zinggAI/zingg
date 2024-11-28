@@ -19,4 +19,9 @@ If we have an understanding of how blocking is working before deciding to run a 
 
 The output contains two directories - zinggDir/modelId/blocks/timestamp/counts and zinggDir/modelId/blocks/timestamp/blockSamples. We can see the counts per block and the top 10% records associated with the top 3 blocks by counts in the directories respectively.
 
-For Enterprise Snowflake, we will be having tables with the names - zingg/modelId/blocks/timestamp/counts where we can see the counts per block and zingg/modelId/blocks/timestamp/blockSamples/hash where we can see the top 10% records associated with the top 3 blocks by counts in these tables respectively.
+
+For running verifyBlocking in **Zingg Enterprise Snowflake**, 
+
+`./scripts/zingg.sh --phase verifyBlocking --conf <path to conf> --properties-file <path to Snowflake properties file> <optional --zinggDir <location of model>>`
+
+  This will generate tables with the names - zingg_modelId_blocks_timestamp_counts where we can see the counts per block and zingg_modelId_blocks_timestamp_blockSamples_hash where we can see the top 10% records associated with the top 3 blocks by counts in these tables respectively.
