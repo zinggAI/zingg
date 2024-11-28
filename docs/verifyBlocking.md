@@ -4,12 +4,9 @@ parent: Step By Step Guide
 nav_order: 7
 ---
 
----
-description: >-
-  Understanding how blocking is working before running match or link
----
-
 # Verification of Blocking Data
+
+## Understanding how blocking is working before running match or link
 
 Sometimes Zingg jobs are slow or fail due to a poorly learnt blocking tree. This can happen due to a variety of reasons. It can happen when:
 - A user adds significantly larger training samples compared to the labelling learnt by Zingg. The manually added training samples may have the same type of columns and blocking rules learnt are not generic enough. For example, providing California state only training data when the matching is using the State column and data has multiple states.
