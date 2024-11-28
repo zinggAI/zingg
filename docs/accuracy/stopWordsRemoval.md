@@ -24,3 +24,5 @@ Once you have verified the above stop words, you can configure them in the JSON 
    		"stopWords": "models/100/stopWords/fname.csv"
    	},
 ```
+
+For Enterprise Snowflake, we will be having tables with the names - zingg/modelId/stopWords/<columnname> where we can see the list of stopwords associated with the respective column name.
