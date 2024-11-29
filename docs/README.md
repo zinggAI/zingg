@@ -8,10 +8,10 @@ description: Hope you find us useful :-)
 
 This is the latest documentation for Zingg. Release wise documentation can be accessed through:
 
-* [v0.5.0 ]
+* [v0.5.0 ]()
 * [v0.4.0 ](https://docs.zingg.ai/zingg0.4.0/)
 * [v0.3.4 ](https://docs.zingg.ai/zingg0.3.4/)
-* [v0.3.3](https://docs.zingg.ai/zingg0.3.3/)
+* [v0.3.3 ](https://docs.zingg.ai/zingg0.3.3/)
 
 ## Why?
 
