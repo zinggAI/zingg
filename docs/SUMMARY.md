@@ -30,7 +30,7 @@
       * [Output](stepbystep/configuration/data-input-and-output/output.md)
     * [Field Definitions](stepbystep/configuration/field-definitions.md)
     * [Deterministic Matching](deterministicMatching.md)
-    * [Paa Thru Data](passthru.md)
+    * [Pass Thru Data](passthru.md)
     * [Model Location](stepbystep/configuration/model-location.md)
     * [Tuning Label, Match And Link Jobs](stepbystep/configuration/tuning-label-match-and-link-jobs.md)
     * [Telemetry](stepbystep/configuration/telemetry.md)
