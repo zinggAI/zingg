@@ -19,7 +19,6 @@
 	  </tbody>
   </table>
  <p>
-  <table class="table table-hover">
   <table class="table table-striped"> 
 
   <div class="container-fluid">
@@ -28,7 +27,7 @@
         <th class="border-right border-white" style="width: 160px;" >CLUSTER</th>
         <div class="clearfix visible-xs-block"></div>
         <#list 3 ..< numColumns as entityIndex>
-        <th class="border-right border-white" > <a href="${columns[entityIndex]}.html"> ${columns[entityIndex]!?upper_case} </a></th>
+        <th class="border-right border-white" > ${columns[entityIndex]!?upper_case} </a></th>
         </#list>
       </tr>
     </thead>
@@ -76,7 +75,6 @@
   
   </#list>
  </tbody>
-  </table>
   </table>
    
 
