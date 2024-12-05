@@ -39,10 +39,14 @@ public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 			sumHash += hash;
 			sumCount += count;
 			}
-			assertTrue(sumHash == 11843 | sumHash == 11855);
-			assertTrue(sumCount == 24 | sumCount == 16);
-			
-
+			performAssertions(sumHash, sumCount);
     }
+
+	//override this method
+	//to assert on different dataset
+	protected void performAssertions(int sumHash, long sumCount) {
+		assertTrue(sumHash == 11843 | sumHash == 11855);
+		assertTrue(sumCount == 24 | sumCount == 16);
+	}
 
 }
