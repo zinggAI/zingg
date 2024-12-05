@@ -24,10 +24,10 @@
   <div class="container-fluid">
     <thead class="thead thead-light">
       <tr>
-        <th class="border-right border-white" style="width: 160px;" >CLUSTER</th>
+        <th class="border-right border-black" style="width: 160px; border: 1.5px solid black; border-right: 1.5px solid black; " >CLUSTER</th>
         <div class="clearfix visible-xs-block"></div>
         <#list 3 ..< numColumns as entityIndex>
-        <th class="border-right border-white" > ${columns[entityIndex]!?upper_case} </a></th>
+        <th class="border-right border-black" style="border: 1.5px solid black; border-right: 1.5px solid black;" > ${columns[entityIndex]!?upper_case} </a></th>
         </#list>
       </tr>
     </thead>
