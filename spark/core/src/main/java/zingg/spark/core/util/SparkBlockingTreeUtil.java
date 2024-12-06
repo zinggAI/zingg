@@ -11,7 +11,6 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
-import org.apache.spark.sql.catalyst.encoders.RowEncoder;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
@@ -85,8 +84,9 @@ public Tree<Canopy<Row>> readBlockingTree(Arguments args) throws Exception, Zing
 
 @Override
 public Block<Dataset<Row>, Row, Column, DataType> getBlock(ZFrame<Dataset<Row>, Row, Column> sample,
-                ZFrame<Dataset<Row>, Row, Column> positives,
-                ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions, long blockSize) {
+                                                           ZFrame<Dataset<Row>, Row, Column> positives,
+                                                           ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions,
+                                                           long blockSize) {
         // TODO Auto-generated method stub
         return new SparkBlock(sample, positives, hashFunctions, blockSize);
 }

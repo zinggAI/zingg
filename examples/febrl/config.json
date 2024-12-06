@@ -89,7 +89,7 @@
 		],
 		"labelDataSampleSize" : 0.5,
 		"numPartitions":4,
-		"modelId": 100,
+		"modelId": "oct_22",
 		"zinggDir": "models"
 
 }

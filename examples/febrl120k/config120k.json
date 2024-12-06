@@ -74,7 +74,7 @@
 			"name":"test", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/febrl120k/test.csv.gz",
+				"location": "examples/febrl120k/test1l20k.csv.orig",
 				"delimiter": ",",
 				"header":false					
 			},
