@@ -14,7 +14,6 @@ import zingg.common.client.ClientOptions;
 import zingg.common.client.FieldDefUtil;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
-import zingg.common.client.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
