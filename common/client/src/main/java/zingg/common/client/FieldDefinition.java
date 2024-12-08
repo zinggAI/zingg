@@ -40,7 +40,7 @@ public class FieldDefinition implements Named,
 	
 	@JsonDeserialize(using = MatchTypeDeserializer.class)
 	@JsonSerialize(using = MatchTypeSerializer.class)
-	public List<MatchType> matchType;
+	public List<? extends IMatchType> matchType;
 	
 	//@JsonSerialize(using = DataTypeSerializer.class)
 	public String dataType;
@@ -61,7 +61,7 @@ public class FieldDefinition implements Named,
 	 * 
 	 * @return the type
 	 */
-	public List<MatchType> getMatchType() {
+	public List<? extends IMatchType> getMatchType() {
 		return matchType;
 	}
 
@@ -185,17 +185,17 @@ public class FieldDefinition implements Named,
 		}
 	}*/
 
-	public static class MatchTypeSerializer extends StdSerializer<List<MatchType>> {
+	public static class MatchTypeSerializer extends StdSerializer<List<? extends IMatchType>> {
 		public MatchTypeSerializer() {
 			this(null);
 		}
 
-		public MatchTypeSerializer(Class<List<MatchType>> t) {
+		public MatchTypeSerializer(Class<List<? extends IMatchType>> t) {
 			super(t);
 		}
 
 		@Override
-		public void serialize(List<MatchType> matchType, JsonGenerator jsonGen, SerializerProvider provider)
+		public void serialize(List<? extends IMatchType> matchType, JsonGenerator jsonGen, SerializerProvider provider)
 				throws IOException, JsonProcessingException {
 			try {
 				jsonGen.writeObject(getStringFromMatchType(matchType));
@@ -205,14 +205,14 @@ public class FieldDefinition implements Named,
 			}
 		}
 
-		public static String getStringFromMatchType(List<MatchType> matchType) throws ZinggClientException {
+		public static String getStringFromMatchType(List<? extends IMatchType> matchType) throws ZinggClientException {
 			return String.join(",", matchType.stream()
 					.map(p -> p.value())
 					.collect(Collectors.toList()));
 		}
 	}
 
-	public static class MatchTypeDeserializer extends StdDeserializer<List<MatchType>> {
+	public static class MatchTypeDeserializer extends StdDeserializer<List<? extends IMatchType>> {
 		private static final long serialVersionUID = 1L;
 		
 		public MatchTypeDeserializer() { 
@@ -222,7 +222,7 @@ public class FieldDefinition implements Named,
 		   super(t); 
 		} 
 		@Override 
-		public List<MatchType> deserialize(JsonParser parser, DeserializationContext context) 
+		public List<? extends IMatchType> deserialize(JsonParser parser, DeserializationContext context) 
 		   throws IOException, JsonProcessingException { 
 			ObjectMapper mapper = new ObjectMapper();
 			try{
@@ -235,7 +235,7 @@ public class FieldDefinition implements Named,
 			}
 		}   
 
-		public static List<MatchType> getMatchTypeFromString(String m) throws ZinggClientException{
+		public static List<? extends IMatchType> getMatchTypeFromString(String m) throws ZinggClientException{
 			List<MatchType> matchTypes = new ArrayList<MatchType>();
 		    String[] matchTypeFromConfig = m.split(","); 
 			for (String s: matchTypeFromConfig) { 
