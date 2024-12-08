@@ -122,7 +122,7 @@ public class FieldDefinition implements Named,
 
 	@JsonIgnore
 	public boolean isDontUse() {
-        return (matchType != null && matchType.contains(MatchType.DONT_USE));
+        return (matchType != null && matchType.contains(MatchTypes.DONT_USE));
     }
 
 	@Override

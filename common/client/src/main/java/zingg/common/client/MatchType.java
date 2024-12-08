@@ -1,18 +1,11 @@
 package zingg.common.client;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 /**
  * Field types used in defining the types of fields for matching. See the field
  * definitions and the user guide for more details
  */
 
-public enum MatchType implements IMatchType {
+public class MatchType implements IMatchType {
 
 	private String value;
 	private String name;
