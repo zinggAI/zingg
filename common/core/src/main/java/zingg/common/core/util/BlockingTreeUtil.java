@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
-import zingg.common.client.MatchType;
+import zingg.common.client.MatchTypes;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.IModelHelper;
@@ -64,7 +64,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 		List<FieldDefinition> fd = new ArrayList<FieldDefinition> ();
 
 		for (FieldDefinition def : args.getFieldDefinition()) {
-			if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
+			if (! (def.getMatchType() == null || def.getMatchType().contains(MatchTypes.DONT_USE))) {
 				fd.add(def);	
 			}
 		}
