@@ -24,6 +24,7 @@ import zingg.spark.core.TestSparkBase;
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
+import zingg.common.client.MatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
@@ -49,19 +50,19 @@ public class TestDSUtil {
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field_fuzzy");
 		def1.setDataType("string");
-		def1.setMatchTypeInternal(MatchTypes.FUZZY);
+		def1.setMatchTypeInternal((MatchType) MatchTypes.FUZZY);
 		def1.setFields("field_fuzzy");
 
 		FieldDefinition def2 = new FieldDefinition();
 		def2.setFieldName("field_match_type_DONT_USE");
 		def2.setDataType("string");
-		def2.setMatchTypeInternal(MatchTypes.DONT_USE);
+		def2.setMatchTypeInternal((MatchType) MatchTypes.DONT_USE);
 		def2.setFields("field_match_type_DONT_USE");
 
 		FieldDefinition def3 = new FieldDefinition();
 		def3.setFieldName("field_str_DONTspaceUSE");
 		def3.setDataType("string");
-		def3.setMatchTypeInternal(MatchTypes.getMatchType("DONT_USE"));
+		def3.setMatchTypeInternal((MatchType) MatchTypes.getByValue("DONT_USE"));
 		def3.setFields("field_str_DONTspaceUSE");
 
 		List<FieldDefinition> fieldDef = new ArrayList<FieldDefinition>();
@@ -100,19 +101,19 @@ public class TestDSUtil {
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field_fuzzy");
 		def1.setDataType("string");
-		def1.setMatchTypeInternal(MatchTypes.FUZZY);
+		def1.setMatchTypeInternal((MatchType) MatchTypes.FUZZY);
 		def1.setFields("field_fuzzy");
 
 		FieldDefinition def2 = new FieldDefinition();
 		def2.setFieldName("field_match_type_DONT_USE");
 		def2.setDataType("string");
-		def2.setMatchTypeInternal(MatchTypes.DONT_USE);
+		def2.setMatchTypeInternal((MatchType) MatchTypes.DONT_USE);
 		def2.setFields("field_match_type_DONT_USE");
 
 		FieldDefinition def3 = new FieldDefinition();
 		def3.setFieldName("field_str_DONTspaceUSE");
 		def3.setDataType("string");
-		def3.setMatchTypeInternal(MatchTypes.getMatchType("DONT_USE"));
+		def3.setMatchTypeInternal((MatchType) MatchTypes.getByValue("DONT_USE"));
 		def3.setFields("field_str_DONTspaceUSE");
 
 		List<FieldDefinition> fieldDef = new ArrayList<FieldDefinition>();

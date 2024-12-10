@@ -1,7 +1,7 @@
 package zingg.common.core.feature;
 
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.MatchType;
+import zingg.common.client.MatchTypes;
 import zingg.common.core.similarity.function.AJaroWinklerFunction;
 import zingg.common.core.similarity.function.AffineGapSimilarityFunction;
 import zingg.common.core.similarity.function.CheckBlankOrNullFunction;
@@ -31,35 +31,35 @@ public class StringFeature extends BaseFeature<String> {
 		// if short string but inverted, like fname lname where ordering is not
 		// important
 		// then do cosine or something
-		if (f.getMatchType().contains(MatchType.FUZZY)) {
+		if (f.getMatchType().contains(MatchTypes.FUZZY)) {
 			addSimFunction(new AffineGapSimilarityFunction());
 			addSimFunction(new JaroWinklerFunction());
 		} 		
-		if (f.getMatchType().contains(MatchType.TEXT)) {
+		if (f.getMatchType().contains(MatchTypes.TEXT)) {
 			addSimFunction(new JaccSimFunction());			
 		} 
-		if (f.getMatchType().contains(MatchType.NUMERIC)) {
+		if (f.getMatchType().contains(MatchTypes.NUMERIC)) {
 			addSimFunction(new NumbersJaccardFunction());
 		}
-		if (f.getMatchType().contains(MatchType.EXACT)) {
+		if (f.getMatchType().contains(MatchTypes.EXACT)) {
 			addSimFunction(new StringSimilarityFunction());
 		} 
-		if(f.getMatchType().contains(MatchType.PINCODE)){
+		if(f.getMatchType().contains(MatchTypes.PINCODE)){
 			addSimFunction(new PinCodeMatchTypeFunction());
 		}
-		if(f.getMatchType().contains(MatchType.EMAIL)){
+		if(f.getMatchType().contains(MatchTypes.EMAIL)){
 			addSimFunction(new EmailMatchTypeFunction());
 		}
-		if (f.getMatchType().contains(MatchType.NUMERIC_WITH_UNITS)) {
+		if (f.getMatchType().contains(MatchTypes.NUMERIC_WITH_UNITS)) {
 			addSimFunction(new ProductCodeFunction());
 		}
-		if (f.getMatchType().contains(MatchType.NULL_OR_BLANK)) {
+		if (f.getMatchType().contains(MatchTypes.NULL_OR_BLANK)) {
 			addSimFunction(new CheckBlankOrNullFunction());
 		}
-		if (f.getMatchType().contains(MatchType.ONLY_ALPHABETS_FUZZY)) {
+		if (f.getMatchType().contains(MatchTypes.ONLY_ALPHABETS_FUZZY)) {
 			addSimFunction(new OnlyAlphabetsAffineGapSimilarity());
 		}
-		if (f.getMatchType().contains(MatchType.ONLY_ALPHABETS_EXACT)) {
+		if (f.getMatchType().contains(MatchTypes.ONLY_ALPHABETS_EXACT)) {
 			addSimFunction(new OnlyAlphabetsExactSimilarity());
 		}
 	}

@@ -73,7 +73,7 @@ public class FieldDefinition implements Named,
 	 *            the type to set
 	*/
 	@JsonDeserialize(using = MatchTypeDeserializer.class)	
-	public void setMatchType(List<MatchType> type) {
+	public void setMatchType(List<? extends IMatchType> type) {
 		this.matchType = type; //MatchTypeDeserializer.getMatchTypeFromString(type);
 	}
 
@@ -207,7 +207,7 @@ public class FieldDefinition implements Named,
 
 		public static String getStringFromMatchType(List<? extends IMatchType> matchType) throws ZinggClientException {
 			return String.join(",", matchType.stream()
-					.map(p -> p.value())
+					.map(p -> p.getValue())
 					.collect(Collectors.toList()));
 		}
 	}
@@ -239,7 +239,7 @@ public class FieldDefinition implements Named,
 			List<MatchType> matchTypes = new ArrayList<MatchType>();
 		    String[] matchTypeFromConfig = m.split(","); 
 			for (String s: matchTypeFromConfig) { 
-				MatchType mt = MatchType.getMatchType(s);
+				MatchType mt = (MatchType) MatchTypes.getByValue(s);
 				matchTypes.add(mt);
 			}     
 		   return matchTypes; 

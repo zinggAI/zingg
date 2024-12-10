@@ -3,7 +3,7 @@ package zingg.common.client.util;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
-import zingg.common.client.MatchType;
+import zingg.common.client.IMatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -246,7 +246,7 @@ public abstract class DSUtil<S, D, R, C> {
 		return trFile;		
 	}
 
-	public  List<FieldDefinition> getFieldDefinitionFiltered(IArguments args, MatchType type) {
+	public  List<FieldDefinition> getFieldDefinitionFiltered(IArguments args, IMatchType type) {
 		return args.getFieldDefinition()
 				.stream()
 				.filter(f -> !(f.getMatchType() == null || f.getMatchType().contains(type)))

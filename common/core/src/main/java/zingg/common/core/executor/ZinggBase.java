@@ -6,7 +6,6 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.IZArgs;
-import zingg.common.client.MatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;

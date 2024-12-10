@@ -215,10 +215,10 @@ public class TestArguments {
 			IArguments args;
             try {
                 args = (IArguments) argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile(), "test");
-				List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
+				List<? extends IMatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
 				assertEquals(2, fNameMatchType.size());
-				assertEquals(MatchType.FUZZY, fNameMatchType.get(0));
-				assertEquals(MatchType.NULL_OR_BLANK, fNameMatchType.get(1));
+				assertEquals(MatchTypes.FUZZY, fNameMatchType.get(0));
+				assertEquals(MatchTypes.NULL_OR_BLANK, fNameMatchType.get(1));
 
 				
             } catch (Exception | ZinggClientException e) {
