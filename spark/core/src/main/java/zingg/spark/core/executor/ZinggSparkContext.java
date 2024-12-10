@@ -75,7 +75,9 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
 				JavaSparkContext.jarOfClass(IZingg.class);
 				LOG.debug("Context " + ctx.toString());
 				//initHashFns();
-				ctx.setCheckpointDir("/tmp/checkpoint");
+                if (!ctx.getCheckpointDir().isPresent()) {
+                    ctx.setCheckpointDir("/tmp/checkpoint");
+                }
 				setUtils();
 			}
         }
