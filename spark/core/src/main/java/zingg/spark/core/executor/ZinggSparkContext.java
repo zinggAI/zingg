@@ -2,6 +2,7 @@ package zingg.spark.core.executor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
@@ -71,12 +72,16 @@ public class ZinggSparkContext implements Context<ZSparkSession, Dataset<Row>, R
             	zSession = new ZSparkSession(spark, license);
             }
             if (ctx==null) {
-				ctx = JavaSparkContext.fromSparkContext(zSession.getSession().sparkContext());
+                SparkContext sparkContext = zSession.getSession().sparkContext();
+                if (sparkContext.getCheckpointDir().isEmpty()) {
+                    sparkContext.setCheckpointDir("/tmp/checkpoint");
+                }
+				ctx = JavaSparkContext.fromSparkContext(sparkContext);
 				JavaSparkContext.jarOfClass(IZingg.class);
 				LOG.debug("Context " + ctx.toString());
 				//initHashFns();
                 if (!ctx.getCheckpointDir().isPresent()) {
-                    ctx.setCheckpointDir("/tmp/checkpoint");
+                    ctx.setCheckpointDir(sparkContext.getCheckpointDir().get());
                 }
 				setUtils();
 			}

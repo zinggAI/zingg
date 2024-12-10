@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -49,15 +50,20 @@ public class ZinggSparkTester {
     				.master("local[*]")
     				.appName("Zingg" + "Junit")
     				.getOrCreate();
-    		ctx = new JavaSparkContext(spark.sparkContext());
+			SparkContext sparkContext = spark.sparkContext();
+			if (sparkContext.getCheckpointDir().isEmpty()) {
+				sparkContext.setCheckpointDir("/tmp/checkpoint");
+			}
+    		ctx = new JavaSparkContext(sparkContext);
     		JavaSparkContext.jarOfClass(IZingg.class);    
 			args = new Arguments();
 			zsCTX = new ZinggSparkContext();
 			zsCTX.ctx = ctx;
 			zSession = new ZSparkSession(spark, null);
 			zsCTX.zSession = zSession;
-			
-            ctx.setCheckpointDir("/tmp/checkpoint");	
+			if (!ctx.getCheckpointDir().isPresent()) {
+				ctx.setCheckpointDir(sparkContext.getCheckpointDir().get());
+			}
             zsCTX.setPipeUtil(new SparkPipeUtil(zSession));
             zsCTX.setDSUtil(new SparkDSUtil(zSession));
             zsCTX.setHashUtil(new SparkHashUtil(zSession));
