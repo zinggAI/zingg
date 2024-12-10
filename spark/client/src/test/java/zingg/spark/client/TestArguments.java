@@ -12,7 +12,7 @@ import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
-import zingg.common.client.MatchType;
+import zingg.common.client.MatchTypes;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
 import zingg.spark.client.pipe.SparkPipe;
@@ -28,13 +28,13 @@ public class TestArguments {
 				FieldDefinition fname = new FieldDefinition();
 				fname.setFieldName("fname");
 				fname.setDataType("string");
-				fname.setMatchType(Arrays.asList(MatchType.EXACT, MatchType.FUZZY, MatchType.PINCODE));
+				fname.setMatchType(Arrays.asList(MatchTypes.EXACT, MatchTypes.FUZZY, MatchTypes.PINCODE));
 				//fname.setMatchType(Arrays.asList(MatchType.EXACT));
 				fname.setFields("fname");
 				FieldDefinition lname = new FieldDefinition();
 				lname.setFieldName("lname");
 				lname.setDataType("string");
-				lname.setMatchType(Arrays.asList(MatchType.FUZZY));
+				lname.setMatchType(Arrays.asList(MatchTypes.FUZZY));
 				lname.setFields("lname");
 				args.setFieldDefinition(Arrays.asList(fname, lname));
 

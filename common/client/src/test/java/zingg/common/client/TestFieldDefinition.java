@@ -15,7 +15,7 @@ public class TestFieldDefinition {
 	@Test
 	public void testConvertAListOFMatchTypesIntoString() {
 		try {
-			List<MatchType> matchType = Arrays.asList(MatchType.EMAIL, MatchType.FUZZY, MatchType.NULL_OR_BLANK);
+			List<? extends IMatchType> matchType = Arrays.asList(MatchTypes.EMAIL, MatchTypes.FUZZY, MatchTypes.NULL_OR_BLANK);
 			String expectedString = "EMAIL,FUZZY,NULL_OR_BLANK";
 			String strMatchType = FieldDefinition.MatchTypeSerializer.getStringFromMatchType(matchType);
 			assertEquals(expectedString, strMatchType);
