@@ -6,4 +6,4 @@ nav_order: 5
 
 # Running on Azure
 
-To run Zingg on Azure, please refer to [Databricks configuration](databricks.md).
+To run Zingg on Azure, please refer to [Databricks configuration](databricks/).

@@ -7,7 +7,7 @@ description: Identity Resolution on Snowflake
 
 # Snowflake
 
-Check a step-by-step tutorial at [Towards Data Science](https://towardsdatascience.com/identifying-duplicates-in-snowflake-e95b3f3fce2b).
+One way to implement Zingg would be through [config JSON.](using-config-json.md)
 
 The config value for the data and output attributes of the JSON is:
 
@@ -34,6 +34,10 @@ One must include Snowflake JDBC driver and Spark dependency on the classpath. Th
 spark.jars=snowflake-jdbc-3.13.18.jar,spark-snowflake_2.12-2.10.0-spark_3.1.jar
 ```
 
-For Zingg to discover the Snowflake jars, please add the property **spark.jars** in [Zingg's runtime properties.](../stepbystep/zingg-runtime-properties.md)
+For Zingg to discover the Snowflake jars, please add the property **spark.jars** in [Zingg's runtime properties.](../../stepbystep/zingg-runtime-properties.md)
 
-If you are looking for a native-run on Snowflake without using Spark, check [Zingg Enterprise Snowflake](https://www.zingg.ai/company/zingg-enterprise-snowflake).&#x20;
+***
+
+Zingg can also be run using [External Functions](using-external-functions.md).
+
+If you are looking for a native-run on Snowflake without using Spark, check [Zingg Enterprise Snowflake](https://www.zingg.ai/company/zingg-enterprise-snowflake).

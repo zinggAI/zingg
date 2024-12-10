@@ -4,12 +4,10 @@ description: Hope you find us useful :-)
 
 # Welcome to Zingg
 
-![](https://static.scarf.sh/a.png?x-pxid=d6dda06e-06c7-4e4a-99c9-ed9f6364dfeb)
-
 This is the latest documentation for Zingg. Release wise documentation can be accessed through:
 
-* [v0.4.0 ](https://docs.zingg.ai/zingg0.4.0/)
-* [v0.3.4 ](https://docs.zingg.ai/zingg0.3.4/)
+* [v0.4.0](https://docs.zingg.ai/zingg0.4.0/)
+* [v0.3.4](https://docs.zingg.ai/zingg0.3.4/)
 * [v0.3.3](https://docs.zingg.ai/zingg0.3.3/)
 
 ## Why?
