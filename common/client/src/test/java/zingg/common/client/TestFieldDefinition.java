@@ -23,4 +23,16 @@ public class TestFieldDefinition {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	public void testConvertAListOFStringIntoMatchTypes() {
+		try{
+			String mtString = "FUZZY,NULL_OR_BLANK";
+			List<IMatchType> expectedString = Arrays.asList(MatchTypes.FUZZY, MatchTypes.NULL_OR_BLANK);
+			List<IMatchType> matchTypeString = FieldDefinition.MatchTypeDeserializer.getMatchTypeFromString(mtString);
+			assertEquals(expectedString, matchTypeString);
+		} catch (Exception | ZinggClientException e) {
+			e.printStackTrace();
+		}
+	}
 }

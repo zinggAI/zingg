@@ -3,7 +3,7 @@ package zingg.common.core.util;
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
-import zingg.common.client.MatchType;
+import zingg.common.client.IMatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.preprocess.StopWordsRemover;
@@ -24,8 +24,8 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
 
         //add first stopWordRemover
         List<FieldDefinition> fdList = new ArrayList<FieldDefinition>(4);
-        ArrayList<MatchType> matchTypelistFuzzy = new ArrayList<MatchType>();
-        matchTypelistFuzzy.add((MatchType) MatchTypes.FUZZY);
+        ArrayList<IMatchType> matchTypelistFuzzy = new ArrayList<IMatchType>();
+        matchTypelistFuzzy.add(MatchTypes.FUZZY);
         FieldDefinition eventFD = new FieldDefinition();
         eventFD.setDataType("string");
         eventFD.setFieldName("statement");

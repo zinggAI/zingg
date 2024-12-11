@@ -31,8 +31,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
  * @author sgoyal
  *
  */
-public class FieldDefinition implements Named,
-		Serializable {
+public class FieldDefinition implements Named, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -52,9 +51,13 @@ public class FieldDefinition implements Named,
 	public FieldDefinition() {
 	}
 
-	public String getFields() { return fields; }
+	public String getFields() { 
+		return fields; 
+	}
 
-	public void setFields(String fields) { this.fields = fields;}	
+	public void setFields(String fields) {
+		this.fields = fields;
+	}	
 	
 	/**
 	 * Get the field type of the class
@@ -62,7 +65,7 @@ public class FieldDefinition implements Named,
 	 * @return the type
 	 */
 	public List<? extends IMatchType> getMatchType() {
-		return matchType;
+		return this.matchType;
 	}
 
 	/**
@@ -113,7 +116,7 @@ public class FieldDefinition implements Named,
 	}
 
 	public String getFieldName() {
-		return fieldName;
+		return this.fieldName;
 	}
 
 	public void setFieldName(String fieldName) {
@@ -222,7 +225,7 @@ public class FieldDefinition implements Named,
 		   super(t); 
 		} 
 		@Override 
-		public List<? extends IMatchType> deserialize(JsonParser parser, DeserializationContext context) 
+		public List<IMatchType> deserialize(JsonParser parser, DeserializationContext context) 
 		   throws IOException, JsonProcessingException { 
 			ObjectMapper mapper = new ObjectMapper();
 			try{
@@ -235,11 +238,11 @@ public class FieldDefinition implements Named,
 			}
 		}   
 
-		public static List<? extends IMatchType> getMatchTypeFromString(String m) throws ZinggClientException{
-			List<MatchType> matchTypes = new ArrayList<MatchType>();
+		public static List<IMatchType> getMatchTypeFromString(String m) throws ZinggClientException{
+			List<IMatchType> matchTypes = new ArrayList<IMatchType>();
 		    String[] matchTypeFromConfig = m.split(","); 
 			for (String s: matchTypeFromConfig) { 
-				MatchType mt = (MatchType) MatchTypes.getByValue(s);
+				IMatchType mt = MatchTypes.getByValue(s);
 				matchTypes.add(mt);
 			}     
 		   return matchTypes; 

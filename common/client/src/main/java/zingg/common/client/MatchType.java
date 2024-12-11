@@ -13,11 +13,13 @@ public class MatchType implements IMatchType {
 	MatchType(String n){
 		this.name = n;
 		this.value = n;
+		MatchTypes.put(this);
 	}
 
 	MatchType(String n, String v){
 		this.name = n;
 		this.value = v;
+		MatchTypes.put(this);
 	}
 
 	@Override

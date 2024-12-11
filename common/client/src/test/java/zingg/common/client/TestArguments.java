@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +38,6 @@ public class TestArguments {
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = argsUtil.substituteVariables(template, env);
 			IArguments args = (IArguments) argsUtil.createArgumentsFromJSONString(json, "");
-
 			assertEquals(args.getData()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
 			assertEquals(args.getData()[0].getFormat(), env.get(KEY_FORMAT));
 			assertEquals(args.getModelId(), env.get(KEY_MODEL_ID));
@@ -169,7 +166,6 @@ public class TestArguments {
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = argsUtil.substituteVariables(template, env);
 			IArguments args = (IArguments) argsUtil.createArgumentsFromJSONString(json, "");
-
 			//Numeric within quotes are allowed
 			assertEquals(args.getModelId(), env.get(KEY_MODEL_ID));
 		} catch (IOException | ZinggClientException e) {
@@ -212,10 +208,13 @@ public class TestArguments {
 
 	@Test
 	public void testMatchTypeMultiple() {
+			LOG.info("START");
 			IArguments args;
             try {
                 args = (IArguments) argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile(), "test");
+				LOG.info(args);
 				List<? extends IMatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
+				LOG.info(fNameMatchType);
 				assertEquals(2, fNameMatchType.size());
 				assertEquals(MatchTypes.FUZZY, fNameMatchType.get(0));
 				assertEquals(MatchTypes.NULL_OR_BLANK, fNameMatchType.get(1));
@@ -234,6 +233,7 @@ public class TestArguments {
 			IArguments args;
             try {
                 args = (IArguments) argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
+				LOG.info(args);
 				//List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
 				fail("config had error, should have flagged");
 				
