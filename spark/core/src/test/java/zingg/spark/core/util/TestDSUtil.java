@@ -45,7 +45,7 @@ public class TestDSUtil {
 	public static final Log LOG = LogFactory.getLog(TestDSUtil.class);
 
 	@Test
-	public void testGetFieldDefColumnsWhenShowConciseIsTrue() throws ZinggClientException {
+	public void testGetFieldDefColumnsWhenShowConciseIsTrue() throws ZinggClientException, Exception {
 		
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field_fuzzy");
@@ -97,7 +97,7 @@ public class TestDSUtil {
 	}
 
 	@Test
-	public void testGetFieldDefColumnsWhenShowConciseIsFalse() throws ZinggClientException {
+	public void testGetFieldDefColumnsWhenShowConciseIsFalse() throws ZinggClientException, Exception {
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field_fuzzy");
 		def1.setDataType("string");

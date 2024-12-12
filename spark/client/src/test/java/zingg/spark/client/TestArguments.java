@@ -3,6 +3,7 @@ package zingg.spark.client;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -12,6 +13,7 @@ import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
+import zingg.common.client.IMatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
@@ -60,8 +62,8 @@ public class TestArguments {
 				assertEquals(newArgs.getModelId(), "500", "Model id is different");
 				assertEquals(newArgs.getBlockSize(), 400L, "Block size is different");
 				assertEquals(newArgs.getFieldDefinition().get(0).getFieldName(), "fname", "Field Definition[0]'s name is different");
-				String expectedMatchType =  "[EXACT, FUZZY, PINCODE]";
-				assertEquals(newArgs.getFieldDefinition().get(0).getMatchType().toString(), expectedMatchType);
+				List<IMatchType> expectedMatchType = Arrays.asList(MatchTypes.EXACT, MatchTypes.FUZZY, MatchTypes.PINCODE);
+				assertEquals(newArgs.getFieldDefinition().get(0).getMatchType(), expectedMatchType);
 			} catch (Exception | ZinggClientException e) {
 				e.printStackTrace();
 			}

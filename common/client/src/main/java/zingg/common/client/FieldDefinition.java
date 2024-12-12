@@ -233,12 +233,12 @@ public class FieldDefinition implements Named, Serializable {
 				LOG.debug("Deserializing custom type");
 				return getMatchTypeFromString(mapper.readValue(parser, String.class)); 
 			}
-			catch(ZinggClientException e) {
+			catch(Exception | ZinggClientException e) {
 				throw new IOException(e);
 			}
 		}   
 
-		public static List<IMatchType> getMatchTypeFromString(String m) throws ZinggClientException{
+		public static List<IMatchType> getMatchTypeFromString(String m) throws ZinggClientException, Exception{
 			List<IMatchType> matchTypes = new ArrayList<IMatchType>();
 		    String[] matchTypeFromConfig = m.split(","); 
 			for (String s: matchTypeFromConfig) { 

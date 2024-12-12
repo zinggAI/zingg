@@ -29,7 +29,7 @@ public class MatchTypes {
             allMatchTypes = new HashMap<String, IMatchType>(); 
         } 
 
-        allMatchTypes.put(o.getName(), o);  
+        allMatchTypes.put(o.getName().toUpperCase(), o);  
     } 
         
     public static String[] getAllMatchTypes() { 
@@ -42,10 +42,12 @@ public class MatchTypes {
         return s; 
     } 
 
-    public static final IMatchType getByValue(String value){ 
+    public static final IMatchType getByValue(String value) throws Exception{ 
 
+        String v = value.toUpperCase();
         for (IMatchType zo: MatchTypes.allMatchTypes.values()) { 
-            if (zo.getName().equals(value)) 
+        
+            if (zo.getName().equals(v)) 
                 return zo; 
         } 
         return null; 

@@ -21,7 +21,7 @@ public class TestFieldDefUtil {
 	public void testMatchTypeFilter() {
 			IArguments args;
             try {
-                args = (IArguments) argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configTestDontUse.json").getFile(), "test");
+                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configTestDontUse.json").getFile(), "test");
                 LOG.info(args);
                 LOG.info(args.getFieldDefinition());
                 List<? extends FieldDefinition> dontUseList = fieldDefUtil.getFieldDefinitionDontUse(args.getFieldDefinition()); 
