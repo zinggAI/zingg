@@ -1,12 +1,15 @@
 package zingg.common.client;
 
+import java.io.Serializable;
+
 /**
  * Field types used in defining the types of fields for matching. See the field
  * definitions and the user guide for more details
  */
 
-public class MatchType implements IMatchType {
+public class MatchType implements IMatchType, Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private String value;
 	private String name;
 
