@@ -13,13 +13,13 @@ public class MatchType implements IMatchType, Serializable{
 	private String value;
 	private String name;
 
-	MatchType(String n){
+	public MatchType(String n){
 		this.name = n;
 		this.value = n;
 		MatchTypes.put(this);
 	}
 
-	MatchType(String n, String v){
+	public MatchType(String n, String v){
 		this.name = n;
 		this.value = v;
 		MatchTypes.put(this);
