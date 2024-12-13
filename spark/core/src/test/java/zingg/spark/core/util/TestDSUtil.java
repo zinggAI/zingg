@@ -62,7 +62,7 @@ public class TestDSUtil {
 		FieldDefinition def3 = new FieldDefinition();
 		def3.setFieldName("field_str_DONTspaceUSE");
 		def3.setDataType("string");
-		def3.setMatchTypeInternal((MatchType) MatchTypes.getByValue("DONT_USE"));
+		def3.setMatchTypeInternal((MatchType) MatchTypes.getByName("DONT_USE"));
 		def3.setFields("field_str_DONTspaceUSE");
 
 		List<FieldDefinition> fieldDef = new ArrayList<FieldDefinition>();
@@ -113,7 +113,7 @@ public class TestDSUtil {
 		FieldDefinition def3 = new FieldDefinition();
 		def3.setFieldName("field_str_DONTspaceUSE");
 		def3.setDataType("string");
-		def3.setMatchTypeInternal((MatchType) MatchTypes.getByValue("DONT_USE"));
+		def3.setMatchTypeInternal((MatchType) MatchTypes.getByName("DONT_USE"));
 		def3.setFields("field_str_DONTspaceUSE");
 
 		List<FieldDefinition> fieldDef = new ArrayList<FieldDefinition>();

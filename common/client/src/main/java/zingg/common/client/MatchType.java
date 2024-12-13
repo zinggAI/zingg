@@ -10,18 +10,10 @@ import java.io.Serializable;
 public class MatchType implements IMatchType, Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private String value;
 	private String name;
 
 	public MatchType(String n){
 		this.name = n;
-		this.value = n;
-		MatchTypes.put(this);
-	}
-
-	public MatchType(String n, String v){
-		this.name = n;
-		this.value = v;
 		MatchTypes.put(this);
 	}
 
@@ -36,13 +28,12 @@ public class MatchType implements IMatchType, Serializable{
 	}
 
 	@Override
-	public String getValue() {
-		return this.value;
-	}
-
-	@Override
-	public void setValue(String value) {
-		this.value = value;
+	public boolean isEqual(String v) {
+		if(this.getName().equalsIgnoreCase(v)){
+			return true;
+		}
+		else
+			return false;
 	}
 
 

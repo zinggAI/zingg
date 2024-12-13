@@ -42,12 +42,12 @@ public class MatchTypes {
         return s; 
     } 
 
-    public static final IMatchType getByValue(String value) throws Exception{ 
+    public static final IMatchType getByName(String name) throws Exception{ 
 
-        String v = value.toUpperCase();
+        String v = name.toUpperCase();
         for (IMatchType zo: MatchTypes.allMatchTypes.values()) { 
         
-            if (zo.getName().equals(v)) 
+            if (zo.isEqual(v)) 
                 return zo; 
         } 
         return null; 

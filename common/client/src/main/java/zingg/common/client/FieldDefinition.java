@@ -210,7 +210,7 @@ public class FieldDefinition implements Named, Serializable {
 
 		public static String getStringFromMatchType(List<? extends IMatchType> matchType) throws ZinggClientException {
 			return String.join(",", matchType.stream()
-					.map(p -> p.getValue())
+					.map(p -> p.getName())
 					.collect(Collectors.toList()));
 		}
 	}
@@ -242,7 +242,7 @@ public class FieldDefinition implements Named, Serializable {
 			List<IMatchType> matchTypes = new ArrayList<IMatchType>();
 		    String[] matchTypeFromConfig = m.split(","); 
 			for (String s: matchTypeFromConfig) { 
-				IMatchType mt = MatchTypes.getByValue(s);
+				IMatchType mt = MatchTypes.getByName(s);
 				matchTypes.add(mt);
 			}     
 		   return matchTypes; 
