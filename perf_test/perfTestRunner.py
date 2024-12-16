@@ -21,7 +21,6 @@ load = load_configs
 start_time = time.time()
 
 reportFile = os.path.abspath(os.curdir)+"/zingg/perf_test/perf_test_report/loadTestReport"
-print(reportFile + " printing report file \n")
 
 def perf_test_small_all():
     return "small_test_running_all"
@@ -37,7 +36,6 @@ def perf_test_small(phase):
 
 
 def write_on_start():
-    print(os.getcwd() + "printing working directory\n")
     f = open(reportFile, "w+")
     f.write("******************************** perf test report, " + str(date.today()) + ", " + current_time + " ********************************\n\n");
     f.write("------------ Test bed details ------------\n")
