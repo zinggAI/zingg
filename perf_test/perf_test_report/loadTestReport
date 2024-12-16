@@ -1,14 +1,24 @@
-******************************** perf test report, 2024-11-14, 18:09:04 ********************************
+******************************** perf test report, 2024-12-16, 11:57:57 ********************************
 
 ------------ Test bed details ------------
-Load samples: 65_samples 
+Load samples: 65_samples 120k_samples 5m_samples 
 Phases: findTrainingData match 
 ------------------------------------------
 
                           capturing for 65_samples
 PHASE                                             TIME_TAKEN_IN_MINUTES
-findTrainingData                                                    3.0
-match                                                               4.5
+findTrainingData                                                    0.0
+match                                                               0.0
+
+                        capturing for 120k_samples
+PHASE                                             TIME_TAKEN_IN_MINUTES
+findTrainingData                                                    0.0
+match                                                               0.0
+
+                          capturing for 5m_samples
+PHASE                                             TIME_TAKEN_IN_MINUTES
+findTrainingData                                                    0.0
+match                                                               0.0
 
 ********************************************************************************************************
 
