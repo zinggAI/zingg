@@ -36,6 +36,7 @@ def perf_test_small(phase):
 
 
 def write_on_start():
+    print(os.getcwd() + "printing working directory\n")
     f = open(reportFile, "w+")
     f.write("******************************** perf test report, " + str(date.today()) + ", " + current_time + " ********************************\n\n");
     f.write("------------ Test bed details ------------\n")
