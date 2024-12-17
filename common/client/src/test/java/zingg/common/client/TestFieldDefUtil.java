@@ -22,8 +22,6 @@ public class TestFieldDefUtil {
 			IArguments args;
             try {
                 args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configTestDontUse.json").getFile(), "test");
-                LOG.info(args);
-                LOG.info(args.getFieldDefinition());
                 List<? extends FieldDefinition> dontUseList = fieldDefUtil.getFieldDefinitionDontUse(args.getFieldDefinition()); 
                 assertEquals(dontUseList.size(), 3);
                 

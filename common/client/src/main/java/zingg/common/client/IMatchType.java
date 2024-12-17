@@ -2,7 +2,7 @@ package zingg.common.client;
 
 public interface IMatchType extends Named { 
 
-    public boolean isEqual(String v);
+    public String toString();
         
 } 
     
