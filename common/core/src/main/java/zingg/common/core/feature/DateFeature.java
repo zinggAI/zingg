@@ -3,7 +3,7 @@ package zingg.common.core.feature;
 import java.util.Date;
 
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.MatchType;
+import zingg.common.client.MatchTypes;
 import zingg.common.core.similarity.function.CheckNullFunction;
 import zingg.common.core.similarity.function.DateSimilarityFunction;
 import zingg.common.core.similarity.function.SimilarityFunctionExact;
@@ -29,13 +29,13 @@ public class DateFeature extends BaseFeature<Date> {
 			addSimFunction(new JaroWinklerFunction());			
 		}
 		else*/ 
-		if (f.getMatchType().contains(MatchType.FUZZY)) {
+		if (f.getMatchType().contains(MatchTypes.FUZZY)) {
 			addSimFunction(new DateSimilarityFunction());
 		} 
-		if (f.getMatchType().contains(MatchType.EXACT)) {
+		if (f.getMatchType().contains(MatchTypes.EXACT)) {
 			addSimFunction(new SimilarityFunctionExact<Date>("DateSimilarityFunctionExact"));
 		} 				
-		if (f.getMatchType().contains(MatchType.NULL_OR_BLANK)) {
+		if (f.getMatchType().contains(MatchTypes.NULL_OR_BLANK)) {
 			addSimFunction(new CheckNullFunction<Date>("CheckNullFunctionDate"));	
 		}				
 	}
