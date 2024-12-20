@@ -188,34 +188,34 @@ public class FieldDefinition implements Named, Serializable {
 		}
 	}*/
 
-	public static class MatchTypeSerializer extends StdSerializer<List<? extends IMatchType>> {
+	public static class MatchTypeSerializer extends StdSerializer<List<IMatchType>> {
 		public MatchTypeSerializer() {
 			this(null);
 		}
 
-		public MatchTypeSerializer(Class<List<? extends IMatchType>> t) {
+		public MatchTypeSerializer(Class<List<IMatchType>> t) {
 			super(t);
 		}
 
 		@Override
-		public void serialize(List<? extends IMatchType> matchType, JsonGenerator jsonGen, SerializerProvider provider)
+		public void serialize(List<IMatchType> matchType, JsonGenerator jsonGen, SerializerProvider provider)
 				throws IOException, JsonProcessingException {
 			try {
-				jsonGen.writeObject(getStringFromMatchType(matchType));
+				jsonGen.writeObject(getStringFromMatchType((List<IMatchType>) matchType));
 				LOG.debug("Serializing custom type");
 			} catch (ZinggClientException e) {
 				throw new IOException(e);
 			}
 		}
 
-		public static String getStringFromMatchType(List<? extends IMatchType> matchType) throws ZinggClientException {
+		public static String getStringFromMatchType(List<IMatchType> matchType) throws ZinggClientException {
 			return String.join(",", matchType.stream()
 					.map(p -> p.getName())
 					.collect(Collectors.toList()));
 		}
 	}
 
-	public static class MatchTypeDeserializer extends StdDeserializer<List<? extends IMatchType>> {
+	public static class MatchTypeDeserializer extends StdDeserializer<List<IMatchType>> {
 		private static final long serialVersionUID = 1L;
 		
 		public MatchTypeDeserializer() { 
