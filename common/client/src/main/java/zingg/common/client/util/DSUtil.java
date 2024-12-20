@@ -3,8 +3,8 @@ package zingg.common.client.util;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
-import zingg.common.client.IZArgs;
-import zingg.common.client.MatchType;
+import zingg.common.client.IMatchType;
+import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
@@ -164,7 +164,7 @@ public abstract class DSUtil<S, D, R, C> {
 
 	public  ZFrame<D, R, C> allFieldsEqual(ZFrame<D, R, C> a, IArguments args) {
 		for (FieldDefinition def : args.getFieldDefinition()) {
-			if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
+			if (! (def.getMatchType() == null || def.getMatchType().contains(MatchTypes.DONT_USE))) {
 				//columns.add(def.getFieldName());
 				String field = def.getFieldName();
 				 a= a.filter(a.equalTo(field,ColName.COL_PREFIX + field));		
@@ -181,7 +181,7 @@ public abstract class DSUtil<S, D, R, C> {
 			cols.add(ds.col(ColName.ID_COL));						
 		}
 		for (FieldDefinition def: args.getFieldDefinition()) {
-			if (showConcise && def.matchType.contains(MatchType.DONT_USE)) {
+			if (showConcise && def.matchType.contains(MatchTypes.DONT_USE)) {
 				continue;
 			}
 			cols.add(ds.col(def.fieldName));						
@@ -203,7 +203,7 @@ public abstract class DSUtil<S, D, R, C> {
 		LOG.info("duplicates before " + a.count());
 		List<String> cols = new ArrayList<String>();
 		for (FieldDefinition def : args.getFieldDefinition()) {
-			if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
+			if (! (def.getMatchType() == null || def.getMatchType().contains(MatchTypes.DONT_USE))) {
 				//columns.add(def.getFieldName());
 				String field = def.getFieldName();
 				cols.add(field);	
@@ -246,7 +246,7 @@ public abstract class DSUtil<S, D, R, C> {
 		return trFile;		
 	}
 
-	public  List<FieldDefinition> getFieldDefinitionFiltered(IArguments args, MatchType type) {
+	public  List<FieldDefinition> getFieldDefinitionFiltered(IArguments args, IMatchType type) {
 		return args.getFieldDefinition()
 				.stream()
 				.filter(f -> !(f.getMatchType() == null || f.getMatchType().contains(type)))
