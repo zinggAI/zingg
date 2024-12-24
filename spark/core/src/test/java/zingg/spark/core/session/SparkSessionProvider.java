@@ -2,6 +2,7 @@ package zingg.spark.core.session;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 import zingg.common.client.Arguments;
@@ -28,9 +29,15 @@ public class SparkSessionProvider {
                         .appName("ZinggJunit")
                         .config("spark.debug.maxToStringFields", 100)
                         .getOrCreate();
-                javaSparkContext = new JavaSparkContext(sparkSession.sparkContext());
+                SparkContext sparkContext = sparkSession.sparkContext();
+                if (sparkContext.getCheckpointDir().isEmpty()) {
+                    sparkContext.setCheckpointDir("/tmp/checkpoint");
+                }
+                javaSparkContext = new JavaSparkContext(sparkContext);
                 JavaSparkContext.jarOfClass(IZingg.class);
-                javaSparkContext.setCheckpointDir("/tmp/checkpoint");
+                if (!javaSparkContext.getCheckpointDir().isPresent()) {
+                    javaSparkContext.setCheckpointDir(String.valueOf(sparkContext.getCheckpointDir()));
+                }
                 args = new Arguments();
                 zinggSparkContext = new ZinggSparkContext();
                 zinggSparkContext.init(sparkSession);
