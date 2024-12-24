@@ -1,5 +1,6 @@
 package zingg.spark.client;
 
+import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
@@ -79,12 +80,18 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 			SparkSession s = SparkSession
                     .builder()
                     .appName("Zingg")
-                    .getOrCreate();	
-			JavaSparkContext ctx = JavaSparkContext.fromSparkContext(s.sparkContext());
+                    .getOrCreate();
+			SparkContext sparkContext = s.sparkContext();
+			if (sparkContext.getCheckpointDir().isEmpty()) {
+				sparkContext.setCheckpointDir("/tmp/checkpoint");
+			}
+			JavaSparkContext ctx = JavaSparkContext.fromSparkContext(sparkContext);
 					JavaSparkContext.jarOfClass(IZingg.class);
 					LOG.debug("Context " + ctx.toString());
 					//initHashFns();
-			ctx.setCheckpointDir("/tmp/checkpoint");
+			if (!ctx.getCheckpointDir().isPresent()) {
+				ctx.setCheckpointDir(String.valueOf(sparkContext.getCheckpointDir()));
+			}
 			setSession(s);
 			return s;
 		}
