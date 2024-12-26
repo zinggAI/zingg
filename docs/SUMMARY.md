@@ -59,6 +59,7 @@
   * [Running on Databricks](running/databricks/README.md)
     * [Using Databricks Interface](running/databricks/using-databricks-interface.md)
     * [Using Spark Jobs](running/databricks/using-spark-jobs.md)
+  * [Running on Fabric](running/running-on-fabric.md)
 * [Zingg Models](zModels.md)
   * [Pre-trained models](pretrainedModels.md)
 * [Improving Accuracy](improving-accuracy/README.md)
