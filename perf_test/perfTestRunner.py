@@ -20,7 +20,7 @@ load = load_configs
 
 start_time = time.time()
 
-reportFile = "./perf_test/perf_test_report/loadTestReport"
+reportFile = os.path.abspath(os.curdir)+"/zingg/perf_test/perf_test_report/loadTestReport"
 
 def perf_test_small_all():
     return "small_test_running_all"
