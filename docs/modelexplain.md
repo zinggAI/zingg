@@ -6,7 +6,7 @@ nav_order: 12
 
 # Explanation of Models
 
-## 
+## To get a better understanding of how the data is trained and matched
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
