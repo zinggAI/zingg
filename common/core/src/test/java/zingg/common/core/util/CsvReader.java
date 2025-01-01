@@ -3,7 +3,6 @@ package zingg.common.core.util;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
-import zingg.common.core.block.data.ICsvReader;
 
 import java.io.File;
 import java.io.FileNotFoundException;

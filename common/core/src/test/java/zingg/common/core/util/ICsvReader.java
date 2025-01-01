@@ -1,9 +1,8 @@
-package zingg.common.core.block.data;
+package zingg.common.core.util;
 
-import zingg.common.core.util.IFromCsv;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public interface ICsvReader extends DataReader {
+public interface ICsvReader extends IDataReader {
     List<? extends IFromCsv> getRecords(String file, boolean skipHeader) throws FileNotFoundException;
 }

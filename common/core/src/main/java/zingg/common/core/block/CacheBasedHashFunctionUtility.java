@@ -12,7 +12,7 @@ public class CacheBasedHashFunctionUtility<D, R, C, T> implements IHashFunctionU
     private static final String DELIMITER = ":";
 
     public CacheBasedHashFunctionUtility() {
-        this.hashFunctionsInCurrentNodePath = new HashSet<>();
+        this.hashFunctionsInCurrentNodePath = new HashSet<String>();
     }
 
     @Override

@@ -3,6 +3,7 @@ package zingg.common.core.block.data;
 import com.opencsv.exceptions.CsvException;
 import zingg.common.core.block.model.Customer;
 import zingg.common.core.block.model.CustomerDupe;
+import zingg.common.core.util.IDataReader;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -11,9 +12,9 @@ import java.util.List;
 
 public class DataUtility {
 
-    private final DataReader dataReader;
+    private final IDataReader dataReader;
 
-    public DataUtility(DataReader dataReader) {
+    public DataUtility(IDataReader dataReader) {
         this.dataReader = dataReader;
     }
 
