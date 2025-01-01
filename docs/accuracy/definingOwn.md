@@ -20,7 +20,7 @@ Say we have data like this:
 
 |   Pair 2  | firstname | lastname |
 | :-------: | :-------: | :------: |
-| Rrecord A |    mary   |    ann   |
+|  Record A |    mary   |    ann   |
 |  Record B |   marry   |          |
 
 Let us assume we have hash function **first1char** and we want to check if it is a good function to apply to **firstname**:

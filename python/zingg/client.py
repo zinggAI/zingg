@@ -20,7 +20,6 @@ LOG = logging.getLogger("zingg")
 _spark_ctxt = None
 _sqlContext = None
 _spark = None
-<<<<<<< HEAD
 _zingg_jar = 'zingg-0.4.1-SNAPSHOT.jar'
 
 

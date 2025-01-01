@@ -7,6 +7,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
+import zingg.common.client.util.IModelHelper;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
@@ -27,7 +28,7 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			
 			ZFrame<D,R,C> positives = null;
 			ZFrame<D,R,C> negatives = null;
-			ZFrame<D,R,C> traOriginal = getDSUtil().getTraining(getPipeUtil(), args);
+			ZFrame<D,R,C> traOriginal = getDSUtil().getTraining(getPipeUtil(), args, getModelHelper());
 			ZFrame<D,R,C> tra = getStopWords().preprocessForStopWords(traOriginal);
 			tra = getDSUtil().joinWithItself(tra, ColName.CLUSTER_COLUMN, true);
 			tra = tra.cache();
@@ -46,11 +47,11 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			if (blockingTree == null || blockingTree.getSubTrees() == null) {
 				LOG.warn("Seems like no indexing rules have been learnt");
 			}
-			getBlockingTreeUtil().writeBlockingTree(blockingTree, args);
+			getBlockingTreeUtil().writeBlockingTree(blockingTree, args, getModelHelper());
 			LOG.info("Learnt indexing rules and saved output at " + args.getZinggDir());
 			// model
 			Model<S,T,D,R,C> model = getModelUtil().createModel(positives, negatives, false, args);
-			model.save(args.getModel());
+			model.save(getModelHelper().getModel(args));
 			LOG.info("Learnt similarity rules and saved output at " + args.getZinggDir());
 			Analytics.track(Metric.TRAINING_MATCHES, positives.count(), args.getCollectMetrics());
 			Analytics.track(Metric.TRAINING_NONMATCHES, negatives.count(), args.getCollectMetrics());

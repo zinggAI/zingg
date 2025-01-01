@@ -2,6 +2,7 @@ package zingg.common.core.context;
 
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.DSUtil;
+import zingg.common.client.util.IModelHelper;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.GraphUtil;
@@ -43,6 +44,10 @@ public interface IContext <S, D, R, C, T> {
     public void cleanup();
     
     public void setUtils();
+
+     public IModelHelper getModelHelper();
+    public void setModelHelper(IModelHelper modelHelper);
+
 }
 
 

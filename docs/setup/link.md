@@ -1,3 +1,9 @@
+---
+title: Linking data
+parent: Step By Step Guide
+nav_order: 11
+---
+
 # Linking Across Datasets
 
 In many cases like reference data mastering, enrichment, etc, two individual datasets are duplicate-free but they need to be matched against each other. The link phase is used for such scenarios.

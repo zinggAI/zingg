@@ -19,17 +19,19 @@
 	  </tbody>
   </table>
  <p>
-  <table class="table table-borderless">
+  <table class="table table-striped"> 
 
-  
-  <thead class="thead thead-dark">
-  <tr>
-    <th class="border-right border-white" style="width: 160px;" >Cluster</th>
-    <#list 3 ..< numColumns as entityIndex>
-    <th class="border-right border-white" > <a href="${columns[entityIndex]}.html"> ${columns[entityIndex]!} </a></th>
-    </#list>
-  </tr>
-  </thead>
+  <div class="container-fluid">
+    <thead class="thead thead-light">
+      <tr>
+        <th class="border-right border-black" style="width: 160px; border: 1.5px solid black; border-right: 1.5px solid black; " >CLUSTER</th>
+        <div class="clearfix visible-xs-block"></div>
+        <#list 3 ..< numColumns as entityIndex>
+        <th class="border-right border-black" style="border: 1.5px solid black; border-right: 1.5px solid black;" > ${columns[entityIndex]!?upper_case} </a></th>
+        </#list>
+      </tr>
+    </thead>
+  </div>  
 
   <tbody>
 
@@ -50,7 +52,7 @@
     <#list 3 ..< numColumns as entityIndex>
     <td 
      <#if c?is_even_item>
-      <#if c[isMatchColumnIndex] == 0>  class="border-bottom bottom-danger" style="border-right: 1px solid #FF4500  ;"
+      <#if c[isMatchColumnIndex] == 0>  class="border-bottom border-danger" style="border-right: 1px solid #FF4500  ;"
       </#if>
       <#if c[isMatchColumnIndex] == 1> class="border-bottom border-success" style="border-right: 1px solid #28a745  ;"
       </#if>
@@ -84,7 +86,7 @@
         position:relative;
         top: 0 ;
     }.table{
-      table-layout: fixed;
+      table-layout: relative;
       width: 100%;
     }
 </style>

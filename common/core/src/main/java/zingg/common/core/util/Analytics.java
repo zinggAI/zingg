@@ -50,7 +50,9 @@ public class Analytics {
 	public static void trackEnvProp(String metricName, boolean collectMetrics) {
 		if (collectMetrics) {
 			try{
-				getMetrics().put(metricName, System.getProperty(metricName));
+				if (System.getProperty(metricName) != null) {
+					getMetrics().put(metricName, "true");
+				}
 			}
 			catch(Exception e){
 				getMetrics().put(metricName, "Exception " + e.getMessage());

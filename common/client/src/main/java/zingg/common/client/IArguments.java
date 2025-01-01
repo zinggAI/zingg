@@ -4,7 +4,7 @@ import java.util.List;
 
 import zingg.common.client.pipe.Pipe;
 
-public interface IArguments {
+public interface IArguments extends IZArgs{
 
 	void setThreshold(double threshold);
 
@@ -78,38 +78,9 @@ public interface IArguments {
 		return zinggInternal;
 	}
 	
-	/**
-	 * Set the location for Zingg to save its internal computations and
-	 * models. Please set it to a place where the program has write access.
-	 * 
-	 * @param zinggDir
-	 *            path to the Zingg directory
 	
-	public void setZinggInternal(Pipe[] zinggDir) {
-		this.zinggInternal = zinggDir;
-	}
-	*/
 
-	String getModelId();
-
-	void setModelId(String modelId);
-
-	/**
-	 * Get the output directory where the match output will be saved
-	 * 
-	 * @return output directory path of the result
-	 */
-	Pipe[] getOutput();
-
-	/**
-	 * Set the output directory where the match result will be saved
-	 * 
-	 * @param outputDir
-	 *            where the match result is saved
-	 * @throws ZinggClientException 
-	 */
-	void setOutput(Pipe[] outputDir) throws ZinggClientException;
-
+	
 	/**
 	 * Get the location of the data file over which the match will be run
 	 * 
@@ -127,88 +98,6 @@ public interface IArguments {
 	 */
 	void setData(Pipe[] dataFile) throws ZinggClientException;
 
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	String getZinggDir();
-
-	/**
-	 * Set the location for Zingg to save its internal computations and
-	 * models. Please set it to a place where the program has write access.
-	 * 
-	 * @param zinggDir
-	 *            path to the Zingg directory
-	 */
-	void setZinggDir(String zinggDir);
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-
-	String getZinggBaseModelDir();
-
-	String getZinggModelDir();
-
-	String getZinggDocDir();
-
-	String getZinggModelDocFile();
-
-	String getZinggDataDocFile();
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	String getZinggBaseTrainingDataDir();
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	String getZinggTrainingDataUnmarkedDir();
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	String getZinggTrainingDataMarkedDir();
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	String getZinggPreprocessedDataDir();
-
-	/**
-	 * This is an internal block file location Not to be used directly by the
-	 * client
-	 * 
-	 * @return the blockFile
-	 */
-	String getBlockFile();
-
-	/**
-	 * This is the internal model location Not to be used by the client
-	 * 
-	 * @return model path
-	 */
-	String getModel();
-
-	int getJobId();
-
-	void setJobId(int jobId);
-
-	boolean getCollectMetrics();
-
-	void setCollectMetrics(boolean collectMetrics);
 
 	float getStopWordsCutoff();
 

@@ -27,7 +27,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
     }
 
 	public ZFrame<D,R,C> getTraining() throws ZinggClientException {
-		return getDSUtil().getTraining(getPipeUtil(), args);
+		return getDSUtil().getTraining(getPipeUtil(), args, getModelHelper());
 	}
 	
 	protected ZFrame<D,R,C> getData() throws ZinggClientException {
@@ -161,7 +161,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 	}
 
 	public Pipe getUnmarkedLocation() {
-		return getPipeUtil().getTrainingDataUnmarkedPipe(args);
+		return getModelHelper().getTrainingDataUnmarkedPipe(args);
 	}
 
 	public ZFrame<D,R,C> getUncertain(ZFrame<D,R,C> dupes) {

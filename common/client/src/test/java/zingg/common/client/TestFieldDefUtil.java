@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class TestFieldDefUtil {
 
 	public static final Log LOG = LogFactory.getLog(TestFieldDefUtil.class);
-	protected ArgumentsUtil argsUtil = new ArgumentsUtil();
+	protected ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
 	
 	protected FieldDefUtil fieldDefUtil = new FieldDefUtil();
 

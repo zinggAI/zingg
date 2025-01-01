@@ -12,6 +12,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
+import zingg.common.client.util.IModelHelper;
 import zingg.common.core.feature.Feature;
 import zingg.common.core.feature.FeatureFactory;
 import zingg.common.core.model.Model;
@@ -83,7 +84,7 @@ public abstract class ModelUtil<S,T, D,R,C> {
 
     public abstract Model<S,T,D,R,C> getModel(boolean isLabel, IArguments args) throws ZinggClientException;
 
-    public abstract Model<S,T,D,R,C> loadModel(boolean isLabel, IArguments args) throws ZinggClientException;
+    public abstract Model<S,T,D,R,C> loadModel(boolean isLabel, IArguments args, IModelHelper mh) throws ZinggClientException;
 
 
 
