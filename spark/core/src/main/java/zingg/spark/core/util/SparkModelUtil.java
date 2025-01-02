@@ -8,6 +8,7 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.IModelHelper;
 import zingg.common.core.feature.FeatureFactory;
 import zingg.common.core.model.Model;
 import zingg.common.core.util.ModelUtil;
@@ -39,9 +40,9 @@ public class SparkModelUtil extends ModelUtil<SparkSession,DataType,Dataset<Row>
 
     @Override
     public Model<SparkSession,DataType,Dataset<Row>, Row, Column> loadModel(boolean isLabel,
-        IArguments args) throws ZinggClientException    {
+        IArguments args, IModelHelper mh) throws ZinggClientException    {
         Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = getModel(isLabel, args);
-        model.load(args.getModel());
+        model.load(mh.getModel(args));
         return model;
      }
 

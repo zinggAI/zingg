@@ -1,10 +1,7 @@
 package zingg.common.client;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.io.StringWriter;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,8 +10,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.JsonStringify;
@@ -81,23 +76,22 @@ import zingg.common.client.util.JsonStringify;
  * </pre>
  */
 @JsonInclude(Include.NON_NULL)
-public class Arguments implements Serializable, IArguments {
+public class Arguments extends ZArgs implements Serializable, IArguments {
 
 	private static final long serialVersionUID = 1L;
 	// creates DriverArgs and invokes the main object
-	Pipe[] output; 
+
 	Pipe[] data;	
 	//Pipe[] zinggInternal;
-	String zinggDir = "/tmp/zingg";
+	
 	
 	Pipe[] trainingSamples;
 	List<? extends FieldDefinition> fieldDefinition;
 	int numPartitions = 10;
 	float labelDataSampleSize = 0.01f;
-	String modelId = "1";
+	
 	double threshold = 0.5d;
-	int jobId = 1;
-	boolean collectMetrics = true;
+
 	boolean showConcise = false;
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
@@ -237,39 +231,8 @@ public class Arguments implements Serializable, IArguments {
 	
 	
 
-	@Override
-	public String getModelId() {
-		return modelId;
-	}
 
-	@Override
-	public void setModelId(String modelId) {
-		this.modelId = modelId;
-	}
-
-	/**
-	 * Get the output directory where the match output will be saved
-	 * 
-	 * @return output directory path of the result
-	 */
-	@Override
-	public Pipe[] getOutput() {
-		return output;
-	}
-
-	/**
-	 * Set the output directory where the match result will be saved
-	 * 
-	 * @param outputDir
-	 *            where the match result is saved
-	 * @throws ZinggClientException 
-	 */
-	@Override
-	public void setOutput(Pipe[] outputDir) throws ZinggClientException {
-		//checkNullBlankEmpty(outputDir, " path for saving results");
-		this.output = outputDir;
-	}
-
+	
 	/**
 	 * Get the location of the data file over which the match will be run
 	 * 
@@ -313,156 +276,9 @@ public class Arguments implements Serializable, IArguments {
 		return JsonStringify.toString(this);
 	}
 	
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	@Override
-	public String getZinggDir() {
-		return zinggDir;
-	}
-
-	/**
-	 * Set the location for Zingg to save its internal computations and
-	 * models. Please set it to a place where the program has write access.
-	 * 
-	 * @param zinggDir
-	 *            path to the Zingg directory
-	 */
-	@Override
-	public void setZinggDir(String zinggDir) {
-		this.zinggDir = zinggDir;
-	}
-
 	
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-
-	@Override
-	@JsonIgnore
-	public String getZinggBaseModelDir(){
-		return zinggDir + "/" + modelId;
-	}
-	@Override
-	@JsonIgnore
-	public String getZinggModelDir() {
-		return getZinggBaseModelDir() + "/model";
-	}
-
-	@Override
-	@JsonIgnore
-	public String getZinggDocDir() {
-		return getZinggBaseModelDir() + "/docs/";
-	}
-
-	@Override
-	@JsonIgnore
-	public String getZinggModelDocFile() {
-		return getZinggDocDir() + "/model.html";
-	}
-
-	@Override
-	@JsonIgnore
-	public String getZinggDataDocFile() {
-		return getZinggDocDir() + "/data.html";
-	}
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	@Override
-	@JsonIgnore
-	public String getZinggBaseTrainingDataDir() {
-		return getZinggBaseModelDir() + "/trainingData/";
-	}
-
-
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	@Override
-	@JsonIgnore
-	public String getZinggTrainingDataUnmarkedDir() {
-		return this.getZinggBaseTrainingDataDir() + "/unmarked/";
-	}
-
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	@Override
-	@JsonIgnore
-	public String getZinggTrainingDataMarkedDir() {
-		return this.getZinggBaseTrainingDataDir() + "/marked/";
-	}
 	
-	/**
-	 * Location for internal Zingg use.
-	 * 
-	 * @return the path for internal Zingg usage
-	 */
-	@Override
-	@JsonIgnore
-	public String getZinggPreprocessedDataDir() {
-		return zinggDir + "/preprocess";
-	}
 	
-	/**
-	 * This is an internal block file location Not to be used directly by the
-	 * client
-	 * 
-	 * @return the blockFile
-	 */
-	@Override
-	@JsonIgnore
-	public String getBlockFile() {
-		return getZinggModelDir() + "/block/zingg.block";
-	}
-	
-	/**
-	 * This is the internal model location Not to be used by the client
-	 * 
-	 * @return model path
-	 */
-	@Override
-	@JsonIgnore
-	public String getModel() {
-		return getZinggModelDir() + "/classifier/best.model";
-	}
-
-
-
-	@Override
-	public int getJobId() {
-		return jobId;
-	}
-
-
-
-	@Override
-	public void setJobId(int jobId) {
-		this.jobId = jobId;
-	}
-
-	@Override
-	public boolean getCollectMetrics() {
-		return collectMetrics;
-	}
-
-	@Override
-	public void setCollectMetrics(boolean collectMetrics) {
-		this.collectMetrics = collectMetrics;
-	}
 	 
 	@Override
 	public float getStopWordsCutoff() {
@@ -521,9 +337,9 @@ public class Arguments implements Serializable, IArguments {
 	}
 
 	@Override
-	@JsonIgnore
+    @JsonIgnore
     public String getStopWordsDir() {
-    	return getZinggBaseModelDir() + "/stopWords/";
+       return getZinggDir() + "/"  + getModelId() + "/stopWords/";
     }
 
 }

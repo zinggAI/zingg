@@ -80,7 +80,7 @@
 			"name":"test", 
 			"format":"csv", 
 			"props": {
-				"location": "test.csv",
+				"location": "./zingg/spark/core/executor/test.csv",
 				"delimiter": ",",
 				"header":false					
 			},

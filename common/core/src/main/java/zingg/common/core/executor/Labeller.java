@@ -13,6 +13,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
+import zingg.common.client.util.DFObjectUtil;
 
 public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
@@ -47,9 +48,9 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 		ZFrame<D,R,C> unmarkedRecords = null;
 		ZFrame<D,R,C> markedRecords = null;
 		try {
-			unmarkedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataUnmarkedPipe(args));
+			unmarkedRecords = getPipeUtil().read(false, false, getModelHelper().getTrainingDataUnmarkedPipe(args));
 			try {
-				markedRecords = getPipeUtil().read(false, false, getPipeUtil().getTrainingDataMarkedPipe(args));
+				markedRecords = getPipeUtil().read(false, false, getModelHelper().getTrainingDataMarkedPipe(args));
 			} catch (Exception e) {
 				LOG.warn("No record has been marked yet");
 			} catch (ZinggClientException zce) {
@@ -137,7 +138,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 	}
 
 	
-	protected int displayRecordsAndGetUserInput(ZFrame<D,R,C> records, String preMessage, String postMessage) {
+	protected int displayRecordsAndGetUserInput(ZFrame<D,R,C> records, String preMessage, String postMessage) throws ZinggClientException {
 		getLabelDataViewHelper().displayRecords(records, preMessage, postMessage);
 		int selection = readCliInput();
 		return selection;
@@ -158,7 +159,6 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 		return selection;
 	}
 	
-	@Override
 	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() {	
 		if (trainingDataModel==null) {
 			this.trainingDataModel = new TrainingDataModel<S, D, R, C, T>(getContext(), getClientOptions());
@@ -170,10 +170,11 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 		this.trainingDataModel = trainingDataModel;
 	}
 
-	@Override
+	
 	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() {
 		if(labelDataViewHelper==null) {
 			labelDataViewHelper = new LabelDataViewHelper<S,D,R,C,T>(getContext(), getClientOptions());
+			labelDataViewHelper.initVerticalDisplayUtility(getDfObjectUtil());
 		}
     	return labelDataViewHelper;
     }
@@ -182,6 +183,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 		this.labelDataViewHelper = labelDataViewHelper;
 	}
 
+	protected abstract DFObjectUtil<S, D, R, C> getDfObjectUtil();
 }
 
 

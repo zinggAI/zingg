@@ -1,10 +1,12 @@
 ---
-description: >-
-  Building a continuosly updated identity graph with new, updated and deleted
-  records
+title: Adding incremental data
+parent: Step By Step Guide
+nav_order: 10
 ---
 
 # Adding Incremental Data
+
+## Building a continuosly updated identity graph with new, updated and deleted records
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 

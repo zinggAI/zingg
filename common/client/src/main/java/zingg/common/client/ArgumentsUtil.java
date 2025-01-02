@@ -17,9 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.module.scala.DefaultScalaModule;
 
-public class ArgumentsUtil {
+public class ArgumentsUtil<A extends IZArgs> {
 	
-	protected Class<? extends IArguments> argsClass;
+	protected Class<A> argsClass;
 	private static final String ENV_VAR_MARKER_START = "$";
 	private static final String ENV_VAR_MARKER_END = "$";
 	private static final String ESC = "\\";
@@ -27,11 +27,9 @@ public class ArgumentsUtil {
 	public static final Log LOG = LogFactory.getLog(ArgumentsUtil.class);	
 	
 	
-	public ArgumentsUtil() {
-		this(Arguments.class);
-	}
+	
 
-	public ArgumentsUtil( Class<? extends IArguments> argsClass) {
+	public ArgumentsUtil(Class<A> argsClass) {
 		this.argsClass = argsClass;
 	}
 
@@ -44,7 +42,7 @@ public class ArgumentsUtil {
 	 * @throws ZinggClientException
 	 *             in case of invalid/wrong json/file not found
 	 */
-	public IArguments createArgumentsFromJSON(String filePath)
+	public A createArgumentsFromJSON(String filePath)
 			throws ZinggClientException {
 		return createArgumentsFromJSON(filePath, "match");
 	}
@@ -58,7 +56,7 @@ public class ArgumentsUtil {
 	 * @throws ZinggClientException
 	 *             in case of invlaid/wrong json/file not found
 	 */
-	public IArguments createArgumentsFromJSON(String filePath, String phase)
+	public A createArgumentsFromJSON(String filePath, String phase)
 			throws ZinggClientException {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -69,9 +67,9 @@ public class ArgumentsUtil {
 			module.addDeserializer(List<MatchType>.class, new FieldDefinition.MatchTypeDeserializer());
 			mapper.registerModule(module);
 			*/
-			IArguments args = mapper.readValue(new File(filePath), argsClass);
+			A args = mapper.readValue(new File(filePath), argsClass);
 			LOG.warn("phase is " + phase);
-			checkValid(args, phase);
+			//checkValid(args, phase);
 			return args;			
 		} catch (Exception e) { 
 			//e.printStackTrace();
@@ -89,7 +87,7 @@ public class ArgumentsUtil {
 	 * @throws ZinggClientException
 	 *             in case there is an error in writing to file
 	 */
-	public void writeArgumentsToJSON(String filePath, IArguments args)
+	public void writeArgumentsToJSON(String filePath, IZArgs args)
 			throws ZinggClientException {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -103,27 +101,29 @@ public class ArgumentsUtil {
 		}
 	}
 
-	public void checkValid(IArguments args, String phase) throws ZinggClientException {
+	/* 
+	public void checkValid(IZArgs args, String phase) throws ZinggClientException {
 		if (phase.equals("train") || phase.equals("match") || phase.equals("trainMatch") || phase.equals("link")) {
-			checkIsValid(args);
+			checkIsValid((IArguments) args);
 		}
 		else if(phase.equals("seed") || phase.equals("seedDB")){
-			checkIsValidForLabelling(args);
+			checkIsValidForLabelling((IArguments) args);
 		}
 		else if (!phase.equalsIgnoreCase("WEB")){
 			checkIsValidForOthers(args);
 		}
 	}
+	*/
 	
-	public IArguments createArgumentsFromJSONString(String data, String phase)
+	public A createArgumentsFromJSONString(String data, String phase)
 			throws ZinggClientException {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS,
 					true);
-			IArguments args = mapper.readValue(data, argsClass);
+			A args = mapper.readValue(data, argsClass);
 			LOG.warn("phase is " + phase);
-			checkValid(args, phase);
+			//checkValid(args, phase);
 			return args;			
 		} catch (Exception e) {
 			//e.printStackTrace();
@@ -132,7 +132,7 @@ public class ArgumentsUtil {
 		}
 	}
 
-	public IArguments createArgumentsFromJSONTemplate(String filePath, String phase)
+	public IZArgs createArgumentsFromJSONTemplate(String filePath, String phase)
 			throws ZinggClientException {
 		try {
 			LOG.warn("Config Argument is " + filePath);
@@ -140,7 +140,7 @@ public class ArgumentsUtil {
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			Map<String, String> env = System.getenv();
 			String updatedJson = substituteVariables(template, env);
-			IArguments args = createArgumentsFromJSONString(updatedJson, phase);
+			IZArgs args = createArgumentsFromJSONString(updatedJson, phase);
 			return args;
 		} catch (Exception e) {
 			//e.printStackTrace();
@@ -174,7 +174,7 @@ public class ArgumentsUtil {
 		return buffer.toString();
 	}
 
-	public void writeArgumentstoJSON(String filePath, IArguments args) throws ZinggClientException {
+	public void writeArgumentstoJSON(String filePath, IZArgs args) throws ZinggClientException {
 		try{
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS,
@@ -188,7 +188,7 @@ public class ArgumentsUtil {
 		}
 	}
 
-	public String writeArgumentstoJSONString(IArguments args) throws ZinggClientException {
+	public String writeArgumentstoJSONString(IZArgs args) throws ZinggClientException {
 		try{
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS,
@@ -206,30 +206,31 @@ public class ArgumentsUtil {
 	 * Checks if the given arguments are correct or not
 	 * @param args
 	 * @throws ZinggClientException
-	 */
-	public void checkIsValid(IArguments args) throws ZinggClientException {
-		IArguments arg = new Arguments();
+	 
+	public void checkIsValid(IZArgs args) throws ZinggClientException {
+		IZArgs arg = new Arguments();
 		arg.setTrainingSamples(args.getTrainingSamples());
 		arg.setData(args.getData());
 		arg.setNumPartitions(args.getNumPartitions());
 		arg.setFieldDefinition(args.getFieldDefinition());
 	}
 	
-	public void checkIsValidForOthers(IArguments args) throws ZinggClientException {
-		IArguments arg = new Arguments();
+	public void checkIsValidForOthers(IZArgs args) throws ZinggClientException {
+		IZArgs arg = new Arguments();
 		arg.setData(args.getData());
 		arg.setNumPartitions(args.getNumPartitions());
 	}
 	
 	
-	public void checkIsValidForLabelling(IArguments args) throws ZinggClientException {
-		IArguments arg = new Arguments();
+	public void checkIsValidForLabelling(IZArgs args) throws ZinggClientException {
+		IZArgs arg = new Arguments();
 		//arg.setPositiveTrainingSamples(args.getPositiveTrainingSamples());
 		//arg.setNegativeTrainingSamples(args.getNegativeTrainingSamples());
 		arg.setData(args.getData());
 		arg.setNumPartitions(args.getNumPartitions());
 		arg.setFieldDefinition(args.getFieldDefinition());
 	}
+	*/
 	
 
 }

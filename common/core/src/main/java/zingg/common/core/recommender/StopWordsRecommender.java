@@ -49,7 +49,7 @@ public abstract class StopWordsRecommender<S,D,R,C,T> {
 				if(Arrays.asList(data.columns()).contains(args.getColumn())) {
 					String filenameCSV = args.getStopWordsDir() + fieldName;
 					data = findStopWords(data, fieldName);
-					context.getPipeUtil().write(data, context.getPipeUtil().getStopWordsPipe(args, filenameCSV));
+					context.getPipeUtil().write(data, context.getModelHelper().getStopWordsPipe(filenameCSV));
 				} else {
 					LOG.info("An invalid column name - " + args.getColumn() + " entered. Please provide valid column name, as per the config (they are case sensitive).");
 				}

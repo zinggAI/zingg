@@ -2,6 +2,8 @@ package zingg.common.client.cols;
 
 import java.util.List;
 
+import zingg.common.client.Named;
+
 public class SelectedCols implements ISelectedCols {
 
     private String[] cols;
@@ -28,10 +30,5 @@ public class SelectedCols implements ISelectedCols {
     @Override
     public void setNamedCols(List<? extends Named> n) {
         this.cols = getCols(n);
-    }
-
-    @Override
-    public void setStringCols(List<String> columnNames) {
-        this.cols = columnNames.toArray(new String[0]);
     }
 }

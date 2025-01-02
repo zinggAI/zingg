@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.ClientOptions;
 import zingg.common.client.FieldDefUtil;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
@@ -35,8 +36,8 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 	
 	protected FieldDefUtil fieldDefUtil;
 
-	public ModelDocumenter(IContext<S,D,R,C,T> context, IArguments args) {
-		super(context, args);
+	public ModelDocumenter(IContext<S,D,R,C,T> context, IArguments args, ClientOptions options) {
+		super(context, args, options);
 		markedRecords = getDSUtil().emptyDataFrame();
 		fieldDefUtil = new FieldDefUtil();
 	}
@@ -46,7 +47,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		modelColDoc.process(markedRecords);
 	}
 
-	protected void createModelDocument() throws ZinggClientException {
+	public void createModelDocument() throws ZinggClientException {
 		try {
 			LOG.info("Model document generation starts");
 
@@ -64,11 +65,11 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 	}
 
 	private void writeModelDocument(Map<String, Object> root) throws ZinggClientException {
-		checkAndCreateDir(args.getZinggDocDir());
-		writeDocument(MODEL_TEMPLATE, root, args.getZinggModelDocFile());
+		checkAndCreateDir(getModelHelper().getZinggDocDir(args));
+		writeDocument(MODEL_TEMPLATE, root, getModelHelper().getZinggModelDocFile(args));
 	}
 
-	protected Map<String, Object> populateTemplateData() {
+	public Map<String, Object> populateTemplateData() {
 		/* Create a data-model */
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put(TemplateFields.MODEL_ID, args.getModelId());
@@ -166,10 +167,20 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		
 		
 	}
+
+	public void setMarkedRecords(ZFrame<D, R, C> markedRecords) {
+		this.markedRecords = markedRecords;
+	}
+
+	public void setUnmarkedRecords(ZFrame<D, R, C> unmarkedRecords) {
+		this.unmarkedRecords = unmarkedRecords;
+	}
 	
 	@Override
 	public void execute() throws ZinggClientException {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 }

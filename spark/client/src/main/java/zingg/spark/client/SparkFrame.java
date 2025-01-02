@@ -1,10 +1,7 @@
 package zingg.spark.client;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import org.apache.spark.internal.config.R;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
@@ -16,8 +13,6 @@ import scala.collection.JavaConverters;
 import zingg.common.client.FieldData;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
-import zingg.common.core.util.ListConverter;
-import zingg.spark.client.util.ExtendedFunction;
 
 //Dataset, Row, column
 public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
@@ -204,14 +199,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.unionByName(other.df(), flag));
     }
 
-    public ZFrame<Dataset<Row>, Row, Column> withColumn(String s, int c){
-        return new SparkFrame(df.withColumn(s, functions.lit(c)));
-    }
-    public ZFrame<Dataset<Row>, Row, Column> withColumn(String s, double c){
-        return new SparkFrame(df.withColumn(s, functions.lit(c)));
-    }
-
-    public ZFrame<Dataset<Row>, Row, Column> withColumn(String s, String c){
+    public <A> ZFrame<Dataset<Row>, Row, Column> withColumn(String s, A c){
         return new SparkFrame(df.withColumn(s, functions.lit(c)));
     }
 
@@ -459,6 +447,7 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         return new SparkFrame(df.groupBy(groupByCol1, groupByCol2).agg(functions.count(groupByCol1).as(countColName)));
     }
 
+    
 
 	@Override
 	public ZFrame<Dataset<Row>, Row, Column> intersect(ZFrame<Dataset<Row>, Row, Column> other) {
@@ -476,57 +465,21 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 	}
 
     @Override
-    public ZFrame<Dataset<Row>, Row, Column> transpose(String pivotColumn) {
-        ExtendedFunction extendedFunction = new ExtendedFunction();
-        List<String> columnsExceptPivot = new ArrayList<>(List.of(df.columns()));
-        columnsExceptPivot.remove(pivotColumn);
-        ListConverter<String> listConverter = new ListConverter<String>();
-        Dataset<Row> r = extendedFunction.TransposeDF(df, listConverter.convertListToSeq(columnsExceptPivot), pivotColumn);
-        return new SparkFrame(r);
+    public Object get(Row r, String colName) {
+        return r.getAs(colName);
+    }
+	
+    public Column[] getCols(){
+        return getCols(this.df);
     }
 
-    @Override
-    public void showVertical() {
-        ZFrame<Dataset<Row>, Row, Column> headerIncludedFrame = getHeaderIncludedDataFrame(new SparkFrame(df));
-        ZFrame<Dataset<Row>, Row, Column> vertical = headerIncludedFrame.transpose(PIVOT_COLUMN);
-        vertical.sortAscending(ORDER).drop(ORDER).show(1000);
-    }
-
-    /***
-     * Add auto incremental row like {1, 2, 3, 4, 5} to the dataframe
-     * @return ZFrame
-     */
-
-    private ZFrame<Dataset<Row>, Row, Column> addAutoIncrementalRow() {
-        String[] columns = df.columns();
-        Dataset<Row> temporaryDF = df.limit(1);
-        List<String> monotonicIncreasing = new ArrayList<>();
-        for (int idx = 0; idx < columns.length; idx++) {
-            monotonicIncreasing.add(String.valueOf(idx));
+    public static Column[] getCols(Dataset<Row> inpDf){
+        String[] colNames = inpDf.schema().names();
+        Column[] cols = new Column[colNames.length];
+        for (int idx=0;idx<colNames.length;idx++){
+        	cols[idx] = inpDf.col(colNames[idx]);
         }
-        Collections.sort(monotonicIncreasing);
-        for (int idx = 0; idx < columns.length; idx++) {
-            temporaryDF = temporaryDF.withColumn(columns[idx], functions.lit(monotonicIncreasing.get(idx)));
-        }
-        return new SparkFrame(df.union(temporaryDF));
-    }
-
-    /***
-     * return new ZFrame with new Column added as PIVOT used for transposing the matrix
-     * @param records
-     * @return header included zFrame
-     */
-    private ZFrame<Dataset<Row>, Row, Column> getHeaderIncludedDataFrame(ZFrame<Dataset<Row>, Row, Column> records) {
-        ZFrame<Dataset<Row>, Row, Column> orderedRowAdded = addAutoIncrementalRow();
-
-        ZFrame<Dataset<Row>, Row, Column> firstRecord = orderedRowAdded.limit(1);
-        ZFrame<Dataset<Row>, Row, Column> secondRecord = orderedRowAdded.except(firstRecord).limit(1);
-        ZFrame<Dataset<Row>, Row, Column> thirdRecord = orderedRowAdded.except(firstRecord.union(secondRecord));
-
-        //return new ZFrame with Field column added to be used as pivot
-        return firstRecord.withColumn(PIVOT_COLUMN, VALUE_1).
-                union(secondRecord.withColumn(PIVOT_COLUMN, VALUE_2)).
-                union(thirdRecord.withColumn(PIVOT_COLUMN, ORDER));
+        return cols;
     }
 
 }
