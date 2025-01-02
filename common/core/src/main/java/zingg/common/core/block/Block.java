@@ -35,7 +35,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	}
 
 	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes) {
-		this.hashFunctionUtility = HashFunctionUtilityFactory.getHashFunctionUtility(HashUtility.CACHED);
+		this();
 		this.training = training;
 		this.dupes = dupes;
 		childless =  new ListMap<HashFunction<D,R,C,T>, String>();
