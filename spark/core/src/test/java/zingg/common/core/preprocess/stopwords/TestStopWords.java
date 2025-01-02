@@ -129,7 +129,7 @@ public class TestStopWords {
 						RowFactory.create("30", "written java scala", "four", "", "test"),
 						RowFactory.create("40", "best luck to zingg ", "Five", "thank you", "test")),
 				schemaOriginal);
-  			String stopWordsFileName = getClass().getResource("../../../../preProcess/stopWords.csv").getFile();
+  			String stopWordsFileName = getClass().getResource("../../../../../preProcess/stopwords/stopWords.csv").getFile();
  			FieldDefinition fd = new FieldDefinition();
 			fd.setStopWords(stopWordsFileName);
 			fd.setFieldName("field1");
@@ -171,7 +171,7 @@ public class TestStopWords {
 						RowFactory.create("30", "written java scala", "four", "", "test"),
 						RowFactory.create("40", "best luck to zingg ", "Five", "thank you", "test")),
 				schemaOriginal);
-  			String stopWordsFileName = getClass().getResource("../../../../preProcess/stopWordsWithoutHeader.csv").getFile();
+  			String stopWordsFileName = getClass().getResource("../../../../../preProcess/stopwords/stopWordsWithoutHeader.csv").getFile();
  			FieldDefinition fd = new FieldDefinition();
 			fd.setStopWords(stopWordsFileName);
 			fd.setFieldName("field1");

@@ -37,7 +37,7 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
 
         //add second stopWordRemover
         String stopWordsFileName1 = Objects.requireNonNull(
-                StopWordRemoverUtility.class.getResource("../../../../preProcess/stopWords.csv")).getFile();
+                StopWordRemoverUtility.class.getResource("../../../../preProcess/stopwords/stopWords.csv")).getFile();
         FieldDefinition fieldDefinition1 = new FieldDefinition();
         fieldDefinition1.setStopWords(stopWordsFileName1);
         fieldDefinition1.setFieldName("field1");
@@ -48,7 +48,7 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
 
         //add third stopWordRemover
         String stopWordsFileName2 = Objects.requireNonNull(
-                StopWordRemoverUtility.class.getResource("../../../../preProcess/stopWordsWithoutHeader.csv")).getFile();
+                StopWordRemoverUtility.class.getResource("../../../../preProcess/stopwords/stopWordsWithoutHeader.csv")).getFile();
         FieldDefinition fieldDefinition2 = new FieldDefinition();
         fieldDefinition2.setStopWords(stopWordsFileName2);
         fieldDefinition2.setFieldName("field1");
