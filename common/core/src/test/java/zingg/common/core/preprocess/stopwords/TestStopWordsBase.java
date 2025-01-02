@@ -1,4 +1,4 @@
-package zingg.common.core.preprocess;
+package zingg.common.core.preprocess.stopwords;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

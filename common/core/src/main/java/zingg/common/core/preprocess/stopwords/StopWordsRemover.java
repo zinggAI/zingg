@@ -1,4 +1,4 @@
-package zingg.common.core.preprocess;
+package zingg.common.core.preprocess.stopwords;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ import zingg.common.core.context.IContext;
 public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	protected static String name = "zingg.preprocess.StopWordsRemover";
+	protected static String name = "zingg.preprocess.stopwords.StopWordsRemover";
 	public static final Log LOG = LogFactory.getLog(StopWordsRemover.class);
 	protected static final int COLUMN_INDEX_DEFAULT = 0;
 	

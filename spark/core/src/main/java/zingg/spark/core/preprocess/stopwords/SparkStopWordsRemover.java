@@ -1,4 +1,4 @@
-package zingg.spark.core.preprocess;
+package zingg.spark.core.preprocess.stopwords;
 
 import static org.apache.spark.sql.functions.callUDF;
 import static org.apache.spark.sql.functions.lit;
@@ -14,10 +14,9 @@ import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 
 import zingg.common.client.IArguments;
-import zingg.common.client.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.core.context.IContext;
-import zingg.common.core.preprocess.StopWordsRemover;
+import zingg.common.core.preprocess.stopwords.StopWordsRemover;
 import zingg.spark.client.SparkFrame;
 import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.util.SparkFnRegistrar;

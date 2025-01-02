@@ -6,7 +6,7 @@ import zingg.common.client.IArguments;
 import zingg.common.client.IMatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZinggClientException;
-import zingg.common.core.preprocess.StopWordsRemover;
+import zingg.common.core.preprocess.stopwords.StopWordsRemover;
 
 import java.util.ArrayList;
 import java.util.List;

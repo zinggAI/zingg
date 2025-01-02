@@ -1,4 +1,4 @@
-package zingg.common.core.preprocess;
+package zingg.common.core.preprocess.stopwords;
 
 import java.io.Serializable;
 

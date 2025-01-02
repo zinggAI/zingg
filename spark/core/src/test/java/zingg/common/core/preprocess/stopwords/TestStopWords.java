@@ -1,4 +1,4 @@
-package zingg.common.core.preprocess;
+package zingg.common.core.preprocess.stopwords;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -31,7 +31,7 @@ import zingg.common.core.match.output.LinkOutputBuilder;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
-import zingg.spark.core.preprocess.SparkStopWordsRemover;
+import zingg.spark.core.preprocess.stopwords.SparkStopWordsRemover;
 
 @ExtendWith(TestSparkBase.class)
 public class TestStopWords {

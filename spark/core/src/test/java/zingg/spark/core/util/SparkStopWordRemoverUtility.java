@@ -9,7 +9,7 @@ import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.context.Context;
 import zingg.common.core.util.StopWordRemoverUtility;
-import zingg.spark.core.preprocess.SparkStopWordsRemover;
+import zingg.spark.core.preprocess.stopwords.SparkStopWordsRemover;
 
 public class SparkStopWordRemoverUtility extends StopWordRemoverUtility<SparkSession, Dataset<Row>, Row, Column, DataType> {
 

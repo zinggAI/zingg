@@ -7,13 +7,12 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
-import zingg.common.client.util.IModelHelper;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
-import zingg.common.core.preprocess.StopWordsRemover;
+import zingg.common.core.preprocess.stopwords.StopWordsRemover;
 
 public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 

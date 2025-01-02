@@ -8,15 +8,13 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IArguments;
 import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.options.ZinggOptions;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.TrainingDataFinder;
-import zingg.common.core.preprocess.StopWordsRemover;
+import zingg.common.core.preprocess.stopwords.StopWordsRemover;
 import org.apache.spark.sql.SparkSession;
-import zingg.spark.core.preprocess.SparkStopWordsRemover;
+import zingg.spark.core.preprocess.stopwords.SparkStopWordsRemover;
 
 public class SparkTrainingDataFinder extends TrainingDataFinder<SparkSession, Dataset<Row>, Row, Column,DataType> {
 

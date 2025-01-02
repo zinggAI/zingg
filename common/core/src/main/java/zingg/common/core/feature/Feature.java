@@ -5,7 +5,6 @@ import java.util.List;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IMatchType;
-import zingg.common.client.MatchType;
 import zingg.common.core.similarity.function.SimFunction;
 
 public interface Feature<T> extends Serializable {
