@@ -11,7 +11,3 @@ nav_order: 14
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
 
-
-### The relate phase is run as follows:
-
-` `

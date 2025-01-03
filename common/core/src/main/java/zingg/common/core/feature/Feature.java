@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.MatchType;
+import zingg.common.client.IMatchType;
 import zingg.common.core.similarity.function.SimFunction;
 
 public interface Feature<T> extends Serializable {
@@ -13,7 +13,7 @@ public interface Feature<T> extends Serializable {
 	
 	FieldDefinition getFieldDefinition();
 
-	List<MatchType> getMatchType();
+	List<? extends IMatchType> getMatchType();
 
 	SimFunction<T> getSimFunction(int i);
 	

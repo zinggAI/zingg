@@ -1,8 +1,8 @@
-package zingg.spark.core.preprocess;
+package zingg.spark.core.preprocess.stopwords;
 
 import org.apache.spark.sql.api.java.UDF2;
 
-import zingg.common.core.preprocess.RemoveStopWords;
+import zingg.common.core.preprocess.stopwords.RemoveStopWords;
 
 public class RemoveStopWordsUDF extends RemoveStopWords implements UDF2<String,String,String>{
 	
@@ -17,3 +17,4 @@ public class RemoveStopWordsUDF extends RemoveStopWords implements UDF2<String,S
 	}
 	
 }
+

@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
-import zingg.common.client.MatchType;
+import zingg.common.client.MatchTypes;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.IModelHelper;
@@ -23,15 +23,12 @@ import zingg.common.core.hash.HashFunction;
 public abstract class BlockingTreeUtil<S, D,R,C,T> {
 
     public final Log LOG = LogFactory.getLog(BlockingTreeUtil.class);
-	
 
 	private PipeUtilBase<S, D, R, C> pipeUtil;
 
     public PipeUtilBase<S, D, R, C> getPipeUtil() {
 		return pipeUtil;
 	}
-
-
 
 
 	public void setPipeUtil(PipeUtilBase<S, D, R, C> pipeUtil) {
@@ -43,10 +40,10 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 		ListMap<T, HashFunction<D,R,C,T>>hashFunctions, long blockSize);
 
 
-	public Tree<Canopy<R>> createBlockingTree(ZFrame<D,R,C> testData,  
-			ZFrame<D,R,C> positives, double sampleFraction, long blockSize,
-            IArguments args,
-			ListMap<T, HashFunction<D,R,C,T>> hashFunctions) throws Exception, ZinggClientException {
+	public Tree<Canopy<R>> createBlockingTree(ZFrame<D,R,C> testData,
+											  ZFrame<D,R,C> positives, double sampleFraction, long blockSize,
+											  IArguments args,
+											  ListMap<T, HashFunction<D,R,C,T>> hashFunctions) throws Exception, ZinggClientException {
 		ZFrame<D,R,C> sample = testData.sample(false, sampleFraction);
 		sample = sample.cache();
 		long totalCount = sample.count();
@@ -64,13 +61,11 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 		List<FieldDefinition> fd = new ArrayList<FieldDefinition> ();
 
 		for (FieldDefinition def : args.getFieldDefinition()) {
-			if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
+			if (! (def.getMatchType() == null || def.getMatchType().contains(MatchTypes.DONT_USE))) {
 				fd.add(def);	
 			}
 		}
-
-		Tree<Canopy<R>> blockingTree = cblock.getBlockingTree(null, null, root,
-				fd);
+		Tree<Canopy<R>> blockingTree =  cblock.getBlockingTree(null, null, root, fd);
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("The blocking tree is ");
 			blockingTree.print(2);

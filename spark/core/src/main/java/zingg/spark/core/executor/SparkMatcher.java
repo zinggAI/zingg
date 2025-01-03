@@ -1,8 +1,11 @@
 package zingg.spark.core.executor;
 
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.spark.internal.config.R;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -16,16 +19,19 @@ import zingg.common.client.options.ZinggOptions;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.Matcher;
 import zingg.common.core.model.Model;
-import zingg.common.core.preprocess.StopWordsRemover;
+import zingg.common.core.preprocess.IPreprocType;
+import zingg.common.core.preprocess.stopwords.StopWordsRemover;
 import org.apache.spark.sql.SparkSession;
-import zingg.spark.core.preprocess.SparkStopWordsRemover;
+
+import zingg.spark.core.preprocess.ISparkPreprocMapSupplier;
+import zingg.spark.core.preprocess.stopwords.SparkStopWordsRemover;
 
 /**
  * Spark specific implementation of Matcher
  * 
  *
  */
-public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,DataType>{
+public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,DataType> implements ISparkPreprocMapSupplier{
 
 
 	private static final long serialVersionUID = 1L;
@@ -57,7 +63,8 @@ public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,D
 
 	@Override
 	public StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
-		return new SparkStopWordsRemover(getContext(),getArgs());
+		return new SparkStopWordsRemover(getContext());
 	}
+
 	
 }

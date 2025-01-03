@@ -1,7 +1,5 @@
 package zingg.common.core.similarity.function;
 
-import java.util.Arrays;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

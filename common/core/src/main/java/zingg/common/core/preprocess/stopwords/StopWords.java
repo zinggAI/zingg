@@ -1,4 +1,4 @@
-package zingg.common.core.preprocess;
+package zingg.common.core.preprocess.stopwords;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,7 +11,7 @@ import zingg.common.client.util.PipeUtilBase;
 
 public class StopWords<S,D,R,C,T> {
 
-	protected static String name = "zingg.preprocess.StopWords";
+	protected static String name = "zingg.preprocess.stopwords.StopWords";
 	public static final Log LOG = LogFactory.getLog(StopWords.class);
 	protected static String stopWordColumn = ColName.COL_WORD;
 	protected static final int COLUMN_INDEX_DEFAULT = 0;

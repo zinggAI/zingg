@@ -1,4 +1,4 @@
-package zingg.common.core.preprocess;
+package zingg.common.core.preprocess.stopwords;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,13 +24,14 @@ import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
+import zingg.common.client.MatchTypes;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.core.match.output.LinkOutputBuilder;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
-import zingg.spark.core.preprocess.SparkStopWordsRemover;
+import zingg.spark.core.preprocess.stopwords.SparkStopWordsRemover;
 
 @ExtendWith(TestSparkBase.class)
 public class TestStopWords {
@@ -77,7 +78,7 @@ public class TestStopWords {
 			List<FieldDefinition> fdList = new ArrayList<FieldDefinition>(4);
 			
 			ArrayList<MatchType> matchTypelistFuzzy = new ArrayList<MatchType>();
-			matchTypelistFuzzy.add(MatchType.FUZZY);
+			matchTypelistFuzzy.add((MatchType)MatchTypes.FUZZY);
 
 			FieldDefinition eventFD = new FieldDefinition();
 			eventFD.setDataType("string");
@@ -88,9 +89,9 @@ public class TestStopWords {
 			IArguments stmtArgs = new Arguments();
 			stmtArgs.setFieldDefinition(fdList);
 			
-			StopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext,stmtArgs);
+			StopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext);
 			
-			stopWordsObj.preprocessForStopWords(new SparkFrame(datasetOriginal));
+			stopWordsObj.preprocess(new SparkFrame(datasetOriginal));
 			System.out.println("datasetOriginal.show() : ");
 			datasetOriginal.show();
 			SparkFrame datasetWithoutStopWords = (SparkFrame)stopWordsObj.removeStopWordsFromDF(new SparkFrame(datasetOriginal),"statement",stopWords);
@@ -128,7 +129,7 @@ public class TestStopWords {
 						RowFactory.create("30", "written java scala", "four", "", "test"),
 						RowFactory.create("40", "best luck to zingg ", "Five", "thank you", "test")),
 				schemaOriginal);
-  			String stopWordsFileName = getClass().getResource("../../../../preProcess/stopWords.csv").getFile();
+  			String stopWordsFileName = getClass().getResource("../../../../../preProcess/stopwords/stopWords.csv").getFile();
  			FieldDefinition fd = new FieldDefinition();
 			fd.setStopWords(stopWordsFileName);
 			fd.setFieldName("field1");
@@ -136,9 +137,9 @@ public class TestStopWords {
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
 
-			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext,args);
+			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext);
 				
- 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocessForStopWords(new SparkFrame(original)))).df();
+ 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocess(new SparkFrame(original)))).df();
  			assertTrue(datasetExpected.except(newDataSet).isEmpty());
 			assertTrue(newDataSet.except(datasetExpected).isEmpty());
 	}
@@ -170,7 +171,7 @@ public class TestStopWords {
 						RowFactory.create("30", "written java scala", "four", "", "test"),
 						RowFactory.create("40", "best luck to zingg ", "Five", "thank you", "test")),
 				schemaOriginal);
-  			String stopWordsFileName = getClass().getResource("../../../../preProcess/stopWordsWithoutHeader.csv").getFile();
+  			String stopWordsFileName = getClass().getResource("../../../../../preProcess/stopwords/stopWordsWithoutHeader.csv").getFile();
  			FieldDefinition fd = new FieldDefinition();
 			fd.setStopWords(stopWordsFileName);
 			fd.setFieldName("field1");
@@ -178,11 +179,11 @@ public class TestStopWords {
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
 			
-			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext,args);
+			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext);
 			
 			System.out.println("testStopWordColumnMissingFromStopWordFile : orginal ");			
 			original.show(200);
- 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocessForStopWords(new SparkFrame(original)))).df();
+ 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocess(new SparkFrame(original)))).df();
  			System.out.println("testStopWordColumnMissingFromStopWordFile : newDataSet ");		
  			newDataSet.show(200);
  			System.out.println("testStopWordColumnMissingFromStopWordFile : datasetExpected ");	

@@ -1,17 +1,14 @@
 package zingg.common.core.similarity.function;
 
-import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestOnlyAlphabetsExactSimilarity {
 	
 	
 	@Test
-	public void testNotSameAlhpabets() {
+	public void testNotSameAlphabets() {
 		OnlyAlphabetsExactSimilarity sim = new OnlyAlphabetsExactSimilarity();
 		double score = sim.call("I have 1 number", "I have no number");
 		assertEquals(0d, score);

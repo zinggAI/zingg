@@ -163,7 +163,7 @@ public class Arguments extends ZArgs implements Serializable, IArguments {
 	 */
 	@Override
 	public List<? extends FieldDefinition> getFieldDefinition() {
-		return fieldDefinition;
+		return this.fieldDefinition;
 	}
 	
 	/**
