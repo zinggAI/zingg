@@ -1,21 +1,40 @@
 package zingg.common.core.preprocess;
 
-import zingg.common.client.IZArgs;
+import java.util.List;
+
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
 import zingg.common.core.context.IContext;
 
-public interface IPreprocessors<D,R,C> extends INeedsPreprocMap {
+public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T> {
+    
+    public void setContext(IContext<S,D,R,C,T> c); 
 
-    public void setContext(IContext c); 
+    public void setArgs(IArguments args); 
 
-    public void setArgs(IZArgs args); 
+    public IArguments getArgs();
 
-    default ZFrame<D,R,C> preprocess(ZFrame<D,R,C> df){ 
-        //go over field defs from args 
-        //for each field def, go over iprocessor list from IPreprocOrder 
-        //if ip is applicable to field, call its process.  
-        //Pass returned zframe to next ip
-        return null;  
+    public void setPreprocOrder(List<IPreprocType> orderList); 
+
+    public List<IPreprocType> getPreprocOrder(); 
+
+    default ZFrame<D,R,C> preprocess(ZFrame<D,R,C> df) throws InstantiationException, IllegalAccessException, ZinggClientException { 
+        ZFrame<D,R,C> dfp = df;  
+        for(FieldDefinition def: getArgs().getFieldDefinition()){
+            for(IPreprocType o: getPreprocOrder()){
+                //creating new instance of the class
+                IPreprocessor ip = (IPreprocessor) getPreprocMap().get(o).newInstance(); 
+                //setting context and field defn
+                ip.getContext();
+                ip.setFieldDefinition(def);
+                if(ip.isApplicable(def)){
+                    dfp = ip.preprocess(dfp);
+                }
+            }
+        }
+        return dfp;  
     }
 
 }

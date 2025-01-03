@@ -1,6 +1,5 @@
 package zingg.common.core.preprocess.stopwords;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,14 +8,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.context.IContext;
+import zingg.common.core.preprocess.IPreprocessor;
 
-public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
+public abstract class StopWordsRemover<S,D,R,C,T> implements IPreprocessor<S,D,R,C,T>{
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.preprocess.stopwords.StopWordsRemover";
@@ -24,26 +23,32 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 	protected static final int COLUMN_INDEX_DEFAULT = 0;
 	
 	protected IContext<S,D,R,C,T> context;
-	protected IArguments args;
+    protected FieldDefinition fd;
 
-	public StopWordsRemover(IContext<S, D, R, C, T> context,IArguments args) {
+	public StopWordsRemover(IContext<S, D, R, C, T> context) {
 		super();
 		this.context = context;
-		this.args = args;
 	}
 
-	public ZFrame<D, R, C> preprocessForStopWords(ZFrame<D, R, C> ds) throws ZinggClientException {
-		for (FieldDefinition def : getArgs().getFieldDefinition()) {
-			if (!(def.getStopWords() == null || def.getStopWords() == "")) {
-				ZFrame<D, R, C> stopWords = getStopWords(def);
-				String stopWordColumn = getStopWordColumnName(stopWords);
-				List<String> wordList = getWordList(stopWords,stopWordColumn);
-				String pattern = getPattern(wordList);
-				ds = removeStopWordsFromDF(ds, def.getFieldName(), pattern);
-			}
-		}
-		return ds;
-	}
+    @Override
+    public boolean isApplicable(FieldDefinition fd){
+		if (!(fd.getStopWords() == null || fd.getStopWords() == "")) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
+    public ZFrame<D,R,C> preprocess(ZFrame<D,R,C> df) throws ZinggClientException{
+        ZFrame<D, R, C> stopWords = getStopWords(getFieldDefinition());
+		String stopWordColumn = getStopWordColumnName(stopWords);
+		List<String> wordList = getWordList(stopWords,stopWordColumn);
+		String pattern = getPattern(wordList);
+		df = removeStopWordsFromDF(df, fd.getFieldName(), pattern);
+        return df;
+    }
 
 	protected ZFrame<D,R,C> getStopWords(FieldDefinition def) throws ZinggClientException {
 		PipeUtilBase<S,D,R,C> pipeUtil = getContext().getPipeUtil();
@@ -86,22 +91,38 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 		return context;
 	}
 
+    @Override
 	public void setContext(IContext<S, D, R, C, T> context) {
 		this.context = context;
 	}
 
-	public IArguments getArgs() {
-		return args;
-	}
-
-	public void setArgs(IArguments args) {
-		this.args = args;
-	}
-
-
 	public static int getColumnIndexDefault() {
 		return COLUMN_INDEX_DEFAULT;
 	}
-	
+
+    @Override
+    public void setFieldDefinition(FieldDefinition fd){
+        this.fd = fd;
+    }
+
+    @Override
+    public FieldDefinition getFieldDefinition(){
+        return fd;
+    }
+
+    /*
+    public ZFrame<D, R, C> preprocessForStopWords(ZFrame<D, R, C> ds) throws ZinggClientException {
+		for (FieldDefinition def : getArgs().getFieldDefinition()) {
+			if (!(def.getStopWords() == null || def.getStopWords() == "")) {
+				ZFrame<D, R, C> stopWords = getStopWords(def);
+				String stopWordColumn = getStopWordColumnName(stopWords);
+				List<String> wordList = getWordList(stopWords,stopWordColumn);
+				String pattern = getPattern(wordList);
+				ds = removeStopWordsFromDF(ds, def.getFieldName(), pattern);
+			}
+		}
+		return ds;
+	}
+     */
 	
 }

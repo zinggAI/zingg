@@ -8,7 +8,6 @@ import zingg.common.client.IArguments;
 import zingg.common.client.ITrainingDataModel;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;

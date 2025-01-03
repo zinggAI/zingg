@@ -1,85 +1,38 @@
 package zingg.spark.core.preprocess;
 
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+
+import org.apache.spark.sql.Column;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataType;
 
 import zingg.common.core.preprocess.IPreprocMap;
+import zingg.common.core.preprocess.IPreprocType;
+import zingg.common.core.preprocess.IPreprocTypes;
+import zingg.common.core.preprocess.IPreprocessor;
+import zingg.common.core.preprocess.PreprocType;
+import zingg.spark.core.preprocess.stopwords.SparkStopWordsRemover;
 
-public class SparkPreprocMap implements IPreprocMap {
+public class SparkPreprocMap implements IPreprocMap<SparkSession,Dataset<Row>,Row,Column,DataType> {
 
-    //Put (IPreprocTypes.STOPWORDS, new SparkStopWordRemover(); 
+    protected Map<IPreprocType,Class<? extends IPreprocessor<SparkSession, Dataset<Row>, Row, Column, DataType>>> sparkPreprocMap;
 
-    @Override
-    public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+    public SparkPreprocMap(){
+        sparkPreprocMap = new HashMap<IPreprocType,Class<? extends IPreprocessor<SparkSession, Dataset<Row>, Row, Column, DataType>>>();
+        sparkPreprocMap.put(IPreprocTypes.STOPWORDS, SparkStopWordsRemover.class);
     }
 
     @Override
-    public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+    public void put(IPreprocType t, Class<? extends IPreprocessor<SparkSession, Dataset<Row>, Row, Column, DataType>> p) {
+        this.sparkPreprocMap.put(t,p);
     }
 
     @Override
-    public boolean containsKey(Object key) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'containsKey'");
-    }
-
-    @Override
-    public boolean containsValue(Object value) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'containsValue'");
-    }
-
-    @Override
-    public Object get(Object key) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
-    }
-
-    @Override
-    public Object put(Object key, Object value) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'put'");
-    }
-
-    @Override
-    public Object remove(Object key) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
-    }
-
-    @Override
-    public void putAll(Map m) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'putAll'");
-    }
-
-    @Override
-    public void clear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clear'");
-    }
-
-    @Override
-    public Set keySet() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keySet'");
-    }
-
-    @Override
-    public Collection values() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'values'");
-    }
-
-    @Override
-    public Set entrySet() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'entrySet'");
+    public Class<? extends IPreprocessor<SparkSession, Dataset<Row>, Row, Column, DataType>> get(IPreprocType t) {
+        return this.sparkPreprocMap.get(t);
     }
     
 }

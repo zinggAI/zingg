@@ -89,9 +89,9 @@ public class TestStopWords {
 			IArguments stmtArgs = new Arguments();
 			stmtArgs.setFieldDefinition(fdList);
 			
-			StopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext,stmtArgs);
+			StopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext);
 			
-			stopWordsObj.preprocessForStopWords(new SparkFrame(datasetOriginal));
+			stopWordsObj.preprocess(new SparkFrame(datasetOriginal));
 			System.out.println("datasetOriginal.show() : ");
 			datasetOriginal.show();
 			SparkFrame datasetWithoutStopWords = (SparkFrame)stopWordsObj.removeStopWordsFromDF(new SparkFrame(datasetOriginal),"statement",stopWords);
@@ -137,9 +137,9 @@ public class TestStopWords {
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
 
-			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext,args);
+			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext);
 				
- 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocessForStopWords(new SparkFrame(original)))).df();
+ 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocess(new SparkFrame(original)))).df();
  			assertTrue(datasetExpected.except(newDataSet).isEmpty());
 			assertTrue(newDataSet.except(datasetExpected).isEmpty());
 	}
@@ -179,11 +179,11 @@ public class TestStopWords {
 			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
 			args.setFieldDefinition(fieldDefinitionList);
 			
-			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext,args);
+			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext);
 			
 			System.out.println("testStopWordColumnMissingFromStopWordFile : orginal ");			
 			original.show(200);
- 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocessForStopWords(new SparkFrame(original)))).df();
+ 			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocess(new SparkFrame(original)))).df();
  			System.out.println("testStopWordColumnMissingFromStopWordFile : newDataSet ");		
  			newDataSet.show(200);
  			System.out.println("testStopWordColumnMissingFromStopWordFile : datasetExpected ");	

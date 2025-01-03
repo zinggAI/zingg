@@ -46,7 +46,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(0);
 			
-			stopWordsRemover.preprocessForStopWords(zFrameOriginal);
+			stopWordsRemover.preprocess(zFrameOriginal);
 			ZFrame<D, R, C> newZFrame = stopWordsRemover.removeStopWordsFromDF(zFrameOriginal,"statement",stopWords);
 
  			assertTrue(zFrameExpected.except(newZFrame).isEmpty());
@@ -61,7 +61,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Expected(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(1);
-			ZFrame<D, R, C> newZFrame = stopWordsRemover.preprocessForStopWords(zFrameOriginal);
+			ZFrame<D, R, C> newZFrame = stopWordsRemover.preprocess(zFrameOriginal);
 				
  			assertTrue(zFrameExpected.except(newZFrame).isEmpty());
 			assertTrue(newZFrame.except(zFrameExpected).isEmpty());
@@ -76,7 +76,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData3Expected(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(2);
- 			ZFrame<D, R, C> newZFrame = stopWordsRemover.preprocessForStopWords(zFrameOriginal);
+ 			ZFrame<D, R, C> newZFrame = stopWordsRemover.preprocess(zFrameOriginal);
 
  			assertTrue(zFrameExpected.except(newZFrame).isEmpty());
 			assertTrue(newZFrame.except(zFrameExpected).isEmpty());

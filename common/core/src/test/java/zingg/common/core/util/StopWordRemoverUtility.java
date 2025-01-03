@@ -33,7 +33,7 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
         fdList.add(eventFD);
         IArguments stmtArgs = new Arguments();
         stmtArgs.setFieldDefinition(fdList);
-        addStopWordRemover(stmtArgs);
+        addStopWordRemover();
 
         //add second stopWordRemover
         String stopWordsFileName1 = Objects.requireNonNull(
@@ -44,7 +44,7 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
         List<FieldDefinition> fieldDefinitionList1 = List.of(fieldDefinition1);
         stmtArgs = new Arguments();
         stmtArgs.setFieldDefinition(fieldDefinitionList1);
-        addStopWordRemover(stmtArgs);
+        addStopWordRemover();
 
         //add third stopWordRemover
         String stopWordsFileName2 = Objects.requireNonNull(
@@ -55,12 +55,12 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
         List<FieldDefinition> fieldDefinitionList2 = List.of(fieldDefinition2);
         stmtArgs = new Arguments();
         stmtArgs.setFieldDefinition(fieldDefinitionList2);
-        addStopWordRemover(stmtArgs);
+        addStopWordRemover();
     }
 
     public List<StopWordsRemover<S, D, R, C, T>> getStopWordsRemovers() {
         return this.stopWordsRemovers;
     }
 
-    public abstract void addStopWordRemover(IArguments iArguments);
+    public abstract void addStopWordRemover();
 }
