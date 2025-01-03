@@ -75,7 +75,7 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
         setTestDataBaseLocation();
         HashUtil<S, D, R, C, T> hashUtil = getHashUtil();
         String configFile = Objects.requireNonNull(getClass().getClassLoader().getResource(TEST_DATA_BASE_LOCATION + "/" + CONFIG_FILE)).getFile();
-        IArguments args = new ArgumentsUtil(Arguments.class).createArgumentsFromJSON(
+        IArguments args = new ArgumentsUtil<Arguments>(Arguments.class).createArgumentsFromJSON(
                 configFile,
                 "");
         args.setBlockSize(8);
