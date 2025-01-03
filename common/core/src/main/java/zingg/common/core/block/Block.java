@@ -21,6 +21,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final Log LOG = LogFactory.getLog(Block.class);
+	private final IHashFunctionUtility<D, R, C, T> hashFunctionUtility;
 
 	protected ZFrame<D,R,C> dupes;
 	// Class[] types;
@@ -30,10 +31,11 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	protected ListMap<HashFunction<D,R,C,T>, String> childless;
 
 	public Block() {
-		
+		this.hashFunctionUtility = HashFunctionUtilityFactory.getHashFunctionUtility(HashUtility.CACHED);
 	}
 
 	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes) {
+		this();
 		this.training = training;
 		this.dupes = dupes;
 		childless =  new ListMap<HashFunction<D,R,C,T>, String>();
@@ -145,7 +147,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 				for (HashFunction function : functions) {
 					// /if (!used.contains(field.getIndex(), function) &&
 					if (least ==0) break;//how much better can it get?
-					if (!isFunctionUsed(tree, node, field.fieldName, function) //&&
+					if (!hashFunctionUtility.isHashFunctionUsed(field, function, tree, node) //&&
 							//!childless.contains(function, field.fieldName)
 							) 
 							{
@@ -231,6 +233,8 @@ public abstract class Block<D,R,C,T> implements Serializable {
 			LOG.debug("Size is bigger ");
 			Canopy<R>best = getBestNode(tree, parent, node, fieldsOfInterest);
 			if (best != null) {
+				//add function, context info for this best node in set
+				hashFunctionUtility.addHashFunctionIfRequired(best);
 				if (LOG.isDebugEnabled()) {
 					LOG.debug(" HashFunction is " + best + " and node is " + node);
 				}
@@ -258,6 +262,8 @@ public abstract class Block<D,R,C,T> implements Serializable {
 				
 					getBlockingTree(tree, node, n, fieldsOfInterest);
 				}
+				//remove function, context info for this best node as we are returning from best node
+				hashFunctionUtility.removeHashFunctionIfRequired(best);
 			}
 			else {
 				node.clearBeforeSaving();
@@ -279,48 +285,10 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		return tree;
 	}
 
-	public boolean checkFunctionInNode(Canopy<R>node, String name,
-			HashFunction function) {
-		if (node.getFunction() != null && node.getFunction().equals(function)
-				&& node.context.fieldName.equals(name)) {
-			return true;
-		}
-		return false;
-	}
+//	public boolean isFunctionUsed(FieldDefinition fieldDefinition, HashFunction<D, R, C, T> function) {
+//		return hashFunctionsInCurrentNodePath.contains(getKey(fieldDefinition, function));
+//	}
 
-	public boolean isFunctionUsed(Tree<Canopy<R>> tree, Canopy<R>node, String fieldName,
-			HashFunction function) {
-		// //LOG.debug("Tree " + tree);
-		// //LOG.debug("Node  " + node);
-		// //LOG.debug("Index " + index);
-		// //LOG.debug("Function " + function);
-		boolean isUsed = false;
-		if (node == null || tree == null)
-			return false;
-		if (checkFunctionInNode(node, fieldName, function))
-			return true;
-		Tree<Canopy<R>> nodeTree = tree.getTree(node);
-		if (nodeTree == null)
-			return false;
-
-		Tree<Canopy<R>> parent = nodeTree.getParent();
-		if (parent != null) {
-			Canopy<R>head = parent.getHead();
-			while (head != null) {
-				// check siblings of node
-				/*for (Tree<Canopy<R>> siblings : parent.getSubTrees()) {
-					Canopy<R>sibling = siblings.getHead();
-					if (checkFunctionInNode(sibling, index, function))
-						return true;
-				}*/
-				// check parent of node
-				return isFunctionUsed(tree, head, fieldName, function);
-			}
-		}
-		return isUsed;
-	}
-	
-	
 	public List<Canopy<R>> getHashSuccessors(Collection<Canopy<R>> successors, Object hash) {
 		List<Canopy<R>> retCanopy = new ArrayList<Canopy<R>>();
 		for (Canopy<R>c: successors) {
