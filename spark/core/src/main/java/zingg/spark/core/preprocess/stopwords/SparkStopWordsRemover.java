@@ -4,6 +4,7 @@ import static org.apache.spark.sql.functions.callUDF;
 import static org.apache.spark.sql.functions.lit;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -12,7 +13,9 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
+import org.codehaus.janino.Java.FieldDeclaration;
 
+import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
 import zingg.common.core.context.IContext;
 import zingg.common.core.preprocess.stopwords.StopWordsRemover;
@@ -30,6 +33,11 @@ public class SparkStopWordsRemover extends StopWordsRemover<SparkSession,Dataset
 	
 	public SparkStopWordsRemover(IContext<SparkSession, Dataset<Row>, Row, Column,DataType> context) {
 		super(context);
+		this.udfName = registerUDF();
+	}
+
+	public SparkStopWordsRemover(IContext<SparkSession, Dataset<Row>, Row, Column,DataType> context, FieldDefinition fd) {
+		super(context,fd);
 		this.udfName = registerUDF();
 	}
 	

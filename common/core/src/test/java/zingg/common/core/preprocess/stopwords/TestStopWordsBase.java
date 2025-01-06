@@ -1,5 +1,6 @@
 package zingg.common.core.preprocess.stopwords;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -45,12 +46,10 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData1Expected(), Statement.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(0);
-			System.out.println(stopWordsRemover);
-			System.out.println(stopWordsRemover.getFieldDefinition());
-			assertTrue(stopWordsRemover.isApplicable());
+			assertFalse(stopWordsRemover.isApplicable());
 			stopWordsRemover.preprocess(zFrameOriginal);
 			ZFrame<D, R, C> newZFrame = stopWordsRemover.removeStopWordsFromDF(zFrameOriginal,"statement",stopWords);
-
+			
  			assertTrue(zFrameExpected.except(newZFrame).isEmpty());
 			assertTrue(newZFrame.except(zFrameExpected).isEmpty());
 	}
@@ -63,6 +62,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Expected(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(1);
+			assertTrue(stopWordsRemover.isApplicable());
 			ZFrame<D, R, C> newZFrame = stopWordsRemover.preprocess(zFrameOriginal);
 				
  			assertTrue(zFrameExpected.except(newZFrame).isEmpty());
@@ -78,6 +78,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData3Expected(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(2);
+			assertTrue(stopWordsRemover.isApplicable());
  			ZFrame<D, R, C> newZFrame = stopWordsRemover.preprocess(zFrameOriginal);
 
  			assertTrue(zFrameExpected.except(newZFrame).isEmpty());
@@ -97,6 +98,11 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			assertTrue(zFrameOriginal.except(newZFrame.select(ColName.ID_COL, "field1", "field2", "field3", ColName.SOURCE_COL)).isEmpty());
 	}
 
+	private List<StopWordsRemover<S, D, R, C, T>> getStopWordsRemovers() throws ZinggClientException {
+		stopWordRemoverUtility.buildStopWordRemovers();
+		return stopWordRemoverUtility.getStopWordsRemovers();
+	}
+
 	/* 
 	@Test
 	public void testOriginalDataAfterPostProcessLinked() throws Exception {
@@ -109,11 +115,62 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			assertTrue(newZFrame.select("field1", "field2", "field3").except(zFrameOriginal.select("field1", "field2", "field3")).isEmpty());
 			assertTrue(zFrameOriginal.select("field1", "field2", "field3").except(newZFrame.select("field1", "field2", "field3")).isEmpty());
 	}
-	*/
 
-	private List<StopWordsRemover<S, D, R, C, T>> getStopWordsRemovers() throws ZinggClientException {
-		stopWordRemoverUtility.buildStopWordRemovers();
-		return stopWordRemoverUtility.getStopWordsRemovers();
+	@Test
+	public void testOriginalDataAfterPostprocessLinked() {
+			StructType schemaActual = new StructType(new StructField[] {
+					new StructField(ColName.CLUSTER_COLUMN, DataTypes.StringType, false, Metadata.empty()),
+					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
+					new StructField(ColName.PREDICTION_COL, DataTypes.StringType, false, Metadata.empty()),
+					new StructField(ColName.SCORE_COL, DataTypes.StringType, false, Metadata.empty()),
+					new StructField(ColName.MATCH_FLAG_COL, DataTypes.StringType, false, Metadata.empty()),
+					new StructField("field1", DataTypes.StringType, false, Metadata.empty()),
+					new StructField("field2", DataTypes.StringType, false, Metadata.empty()),
+					new StructField("field3", DataTypes.StringType, false, Metadata.empty()),
+					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
+			});
+
+			StructType schemaOriginal = new StructType(new StructField[] {
+					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
+					new StructField("field1", DataTypes.StringType, false, Metadata.empty()),
+					new StructField("field2", DataTypes.StringType, false, Metadata.empty()),
+					new StructField("field3", DataTypes.StringType, false, Metadata.empty()),
+					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
+			});
+
+			Dataset<Row> original = sparkSession.createDataFrame(
+					Arrays.asList(
+							RowFactory.create("10", "The zingg is a spark application", "two",
+									"Yes. a good application", "test"),
+							RowFactory.create("20", "It is very popular in data science", "Three", "true indeed",
+									"test"),
+							RowFactory.create("30", "It is written in java and scala", "four", "", "test"),
+							RowFactory.create("40", "Best of luck to zingg", "Five", "thank you", "test")),
+					schemaOriginal);
+
+			Dataset<Row> actual = sparkSession.createDataFrame(
+					Arrays.asList(
+							RowFactory.create("1648811730857:10", "10", "1.0", "0.555555", "-1",
+									"The zingg spark application", "two", "Yes. good application", "test"),
+							RowFactory.create("1648811730857:20", "20", "1.0", "1.0", "-1",
+									"It very popular data science", "Three", "true indeed", "test"),
+							RowFactory.create("1648811730857:30", "30", "1.0", "0.999995", "-1",
+									"It written java scala", "four", "", "test"),
+							RowFactory.create("1648811730857:40", "40", "1.0", "1.0", "-1", "Best luck zingg", "Five",
+									"thank", "test")),
+					schemaActual);
+			
+			System.out.println("testOriginalDataAfterPostprocessLinked original :");
+			original.show(200);
+			
+			Dataset<Row> newDataset = ((SparkFrame)(new LinkOutputBuilder(zinggSparkContext.getDSUtil(), args).postprocessLinked(new SparkFrame(actual), new SparkFrame(original)))).df();
+			
+			System.out.println("testOriginalDataAfterPostprocessLinked newDataset :");
+			newDataset.show(200);
+			
+			assertTrue(newDataset.select("field1", "field2", "field3").except(original.select("field1", "field2", "field3")).isEmpty());
+			assertTrue(original.select("field1", "field2", "field3").except(newDataset.select("field1", "field2", "field3")).isEmpty());
 	}
+	*/
 
 }

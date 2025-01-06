@@ -1,8 +1,6 @@
 package zingg.common.core.util;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.IArguments;
 import zingg.common.client.IMatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZinggClientException;
@@ -23,17 +21,17 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
     public void buildStopWordRemovers() throws ZinggClientException {
 
         //add first stopWordRemover
-        List<FieldDefinition> fdList = new ArrayList<FieldDefinition>(4);
+        //List<FieldDefinition> fdList = new ArrayList<FieldDefinition>(4);
         ArrayList<IMatchType> matchTypelistFuzzy = new ArrayList<IMatchType>();
         matchTypelistFuzzy.add(MatchTypes.FUZZY);
         FieldDefinition eventFD = new FieldDefinition();
         eventFD.setDataType("string");
         eventFD.setFieldName("statement");
         eventFD.setMatchType(matchTypelistFuzzy);
-        fdList.add(eventFD);
-        IArguments stmtArgs = new Arguments();
-        stmtArgs.setFieldDefinition(fdList);
-        addStopWordRemover();
+        //fdList.add(eventFD);
+        //IArguments stmtArgs = new Arguments();
+        //stmtArgs.setFieldDefinition(fdList);
+        addStopWordRemover(eventFD);
 
         //add second stopWordRemover
         String stopWordsFileName1 = Objects.requireNonNull(
@@ -41,10 +39,10 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
         FieldDefinition fieldDefinition1 = new FieldDefinition();
         fieldDefinition1.setStopWords(stopWordsFileName1);
         fieldDefinition1.setFieldName("field1");
-        List<FieldDefinition> fieldDefinitionList1 = List.of(fieldDefinition1);
-        stmtArgs = new Arguments();
-        stmtArgs.setFieldDefinition(fieldDefinitionList1);
-        addStopWordRemover();
+        //List<FieldDefinition> fieldDefinitionList1 = List.of(fieldDefinition1);
+        //stmtArgs = new Arguments();
+        //stmtArgs.setFieldDefinition(fieldDefinitionList1);
+        addStopWordRemover(fieldDefinition1);
 
         //add third stopWordRemover
         String stopWordsFileName2 = Objects.requireNonNull(
@@ -52,15 +50,15 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
         FieldDefinition fieldDefinition2 = new FieldDefinition();
         fieldDefinition2.setStopWords(stopWordsFileName2);
         fieldDefinition2.setFieldName("field1");
-        List<FieldDefinition> fieldDefinitionList2 = List.of(fieldDefinition2);
-        stmtArgs = new Arguments();
-        stmtArgs.setFieldDefinition(fieldDefinitionList2);
-        addStopWordRemover();
+        //List<FieldDefinition> fieldDefinitionList2 = List.of(fieldDefinition2);
+        //stmtArgs = new Arguments();
+        //stmtArgs.setFieldDefinition(fieldDefinitionList2);
+        addStopWordRemover(fieldDefinition2);
     }
 
     public List<StopWordsRemover<S, D, R, C, T>> getStopWordsRemovers() {
         return this.stopWordsRemovers;
     }
 
-    public abstract void addStopWordRemover();
+    public abstract void addStopWordRemover(FieldDefinition fd);
 }

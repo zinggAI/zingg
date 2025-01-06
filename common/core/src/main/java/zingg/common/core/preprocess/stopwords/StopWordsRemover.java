@@ -30,6 +30,12 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements IPreprocessor<S,D,R
 		this.context = context;
 	}
 
+	public StopWordsRemover(IContext<S, D, R, C, T> context, FieldDefinition fd){
+		super();
+		this.context = context;
+		this.fd = fd;
+	}
+
     @Override
     public boolean isApplicable(){
 		if (!(fd.getStopWords() == null || fd.getStopWords() == "")) {
@@ -111,5 +117,5 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements IPreprocessor<S,D,R
     public FieldDefinition getFieldDefinition(){
         return this.fd;
     }
-	
+
 }
