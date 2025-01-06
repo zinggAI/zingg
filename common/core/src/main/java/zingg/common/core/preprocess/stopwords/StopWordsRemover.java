@@ -31,7 +31,7 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements IPreprocessor<S,D,R
 	}
 
     @Override
-    public boolean isApplicable(FieldDefinition fd){
+    public boolean isApplicable(){
 		if (!(fd.getStopWords() == null || fd.getStopWords() == "")) {
             return true;
         }
@@ -42,11 +42,13 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements IPreprocessor<S,D,R
 
     @Override
     public ZFrame<D,R,C> preprocess(ZFrame<D,R,C> df) throws ZinggClientException{
-        ZFrame<D, R, C> stopWords = getStopWords(getFieldDefinition());
-		String stopWordColumn = getStopWordColumnName(stopWords);
-		List<String> wordList = getWordList(stopWords,stopWordColumn);
-		String pattern = getPattern(wordList);
-		df = removeStopWordsFromDF(df, fd.getFieldName(), pattern);
+		if(isApplicable()){
+			ZFrame<D, R, C> stopWords = getStopWords(fd);
+			String stopWordColumn = getStopWordColumnName(stopWords);
+			List<String> wordList = getWordList(stopWords,stopWordColumn);
+			String pattern = getPattern(wordList);
+			df = removeStopWordsFromDF(df, fd.getFieldName(), pattern);
+		}
         return df;
     }
 
@@ -107,22 +109,7 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements IPreprocessor<S,D,R
 
     @Override
     public FieldDefinition getFieldDefinition(){
-        return fd;
+        return this.fd;
     }
-
-    /*
-    public ZFrame<D, R, C> preprocessForStopWords(ZFrame<D, R, C> ds) throws ZinggClientException {
-		for (FieldDefinition def : getArgs().getFieldDefinition()) {
-			if (!(def.getStopWords() == null || def.getStopWords() == "")) {
-				ZFrame<D, R, C> stopWords = getStopWords(def);
-				String stopWordColumn = getStopWordColumnName(stopWords);
-				List<String> wordList = getWordList(stopWords,stopWordColumn);
-				String pattern = getPattern(wordList);
-				ds = removeStopWordsFromDF(ds, def.getFieldName(), pattern);
-			}
-		}
-		return ds;
-	}
-     */
 	
 }

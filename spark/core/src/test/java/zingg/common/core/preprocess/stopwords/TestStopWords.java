@@ -85,21 +85,16 @@ public class TestStopWords {
 			eventFD.setFieldName("statement");
 			eventFD.setMatchType(matchTypelistFuzzy);
 			fdList.add(eventFD);
-
-			IArguments stmtArgs = new Arguments();
-			stmtArgs.setFieldDefinition(fdList);
 			
 			StopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext);
-			
-			stopWordsObj.preprocess(new SparkFrame(datasetOriginal));
+			SparkFrame datasetWithoutStopWords = (SparkFrame) stopWordsObj.removeStopWordsFromDF(new SparkFrame(datasetOriginal),"statement",stopWords);
+			assertTrue(datasetExpected.except(datasetWithoutStopWords.df()).isEmpty());
+			assertTrue(datasetWithoutStopWords.df().except(datasetExpected).isEmpty());
 			System.out.println("datasetOriginal.show() : ");
 			datasetOriginal.show();
-			SparkFrame datasetWithoutStopWords = (SparkFrame)stopWordsObj.removeStopWordsFromDF(new SparkFrame(datasetOriginal),"statement",stopWords);
 			System.out.println("datasetWithoutStopWords.show() : ");
-			datasetWithoutStopWords.show();
-			
- 			assertTrue(datasetExpected.except(datasetWithoutStopWords.df()).isEmpty());
-			assertTrue(datasetWithoutStopWords.df().except(datasetExpected).isEmpty());
+			datasetWithoutStopWords.show();	
+ 			
 	}
 
 	@Test
@@ -133,15 +128,14 @@ public class TestStopWords {
  			FieldDefinition fd = new FieldDefinition();
 			fd.setStopWords(stopWordsFileName);
 			fd.setFieldName("field1");
-
-			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
-			args.setFieldDefinition(fieldDefinitionList);
-
+		
 			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext);
-				
+			stopWordsObj.setFieldDefinition(fd);
+			assertTrue(stopWordsObj.isApplicable());
  			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocess(new SparkFrame(original)))).df();
  			assertTrue(datasetExpected.except(newDataSet).isEmpty());
 			assertTrue(newDataSet.except(datasetExpected).isEmpty());
+		
 	}
 
 	@Test
@@ -175,17 +169,16 @@ public class TestStopWords {
  			FieldDefinition fd = new FieldDefinition();
 			fd.setStopWords(stopWordsFileName);
 			fd.setFieldName("field1");
-
-			List<FieldDefinition> fieldDefinitionList = Arrays.asList(fd);
-			args.setFieldDefinition(fieldDefinitionList);
 			
 			SparkStopWordsRemover stopWordsObj = new SparkStopWordsRemover(zinggSparkContext);
 			
-			System.out.println("testStopWordColumnMissingFromStopWordFile : orginal ");			
-			original.show(200);
+			System.out.println("testStopWordColumnMissingFromStopWordFile : original ");			
+			original.show(20);
+			stopWordsObj.setFieldDefinition(fd);
+			assertTrue(stopWordsObj.isApplicable());
  			Dataset<Row> newDataSet = ((SparkFrame)(stopWordsObj.preprocess(new SparkFrame(original)))).df();
  			System.out.println("testStopWordColumnMissingFromStopWordFile : newDataSet ");		
- 			newDataSet.show(200);
+ 			newDataSet.show(20);
  			System.out.println("testStopWordColumnMissingFromStopWordFile : datasetExpected ");	
  			datasetExpected.show(200);
  			assertTrue(datasetExpected.except(newDataSet).isEmpty());

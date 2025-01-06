@@ -17,7 +17,7 @@ public interface IPreprocessor<S,D,R,C,T> extends Serializable{
 
     public FieldDefinition getFieldDefinition();
 
-    public boolean isApplicable(FieldDefinition fd); 
+    public boolean isApplicable(); 
 
     public ZFrame<D,R,C> preprocess(ZFrame<D,R,C> df) throws ZinggClientException; 
 

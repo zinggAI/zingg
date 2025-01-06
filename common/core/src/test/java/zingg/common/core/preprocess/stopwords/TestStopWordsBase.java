@@ -45,7 +45,9 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData1Expected(), Statement.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(0);
-			
+			System.out.println(stopWordsRemover);
+			System.out.println(stopWordsRemover.getFieldDefinition());
+			assertTrue(stopWordsRemover.isApplicable());
 			stopWordsRemover.preprocess(zFrameOriginal);
 			ZFrame<D, R, C> newZFrame = stopWordsRemover.removeStopWordsFromDF(zFrameOriginal,"statement",stopWords);
 

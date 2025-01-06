@@ -15,7 +15,6 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.Trainer;
-import zingg.common.core.preprocess.IPreprocOrder;
 import zingg.common.core.preprocess.stopwords.StopWordsRemover;
 import zingg.spark.core.preprocess.ISparkPreprocMapSupplier;
 import zingg.spark.core.preprocess.stopwords.SparkStopWordsRemover;
