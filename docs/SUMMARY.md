@@ -69,6 +69,7 @@
   * [Running On AWS](running/aws.md)
   * [Running On Azure](running/azure.md)
   * [Running On Databricks](running/databricks.md)
+  * [Running on Fabric](running/running-on-fabric.md)
 * [Zingg Models](zModels.md)
   * [Pre-Trained Models](pretrainedModels.md)
 * [Improving Accuracy](improving-accuracy/README.md)
