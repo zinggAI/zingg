@@ -16,12 +16,12 @@ import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.core.context.ZinggSparkContext;
 
 @ExtendWith(TestSparkBase.class)
-public class TestSparkStopWords extends TestStopWordsBase<SparkSession, Dataset<Row>, Row, Column, DataType> {
+public class TestSparkStopWordsRemover extends TestStopWordsBase<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
     public static IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
     public static ZinggSparkContext zsCTX = new ZinggSparkContext();
 
-    public TestSparkStopWords(SparkSession sparkSession) throws ZinggClientException {
+    public TestSparkStopWordsRemover(SparkSession sparkSession) throws ZinggClientException {
         super(new SparkDFObjectUtil(iWithSession), new SparkStopWordRemoverUtility(zsCTX), zsCTX);
         iWithSession.setSession(sparkSession);
         zsCTX.init(sparkSession);
