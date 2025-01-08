@@ -1,4 +1,4 @@
-# Input Data
+# Data
 
 #### data
 
@@ -6,7 +6,7 @@ An array of input data. Each array entry here refers to a [Zingg Pipe](../../../
 
 For example, for the CSV under [examples/febrl/test.csv](../../../../examples/febrl/test.csv)
 
-![febrl](<../../../.gitbook/assets/image (11).png>)
+![febrl](../../../.gitbook/assets/image.png)
 
 ```python
  "data" : [ {
