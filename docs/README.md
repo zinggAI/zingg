@@ -4,7 +4,7 @@ description: Hope you find us useful :-)
 
 # Welcome to Zingg
 
-This is the latest documentation for Zingg. Release wise documentation can be accessed through:
+This is the 0.4.0 documentation for Zingg. Release wise documentation can be accessed through:
 
 * [v0.4.0](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/a7sgpR3odgfck5L8KMcN/)
 * [v0.3.4](https://docs.zingg.ai/zingg0.3.4/)
