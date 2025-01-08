@@ -11,6 +11,7 @@ public class RemoveStopWordsUDF extends RemoveStopWords implements UDF2<String,S
 	public RemoveStopWordsUDF() {
 		super();
 	}
+	
 	@Override
 	public String call(String s,String stopWordsRegexString) throws Exception {
 		return removeStopWordsUsingRegex(s,stopWordsRegexString);

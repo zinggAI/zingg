@@ -26,16 +26,14 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements IPreprocessor<S,D,R
     protected FieldDefinition fd;
 
 	public StopWordsRemover(){
-		
+		super();
 	}
 
 	public StopWordsRemover(IContext<S, D, R, C, T> context) {
-		super();
 		this.context = context;
 	}
 
 	public StopWordsRemover(IContext<S, D, R, C, T> context, FieldDefinition fd){
-		super();
 		this.context = context;
 		this.fd = fd;
 	}
@@ -99,8 +97,9 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements IPreprocessor<S,D,R
 	// implementation specific as may require UDF
 	protected abstract ZFrame<D,R,C> removeStopWordsFromDF(ZFrame<D,R,C> ds,String fieldName, String pattern);
 	
+	@Override
 	public IContext<S, D, R, C, T> getContext() {
-		return context;
+		return this.context;
 	}
 
     @Override
