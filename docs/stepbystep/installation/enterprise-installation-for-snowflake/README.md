@@ -1,2 +1,0 @@
-# Enterprise Installation for Snowflake
-
