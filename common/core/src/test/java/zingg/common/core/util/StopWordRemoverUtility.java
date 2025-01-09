@@ -21,16 +21,12 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
     public void buildStopWordRemovers() throws ZinggClientException {
 
         //add first stopWordRemover
-        //List<FieldDefinition> fdList = new ArrayList<FieldDefinition>(4);
         ArrayList<IMatchType> matchTypelistFuzzy = new ArrayList<IMatchType>();
         matchTypelistFuzzy.add(MatchTypes.FUZZY);
         FieldDefinition eventFD = new FieldDefinition();
         eventFD.setDataType("string");
         eventFD.setFieldName("statement");
         eventFD.setMatchType(matchTypelistFuzzy);
-        //fdList.add(eventFD);
-        //IArguments stmtArgs = new Arguments();
-        //stmtArgs.setFieldDefinition(fdList);
         addStopWordRemover(eventFD);
 
         //add second stopWordRemover
@@ -39,9 +35,6 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
         FieldDefinition fieldDefinition1 = new FieldDefinition();
         fieldDefinition1.setStopWords(stopWordsFileName1);
         fieldDefinition1.setFieldName("field1");
-        //List<FieldDefinition> fieldDefinitionList1 = List.of(fieldDefinition1);
-        //stmtArgs = new Arguments();
-        //stmtArgs.setFieldDefinition(fieldDefinitionList1);
         addStopWordRemover(fieldDefinition1);
 
         //add third stopWordRemover
@@ -50,10 +43,15 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
         FieldDefinition fieldDefinition2 = new FieldDefinition();
         fieldDefinition2.setStopWords(stopWordsFileName2);
         fieldDefinition2.setFieldName("field1");
-        //List<FieldDefinition> fieldDefinitionList2 = List.of(fieldDefinition2);
-        //stmtArgs = new Arguments();
-        //stmtArgs.setFieldDefinition(fieldDefinitionList2);
         addStopWordRemover(fieldDefinition2);
+
+        //add fourth stopWordRemover
+        String stopWordsFileName3 = Objects.requireNonNull(
+        StopWordRemoverUtility.class.getResource("../../../../preProcess/stopwords/stopWordsMultipleCols.csv")).getFile();
+        FieldDefinition fieldDefinition3 = new FieldDefinition();
+        fieldDefinition3.setStopWords(stopWordsFileName3);
+        fieldDefinition3.setFieldName("field1");
+        addStopWordRemover(fieldDefinition3);
     }
 
     public List<StopWordsRemover<S, D, R, C, T>> getStopWordsRemovers() {
