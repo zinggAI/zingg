@@ -14,7 +14,7 @@
       * [Installing Zingg](stepbystep/installation/installing-from-release/installing-zingg.md)
       * [Verifying The Installation](stepbystep/installation/installing-from-release/verification.md)
     * [Enterprise Installation for Snowflake](stepbystep/installation/installing-zingg-enterprise-snowflake/README.md)
-      * [Setting up Zingg](stepbystep/installation/installing-zingg-enterprise-snowflake/setting-up-zingg.md)
+      * [Setting up Zingg](stepbystep/installation/installing-zingg-enterprise-snowflake/setting-up-zingg-enterprise-for-snowflake.md)
       * [Snowflake Properties](stepbystep/installation/installing-zingg-enterprise-snowflake/snowflake-properties.md)
       * [Match Configuration](stepbystep/installation/installing-zingg-enterprise-snowflake/match-configuration.md)
       * [Running Asynchronously](stepbystep/installation/installing-zingg-enterprise-snowflake/running-asynchronously.md)
