@@ -35,7 +35,7 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
 
         //add second stopWordRemover
         String stopWordsFileName1 = Objects.requireNonNull(
-                StopWordRemoverUtility.class.getResource("../../../../preProcess/stopwords/stopWords.csv")).getFile();
+        StopWordRemoverUtility.class.getResource("../../../../preProcess/stopwords/stopWords.csv")).getFile();
         FieldDefinition fieldDefinition1 = new FieldDefinition();
         fieldDefinition1.setStopWords(stopWordsFileName1);
         fieldDefinition1.setFieldName("field1");

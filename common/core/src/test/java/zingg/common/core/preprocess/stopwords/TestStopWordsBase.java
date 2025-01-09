@@ -39,6 +39,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testStopWordsSingleColumn() throws ZinggClientException, Exception {
 
+		//check functionality of removeStopWordsFromDF - for a single column of data
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 			String stopWords = "\\b(a|an|the|is|It|of|yes|no|I|has|have|you)\\b\\s?".toLowerCase();
 
@@ -57,6 +58,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testRemoveStopWordsFromDataset() throws ZinggClientException, Exception {
 
+		//check functionality of preprocess on dataset with header in csv as StopWord
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Original(), PriorStopWordProcess.class);
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Expected(), PriorStopWordProcess.class);
@@ -72,6 +74,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testStopWordColumnMissingFromStopWordFile() throws ZinggClientException, Exception {
 
+		//check functionality of preprocess on dataset with header in csv as Header - dummy to ensure it is being ignored by default
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 
 			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(EventTestData.getData3Original(), PriorStopWordProcess.class);

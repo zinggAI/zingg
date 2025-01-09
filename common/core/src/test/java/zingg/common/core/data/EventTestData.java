@@ -187,7 +187,7 @@ public class EventTestData {
         List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
         sample.add(new PriorStopWordProcess("10", "The zingg is a spark application", "two",
                 "Yes. a good application", "test"));
-        sample.add(new PriorStopWordProcess("20", "It is very popular in Data Science", "Three", "true indeed",
+        sample.add(new PriorStopWordProcess("20", "It is very popular in Header Data Science", "Three", "true indeed",
                 "test"));
         sample.add(new PriorStopWordProcess("30", "It is written in java and scala", "four", "", "test"));
         sample.add(new PriorStopWordProcess("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test"));
@@ -199,7 +199,7 @@ public class EventTestData {
 
         List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
         sample.add(new PriorStopWordProcess("10", "zingg spark application", "two", "Yes. a good application", "test"));
-        sample.add(new PriorStopWordProcess("20", "very popular data science", "Three", "true indeed", "test"));
+        sample.add(new PriorStopWordProcess("20", "very popular header data science", "Three", "true indeed", "test"));
         sample.add(new PriorStopWordProcess("30", "written java scala", "four", "", "test"));
         sample.add(new PriorStopWordProcess("40", "best luck to zingg ", "Five", "thank you", "test"));
 
