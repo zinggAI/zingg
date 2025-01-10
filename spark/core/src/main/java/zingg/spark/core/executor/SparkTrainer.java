@@ -10,18 +10,17 @@ import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IArguments;
 import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.Trainer;
-import zingg.common.core.preprocess.StopWordsRemover;
+import zingg.common.core.preprocess.stopwords.StopWordsRemover;
+import zingg.spark.core.preprocess.ISparkPreprocMapSupplier;
+import zingg.spark.core.preprocess.stopwords.SparkStopWordsRemover;
 
-import zingg.spark.core.preprocess.SparkStopWordsRemover;
 
-
-public class SparkTrainer extends Trainer<SparkSession, Dataset<Row>, Row, Column,DataType> {
+public class SparkTrainer extends Trainer<SparkSession, Dataset<Row>, Row, Column,DataType> implements ISparkPreprocMapSupplier {
 
 	public static String name = "zingg.spark.core.executor.SparkTrainer";
 	private static final long serialVersionUID = 1L;
@@ -44,7 +43,7 @@ public class SparkTrainer extends Trainer<SparkSession, Dataset<Row>, Row, Colum
 	
 	@Override
 	public StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
-		return new SparkStopWordsRemover(getContext(),getArgs());
+		return new SparkStopWordsRemover(getContext());
 	}
 	
 }

@@ -4,14 +4,13 @@ import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.common.client.IZingg;
+import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.client.util.IWithSession;
@@ -19,10 +18,12 @@ import zingg.common.client.util.WithSession;
 import zingg.common.core.executor.TestExecutorsCompound;
 import zingg.common.core.executor.TrainMatcher;
 import zingg.spark.client.util.SparkDFObjectUtil;
+import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.executor.labeller.ProgrammaticSparkLabeller;
 import zingg.spark.core.executor.validate.SparkTrainMatchValidator;
 
+@ExtendWith(TestSparkBase.class)
 public class TestSparkExecutorsCompound extends TestExecutorsCompound<SparkSession,Dataset<Row>,Row,Column,DataType> {
 	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
 	protected static final String TEST_DATA_FILE = "zingg/spark/core/executor/test.csv";
@@ -31,22 +32,11 @@ public class TestSparkExecutorsCompound extends TestExecutorsCompound<SparkSessi
 	
 	protected ZinggSparkContext ctx;
 
-	public TestSparkExecutorsCompound() throws IOException, ZinggClientException {	
-		SparkSession spark = SparkSession
-				.builder()
-				.master("local[*]")
-				.appName("Zingg" + "Junit")
-				.getOrCreate();
-		
-		JavaSparkContext ctx1 = new JavaSparkContext(spark.sparkContext());
-    	JavaSparkContext.jarOfClass(IZingg.class);    
-		ctx1.setCheckpointDir("/tmp/checkpoint");
-
+	public TestSparkExecutorsCompound(SparkSession sparkSession) throws IOException, ZinggClientException {
 		this.ctx = new ZinggSparkContext();
-		this.ctx.setSession(spark);
+		this.ctx.setSession(sparkSession);
 		this.ctx.setUtils();
-		init(spark);
-		//setupArgs();
+		init(sparkSession);
 	}
 
 	@Override

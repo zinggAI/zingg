@@ -20,10 +20,10 @@ public class Metric {
     public static final String ZINGG_VERSION = "zingg_version";
     public static final String DATABRICKS_RUNTIME_VERSION = "DATABRICKS_RUNTIME_VERSION";
     public static final String DB_INSTANCE_TYPE = "DB_INSTANCE_TYPE";
-    public static final String JAVA_HOME = "java.home";
-    public static final String JAVA_VERSION = "java.version";
-    public static final String OS_ARCH = "os.arch";
-    public static final String OS_NAME = "os.name";
+    public static final String JAVA_HOME = "java_home";
+    public static final String JAVA_VERSION = "java_version";
+    public static final String OS_ARCH = "os_arch";
+    public static final String OS_NAME = "os_name";
     public static final String DOMAIN = "domain";
     //public static final String USER_NAME = "user.name";
     //public static final String USER_HOME = "user.home";

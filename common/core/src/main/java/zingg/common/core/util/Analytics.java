@@ -123,10 +123,11 @@ public class Analytics {
 			uri = builder.build();
 			URL url = uri.toURL();
    			String response = executePostRequest(url.toString(), param);
+			LOG.warn("Analytics event " + response);
     	} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 		}
-		LOG.debug("Event tracked.");
+		LOG.warn("Event tracked.");
 	}
 
 	private static String executePostRequest(String targetURL, String urlParameters) {
