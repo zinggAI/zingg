@@ -1,7 +1,9 @@
-package zingg.common.core.feature;
+package zingg.spark.core.feature;
 
 import org.apache.spark.sql.types.DataType;
-import zingg.spark.core.feature.SparkFeatureFactory;
+
+import zingg.common.core.feature.FeatureFactory;
+import zingg.common.core.feature.FieldDataTypeTester;
 
 public class SparkFieldDataTypeTester extends FieldDataTypeTester<DataType> {
 

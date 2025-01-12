@@ -394,7 +394,7 @@ class Zingg:
         :param args: provide arguments for this class object
         :type args: Arguments
         """
-        self.client.setArguments()
+        self.client.setArguments(args)
 
     def getArguments(self):
         """Method to get atguments of this class object
