@@ -45,12 +45,12 @@ public abstract class TestPreprocessors<S,D,R,C,T> {
         fieldDefs.add(fieldDefinition1);
         args.setFieldDefinition(fieldDefs);
         
-        IPreprocessors<S,D,R,C,T> preprocessors = getPreprocessors();
+        IPreprocessors<S,D,R,C,T> preprocessors = getPreprocessors(context);
         
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Original(), PriorStopWordProcess.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Expected(), PriorStopWordProcess.class);
 
-        preprocessors.setArgs((IZArgs) args);
+        preprocessors.setArgs(args);
         ZFrame<D,R,C> resultDF = preprocessors.preprocess(inputDF);
         
         assertTrue(resultDF.except(expectedDF).isEmpty());
@@ -58,6 +58,6 @@ public abstract class TestPreprocessors<S,D,R,C,T> {
     
     }
 
-    public abstract IPreprocessors<S,D,R,C,T> getPreprocessors();
+    public abstract IPreprocessors<S,D,R,C,T> getPreprocessors(Context<S, D, R, C, T> context);
 
 }
