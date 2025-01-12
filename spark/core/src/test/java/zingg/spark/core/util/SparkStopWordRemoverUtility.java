@@ -1,7 +1,5 @@
 package zingg.spark.core.util;
 
-import java.lang.reflect.Field;
-
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
