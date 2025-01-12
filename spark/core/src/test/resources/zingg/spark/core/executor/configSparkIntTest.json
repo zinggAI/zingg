@@ -28,8 +28,7 @@
 			"fieldName" : "add1",
 			"matchType": "fuzzy",
 			"fields" : "add1",
-			"dataType": "string",
-			"stopWords":"spark/core/src/test/resources/zingg/spark/core/executor/stopwords/add1.csv"
+			"dataType": "string"
 		},
 		{
 			"fieldName" : "add2",

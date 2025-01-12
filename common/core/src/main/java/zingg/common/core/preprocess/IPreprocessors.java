@@ -15,6 +15,8 @@ public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, 
 
     public IZArgs getArgs();
 
+    public void setArgs(IZArgs args);
+
     default ZFrame<D,R,C> preprocess(ZFrame<D,R,C> df) throws ZinggClientException { 
         ZFrame<D,R,C> dfp = df; 
         try{ 
