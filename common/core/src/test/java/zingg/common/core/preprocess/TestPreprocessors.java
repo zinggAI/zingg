@@ -2,13 +2,19 @@ package zingg.common.core.preprocess;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
+import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
+import zingg.common.client.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.DFObjectUtil;
@@ -30,13 +36,21 @@ public abstract class TestPreprocessors<S,D,R,C,T> {
     
     @Test
     public void TestPreprocessorsFlow() throws ZinggClientException, Exception{
-        IArguments args = argsUtil.createArgumentsFromJSON(TestPreprocessors.class.getResource("/Users/sania/zingg/common/core/src/test/resources/preProcess/configTestPreprocess.json").getFile(), "test");
+        IArguments args = new Arguments();
+        List<FieldDefinition> fieldDefs = new ArrayList<FieldDefinition>();
+        String stopWordsFileName1 = Objects.requireNonNull(TestPreprocessors.class.getResource("../../../../preprocess/stopwords/stopWords.csv")).getFile();
+        FieldDefinition fieldDefinition1 = new FieldDefinition();
+        fieldDefinition1.setStopWords(stopWordsFileName1);
+        fieldDefinition1.setFieldName("field1");
+        fieldDefs.add(fieldDefinition1);
+        args.setFieldDefinition(fieldDefs);
         
         IPreprocessors<S,D,R,C,T> preprocessors = getPreprocessors();
         
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Original(), PriorStopWordProcess.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Expected(), PriorStopWordProcess.class);
 
+        preprocessors.setArgs((IZArgs) args);
         ZFrame<D,R,C> resultDF = preprocessors.preprocess(inputDF);
         
         assertTrue(resultDF.except(expectedDF).isEmpty());
