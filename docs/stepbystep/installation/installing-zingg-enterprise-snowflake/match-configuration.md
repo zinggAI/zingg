@@ -1,5 +1,5 @@
 ---
-description: 
+description: Configuring Zingg Enteprrise For Snowflake 
 ---
 
 # Match Configuration:  
