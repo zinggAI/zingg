@@ -1,12 +1,12 @@
 package zingg.spark.client.pipe;
 
-import java.io.IOException;
-
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 
 import org.apache.spark.sql.Dataset;
+
+import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
 
 
@@ -51,6 +51,19 @@ public class SparkPipe extends Pipe<Dataset<Row>, Row, Column> {
 
     public void setOverwriteMode() {
 		setMode(SaveMode.Overwrite.toString());
+    }
+
+    public String massageLocation(String name){
+        name = name.replaceAll("-", "");
+        name = name.replaceAll("@","");
+        name = name.replaceAll(",","");
+        name = name.replaceAll(":","");
+        name = name.replaceAll(".","");
+        return name;
+    }
+
+    public void setLocation(String fileName){
+        setProp(FilePipe.LOCATION, massageLocation(fileName));
     }
 
 	

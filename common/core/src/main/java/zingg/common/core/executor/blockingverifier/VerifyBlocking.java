@@ -42,7 +42,8 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			LOG.info("Blocked");
 			
 			ZFrame<D,R,C> blockCounts = blocked.select(ColName.HASH_COL).groupByCount(ColName.HASH_COL, ColName.HASH_COUNTS_COL).sortDescending(ColName.HASH_COUNTS_COL);
-
+			blockCounts = blockCounts.cache();
+			
             getPipeUtil().write(blockCounts,getVerifyBlockingPipeUtil().getCountsPipe(args));	
 
 			ZFrame<D,R,C> blockTopRec = blockCounts.select(ColName.HASH_COL,ColName.HASH_COUNTS_COL).limit(noOfBlocks);

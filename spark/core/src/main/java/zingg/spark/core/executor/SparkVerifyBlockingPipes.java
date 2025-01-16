@@ -1,13 +1,11 @@
 package zingg.spark.core.executor;
 
-import org.apache.spark.internal.config.R;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 import zingg.common.client.IArguments;
-import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.IModelHelper;
 import zingg.common.client.util.PipeUtilBase;
@@ -24,7 +22,7 @@ public class SparkVerifyBlockingPipes extends VerifyBlockingPipes<SparkSession,D
     public Pipe<Dataset<Row>,Row,Column> getPipeForVerifyBlockingLocation(IArguments args, String type){
         SparkPipe p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
-		p.setProp(FilePipe.LOCATION, getName(args,timestamp,type));
+		p.setLocation(getName(args,timestamp,type));
 		p.setOverwriteMode();
 		return p;
     }
