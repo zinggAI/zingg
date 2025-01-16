@@ -58,12 +58,11 @@ public class SparkPipe extends Pipe<Dataset<Row>, Row, Column> {
         name = name.replaceAll("@","");
         name = name.replaceAll(",","");
         name = name.replaceAll(":","");
-        name = name.replaceAll(".","");
         return name;
     }
 
     public void setLocation(String fileName){
-        setProp(FilePipe.LOCATION, massageLocation(fileName));
+        this.props.put(FilePipe.LOCATION, massageLocation(fileName));
     }
 
 	

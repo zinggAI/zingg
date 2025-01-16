@@ -38,7 +38,7 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	String name;
 	String format;
 	String preprocessors;
-	Map<String, String> props = new HashMap<String, String>();
+	protected Map<String, String> props = new HashMap<String, String>();
 	int id;
 	protected ZFrame<D, R, C> dataset;
 	String schema;
