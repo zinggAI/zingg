@@ -10,6 +10,7 @@ public class Metric {
     public static final String TRAINING_MATCHES = "trainingDataMatches";
     public static final String TRAINING_NONMATCHES = "trainingDataNonmatches";
     public static final String DATA_COUNT = "dataCount";
+    public static final String STOPWORDS = "stopWords";
 
     public static final long timeout = 1200L;
     public static final double confidence = 0.95; // default value

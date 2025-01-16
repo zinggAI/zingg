@@ -3,7 +3,6 @@ package zingg.common.client.util;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
-import zingg.common.client.IZArgs;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -252,6 +251,13 @@ public abstract class DSUtil<S, D, R, C> {
 				.filter(f -> !(f.getMatchType() == null || f.getMatchType().contains(type)))
 				.collect(Collectors.toList());
 	}
+
+	public  List<FieldDefinition> getFieldDefinitionWithStopwords(IArguments args) {
+		return args.getFieldDefinition()
+				.stream()
+				.filter(f -> !(f.getStopWords() == null || f.getStopWords() == ""))
+				.collect(Collectors.toList());
+	}	
 
     public ZFrame<D,R,C> postprocess(ZFrame<D,R,C> actual, ZFrame<D,R,C> orig) {
     	List<C> cols = new ArrayList<C>();	
