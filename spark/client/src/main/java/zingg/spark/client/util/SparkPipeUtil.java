@@ -5,14 +5,11 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SaveMode;
 
 import zingg.common.client.ZFrame;
 //import zingg.common.client.pipe.InMemoryPipe;
-import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.DFReader;
 import zingg.common.client.util.DFWriter;
-import zingg.common.client.util.IModelHelper;
 import zingg.common.client.util.PipeUtil;
 import zingg.spark.client.SparkFrame;
 import org.apache.spark.sql.SparkSession;
