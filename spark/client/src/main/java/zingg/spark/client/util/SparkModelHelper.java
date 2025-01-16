@@ -146,7 +146,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 		SparkPipe p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_CSV);
 		p.setProp(FilePipe.HEADER, "true");
-		p.setLocation(fileName);
+		p.setProp(FilePipe.LOCATION, fileName);
 		//p.setMode(SaveMode.Overwrite.toString());
 		p.setOverwriteMode();
 		return p;
