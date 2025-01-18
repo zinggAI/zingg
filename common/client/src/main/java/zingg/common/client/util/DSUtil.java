@@ -253,6 +253,13 @@ public abstract class DSUtil<S, D, R, C> {
 				.collect(Collectors.toList());
 	}
 
+	public  List<FieldDefinition> getFieldDefinitionWithStopwords(IArguments args) {
+		return args.getFieldDefinition()
+				.stream()
+				.filter(f -> !(f.getStopWords() == null || f.getStopWords() == ""))
+				.collect(Collectors.toList());
+	}	
+
     public ZFrame<D,R,C> postprocess(ZFrame<D,R,C> actual, ZFrame<D,R,C> orig) {
     	List<C> cols = new ArrayList<C>();	
     	cols.add(actual.col(ColName.CLUSTER_COLUMN));
