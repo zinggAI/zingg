@@ -253,11 +253,18 @@ public abstract class DSUtil<S, D, R, C> {
 				.collect(Collectors.toList());
 	}
 
-	public  List<FieldDefinition> getFieldDefinitionWithStopwords(IArguments args) {
-		return args.getFieldDefinition()
-				.stream()
-				.filter(f -> !(f.getStopWords() == null || f.getStopWords() == ""))
-				.collect(Collectors.toList());
+	public  String getFieldDefinitionWithStopwords(IArguments args) {
+		List<FieldDefinition> list = args.getFieldDefinition()
+										.stream()
+										.filter(f -> !(f.getStopWords() == null || f.getStopWords() == ""))
+										.collect(Collectors.toList());
+		List<String> fieldNamesList = new ArrayList<String>();	
+		for(FieldDefinition fd: list){
+			fieldNamesList.add(fd.getName());
+		}							
+		String fieldNames = fieldNamesList.stream()
+								.collect(Collectors.joining(", "));
+		return fieldNames;
 	}	
 
     public ZFrame<D,R,C> postprocess(ZFrame<D,R,C> actual, ZFrame<D,R,C> orig) {

@@ -80,7 +80,7 @@ public abstract class ZinggBase<S,D, R, C, T> extends ZinggBaseCommon<S, D, R, C
 		Analytics.track(Metric.DATA_FORMAT, getPipeUtil().getPipesAsString(args.getData()), collectMetrics);
 		Analytics.track(Metric.OUTPUT_FORMAT, getPipeUtil().getPipesAsString(args.getOutput()), collectMetrics);
         Analytics.track(Metric.MODEL_ID, args.getModelId(), collectMetrics);
-        Analytics.track(Metric.STOPWORDS, getDSUtil().getFieldDefinitionWithStopwords(args).size(),
+        Analytics.track(Metric.STOPWORDS, getDSUtil().getFieldDefinitionWithStopwords(args),
                 collectMetrics);
 
     }
