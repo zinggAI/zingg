@@ -11,6 +11,8 @@ public interface IPreprocessor<S,D,R,C,T> extends Serializable{
 
     public void setContext(IContext<S,D,R,C,T> c); 
 
+    public void init();
+
     public IContext<S,D,R,C,T> getContext();
 
     public void setFieldDefinition(FieldDefinition fd);
