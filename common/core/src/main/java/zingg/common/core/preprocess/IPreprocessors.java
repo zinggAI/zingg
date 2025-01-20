@@ -26,6 +26,7 @@ public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, 
                     IPreprocessor ip = getPreprocMap().get(o).getDeclaredConstructor().newInstance(); 
                     //setting context and field defn
                     ip.setContext(getContext());
+                    ip.init();;
                     ip.setFieldDefinition(def);
                     dfp = ip.preprocess(dfp);
                 }

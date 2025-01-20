@@ -35,31 +35,34 @@ public class SparkStopWordsRemover extends StopWordsRemover<SparkSession,Dataset
 	
 	public SparkStopWordsRemover(IContext<SparkSession, Dataset<Row>, Row, Column,DataType> context) {
 		super(context);
-		this.udfName = registerUDF();
+		registerUDF();
 	}
 
 	public SparkStopWordsRemover(IContext<SparkSession, Dataset<Row>, Row, Column,DataType> context, FieldDefinition fd) {
 		super(context,fd);
-		this.udfName = registerUDF();
+		registerUDF();
 	}
 	
  	@Override
 	protected ZFrame<Dataset<Row>, Row, Column> removeStopWordsFromDF(ZFrame<Dataset<Row>, Row, Column> ds,
 			String fieldName, String pattern) {
-		this.udfName = registerUDF();
- 		Dataset<Row> dfAfterRemoval = ds.df().withColumn(fieldName,callUDF(udfName, ds.df().col(fieldName),lit(pattern)));
+		Dataset<Row> dfAfterRemoval = ds.df().withColumn(fieldName,callUDF(udfName, ds.df().col(fieldName),lit(pattern)));
 		return new SparkFrame(dfAfterRemoval);
 	}
 
-	protected String registerUDF() {
+	protected void registerUDF() {
 		RemoveStopWordsUDF removeStopWordsUDF = new RemoveStopWordsUDF();
 		// Each field will have different pattern
-		String udfName = removeStopWordsUDF.getName();
+		this.udfName = removeStopWordsUDF.getName();
 		// register the UDF
 		SparkSession zSession = getContext().getSession();
 
 		SparkFnRegistrar.registerUDF2(zSession, udfName, removeStopWordsUDF, DataTypes.StringType);
-		return udfName;
+	}
+
+	@Override
+	public void init() {
+		registerUDF();
 	}
 
 }
