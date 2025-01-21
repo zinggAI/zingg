@@ -1,6 +1,6 @@
 package zingg.common.client;
 
-public interface IZingg<S,D,R,C> {
+public interface IZingg<S,D,R,C> extends IZinggSuper<S, D, R, C>{
 
 	public void init(IZArgs args, S session, ClientOptions options)
 			throws ZinggClientException;
