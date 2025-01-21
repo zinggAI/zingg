@@ -1,6 +1,5 @@
 package zingg.spark.core.preprocess;
 
-import org.apache.spark.internal.config.R;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -15,12 +14,10 @@ import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.WithSession;
 import zingg.common.core.context.Context;
 import zingg.common.core.context.IContext;
-import zingg.common.core.preprocess.IPreprocMap;
 import zingg.common.core.preprocess.IPreprocessors;
 import zingg.common.core.preprocess.TestPreprocessors;
 import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.core.context.ZinggSparkContext;
-import zingg.spark.core.executor.SparkTrainingDataFinder;
 
 @ExtendWith(TestSparkBase.class)
 public class TestSparkPreprocessors extends TestPreprocessors<SparkSession, Dataset<Row>, Row, Column, DataType> {

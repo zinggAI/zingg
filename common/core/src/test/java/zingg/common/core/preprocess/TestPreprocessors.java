@@ -11,10 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
-import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
-import zingg.common.client.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.DFObjectUtil;
@@ -25,7 +23,6 @@ import zingg.common.core.model.PriorStopWordProcess;
 public abstract class TestPreprocessors<S,D,R,C,T> {
 
     public static final Log LOG = LogFactory.getLog(TestPreprocessors.class);
-    protected ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
 	private final DFObjectUtil<S, D, R, C> dfObjectUtil;
 	private final Context<S, D, R, C, T> context;
 
