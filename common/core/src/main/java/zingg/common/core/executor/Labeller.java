@@ -158,7 +158,8 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
 		return selection;
 	}
-	
+
+	@Override
 	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() {	
 		if (trainingDataModel==null) {
 			this.trainingDataModel = new TrainingDataModel<S, D, R, C, T>(getContext(), getClientOptions());

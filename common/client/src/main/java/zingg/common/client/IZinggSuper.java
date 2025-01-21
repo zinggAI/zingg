@@ -13,4 +13,7 @@ public interface IZinggSuper<S,D,R,C> {
     Long getUnmatchedMarkedRecordsStat(ZFrame<D, R, C> markedRecords);
 
     Long getUnsureMarkedRecordsStat(ZFrame<D, R, C> markedRecords);
+
+    ITrainingDataModel<S, D, R, C> getTrainingDataModel();
+
 }
