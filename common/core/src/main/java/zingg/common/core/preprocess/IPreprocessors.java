@@ -1,5 +1,8 @@
 package zingg.common.core.preprocess;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
 import zingg.common.client.IZArgs;
@@ -7,7 +10,9 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.context.IContext;
 
-public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, IPreprocOrder {
+public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, INeedsPreprocOrder {
+
+    public static final Log LOG = LogFactory.getLog(IPreprocessors.class);
     
     public void setContext(IContext<S,D,R,C,T> c); 
 
@@ -21,14 +26,13 @@ public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, 
         ZFrame<D,R,C> dfp = df; 
         try{ 
             for(FieldDefinition def:((IArguments) getArgs()).getFieldDefinition()){
-                for(IPreprocType o: getPreprocOrder()){
+                for(IPreprocType o: getPreprocOrder().getOrder()){
                     //creating new instance of the class
-                    IPreprocessor ip = getPreprocMap().get(o).getDeclaredConstructor().newInstance(); 
+                    IPreprocessor<S,D,R,C,T> ip = getPreprocMap().get(o).getDeclaredConstructor().newInstance(); 
+                    LOG.info("tryibng preproc " + ip);
                     //setting context and field defn
                     ip.setContext(getContext());
-                  
                     ip.init();
-
                     ip.setFieldDefinition(def);
                     dfp = ip.preprocess(dfp);
                 }

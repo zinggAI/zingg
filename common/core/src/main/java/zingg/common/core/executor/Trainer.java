@@ -12,11 +12,10 @@ import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
-import zingg.common.core.preprocess.IPreprocOrder;
 import zingg.common.core.preprocess.IPreprocessors;
 import zingg.common.core.preprocess.stopwords.StopWordsRemover;
 
-public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements IPreprocessors<S,D,R,C,T>, IPreprocOrder{
+public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements IPreprocessors<S,D,R,C,T>{
 
 	protected static String name = "zingg.Trainer";
 	public static final Log LOG = LogFactory.getLog(Trainer.class);    
