@@ -2,6 +2,7 @@ package zingg.common.client.util;
 
 
 import zingg.common.client.FieldDefinition;
+import zingg.common.client.HasStopWords;
 import zingg.common.client.IArguments;
 import zingg.common.client.IZArgs;
 import zingg.common.client.MatchType;
@@ -256,7 +257,7 @@ public abstract class DSUtil<S, D, R, C> {
 	public  String getFieldDefinitionWithStopwords(IArguments args) {
 		List<FieldDefinition> list = args.getFieldDefinition()
 										.stream()
-										.filter(f -> !(f.getStopWords() == null || f.getStopWords() == ""))
+										.filter(f -> HasStopWords.isStopwordField(f))
 										.collect(Collectors.toList());
 		List<String> fieldNamesList = new ArrayList<String>();	
 		for(FieldDefinition fd: list){

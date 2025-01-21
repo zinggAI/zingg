@@ -1,8 +1,11 @@
-package zingg.common.client;
+package zingg.common.client.util;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.HasStopWords;
 
 public class StopWordFieldDefUtility implements Serializable {
 
@@ -10,7 +13,7 @@ public class StopWordFieldDefUtility implements Serializable {
 
     public  List<? extends FieldDefinition> getFieldDefinitionWithStopwords(List<? extends FieldDefinition> fieldDefinition) {
 		return fieldDefinition.stream()
-				.filter(f -> !(f.getStopWords() == null || f.getStopWords() == ""))
+				.filter(f -> HasStopWords.isStopwordField(f))
 				.collect(Collectors.toList());
 	}
     
