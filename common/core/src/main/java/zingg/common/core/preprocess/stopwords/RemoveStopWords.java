@@ -1,8 +1,9 @@
-package zingg.common.core.preprocess;
+package zingg.common.core.preprocess.stopwords;
 
 import java.io.Serializable;
 
 public class RemoveStopWords implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 	private String name = "removeStopWordsUDF";
 	
