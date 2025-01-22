@@ -35,7 +35,7 @@ public abstract class TestPreprocessors<S,D,R,C,T> {
     public void TestPreprocessorsFlow() throws ZinggClientException, Exception{
         IArguments args = new Arguments();
         List<FieldDefinition> fieldDefs = new ArrayList<FieldDefinition>();
-        String stopWordsFileName1 = Objects.requireNonNull(TestPreprocessors.class.getResource("../../../../preprocess/stopwords/stopWords.csv")).getFile();
+        String stopWordsFileName1 = Objects.requireNonNull(TestPreprocessors.class.getResource("../../../../preProcess/stopwords/stopWords.csv")).getFile();
         FieldDefinition fieldDefinition1 = new FieldDefinition();
         fieldDefinition1.setStopWords(stopWordsFileName1);
         fieldDefinition1.setFieldName("field1");
