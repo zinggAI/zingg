@@ -66,8 +66,8 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 					
 					
 				if (posPairs == null || posPairs.count() <= 5) {
-					ZFrame<D,R,C> posSamplesOriginal = getPositiveSamples(data);
-					ZFrame<D,R,C> posSamples = preprocess(posSamplesOriginal);
+					ZFrame<D,R,C> posSamples = getPositiveSamples(data);
+					//ZFrame<D,R,C> posSamples = preprocess(posSamplesOriginal);
 					//posSamples.printSchema();
 					if (posPairs != null) {
 						//posPairs.printSchema();
@@ -182,7 +182,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 		return pos.union(neg);
 	}
 
-	public ZFrame<D,R,C> getPositiveSamples(ZFrame<D,R,C> data) throws Exception {
+	public ZFrame<D,R,C> getPositiveSamples(ZFrame<D,R,C> data) throws Exception, ZinggClientException {
 		if (LOG.isDebugEnabled()) {
 			long count = data.count();
 			LOG.debug("Total count is " + count);
@@ -195,6 +195,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 			LOG.debug("Sampled " + posSample.count());
 		}
 		posSample = posSample.cache();
+		posSample = preprocess(posSample);
 		ZFrame<D,R,C> posPairs = getDSUtil().joinWithItself(posSample, ColName.ID_COL, false);
 		
 		LOG.info("Created positive sample pairs ");
