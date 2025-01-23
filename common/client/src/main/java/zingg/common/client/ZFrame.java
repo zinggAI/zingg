@@ -6,15 +6,9 @@ import java.util.List;
 public interface ZFrame<D, R, C> {
 	
 	public static final String RIGHT_JOIN = "right";
-	public static final String LEFT_JOIN = "left";
 	
 	public static final String COL_COUNT = "count";
-	public static final String COL_VALUE = "VALUE";
 
-    public static String PIVOT_COLUMN = "field";
-    public static String VALUE_1 = "value1";
-    public static String VALUE_2 = "value2";
-    public static String ORDER = "order";
 		
     public ZFrame<D, R, C> cache();
     public ZFrame<D, R, C> as(String s);
