@@ -6,6 +6,7 @@ import java.util.List;
 public interface ZFrame<D, R, C> {
 	
 	public static final String RIGHT_JOIN = "right";
+	public static final String LEFT_JOIN = "left";
 	
 	public static final String COL_COUNT = "count";
 
