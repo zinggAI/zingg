@@ -11,7 +11,7 @@ public class StopWordFieldDefUtility implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public  List<? extends FieldDefinition> getFieldDefinitionWithStopwords(List<? extends FieldDefinition> fieldDefinition) {
+    public List<? extends FieldDefinition> getFieldDefinitionWithStopwords(List<? extends FieldDefinition> fieldDefinition) {
 		return fieldDefinition.stream()
 				.filter(f -> HasStopWords.isStopwordField(f))
 				.collect(Collectors.toList());

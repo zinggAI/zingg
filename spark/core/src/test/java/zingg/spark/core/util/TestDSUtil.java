@@ -1,5 +1,6 @@
 package zingg.spark.core.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -147,5 +148,44 @@ public class TestDSUtil {
 		for (int i = 0; i < expectedColumnsTest2.size(); i++) {
 			assertTrue(expectedColumnsTest2.get(i).contains(colListTest2.get(i).toString()));
 		};
+	}
+
+	@Test
+	public void testgetFieldDefinitionWithStopwords() throws ZinggClientException{
+		FieldDefinition def1 = new FieldDefinition();
+		def1.setFieldName("field1");
+		def1.setDataType("string");
+		def1.setMatchTypeInternal(MatchType.FUZZY);
+		def1.setFields("field1");
+
+		FieldDefinition def2 = new FieldDefinition();
+		def2.setFieldName("field2");
+		def2.setDataType("string");
+		def2.setMatchTypeInternal(MatchType.EXACT);
+		def2.setStopWords("stopWordsFileName2");
+		def2.setFields("field2");
+
+		FieldDefinition def3 = new FieldDefinition();
+		def3.setFieldName("field3");
+		def3.setDataType("string");
+		def3.setMatchTypeInternal(MatchType.FUZZY);
+		def3.setStopWords("stopWordsFileName3");
+		def3.setFields("field3");
+
+		List<FieldDefinition> fieldDef = new ArrayList<FieldDefinition>();
+		fieldDef.add(def1);
+		fieldDef.add(def2);
+		fieldDef.add(def3);
+		IArguments args = null; 
+		try {
+			args = new Arguments();
+			args.setFieldDefinition(fieldDef);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+
+		String result = zinggSparkContext.getDSUtil().getFieldDefinitionWithStopwords(args);
+		assertEquals("field2, field3", result);
+
 	}
 }
