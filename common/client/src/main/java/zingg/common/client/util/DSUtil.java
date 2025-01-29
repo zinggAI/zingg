@@ -2,7 +2,6 @@ package zingg.common.client.util;
 
 
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.HasStopWords;
 import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;

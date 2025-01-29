@@ -70,7 +70,7 @@ public class TestStopWordFieldDefUtility {
 		try {
 			args = new Arguments();
 			args.setFieldDefinition(fieldDef);
-		} catch (Throwable e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
