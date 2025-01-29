@@ -43,7 +43,7 @@ public class TestStopWordUtility {
                 fieldDef.add(def2);
                 fieldDef.add(def3);
 
-                List<? extends FieldDefinition> stopWordList = (new StopWordUtility()).getFieldDefinitionWithStopwords(fieldDef);
+                List<? extends FieldDefinition> stopWordList = new StopWordUtility().getFieldDefinitionWithStopwords(fieldDef);
                 assertEquals(stopWordList.size(), 1);
                 
             } catch (Exception e) {
@@ -87,7 +87,7 @@ public class TestStopWordUtility {
 			e.printStackTrace();
 		}
 
-		String result = (new StopWordUtility()).getFieldDefinitionNamesWithStopwords(args);
+		String result = new StopWordUtility().getFieldDefinitionNamesWithStopwords(args);
 		assertEquals("field2, field3", result);
 
 	}
