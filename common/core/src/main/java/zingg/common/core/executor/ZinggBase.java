@@ -11,6 +11,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
+import zingg.common.client.util.StopWordFieldDefUtility;
 import zingg.common.core.context.IContext;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
@@ -22,6 +23,7 @@ public abstract class ZinggBase<S,D, R, C, T> extends ZinggBaseCommon<S, D, R, C
     protected String name;
     protected long startTime;
     protected ClientOptions clientOptions;
+    protected StopWordFieldDefUtility stopWordFieldDefUtility = new StopWordFieldDefUtility();
 
     public static final Log LOG = LogFactory.getLog(ZinggBase.class);
 
@@ -71,24 +73,17 @@ public abstract class ZinggBase<S,D, R, C, T> extends ZinggBaseCommon<S, D, R, C
     }
    
 
-   
-
     public void track(boolean collectMetrics){
         Analytics.track(Metric.TOTAL_FIELDS_COUNT, args.getFieldDefinition().size(), collectMetrics);
-        Analytics.track(Metric.MATCH_FIELDS_COUNT, getDSUtil().getFieldDefinitionFiltered(args, MatchType.DONT_USE).size(),
-                collectMetrics);
+        Analytics.track(Metric.MATCH_FIELDS_COUNT, getDSUtil().getFieldDefinitionFiltered(args, MatchType.DONT_USE).size(), collectMetrics);
 		Analytics.track(Metric.DATA_FORMAT, getPipeUtil().getPipesAsString(args.getData()), collectMetrics);
 		Analytics.track(Metric.OUTPUT_FORMAT, getPipeUtil().getPipesAsString(args.getOutput()), collectMetrics);
         Analytics.track(Metric.MODEL_ID, args.getModelId(), collectMetrics);
-        Analytics.track(Metric.STOPWORDS, getDSUtil().getFieldDefinitionWithStopwords(args),
-                collectMetrics);
+        Analytics.track(Metric.STOPWORDS, stopWordFieldDefUtility.getFieldDefinitionWithStopwords(args), collectMetrics);
 
     }
 
 
-   
-    
-    
     public IContext<S,D,R,C,T> getContext() {
         return this.context;
     }

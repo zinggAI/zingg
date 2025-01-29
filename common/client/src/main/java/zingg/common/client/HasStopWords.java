@@ -8,8 +8,9 @@ public class HasStopWords implements Serializable {
         if(!(f.getStopWords() == null || f.getStopWords() == "")){
             return true;
         }
-        else 
+        else {
             return false;
+        }
     }
     
 }

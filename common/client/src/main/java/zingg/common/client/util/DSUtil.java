@@ -4,7 +4,6 @@ package zingg.common.client.util;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.HasStopWords;
 import zingg.common.client.IArguments;
-import zingg.common.client.IZArgs;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -252,20 +251,6 @@ public abstract class DSUtil<S, D, R, C> {
 				.stream()
 				.filter(f -> !(f.getMatchType() == null || f.getMatchType().contains(type)))
 				.collect(Collectors.toList());
-	}
-
-	public  String getFieldDefinitionWithStopwords(IArguments args) {
-		List<FieldDefinition> list = args.getFieldDefinition()
-										.stream()
-										.filter(f -> HasStopWords.isStopwordField(f))
-										.collect(Collectors.toList());
-		List<String> fieldNamesList = new ArrayList<String>();	
-		for(FieldDefinition fd: list){
-			fieldNamesList.add(fd.getName());
-		}							
-		String fieldNames = fieldNamesList.stream()
-								.collect(Collectors.joining(", "));
-		return fieldNames;
 	}	
 
     public ZFrame<D,R,C> postprocess(ZFrame<D,R,C> actual, ZFrame<D,R,C> orig) {
