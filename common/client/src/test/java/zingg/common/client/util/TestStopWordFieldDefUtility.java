@@ -25,7 +25,7 @@ public class TestStopWordFieldDefUtility {
     StopWordFieldDefUtility stopWordFieldDefUtil = new StopWordFieldDefUtility();
 
     @Test
-    public void testgetFieldDefinitionWithStopwords(){
+    public void testGetFieldDefinitionWithStopwords(){
         IArguments args;
             try {
                 args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../../testArguments/configWithStopWords.json").getFile(), "test");
@@ -41,7 +41,7 @@ public class TestStopWordFieldDefUtility {
     }
 
     @Test
-	public void testGetFieldDefinitionWithStopwords() throws ZinggClientException{
+	public void testGetFieldDefinitionNamesWithStopwords() throws ZinggClientException{
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field1");
 		def1.setDataType("string");
@@ -74,7 +74,7 @@ public class TestStopWordFieldDefUtility {
 			e.printStackTrace();
 		}
 
-		String result = stopWordFieldDefUtil.getFieldDefinitionWithStopwords(args);
+		String result = stopWordFieldDefUtil.getFieldDefinitionNamesWithStopwords(args);
 		assertEquals("field2, field3", result);
 
 	}

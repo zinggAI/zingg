@@ -19,7 +19,7 @@ public class StopWordFieldDefUtility implements Serializable {
 				.collect(Collectors.toList());
 	}
 
-	public  String getFieldDefinitionWithStopwords(IArguments args) {
+	public  String getFieldDefinitionNamesWithStopwords(IArguments args) {
 		List<FieldDefinition> list = args.getFieldDefinition()
 										.stream()
 										.filter(f -> HasStopWords.isStopwordField(f))
@@ -29,7 +29,7 @@ public class StopWordFieldDefUtility implements Serializable {
 		for(FieldDefinition fd: list){
 			fieldNamesList.add(fd.getName());
 		}			
-						
+
 		String fieldNames = fieldNamesList.stream()
 								.collect(Collectors.joining(", "));
 		return fieldNames;
