@@ -1,7 +1,6 @@
 package zingg.common.client.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
-import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
@@ -20,22 +18,43 @@ import zingg.common.client.ZinggClientException;
 public class TestStopWordFieldDefUtility {
 
     private static final Log LOG = LogFactory.getLog(TestStopWordFieldDefUtility.class);
-	protected ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
 
     StopWordFieldDefUtility stopWordFieldDefUtil = new StopWordFieldDefUtility();
 
     @Test
     public void testGetFieldDefinitionWithStopwords(){
-        IArguments args;
             try {
-                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../../testArguments/configWithStopWords.json").getFile(), "test");
+                FieldDefinition def1 = new FieldDefinition();
+		        def1.setFieldName("field1");
+		        def1.setDataType("string");
+		        def1.setMatchTypeInternal(MatchType.FUZZY);
+		        def1.setFields("field1");
 
-                List<? extends FieldDefinition> dontUseList = stopWordFieldDefUtil.getFieldDefinitionWithStopwords(args.getFieldDefinition());
-                assertEquals(dontUseList.size(), 2);
+                FieldDefinition def2 = new FieldDefinition();
+                def2.setFieldName("field2");
+                def2.setDataType("string");
+                def2.setMatchTypeInternal(MatchType.EXACT);
+                def2.setStopWords("stopWordsFileName2");
+                def2.setFields("field2");
+
+                FieldDefinition def3 = new FieldDefinition();
+                def3.setFieldName("field3");
+                def3.setDataType("string");
+                def3.setMatchTypeInternal(MatchType.FUZZY);
+                def3.setStopWords("");
+                def3.setFields("field3");
+
+                List<FieldDefinition> fieldDef = new ArrayList<FieldDefinition>();
+                fieldDef.add(def1);
+                fieldDef.add(def2);
+                fieldDef.add(def3);
+
+                List<? extends FieldDefinition> stopWordList = stopWordFieldDefUtil.getFieldDefinitionWithStopwords(fieldDef);
+                assertEquals(stopWordList.size(), 1);
                 
-            } catch (Exception | ZinggClientException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-				fail("Could not read config");
+
             }
 
     }
