@@ -1,7 +1,7 @@
 package zingg.common.client;
 
 //TODO need to revisit this interface
-public interface IZinggSuper<S,D,R,C> {
+public interface IZinggModelInfo<S,D,R,C> {
     ZFrame<D,R,C>  getMarkedRecords();
 
     ZFrame<D,R,C>  getUnmarkedRecords();
