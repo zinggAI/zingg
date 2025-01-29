@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
@@ -15,11 +13,7 @@ import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
 import zingg.common.client.ZinggClientException;
 
-public class TestStopWordFieldDefUtility {
-
-    private static final Log LOG = LogFactory.getLog(TestStopWordFieldDefUtility.class);
-
-    StopWordFieldDefUtility stopWordFieldDefUtil = new StopWordFieldDefUtility();
+public class TestStopWordUtility {
 
     @Test
     public void testGetFieldDefinitionWithStopwords(){
@@ -49,7 +43,7 @@ public class TestStopWordFieldDefUtility {
                 fieldDef.add(def2);
                 fieldDef.add(def3);
 
-                List<? extends FieldDefinition> stopWordList = stopWordFieldDefUtil.getFieldDefinitionWithStopwords(fieldDef);
+                List<? extends FieldDefinition> stopWordList = (new StopWordUtility()).getFieldDefinitionWithStopwords(fieldDef);
                 assertEquals(stopWordList.size(), 1);
                 
             } catch (Exception e) {
@@ -93,7 +87,7 @@ public class TestStopWordFieldDefUtility {
 			e.printStackTrace();
 		}
 
-		String result = stopWordFieldDefUtil.getFieldDefinitionNamesWithStopwords(args);
+		String result = (new StopWordUtility()).getFieldDefinitionNamesWithStopwords(args);
 		assertEquals("field2, field3", result);
 
 	}
