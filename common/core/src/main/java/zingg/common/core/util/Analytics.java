@@ -133,7 +133,7 @@ public class Analytics {
    			String response = executePostRequest(url.toString(), param);
 			LOG.warn("Analytics event " + response);
     	} catch (IOException | URISyntaxException e) {
-			e.printStackTrace();
+			if(LOG.isDebugEnabled()) e.printStackTrace();
 		}
 		LOG.warn("Event tracked.");
 	}
