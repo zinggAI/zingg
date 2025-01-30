@@ -30,6 +30,7 @@ public class Analytics {
 	private static final String API_SECRET = "IYJgNn8KR2Cr0yZIvrMvng";
 	private static final String API_VERSION = "2";
 	private static final String MEASUREMENT_ID = "G-MWRMGB9652";
+	private static final String ZINGG_USER_ENV = "ZINGG_USER";
 
 	private static Map<String, String> metrics;
 	public static final Log LOG = LogFactory.getLog(Analytics.class); 
@@ -77,7 +78,14 @@ public class Analytics {
 		track(metricName, getDomain(), collectMetrics);
 	}
 
-	
+	public static String getUserId() {
+		String userId = System.getenv(ZINGG_USER_ENV); // Fetch the environment variable
+		if (userId == null || userId.isEmpty()) {
+			userId = getDomain(); // Default to domain if environment variable is not set
+		}
+		return userId;
+	}
+
 
 	public static void postEvent(String phase, boolean collectMetrics) {
 		
@@ -101,8 +109,8 @@ public class Analytics {
 		eventList = mapper.createArrayNode();
 		eventList.add(eventNode);
 		rootNode.set("events", eventList);
-		rootNode.put("user_id", getDomain());
-		
+		rootNode.put("user_id", getUserId());
+
 		String metricEvent = rootNode.toString();
 		LOG.warn("event is " + metricEvent);
 		Analytics.sendEvents(metricEvent);
@@ -151,7 +159,7 @@ public class Analytics {
 			os.writeBytes(urlParameters);
 			os.close();
 
-			//Get Response  
+			//Get Response
 			InputStream is = connection.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			StringBuffer response = new StringBuffer();
