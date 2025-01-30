@@ -110,7 +110,6 @@ public class Analytics {
 		eventList.add(eventNode);
 		rootNode.set("events", eventList);
 		rootNode.put("user_id", getUserId());
-
 		String metricEvent = rootNode.toString();
 		LOG.warn("event is " + metricEvent);
 		Analytics.sendEvents(metricEvent);
