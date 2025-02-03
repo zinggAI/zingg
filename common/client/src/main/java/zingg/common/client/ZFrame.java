@@ -9,6 +9,7 @@ public interface ZFrame<D, R, C> {
 	public static final String LEFT_JOIN = "left";
 	
 	public static final String COL_COUNT = "count";
+	public static final String COL_VALUE = "VALUE";
 
 		
     public ZFrame<D, R, C> cache();
