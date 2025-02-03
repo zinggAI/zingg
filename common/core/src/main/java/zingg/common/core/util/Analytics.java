@@ -131,7 +131,7 @@ public class Analytics {
 			URL url = uri.toURL();
    			String response = executePostRequest(url.toString(), param);
 			LOG.warn("Analytics event " + response);
-    	} catch (IOException | URISyntaxException e) {
+    		} catch (IOException | URISyntaxException e) {
 			if(LOG.isDebugEnabled()) e.printStackTrace();
 		}
 		LOG.warn("Event tracked.");
