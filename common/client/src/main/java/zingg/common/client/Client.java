@@ -39,7 +39,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	 * Construct a client to Zingg using provided arguments and spark master.
 	 * If running locally, set the master to local.
 	 * 
-	 * @param args
+	 * @param zFactory
 	 *            - arguments for training and matching
 	 * @throws ZinggClientException
 	 *             if issue connecting to master
@@ -333,5 +333,33 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public String getProductVersion(){
 		return "0.4.1-SNAPSHOT";
 	}
-    
+
+	public Long getMarkedRecordsStat(ZFrame<D,R,C>  markedRecords, long value) {
+		return zingg.getMarkedRecordsStat(markedRecords, value);
+	}
+
+	public Long getMatchedMarkedRecordsStat(ZFrame<D,R,C>  markedRecords) {
+		return zingg.getMatchedMarkedRecordsStat(markedRecords);
+	}
+
+	public Long getUnmatchedMarkedRecordsStat(ZFrame<D,R,C>  markedRecords) {
+		return zingg.getUnmatchedMarkedRecordsStat(markedRecords);
+	}
+
+	public Long getUnsureMarkedRecordsStat(ZFrame<D,R,C>  markedRecords) {
+		return zingg.getUnsureMarkedRecordsStat(markedRecords);
+	}
+
+	public ZFrame<D,R,C>  getMarkedRecords() {
+		return zingg.getMarkedRecords();
+	}
+
+	public ZFrame<D,R,C>  getUnmarkedRecords() {
+		return zingg.getUnmarkedRecords();
+	}
+
+	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException {
+		return zingg.getTrainingDataModel();
+	}
+
 }
