@@ -47,7 +47,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				ZFrame<D,R,C> trFile = getTraining();					
 
 				if (trFile != null) {
-					trFile = preprocess(trFile);
+					trFile = preprocess(trFile).cache();
 					ZFrame<D,R,C> trPairs = getDSUtil().joinWithItself(trFile, ColName.CLUSTER_COLUMN, true);
 						
 						posPairs = trPairs.filter(trPairs.equalTo(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_MATCH));
