@@ -5,6 +5,8 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ZINGG_USER: zingg_user
 
     steps:
       - uses: actions/checkout@v2
