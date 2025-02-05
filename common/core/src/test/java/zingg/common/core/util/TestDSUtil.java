@@ -158,6 +158,8 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 			e.printStackTrace();
 		}
 
+        args.setTrainingSamples(null);
+
 		PipeUtilBase<S,D,R,C> pipeUtil = mock(PipeUtilBase.class);
 		IModelHelper modelHelper = mock(IModelHelper.class);
 
@@ -165,7 +167,6 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		when(modelHelper.getTrainingDataMarkedPipe(args)).thenReturn(p);
 
 		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingFile(), TestTrainingData.class);
-		ZFrame<D,R,C> trSamples1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingSamplesData(), TrainingSamplesData.class);
 		
 		when(pipeUtil.read(false, false, p)).thenReturn(trFile1);
 		when(pipeUtil.read(true, false, args.getTrainingSamples())).thenThrow(ZinggClientException.class);
