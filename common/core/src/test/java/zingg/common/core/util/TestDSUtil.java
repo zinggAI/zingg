@@ -1,30 +1,17 @@
-package zingg.spark.core.util;
+package zingg.common.core.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import static org.mockito.Mockito.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.RowFactory;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.DataType;
-import org.apache.spark.sql.types.DataTypes;
-import org.apache.spark.sql.types.StructField;
-import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-
-import zingg.spark.core.TestSparkBase;
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
@@ -35,34 +22,27 @@ import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.client.util.IModelHelper;
-import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.PipeUtilBase;
-import zingg.common.client.util.WithSession;
+import zingg.common.core.context.Context;
 import zingg.common.core.data.EventTestData;
-import zingg.common.core.model.Statement;
+import zingg.common.core.model.TestShowConciseData;
 import zingg.common.core.model.TestTrainingData;
 import zingg.common.core.model.TrainingSamplesData;
-import zingg.spark.client.SparkFrame;
-import zingg.spark.client.pipe.SparkPipe;
-import zingg.spark.client.util.SparkDFObjectUtil;
-import zingg.spark.core.context.ZinggSparkContext;
 
-@ExtendWith(TestSparkBase.class)
-public class TestDSUtil {
+public abstract class TestDSUtil<S, D, R, C, T> {
 
-	private final SparkSession sparkSession;
-	private final ZinggSparkContext zinggSparkContext;
-	public static IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
+    public static final Log LOG = LogFactory.getLog(TestDSUtil.class);
+    private final DFObjectUtil<S, D, R, C> dfObjectUtil;
+	private final Context<S, D, R, C, T> context;
 
-	public TestDSUtil(SparkSession sparkSession) throws ZinggClientException {
-		this.sparkSession = sparkSession;
-		this.zinggSparkContext = new ZinggSparkContext();
-		zinggSparkContext.init(sparkSession);
+	public TestDSUtil(DFObjectUtil<S, D, R, C> dfObjectUtil, Context<S, D, R, C, T> context) throws ZinggClientException {
+		this.dfObjectUtil = dfObjectUtil;
+		this.context = context;
 	}
-	public static final Log LOG = LogFactory.getLog(TestDSUtil.class);
+	
 
 	@Test
-	public void testGetFieldDefColumnsWhenShowConciseIsTrue() throws ZinggClientException {
+	public void testGetFieldDefColumnsWhenShowConciseIsTrue() throws ZinggClientException, Exception {
 		
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field_fuzzy");
@@ -86,6 +66,7 @@ public class TestDSUtil {
 		fieldDef.add(def1);
 		fieldDef.add(def2);
 		fieldDef.add(def3);
+
 		IArguments args = null; 
 		try {
 			args = new Arguments();
@@ -93,20 +74,15 @@ public class TestDSUtil {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-		StructType schema = DataTypes.createStructType(new StructField[] { 
-			DataTypes.createStructField(def1.getFieldName(), DataType.fromDDL(def1.getDataType()), false), 
-			DataTypes.createStructField(def2.getFieldName(), DataType.fromDDL(def2.getDataType()), false),
-			DataTypes.createStructField(def3.getFieldName(), DataType.fromDDL(def3.getDataType()), false),
-			DataTypes.createStructField(ColName.SOURCE_COL, DataTypes.StringType, false) 
-		});
-		List<Row> list = Arrays.asList(RowFactory.create("1", "first", "one", "Junit"), RowFactory.create("2", "second", "two", "Junit"), 
-				RowFactory.create("3", "third", "three", "Junit"), RowFactory.create("4", "forth", "Four", "Junit"));
-		Dataset<Row> ds = sparkSession.createDataFrame(list, schema);
+		
+        ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(EventTestData.getFieldDefnDataForShowConcise(), TestShowConciseData.class);
 
 		List<String> expectedColumns = new ArrayList<String>();
 		expectedColumns.add("field_fuzzy");
 		expectedColumns.add(ColName.SOURCE_COL);
-		List<Column> colList = zinggSparkContext.getDSUtil().getFieldDefColumns(new SparkFrame(ds), args, false, true);
+
+		List<C> colList = context.getDSUtil().getFieldDefColumns(ds, args, false, true);
+
 		assertTrue(expectedColumns.size() == colList.size());
 		for (int i = 0; i < expectedColumns.size(); i++) {
 			assertTrue(expectedColumns.get(i).equals(colList.get(i).toString()));
@@ -114,7 +90,7 @@ public class TestDSUtil {
 	}
 
 	@Test
-	public void testGetFieldDefColumnsWhenShowConciseIsFalse() throws ZinggClientException {
+	public void testGetFieldDefColumnsWhenShowConciseIsFalse() throws ZinggClientException, Exception {
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field_fuzzy");
 		def1.setDataType("string");
@@ -137,6 +113,7 @@ public class TestDSUtil {
 		fieldDef.add(def1);
 		fieldDef.add(def2);
 		fieldDef.add(def3);
+
 		IArguments args = null; 
 		try {
 			args = new Arguments();
@@ -144,18 +121,12 @@ public class TestDSUtil {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-		StructType schema = DataTypes.createStructType(new StructField[] { 
-			DataTypes.createStructField(def1.getFieldName(), DataType.fromDDL(def1.getDataType()), false), 
-			DataTypes.createStructField(def2.getFieldName(), DataType.fromDDL(def2.getDataType()), false),
-			DataTypes.createStructField(def3.getFieldName(), DataType.fromDDL(def3.getDataType()), false),
-			DataTypes.createStructField(ColName.SOURCE_COL, DataTypes.StringType, false) 
-		});
-		List<Row> list = Arrays.asList(RowFactory.create("1", "first", "one", "Junit"), RowFactory.create("2", "second", "two", "Junit"), 
-				RowFactory.create("3", "third", "three", "Junit"), RowFactory.create("4", "forth", "Four", "Junit"));
-		Dataset<Row> ds = sparkSession.createDataFrame(list, schema);
+        
+		ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(EventTestData.getFieldDefnDataForShowConcise(), TestShowConciseData.class);
 
-		List<Column> colListTest2 = zinggSparkContext.getDSUtil().getFieldDefColumns (new SparkFrame(ds), args, false, false);
+		List<C> colListTest2 = context.getDSUtil().getFieldDefColumns (ds, args, false, false);
 		List<String> expectedColumnsTest2 = new ArrayList<String>();
+
 		expectedColumnsTest2.add("field_fuzzy");
 		expectedColumnsTest2.add("field_match_type_DONT_USE");
 		expectedColumnsTest2.add("field_str_DONTspaceUSE");
@@ -187,23 +158,20 @@ public class TestDSUtil {
 			e.printStackTrace();
 		}
 
-		PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> pipeUtil = mock(PipeUtilBase.class);
+		PipeUtilBase<S,D,R,C> pipeUtil = mock(PipeUtilBase.class);
 		IModelHelper modelHelper = mock(IModelHelper.class);
 
-		Pipe<Dataset<Row>, Row, Column> p = new Pipe<>();
+		Pipe<D,R,C> p = new Pipe<>();
 		when(modelHelper.getTrainingDataMarkedPipe(args)).thenReturn(p);
 
-		DFObjectUtil<SparkSession, Dataset<Row>, Row, Column> dfObjectUtil = new SparkDFObjectUtil(iWithSession);
-		iWithSession.setSession(sparkSession);
-        zinggSparkContext.init(sparkSession);
-		ZFrame<Dataset<Row>, Row, Column> trFile1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingFile(), TestTrainingData.class);
-		ZFrame<Dataset<Row>, Row, Column> trSamples1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingSamplesData(), TrainingSamplesData.class);
+		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingFile(), TestTrainingData.class);
+		ZFrame<D,R,C> trSamples1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingSamplesData(), TrainingSamplesData.class);
 		
 		when(pipeUtil.read(false, false, p)).thenReturn(trFile1);
 		when(pipeUtil.read(true, false, args.getTrainingSamples())).thenThrow(ZinggClientException.class);
 
 		//when training samples are null
-		ZFrame<Dataset<Row>, Row, Column> trainingData1 = zinggSparkContext.getDSUtil().getTraining(pipeUtil, args, p);
+		ZFrame<D,R,C> trainingData1 = context.getDSUtil().getTraining(pipeUtil, args, p);
 		trainingData1.show();
 
 	}
@@ -232,24 +200,23 @@ public class TestDSUtil {
 		Pipe[] trainingSamples = new Pipe[2];
 		args.setTrainingSamples(trainingSamples);
 
-		PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> pipeUtil = mock(PipeUtilBase.class);
+		PipeUtilBase<S,D,R,C> pipeUtil = mock(PipeUtilBase.class);
 		IModelHelper modelHelper = mock(IModelHelper.class);
 
-		Pipe<Dataset<Row>, Row, Column> p = new Pipe<>();
+		Pipe<D,R,C> p = new Pipe<>();
 		when(modelHelper.getTrainingDataMarkedPipe(args)).thenReturn(p);
 
-		DFObjectUtil<SparkSession, Dataset<Row>, Row, Column> dfObjectUtil = new SparkDFObjectUtil(iWithSession);
-		iWithSession.setSession(sparkSession);
-        zinggSparkContext.init(sparkSession);
-		ZFrame<Dataset<Row>, Row, Column> trFile1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingFile(), TestTrainingData.class);
-		ZFrame<Dataset<Row>, Row, Column> trSamples1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingSamplesData(), TrainingSamplesData.class);
+		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingFile(), TestTrainingData.class);
+		ZFrame<D,R,C> trSamples1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingSamplesData(), TrainingSamplesData.class);
 		
 		when(pipeUtil.read(false, false, p)).thenReturn(trFile1);
 		when(pipeUtil.read(true, false, args.getTrainingSamples())).thenReturn(trSamples1);
 
-		ZFrame<Dataset<Row>, Row, Column> trainingData1 = zinggSparkContext.getDSUtil().getTraining(pipeUtil, args, p);
+		ZFrame<D,R,C> trainingData1 = context.getDSUtil().getTraining(pipeUtil, args, p);
 		trainingData1.show();
 		assertEquals(trainingData1.count(), 6);
-		
+
 	}
 }
+    
+

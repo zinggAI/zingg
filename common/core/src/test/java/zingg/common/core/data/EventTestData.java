@@ -3,6 +3,7 @@ package zingg.common.core.data;
 import zingg.common.core.model.Event;
 import zingg.common.core.model.EventPair;
 import zingg.common.core.model.Statement;
+import zingg.common.core.model.TestShowConciseData;
 import zingg.common.core.model.TestTrainingData;
 import zingg.common.core.model.TrainingSamplesData;
 import zingg.common.core.model.PostStopWordProcess;
@@ -281,5 +282,16 @@ public class EventTestData {
         sample.add(new TestTrainingData("101","0","The zingg is a Spark application","1.0","1.0"));
         sample.add(new TestTrainingData("101","0","It is very popular in data Science","1.0","1.0"));
         return sample;
+    }
+
+    public static List<TestShowConciseData> getFieldDefnDataForShowConcise(){
+
+        List<TestShowConciseData> sample = new ArrayList<TestShowConciseData>();
+        sample.add(new TestShowConciseData("1", "first", "one", "Junit"));
+        sample.add(new TestShowConciseData("2", "second", "two", "Junit"));
+        sample.add(new TestShowConciseData("3", "third", "three", "Junit"));
+        sample.add(new TestShowConciseData("4", "forth", "Four", "Junit"));
+        return sample;
+
     }
 }
