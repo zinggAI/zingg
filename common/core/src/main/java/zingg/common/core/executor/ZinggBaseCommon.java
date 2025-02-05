@@ -9,6 +9,7 @@ import zingg.common.client.ClientOptions;
 import zingg.common.client.IZArgs;
 import zingg.common.client.IZingg;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.ITrainingDataModel;
 import zingg.common.client.options.ZinggOption;
 import zingg.common.client.util.DSUtil;
 import zingg.common.client.util.IModelHelper;
@@ -163,6 +164,10 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
     public BlockingTreeUtil<S, D,R,C,T> getBlockingTreeUtil() {
         return context.getBlockingTreeUtil();
     }
-    
-   
+
+    //TODO needs to revisit this
+    @Override
+    public ITrainingDataModel<S, D, R, C> getTrainingDataModel() {
+        return null;
+    }
  }
