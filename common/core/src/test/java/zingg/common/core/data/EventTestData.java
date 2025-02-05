@@ -3,6 +3,8 @@ package zingg.common.core.data;
 import zingg.common.core.model.Event;
 import zingg.common.core.model.EventPair;
 import zingg.common.core.model.Statement;
+import zingg.common.core.model.TestTrainingData;
+import zingg.common.core.model.TrainingSamplesData;
 import zingg.common.core.model.PostStopWordProcess;
 import zingg.common.core.model.PriorStopWordProcess;
 
@@ -259,6 +261,25 @@ public class EventTestData {
         sample.add(new PostStopWordProcess("1648811730857:40", "40", "1.0", "1.0", "-1", "Best luck zingg", "Five",
                 "thank", "test"));
 
+        return sample;
+    }
+
+    public static List<TrainingSamplesData> getTrainingSamplesData() {
+
+        List<TrainingSamplesData> sample = new ArrayList<TrainingSamplesData>();
+        sample.add(new TrainingSamplesData("111","1","The zingg is a Spark application"));
+        sample.add(new TrainingSamplesData("111","1","zingg is running on spark"));
+
+        return sample;
+    }
+
+    public static List<TestTrainingData> getTrainingFile() {
+
+        List<TestTrainingData> sample = new ArrayList<TestTrainingData>();
+        sample.add(new TestTrainingData("121","1","written java scala","1.0","1.0"));
+        sample.add(new TestTrainingData("121","1","It is written in java and scala","1.0","1.0"));
+        sample.add(new TestTrainingData("101","0","The zingg is a Spark application","1.0","1.0"));
+        sample.add(new TestTrainingData("101","0","It is very popular in data Science","1.0","1.0"));
         return sample;
     }
 }

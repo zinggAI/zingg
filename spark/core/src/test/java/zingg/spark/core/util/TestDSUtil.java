@@ -1,10 +1,12 @@
 package zingg.spark.core.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import static org.mockito.Mockito.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,14 +22,29 @@ import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+
 import zingg.spark.core.TestSparkBase;
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
+import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
+import zingg.common.client.util.DFObjectUtil;
+import zingg.common.client.util.IModelHelper;
+import zingg.common.client.util.IWithSession;
+import zingg.common.client.util.PipeUtilBase;
+import zingg.common.client.util.WithSession;
+import zingg.common.core.data.EventTestData;
+import zingg.common.core.model.Statement;
+import zingg.common.core.model.TestTrainingData;
+import zingg.common.core.model.TrainingSamplesData;
 import zingg.spark.client.SparkFrame;
+import zingg.spark.client.pipe.SparkPipe;
+import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.core.context.ZinggSparkContext;
 
 @ExtendWith(TestSparkBase.class)
@@ -35,6 +52,7 @@ public class TestDSUtil {
 
 	private final SparkSession sparkSession;
 	private final ZinggSparkContext zinggSparkContext;
+	public static IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
 
 	public TestDSUtil(SparkSession sparkSession) throws ZinggClientException {
 		this.sparkSession = sparkSession;
@@ -147,5 +165,91 @@ public class TestDSUtil {
 		for (int i = 0; i < expectedColumnsTest2.size(); i++) {
 			assertTrue(expectedColumnsTest2.get(i).contains(colListTest2.get(i).toString()));
 		};
+	}
+
+	@Test
+	public void testGetTrainingDataWhenTrainingSamplesIsNull() throws Exception, ZinggClientException{
+	
+		FieldDefinition def1 = new FieldDefinition();
+		def1.setFieldName("field1");
+		def1.setDataType("string");
+		def1.setMatchTypeInternal(MatchType.FUZZY);
+		def1.setFields("field1");
+
+		List<FieldDefinition> fieldDef = new ArrayList<FieldDefinition>();
+		fieldDef.add(def1);
+
+		IArguments args = null; 
+		try {
+			args = new Arguments();
+			args.setFieldDefinition(fieldDef);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+
+		PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> pipeUtil = mock(PipeUtilBase.class);
+		IModelHelper modelHelper = mock(IModelHelper.class);
+
+		Pipe<Dataset<Row>, Row, Column> p = new Pipe<>();
+		when(modelHelper.getTrainingDataMarkedPipe(args)).thenReturn(p);
+
+		DFObjectUtil<SparkSession, Dataset<Row>, Row, Column> dfObjectUtil = new SparkDFObjectUtil(iWithSession);
+		iWithSession.setSession(sparkSession);
+        zinggSparkContext.init(sparkSession);
+		ZFrame<Dataset<Row>, Row, Column> trFile1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingFile(), TestTrainingData.class);
+		ZFrame<Dataset<Row>, Row, Column> trSamples1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingSamplesData(), TrainingSamplesData.class);
+		
+		when(pipeUtil.read(false, false, p)).thenReturn(trFile1);
+		when(pipeUtil.read(true, false, args.getTrainingSamples())).thenThrow(ZinggClientException.class);
+
+		//when training samples are null
+		ZFrame<Dataset<Row>, Row, Column> trainingData1 = zinggSparkContext.getDSUtil().getTraining(pipeUtil, args, p);
+		trainingData1.show();
+
+	}
+
+	@Test
+	public void testGetTrainingDataWhenTrainingSamplesIsNotNull() throws Exception, ZinggClientException{
+	
+		FieldDefinition def1 = new FieldDefinition();
+		def1.setFieldName("field1");
+		def1.setDataType("string");
+		def1.setMatchTypeInternal(MatchType.FUZZY);
+		def1.setFields("field1");
+
+		List<FieldDefinition> fieldDef = new ArrayList<FieldDefinition>();
+		fieldDef.add(def1);
+
+		IArguments args = null; 
+		try {
+			args = new Arguments();
+			args.setFieldDefinition(fieldDef);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+
+		//setting training samples
+		Pipe[] trainingSamples = new Pipe[2];
+		args.setTrainingSamples(trainingSamples);
+
+		PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> pipeUtil = mock(PipeUtilBase.class);
+		IModelHelper modelHelper = mock(IModelHelper.class);
+
+		Pipe<Dataset<Row>, Row, Column> p = new Pipe<>();
+		when(modelHelper.getTrainingDataMarkedPipe(args)).thenReturn(p);
+
+		DFObjectUtil<SparkSession, Dataset<Row>, Row, Column> dfObjectUtil = new SparkDFObjectUtil(iWithSession);
+		iWithSession.setSession(sparkSession);
+        zinggSparkContext.init(sparkSession);
+		ZFrame<Dataset<Row>, Row, Column> trFile1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingFile(), TestTrainingData.class);
+		ZFrame<Dataset<Row>, Row, Column> trSamples1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingSamplesData(), TrainingSamplesData.class);
+		
+		when(pipeUtil.read(false, false, p)).thenReturn(trFile1);
+		when(pipeUtil.read(true, false, args.getTrainingSamples())).thenReturn(trSamples1);
+
+		ZFrame<Dataset<Row>, Row, Column> trainingData1 = zinggSparkContext.getDSUtil().getTraining(pipeUtil, args, p);
+		trainingData1.show();
+		assertEquals(trainingData1.count(), 6);
+		
 	}
 }
