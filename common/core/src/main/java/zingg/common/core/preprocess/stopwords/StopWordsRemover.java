@@ -50,14 +50,20 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements ISingleFieldPreproc
 
     @Override
     public ZFrame<D,R,C> preprocess(ZFrame<D,R,C> df) throws ZinggClientException{
-		if(isApplicable()){
-			ZFrame<D, R, C> stopWords = getStopWords(fd);
-			String stopWordColumn = getStopWordColumnName(stopWords);
-			List<String> wordList = getWordList(stopWords,stopWordColumn);
-			String pattern = getPattern(wordList);
-			df = removeStopWordsFromDF(df, fd.getFieldName(), pattern);
+		try {
+			if(isApplicable()){
+				LOG.info("Applying stopwords preprocessing on input dataframe");
+				ZFrame<D, R, C> stopWords = getStopWords(fd);
+				String stopWordColumn = getStopWordColumnName(stopWords);
+				List<String> wordList = getWordList(stopWords,stopWordColumn);
+				String pattern = getPattern(wordList);
+				df = removeStopWordsFromDF(df, fd.getFieldName(), pattern);
+			}
+			return df;
+		} catch (Exception exception) {
+			LOG.warn("Error occurred while applying stopword preprocessing, skipping");
 		}
-        return df;
+		return df;
     }
 
 	protected ZFrame<D,R,C> getStopWords(FieldDefinition def) throws ZinggClientException {
