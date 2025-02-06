@@ -20,6 +20,7 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
 
     public void buildStopWordRemovers() throws ZinggClientException {
 
+        List<String> stopWordFileNames = getStopWordFileNames();
         //add first stopWordRemover
         ArrayList<IMatchType> matchTypelistFuzzy = new ArrayList<IMatchType>();
         matchTypelistFuzzy.add(MatchTypes.FUZZY);
@@ -30,24 +31,21 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
         addStopWordRemover(eventFD);
 
         //add second stopWordRemover
-        String stopWordsFileName1 = Objects.requireNonNull(
-        StopWordRemoverUtility.class.getResource("../../../../preProcess/stopwords/stopWords.csv")).getFile();
+        String stopWordsFileName1 = stopWordFileNames.get(0);
         FieldDefinition fieldDefinition1 = new FieldDefinition();
         fieldDefinition1.setStopWords(stopWordsFileName1);
         fieldDefinition1.setFieldName("field1");
         addStopWordRemover(fieldDefinition1);
 
         //add third stopWordRemover
-        String stopWordsFileName2 = Objects.requireNonNull(
-        StopWordRemoverUtility.class.getResource("../../../../preProcess/stopwords/stopWordsWithoutHeader.csv")).getFile();
+        String stopWordsFileName2 = stopWordFileNames.get(1);
         FieldDefinition fieldDefinition2 = new FieldDefinition();
         fieldDefinition2.setStopWords(stopWordsFileName2);
         fieldDefinition2.setFieldName("field1");
         addStopWordRemover(fieldDefinition2);
 
         //add fourth stopWordRemover
-        String stopWordsFileName3 = Objects.requireNonNull(
-        StopWordRemoverUtility.class.getResource("../../../../preProcess/stopwords/stopWordsMultipleCols.csv")).getFile();
+        String stopWordsFileName3 = stopWordFileNames.get(2);
         FieldDefinition fieldDefinition3 = new FieldDefinition();
         fieldDefinition3.setStopWords(stopWordsFileName3);
         fieldDefinition3.setFieldName("field1");
@@ -58,5 +56,7 @@ public abstract class StopWordRemoverUtility<S, D, R, C, T> {
         return this.stopWordsRemovers;
     }
 
-    public abstract void addStopWordRemover(FieldDefinition fd);
+    protected abstract void addStopWordRemover(FieldDefinition fd);
+
+    protected abstract List<String> getStopWordFileNames();
 }
