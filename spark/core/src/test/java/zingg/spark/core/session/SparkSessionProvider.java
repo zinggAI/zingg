@@ -27,6 +27,7 @@ public class SparkSessionProvider {
                 if (sparkDriverMemory == null) {
                     sparkDriverMemory = "1g";
                 }
+                System.out.println("Using spark driver with memory: " + sparkDriverMemory);
                 sparkSession = SparkSession
                         .builder()
                         .master("local[*]")
