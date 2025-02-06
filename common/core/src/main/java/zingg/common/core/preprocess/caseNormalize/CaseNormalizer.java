@@ -52,13 +52,13 @@ public abstract class CaseNormalizer<S,D,R,C,T> implements IMultiFieldPreprocess
     }
 
     @Override
-    public ZFrame<D, R, C> preprocess(ZFrame<D, R, C> df) throws ZinggClientException {
+    public ZFrame<D, R, C> preprocess(ZFrame<D, R, C> df) {
         try {
             LOG.info("Applying case normalization on input dataframe");
             List<String> relevantFields = getRelevantFields();
             return applyCaseNormalizer(df, relevantFields);
         } catch (Exception exception) {
-            LOG.warn("Error occurred while performing case normalization, skipping it");
+            LOG.warn("Error occurred while performing case normalization, skipping it, " + exception);
         }
         return df;
     }
