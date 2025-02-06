@@ -44,12 +44,8 @@ public class TestStopWordUtility {
                 fieldDef.add(def3);
 
                 List<? extends FieldDefinition> stopWordList = new StopWordUtility().getFieldDefinitionWithStopwords(fieldDef);
-				String s = null;
-				for(FieldDefinition fd : stopWordList){
-					s = fd.getName();
-				}
                 assertEquals(stopWordList.size(), 1);
-				assertEquals("field2", s);
+		assertEquals("field2", stopWordList.get(0).getName());
                 
             } catch (Exception e) {
                 e.printStackTrace();
