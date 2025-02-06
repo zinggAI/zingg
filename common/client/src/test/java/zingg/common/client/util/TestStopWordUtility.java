@@ -17,7 +17,7 @@ public class TestStopWordUtility {
 
     @Test
     public void testGetFieldDefinitionWithStopwords(){
-            try {
+        try {
                 FieldDefinition def1 = new FieldDefinition();
 		        def1.setFieldName("field1");
 		        def1.setDataType("string");
@@ -35,7 +35,7 @@ public class TestStopWordUtility {
                 def3.setFieldName("field3");
                 def3.setDataType("string");
                 def3.setMatchTypeInternal(MatchType.FUZZY);
-                def3.setStopWords("");
+				def3.setStopWords(null);
                 def3.setFields("field3");
 
                 List<FieldDefinition> fieldDef = new ArrayList<FieldDefinition>();
@@ -44,7 +44,12 @@ public class TestStopWordUtility {
                 fieldDef.add(def3);
 
                 List<? extends FieldDefinition> stopWordList = new StopWordUtility().getFieldDefinitionWithStopwords(fieldDef);
+				String s = null;
+				for(FieldDefinition fd : stopWordList){
+					s = fd.getName();
+				}
                 assertEquals(stopWordList.size(), 1);
+				assertEquals("field2", s);
                 
             } catch (Exception e) {
                 e.printStackTrace();
