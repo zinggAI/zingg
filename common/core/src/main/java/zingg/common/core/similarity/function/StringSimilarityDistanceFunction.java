@@ -27,7 +27,7 @@ public abstract class StringSimilarityDistanceFunction extends StringSimilarityF
 		if (first == null || first.trim().length() ==0) return 1d;
 		if (second == null || second.trim().length() ==0) return 1d;
 		if (first.equalsIgnoreCase(second)) return 1d;
-		double score = getDistanceFunction().score(first.toLowerCase(), second.toLowerCase());
+		double score = getDistanceFunction().score(first, second);
 		if (Double.isNaN(score)) return 0d; 
 		//LOG.warn(" score  " + gap +  " " + first + " " + second + " is " + score);
 		return score;		
