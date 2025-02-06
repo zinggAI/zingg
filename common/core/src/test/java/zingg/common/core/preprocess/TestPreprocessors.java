@@ -36,8 +36,8 @@ public abstract class TestPreprocessors<S,D,R,C,T> {
         
         IPreprocessors<S,D,R,C,T> preprocessors = getPreprocessors(context);
         
-        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Original(), PriorStopWordProcess.class);
-        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Expected(), PriorStopWordProcess.class);
+        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreProcessed(), PriorStopWordProcess.class);
+        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostProcessed(), PriorStopWordProcess.class);
 
         preprocessors.setArgs(args);
         ZFrame<D,R,C> resultDF = preprocessors.preprocess(inputDF);
@@ -48,6 +48,9 @@ public abstract class TestPreprocessors<S,D,R,C,T> {
     }
 
     private List<FieldDefinition>  getFieldDefinitions() {
+        /*
+            only field1 and field3 will be lower cased
+         */
         List<FieldDefinition> fieldDefs = new ArrayList<FieldDefinition>();
         String stopWordsFileName1 = Objects.requireNonNull(TestPreprocessors.class.getResource("../../../../preProcess/stopwords/stopWords.csv")).getFile();
         FieldDefinition fieldDefinition1 = new FieldDefinition();

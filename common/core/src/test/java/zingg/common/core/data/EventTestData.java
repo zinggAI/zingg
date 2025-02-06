@@ -139,10 +139,10 @@ public class EventTestData {
     public static List<Statement> getData1Original() {
 
         List<Statement> sample = new ArrayList<Statement>();
-        sample.add(new Statement("The zingg is a Spark application"));
-        sample.add(new Statement("It is very popular in data Science"));
-        sample.add(new Statement("It is written in Java and Scala"));
-        sample.add(new Statement("Best of luck to zingg"));
+        sample.add(new Statement("the zingg is a spark application"));
+        sample.add(new Statement("it is very popular in data science"));
+        sample.add(new Statement("it is written in java and scala"));
+        sample.add(new Statement("best of luck to zingg"));
 
         return sample;
     }
@@ -161,6 +161,30 @@ public class EventTestData {
     public static List<PriorStopWordProcess> getData2Original() {
 
         List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
+        sample.add(new PriorStopWordProcess("10", "the zingg is a spark application", "two",
+                "Yes. a good application", "test"));
+        sample.add(new PriorStopWordProcess("20", "it is very popular in data science", "Three", "true indeed",
+                "test"));
+        sample.add(new PriorStopWordProcess("30", "it is written in java and scala", "four", "", "test"));
+        sample.add(new PriorStopWordProcess("40", "best of luck to zingg mobile/t-mobile", "Five", "thank you", "test"));
+
+        return sample;
+    }
+
+    public static List<PriorStopWordProcess> getData2Expected() {
+
+        List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
+        sample.add(new PriorStopWordProcess("10", "zingg spark application", "two", "Yes. a good application", "test"));
+        sample.add(new PriorStopWordProcess("20", "very popular data science", "Three", "true indeed", "test"));
+        sample.add(new PriorStopWordProcess("30", "written java scala", "four", "", "test"));
+        sample.add(new PriorStopWordProcess("40", "best luck to zingg ", "Five", "thank you", "test"));
+
+        return sample;
+    }
+
+    public static List<PriorStopWordProcess> getDataInputPreProcessed() {
+
+        List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
         sample.add(new PriorStopWordProcess("10", "The ZINGG IS a SpaRk AppLiCation", "two",
                 "Yes. a good application", "test"));
         sample.add(new PriorStopWordProcess("20", "It is VERY POpuLar in Data SCIENCE", "Three", "true indeed",
@@ -171,7 +195,7 @@ public class EventTestData {
         return sample;
     }
 
-    public static List<PriorStopWordProcess> getData2Expected() {
+    public static List<PriorStopWordProcess> getDataInputPostProcessed() {
 
         List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
         sample.add(new PriorStopWordProcess("10", "zingg spark application", "two", "yes. a good application", "test"));
@@ -185,12 +209,12 @@ public class EventTestData {
     public static List<PriorStopWordProcess> getData3Original() {
 
         List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
-        sample.add(new PriorStopWordProcess("10", "The zingg is a spark application", "two",
+        sample.add(new PriorStopWordProcess("10", "the zingg is a spark application", "two",
                 "Yes. a good application", "test"));
-        sample.add(new PriorStopWordProcess("20", "It is very popular in Header Data Science", "Three", "true indeed",
+        sample.add(new PriorStopWordProcess("20", "it is very popular in header data science", "Three", "true indeed",
                 "test"));
-        sample.add(new PriorStopWordProcess("30", "It is written in java and scala", "four", "", "test"));
-        sample.add(new PriorStopWordProcess("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test"));
+        sample.add(new PriorStopWordProcess("30", "it is written in java and scala", "four", "", "test"));
+        sample.add(new PriorStopWordProcess("40", "best of luck to zingg mobile/t-mobile", "Five", "thank you", "test"));
 
         return sample;
     }
