@@ -18,9 +18,9 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.HashUtil;
-import zingg.common.core.model.Event;
-import zingg.common.core.model.EventPair;
-import zingg.common.core.data.EventTestData;
+import zingg.common.core.block.data.TestBlockData;
+import zingg.common.core.block.model.Event;
+import zingg.common.core.block.model.EventPair;
 
 public abstract class TestBlockBase<S, D, R, C, T> {
 
@@ -39,8 +39,8 @@ public abstract class TestBlockBase<S, D, R, C, T> {
 	public void testTree() throws Throwable {
 
 		// form tree
-		ZFrame<D, R, C> zFrameEvent = dfObjectUtil.getDFFromObjectList(EventTestData.createSampleEventData(), Event.class);
-		ZFrame<D, R, C> zFrameEventCluster = dfObjectUtil.getDFFromObjectList(EventTestData.createSampleClusterEventData(), EventPair.class);
+		ZFrame<D, R, C> zFrameEvent = dfObjectUtil.getDFFromObjectList(TestBlockData.createSampleEventData(), Event.class);
+		ZFrame<D, R, C> zFrameEventCluster = dfObjectUtil.getDFFromObjectList(TestBlockData.createSampleClusterEventData(), EventPair.class);
 		IArguments args = getArguments();
 
 		Tree<Canopy<R>> blockingTree = blockingTreeUtil.createBlockingTreeFromSample(zFrameEvent, zFrameEventCluster, 0.5, -1,

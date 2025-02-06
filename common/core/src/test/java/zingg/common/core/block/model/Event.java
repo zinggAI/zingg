@@ -1,4 +1,6 @@
-package zingg.common.core.model;
+package zingg.common.core.block.model;
+
+import zingg.common.core.model.EventBase;
 
 public class Event extends EventBase{
 

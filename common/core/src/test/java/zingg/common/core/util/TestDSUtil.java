@@ -1,9 +1,9 @@
 package zingg.common.core.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +24,10 @@ import zingg.common.client.util.DFObjectUtil;
 import zingg.common.client.util.IModelHelper;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.context.Context;
-import zingg.common.core.data.EventTestData;
-import zingg.common.core.model.TestShowConciseData;
-import zingg.common.core.model.TestTrainingData;
-import zingg.common.core.model.TrainingSamplesData;
+import zingg.common.core.util.data.TestDSUtilData;
+import zingg.common.core.util.model.TestShowConciseData;
+import zingg.common.core.util.model.TestTrainingData;
+import zingg.common.core.util.model.TrainingSamplesData;
 
 public abstract class TestDSUtil<S, D, R, C, T> {
 
@@ -68,25 +68,23 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		fieldDef.add(def3);
 
 		IArguments args = null; 
-		try {
-			args = new Arguments();
-			args.setFieldDefinition(fieldDef);
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		
-        ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(EventTestData.getFieldDefnDataForShowConcise(), TestShowConciseData.class);
+		args = new Arguments();
+		args.setFieldDefinition(fieldDef);
+
+        ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getFieldDefnDataForShowConcise(), TestShowConciseData.class);
 
 		List<String> expectedColumns = new ArrayList<String>();
 		expectedColumns.add("field_fuzzy");
 		expectedColumns.add(ColName.SOURCE_COL);
 
 		List<C> colList = context.getDSUtil().getFieldDefColumns(ds, args, false, true);
-
-		assertTrue(expectedColumns.size() == colList.size());
-		for (int i = 0; i < expectedColumns.size(); i++) {
-			assertTrue(expectedColumns.get(i).equals(colList.get(i).toString()));
+		List<String> expectedColList = new ArrayList<String>();
+		for (int i = 0; i < colList.size(); i++) {
+			String s = colList.get(i).toString();
+			expectedColList.add(i,s);
 		};
+
+		assertIterableEquals(expectedColumns, expectedColList);
 	}
 
 	@Test
@@ -115,27 +113,26 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		fieldDef.add(def3);
 
 		IArguments args = null; 
-		try {
-			args = new Arguments();
-			args.setFieldDefinition(fieldDef);
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-        
-		ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(EventTestData.getFieldDefnDataForShowConcise(), TestShowConciseData.class);
+		args = new Arguments();
+		args.setFieldDefinition(fieldDef);
 
-		List<C> colListTest2 = context.getDSUtil().getFieldDefColumns (ds, args, false, false);
+		ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getFieldDefnDataForShowConcise(), TestShowConciseData.class);
+
 		List<String> expectedColumnsTest2 = new ArrayList<String>();
-
 		expectedColumnsTest2.add("field_fuzzy");
 		expectedColumnsTest2.add("field_match_type_DONT_USE");
 		expectedColumnsTest2.add("field_str_DONTspaceUSE");
 		expectedColumnsTest2.add(ColName.SOURCE_COL);
 
-		assertTrue(expectedColumnsTest2.size() == colListTest2.size());
-		for (int i = 0; i < expectedColumnsTest2.size(); i++) {
-			assertTrue(expectedColumnsTest2.get(i).contains(colListTest2.get(i).toString()));
+		List<C> colListTest2 = context.getDSUtil().getFieldDefColumns (ds, args, false, false);
+		List<String> expectedColList2 = new ArrayList<String>();
+		for (int i = 0; i < colListTest2.size(); i++) {
+			String s = colListTest2.get(i).toString();
+			expectedColList2.add(i,s);
 		};
+
+		assertIterableEquals(expectedColumnsTest2, expectedColList2);
+
 	}
 
 	@Test
@@ -151,13 +148,8 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		fieldDef.add(def1);
 
 		IArguments args = null; 
-		try {
-			args = new Arguments();
-			args.setFieldDefinition(fieldDef);
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-
+		args = new Arguments();
+		args.setFieldDefinition(fieldDef);
         args.setTrainingSamples(null);
 
 		PipeUtilBase<S,D,R,C> pipeUtil = mock(PipeUtilBase.class);
@@ -166,14 +158,17 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		Pipe<D,R,C> p = new Pipe<>();
 		when(modelHelper.getTrainingDataMarkedPipe(args)).thenReturn(p);
 
-		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingFile(), TestTrainingData.class);
+		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getTrainingFile(), TestTrainingData.class);
 		
 		when(pipeUtil.read(false, false, p)).thenReturn(trFile1);
-		when(pipeUtil.read(true, false, args.getTrainingSamples())).thenThrow(ZinggClientException.class);
 
 		//when training samples are null
 		ZFrame<D,R,C> trainingData1 = context.getDSUtil().getTraining(pipeUtil, args, p);
+		trFile1 = trFile1.drop(ColName.PREDICTION_COL);
+		trFile1 = trFile1.drop(ColName.SCORE_COL);
 		trainingData1.show();
+		assertTrue(trainingData1.except(trFile1).isEmpty());
+		assertTrue(trFile1.except(trainingData1).isEmpty());
 
 	}
 
@@ -190,12 +185,8 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		fieldDef.add(def1);
 
 		IArguments args = null; 
-		try {
-			args = new Arguments();
-			args.setFieldDefinition(fieldDef);
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
+		args = new Arguments();
+		args.setFieldDefinition(fieldDef);
 
 		//setting training samples
 		Pipe[] trainingSamples = new Pipe[2];
@@ -207,16 +198,58 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		Pipe<D,R,C> p = new Pipe<>();
 		when(modelHelper.getTrainingDataMarkedPipe(args)).thenReturn(p);
 
-		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingFile(), TestTrainingData.class);
-		ZFrame<D,R,C> trSamples1 = dfObjectUtil.getDFFromObjectList(EventTestData.getTrainingSamplesData(), TrainingSamplesData.class);
+		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getTrainingFile(), TestTrainingData.class);
+		ZFrame<D,R,C> trSamples1 = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getTrainingSamplesData(), TrainingSamplesData.class);
 		
 		when(pipeUtil.read(false, false, p)).thenReturn(trFile1);
 		when(pipeUtil.read(true, false, args.getTrainingSamples())).thenReturn(trSamples1);
 
 		ZFrame<D,R,C> trainingData1 = context.getDSUtil().getTraining(pipeUtil, args, p);
+		trFile1 = trFile1.drop(ColName.PREDICTION_COL);
+		trFile1 = trFile1.drop(ColName.SCORE_COL);
+		ZFrame<D,R,C> expTrainingData = trFile1.unionByName(trSamples1, true);
 		trainingData1.show();
 		assertEquals(trainingData1.count(), 6);
+		assertTrue(trainingData1.except(expTrainingData).isEmpty());
+		assertTrue(expTrainingData.except(trainingData1).isEmpty());
 
+	}
+
+	@Test
+	public void testGetTrainingDataWhenTrainingDataIsNull() throws Exception, ZinggClientException{
+	
+		FieldDefinition def1 = new FieldDefinition();
+		def1.setFieldName("field1");
+		def1.setDataType("string");
+		def1.setMatchTypeInternal(MatchType.FUZZY);
+		def1.setFields("field1");
+
+		List<FieldDefinition> fieldDef = new ArrayList<FieldDefinition>();
+		fieldDef.add(def1);
+
+		IArguments args = null; 
+		args = new Arguments();
+		args.setFieldDefinition(fieldDef);
+
+		//setting training samples
+		Pipe[] trainingSamples = new Pipe[2];
+		args.setTrainingSamples(trainingSamples);
+
+		PipeUtilBase<S,D,R,C> pipeUtil = mock(PipeUtilBase.class);
+		Pipe<D,R,C> p = new Pipe<>();
+		ZFrame<D,R,C> trSamples1 = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getTrainingSamplesData(), TrainingSamplesData.class);
+		
+		//training data is null 
+		when(pipeUtil.read(false, false, p)).thenThrow(ZinggClientException.class);
+		when(pipeUtil.read(true, false, args.getTrainingSamples())).thenReturn(trSamples1);
+
+		ZFrame<D,R,C> trainingData1 = context.getDSUtil().getTraining(pipeUtil, args, p);
+		trainingData1.show();
+		assertEquals(trainingData1.count(), 2);
+		assertTrue(trainingData1.except(trSamples1).isEmpty());
+		assertTrue(trSamples1.except(trainingData1).isEmpty());
+	
+	
 	}
 }
     

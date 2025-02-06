@@ -1,4 +1,4 @@
-package zingg.common.core.model;
+package zingg.common.core.util.model;
 
 public class TrainingSamplesData {
     public final String z_cluster;
