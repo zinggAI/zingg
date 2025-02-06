@@ -13,9 +13,9 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.context.IContext;
-import zingg.common.core.preprocess.IPreprocessor;
+import zingg.common.core.preprocess.ISingleFieldPreprocessor;
 
-public abstract class StopWordsRemover<S,D,R,C,T> implements IPreprocessor<S,D,R,C,T>{
+public abstract class StopWordsRemover<S,D,R,C,T> implements ISingleFieldPreprocessor<S,D,R,C,T> {
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.preprocess.stopwords.StopWordsRemover";

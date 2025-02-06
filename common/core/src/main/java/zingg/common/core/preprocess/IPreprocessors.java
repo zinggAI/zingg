@@ -22,20 +22,29 @@ public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, 
 
     public void setArgs(IZArgs args);
 
-    default ZFrame<D,R,C> preprocess(ZFrame<D,R,C> df) throws ZinggClientException { 
-        ZFrame<D,R,C> dfp = df; 
-        try{ 
-            for(FieldDefinition def:((IArguments) getArgs()).getFieldDefinition()){
-                for(IPreprocType o: getPreprocOrder().getOrder()){
-                    //creating new instance of the class
-                    IPreprocessor<S,D,R,C,T> ip = getPreprocMap().get(o).getDeclaredConstructor().newInstance(); 
+    default ZFrame<D,R,C> preprocess(ZFrame<D,R,C> df) throws ZinggClientException {
+        ZFrame<D,R,C> dfp = df;
+        try{
+            for(IPreprocType preprocType: getPreprocOrder().getOrder()) {
+                if (ProcessingType.SINGLE.equals(preprocType.getProcessingType())) {
+                    for(FieldDefinition def:((IArguments) getArgs()).getFieldDefinition()){
+                        //creating new instance of the class
+                        ISingleFieldPreprocessor<S,D,R,C,T> ip = (ISingleFieldPreprocessor<S, D, R, C, T>) getPreprocMap().get(preprocType).getDeclaredConstructor().newInstance();
+                        //setting context and field defn
+                        ip.setContext(getContext());
+                        ip.init();
+                        ip.setFieldDefinition(def);
+                        dfp = ip.preprocess(dfp);
+                    }
+                } else {
+                    IMultiFieldPreprocessor<S,D,R,C,T> ip = (IMultiFieldPreprocessor<S, D, R, C, T>) getPreprocMap().get(preprocType).getDeclaredConstructor().newInstance();
                     //setting context and field defn
                     ip.setContext(getContext());
                     ip.init();
-                    ip.setFieldDefinition(def);
+                    ip.setFieldDefinitions(((IArguments) getArgs()).getFieldDefinition());
                     dfp = ip.preprocess(dfp);
                 }
-            }  
+            }
         }
         catch(Exception e){
             e.printStackTrace();
