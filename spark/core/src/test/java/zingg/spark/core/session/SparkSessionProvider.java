@@ -35,7 +35,7 @@ public class SparkSessionProvider {
                         .config("spark.driver.memory", sparkDriverMemory)
                         .getOrCreate();
                 SparkContext sparkContext = sparkSession.sparkContext();
-                long driverMemory = sparkContext.getConf().getSizeAsBytes("spark.driver.memory", 0);
+                long driverMemory = sparkContext.getConf().getSizeAsGb("spark.driver.memory", "0");
                 System.out.println("Spark driver memory: " + driverMemory + " bytes");
                 if (sparkContext.getCheckpointDir().isEmpty()) {
                     sparkContext.setCheckpointDir("/tmp/checkpoint");
