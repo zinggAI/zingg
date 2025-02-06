@@ -23,11 +23,16 @@ public class SparkSessionProvider {
     private void initializeSession() {
         if (sparkSession == null) {
             try {
+                String sparkDriverMemory = System.getenv("SPARK_DRIVER_MEMORY");
+                if (sparkDriverMemory == null) {
+                    sparkDriverMemory = "1g";
+                }
                 sparkSession = SparkSession
                         .builder()
                         .master("local[*]")
                         .appName("ZinggJunit")
                         .config("spark.debug.maxToStringFields", 100)
+                        .config("spark.driver.memory", sparkDriverMemory)
                         .getOrCreate();
                 SparkContext sparkContext = sparkSession.sparkContext();
                 if (sparkContext.getCheckpointDir().isEmpty()) {
