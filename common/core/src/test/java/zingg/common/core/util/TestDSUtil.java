@@ -32,8 +32,8 @@ import zingg.common.core.util.model.TrainingSamplesData;
 public abstract class TestDSUtil<S, D, R, C, T> {
 
     public static final Log LOG = LogFactory.getLog(TestDSUtil.class);
-    private final DFObjectUtil<S, D, R, C> dfObjectUtil;
-	private final Context<S, D, R, C, T> context;
+    protected final DFObjectUtil<S, D, R, C> dfObjectUtil;
+	protected final Context<S, D, R, C, T> context;
 
 	public TestDSUtil(DFObjectUtil<S, D, R, C> dfObjectUtil, Context<S, D, R, C, T> context) throws ZinggClientException {
 		this.dfObjectUtil = dfObjectUtil;
