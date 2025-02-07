@@ -43,4 +43,9 @@ public class TestSparkDSUtil extends TestDSUtil<SparkSession, Dataset<Row>, Row,
 		return colNamesList;
 	}
 
+	@Override
+	public List<String> getExpectedColNames(List<String> col) {
+		return col;
+	}
+
 }

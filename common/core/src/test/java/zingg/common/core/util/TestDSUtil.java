@@ -41,6 +41,8 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 	}
 
 	public abstract List<String> getColNames(List<C> col);
+
+	public abstract List<String> getExpectedColNames(List<String> col);
 	
 
 	@Test
@@ -78,11 +80,12 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		List<String> expectedColumns = new ArrayList<String>();
 		expectedColumns.add("field_fuzzy");
 		expectedColumns.add(ColName.SOURCE_COL);
+		List<String> expectedColumnsList = getExpectedColNames(expectedColumns);
 
 		List<C> colList = context.getDSUtil().getFieldDefColumns(ds, args, false, true);
 		List<String> expectedColList = getColNames(colList);
 
-		assertIterableEquals(expectedColumns, expectedColList);
+		assertIterableEquals(expectedColumnsList, expectedColList);
 	}
 
 	@Test
@@ -121,11 +124,12 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		expectedColumnsTest2.add("field_match_type_DONT_USE");
 		expectedColumnsTest2.add("field_str_DONTspaceUSE");
 		expectedColumnsTest2.add(ColName.SOURCE_COL);
+		List<String> expectedColumnsTestList2 = getExpectedColNames(expectedColumnsTest2);
 
 		List<C> colListTest2 = context.getDSUtil().getFieldDefColumns (ds, args, false, false);
 		List<String> expectedColList2 = getColNames(colListTest2);
 
-		assertIterableEquals(expectedColumnsTest2, expectedColList2);
+		assertIterableEquals(expectedColumnsTestList2, expectedColList2);
 
 	}
 
