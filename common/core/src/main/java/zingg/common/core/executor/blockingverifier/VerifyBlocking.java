@@ -41,12 +41,11 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			ZFrame<D,R,C> blocked = getBlockedData(testDataOriginal);
 			LOG.info("Blocked");
 			
-			ZFrame<D,R,C> blockCounts = blocked.select(ColName.HASH_COL).groupByCount(ColName.HASH_COL, ColName.HASH_COUNTS_COL).sortDescending(ColName.HASH_COUNTS_COL);
-			blockCounts = blockCounts.cache();
+			ZFrame<D,R,C> blockCounts = blocked.select(ColName.HASH_COL).groupByCount(ColName.HASH_COL, ColName.HASH_COUNTS_COL);
 			
             getPipeUtil().write(blockCounts,getVerifyBlockingPipeUtil().getCountsPipe(args));	
 
-			ZFrame<D,R,C> blockTopRec = blockCounts.select(ColName.HASH_COL,ColName.HASH_COUNTS_COL).limit(noOfBlocks);
+			ZFrame<D,R,C> blockTopRec = blockCounts.select(ColName.HASH_COL,ColName.HASH_COUNTS_COL).sortDescending(ColName.HASH_COUNTS_COL).limit(noOfBlocks);
 
 			getBlockSamples(blocked, blockTopRec,verifyBlockingPipeUtil);
 			
@@ -54,7 +53,6 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			if (LOG.isDebugEnabled()){
 				e.printStackTrace();
 			}
-			e.printStackTrace();
 			throw new ZinggClientException(e.getMessage());
 		}
     
