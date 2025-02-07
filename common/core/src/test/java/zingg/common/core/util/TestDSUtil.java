@@ -25,8 +25,8 @@ import zingg.common.client.util.IModelHelper;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.context.Context;
 import zingg.common.core.util.data.TestDSUtilData;
-import zingg.common.core.util.model.TestShowConciseData;
-import zingg.common.core.util.model.TestTrainingData;
+import zingg.common.core.util.model.FieldDefnForShowConciseData;
+import zingg.common.core.util.model.TrainingData;
 import zingg.common.core.util.model.TrainingSamplesData;
 
 public abstract class TestDSUtil<S, D, R, C, T> {
@@ -39,6 +39,8 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		this.dfObjectUtil = dfObjectUtil;
 		this.context = context;
 	}
+
+	public abstract List<String> getColNames(List<C> col);
 	
 
 	@Test
@@ -71,18 +73,14 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		args = new Arguments();
 		args.setFieldDefinition(fieldDef);
 
-        ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getFieldDefnDataForShowConcise(), TestShowConciseData.class);
+        ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getFieldDefnDataForShowConcise(), FieldDefnForShowConciseData.class);
 
 		List<String> expectedColumns = new ArrayList<String>();
 		expectedColumns.add("field_fuzzy");
 		expectedColumns.add(ColName.SOURCE_COL);
 
 		List<C> colList = context.getDSUtil().getFieldDefColumns(ds, args, false, true);
-		List<String> expectedColList = new ArrayList<String>();
-		for (int i = 0; i < colList.size(); i++) {
-			String s = colList.get(i).toString();
-			expectedColList.add(i,s);
-		};
+		List<String> expectedColList = getColNames(colList);
 
 		assertIterableEquals(expectedColumns, expectedColList);
 	}
@@ -116,7 +114,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		args = new Arguments();
 		args.setFieldDefinition(fieldDef);
 
-		ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getFieldDefnDataForShowConcise(), TestShowConciseData.class);
+		ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getFieldDefnDataForShowConcise(), FieldDefnForShowConciseData.class);
 
 		List<String> expectedColumnsTest2 = new ArrayList<String>();
 		expectedColumnsTest2.add("field_fuzzy");
@@ -125,11 +123,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		expectedColumnsTest2.add(ColName.SOURCE_COL);
 
 		List<C> colListTest2 = context.getDSUtil().getFieldDefColumns (ds, args, false, false);
-		List<String> expectedColList2 = new ArrayList<String>();
-		for (int i = 0; i < colListTest2.size(); i++) {
-			String s = colListTest2.get(i).toString();
-			expectedColList2.add(i,s);
-		};
+		List<String> expectedColList2 = getColNames(colListTest2);
 
 		assertIterableEquals(expectedColumnsTest2, expectedColList2);
 
@@ -158,7 +152,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		Pipe<D,R,C> p = new Pipe<>();
 		when(modelHelper.getTrainingDataMarkedPipe(args)).thenReturn(p);
 
-		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getTrainingFile(), TestTrainingData.class);
+		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getTrainingFile(), TrainingData.class);
 		
 		when(pipeUtil.read(false, false, p)).thenReturn(trFile1);
 
@@ -166,7 +160,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		ZFrame<D,R,C> trainingData1 = context.getDSUtil().getTraining(pipeUtil, args, p);
 		trFile1 = trFile1.drop(ColName.PREDICTION_COL);
 		trFile1 = trFile1.drop(ColName.SCORE_COL);
-		trainingData1.show();
+		
 		assertTrue(trainingData1.except(trFile1).isEmpty());
 		assertTrue(trFile1.except(trainingData1).isEmpty());
 
@@ -198,7 +192,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		Pipe<D,R,C> p = new Pipe<>();
 		when(modelHelper.getTrainingDataMarkedPipe(args)).thenReturn(p);
 
-		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getTrainingFile(), TestTrainingData.class);
+		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getTrainingFile(), TrainingData.class);
 		ZFrame<D,R,C> trSamples1 = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getTrainingSamplesData(), TrainingSamplesData.class);
 		
 		when(pipeUtil.read(false, false, p)).thenReturn(trFile1);
@@ -208,7 +202,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		trFile1 = trFile1.drop(ColName.PREDICTION_COL);
 		trFile1 = trFile1.drop(ColName.SCORE_COL);
 		ZFrame<D,R,C> expTrainingData = trFile1.unionByName(trSamples1, true);
-		trainingData1.show();
+		
 		assertEquals(trainingData1.count(), 6);
 		assertTrue(trainingData1.except(expTrainingData).isEmpty());
 		assertTrue(expTrainingData.except(trainingData1).isEmpty());
@@ -244,7 +238,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		when(pipeUtil.read(true, false, args.getTrainingSamples())).thenReturn(trSamples1);
 
 		ZFrame<D,R,C> trainingData1 = context.getDSUtil().getTraining(pipeUtil, args, p);
-		trainingData1.show();
+		
 		assertEquals(trainingData1.count(), 2);
 		assertTrue(trainingData1.except(trSamples1).isEmpty());
 		assertTrue(trSamples1.except(trainingData1).isEmpty());

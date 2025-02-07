@@ -1,7 +1,5 @@
 package zingg.common.core.block.model;
 
-import zingg.common.core.model.EventBase;
-
 public class EventPair extends EventBase{
     public final Integer z_year;
     public final String z_event;

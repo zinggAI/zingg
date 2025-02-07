@@ -1,5 +1,8 @@
 package zingg.spark.core.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.sql.Column;
@@ -28,6 +31,16 @@ public class TestSparkDSUtil extends TestDSUtil<SparkSession, Dataset<Row>, Row,
 		super(new SparkDFObjectUtil(iWithSession), zinggSparkContext);
 		iWithSession.setSession(sparkSession);
 		zinggSparkContext.init(sparkSession);
+	}
+
+	@Override
+	public List<String> getColNames(List<Column> col) {
+		List<String> colNamesList = new ArrayList<String>();
+		for (int i = 0; i < col.size(); i++) {
+			String s = col.get(i).toString();
+			colNamesList.add(i,s);
+		}
+		return colNamesList;
 	}
 
 }
