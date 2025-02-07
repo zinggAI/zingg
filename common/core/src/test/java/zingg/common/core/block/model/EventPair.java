@@ -1,4 +1,4 @@
-package zingg.common.core.model;
+package zingg.common.core.block.model;
 
 public class EventPair extends EventBase{
     public final Integer z_year;

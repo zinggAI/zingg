@@ -1,6 +1,7 @@
-package zingg.common.core.model;
+package zingg.common.core.block.model;
 
 public class EventBase {
+    
     public final Integer id;
     public final Integer year;
     public final String event;
