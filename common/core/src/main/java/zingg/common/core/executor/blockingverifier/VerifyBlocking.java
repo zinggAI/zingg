@@ -46,7 +46,6 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
             getPipeUtil().write(blockCounts,getVerifyBlockingPipeUtil().getCountsPipe(args));	
 
 			ZFrame<D,R,C> blockTopRec = blockCounts.select(ColName.HASH_COL,ColName.HASH_COUNTS_COL).sortDescending(ColName.HASH_COUNTS_COL).limit(noOfBlocks);
-			blockTopRec = blockTopRec.cache();
 
 			getBlockSamples(blocked, blockTopRec,verifyBlockingPipeUtil);
 			
