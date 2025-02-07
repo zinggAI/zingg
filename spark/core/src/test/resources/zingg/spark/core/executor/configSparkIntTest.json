@@ -1,4 +1,15 @@
-{	
+{
+	"trainingSamples" : [{
+		"name":"trainingPos", 
+		"format":"csv", 
+		"props": {
+			"location": "./zingg/spark/core/executor/training.csv",
+			"delimiter": ",",
+			"header":false,
+			"badRecordsPath":"/tmp/bad"					
+			},
+		"schema": "z_cluster string, z_ismatch integer, id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
+		}],	
 	"fieldDefinition":[
 		{
 			"fieldName" : "id",
