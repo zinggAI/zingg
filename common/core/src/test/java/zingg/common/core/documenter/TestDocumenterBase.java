@@ -1,4 +1,4 @@
-package zingg.spark.core.documenter;
+package zingg.common.core.documenter;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,48 +14,36 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZinggClientException;
-import zingg.common.core.documenter.DocumenterBase;
-import zingg.common.core.documenter.TemplateFields;
-import zingg.spark.core.TestSparkBase;
-import zingg.spark.core.context.ZinggSparkContext;
+import zingg.common.core.context.Context;
+import zingg.common.core.context.IContext;
 
+public abstract class TestDocumenterBase<S,D,R,C,T> {
 
-@ExtendWith(TestSparkBase.class)
-public class TestDocumenterBase {
-	public static final Log LOG = LogFactory.getLog(TestDocumenterBase.class);
-	private final String TEST_DOC_TEMPLATE = "documenter/testDocumenterTemplate.ftlh";
+    public static final Log LOG = LogFactory.getLog(TestDocumenterBase.class);
+	protected final Context<S, D, R, C, T> context;
+    private final String TEST_DOC_TEMPLATE = "documenter/testDocumenterTemplate.ftlh";
 	public ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
 	private IArguments docArguments = new Arguments();
-	private final SparkSession sparkSession;
-	private final ZinggSparkContext zinggSparkContext;
-	private final IArguments args;
+    private final IArguments args = new Arguments();
 
-
-	public TestDocumenterBase(SparkSession sparkSession) throws ZinggClientException {
-		this.sparkSession = sparkSession;
-		zinggSparkContext = new ZinggSparkContext();
-		zinggSparkContext.init(sparkSession);
-		args = new Arguments();
+    public TestDocumenterBase(Context<S, D, R, C, T> context) throws ZinggClientException {
+		this.context = context;
 	}
 
-	@DisplayName ("Test Column is a Z column or not")
+    public abstract DocumenterBase<S,D,R,C,T> getDocumenter(IContext<S,D,R,C,T> context, IArguments args, ClientOptions options);
+
+    @DisplayName ("Test Column is a Z column or not")
 	@Test
 	public void testIfColumnIsZColumn() throws Throwable {
-		DocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType> base = new SparkModelDocumenter(zinggSparkContext, docArguments, new ClientOptions());
+		DocumenterBase<S,D,R,C,T> base = getDocumenter(context, docArguments, new ClientOptions());
 		String aZColumn = "z_sampleColumn";
 		
 		assertTrue(base.isZColumn(aZColumn), "Column is not a Z column");
@@ -67,7 +55,7 @@ public class TestDocumenterBase {
 	@DisplayName ("Test if a directory already exists else it is created")
 	@Test
 	public void testIfDirectoryAlreadyExistsElseCreate() throws Throwable {
-		DocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType> base = new SparkModelDocumenter(zinggSparkContext, args, new ClientOptions());
+		DocumenterBase<S,D,R,C,T> base = getDocumenter(context, args, new ClientOptions());
 		base.checkAndCreateDir(args.getZinggDir());
 		assertTrue(Files.exists(Paths.get(args.getZinggDir())), "The directory doesn't exist");
 		base.checkAndCreateDir("/an/invalid/dir");
@@ -78,7 +66,7 @@ public class TestDocumenterBase {
 	@Test
 	public void testProcessTemplateToMakeDocument() throws Throwable {
 		
-		DocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType> base = new SparkModelDocumenter(zinggSparkContext, args, new ClientOptions());
+		DocumenterBase<S,D,R,C,T> base = getDocumenter(context, args, new ClientOptions());
 		base.checkAndCreateDir(args.getZinggDir());
 
 		Map<String, Object> root = new HashMap<String, Object>();
@@ -100,4 +88,5 @@ public class TestDocumenterBase {
 		assertTrue(content.contains("zingg"));
 		assertTrue(content.contains("template test"));
 	}
+    
 }
