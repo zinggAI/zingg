@@ -1,4 +1,4 @@
-package zingg.spark.core.recommender;
+package zingg.common.core.recommender;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,52 +10,37 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.RowFactory;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.DataTypes;
-import org.apache.spark.sql.types.StructType;
 import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.client.Arguments;
 import zingg.common.client.IArguments;
+import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.core.recommender.StopWordsRecommender;
-import zingg.spark.client.SparkFrame;
-import zingg.spark.core.TestSparkBase;
-import zingg.spark.core.context.ZinggSparkContext;
+import zingg.common.client.util.DFObjectUtil;
+import zingg.common.core.context.Context;
+import zingg.common.core.context.IContext;
+import zingg.common.core.recommender.model.Records;
+import zingg.common.core.recommender.model.WordByCount;
 
-@ExtendWith(TestSparkBase.class)
-public class TestStopWordsRecommender {
+public abstract class TestStopWordsRecommenderBase<S, D, R, C, T> {
 
-	private final IArguments arguments;
-	private final SparkSession sparkSession;
-	private final ZinggSparkContext zinggSparkContext;
-	private final StopWordsRecommender recommender;
-	private static final int NO_OF_RECORDS = 5;
-	private final Dataset<Row> dataset;
-	private List<Row> stopwordRow;
-	private List<String> stopwordList;
-	private Dataset<Row> stopWords;
-	private static final String COL_STOPWORDS = "stopwords";
-	public static final Log LOG = LogFactory.getLog(TestStopWordsRecommender.class);
+    public static final Log LOG = LogFactory.getLog(TestStopWordsRecommenderBase.class);
+    protected final Context<S, D, R, C, T> context;
+    protected final DFObjectUtil<S, D, R, C> dfObjectUtil;
+    protected final IArguments arguments = new Arguments();
+    protected static final int NO_OF_RECORDS = 5;
+	protected List<R> stopwordRow = new ArrayList<R>();
+	protected List<String> stopwordList = new ArrayList<String>();
+	protected static final String COL_STOPWORDS = "stopwords";
+    private final StopWordsRecommender<S,D,R,C,T> recommender;
 
+    public TestStopWordsRecommenderBase(DFObjectUtil<S, D, R, C> dfObjectUtil, Context<S,D,R,C,T> context){
+	    this.dfObjectUtil = dfObjectUtil;
+        this.context = context;
+        this.recommender = getRecommender(context,arguments);
+    }
 
-	public TestStopWordsRecommender(SparkSession sparkSession) throws ZinggClientException {
-		this.sparkSession = sparkSession;
-		this.zinggSparkContext = new ZinggSparkContext();
-		this.zinggSparkContext.init(sparkSession);
-		this.arguments = new Arguments();
-		this.recommender = new SparkStopWordsRecommender(zinggSparkContext, arguments);
-		this.dataset = createDFWithGivenStopWords();
-		this.stopwordRow= new ArrayList<Row>();
-		this.stopwordList = new ArrayList<String>();
-	}
-
-
-	@Test
+    @Test
     public void testWithNegativefCuttoff() throws Throwable{
         try {
 			LOG.info("Test with stopCutoff = -1");
@@ -140,25 +125,20 @@ public class TestStopWordsRecommender {
 		assertEquals(9, stopwordList.size());
 	}
 
-	/* creates list of string countaining recommended stopwords based on stopWordsCutoff */
-	public List<String> getStopWordList(float cutoff ) throws Throwable {
-		//create stopwords dataset and display according to stopWordsCutoff
-		arguments.setStopWordsCutoff(cutoff);
-		stopWords = ((SparkFrame)(recommender.findStopWords(new SparkFrame(dataset), COL_STOPWORDS))).df();
-		//stopWords.show();
+    public abstract StopWordsRecommender<S,D,R,C,T> getRecommender(IContext<S, D, R, C, T> context, IArguments args);
 
-		//convert spark Dataset<Row> into java List<Row>
-		stopwordRow = stopWords.collectAsList();
+    public abstract ZFrame<D,R,C> getStopWordsDataset(ZFrame<D,R,C> dataset);
 
-		//convert list of Row containing word,count to list of String containing only stopword
-		List<String> stopwordsList = new ArrayList<String>();
-		for(Row r: stopwordRow){
-			stopwordsList.add(r.getString(0));
-		}
-		return stopwordsList;
+    public abstract String getStopWordColName();
+
+    /* join list elements */
+	public static String getStringFromList(List<String> strs) {
+		return strs.stream().reduce((p1, p2) -> p1 + " " + p2)
+				.map(Object::toString)
+				.orElse("");
 	}
 
-	/* method to check if words in List of String arr are recommended or not */
+    /* method to check if words in List of String arr are recommended or not */
 	public Boolean validTestWithStopWords(List<String> stopwordList, List<String> arr){
 		for(String r: stopwordList){
 			if(!arr.contains(r)){
@@ -168,10 +148,44 @@ public class TestStopWordsRecommender {
 		return true;
 	}
 
+    /* Breaks WordByCount object's 'count' Variable into 'm' random numbers such that sum(arr[m]) = count */
+	public static int[][] randomDistributionList(int m, List<WordByCount> wbc) {
+		int[][] arr=new int[m][wbc.size()];
+		for (WordByCount c:wbc) {
+            for(int i = 0; i < c.z_count; i++){
+				arr[(int) (Math.random() * m)][wbc.indexOf(c)]++;
+            }
+		}
+		return arr;
+	}
+
+	/* creates list of string countaining recommended stopwords based on stopWordsCutoff */
+	public List<String> getStopWordList(float cutoff) throws Throwable {
+
+        ZFrame<D,R,C> dataset = createDFWithGivenStopWords();
+
+		//create stopwords dataset and display according to stopWordsCutoff
+		arguments.setStopWordsCutoff(cutoff);
+		ZFrame<D,R,C> stopWords = recommender.findStopWords(getStopWordsDataset(dataset), COL_STOPWORDS);
+		//stopWords.show();
+
+		//convert spark Dataset<Row> into java List<Row>
+		stopwordRow = stopWords.collectAsList();
+
+		//convert list of Row containing word,count to list of String containing only stopword
+		List<String> stopwordsList = new ArrayList<String>();
+		for(R r: stopwordRow){
+            String s = stopWords.getAsString(r,getStopWordColName());
+			stopwordsList.add(s);
+		}
+		return stopwordsList;
+	}
+
+
 	/* creates a dataframe for given words and their frequency*/
-	public Dataset<Row> createDFWithGivenStopWords() {
+	public ZFrame<D,R,C> createDFWithGivenStopWords() throws Exception {
 		//Initialize WordByCount list and add all the (word,count) one by one.
-		List<WordByCount> wordCount=new ArrayList<WordByCount>();
+		List<WordByCount> wordCount= new ArrayList<WordByCount>();
 		wordCount.add(new WordByCount("the", 44));
 		wordCount.add(new WordByCount("of", 27));
 		wordCount.add(new WordByCount("was", 11));
@@ -183,48 +197,23 @@ public class TestStopWordsRecommender {
 		wordCount.add(new WordByCount("iceberg", 1));
 
 		//fill wordDistribution per word in the list of words where row is NO_OF_RECORDS, each column represents a word 
-		int[][] wordDistribution=randomDistributionList(NO_OF_RECORDS,wordCount);
+		int[][] wordDistribution = randomDistributionList(NO_OF_RECORDS,wordCount);
 
 		//add stopwords as per calulcated random distribution to each record
-		List<Row> records = new ArrayList<Row>();
+		List<Records> records = new ArrayList<Records>();
 		for (int index = 0; index < NO_OF_RECORDS; index++) {
 			List<String> strList = new ArrayList<String>();
 			for(WordByCount wc: wordCount){
 				strList.addAll(Collections.nCopies(wordDistribution[index][wordCount.indexOf(wc)],wc.z_word));
 			}
-			records.add(RowFactory.create(getStringFromList(strList)));
+			records.add(new Records(getStringFromList(strList)));
 		}
-		//schema definition
-		StructType structType = new StructType();
-		structType = structType.add(DataTypes.createStructField(COL_STOPWORDS, DataTypes.StringType, false));
-		//create dataframe with given records and schema
-		Dataset<Row> recordDF = sparkSession.createDataFrame(records, structType);
+		
+		//create dataframe with given records
+		ZFrame<D,R,C> recordDF = dfObjectUtil.getDFFromObjectList(records, Records.class);
 		return recordDF;
 	}
-	/* WordByCount class containing word,count variable*/
-	class WordByCount{
-		String z_word;
-		Integer z_count;
-		public WordByCount(String word, Integer count){
-			this.z_word = word;
-			this.z_count = count;
-		}
-	}
-
-	/* join list elements */
-	public static String getStringFromList(List<String> strs) {
-		return strs.stream().reduce((p1, p2) -> p1 + " " + p2)
-				.map(Object::toString)
-				.orElse("");
-	}
-	/* Breaks WordByCount object's 'count' Variable into 'm' random numbers such that sum(arr[m]) = count */
-	public static int[][] randomDistributionList(int m, List<WordByCount> wbc) {
-		int[][] arr=new int[m][wbc.size()];
-		for (WordByCount c:wbc) {
-            for(int i = 0; i < c.z_count; i++){
-				arr[(int) (Math.random() * m)][wbc.indexOf(c)]++;
-            }
-		}
-		return arr;
-	}
-} 
+	
+	
+    
+}
