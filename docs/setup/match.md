@@ -2,11 +2,10 @@
 title: Find the matches
 parent: Step By Step Guide
 nav_order: 9
+description: Finds the records that match with each other.
 ---
 
 # Finding The Matches
-
-## Finds the records that match with each other.
 
 `./zingg.sh --phase match --conf config.json`
 
