@@ -24,7 +24,7 @@ import zingg.common.client.util.DFObjectUtil;
 import zingg.common.client.util.IModelHelper;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.context.Context;
-import zingg.common.core.util.data.TestDSUtilData;
+import zingg.common.core.util.data.DSUtilData;
 import zingg.common.core.util.model.FieldDefnForShowConciseData;
 import zingg.common.core.util.model.TrainingData;
 import zingg.common.core.util.model.TrainingSamplesData;
@@ -75,7 +75,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		args = new Arguments();
 		args.setFieldDefinition(fieldDef);
 
-        ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getFieldDefnDataForShowConcise(), FieldDefnForShowConciseData.class);
+        ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(DSUtilData.getFieldDefnDataForShowConcise(), FieldDefnForShowConciseData.class);
 
 		List<String> expectedColumns = new ArrayList<String>();
 		expectedColumns.add("field_fuzzy");
@@ -117,7 +117,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		args = new Arguments();
 		args.setFieldDefinition(fieldDef);
 
-		ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getFieldDefnDataForShowConcise(), FieldDefnForShowConciseData.class);
+		ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(DSUtilData.getFieldDefnDataForShowConcise(), FieldDefnForShowConciseData.class);
 
 		List<String> expectedColumnsTest2 = new ArrayList<String>();
 		expectedColumnsTest2.add("field_fuzzy");
@@ -156,7 +156,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		Pipe<D,R,C> p = new Pipe<>();
 		when(modelHelper.getTrainingDataMarkedPipe(args)).thenReturn(p);
 
-		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getTrainingFile(), TrainingData.class);
+		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(DSUtilData.getTrainingFile(), TrainingData.class);
 		
 		when(pipeUtil.read(false, false, p)).thenReturn(trFile1);
 
@@ -196,8 +196,8 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		Pipe<D,R,C> p = new Pipe<>();
 		when(modelHelper.getTrainingDataMarkedPipe(args)).thenReturn(p);
 
-		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getTrainingFile(), TrainingData.class);
-		ZFrame<D,R,C> trSamples1 = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getTrainingSamplesData(), TrainingSamplesData.class);
+		ZFrame<D,R,C> trFile1 = dfObjectUtil.getDFFromObjectList(DSUtilData.getTrainingFile(), TrainingData.class);
+		ZFrame<D,R,C> trSamples1 = dfObjectUtil.getDFFromObjectList(DSUtilData.getTrainingSamplesData(), TrainingSamplesData.class);
 		
 		when(pipeUtil.read(false, false, p)).thenReturn(trFile1);
 		when(pipeUtil.read(true, false, args.getTrainingSamples())).thenReturn(trSamples1);
@@ -235,7 +235,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 
 		PipeUtilBase<S,D,R,C> pipeUtil = mock(PipeUtilBase.class);
 		Pipe<D,R,C> p = new Pipe<>();
-		ZFrame<D,R,C> trSamples1 = dfObjectUtil.getDFFromObjectList(TestDSUtilData.getTrainingSamplesData(), TrainingSamplesData.class);
+		ZFrame<D,R,C> trSamples1 = dfObjectUtil.getDFFromObjectList(DSUtilData.getTrainingSamplesData(), TrainingSamplesData.class);
 		
 		//training data is null 
 		when(pipeUtil.read(false, false, p)).thenThrow(ZinggClientException.class);

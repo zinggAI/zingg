@@ -7,7 +7,7 @@ import zingg.common.core.util.model.FieldDefnForShowConciseData;
 import zingg.common.core.util.model.TrainingData;
 import zingg.common.core.util.model.TrainingSamplesData;
 
-public class TestDSUtilData {
+public class DSUtilData {
 
     public static List<TrainingSamplesData> getTrainingSamplesData() {
 

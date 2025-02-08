@@ -7,7 +7,6 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ColValues;
-import zingg.common.client.util.IModelHelper;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;

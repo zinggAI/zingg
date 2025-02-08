@@ -6,7 +6,7 @@ import java.util.List;
 import zingg.common.core.block.model.EventBase;
 import zingg.common.core.block.model.EventPair;
 
-public class TestBlockBaseData {
+public class BlockBaseData {
 
     public static List<EventBase> createSampleEventData() {
 
