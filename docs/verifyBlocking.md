@@ -30,4 +30,4 @@ In the **Zingg Enterprise** version, all the blocks are persisted and we get the
 
 For  **Zingg Enterprise for Snowflake**, verifyBlocking generates tables with the names:
 
-`zingg_modelId_blocks_timestamp_counts` where we can see the counts per block and `zingg_modelId_blocks_timestamp_blockSamples_hash` where we can see the top 10% records associated with the top 3 blocks by counts in these tables respectively.
+`zingg_modelId_blocks_timestamp_counts` where we can see the counts per block and `zingg_modelId_blocks_timestamp_blockSamples_hash` where we can see the records associated with the blocks.
