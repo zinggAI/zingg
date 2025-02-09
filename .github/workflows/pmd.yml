@@ -24,7 +24,3 @@ jobs:
         with:
           rulesets: 'pmd/resources/rulesets/java/quickstart.xml'
           analyzeModifiedFilesOnly: false
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v1
-        with:
-          sarif_file: pmd-report.sarif
