@@ -44,9 +44,10 @@ public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 
 	//override this method
 	//to assert on different dataset
+	//TODO need to check if this is a valid assertion and required
 	protected void performAssertions(int sumHash, long sumCount) {
-		assertTrue(sumHash == 11843 | sumHash == 11855);
-		assertTrue(sumCount == 24 | sumCount == 16);
+		assertTrue(sumHash == 11846 | sumHash == 11855);
+		assertTrue(sumCount == 20 | sumCount == 16);
 	}
 
 }

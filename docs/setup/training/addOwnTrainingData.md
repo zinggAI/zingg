@@ -3,11 +3,10 @@ parent: Creating training data
 nav_order: 3
 title: Using preexisting training data
 grand_parent: Step By Step Guide
+description: Supplementing Zingg With Existing Training Data
 ---
 
 # Using Pre-existing Training Data
-
-## Supplementing Zingg With Existing Training Data
 
 If you already have some training data that you want to start with, you can use that as well with Zingg. Add an attribute **trainingSamples** to the config and define the training pairs.
 
