@@ -11,37 +11,25 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.core.context.Context;
 import zingg.common.core.util.IDataFrameUtility;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class TestTrainer<S,D,R,C,T> {
     
     protected final Context<S, D, R, C, T> context;
-
+    
     public TestTrainer(Context<S,D,R,C,T> context) {
         this.context = context;
-    }
-    
-    public ZFrame<D,R,C> tenRowsDF;
-    public ZFrame<D,R,C> oneRowsDF;
-
-    @BeforeAll
-    public void setupDF() {
-        tenRowsDF = getDataFrameUtility().createDFWithDoubles(10,1, context.getSession());
-        oneRowsDF = getDataFrameUtility().createDFWithDoubles(1,1, context.getSession());
     }
 
     public abstract Trainer<S,D,R,C,T> getTestTrainer();
 
-    public abstract IDataFrameUtility<S,D,R,C,T> getDataFrameUtility();
+    public abstract ZFrame<D,R,C> getTenRowsDF();
 
-    public abstract ZFrame<D,R,C> getTenRowsDF(ZFrame<D,R,C> tenRowsDF);
-
-    public abstract ZFrame<D,R,C> getOneRowsDF(ZFrame<D,R,C> oneRowsDF);
+    public abstract ZFrame<D,R,C> getOneRowsDF();
 
     @Test
     public void testVerifyTrainingPosDatasetLess() throws Throwable{
         try {
             Trainer<S,D,R,C,T> trainer = getTestTrainer();
-            trainer.verifyTraining(getOneRowsDF(oneRowsDF), getTenRowsDF(tenRowsDF));
+            trainer.verifyTraining(getOneRowsDF(), getTenRowsDF());
             fail("Expected exception not getting thrown when training data is less");
         }
         catch(ZinggClientException e) {
@@ -53,7 +41,7 @@ public abstract class TestTrainer<S,D,R,C,T> {
     public void testVerifyTrainingNegDatasetLess() throws Throwable{
         try {
             Trainer<S,D,R,C,T> trainer = getTestTrainer();
-            trainer.verifyTraining(getTenRowsDF(tenRowsDF), getOneRowsDF(oneRowsDF));
+            trainer.verifyTraining(getTenRowsDF(), getOneRowsDF());
             fail("Expected exception not getting thrown when training data is less");
         }
         catch(ZinggClientException e) {
@@ -65,7 +53,7 @@ public abstract class TestTrainer<S,D,R,C,T> {
     public void testVerifyTrainingBothDatasetLess() throws Throwable{
         try {
             Trainer<S,D,R,C,T> trainer = getTestTrainer();
-            trainer.verifyTraining(getOneRowsDF(oneRowsDF), getOneRowsDF(oneRowsDF));
+            trainer.verifyTraining(getOneRowsDF(), getOneRowsDF());
             fail("Expected exception not getting thrown when training data is less");
         }
         catch(ZinggClientException e) {
@@ -78,7 +66,7 @@ public abstract class TestTrainer<S,D,R,C,T> {
     public void testVerifyTrainingBothDatasetMore() throws Throwable{
         try {
             Trainer<S,D,R,C,T> trainer = getTestTrainer();
-            trainer.verifyTraining(getTenRowsDF(tenRowsDF), getTenRowsDF(tenRowsDF));
+            trainer.verifyTraining(getTenRowsDF(), getTenRowsDF());
             
         }
         catch(ZinggClientException e) {
