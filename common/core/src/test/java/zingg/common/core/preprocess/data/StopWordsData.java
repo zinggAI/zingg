@@ -7,7 +7,7 @@ import zingg.common.core.preprocess.model.PostStopWordProcess;
 import zingg.common.core.preprocess.model.PriorStopWordProcess;
 import zingg.common.core.preprocess.model.Statement;
 
-public class TestStopWordsData {
+public class StopWordsData {
 
     public static List<Statement> getData1Original() {
 
