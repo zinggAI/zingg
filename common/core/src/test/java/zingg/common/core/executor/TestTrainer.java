@@ -1,15 +1,11 @@
 package zingg.common.core.executor;
 
 import static org.junit.jupiter.api.Assertions.fail;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.context.Context;
-import zingg.common.core.util.IDataFrameUtility;
 
 public abstract class TestTrainer<S,D,R,C,T> {
     
