@@ -80,7 +80,7 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements Serializable{
 	}
     
 	// implementation specific as may require UDF
-	protected abstract ZFrame<D,R,C> removeStopWordsFromDF(ZFrame<D,R,C> ds,String fieldName, String pattern);
+	public abstract ZFrame<D,R,C> removeStopWordsFromDF(ZFrame<D,R,C> ds,String fieldName, String pattern);
 	
 	public IContext<S, D, R, C, T> getContext() {
 		return context;

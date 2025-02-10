@@ -1,4 +1,4 @@
-package zingg.common.core.util;
+package zingg.spark.core.util;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.spark.core.TestSparkBase;
 import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.WithSession;
+import zingg.common.core.util.TestVerticalDisplayUtility;
 import zingg.spark.client.util.SparkDFObjectUtil;
 
 
