@@ -267,7 +267,19 @@ public abstract class DSUtil<S, D, R, C> {
     	return joined;
     }
 
-    
+
+	public ZFrame<D,R,C> postProcessLabel(ZFrame<D,R,C> updatedLabelledRecords, ZFrame<D,R,C> unmarkedRecords) {
+		List<C> cols = new ArrayList<C>();
+		cols.add(updatedLabelledRecords.col(ColName.ID_COL));
+
+		//drop isMatch column from unMarked records
+		//and replace with updated isMatch column
+		cols.add(updatedLabelledRecords.col(ColName.MATCH_FLAG_COL));
+		ZFrame<D,R,C> zFieldsFromUpdatedLabelledRecords = updatedLabelledRecords.select(cols);
+		unmarkedRecords = unmarkedRecords.drop(ColName.MATCH_FLAG_COL);
+		return unmarkedRecords.joinOnCol(zFieldsFromUpdatedLabelledRecords, ColName.ID_COL);
+	}
+
 
 	public abstract ZFrame<D, R, C> addClusterRowNumber(ZFrame<D, R, C> ds);
 

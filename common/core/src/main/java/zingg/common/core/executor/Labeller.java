@@ -14,8 +14,9 @@ import zingg.common.client.cols.ZidAndFieldDefSelector;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
+import zingg.common.core.preprocess.IPreprocessors;
 
-public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
+public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements IPreprocessors<S,D,R,C,T> {
 
 	public static final Integer QUIT_LABELING = 9;
 	public static final Integer INCREMENT = 1;
@@ -34,8 +35,10 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 			LOG.info("Reading inputs for labelling phase ...");
 			getTrainingDataModel().setMarkedRecordsStat(getMarkedRecords());
 			ZFrame<D,R,C>  unmarkedRecords = getUnmarkedRecords();
-			ZFrame<D,R,C>  updatedLabelledRecords = processRecordsCli(unmarkedRecords);
-			getTrainingDataModel().writeLabelledOutput(updatedLabelledRecords,args);
+			ZFrame<D, R, C> preprocessedUnmarkedRecords = preprocess(unmarkedRecords);
+			ZFrame<D,R,C>  updatedLabelledRecords = processRecordsCli(preprocessedUnmarkedRecords);
+			ZFrame<D, R, C> postProcessedLabelledRecords = getDSUtil().postProcessLabel(updatedLabelledRecords, unmarkedRecords);
+			getTrainingDataModel().writeLabelledOutput(postProcessedLabelledRecords,args);
 			LOG.info("Finished labelling phase");
 		} catch (Exception e) {
 			e.printStackTrace();
