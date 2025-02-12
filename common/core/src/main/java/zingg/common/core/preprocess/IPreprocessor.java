@@ -15,10 +15,6 @@ public interface IPreprocessor<S,D,R,C,T> extends Serializable{
 
     public IContext<S,D,R,C,T> getContext();
 
-    public void setFieldDefinition(FieldDefinition fd);
-
-    public FieldDefinition getFieldDefinition();
-
     public boolean isApplicable(); 
 
     public ZFrame<D,R,C> preprocess(ZFrame<D,R,C> df) throws ZinggClientException; 
