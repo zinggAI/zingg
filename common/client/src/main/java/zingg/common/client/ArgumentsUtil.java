@@ -140,8 +140,7 @@ public class ArgumentsUtil<A extends IZArgs> {
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			Map<String, String> env = System.getenv();
 			String updatedJson = substituteVariables(template, env);
-			IZArgs args = createArgumentsFromJSONString(updatedJson, phase);
-			return args;
+			return createArgumentsFromJSONString(updatedJson, phase);
 		} catch (Exception e) {
 			//e.printStackTrace();
 			throw new ZinggClientException("Unable to parse the configuration at " + filePath +
@@ -157,7 +156,7 @@ public class ArgumentsUtil<A extends IZArgs> {
 		while (matcher.find()) {
 			if (variables.containsKey(matcher.group(1))) {
 				String replacement = variables.get(matcher.group(1));
-				if (replacement == null || replacement.equals("")) {
+				if ( replacement.equals("") || replacement == null ) {
 					throw new ZinggClientException("The environment variable for " + ENV_VAR_MARKER_START
 							+ matcher.group(1) + ENV_VAR_MARKER_END + " is not set or is empty string");
 				}
