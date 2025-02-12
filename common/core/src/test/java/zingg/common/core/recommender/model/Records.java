@@ -5,7 +5,7 @@ public class Records {
     public final String stopwords;
 
     public Records(String stopwords){
-		this.stopwords = stopwords;
+		  this.stopwords = stopwords;
 	}
     
 }

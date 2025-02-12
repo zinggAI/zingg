@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.context.Context;
+import zingg.common.core.util.IDataFrameUtility;
 
 public abstract class TestTrainer<S,D,R,C,T> {
     
@@ -16,6 +17,10 @@ public abstract class TestTrainer<S,D,R,C,T> {
     }
 
     public abstract Trainer<S,D,R,C,T> getTestTrainer();
+
+    public abstract void setUpDF();
+
+    public abstract IDataFrameUtility<S,D,R,C,T> getDataFrameUtility();
 
     public abstract ZFrame<D,R,C> getTenRowsDF();
 

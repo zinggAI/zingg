@@ -31,7 +31,6 @@ import zingg.common.core.feature.Feature;
 import zingg.common.core.model.Model;
 import zingg.common.core.similarity.function.SimFunction;
 import zingg.spark.client.SparkFrame;
-import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.similarity.SparkSimFunction;
 import zingg.spark.core.similarity.SparkTransformer;
 
