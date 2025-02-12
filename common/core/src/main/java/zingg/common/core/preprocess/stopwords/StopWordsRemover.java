@@ -13,9 +13,9 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.context.IContext;
-import zingg.common.core.preprocess.IPreprocessor;
+import zingg.common.core.preprocess.ISingleFieldPreprocessor;
 
-public abstract class StopWordsRemover<S,D,R,C,T> implements IPreprocessor<S,D,R,C,T>{
+public abstract class StopWordsRemover<S,D,R,C,T> implements ISingleFieldPreprocessor<S,D,R,C,T> {
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.preprocess.stopwords.StopWordsRemover";
@@ -49,15 +49,21 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements IPreprocessor<S,D,R
     }
 
     @Override
-    public ZFrame<D,R,C> preprocess(ZFrame<D,R,C> df) throws ZinggClientException{
-		if(isApplicable()){
-			ZFrame<D, R, C> stopWords = getStopWords(fd);
-			String stopWordColumn = getStopWordColumnName(stopWords);
-			List<String> wordList = getWordList(stopWords,stopWordColumn);
-			String pattern = getPattern(wordList);
-			df = removeStopWordsFromDF(df, fd.getFieldName(), pattern);
+    public ZFrame<D,R,C> preprocess(ZFrame<D,R,C> df) throws ZinggClientException {
+		try {
+			if(isApplicable()){
+				LOG.info("Applying stopwords preprocessing on input dataframe");
+				ZFrame<D, R, C> stopWords = getStopWords(fd);
+				String stopWordColumn = getStopWordColumnName(stopWords);
+				List<String> wordList = getWordList(stopWords,stopWordColumn);
+				String pattern = getPattern(wordList);
+				df = removeStopWordsFromDF(df, fd.getFieldName(), pattern);
+			}
+			return df;
+		} catch (Exception | ZinggClientException exception) {
+			LOG.warn("Error occurred while applying stopword preprocessing, skipping, " + exception);
 		}
-        return df;
+		return df;
     }
 
 	protected ZFrame<D,R,C> getStopWords(FieldDefinition def) throws ZinggClientException {

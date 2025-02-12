@@ -10,6 +10,7 @@ public class CommonPreprocOrder implements IPreprocOrder{
 
     public CommonPreprocOrder(){
         order = new ArrayList<>();
+        order.add(IPreprocTypes.LOWERCASE);
         order.add(IPreprocTypes.STOPWORDS);
     }
 

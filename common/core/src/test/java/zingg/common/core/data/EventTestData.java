@@ -1,5 +1,6 @@
 package zingg.common.core.data;
 
+import zingg.common.core.model.InputDataModel;
 import zingg.common.core.model.Event;
 import zingg.common.core.model.EventPair;
 import zingg.common.core.model.Statement;
@@ -139,10 +140,10 @@ public class EventTestData {
     public static List<Statement> getData1Original() {
 
         List<Statement> sample = new ArrayList<Statement>();
-        sample.add(new Statement("The zingg is a Spark application"));
-        sample.add(new Statement("It is very popular in data Science"));
-        sample.add(new Statement("It is written in Java and Scala"));
-        sample.add(new Statement("Best of luck to zingg"));
+        sample.add(new Statement("the zingg is a spark application"));
+        sample.add(new Statement("it is very popular in data science"));
+        sample.add(new Statement("it is written in java and scala"));
+        sample.add(new Statement("best of luck to zingg"));
 
         return sample;
     }
@@ -161,12 +162,12 @@ public class EventTestData {
     public static List<PriorStopWordProcess> getData2Original() {
 
         List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
-        sample.add(new PriorStopWordProcess("10", "The zingg is a spark application", "two",
+        sample.add(new PriorStopWordProcess("10", "the zingg is a spark application", "two",
                 "Yes. a good application", "test"));
-        sample.add(new PriorStopWordProcess("20", "It is very popular in Data Science", "Three", "true indeed",
+        sample.add(new PriorStopWordProcess("20", "it is very popular in data science", "Three", "true indeed",
                 "test"));
-        sample.add(new PriorStopWordProcess("30", "It is written in java and scala", "four", "", "test"));
-        sample.add(new PriorStopWordProcess("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test"));
+        sample.add(new PriorStopWordProcess("30", "it is written in java and scala", "four", "", "test"));
+        sample.add(new PriorStopWordProcess("40", "best of luck to zingg mobile/t-mobile", "Five", "thank you", "test"));
 
         return sample;
     }
@@ -182,15 +183,39 @@ public class EventTestData {
         return sample;
     }
 
+    public static List<PriorStopWordProcess> getDataInputPreProcessed() {
+
+        List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
+        sample.add(new PriorStopWordProcess("10", "The ZINGG IS a SpaRk AppLiCation", "two",
+                "Yes. a good application", "test"));
+        sample.add(new PriorStopWordProcess("20", "It is VERY POpuLar in Data SCIENCE", "Three", "true indeed",
+                "test"));
+        sample.add(new PriorStopWordProcess("30", "It is WRITTEN in java and SCala", "four", "", "test"));
+        sample.add(new PriorStopWordProcess("40", "Best of LUCK to zingg Mobile/T-Mobile", "Five", "thank you", "test"));
+
+        return sample;
+    }
+
+    public static List<PriorStopWordProcess> getDataInputPostProcessed() {
+
+        List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
+        sample.add(new PriorStopWordProcess("10", "zingg spark application", "two", "yes. a good application", "test"));
+        sample.add(new PriorStopWordProcess("20", "very popular data science", "Three", "true indeed", "test"));
+        sample.add(new PriorStopWordProcess("30", "written java scala", "four", "", "test"));
+        sample.add(new PriorStopWordProcess("40", "best luck to zingg ", "Five", "thank you", "test"));
+
+        return sample;
+    }
+
     public static List<PriorStopWordProcess> getData3Original() {
 
         List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
-        sample.add(new PriorStopWordProcess("10", "The zingg is a spark application", "two",
+        sample.add(new PriorStopWordProcess("10", "the zingg is a spark application", "two",
                 "Yes. a good application", "test"));
-        sample.add(new PriorStopWordProcess("20", "It is very popular in Header Data Science", "Three", "true indeed",
+        sample.add(new PriorStopWordProcess("20", "it is very popular in header data science", "Three", "true indeed",
                 "test"));
-        sample.add(new PriorStopWordProcess("30", "It is written in java and scala", "four", "", "test"));
-        sample.add(new PriorStopWordProcess("40", "Best of luck to zingg Mobile/T-Mobile", "Five", "thank you", "test"));
+        sample.add(new PriorStopWordProcess("30", "it is written in java and scala", "four", "", "test"));
+        sample.add(new PriorStopWordProcess("40", "best of luck to zingg mobile/t-mobile", "Five", "thank you", "test"));
 
         return sample;
     }
@@ -258,6 +283,71 @@ public class EventTestData {
                 "It written java scala", "four", "", "test"));
         sample.add(new PostStopWordProcess("1648811730857:40", "40", "1.0", "1.0", "-1", "Best luck zingg", "Five",
                 "thank", "test"));
+
+        return sample;
+    }
+
+    public static List<InputDataModel> getDataInputPreCaseNormalization() {
+
+        List<InputDataModel> sample = new ArrayList<InputDataModel>();
+        sample.add(new InputDataModel("10", "The ZINGG IS a SPARK AppLiCation", "tWo",
+                "Yes. a good Application", "test"));
+        sample.add(new InputDataModel("20", "It is VERY POpuLar in Data SCIENCE", "THREE", "TRUE indeed",
+                "test"));
+        sample.add(new InputDataModel("30", "It is WRITTEN in java and SCala", "four", "", "test"));
+        sample.add(new InputDataModel("40", "Best of LUCK to ZINGG Mobile/T-Mobile", "FIVE", "thank you", "test"));
+
+        return sample;
+    }
+
+    public static List<InputDataModel> getDataInputPostCaseNormalizationField1() {
+
+        List<InputDataModel> sample = new ArrayList<InputDataModel>();
+        sample.add(new InputDataModel("10", "the zingg is a spark application", "tWo",
+                "Yes. a good Application", "test"));
+        sample.add(new InputDataModel("20", "it is very popular in data science", "THREE", "TRUE indeed",
+                "test"));
+        sample.add(new InputDataModel("30", "it is written in java and scala", "four", "", "test"));
+        sample.add(new InputDataModel("40", "best of luck to zingg mobile/t-mobile", "FIVE", "thank you", "test"));
+
+        return sample;
+    }
+
+    public static List<InputDataModel> getDataInputPostCaseNormalizationAllFields() {
+
+        List<InputDataModel> sample = new ArrayList<InputDataModel>();
+        sample.add(new InputDataModel("10", "the zingg is a spark application", "two",
+                "yes. a good application", "test"));
+        sample.add(new InputDataModel("20", "it is very popular in data science", "three", "true indeed",
+                "test"));
+        sample.add(new InputDataModel("30", "it is written in java and scala", "four", "", "test"));
+        sample.add(new InputDataModel("40", "best of luck to zingg mobile/t-mobile", "five", "thank you", "test"));
+
+        return sample;
+    }
+
+    public static List<InputDataModel> getDataInputPostCaseNormalizationNone() {
+
+        List<InputDataModel> sample = new ArrayList<InputDataModel>();
+        sample.add(new InputDataModel("10", "The ZINGG IS a SPARK AppLiCation", "tWo",
+                "Yes. a good Application", "test"));
+        sample.add(new InputDataModel("20", "It is VERY POpuLar in Data SCIENCE", "THREE", "TRUE indeed",
+                "test"));
+        sample.add(new InputDataModel("30", "It is WRITTEN in java and SCala", "four", "", "test"));
+        sample.add(new InputDataModel("40", "Best of LUCK to ZINGG Mobile/T-Mobile", "FIVE", "thank you", "test"));
+
+        return sample;
+    }
+
+    public static List<InputDataModel> getDataInputPostCaseNormalizationWhenMatchTypeDONT_USE() {
+
+        List<InputDataModel> sample = new ArrayList<InputDataModel>();
+        sample.add(new InputDataModel("10", "The ZINGG IS a SPARK AppLiCation", "two",
+                "Yes. a good Application", "test"));
+        sample.add(new InputDataModel("20", "It is VERY POpuLar in Data SCIENCE", "three", "TRUE indeed",
+                "test"));
+        sample.add(new InputDataModel("30", "It is WRITTEN in java and SCala", "four", "", "test"));
+        sample.add(new InputDataModel("40", "Best of LUCK to ZINGG Mobile/T-Mobile", "five", "thank you", "test"));
 
         return sample;
     }
