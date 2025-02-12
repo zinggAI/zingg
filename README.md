@@ -2,7 +2,7 @@
 [![pages-build-deployment](https://github.com/zinggAI/zingg/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/pages/pages-build-deployment)
 [![CodeQL](https://github.com/zinggAI/zingg/actions/workflows/codeql.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/codeql.yml)
 [![PMD](https://github.com/zinggAI/zingg/actions/workflows/pmd.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/pmd.yml)
-
+[![Junits](https://github.com/zinggAI/zingg/actions/workflows/junits.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/junits.yml)
 
 ## 0.5.0 release of Zingg is coming soon!
 
