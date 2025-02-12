@@ -1,4 +1,4 @@
-package zingg.common.core.executor;
+package zingg.common.core.executor.trainer;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.context.Context;
-import zingg.common.core.util.IDataFrameUtility;
+import zingg.common.core.executor.Trainer;
+import zingg.common.core.executor.trainer.util.IDataFrameUtility;
 
 public abstract class TestTrainer<S,D,R,C,T> {
     

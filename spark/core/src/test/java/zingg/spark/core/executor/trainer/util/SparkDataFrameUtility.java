@@ -1,4 +1,4 @@
-package zingg.spark.core.util;
+package zingg.spark.core.executor.trainer.util;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
@@ -10,7 +10,7 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
 
 import zingg.common.client.ZFrame;
-import zingg.common.core.util.IDataFrameUtility;
+import zingg.common.core.executor.trainer.util.IDataFrameUtility;
 import zingg.spark.client.SparkFrame;
 
 import java.util.ArrayList;

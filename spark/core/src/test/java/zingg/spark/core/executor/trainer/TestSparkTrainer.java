@@ -1,4 +1,4 @@
-package zingg.spark.core.executor;
+package zingg.spark.core.executor.trainer;
 
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -10,12 +10,13 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.WithSession;
-import zingg.common.core.executor.TestTrainer;
 import zingg.common.core.executor.Trainer;
-import zingg.common.core.util.IDataFrameUtility;
+import zingg.common.core.executor.trainer.TestTrainer;
+import zingg.common.core.executor.trainer.util.IDataFrameUtility;
 import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
-import zingg.spark.core.util.SparkDataFrameUtility;
+import zingg.spark.core.executor.SparkTrainer;
+import zingg.spark.core.executor.trainer.util.SparkDataFrameUtility;
 
 @ExtendWith(TestSparkBase.class)
 public class TestSparkTrainer extends TestTrainer<SparkSession, Dataset<Row>, Row, Column, DataType> {

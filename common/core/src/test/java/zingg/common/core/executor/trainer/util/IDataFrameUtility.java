@@ -1,4 +1,4 @@
-package zingg.common.core.util;
+package zingg.common.core.executor.trainer.util;
 
 import zingg.common.client.ZFrame;
 
