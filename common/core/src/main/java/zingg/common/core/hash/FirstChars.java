@@ -23,7 +23,7 @@ public class FirstChars extends BaseHash<String,String>{
 				r = field;
 			}
 			else{
-				field = field.trim().toLowerCase();
+				field = field.trim();
 				if (field.length() <= (endIndex)) {
 			
 				r = field; 
