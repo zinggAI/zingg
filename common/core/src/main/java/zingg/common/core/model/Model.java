@@ -8,7 +8,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;

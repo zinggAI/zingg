@@ -8,7 +8,6 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ListMap;
 import zingg.common.core.block.Block;
-import zingg.common.core.block.HashUtility;
 import zingg.common.core.feature.FeatureFactory;
 import zingg.common.core.hash.HashFunction;
 import zingg.spark.core.feature.SparkFeatureFactory;

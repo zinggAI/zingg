@@ -2,7 +2,6 @@ package zingg.common.core.feature;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.MatchType;
-import zingg.common.core.similarity.function.AJaroWinklerFunction;
 import zingg.common.core.similarity.function.AffineGapSimilarityFunction;
 import zingg.common.core.similarity.function.CheckBlankOrNullFunction;
 import zingg.common.core.similarity.function.EmailMatchTypeFunction;
@@ -13,7 +12,6 @@ import zingg.common.core.similarity.function.OnlyAlphabetsAffineGapSimilarity;
 import zingg.common.core.similarity.function.OnlyAlphabetsExactSimilarity;
 import zingg.common.core.similarity.function.PinCodeMatchTypeFunction;
 import zingg.common.core.similarity.function.ProductCodeFunction;
-import zingg.common.core.similarity.function.SameFirstWordFunction;
 import zingg.common.core.similarity.function.StringSimilarityFunction;
 
 
