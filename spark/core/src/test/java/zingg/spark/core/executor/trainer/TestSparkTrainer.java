@@ -13,6 +13,7 @@ import zingg.common.client.util.WithSession;
 import zingg.common.core.executor.Trainer;
 import zingg.common.core.executor.trainer.TestTrainer;
 import zingg.common.core.executor.trainer.util.IDataFrameUtility;
+import zingg.spark.client.SparkFrame;
 import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.executor.SparkTrainer;
@@ -21,18 +22,14 @@ import zingg.spark.core.executor.trainer.util.SparkDataFrameUtility;
 @ExtendWith(TestSparkBase.class)
 public class TestSparkTrainer extends TestTrainer<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
-    private SparkSession sparkSession;
     private static ZinggSparkContext zinggSparkContext = new ZinggSparkContext();
     public static IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
-    protected ZFrame<Dataset<Row>, Row, Column> tenRowsDF;
-    protected ZFrame<Dataset<Row>, Row, Column> oneRowsDF;
-
+    
     public TestSparkTrainer(SparkSession sparkSession) throws ZinggClientException {
         super(zinggSparkContext); 
-        this.sparkSession = sparkSession;
         iWithSession.setSession(sparkSession);
 		zinggSparkContext.init(sparkSession); 
-        setUpDF();
+        setUpDF(sparkSession);
     }
 
     @Override
@@ -41,19 +38,13 @@ public class TestSparkTrainer extends TestTrainer<SparkSession, Dataset<Row>, Ro
     }
 
     @Override
-    public ZFrame<Dataset<Row>, Row, Column> getTenRowsDF() {
-       return tenRowsDF;
+    public ZFrame<Dataset<Row>, Row, Column> getTenRowsDF(ZFrame<Dataset<Row>, Row, Column> tenRowsDF) {
+       return new SparkFrame(tenRowsDF.df());
     }
 
     @Override
-    public ZFrame<Dataset<Row>, Row, Column> getOneRowsDF() {
-        return oneRowsDF;
-    }
-
-    @Override
-    public void setUpDF() {
-        tenRowsDF = getDataFrameUtility().createDFWithDoubles(10,1, sparkSession);
-        oneRowsDF = getDataFrameUtility().createDFWithDoubles(1,1, sparkSession);
+    public ZFrame<Dataset<Row>, Row, Column> getOneRowsDF(ZFrame<Dataset<Row>, Row, Column> oneRowsDF) {
+        return new SparkFrame(oneRowsDF.df());
     }
 
     @Override
