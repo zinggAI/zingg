@@ -35,6 +35,7 @@ public abstract class TestModelBase<S,D,R,C,T> {
     public void testPredict() throws ZinggClientException, Exception {  
         ModelUtil<S,T, D,R,C> modelUtil = getModelUtil();
         Model<S,T, D,R,C> model = modelUtil.getModel(false, getArgs()); 
+        model.register();
 
         ZFrame<D, R, C> posDF = dfObjectUtil.getDFFromObjectList(ModelDFData.getPosDF(), ModelDF.class);
         ZFrame<D, R, C> negDF = dfObjectUtil.getDFFromObjectList(ModelDFData.getNegDF(), ModelDF.class);
@@ -55,9 +56,9 @@ public abstract class TestModelBase<S,D,R,C,T> {
         for (R row : assertionRows) {
             //System.out.println("row is " + row);
             if(assertionDF.getAsInt(row, "z_zid")<10000) {
-                assertEquals(1,assertionDF.getAsInt(row, "z_prediction"));
+                assertEquals(1,assertionDF.getAsDouble(row, "z_prediction"));
             } else {
-                assertEquals(0,assertionDF.getAsInt(row, "z_prediction"));
+                assertEquals(0,assertionDF.getAsDouble(row, "z_prediction"));
             }
             
         }
