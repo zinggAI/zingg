@@ -25,7 +25,7 @@ import zingg.spark.core.preprocess.stopwords.SparkStopWordsRemover;
  * 
  *
  */
-public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,DataType> implements ISparkPreprocMapSupplier{
+public class SparkMatcher extends Matcher<SparkSession,Dataset<Row>,Row,Column,DataType> implements ISparkPreprocMapSupplier {
 
 
 	private static final long serialVersionUID = 1L;

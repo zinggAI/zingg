@@ -31,7 +31,6 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			ZFrame<D,R,C> traOriginal = getDSUtil().getTraining(getPipeUtil(), args, getModelHelper());
 			ZFrame<D,R,C> tra = preprocess(traOriginal).cache();
 			tra = getDSUtil().joinWithItself(tra, ColName.CLUSTER_COLUMN, true);
-			tra = tra.cache();
 			positives = tra.filter(tra.equalTo(ColName.MATCH_FLAG_COL,ColValues.MATCH_TYPE_MATCH));
 			negatives = tra.filter(tra.equalTo(ColName.MATCH_FLAG_COL,ColValues.MATCH_TYPE_NOT_A_MATCH));
 			

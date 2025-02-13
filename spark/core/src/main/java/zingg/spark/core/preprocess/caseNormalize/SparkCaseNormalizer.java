@@ -31,6 +31,7 @@ public class SparkCaseNormalizer extends CaseNormalizer<SparkSession, Dataset<Ro
 
     @Override
     protected ZFrame<Dataset<Row>, Row, Column> applyCaseNormalizer(ZFrame<Dataset<Row>, Row, Column> incomingDataFrame, List<String> relevantFields) {
+        String[] incomingDFColumns = incomingDataFrame.columns();
         Seq<String> columnsSeq = JavaConverters.asScalaIteratorConverter(relevantFields.iterator())
                 .asScala()
                 .toSeq();
@@ -41,6 +42,6 @@ public class SparkCaseNormalizer extends CaseNormalizer<SparkSession, Dataset<Ro
         Seq<Column> caseNormalizedSeq = JavaConverters.asScalaIteratorConverter(caseNormalizedValues.iterator())
                 .asScala()
                 .toSeq();
-        return new SparkFrame(incomingDataFrame.df().withColumns(columnsSeq, caseNormalizedSeq));
+        return new SparkFrame(incomingDataFrame.df().withColumns(columnsSeq, caseNormalizedSeq)).select(incomingDFColumns);
     }
 }
