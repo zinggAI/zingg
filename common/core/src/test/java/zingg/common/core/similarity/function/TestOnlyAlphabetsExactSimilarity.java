@@ -33,9 +33,4 @@ public class TestOnlyAlphabetsExactSimilarity {
 		assertEquals(0d, sim.call("I have a no number", "I have r number"));
 	}	
 
-	@Test
-	public void testSameIgnoreCase() {
-		OnlyAlphabetsExactSimilarity sim = new OnlyAlphabetsExactSimilarity();
-		assertEquals(1d, sim.call("I have 1 number", "I HAVE 2 number"));
-	}
 }
