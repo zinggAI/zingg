@@ -21,10 +21,13 @@ import zingg.common.core.util.ModelUtil;
 
 public abstract class TestModelBase<S,D,R,C,T> {
 
-    protected final Context<S, D, R, C, T> context;
-    protected final DFObjectUtil<S, D, R, C> dfObjectUtil;
+    protected Context<S, D, R, C, T> context;
+    protected DFObjectUtil<S, D, R, C> dfObjectUtil;
 
-    public TestModelBase(DFObjectUtil<S, D, R, C> dfObjectUtil, Context<S,D,R,C,T> context){
+    public TestModelBase(){
+    }
+
+    public void initialize(DFObjectUtil<S, D, R, C> dfObjectUtil, Context<S, D, R, C, T> context) {
         this.dfObjectUtil = dfObjectUtil;
         this.context = context;
     }

@@ -1,5 +1,6 @@
 package zingg.spark.core.model;
 
+import org.apache.spark.internal.config.R;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -21,14 +22,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class TestSparkModel extends TestModelBase<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
     private SparkSession sparkSession;
-    private static ZinggSparkContext zinggSparkContext = new ZinggSparkContext();
-    public static IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
+    private ZinggSparkContext zinggSparkContext;
+    private IWithSession<SparkSession> iWithSession;
 
-    public TestSparkModel(SparkSession sparkSession) throws ZinggClientException {
-        super(new SparkDFObjectUtil(iWithSession), zinggSparkContext);
+    public TestSparkModel(SparkSession sparkSession) throws ZinggClientException {        
         this.sparkSession = sparkSession;
+        zinggSparkContext = new ZinggSparkContext();
+        iWithSession = new WithSession<>();
         zinggSparkContext.init(sparkSession);
         iWithSession.setSession(sparkSession);
+        initialize(new SparkDFObjectUtil(iWithSession), zinggSparkContext);
     }
 
     @Override
