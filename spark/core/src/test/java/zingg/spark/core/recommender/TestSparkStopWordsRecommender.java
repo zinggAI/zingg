@@ -26,13 +26,15 @@ import zingg.spark.core.context.ZinggSparkContext;
 public class TestSparkStopWordsRecommender extends TestStopWordsRecommenderBase<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
 	public static final Log LOG = LogFactory.getLog(TestSparkStopWordsRecommender.class);
-	private static ZinggSparkContext zinggSparkContext = new ZinggSparkContext();
-	public static IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
+	private ZinggSparkContext zinggSparkContext;
+	private IWithSession<SparkSession> iWithSession;
 
 	public TestSparkStopWordsRecommender(SparkSession sparkSession) throws ZinggClientException {
-		super(new SparkDFObjectUtil(iWithSession), zinggSparkContext);
+		this.zinggSparkContext = new ZinggSparkContext();
+		this.iWithSession = new WithSession<SparkSession>();
 		zinggSparkContext.init(sparkSession);
 		iWithSession.setSession(sparkSession);
+		initialize(new SparkDFObjectUtil(iWithSession), zinggSparkContext);
 	}
 
 	@Override

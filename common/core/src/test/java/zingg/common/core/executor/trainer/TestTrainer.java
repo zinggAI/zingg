@@ -11,11 +11,15 @@ import zingg.common.core.executor.trainer.util.IDataFrameUtility;
 
 public abstract class TestTrainer<S,D,R,C,T> {
     
-    protected final Context<S, D, R, C, T> context;
+    protected Context<S, D, R, C, T> context;
     protected ZFrame<D,R,C> tenRowsDF;
     protected ZFrame<D,R,C> oneRowsDF;
     
-    public TestTrainer(Context<S,D,R,C,T> context) {
+    public TestTrainer(){
+    }
+    
+    
+    public void initialize(Context<S,D,R,C,T> context) {
         this.context = context;
     }
 
@@ -28,70 +32,39 @@ public abstract class TestTrainer<S,D,R,C,T> {
 
     public abstract IDataFrameUtility<S,D,R,C,T> getDataFrameUtility();
 
-    public abstract ZFrame<D,R,C> getTenRowsDF(ZFrame<D,R,C> tenRowsDF);
-
-    public abstract ZFrame<D,R,C> getOneRowsDF(ZFrame<D,R,C> oneRowsDF);
-
     @Test
-    public void testVerifyTrainingPosDatasetLess() throws Throwable{
-        try {
-            Trainer<S,D,R,C,T> trainer = getTestTrainer();
-            trainer.verifyTraining(getOneRowsDF(oneRowsDF), getTenRowsDF(tenRowsDF));
-            fail("Expected exception not getting thrown when training data is less");
-        }
-        catch(ZinggClientException e) {
-        }
-
+    public void testVerifyTrainingPosDatasetLess() throws ZinggClientException{
+        Trainer<S,D,R,C,T> trainer = getTestTrainer();
+        trainer.verifyTraining(oneRowsDF, tenRowsDF);
+        fail("Expected exception not getting thrown when training data is less");
     }
 
     @Test
-    public void testVerifyTrainingNegDatasetLess() throws Throwable{
-        try {
-            Trainer<S,D,R,C,T> trainer = getTestTrainer();
-            trainer.verifyTraining(getTenRowsDF(tenRowsDF), getOneRowsDF(oneRowsDF));
-            fail("Expected exception not getting thrown when training data is less");
-        }
-        catch(ZinggClientException e) {
-
-        }
+    public void testVerifyTrainingNegDatasetLess() throws ZinggClientException{
+        Trainer<S,D,R,C,T> trainer = getTestTrainer();
+        trainer.verifyTraining(tenRowsDF, oneRowsDF);
+        fail("Expected exception not getting thrown when training data is less");
     }
     
     @Test
-    public void testVerifyTrainingBothDatasetLess() throws Throwable{
-        try {
-            Trainer<S,D,R,C,T> trainer = getTestTrainer();
-            trainer.verifyTraining(getOneRowsDF(oneRowsDF), getOneRowsDF(oneRowsDF));
-            fail("Expected exception not getting thrown when training data is less");
-        }
-        catch(ZinggClientException e) {
-
-        }
-
+    public void testVerifyTrainingBothDatasetLess() throws ZinggClientException{
+        Trainer<S,D,R,C,T> trainer = getTestTrainer();
+        trainer.verifyTraining(oneRowsDF,oneRowsDF);
+        fail("Expected exception not getting thrown when training data is less");
     }
 
     @Test
-    public void testVerifyTrainingBothDatasetMore() throws Throwable{
-        try {
-            Trainer<S,D,R,C,T> trainer = getTestTrainer();
-            trainer.verifyTraining(getTenRowsDF(tenRowsDF), getTenRowsDF(tenRowsDF));
-            
-        }
-        catch(ZinggClientException e) {
-            fail("Exception should not have been thrown when training data is appopriate");
-        }
-
+    public void testVerifyTrainingBothDatasetMore() throws ZinggClientException{
+        Trainer<S,D,R,C,T> trainer = getTestTrainer();
+        trainer.verifyTraining(tenRowsDF, tenRowsDF);
+        fail("Exception should not have been thrown when training data is appopriate");
     }
 
     @Test
-    public void testVerifyTrainingBothDatasetNull() throws Throwable{
-        try {
-            Trainer<S,D,R,C,T> trainer = getTestTrainer();
-            trainer.verifyTraining(null, null);
-            fail("Expected exception not getting thrown when training data is less");
-        }
-        catch(ZinggClientException e) {
-
-        }
+    public void testVerifyTrainingBothDatasetNull() throws ZinggClientException{
+        Trainer<S,D,R,C,T> trainer = getTestTrainer();
+        trainer.verifyTraining(null, null);
+        fail("Expected exception not getting thrown when training data is less");
     }
 
 }

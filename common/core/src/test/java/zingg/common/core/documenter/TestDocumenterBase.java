@@ -28,13 +28,16 @@ import zingg.common.core.context.IContext;
 public abstract class TestDocumenterBase<S,D,R,C,T> {
 
     public static final Log LOG = LogFactory.getLog(TestDocumenterBase.class);
-	protected final Context<S, D, R, C, T> context;
+	protected Context<S, D, R, C, T> context;
     private final String TEST_DOC_TEMPLATE = "documenter/testDocumenterTemplate.ftlh";
 	public ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
 	private IArguments docArguments = new Arguments();
     private final IArguments args = new Arguments();
 
-    public TestDocumenterBase(Context<S, D, R, C, T> context) throws ZinggClientException {
+    public TestDocumenterBase(){
+	}
+	
+	public void initialize(Context<S, D, R, C, T> context) throws ZinggClientException {
 		this.context = context;
 	}
 

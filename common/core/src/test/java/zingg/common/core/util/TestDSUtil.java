@@ -32,10 +32,13 @@ import zingg.common.core.util.model.TrainingSamplesData;
 public abstract class TestDSUtil<S, D, R, C, T> {
 
     public static final Log LOG = LogFactory.getLog(TestDSUtil.class);
-    protected final DFObjectUtil<S, D, R, C> dfObjectUtil;
-	protected final Context<S, D, R, C, T> context;
+    protected DFObjectUtil<S, D, R, C> dfObjectUtil;
+	protected Context<S, D, R, C, T> context;
 
-	public TestDSUtil(DFObjectUtil<S, D, R, C> dfObjectUtil, Context<S, D, R, C, T> context) throws ZinggClientException {
+	public TestDSUtil(){
+	}
+	
+	public void initialize(DFObjectUtil<S, D, R, C> dfObjectUtil, Context<S, D, R, C, T> context) throws ZinggClientException {
 		this.dfObjectUtil = dfObjectUtil;
 		this.context = context;
 	}

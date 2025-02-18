@@ -156,7 +156,7 @@ public class ArgumentsUtil<A extends IZArgs> {
 		while (matcher.find()) {
 			if (variables.containsKey(matcher.group(1))) {
 				String replacement = variables.get(matcher.group(1));
-				if ( replacement.equals("") || replacement == null ) {
+				if ( replacement == null || replacement.equals("") ) {
 					throw new ZinggClientException("The environment variable for " + ENV_VAR_MARKER_START
 							+ matcher.group(1) + ENV_VAR_MARKER_END + " is not set or is empty string");
 				}
