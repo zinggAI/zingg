@@ -208,6 +208,9 @@
 						<usePhrasedClassNameInRunning>true</usePhrasedClassNameInRunning>
 						<usePhrasedClassNameInTestCaseSummary>true</usePhrasedClassNameInTestCaseSummary>
 					</statelessTestsetInfoReporter>
+					<parallel>classes</parallel>
+                                        <forkCount>4</forkCount>
+
             	</configuration>
         	</plugin>
 			<plugin>

@@ -33,7 +33,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 
     public static final Log LOG = LogFactory.getLog(TestDSUtil.class);
     protected DFObjectUtil<S, D, R, C> dfObjectUtil;
-	protected Context<S, D, R, C, T> context;
+	  protected Context<S, D, R, C, T> context;
 
 	public TestDSUtil(){
 	}
@@ -78,7 +78,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 		args = new Arguments();
 		args.setFieldDefinition(fieldDef);
 
-        ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(DSUtilData.getFieldDefnDataForShowConcise(), FieldDefnForShowConciseData.class);
+    ZFrame<D,R,C> ds = dfObjectUtil.getDFFromObjectList(DSUtilData.getFieldDefnDataForShowConcise(), FieldDefnForShowConciseData.class);
 
 		List<String> expectedColumns = new ArrayList<String>();
 		expectedColumns.add("field_fuzzy");
@@ -238,6 +238,7 @@ public abstract class TestDSUtil<S, D, R, C, T> {
 
 		PipeUtilBase<S,D,R,C> pipeUtil = mock(PipeUtilBase.class);
 		Pipe<D,R,C> p = new Pipe<>();
+
 		ZFrame<D,R,C> trSamples1 = dfObjectUtil.getDFFromObjectList(DSUtilData.getTrainingSamplesData(), TrainingSamplesData.class);
 		
 		//training data is null 

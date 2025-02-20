@@ -1,7 +1,6 @@
 package zingg.common.client.util;
 
 import java.text.MessageFormat;
-import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 public class EmailBody {

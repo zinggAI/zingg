@@ -28,18 +28,19 @@ import zingg.common.core.context.IContext;
 public abstract class TestDocumenterBase<S,D,R,C,T> {
 
     public static final Log LOG = LogFactory.getLog(TestDocumenterBase.class);
-	protected Context<S, D, R, C, T> context;
+	  protected Context<S, D, R, C, T> context;
     private final String TEST_DOC_TEMPLATE = "documenter/testDocumenterTemplate.ftlh";
-	public ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
-	private IArguments docArguments = new Arguments();
+	  public ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
+	  private IArguments docArguments = new Arguments();
     private final IArguments args = new Arguments();
 
+
     public TestDocumenterBase(){
-	}
+	  }
 	
-	public void initialize(Context<S, D, R, C, T> context) throws ZinggClientException {
+	  public void initialize(Context<S, D, R, C, T> context) throws ZinggClientException {
 		this.context = context;
-	}
+	  }
 
     public abstract DocumenterBase<S,D,R,C,T> getDocumenter(IContext<S,D,R,C,T> context, IArguments args, ClientOptions options);
 

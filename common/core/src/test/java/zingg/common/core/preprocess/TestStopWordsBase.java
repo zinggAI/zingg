@@ -57,6 +57,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	public void testRemoveStopWordsFromDataset() throws ZinggClientException, Exception {
 
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
+
 			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getData2Original(), PriorStopWordProcess.class);
 			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getData2Expected(), PriorStopWordProcess.class);
 

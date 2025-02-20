@@ -29,7 +29,7 @@ import zingg.common.core.context.IContext;
 public abstract class TestModelDocumenterBase<S,D,R,C,T> {
 
     public static final Log LOG = LogFactory.getLog(TestModelDocumenterBase.class);
-	protected Context<S, D, R, C, T> context;
+	  protected Context<S, D, R, C, T> context;
     IArguments docArguments = new Arguments();
 
     public TestModelDocumenterBase(){
