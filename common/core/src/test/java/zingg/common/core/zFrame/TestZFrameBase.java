@@ -24,15 +24,15 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static zingg.common.core.zFrame.data.TestData.createEmptySampleData;
-import static zingg.common.core.zFrame.data.TestData.createSampleDataCluster;
-import static zingg.common.core.zFrame.data.TestData.createSampleDataClusterWithNull;
-import static zingg.common.core.zFrame.data.TestData.createSampleDataInput;
-import static zingg.common.core.zFrame.data.TestData.createSampleDataList;
-import static zingg.common.core.zFrame.data.TestData.createSampleDataListDistinct;
-import static zingg.common.core.zFrame.data.TestData.createSampleDataListWithDistinctSurnameAndPostcode;
-import static zingg.common.core.zFrame.data.TestData.createSampleDataListWithMixedDataType;
-import static zingg.common.core.zFrame.data.TestData.createSampleDataZScore;
+import static zingg.common.core.zFrame.data.ZframeData.createEmptySampleData;
+import static zingg.common.core.zFrame.data.ZframeData.createSampleDataCluster;
+import static zingg.common.core.zFrame.data.ZframeData.createSampleDataClusterWithNull;
+import static zingg.common.core.zFrame.data.ZframeData.createSampleDataInput;
+import static zingg.common.core.zFrame.data.ZframeData.createSampleDataList;
+import static zingg.common.core.zFrame.data.ZframeData.createSampleDataListDistinct;
+import static zingg.common.core.zFrame.data.ZframeData.createSampleDataListWithDistinctSurnameAndPostcode;
+import static zingg.common.core.zFrame.data.ZframeData.createSampleDataListWithMixedDataType;
+import static zingg.common.core.zFrame.data.ZframeData.createSampleDataZScore;
 
 public abstract class TestZFrameBase<S, D, R, C> {
 

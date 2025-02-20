@@ -35,7 +35,7 @@ public class SparkStopWordsRemover extends StopWordsRemover<SparkSession,Dataset
 	}
 	
  	@Override
-	protected ZFrame<Dataset<Row>, Row, Column> removeStopWordsFromDF(ZFrame<Dataset<Row>, Row, Column> ds,
+	public ZFrame<Dataset<Row>, Row, Column> removeStopWordsFromDF(ZFrame<Dataset<Row>, Row, Column> ds,
 			String fieldName, String pattern) {
  		Dataset<Row> dfAfterRemoval = ds.df().withColumn(fieldName,callUDF(udfName, ds.df().col(fieldName),lit(pattern)));
 		return new SparkFrame(dfAfterRemoval);

@@ -27,12 +27,13 @@ public class TestSparkModelDocumenter extends TestModelDocumenterBase<SparkSessi
 
 	public static final Log LOG = LogFactory.getLog(TestSparkModelDocumenter.class);
 	private SparkSession sparkSession;
-	private static ZinggSparkContext zinggSparkContext = new ZinggSparkContext();
+	private ZinggSparkContext zinggSparkContext;
 
 	public TestSparkModelDocumenter(SparkSession sparkSession) throws ZinggClientException {
-		super(zinggSparkContext);
 		this.sparkSession = sparkSession;
+		this.zinggSparkContext = new ZinggSparkContext();
 		zinggSparkContext.init(sparkSession);
+		initialize(zinggSparkContext);
 	}
 
 	@Override

@@ -21,6 +21,7 @@ import org.apache.spark.ml.tuning.ParamGridBuilder;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.FieldDefinition;
@@ -30,7 +31,6 @@ import zingg.common.core.feature.Feature;
 import zingg.common.core.model.Model;
 import zingg.common.core.similarity.function.SimFunction;
 import zingg.spark.client.SparkFrame;
-import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.similarity.SparkSimFunction;
 import zingg.spark.core.similarity.SparkTransformer;
 
