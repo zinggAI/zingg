@@ -33,7 +33,6 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 	protected ModelColDocumenter<S,D,R,C,T> modelColDoc;
 	protected  ZFrame<D,R,C>  markedRecords;
 	protected  ZFrame<D,R,C>  unmarkedRecords;
-	
 	protected FieldDefUtil fieldDefUtil;
 
 	public ModelDocumenter(IContext<S,D,R,C,T> context, IArguments args, ClientOptions options) {

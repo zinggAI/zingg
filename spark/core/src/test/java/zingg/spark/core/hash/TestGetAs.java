@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.io.input.TeeInputStream;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;

@@ -3,8 +3,6 @@ package zingg.common.core.similarity.function;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.wcohen.ss.api.*;
-
 public class OnlyAlphabetsAffineGapSimilarity extends StringSimilarityDistanceFunction {
 
 	public static final Log LOG = LogFactory

@@ -217,7 +217,7 @@ public abstract class DSUtil<S, D, R, C> {
 		return getTraining(pipeUtil, args, modelHelper.getTrainingDataMarkedPipe(args)); 			
 	}
 	
-	private  ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, IArguments args, Pipe<D,R,C> p) {
+	public ZFrame<D, R, C> getTraining(PipeUtilBase<S, D, R, C> pipeUtil, IArguments args, Pipe<D,R,C> p) {
 		ZFrame<D, R, C> trFile = null;
 		try{
 			try {

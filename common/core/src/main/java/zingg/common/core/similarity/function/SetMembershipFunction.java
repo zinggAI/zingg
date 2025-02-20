@@ -1,8 +1,5 @@
 package zingg.common.core.similarity.function;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 public class SetMembershipFunction { /*extends SimFunction<String>{
 	
 	public static final Log LOG = LogFactory
