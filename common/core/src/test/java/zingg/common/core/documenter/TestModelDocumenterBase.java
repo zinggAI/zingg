@@ -1,4 +1,4 @@
-package zingg.spark.core.documenter;
+package zingg.common.core.documenter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,43 +12,29 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
+import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
-import zingg.common.core.documenter.ModelDocumenter;
-import zingg.common.core.documenter.TemplateFields;
-import zingg.spark.client.SparkFrame;
-import zingg.spark.core.TestSparkBase;
-import zingg.spark.core.context.ZinggSparkContext;
+import zingg.common.core.context.Context;
+import zingg.common.core.context.IContext;
 
+public abstract class TestModelDocumenterBase<S,D,R,C,T> {
 
-@ExtendWith(TestSparkBase.class)
-public class TestModelDocumenter {
-	public static final Log LOG = LogFactory.getLog(TestModelDocumenter.class);
+    public static final Log LOG = LogFactory.getLog(TestModelDocumenterBase.class);
+	protected final Context<S, D, R, C, T> context;
+    IArguments docArguments = new Arguments();
 
-	private final SparkSession sparkSession;
-	private final ZinggSparkContext zinggSparkContext;
-
-	public TestModelDocumenter(SparkSession sparkSession) throws ZinggClientException {
-		this.sparkSession = sparkSession;
-		this.zinggSparkContext = new ZinggSparkContext();
-		this.zinggSparkContext.init(sparkSession);
+    public TestModelDocumenterBase(Context<S, D, R, C, T> context) throws ZinggClientException {
+		this.context = context;
 	}
-
-	IArguments docArguments = new Arguments();
 	
 	@BeforeEach
 	public void setUp(){
@@ -66,11 +52,10 @@ public class TestModelDocumenter {
 		}
 	}
 
-	@Test
+    @Test
 	public void testIfModelDocumenterGeneratedDocFile() throws Throwable {
 		
-		
-		ModelDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> modelDoc = new SparkModelDocumenter(zinggSparkContext, docArguments, new ClientOptions());
+		ModelDocumenter<S,D,R,C,T> modelDoc = getModelDocumenter(context, docArguments, new ClientOptions());
 		try {
 			Files.deleteIfExists(Paths.get(modelDoc.getModelHelper().getZinggModelDocFile(docArguments)));
 		} catch (IOException e) {
@@ -84,8 +69,8 @@ public class TestModelDocumenter {
 	@Test
 	public void testPopulateTemplateDataWhenMarkedRecordsAreAvailable() throws Throwable {
 		
-		ModelDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> modelDoc = new SparkModelDocumenter(zinggSparkContext, docArguments, new ClientOptions());
-		modelDoc.setMarkedRecords(zinggSparkContext.getPipeUtil().read(false, false, modelDoc.getModelHelper().getTrainingDataMarkedPipe(docArguments)));
+		ModelDocumenter<S,D,R,C,T> modelDoc = getModelDocumenter(context, docArguments, new ClientOptions());
+		modelDoc.setMarkedRecords(context.getPipeUtil().read(false, false, modelDoc.getModelHelper().getTrainingDataMarkedPipe(docArguments)));
 
 		Map<String, Object> root =  modelDoc.populateTemplateData();
 		Assertions.assertTrue(root.containsKey(TemplateFields.MODEL_ID), "The field does not exist - " + TemplateFields.MODEL_ID);
@@ -100,8 +85,8 @@ public class TestModelDocumenter {
 	@Test
 	public void testPopulateTemplateDataWhenMarkedRecordsAreNone() throws Throwable {
 		
-		SparkModelDocumenter modelDoc = new SparkModelDocumenter(zinggSparkContext, docArguments, new ClientOptions());
-		modelDoc.setMarkedRecords(new SparkFrame(sparkSession.emptyDataFrame()));
+		ModelDocumenter<S,D,R,C,T> modelDoc = getModelDocumenter(context, docArguments, new ClientOptions());
+		modelDoc.setMarkedRecords(getMarkedRecordsZFrame());
 
 		Map<String, Object> root =  modelDoc.populateTemplateData();
 		assertTrue(root.containsKey(TemplateFields.MODEL_ID), "The field does not exist - " + TemplateFields.MODEL_ID);
@@ -112,4 +97,8 @@ public class TestModelDocumenter {
 		assertEquals(0, root.get(TemplateFields.ISMATCH_COLUMN_INDEX));
 		assertEquals(1, root.get(TemplateFields.CLUSTER_COLUMN_INDEX));
 	}
+
+    protected abstract ModelDocumenter<S,D,R,C,T> getModelDocumenter(IContext<S,D,R,C,T> context, IArguments args, ClientOptions options);
+
+    protected abstract ZFrame<D,R,C> getMarkedRecordsZFrame();
 }

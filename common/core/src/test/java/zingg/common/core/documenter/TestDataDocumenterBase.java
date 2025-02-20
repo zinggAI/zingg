@@ -1,4 +1,4 @@
-package zingg.spark.core.documenter;
+package zingg.common.core.documenter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,39 +8,32 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.extension.ExtendWith;
-import zingg.common.core.documenter.DataDocumenter;
-import zingg.common.core.documenter.TemplateFields;
-import zingg.spark.core.TestSparkBase;
 import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IArguments;
+import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
-import zingg.spark.core.context.ZinggSparkContext;
+import zingg.common.core.context.Context;
+import zingg.common.core.context.IContext;
 
-@ExtendWith(TestSparkBase.class)
-public class TestDataDocumenter {
+public abstract class TestDataDocumenterBase<S,D,R,C,T> {
 
-	private final SparkSession sparkSession;
+    public static final Log LOG = LogFactory.getLog(TestDataDocumenterBase.class);
+    protected final Context<S, D, R, C, T> context;
+    IArguments docArguments = new Arguments();
 
-	public TestDataDocumenter(SparkSession sparkSession) {
-		this.sparkSession = sparkSession;
+    public TestDataDocumenterBase(Context<S, D, R, C, T> context) throws ZinggClientException {
+		this.context = context;
 	}
 
-	public static final Log LOG = LogFactory.getLog(TestDataDocumenter.class);
+    protected abstract DataDocumenter<S,D,R,C,T> getDataDocumenter(IContext<S,D,R,C,T> context, IArguments args, ClientOptions options);
 
-	private IArguments docArguments = new Arguments();
-	@BeforeEach
+    @BeforeEach
 	public void setUp(){
 		try {
 			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
@@ -56,16 +49,14 @@ public class TestDataDocumenter {
 	@Test
 	public void testPopulateTemplateData() throws Throwable {
 
-		ZinggSparkContext zinggSparkContext = new ZinggSparkContext();
-		zinggSparkContext.init(sparkSession);
-		DataDocumenter<SparkSession, Dataset<Row>, Row, Column, DataType> dataDoc = new SparkDataDocumenter(zinggSparkContext, docArguments, new ClientOptions());
+		DataDocumenter<S,D,R,C,T> dataDoc = getDataDocumenter(context, docArguments, new ClientOptions());
 		Pipe[] dataPipeArr = docArguments.getData();
 		
 		for (int i = 0; i < dataPipeArr.length; i++) {
 			String file = getClass().getResource("../../../../documenter/test.csv").getFile();
 			dataPipeArr[i].setProp(FilePipe.LOCATION, file);
 		}
-		dataDoc.setData(zinggSparkContext.getPipeUtil().read(false, false, dataPipeArr));
+		dataDoc.setData(context.getPipeUtil().read(false, false, dataPipeArr));
 
 
 		Map<String, Object> root =  dataDoc.populateTemplateData();
@@ -78,4 +69,5 @@ public class TestDataDocumenter {
 
 		assertTrue(root.containsKey(TemplateFields.DATA_FIELDS_LIST), "The field does not exist. - " + TemplateFields.DATA_FIELDS_LIST);
 	}
+    
 }
