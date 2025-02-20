@@ -1,4 +1,4 @@
-package zingg.common.core.model;
+package zingg.common.core.preprocess.model;
 
 public class PostStopWordProcess {
     public final String z_cluster;

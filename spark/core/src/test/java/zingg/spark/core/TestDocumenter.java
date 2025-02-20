@@ -12,6 +12,7 @@ import zingg.common.client.Arguments;
 public class TestDocumenter {
 
     public static final Log LOG = LogFactory.getLog(TestDocumenter.class);
+
     @BeforeEach
     public void setUp(){
         try {

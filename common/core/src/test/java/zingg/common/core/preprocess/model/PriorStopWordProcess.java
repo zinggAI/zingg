@@ -1,4 +1,4 @@
-package zingg.common.core.model;
+package zingg.common.core.preprocess.model;
 
 public class PriorStopWordProcess {
     public final String z_zid;

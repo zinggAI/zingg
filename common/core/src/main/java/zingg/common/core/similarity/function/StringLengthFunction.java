@@ -1,10 +1,5 @@
 package zingg.common.core.similarity.function;
 
-import java.util.Arrays;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 public class StringLengthFunction {/*extends StringSimilarityFunction {
 
 	public static final Log LOG = LogFactory
