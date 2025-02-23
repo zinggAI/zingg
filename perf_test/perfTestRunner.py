@@ -90,7 +90,7 @@ def compare_results(new_results):
             for phase, new_data in phases.items():
                 if phase in prev_results[load_size] and "time_taken_minutes" in prev_results[load_size][phase]:
                     prev_time = prev_results[load_size][phase]["time_taken_minutes"]
-                    new_time = new_data["time_taken_minutes"]
+                    new_time = round(new_data / 60, 2)
 
                     if new_time > prev_time * PERFORMANCE_THRESHOLD:
                         print(f"Performance degradation detected in phase {phase} (Load: {load_size})!")
