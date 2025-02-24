@@ -1,5 +1,22 @@
-{	
+{
+	"trainingSamples" : [{
+		"name":"trainingPos", 
+		"format":"csv", 
+		"props": {
+			"location": "./zingg/spark/core/executor/training.csv",
+			"delimiter": ",",
+			"header":false,
+			"badRecordsPath":"/tmp/bad"					
+			},
+		"schema": "z_cluster string, z_ismatch integer, id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
+		}],	
 	"fieldDefinition":[
+		{
+			"fieldName" : "id",
+			"matchType" : "dont_use",
+			"fields" : "id",
+			"dataType": "string"
+		},
 		{
 			"fieldName" : "fname",
 			"matchType" : "fuzzy",
@@ -65,35 +82,25 @@
 			"name":"output", 
 			"format":"csv", 
 			"props": {
-				"location": "/tmp/junit_integration_spark/zinggOutput",
+				"location": "/tmp/junit_integration_spark/single/zinggOutput",
 				"delimiter": ",",
 				"header":true
 			}
 		}],
 		"data" : [{
-			"name":"test1", 
+			"name":"test", 
 			"format":"csv", 
 			"props": {
-				"location": "./zingg/spark/core/executor/test1.csv",
+				"location": "./zingg/spark/core/executor/test.csv",
 				"delimiter": ",",
 				"header":false					
 			},
-			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
-		},
-			{
-			"name":"test2", 
-			"format":"csv", 
-			"props": {
-				"location": "./zingg/spark/core/executor/test2.csv",
-				"delimiter": ",",
-				"header":false					
-			},
-			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
-		}
+			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string" 
+			}
 		],
 		"labelDataSampleSize" : 0.5,
 		"numPartitions":4,
 		"modelId": "junit_integration_spark",
-		"zinggDir": "/tmp/junit_integration_spark"
+		"zinggDir": "/tmp/junit_integration_spark/single"
 
 }
