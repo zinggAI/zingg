@@ -12,9 +12,12 @@ import java.util.List;
 
 public abstract class TestVerticalDisplayUtility<S, D, R, C> {
 
-    private final DFObjectUtil<S, D, R, C> dfObjectUtil;
+    private DFObjectUtil<S, D, R, C> dfObjectUtil;
 
-    public TestVerticalDisplayUtility(DFObjectUtil<S, D, R, C> dfObjectUtil) {
+    public TestVerticalDisplayUtility(){
+    }
+    
+    public void initialize(DFObjectUtil<S, D, R, C> dfObjectUtil) {
         this.dfObjectUtil = dfObjectUtil;
     }
 

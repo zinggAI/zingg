@@ -14,10 +14,10 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
-import zingg.common.core.data.EventTestData;
-import zingg.common.core.model.Statement;
-import zingg.common.core.model.PostStopWordProcess;
-import zingg.common.core.model.PriorStopWordProcess;
+import zingg.common.core.preprocess.data.StopWordsData;
+import zingg.common.core.preprocess.model.PostStopWordProcess;
+import zingg.common.core.preprocess.model.PriorStopWordProcess;
+import zingg.common.core.preprocess.model.Statement;
 import zingg.common.core.util.StopWordRemoverUtility;
 
 public abstract class TestStopWordsBase<S, D, R, C, T> {
@@ -41,8 +41,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 			String stopWords = "\\b(a|an|the|is|It|of|yes|no|I|has|have|you)\\b\\s?".toLowerCase();
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(EventTestData.getData1Original(), Statement.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData1Expected(), Statement.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getData1Original(), Statement.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getData1Expected(), Statement.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(0);
 			
@@ -57,8 +57,9 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	public void testRemoveStopWordsFromDataset() throws ZinggClientException, Exception {
 
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Original(), PriorStopWordProcess.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData2Expected(), PriorStopWordProcess.class);
+
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getData2Original(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getData2Expected(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(1);
 			ZFrame<D, R, C> newZFrame = stopWordsRemover.preprocessForStopWords(zFrameOriginal);
@@ -72,8 +73,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(EventTestData.getData3Original(), PriorStopWordProcess.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData3Expected(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getData3Original(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getData3Expected(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(2);
  			ZFrame<D, R, C> newZFrame = stopWordsRemover.preprocessForStopWords(zFrameOriginal);
@@ -86,8 +87,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testForOriginalDataAfterPostProcess() throws Exception {
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(EventTestData.getData4original(), PriorStopWordProcess.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData4Expected(), PostStopWordProcess.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getData4original(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getData4Expected(), PostStopWordProcess.class);
 
 			ZFrame<D, R, C> newZFrame = context.getDSUtil().postprocess(zFrameExpected, zFrameOriginal);
 
@@ -99,8 +100,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testOriginalDataAfterPostProcessLinked() throws Exception {
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(EventTestData.getData5Original(), PriorStopWordProcess.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData5Actual(), PostStopWordProcess.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(TestStopWordsData.getData5Original(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(TestStopWordsData.getData5Actual(), PostStopWordProcess.class);
 			
 			ZFrame<D, R, C> newZFrame = context.getDSUtil().postprocessLinked(zFrameExpected, zFrameOriginal);
 			
