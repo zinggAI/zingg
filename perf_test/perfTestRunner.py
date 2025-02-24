@@ -19,7 +19,7 @@ propertyFile = "./config/zingg.conf"
 PERFORMANCE_THRESHOLD = 1.1  # 10% increase threshold
 
 
-def load_previous_results():
+def load_results():
     """Load previous test results if available."""
     if os.path.exists(reportFile):
         with open(reportFile, "r") as f:
@@ -56,7 +56,7 @@ def write_on_start():
 
 def write_results(phase_time, phase_error):
     """Save success and failure results in JSON format."""
-    report_data = load_previous_results()
+    report_data = load_results()
 
     for load_size, times in phase_time.items():
         if load_size not in report_data["results"]:
@@ -81,9 +81,8 @@ def write_results(phase_time, phase_error):
     save_results(report_data)
 
 
-def compare_results(new_results):
+def compare_results(prev_results, new_results):
     """Compare new results with previous ones and check for performance degradation."""
-    prev_results = load_previous_results().get("results", {})
     
     for load_size, phases in new_results.items():
         if load_size in prev_results:
@@ -107,6 +106,8 @@ def perform_load_test():
         print("No phase set for test, first set it!")
         return
 
+    prev_results = load_results().get("results", {})
+    
     phase_time = {}
     phase_error = {}
 
@@ -125,7 +126,7 @@ def perform_load_test():
 
     if phase_time:
         write_results(phase_time, phase_error)
-        compare_results(phase_time)
+        compare_results(prev_results, phase_time)
 
 
 def main():
