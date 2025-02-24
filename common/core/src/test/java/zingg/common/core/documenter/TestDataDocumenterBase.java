@@ -24,10 +24,13 @@ import zingg.common.core.context.IContext;
 public abstract class TestDataDocumenterBase<S,D,R,C,T> {
 
     public static final Log LOG = LogFactory.getLog(TestDataDocumenterBase.class);
-    protected final Context<S, D, R, C, T> context;
+    protected Context<S, D, R, C, T> context;
     IArguments docArguments = new Arguments();
 
-    public TestDataDocumenterBase(Context<S, D, R, C, T> context) throws ZinggClientException {
+    public TestDataDocumenterBase(){
+	}
+	
+	public void initialize(Context<S, D, R, C, T> context) throws ZinggClientException {
 		this.context = context;
 	}
 

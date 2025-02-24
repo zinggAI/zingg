@@ -29,8 +29,8 @@ import zingg.spark.core.executor.validate.SparkTrainerValidator;
 
 @ExtendWith(TestSparkBase.class)
 public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,Dataset<Row>,Row,Column,DataType> {
-	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
-	protected static final String CONFIGLINK_FILE = "zingg/spark/core/executor/configSparkLinkTest.json";
+	protected static final String CONFIG_FILE = "zingg/spark/core/executor/single/configSparkIntTest.json";
+	protected static final String CONFIGLINK_FILE = "zingg/spark/core/executor/single/configSparkLinkTest.json";
 	protected static final String TEST1_DATA_FILE = "zingg/spark/core/executor/test1.csv";
 	protected static final String TEST2_DATA_FILE = "zingg/spark/core/executor/test2.csv";
 	private final SparkSession sparkSession;

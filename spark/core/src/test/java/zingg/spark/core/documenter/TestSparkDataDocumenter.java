@@ -23,11 +23,12 @@ import zingg.spark.core.context.ZinggSparkContext;
 public class TestSparkDataDocumenter extends TestDataDocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
 	public static final Log LOG = LogFactory.getLog(TestSparkDataDocumenter.class);
-	private static ZinggSparkContext zinggSparkContext = new ZinggSparkContext();
+	private ZinggSparkContext zinggSparkContext;
 	
 	public TestSparkDataDocumenter(SparkSession sparkSession) throws ZinggClientException {
-		super(zinggSparkContext);
+		this.zinggSparkContext = new ZinggSparkContext();
 		zinggSparkContext.init(sparkSession);
+		initialize(zinggSparkContext);
 	}
 
 	@Override

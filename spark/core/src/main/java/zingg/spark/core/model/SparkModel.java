@@ -21,6 +21,7 @@ import org.apache.spark.ml.tuning.ParamGridBuilder;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.FieldDefinition;
@@ -30,7 +31,6 @@ import zingg.common.core.feature.Feature;
 import zingg.common.core.model.Model;
 import zingg.common.core.similarity.function.SimFunction;
 import zingg.spark.client.SparkFrame;
-import org.apache.spark.sql.SparkSession;
 import zingg.spark.core.similarity.SparkSimFunction;
 import zingg.spark.core.similarity.SparkTransformer;
 
@@ -97,7 +97,7 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 		fitCore(pos, neg);
 	}
 	
-	protected ZFrame<Dataset<Row>,Row,Column> fitCore(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
+	public ZFrame<Dataset<Row>,Row,Column> fitCore(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
 		//transform
 		ZFrame<Dataset<Row>,Row,Column> input = transform(pos.union(neg)).coalesce(1).cache();
 		//if (LOG.isDebugEnabled()) input.write().csv("/tmp/input/" + System.currentTimeMillis());
@@ -143,7 +143,7 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 	
 	
 	@Override
-	protected ZFrame<Dataset<Row>,Row,Column> predictCore(ZFrame<Dataset<Row>,Row,Column> data) {
+	public ZFrame<Dataset<Row>,Row,Column> predictCore(ZFrame<Dataset<Row>,Row,Column> data) {
 		//create features
 		LOG.info("threshold while predicting is " + lr.getThreshold());
 		//lr.setThreshold(0.95);

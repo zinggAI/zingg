@@ -25,16 +25,19 @@ import zingg.common.core.recommender.model.WordByCount;
 public abstract class TestStopWordsRecommenderBase<S, D, R, C, T> {
 
     public static final Log LOG = LogFactory.getLog(TestStopWordsRecommenderBase.class);
-    protected final Context<S, D, R, C, T> context;
-    protected final DFObjectUtil<S, D, R, C> dfObjectUtil;
+    protected Context<S, D, R, C, T> context;
+    protected DFObjectUtil<S, D, R, C> dfObjectUtil;
     protected final IArguments arguments = new Arguments();
     protected static final int NO_OF_RECORDS = 5;
 	protected List<R> stopwordRow = new ArrayList<R>();
 	protected List<String> stopwordList = new ArrayList<String>();
 	protected static final String COL_STOPWORDS = "stopwords";
-    private final StopWordsRecommender<S,D,R,C,T> recommender;
+    private StopWordsRecommender<S,D,R,C,T> recommender;
 
-    public TestStopWordsRecommenderBase(DFObjectUtil<S, D, R, C> dfObjectUtil, Context<S,D,R,C,T> context){
+    public TestStopWordsRecommenderBase(){
+	}
+	
+	public void initialize(DFObjectUtil<S, D, R, C> dfObjectUtil, Context<S,D,R,C,T> context){
 	    this.dfObjectUtil = dfObjectUtil;
         this.context = context;
         this.recommender = getRecommender(context,arguments);

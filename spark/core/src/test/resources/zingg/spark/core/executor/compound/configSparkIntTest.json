@@ -82,7 +82,7 @@
 			"name":"output", 
 			"format":"csv", 
 			"props": {
-				"location": "/tmp/junit_integration_spark/zinggOutput",
+				"location": "/tmp/junit_integration_spark/compound/zinggOutput",
 				"delimiter": ",",
 				"header":true
 			}
@@ -101,6 +101,6 @@
 		"labelDataSampleSize" : 0.5,
 		"numPartitions":4,
 		"modelId": "junit_integration_spark",
-		"zinggDir": "/tmp/junit_integration_spark"
+		"zinggDir": "/tmp/junit_integration_spark/compound"
 
 }

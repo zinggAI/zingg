@@ -24,13 +24,15 @@ import zingg.spark.core.context.ZinggSparkContext;
 public class TestSparkDSUtil extends TestDSUtil<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
 	public static final Log LOG = LogFactory.getLog(TestSparkDSUtil.class);
-	private static ZinggSparkContext zinggSparkContext = new ZinggSparkContext();
-	public static IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
+	private ZinggSparkContext zinggSparkContext;
+	private IWithSession<SparkSession> iWithSession;
 
 	public TestSparkDSUtil(SparkSession sparkSession) throws ZinggClientException {
-		super(new SparkDFObjectUtil(iWithSession), zinggSparkContext);
+		this.zinggSparkContext = new ZinggSparkContext();
+		this.iWithSession = new WithSession<SparkSession>();
 		iWithSession.setSession(sparkSession);
 		zinggSparkContext.init(sparkSession);
+		initialize(new SparkDFObjectUtil(iWithSession), zinggSparkContext);
 	}
 
 	@Override

@@ -19,4 +19,5 @@ public class TestModel {
         double[] expected = {1.0, 2.0, 4.0, 8.0};
         assertArrayEquals(expected, result, 0.0);
     }
+    
 }

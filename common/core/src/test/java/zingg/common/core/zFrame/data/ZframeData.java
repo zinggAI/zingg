@@ -1,6 +1,9 @@
 package zingg.common.core.zFrame.data;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import zingg.common.core.zFrame.model.ClusterZScore;
 import zingg.common.core.zFrame.model.InputWithZidAndSource;
 import zingg.common.core.zFrame.model.PairPartOne;
@@ -8,10 +11,7 @@ import zingg.common.core.zFrame.model.PairPartTwo;
 import zingg.common.core.zFrame.model.Person;
 import zingg.common.core.zFrame.model.PersonMixed;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class TestData {
+public class ZframeData {
 
     //sample data classes to be used for testing
     public static List<Person> createEmptySampleData() {

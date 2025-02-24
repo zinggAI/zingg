@@ -29,10 +29,13 @@ import zingg.common.core.context.IContext;
 public abstract class TestModelDocumenterBase<S,D,R,C,T> {
 
     public static final Log LOG = LogFactory.getLog(TestModelDocumenterBase.class);
-	protected final Context<S, D, R, C, T> context;
+	  protected Context<S, D, R, C, T> context;
     IArguments docArguments = new Arguments();
 
-    public TestModelDocumenterBase(Context<S, D, R, C, T> context) throws ZinggClientException {
+    public TestModelDocumenterBase(){
+	}
+	
+	public void initialize(Context<S, D, R, C, T> context) throws ZinggClientException {
 		this.context = context;
 	}
 	
