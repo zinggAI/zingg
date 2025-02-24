@@ -119,9 +119,10 @@ public class Arguments extends ZArgs implements Serializable, IArguments {
 
 	@Override
 	public void setNumPartitions(int numPartitions) throws ZinggClientException{
-		if (numPartitions != -1 && numPartitions <= 0) 
+		if (numPartitions != -1 && numPartitions <= 0){
 			throw new ZinggClientException(
 					"Number of partitions can be greater than 0 for user specified partitioning or equal to -1 for system decided partitioning");
+		}
 		this.numPartitions = numPartitions;
 	}
 
@@ -151,8 +152,9 @@ public class Arguments extends ZArgs implements Serializable, IArguments {
 	 */
 	@Override
 	public void setLabelDataSampleSize(float labelDataSampleSize) throws ZinggClientException {
-		if (labelDataSampleSize > 1 || labelDataSampleSize < 0)
+		if (labelDataSampleSize > 1 || labelDataSampleSize < 0){
 			throw new ZinggClientException("Label Data Sample Size should be between 0 and 1");
+		}
 		this.labelDataSampleSize = labelDataSampleSize;
 	}
 
@@ -287,8 +289,9 @@ public class Arguments extends ZArgs implements Serializable, IArguments {
 
 	@Override
 	public void setStopWordsCutoff(float stopWordsCutoff) throws ZinggClientException {
-		if (stopWordsCutoff > 1 || stopWordsCutoff < 0)
+		if (stopWordsCutoff > 1 || stopWordsCutoff < 0){
 			throw new ZinggClientException("Stop words cutoff should be between 0 and 1");
+		}
 		this.stopWordsCutoff = stopWordsCutoff;
 	}
 

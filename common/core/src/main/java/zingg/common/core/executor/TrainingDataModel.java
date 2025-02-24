@@ -90,6 +90,7 @@ public class TrainingDataModel<S,D,R,C,T> extends ZinggBase<S, D, R, C, T> imple
 		throw new UnsupportedOperationException();		
 	}
 
+	@Override
 	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException {
 		return this;
 	}

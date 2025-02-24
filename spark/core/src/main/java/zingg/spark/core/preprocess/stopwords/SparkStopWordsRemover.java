@@ -32,7 +32,7 @@ public class SparkStopWordsRemover extends StopWordsRemover<SparkSession,Dataset
 	public SparkStopWordsRemover(){
 		super();
 	}
-	
+
 	public SparkStopWordsRemover(IContext<SparkSession, Dataset<Row>, Row, Column,DataType> context) {
 		super(context);
 		registerUDF();
@@ -44,7 +44,7 @@ public class SparkStopWordsRemover extends StopWordsRemover<SparkSession,Dataset
 	}
 	
  	@Override
-	protected ZFrame<Dataset<Row>, Row, Column> removeStopWordsFromDF(ZFrame<Dataset<Row>, Row, Column> ds,
+	public ZFrame<Dataset<Row>, Row, Column> removeStopWordsFromDF(ZFrame<Dataset<Row>, Row, Column> ds,
 			String fieldName, String pattern) {
 		Dataset<Row> dfAfterRemoval = ds.df().withColumn(fieldName,callUDF(udfName, ds.df().col(fieldName),lit(pattern)));
 

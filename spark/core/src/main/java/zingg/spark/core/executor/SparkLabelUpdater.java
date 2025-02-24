@@ -9,7 +9,6 @@ import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IArguments;
 import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;

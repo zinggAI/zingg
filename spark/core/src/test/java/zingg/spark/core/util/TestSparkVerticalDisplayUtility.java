@@ -15,10 +15,11 @@ import zingg.spark.client.util.SparkDFObjectUtil;
 @ExtendWith(TestSparkBase.class)
 public class TestSparkVerticalDisplayUtility extends TestVerticalDisplayUtility<SparkSession, Dataset<Row>, Row, Column> {
 
-    private static final IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
+    private IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
 
     public TestSparkVerticalDisplayUtility(SparkSession sparkSession) {
-        super(new SparkDFObjectUtil(iWithSession));
+        this.iWithSession = new WithSession<SparkSession>();
         iWithSession.setSession(sparkSession);
+        initialize(new SparkDFObjectUtil(iWithSession));
     }
 }

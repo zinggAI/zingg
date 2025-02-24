@@ -7,7 +7,6 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
-import zingg.common.client.Arguments;
 import zingg.common.client.IArguments;
 import zingg.common.core.context.IContext;
 import zingg.common.core.recommender.StopWordsRecommender;

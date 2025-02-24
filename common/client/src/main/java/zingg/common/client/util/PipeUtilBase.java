@@ -1,6 +1,5 @@
 package zingg.common.client.util;
 
-import zingg.common.client.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;

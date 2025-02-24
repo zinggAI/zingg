@@ -3,7 +3,6 @@ package zingg.common.core.similarity.function;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
-import com.wcohen.ss.MongeElkan;
 
 public class TestSAffineGap {
 	
