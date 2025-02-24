@@ -1,6 +1,6 @@
 {
     "date": "2025-02-24",
-    "time": "06:50:17",
+    "time": "09:23:20",
     "load_samples": [
         "65_samples",
         "120k_samples",
@@ -12,19 +12,19 @@
     "results": {
         "65_samples": {
             "findTrainingData": {
-                "time_taken_minutes": 3.94,
+                "time_taken_minutes": 3.99,
                 "status": "success"
             }
         },
         "120k_samples": {
             "findTrainingData": {
-                "time_taken_minutes": 2.42,
+                "time_taken_minutes": 2.45,
                 "status": "success"
             }
         },
         "5m_samples": {
             "findTrainingData": {
-                "time_taken_minutes": 7.82,
+                "time_taken_minutes": 7.61,
                 "status": "success"
             }
         }
