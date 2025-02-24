@@ -25,7 +25,7 @@ import zingg.spark.core.executor.validate.SparkTrainMatchValidator;
 
 @ExtendWith(TestSparkBase.class)
 public class TestSparkExecutorsCompound extends TestExecutorsCompound<SparkSession,Dataset<Row>,Row,Column,DataType> {
-	protected static final String CONFIG_FILE = "zingg/spark/core/executor/configSparkIntTest.json";
+	protected static final String CONFIG_FILE = "zingg/spark/core/executor/compound/configSparkIntTest.json";
 	protected static final String TEST_DATA_FILE = "zingg/spark/core/executor/test.csv";
 
     public static final Log LOG = LogFactory.getLog(TestSparkExecutorsCompound.class);
