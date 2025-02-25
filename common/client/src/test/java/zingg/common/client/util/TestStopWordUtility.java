@@ -22,20 +22,20 @@ public class TestStopWordUtility {
                 FieldDefinition def1 = new FieldDefinition();
 		        def1.setFieldName("field1");
 		        def1.setDataType("string");
-		        def1.setMatchTypeInternal((MatchType) MatchTypes.FUZZY);
+		        def1.setMatchTypeInternal(MatchTypes.FUZZY);
 		        def1.setFields("field1");
 
                 FieldDefinition def2 = new FieldDefinition();
                 def2.setFieldName("field2");
                 def2.setDataType("string");
-                def2.setMatchTypeInternal((MatchType) MatchTypes.EXACT);
+                def2.setMatchTypeInternal(MatchTypes.EXACT);
                 def2.setStopWords("stopWordsFileName2");
                 def2.setFields("field2");
 
                 FieldDefinition def3 = new FieldDefinition();
                 def3.setFieldName("field3");
                 def3.setDataType("string");
-                def3.setMatchTypeInternal((MatchType) MatchTypes.FUZZY);
+                def3.setMatchTypeInternal(MatchTypes.FUZZY);
 				def3.setStopWords(null);
                 def3.setFields("field3");
 
@@ -60,20 +60,20 @@ public class TestStopWordUtility {
 		FieldDefinition def1 = new FieldDefinition();
 		def1.setFieldName("field1");
 		def1.setDataType("string");
-		def1.setMatchTypeInternal((MatchType) MatchTypes.FUZZY);
+		def1.setMatchTypeInternal(MatchTypes.FUZZY);
 		def1.setFields("field1");
 
 		FieldDefinition def2 = new FieldDefinition();
 		def2.setFieldName("field2");
 		def2.setDataType("string");
-		def2.setMatchTypeInternal((MatchType) MatchTypes.EXACT);
+		def2.setMatchTypeInternal(MatchTypes.EXACT);
 		def2.setStopWords("stopWordsFileName2");
 		def2.setFields("field2");
 
 		FieldDefinition def3 = new FieldDefinition();
 		def3.setFieldName("field3");
 		def3.setDataType("string");
-		def3.setMatchTypeInternal((MatchType) MatchTypes.FUZZY);
+		def3.setMatchTypeInternal(MatchTypes.FUZZY);
 		def3.setStopWords("stopWordsFileName3");
 		def3.setFields("field3");
 

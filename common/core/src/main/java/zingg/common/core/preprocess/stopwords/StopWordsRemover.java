@@ -100,7 +100,7 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements ISingleFieldPreproc
 	}
     
 	// implementation specific as may require UDF
-	public abstract ZFrame<D,R,C> removeStopWordsFromDF(ZFrame<D,R,C> ds,String fieldName, String pattern);
+	protected abstract ZFrame<D,R,C> removeStopWordsFromDF(ZFrame<D,R,C> ds,String fieldName, String pattern);
 	
 	@Override
 	public IContext<S, D, R, C, T> getContext() {
