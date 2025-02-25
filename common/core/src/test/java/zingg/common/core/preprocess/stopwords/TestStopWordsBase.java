@@ -15,6 +15,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
+import zingg.common.core.data.EventTestData;
 import zingg.common.core.preprocess.data.StopWordsData;
 import zingg.common.core.preprocess.model.PostStopWordProcess;
 import zingg.common.core.preprocess.model.PriorStopWordProcess;
@@ -75,7 +76,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testStopWordColumnMissingFromStopWordFile() throws ZinggClientException, Exception {
 
-		//check functionality of preprocess on dataset with header in csv as Header - dummy to ensure it is being ignored by default
+			//check functionality of preprocess on dataset with header in csv as Header - dummy to ensure it is being ignored by default
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 
 			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getData3Original(), PriorStopWordProcess.class);
@@ -92,7 +93,7 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testStopWordMultipleColumnFromStopWordFile() throws ZinggClientException, Exception {
 
-		//check functionality of preprocess on dataset with multiple columns in csv - check default is first column
+			//check functionality of preprocess on dataset with multiple columns in csv - check default is first column
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 
 			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(EventTestData.getData3Original(), PriorStopWordProcess.class);
