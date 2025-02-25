@@ -58,6 +58,8 @@ def write_on_start():
 
 def compare_results(prev_results, new_results):
     """Compare new results with previous ones and check for performance degradation."""
+
+    test_fail = False
     
     for load_size, phases in new_results.items():
         if load_size in prev_results:
@@ -71,7 +73,7 @@ def compare_results(prev_results, new_results):
                     if new_time > prev_time * PERFORMANCE_THRESHOLD:
                         print(f"Performance degradation detected in phase {phase} (Load: {load_size})!")
                         print(f"Previous time: {prev_time} min, New time: {new_time} min")
-                        exit(1)  # Exit before writing new results
+                        test_fail = True
 
 
 def perform_load_test():
@@ -106,7 +108,6 @@ def perform_load_test():
     # Compare results **before** writing
     compare_results(prev_results, phase_time)
 
-    # Save only if no performance degradation was detected
     test_data["results"] = {}
 
     for load_size, times in phase_time.items():
@@ -130,6 +131,8 @@ def perform_load_test():
     # Save results after successful test execution
     save_results(test_data)
 
+    if test_fail:
+        exit(1)
 
 def main():
     perform_load_test()
