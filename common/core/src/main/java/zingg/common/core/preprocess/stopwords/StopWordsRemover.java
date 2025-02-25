@@ -25,6 +25,9 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements ISingleFieldPreproc
 	protected IContext<S,D,R,C,T> context;
     protected FieldDefinition fd;
 
+	public StopWordsRemover(){
+	}
+
 	public StopWordsRemover(IContext<S, D, R, C, T> context) {
 		this.context = context;
 	}
