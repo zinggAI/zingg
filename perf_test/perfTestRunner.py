@@ -15,7 +15,7 @@ current_time = now.strftime("%H:%M:%S")
 reportFile = "./perf_test/perf_test_report/loadTestReport.json"
 
 propertyFile = "./config/zingg.conf"
-PERFORMANCE_THRESHOLD = 1.1  # 10% increase threshold
+PERFORMANCE_THRESHOLD = 1.05  # 5% increase threshold
 
 
 def load_results():
