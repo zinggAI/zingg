@@ -26,9 +26,8 @@ public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 	public void validateResults() throws ZinggClientException {
 	
 			ZFrame<D, R, C> df  = executor.getContext().getPipeUtil().read(false,false,verifyBlockingPipes.getCountsPipe(executor.getArgs()));
-			ZFrame<D, R, C> topDf = df.select(ColName.HASH_COL,ColName.HASH_COUNTS_COL).limit(3);
+			ZFrame<D, R, C> topDf = df.select(ColName.HASH_COL,ColName.HASH_COUNTS_COL).sortDescending(ColName.HASH_COUNTS_COL).limit(3);
 			long blockCount = topDf.count();
-			LOG.info("blockCount : " + blockCount);
 			assertTrue(blockCount == 3);
 			List<R> countsDf = topDf.collectAsList();
 			int sumHash = 0;
@@ -46,8 +45,8 @@ public class BlockerValidator<S, D, R, C, T> extends ExecutorValidator<S, D, R, 
 	//to assert on different dataset
 	//TODO need to check if this is a valid assertion and required
 	protected void performAssertions(int sumHash, long sumCount) {
-		assertTrue(sumHash == 11846 | sumHash == 11855);
-		assertTrue(sumCount == 20 | sumCount == 16);
+		assertTrue(sumHash == 11843 | sumHash == 11855);
+		assertTrue(sumCount == 24 | sumCount == 16);
 	}
 
 }
