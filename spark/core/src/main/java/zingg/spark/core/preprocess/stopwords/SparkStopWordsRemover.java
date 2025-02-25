@@ -29,10 +29,6 @@ public class SparkStopWordsRemover extends StopWordsRemover<SparkSession,Dataset
 	
 	private String udfName;
 
-	public SparkStopWordsRemover(){
-		super();
-	}
-
 	public SparkStopWordsRemover(IContext<SparkSession, Dataset<Row>, Row, Column,DataType> context) {
 		super(context);
 		registerUDF();
