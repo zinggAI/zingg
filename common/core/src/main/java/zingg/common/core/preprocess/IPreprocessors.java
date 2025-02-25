@@ -30,18 +30,14 @@ public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, 
                     for(FieldDefinition def:((IArguments) getArgs()).getFieldDefinition()){
                         //creating new instance of the class
                         ISingleFieldPreprocessor<S,D,R,C,T> ip = (ISingleFieldPreprocessor<S, D, R, C, T>) getPreprocMap().get(preprocType).getDeclaredConstructor().newInstance();
-                        ip.setContext(getContext());
-                        ip.init();
                         ip.setFieldDefinition(def);
-                        dfp = ip.preprocess(dfp);
+                        dfp = executeAndBuildPreprocessedDF(ip, dfp);
                     }
                 } else {
                     //creating new instance of the class
                     IMultiFieldPreprocessor<S,D,R,C,T> ip = (IMultiFieldPreprocessor<S, D, R, C, T>) getPreprocMap().get(preprocType).getDeclaredConstructor().newInstance();
-                    ip.setContext(getContext());
-                    ip.init();
                     ip.setFieldDefinitions(((IArguments) getArgs()).getFieldDefinition());
-                    dfp = ip.preprocess(dfp);
+                    dfp = executeAndBuildPreprocessedDF(ip, dfp);
                 }
             }
         } catch(Exception e){
@@ -50,6 +46,12 @@ public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, 
             }
         }
         return dfp;
+    }
+
+    default ZFrame<D, R, C> executeAndBuildPreprocessedDF(IPreprocessor<S, D, R, C, T> preprocessor, ZFrame<D, R, C> inputDF) throws ZinggClientException {
+        preprocessor.setContext(getContext());
+        preprocessor.init();
+        return preprocessor.preprocess(inputDF);
     }
 
 }
