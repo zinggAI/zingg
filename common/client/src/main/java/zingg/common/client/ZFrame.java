@@ -7,6 +7,7 @@ public interface ZFrame<D, R, C> {
 	
 	public static final String RIGHT_JOIN = "right";
 	public static final String LEFT_JOIN = "left";
+    public static final String INNER_JOIN = "inner";
 	
 	public static final String COL_COUNT = "count";
 	public static final String COL_VALUE = "VALUE";
