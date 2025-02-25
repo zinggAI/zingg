@@ -3,7 +3,6 @@ FIND_TRAINING_DATA = "findTrainingData"
 LABEL = "label"
 TRAIN = "train"
 MATCH = "match"
-INCREMENTAL = "runIncrement"
 
 #load file config to test on
 febrl = "./examples/febrl120k/config.json"
