@@ -81,7 +81,7 @@ public class FieldDefinition implements Named, Serializable {
 	}
 
 	
-	public void setMatchTypeInternal(MatchType... type) {
+	public void setMatchTypeInternal(IMatchType... type) {
 		this.matchType = Arrays.asList(type);
 	}
 	
