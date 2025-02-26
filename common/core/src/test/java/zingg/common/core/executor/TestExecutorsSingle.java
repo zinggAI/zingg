@@ -7,14 +7,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZinggClientException;
-import zingg.common.core.executor.blockingverifier.IVerifyBlockingPipes;
-import zingg.common.core.executor.validate.BlockerValidator;
 import zingg.common.core.executor.validate.LabellerValidator;
 import zingg.common.core.executor.validate.LinkerValidator;
 import zingg.common.core.executor.validate.MatcherValidator;
 import zingg.common.core.executor.validate.TrainerValidator;
 import zingg.common.core.executor.validate.TrainingDataFinderValidator;
-import zingg.common.core.executor.blockingverifier.VerifyBlocking;
 
 public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGeneric<S, D, R, C, T> {
 
@@ -45,11 +42,12 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 		Trainer<S, D, R, C, T> trainer = getTrainer();
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer),getConfigFile(),getModelId(),getDFObjectUtil()));
 
+		/* 
 		VerifyBlocking<S, D, R, C, T> verifyBlocker = getVerifyBlocker();
 		IVerifyBlockingPipes<S, D, R, C> verifyBlockingPipes = getVerifyBlockingPipes();
 		verifyBlockingPipes.setTimestamp(verifyBlocker.getTimestamp());
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(verifyBlocker, new BlockerValidator<S, D, R, C, T>(verifyBlocker, verifyBlockingPipes),getConfigFile(),getModelId(),getDFObjectUtil()));
-
+		*/
 	}
 
 	public void getAdditionalExecutors() throws ZinggClientException, IOException{
@@ -73,12 +71,12 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 	protected abstract Trainer<S, D, R, C, T> getTrainer() throws ZinggClientException;
 
 	protected abstract TrainerValidator<S, D, R, C, T> getTrainerValidator(Trainer<S, D, R, C, T> trainer);
-
-	protected abstract VerifyBlocking<S, D, R, C, T> getVerifyBlocker() throws ZinggClientException;
     
     protected abstract Matcher<S, D, R, C, T> getMatcher() throws ZinggClientException;	
 
 	protected abstract Linker<S, D, R, C, T> getLinker() throws ZinggClientException;	
 
-	protected abstract IVerifyBlockingPipes<S, D, R, C> getVerifyBlockingPipes() throws ZinggClientException;
+	//protected abstract VerifyBlocking<S, D, R, C, T> getVerifyBlocker() throws ZinggClientException;
+
+	//protected abstract IVerifyBlockingPipes<S, D, R, C> getVerifyBlockingPipes() throws ZinggClientException;
 }
