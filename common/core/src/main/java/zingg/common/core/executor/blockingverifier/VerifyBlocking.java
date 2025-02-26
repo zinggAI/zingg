@@ -39,8 +39,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			ZFrame<D,R,C>  testDataOriginal = getTestData();
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
 			ZFrame<D,R,C> blocked = getBlockedData(testDataOriginal);
-			LOG.info("Blocked");
-			blocked.show();
+			LOG.info("Blocked Data" + blocked.count());
 			//get the no of counts per hash
 			ZFrame<D,R,C> blockCounts = getBlockCounts(blocked, verifyBlockingPipeUtil);	
 			getPipeUtil().write(blockCounts,getVerifyBlockingPipeUtil().getCountsPipe(args));
