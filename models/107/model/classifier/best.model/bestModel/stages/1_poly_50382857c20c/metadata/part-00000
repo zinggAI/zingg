@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.PolynomialExpansion","timestamp":1740539676471,"sparkVersion":"3.5.3","uid":"poly_50382857c20c","paramMap":{"degree":3,"outputCol":"z_feature","inputCol":"z_featurevector"},"defaultParamMap":{"degree":2,"outputCol":"poly_50382857c20c__output"}}
