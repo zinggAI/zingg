@@ -41,14 +41,14 @@ public class NumbersJaccardFunction extends StringSimilarityDistanceFunction {
 				// get numbers
 				Matcher m = p.matcher(first);
 				while (m.find()) {
-					num1.add(m.group().toLowerCase());
+					num1.add(m.group());
 					score1 ++;
 				}
 			}
 			if (score2 == 1.0d) {
 				Matcher m = p.matcher(second);
 				while (m.find()) {
-					num2.add(m.group().toLowerCase());
+					num2.add(m.group());
 					score2 ++;
 				}
 			}

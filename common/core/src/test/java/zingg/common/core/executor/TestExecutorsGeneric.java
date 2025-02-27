@@ -47,7 +47,8 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 				 executorTester.validateResults();
 			 }
 		 } catch (Throwable throwable) {
-			 throw new ZinggClientException("Exception occurred while running one or more test executors, " + throwable.getMessage());
+			throwable.printStackTrace();
+			throw new ZinggClientException("Exception occurred while running one or more test executors, " + throwable.getMessage());
 		 }
 
 	}

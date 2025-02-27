@@ -42,14 +42,14 @@ public class ProductCodeFunction extends StringSimilarityFunction {
 				// get numbers
 				Matcher m = p.matcher(first);
 				while (m.find()) {
-					num1.add(m.group().toLowerCase().replaceAll(" ", ""));
+					num1.add(m.group().replaceAll(" ", ""));
 					score1 ++;
 				}
 			}
 			if (score2 == 1.0d) {
 				Matcher m = p.matcher(second);
 				while (m.find()) {
-					num2.add(m.group().toLowerCase().replaceAll(" ", ""));
+					num2.add(m.group().replaceAll(" ", ""));
 					score2 ++;
 				}
 			}

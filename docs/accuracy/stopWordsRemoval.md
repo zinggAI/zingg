@@ -14,7 +14,7 @@ By default, Zingg extracts 10% of the high-frequency unique words from a dataset
 stopWordsCutoff: <a value between 0 and 1>
 ```
 
-Once you have verified the above stop words, you can configure them in the JSON variable **stopWords** with the path to the CSV file containing them. Please ensure while editing the CSV or building it manually that it should contain _one word per row_.
+Once you have verified the above stop words, you can configure them in the JSON variable **stopWords** with the path to the CSV file containing them. Please ensure while editing the CSV or building it manually that it should contain _one word per row_. Also, ensure that it has a header such as StopWords as Zingg ignores the header by default and works on the remaining data.
 
 ```
 "fieldDefinition":[
@@ -26,6 +26,9 @@ Once you have verified the above stop words, you can configure them in the JSON 
    		"stopWords": "models/100/stopWords/fname.csv"
    	},
 ```
+
+In case of stopwords being set up manually by the user, the list of stopwords may consider multiple columns and Zingg used only the first column by default.
+
 
 For recommending stopwords in **Zingg Enterprise Snowflake**, 
 

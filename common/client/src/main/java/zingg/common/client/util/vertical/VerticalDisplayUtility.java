@@ -42,8 +42,8 @@ public class VerticalDisplayUtility<S, D, R, C> {
             //and create model list
             List<VerticalDisplayModel> samples = new ArrayList<>();
             for (String column : columns) {
-                samples.add(new VerticalDisplayTwoRowModel(column, getString(zFrame.getAsString(row1, column)),
-                        getString(zFrame2.getAsString(row2, column))));
+                samples.add(new VerticalDisplayTwoRowModel(column, getString(zFrame.get(row1, column)),
+                        getString(zFrame2.get(row2, column))));
             }
             return dfObjectUtil.getDFFromObjectList(samples, VerticalDisplayTwoRowModel.class);
         } catch (Exception exception) {

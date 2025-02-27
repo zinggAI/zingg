@@ -13,8 +13,9 @@ import zingg.common.client.options.ZinggOptions;
 import zingg.common.core.executor.labeller.ProgrammaticLabeller;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.executor.SparkLabeller;
+import zingg.spark.core.preprocess.ISparkPreprocMapSupplier;
 
-public class ProgrammaticSparkLabeller extends SparkLabeller {
+public class ProgrammaticSparkLabeller extends SparkLabeller implements ISparkPreprocMapSupplier {
 
 	private static final long serialVersionUID = 1L;
 
