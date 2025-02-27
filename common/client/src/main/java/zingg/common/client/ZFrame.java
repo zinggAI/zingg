@@ -76,6 +76,7 @@ public interface ZFrame<D, R, C> {
     public ZFrame<D, R, C> unionByName(ZFrame<D, R, C> other, boolean flag);
 
     public <A> ZFrame<D, R, C> withColumn(String s, A c);
+    public ZFrame<D, R, C> withColumns(String[] columns, C[] columnValues);
 
     
     public ZFrame<D, R, C> repartition(int num);

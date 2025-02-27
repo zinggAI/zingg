@@ -20,7 +20,7 @@ import static org.apache.spark.sql.functions.lower;
 
 public class SparkCaseNormalizer extends CaseNormalizer<SparkSession, Dataset<Row>, Row, Column, DataType> {
     private static final long serialVersionUID = 1L;
-    protected static String name = "zingg.spark.core.preprocess.caseNormalize.SparkCaseNormalizer";
+    protected static String name = "zingg.spark.core.preprocess.casenormalize.SparkCaseNormalizer";
 
     public SparkCaseNormalizer() {
         super();
@@ -32,16 +32,11 @@ public class SparkCaseNormalizer extends CaseNormalizer<SparkSession, Dataset<Ro
     @Override
     protected ZFrame<Dataset<Row>, Row, Column> applyCaseNormalizer(ZFrame<Dataset<Row>, Row, Column> incomingDataFrame, List<String> relevantFields) {
         String[] incomingDFColumns = incomingDataFrame.columns();
-        Seq<String> columnsSeq = JavaConverters.asScalaIteratorConverter(relevantFields.iterator())
-                .asScala()
-                .toSeq();
-        List<Column> caseNormalizedValues = new ArrayList<>();
-        for (String relevantField : relevantFields) {
-            caseNormalizedValues.add(lower(incomingDataFrame.col(relevantField)));
+        Column[] caseNormalizedValues = new Column[relevantFields.size()];
+        for (int idx = 0; idx < relevantFields.size(); idx++) {
+            caseNormalizedValues[idx] = lower(incomingDataFrame.col(relevantFields.get(idx)));
         }
-        Seq<Column> caseNormalizedSeq = JavaConverters.asScalaIteratorConverter(caseNormalizedValues.iterator())
-                .asScala()
-                .toSeq();
-        return new SparkFrame(incomingDataFrame.df().withColumns(columnsSeq, caseNormalizedSeq)).select(incomingDFColumns);
+
+        return incomingDataFrame.withColumns(incomingDFColumns, caseNormalizedValues).select(incomingDFColumns);
     }
 }
