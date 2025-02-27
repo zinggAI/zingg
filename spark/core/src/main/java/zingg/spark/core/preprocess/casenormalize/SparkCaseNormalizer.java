@@ -29,10 +29,12 @@ public class SparkCaseNormalizer extends CaseNormalizer<SparkSession, Dataset<Ro
     protected ZFrame<Dataset<Row>, Row, Column> applyCaseNormalizer(ZFrame<Dataset<Row>, Row, Column> incomingDataFrame, List<String> relevantFields) {
         String[] incomingDFColumns = incomingDataFrame.columns();
         Column[] caseNormalizedValues = new Column[relevantFields.size()];
+        String[] relevantFieldsArray = new String[relevantFields.size()];
         for (int idx = 0; idx < relevantFields.size(); idx++) {
             caseNormalizedValues[idx] = lower(incomingDataFrame.col(relevantFields.get(idx)));
+            relevantFieldsArray[idx] = relevantFields.get(idx);
         }
 
-        return incomingDataFrame.withColumns(incomingDFColumns, caseNormalizedValues).select(incomingDFColumns);
+        return incomingDataFrame.withColumns(relevantFieldsArray, caseNormalizedValues).select(incomingDFColumns);
     }
 }
