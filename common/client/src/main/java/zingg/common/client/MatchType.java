@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class MatchType implements IMatchType, Serializable{
 
 	private static final long serialVersionUID = 1L;
-	public String name;
+	protected String name;
 
 	public MatchType(){
 		
