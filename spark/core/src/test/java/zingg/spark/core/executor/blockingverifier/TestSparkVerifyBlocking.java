@@ -10,6 +10,7 @@ import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.ColName;
 import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.WithSession;
 import zingg.common.core.executor.blockingverifier.IVerifyBlockingPipes;
@@ -33,8 +34,9 @@ public class TestSparkVerifyBlocking extends TestVerifyBlocking<SparkSession,Dat
     public TestSparkVerifyBlocking(SparkSession sparkSession) throws ZinggClientException {
 		this.zinggSparkContext = new ZinggSparkContext();
 		this.iWithSession = new WithSession<SparkSession>();
-		zinggSparkContext.init(sparkSession);
 		iWithSession.setSession(sparkSession);
+        zinggSparkContext.setUtils();
+        zinggSparkContext.init(sparkSession);
 		initialize(new SparkDFObjectUtil(iWithSession), zinggSparkContext);
 	}
 
@@ -46,6 +48,11 @@ public class TestSparkVerifyBlocking extends TestVerifyBlocking<SparkSession,Dat
     @Override
     public IVerifyBlockingPipes<SparkSession, Dataset<Row>, Row, Column> getVerifyBlockingPipes() {
         return new SparkVerifyBlockingPipes(new SparkPipeUtil(zinggSparkContext.getSession()), getVerifyBlocker().getTimestamp(), new SparkModelHelper());
+    }
+
+    @Override
+    public String getMassagedTableName(String hash) {
+        return (ColName.BLOCK_SAMPLES + hash);
     } 
 
     

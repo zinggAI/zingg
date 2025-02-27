@@ -11,7 +11,7 @@ public class BlockingVerifyData {
     public static List<BlockedData> getBlockedDF1() {
 
         List<BlockedData> sample = new ArrayList<BlockedData>();
-        sample.add(new BlockedData("15", "rec-1040-dup-2", "matilda", "mestrov", "retiremen tvillage", "taringa", "qld", "2563135", "test", "3910"));
+        sample.add(new BlockedData("15", "rec-1040-dup-2", "matilda", "mestrov", "retiremen tvillage", "taringa", "qld", "2563135", "test", "-3910"));
         sample.add(new BlockedData("101", "rec-1041-dup-0", "tyler", "frojd", "burramurra avenue", "san rmeo", "sa", "7812219", "test", "3915"));
         sample.add(new BlockedData("102", "rec-1041-org", "tyler", "froud", "burramurra avenue", "san remo", "sa", "7812219", "test", "3915"));
         sample.add(new BlockedData("103", "rec-1041-dup-1", "tyler", "frjd", "burramura avenue", "san remo", "sa", "7812219", "test", "3915"));
@@ -24,14 +24,14 @@ public class BlockingVerifyData {
         sample.add(new BlockedData("127", "rec-1041-dup-25", "tyler", "frojd", "burramurra aven", "san remo", "sa", "7812219", "test", "3915"));
         sample.add(new BlockedData("128", "rec-1041-dup-26", "tyler", "froud", "burramurra avenue", "san remo", "sa", "7812219", "test", "3915"));
         sample.add(new BlockedData("129", "rec-1041-dup-27", "tyler", "frojd", "burramurra avenue", "san remo", "sa", "7812219", "", "3915"));
-        sample.add(new BlockedData("55", "rec-1043-org", "giorgia", "frahn", "ramano estate locn 1", "tallebudgera", "vic", "9724789", "test", "-3950"));
-        sample.add(new BlockedData("19", "rec-1040-dup-1", "matilda", "mestrv", "retirement village", "taringa", "", "2563135", "test", "3910"));
-        sample.add(new BlockedData("12", "rec-1040-dup-0", "matilda", "mestrov", "retirement village", "taringa", "qld", "2536135", "test", "3910"));
+        sample.add(new BlockedData("55", "rec-1043-org", "giorgia", "frahn", "ramano estate locn 1", "tallebudgera", "vic", "9724789", "test", "3950"));
+        sample.add(new BlockedData("19", "rec-1040-dup-1", "matilda", "mestrv", "retirement village", "taringa", "", "2563135", "test", "-3910"));
+        sample.add(new BlockedData("12", "rec-1040-dup-0", "matilda", "mestrov", "retirement village", "taringa", "qld", "2536135", "test", "-3910"));
         sample.add(new BlockedData("94", "rec-1044-org", "nicole", "carbone", "simpson army barracks", "toowoomba", "wa", "8190756", "test", "3930"));
         sample.add(new BlockedData("27", "rec-104-org", "benjamin", "carbone", "arthella", "orange", "vic", "3677127", "test", "-3945"));
         sample.add(new BlockedData("92", "rec-1044-dup-1", "nicole", "carbone", "simpson army barracks", "toowoomba", "wa", "8190756", "test", "3930"));
         sample.add(new BlockedData("96", "rec-1044-dup-0", "nicole", "shadbolt", "simpson army barracks", "toowoomba", "wa", "8190756", "test", "3930"));
-        sample.add(new BlockedData("11", "rec-1040-org", "matilda", "mestriv", "retirement village", "taringa", "qld", "2563135", "test", "3910"));
+        sample.add(new BlockedData("11", "rec-1040-org", "matilda", "mestriv", "retirement village", "taringa", "qld", "2563135", "test", "-3910"));
         sample.add(new BlockedData("39", "rec-1042-dup-1", "kiandra", "cowle", "rustenubr g sth", "girgarre", "qld", "3328205", "test", "3925"));
         sample.add(new BlockedData("112", "rec-1041-dup-10", "tyler", "froud", "burramurra avenue", "san remo", "sa", "", "test", "3915"));
         sample.add(new BlockedData("113", "rec-1041-dup-11", "tyler", "frojd", "burramura avenue", "san remo", "sa", "7812219", "test", "3915"));
@@ -62,12 +62,12 @@ public class BlockingVerifyData {
     public static List<BlockCountsData> getExpectedBlockedDF1() {
 
         List<BlockCountsData> sample = new ArrayList<BlockCountsData>();
-        sample.add(new BlockCountsData("3915", "29")); 
-        sample.add(new BlockCountsData("3930", "5"));
-        sample.add(new BlockCountsData("3910", "4"));
-        sample.add(new BlockCountsData("3925", "3"));
-        sample.add(new BlockCountsData("-3945", "2"));
-        sample.add(new BlockCountsData("-3950", "1"));
+        sample.add(new BlockCountsData(3915, 29L)); 
+        sample.add(new BlockCountsData(3930, 5L));
+        sample.add(new BlockCountsData(-3910, 4L));
+        sample.add(new BlockCountsData(3925, 3L));
+        sample.add(new BlockCountsData(-3945, 2L));
+        sample.add(new BlockCountsData(3950, 1L));
 
         return sample;
     }

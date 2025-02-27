@@ -60,8 +60,12 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return blockCounts;
 	}
 
+	protected ZFrame<D,R,C> getTopRecordsDF(ZFrame<D,R,C> blockCounts){
+		return blockCounts.select(ColName.HASH_COL,ColName.HASH_COUNTS_COL).sortDescending(ColName.HASH_COUNTS_COL).limit(noOfBlocks);
+	}
+
 	protected void getBlockSamples(ZFrame<D, R, C> blocked, ZFrame<D, R, C> blockCounts, IVerifyBlockingPipes<S,D,R,C> verifyBlockingPipeUtil) throws ZinggClientException {
-		ZFrame<D,R,C> blockTopRec = blockCounts.select(ColName.HASH_COL,ColName.HASH_COUNTS_COL).sortDescending(ColName.HASH_COUNTS_COL).limit(noOfBlocks);
+		ZFrame<D,R,C> blockTopRec = getTopRecordsDF(blockCounts);
 		List<R> topRec = blockTopRec.collectAsList();
 
 		for(R row: topRec) {
