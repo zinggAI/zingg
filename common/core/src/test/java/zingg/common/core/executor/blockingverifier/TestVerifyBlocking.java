@@ -60,6 +60,10 @@ public abstract class TestVerifyBlocking<S,D,R,C,T> {
     public void testGetBlockSamples() throws Exception, ZinggClientException{
         VerifyBlocking<S,D,R,C,T> vb = getVerifyBlocker(); 
         verifyBlockingPipes = getVerifyBlockingPipes();
+        vb.setModelHelper(verifyBlockingPipes.getModelHelper());
+        verifyBlockingPipes.setTimestamp(vb.getTimestamp());
+        arguments.setModelId("junit_vb");
+        vb.setArgs(arguments);
 
         ZFrame<D,R,C> blocked = dfObjectUtil.getDFFromObjectList(BlockingVerifyData.getBlockedDF1(), BlockedData.class);
         ZFrame<D,R,C> blockCounts = vb.getBlockCounts(blocked,verifyBlockingPipes);
@@ -70,32 +74,16 @@ public abstract class TestVerifyBlocking<S,D,R,C,T> {
         assertEquals("3930",blockTopRec.getAsString(topRec.get(1), ColName.HASH_COL));
 
         ZFrame<D,R,C> matchingRec1 = vb.getMatchingRecords(topRec.get(0), blockTopRec, blocked, 3915);
-        assertTrue(matchingRec1.count()== 3L);
+        context.getPipeUtil().write(matchingRec1, verifyBlockingPipes.getBlockSamplesPipe(arguments, ColName.BLOCK_SAMPLES + "3915"));
 
         ZFrame<D,R,C> matchingRec2 = vb.getMatchingRecords(topRec.get(2), blockTopRec, blocked, -3910);        
-        assertTrue(matchingRec2.count()== 1L);
-
-    }
-
-    @Test
-    public void testOutputBlockSamples() throws Exception, ZinggClientException{
-        VerifyBlocking<S,D,R,C,T> vb = getVerifyBlocker(); 
-        verifyBlockingPipes = getVerifyBlockingPipes();
-        vb.setModelHelper(verifyBlockingPipes.getModelHelper());
-        context.setPipeUtil(verifyBlockingPipes.getPipeUtil());
-        verifyBlockingPipes.setTimestamp(vb.getTimestamp());
-        arguments.setModelId("junit_vb");
-        vb.setArgs(arguments);
-
-        ZFrame<D,R,C> blocked = dfObjectUtil.getDFFromObjectList(BlockingVerifyData.getBlockedDF1(), BlockedData.class);
-        ZFrame<D,R,C> blockCounts = dfObjectUtil.getDFFromObjectList(BlockingVerifyData.getExpectedBlockedDF1(), BlockCountsData.class);
-        vb.getBlockSamples(blocked, blockCounts, verifyBlockingPipes);
+        context.getPipeUtil().write(matchingRec2, verifyBlockingPipes.getBlockSamplesPipe(arguments, ColName.BLOCK_SAMPLES + "-3910"));
 
         ZFrame<D, R, C> df1 = context.getPipeUtil().read(false, false, verifyBlockingPipes.getBlockSamplesPipe(arguments, ColName.BLOCK_SAMPLES + "3915"));
-        ZFrame<D, R, C> df3 = context.getPipeUtil().read(false, false, verifyBlockingPipes.getBlockSamplesPipe(arguments, getMassagedTableName("-3910")));
+        ZFrame<D, R, C> df2 = context.getPipeUtil().read(false, false, verifyBlockingPipes.getBlockSamplesPipe(arguments, getMassagedTableName("-3910")));
 
         assertTrue(df1.count() == 3L);
-        assertTrue(df3.count() == 1L);
+        assertTrue(df2.count() == 1L);
     }
 
     public boolean checkNoOfTopBlocks(ZFrame<D,R,C> blockTopRec){

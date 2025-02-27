@@ -35,9 +35,9 @@ public class TestSparkVerifyBlocking extends TestVerifyBlocking<SparkSession,Dat
 		this.zinggSparkContext = new ZinggSparkContext();
 		this.iWithSession = new WithSession<SparkSession>();
 		iWithSession.setSession(sparkSession);
-        zinggSparkContext.setUtils();
         zinggSparkContext.init(sparkSession);
 		initialize(new SparkDFObjectUtil(iWithSession), zinggSparkContext);
+        zinggSparkContext.setPipeUtil(new SparkPipeUtil(zinggSparkContext.getSession()));
 	}
 
     @Override
