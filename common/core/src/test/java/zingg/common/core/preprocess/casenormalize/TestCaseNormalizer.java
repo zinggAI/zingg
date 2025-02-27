@@ -1,4 +1,4 @@
-package zingg.common.core.preprocess.caseNormalize;
+package zingg.common.core.preprocess.casenormalize;
 
 import org.junit.jupiter.api.Test;
 import zingg.common.client.FieldDefinition;

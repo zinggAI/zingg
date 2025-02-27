@@ -10,7 +10,7 @@ import scala.collection.Seq;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
 import zingg.common.core.context.IContext;
-import zingg.common.core.preprocess.caseNormalize.CaseNormalizer;
+import zingg.common.core.preprocess.casenormalize.CaseNormalizer;
 import zingg.spark.client.SparkFrame;
 
 import java.util.ArrayList;
