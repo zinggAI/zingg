@@ -1,19 +1,15 @@
-package zingg.spark.core.preprocess.caseNormalize;
+package zingg.spark.core.preprocess.casenormalize;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
-import scala.collection.JavaConverters;
-import scala.collection.Seq;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
 import zingg.common.core.context.IContext;
 import zingg.common.core.preprocess.casenormalize.CaseNormalizer;
-import zingg.spark.client.SparkFrame;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.apache.spark.sql.functions.lower;

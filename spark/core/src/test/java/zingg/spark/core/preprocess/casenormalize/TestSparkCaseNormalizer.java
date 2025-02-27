@@ -1,4 +1,4 @@
-package zingg.spark.core.preprocess.caseNormalize;
+package zingg.spark.core.preprocess.casenormalize;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;

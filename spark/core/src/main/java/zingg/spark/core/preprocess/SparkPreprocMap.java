@@ -13,7 +13,7 @@ import zingg.common.core.preprocess.IPreprocMap;
 import zingg.common.core.preprocess.IPreprocType;
 import zingg.common.core.preprocess.IPreprocTypes;
 import zingg.common.core.preprocess.IPreprocessor;
-import zingg.spark.core.preprocess.caseNormalize.SparkCaseNormalizer;
+import zingg.spark.core.preprocess.casenormalize.SparkCaseNormalizer;
 import zingg.spark.core.preprocess.stopwords.SparkStopWordsRemover;
 
 public class SparkPreprocMap implements IPreprocMap<SparkSession,Dataset<Row>,Row,Column,DataType> {
