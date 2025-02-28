@@ -42,12 +42,6 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 		Trainer<S, D, R, C, T> trainer = getTrainer();
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer),getConfigFile(),getModelId(),getDFObjectUtil()));
 
-		/* 
-		VerifyBlocking<S, D, R, C, T> verifyBlocker = getVerifyBlocker();
-		IVerifyBlockingPipes<S, D, R, C> verifyBlockingPipes = getVerifyBlockingPipes();
-		verifyBlockingPipes.setTimestamp(verifyBlocker.getTimestamp());
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(verifyBlocker, new BlockerValidator<S, D, R, C, T>(verifyBlocker, verifyBlockingPipes),getConfigFile(),getModelId(),getDFObjectUtil()));
-		*/
 	}
 
 	public void getAdditionalExecutors() throws ZinggClientException, IOException{
@@ -76,7 +70,4 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 
 	protected abstract Linker<S, D, R, C, T> getLinker() throws ZinggClientException;	
 
-	//protected abstract VerifyBlocking<S, D, R, C, T> getVerifyBlocker() throws ZinggClientException;
-
-	//protected abstract IVerifyBlockingPipes<S, D, R, C> getVerifyBlockingPipes() throws ZinggClientException;
 }

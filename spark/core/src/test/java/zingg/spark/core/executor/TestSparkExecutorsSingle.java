@@ -95,17 +95,4 @@ public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,D
 		return new SparkDFObjectUtil(iWithSession);
 	}
 
-	/*
-	@Override
-	protected SparkVerifyBlocker getVerifyBlocker() throws ZinggClientException {
-		SparkVerifyBlocker svb = new SparkVerifyBlocker(ctx);
-		return svb;
-	}
-
-	@Override
-	protected IVerifyBlockingPipes<SparkSession, Dataset<Row>, Row, Column> getVerifyBlockingPipes() throws ZinggClientException {
-		return new SparkVerifyBlockingPipes(new SparkPipeUtil(sparkSession), getVerifyBlocker().getTimestamp(), new SparkModelHelper());
-	}
-	*/
-
 }
