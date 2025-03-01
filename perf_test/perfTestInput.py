@@ -5,7 +5,7 @@ TRAIN = "train"
 MATCH = "match"
 
 #load file config to test on
-febrl = "./examples/febrl120k/config.json"
+febrl = "./examples/febrl/config.json"
 febrl_120k = "./examples/febrl120k/config120k.json"
 ncVoter_5m = "./examples/ncVoters5M/config.json"
 

@@ -74,6 +74,7 @@ def compare_results(prev_results, new_results):
                         print(f"Performance degradation detected in phase {phase} (Load: {load_size})!")
                         print(f"Previous time: {prev_time} min, New time: {new_time} min")
                         test_fail = True
+    return test_fail
 
 
 def perform_load_test():
@@ -106,7 +107,7 @@ def perform_load_test():
                 phase_error[load_size][phase] = e
 
     # Compare results **before** writing
-    compare_results(prev_results, phase_time)
+    test_fail = compare_results(prev_results, phase_time)
 
     test_data["results"] = {}
 
