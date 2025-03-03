@@ -1,79 +1,84 @@
 import subprocess
-from perfTestInput import phases, load_configs, ZINGG
+import json
 import time
-from datetime import date, datetime
-from subprocess import PIPE
 import os
+from datetime import datetime, date
+from perfTestInput import phases, load_configs, ZINGG
 
-#set working directory
-os.chdir(os.path.dirname("../"))
-
-ZINGG = ZINGG           
-#phases to run: ftd, match
+ZINGG = ZINGG
 phases_to_test = phases
+load = load_configs
 
 now = datetime.now()
 current_time = now.strftime("%H:%M:%S")
 
-#load to test: 65, 120k, 5m
-load = load_configs
-
-start_time = time.time()
-
-reportFile = os.path.abspath(os.curdir)+"/zingg/perf_test/perf_test_report/loadTestReport"
-
-def perf_test_small_all():
-    return "small_test_running_all"
+reportFile = "./perf_test/perf_test_report/loadTestReport.json"
 
 propertyFile = "./config/zingg.conf"
+PERFORMANCE_THRESHOLD = 1.05  # 5% increase threshold
+
+
+def load_results():
+    """Load previous test results if available."""
+    if os.path.exists(reportFile):
+        with open(reportFile, "r") as f:
+            try:
+                return json.load(f)
+            except json.JSONDecodeError:
+                return {}
+    return {}
+
+
+def save_results(data):
+    """Save current test results to the report file."""
+    with open(reportFile, "w") as f:
+        json.dump(data, f, indent=4)
+
 
 def run_phase(phase, conf):
-    print("Running phase - " + phase)
-    return subprocess.call(ZINGG + " %s %s %s %s %s %s" % ("--phase", phase, "--conf", conf, "--properties-file", propertyFile), shell=True)
-
-def perf_test_small(phase):
-    return "small_test_running"
+    """Run a single test phase."""
+    print(f"Running phase - {phase}")
+    return subprocess.call(
+        f"{ZINGG} --phase {phase} --conf {conf} --properties-file {propertyFile}",
+        shell=True
+    )
 
 
 def write_on_start():
-    f = open(reportFile, "w+")
-    f.write("******************************** perf test report, " + str(date.today()) + ", " + current_time + " ********************************\n\n");
-    f.write("------------ Test bed details ------------\n")
-    f.write("Load samples: ")
-    for load, config in load_configs.items():
-        f.write(str(load) + " ")
-    f.write("\n")
-    f.write("Phases: ")
-    for phase in phases:
-        f.write(phase + " ")
-    f.write("\n")
-    f.write("------------------------------------------\n\n")
-    f.close()
-
-def write_on_complete():
-    f = open(reportFile, "a+")
-    f.write("********************************************************************************************************\n\n\n\n\n\n")
+    """Initialize test report with metadata."""
+    test_data = {
+        "date": str(date.today()),
+        "time": current_time,
+        "load_samples": list(load_configs.keys()),
+        "phases": phases,
+        "results": {}
+    }
+    return test_data  # Return instead of saving immediately
 
 
+def compare_results(prev_results, new_results):
+    """Compare new results with previous ones and check for performance degradation."""
 
+    test_fail = False
+    
+    for load_size, phases in new_results.items():
+        if load_size in prev_results:
+            for phase, new_time_seconds in phases.items():
+                prev_phase_data = prev_results[load_size].get(phase, {})
 
-def write_success_stats(phase_time, load):
-    f = open(reportFile, "a+")
-    f.write("{:>50}".format("capturing for " + load) + "\n")
-    f.write("PHASE {:>65}".format("TIME_TAKEN_IN_MINUTES") + "\n")
-    for phase, time in phase_time.items():
-        f.write(success_message(phase, round(time/60, 1)) + "\n")
-    f.write("\n")
-    f.close()
+                if "time_taken_minutes" in prev_phase_data:
+                    prev_time = prev_phase_data["time_taken_minutes"]
+                    new_time = round(new_time_seconds / 60, 2)  # Convert seconds to minutes
 
-def write_failure_stats(phase_error):
-    f = open(reportFile, "a+")
-    for phase, error in phase_error.items():
-        f.write(error_message(phase, error) + "\n\n")
-    f.close()
+                    if new_time > prev_time * PERFORMANCE_THRESHOLD:
+                        print(f"Performance degradation detected in phase {phase} (Load: {load_size})!")
+                        print(f"Previous time: {prev_time} min, New time: {new_time} min")
+                        test_fail = True
+    return test_fail
 
 
 def perform_load_test():
+    """Execute the test and compare with previous results."""
     if not load_configs:
         print("No load configured to test, first set it!")
         return
@@ -81,38 +86,58 @@ def perform_load_test():
         print("No phase set for test, first set it!")
         return
 
-    for load, config in load_configs.items():
-        phase_time = {}
-        phase_error = {}
+    prev_results = load_results().get("results", {})
+
+    test_data = write_on_start()  # Initialize metadata
+
+    phase_time = {}
+    phase_error = {}
+
+    for load_size, config in load_configs.items():
+        phase_time[load_size] = {}
+        phase_error[load_size] = {}
+
         for phase in phases_to_test:
             try:
                 t1 = time.time()
-                r = run_phase(phase, config)
+                result = run_phase(phase, config)
                 t2 = time.time()
-                phase_time[phase] = t2 - t1
+                phase_time[load_size][phase] = t2 - t1
             except Exception as e:
-                phase_error[phase] = e
+                phase_error[load_size][phase] = e
 
+    # Compare results **before** writing
+    test_fail = compare_results(prev_results, phase_time)
 
-        #write success data to file
-        if phase_time:
-            write_success_stats(phase_time, load)
-        #write failure data to file
-        if phase_error:
-            write_failure_stats(phase_error)
+    test_data["results"] = {}
 
+    for load_size, times in phase_time.items():
+        test_data["results"][load_size] = {
+            phase: {
+                "time_taken_minutes": round(duration / 60, 2),
+                "status": "success"
+            } for phase, duration in times.items()
+        }
 
-def success_message(phase, time):
-    return "{:<20} {:>50}".format(phase, str(time))
+    for load_size, errors in phase_error.items():
+        if load_size not in test_data["results"]:
+            test_data["results"][load_size] = {}
 
-def error_message(phase, error):
-    return phase + " failed with error " + str(error) + "\n"
+        for phase, error in errors.items():
+            test_data["results"][load_size][phase] = {
+                "error": str(error),
+                "status": "failure"
+            }
 
+    # Save results after successful test execution
+    save_results(test_data)
+
+    if test_fail:
+        exit(1)
 
 def main():
-    write_on_start()
     perform_load_test()
-    write_on_complete()
+
 
 if __name__ == "__main__":
     main()
