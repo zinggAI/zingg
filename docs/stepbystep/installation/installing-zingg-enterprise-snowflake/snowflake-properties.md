@@ -21,4 +21,4 @@ Zingg needs details about accessing Snowflake which can be provided through a pr
     CLIENT_SESSION_KEEP_ALIVE_HEARTBEAT_FREQUENCY=900
 ```
 
-The parameter CLIENT_SESSION_KEEP_ALIVE_HEARTBEAT_FREQUENCY is the number of seconds in-between client attempts to update the token for the session - it can vary from 99 to 3600.
+The parameter CLIENT_SESSION_KEEP_ALIVE_HEARTBEAT_FREQUENCY is the number of seconds in-between client attempts to update the token for the session - it can vary from 900 to 3600.
