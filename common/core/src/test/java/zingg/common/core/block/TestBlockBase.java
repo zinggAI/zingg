@@ -12,7 +12,7 @@ import zingg.common.client.Arguments;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
-import zingg.common.client.MatchType;
+import zingg.common.client.IMatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -70,13 +70,13 @@ public abstract class TestBlockBase<S, D, R, C, T> {
 		FieldDefinition idFD = new FieldDefinition();
 		idFD.setDataType("integer");
 		idFD.setFieldName("id");
-		ArrayList<MatchType> matchTypelistId = new ArrayList<MatchType>();
-		matchTypelistId.add((MatchType)MatchTypes.DONT_USE);
+		ArrayList<IMatchType> matchTypelistId = new ArrayList<IMatchType>();
+		matchTypelistId.add(MatchTypes.DONT_USE);
 		idFD.setMatchType(matchTypelistId);
 		fdList.add(idFD);
 		
-		ArrayList<MatchType> matchTypelistFuzzy = new ArrayList<MatchType>();
-		matchTypelistFuzzy.add((MatchType)MatchTypes.FUZZY);
+		ArrayList<IMatchType> matchTypelistFuzzy = new ArrayList<IMatchType>();
+		matchTypelistFuzzy.add(MatchTypes.FUZZY);
 
 		
 		FieldDefinition yearFD = new FieldDefinition();
