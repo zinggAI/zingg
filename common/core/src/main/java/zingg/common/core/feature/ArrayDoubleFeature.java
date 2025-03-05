@@ -2,7 +2,7 @@ package zingg.common.core.feature;
 
 import scala.collection.mutable.WrappedArray;
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.MatchType;
+import zingg.common.client.MatchTypes;
 import zingg.common.core.similarity.function.ArrayDoubleSimilarityFunction;
 public class ArrayDoubleFeature extends BaseFeature<WrappedArray<Double>> {
 
@@ -14,7 +14,7 @@ public class ArrayDoubleFeature extends BaseFeature<WrappedArray<Double>> {
 
 	public void init(FieldDefinition newParam) {
 		setFieldDefinition(newParam);
-		if (newParam.getMatchType().contains(MatchType.FUZZY)) {
+		if (newParam.getMatchType().contains(MatchTypes.FUZZY)) {
 			addSimFunction(new ArrayDoubleSimilarityFunction());
 		} 
 	}

@@ -39,7 +39,7 @@
 			"fieldName" : "add1",
 			"matchType": "fuzzy",
 			"fields" : "add1",
-			"dataType": "string" 
+			"dataType": "string"
 		},
 		{
 			"fieldName" : "add2",

@@ -29,6 +29,7 @@
       * [Input Data](stepbystep/configuration/data-input-and-output/data.md)
       * [Output](stepbystep/configuration/data-input-and-output/output.md)
     * [Field Definitions](stepbystep/configuration/field-definitions.md)
+    * [Advanced Match Types](stepbystep/configuration/adv-matchtypes.md)
     * [Deterministic Matching](deterministicMatching.md)
     * [Pass Thru Data](passthru.md)
     * [Model Location](stepbystep/configuration/model-location.md)

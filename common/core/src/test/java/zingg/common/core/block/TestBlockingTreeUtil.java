@@ -9,6 +9,7 @@ import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
 import zingg.common.client.MatchType;
+import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.DFObjectUtil;
@@ -217,7 +218,7 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
         List<FieldDefinition> fieldDefinitions = new ArrayList<FieldDefinition>();
 
         for (FieldDefinition def : arguments.getFieldDefinition()) {
-            if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
+            if (! (def.getMatchType() == null || def.getMatchType().contains(MatchTypes.DONT_USE))) {
                 fieldDefinitions.add(def);
             }
         }
