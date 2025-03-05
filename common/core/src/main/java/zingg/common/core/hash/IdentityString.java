@@ -9,7 +9,7 @@ public class IdentityString extends BaseHash<String,String>{
 
 	public String call(String field) {
 		 if (field == null) return field;
-		 field = field.trim().toLowerCase();
+		 field = field.trim();
 		 return field;
 	}
 
