@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.util.ColName;
 import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.WithSession;
 import zingg.common.core.context.IContext;
@@ -49,7 +50,7 @@ public class TestSparkStopWordsRecommender extends TestStopWordsRecommenderBase<
 
 	@Override
 	public String getStopWordColName() {
-		return "z_word";
+		return ColName.STOPWORD_COL;
 	}
 
 

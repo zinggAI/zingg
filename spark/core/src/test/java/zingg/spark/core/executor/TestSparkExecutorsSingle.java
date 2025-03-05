@@ -18,10 +18,7 @@ import zingg.common.client.util.WithSession;
 import zingg.common.core.executor.Labeller;
 import zingg.common.core.executor.TestExecutorsSingle;
 import zingg.common.core.executor.Trainer;
-import zingg.common.core.executor.blockingverifier.IVerifyBlockingPipes;
 import zingg.spark.client.util.SparkDFObjectUtil;
-import zingg.spark.client.util.SparkModelHelper;
-import zingg.spark.client.util.SparkPipeUtil;
 import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.executor.labeller.ProgrammaticSparkLabeller;
@@ -74,12 +71,6 @@ public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,D
 	}
 
 	@Override
-	protected SparkVerifyBlocker getVerifyBlocker() throws ZinggClientException {
-		SparkVerifyBlocker svb = new SparkVerifyBlocker(ctx);
-		return svb;
-	}
-
-	@Override
 	protected SparkMatcher getMatcher() throws ZinggClientException {
 		SparkMatcher sm = new SparkMatcher(ctx);
 		return sm;
@@ -90,11 +81,6 @@ public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,D
 	protected SparkLinker getLinker() throws ZinggClientException {
 		SparkLinker sl = new SparkLinker(ctx);
 		return sl;
-	}
-
-	@Override
-	protected IVerifyBlockingPipes<SparkSession, Dataset<Row>, Row, Column> getVerifyBlockingPipes() throws ZinggClientException {
-		return new SparkVerifyBlockingPipes(new SparkPipeUtil(sparkSession), getVerifyBlocker().getTimestamp(), new SparkModelHelper());
 	}
 
 	@Override

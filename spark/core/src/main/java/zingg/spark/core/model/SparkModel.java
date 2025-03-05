@@ -143,7 +143,7 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 	
 	
 	@Override
-	public ZFrame<Dataset<Row>,Row,Column> predictCore(ZFrame<Dataset<Row>,Row,Column> data) {
+	protected ZFrame<Dataset<Row>,Row,Column> predictCore(ZFrame<Dataset<Row>,Row,Column> data) {
 		//create features
 		LOG.info("threshold while predicting is " + lr.getThreshold());
 		//lr.setThreshold(0.95);
