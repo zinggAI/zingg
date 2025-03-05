@@ -82,17 +82,12 @@ public abstract class TestVerifyBlocking<S,D,R,C,T> {
         ZFrame<D, R, C> df1 = context.getPipeUtil().read(false, false, verifyBlockingPipes.getBlockSamplesPipe(arguments, ColName.BLOCK_SAMPLES + "3915"));
         ZFrame<D, R, C> df2 = context.getPipeUtil().read(false, false, verifyBlockingPipes.getBlockSamplesPipe(arguments, getMassagedTableName("-3910")));
 
-        assertTrue(df1.count() == 3L);
-        assertTrue(df2.count() == 1L);
+        assertEquals(3L, df1.count());
+        assertEquals(1L, df2.count());
     }
 
     public boolean checkNoOfTopBlocks(ZFrame<D,R,C> blockTopRec){
-        if(blockTopRec.count() == 3L){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return blockTopRec.count() == 3L;
     }
 
     public abstract String getMassagedTableName(String hash);
