@@ -1,12 +1,12 @@
-name: load-test
+name: performance-test
 
 on:
   schedule:
     - cron: "0 0 */3 * *"
 
 jobs:
-  load-test:
-    name: load-test-spark
+  perf-test:
+    name: performance-test
     runs-on: ubuntu-latest
     env:
       SPARK_MASTER: local[*]
@@ -26,7 +26,7 @@ jobs:
       - name: setup spark
         uses: vemonet/setup-spark@v1
         with:
-          spark-version: '3.5.3'
+          spark-version: '3.5.0'
           hadoop-version: '3'
       - name: check spark
         run: spark-submit --version
@@ -37,6 +37,9 @@ jobs:
       - name: execute py script
         run: |
           python perf_test/perfTestRunner.py
+      - name: Commit test results
+        if: always()
+        run: |
           git config user.name nitish
           git config user.email nitish1814@github.com
           git add .

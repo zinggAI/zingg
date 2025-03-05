@@ -17,5 +17,8 @@ Zingg needs details about accessing Snowflake which can be provided through a pr
     ROLE={role} 
     WAREHOUSE={warehouse}  
     DB={database_name}  
-    SCHEMA={schema} 
-``` 
+    SCHEMA={schema}
+    CLIENT_SESSION_KEEP_ALIVE_HEARTBEAT_FREQUENCY=900
+```
+
+The parameter CLIENT_SESSION_KEEP_ALIVE_HEARTBEAT_FREQUENCY is the number of seconds in-between client attempts to update the token for the session - it can vary from 900 to 3600.

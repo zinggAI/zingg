@@ -42,7 +42,7 @@ public abstract class TestDocumenterBase<S,D,R,C,T> {
 		this.context = context;
 	  }
 
-    public abstract DocumenterBase<S,D,R,C,T> getDocumenter(IContext<S,D,R,C,T> context, IArguments args, ClientOptions options);
+    protected abstract DocumenterBase<S,D,R,C,T> getDocumenter(IContext<S,D,R,C,T> context, IArguments args, ClientOptions options);
 
     @DisplayName ("Test Column is a Z column or not")
 	@Test
