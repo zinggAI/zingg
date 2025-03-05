@@ -201,7 +201,7 @@ public class FieldDefinition implements Named, Serializable {
 		public void serialize(List<IMatchType> matchType, JsonGenerator jsonGen, SerializerProvider provider)
 				throws IOException, JsonProcessingException {
 			try {
-				jsonGen.writeObject(getStringFromMatchType((List<IMatchType>) matchType));
+				jsonGen.writeObject(getStringFromMatchType(matchType));
 				LOG.debug("Serializing custom type");
 			} catch (ZinggClientException e) {
 				throw new IOException(e);
