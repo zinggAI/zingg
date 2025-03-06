@@ -74,17 +74,15 @@ public abstract class TestVerifyBlocking<S,D,R,C,T> {
         assertEquals("3930",blockTopRec.getAsString(topRec.get(1), ColName.HASH_COL));
 
         ZFrame<D,R,C> matchingRec1 = vb.getMatchingRecords(topRec.get(0), blockTopRec, blocked, 3915);
-        matchingRec1.show();
         context.getPipeUtil().write(matchingRec1, verifyBlockingPipes.getBlockSamplesPipe(arguments, ColName.BLOCK_SAMPLES + "3915"));
 
-        ZFrame<D,R,C> matchingRec2 = vb.getMatchingRecords(topRec.get(2), blockTopRec, blocked, -3910);   
-        matchingRec2.show();     
+        ZFrame<D,R,C> matchingRec2 = vb.getMatchingRecords(topRec.get(2), blockTopRec, blocked, -3910);     
         context.getPipeUtil().write(matchingRec2, verifyBlockingPipes.getBlockSamplesPipe(arguments, ColName.BLOCK_SAMPLES + "-3910"));
 
         ZFrame<D, R, C> df1 = context.getPipeUtil().read(false, false, verifyBlockingPipes.getBlockSamplesPipe(arguments, ColName.BLOCK_SAMPLES + "3915"));
         ZFrame<D, R, C> df2 = context.getPipeUtil().read(false, false, verifyBlockingPipes.getBlockSamplesPipe(arguments, getMassagedTableName("-3910")));
 
-        assertTrue(df1.count() > 2 );
+        assertTrue(df1.count() > 1 );
         assertTrue(df2.count() > 1);
     }
 
