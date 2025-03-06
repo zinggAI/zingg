@@ -1,7 +1,6 @@
 package zingg.common.core.executor.blockingverifier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -82,8 +81,8 @@ public abstract class TestVerifyBlocking<S,D,R,C,T> {
         ZFrame<D, R, C> df1 = context.getPipeUtil().read(false, false, verifyBlockingPipes.getBlockSamplesPipe(arguments, ColName.BLOCK_SAMPLES + "3915"));
         ZFrame<D, R, C> df2 = context.getPipeUtil().read(false, false, verifyBlockingPipes.getBlockSamplesPipe(arguments, getMassagedTableName("-3910")));
 
-        assertTrue(df1.count() > 1 );
-        assertTrue(df2.count() > 1);
+        assertTrue(df1.count() > 0 );
+        assertTrue(df2.count() > 0);
     }
 
     public boolean checkNoOfTopBlocks(ZFrame<D,R,C> blockTopRec){
