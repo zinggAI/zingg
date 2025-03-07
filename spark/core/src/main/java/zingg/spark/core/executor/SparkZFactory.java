@@ -6,16 +6,7 @@ import zingg.common.client.IZingg;
 import zingg.common.client.IZinggFactory;
 import zingg.common.client.options.ZinggOption;
 import zingg.common.client.options.ZinggOptions;
-import zingg.spark.core.executor.SparkDocumenter;
-import zingg.spark.core.executor.SparkFindAndLabeller;
-import zingg.spark.core.executor.SparkLabelUpdater;
-import zingg.spark.core.executor.SparkLabeller;
-import zingg.spark.core.executor.SparkLinker;
-import zingg.spark.core.executor.SparkMatcher;
-import zingg.spark.core.executor.SparkRecommender;
-import zingg.spark.core.executor.SparkTrainMatcher;
-import zingg.spark.core.executor.SparkTrainer;
-import zingg.spark.core.executor.SparkTrainingDataFinder;
+import zingg.spark.core.executor.blockingverifier.SparkVerifyBlocker;
 
 public class SparkZFactory implements IZinggFactory{
 

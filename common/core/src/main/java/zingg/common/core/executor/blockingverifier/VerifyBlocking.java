@@ -22,7 +22,6 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected static String name = "zingg.common.core.executor.blockingverifier.VerifyBlocking";
 	public static final Log LOG = LogFactory.getLog(VerifyBlocking.class);
     public long timestamp = System.currentTimeMillis();   
-	public int noOfBlocks = 3 ;
 	public double percentageOfBlockedRecords = 0.1 ;
 	protected IVerifyBlockingPipes<S,D,R,C> verifyBlockingPipeUtil;
 	protected IDataGetter<S, D, R, C> dataGetter;
@@ -39,9 +38,9 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			ZFrame<D,R,C>  testDataOriginal = getTestData();
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
 			ZFrame<D,R,C> blocked = getBlockedData(testDataOriginal);
-			LOG.info("Blocked Data" + blocked.count());
+			
 			//get the no of counts per hash
-			ZFrame<D,R,C> blockCounts = getBlockCounts(blocked, verifyBlockingPipeUtil);	
+			ZFrame<D,R,C> blockCounts = getBlockCounts(blocked);	
 			getPipeUtil().write(blockCounts,getVerifyBlockingPipeUtil().getCountsPipe(args));
 			//get the records associated with the top 3 hashes
 			getBlockSamples(blocked, blockCounts,verifyBlockingPipeUtil);
@@ -55,13 +54,17 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     
     }
 
-	protected ZFrame<D, R, C> getBlockCounts(ZFrame<D, R, C> blocked, IVerifyBlockingPipes<S,D,R,C> verifyBlockingPipeUtil) throws ZinggClientException{
+	protected ZFrame<D, R, C> getBlockCounts(ZFrame<D, R, C> blocked) throws ZinggClientException{
 		ZFrame<D,R,C> blockCounts = blocked.select(ColName.HASH_COL).groupByCount(ColName.HASH_COL, ColName.HASH_COUNTS_COL);
 		return blockCounts;
 	}
 
+	protected int getNoOfBlocks(){
+		return 3;
+	}
+
 	protected ZFrame<D,R,C> getTopRecordsDF(ZFrame<D,R,C> blockCounts){
-		return blockCounts.select(ColName.HASH_COL,ColName.HASH_COUNTS_COL).sortDescending(ColName.HASH_COUNTS_COL).limit(noOfBlocks);
+		return blockCounts.select(ColName.HASH_COL,ColName.HASH_COUNTS_COL).sortDescending(ColName.HASH_COUNTS_COL).limit(getNoOfBlocks());
 	}
 
 	protected void getBlockSamples(ZFrame<D, R, C> blocked, ZFrame<D, R, C> blockCounts, IVerifyBlockingPipes<S,D,R,C> verifyBlockingPipeUtil) throws ZinggClientException {
@@ -69,7 +72,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		List<R> topRec = blockTopRec.collectAsList();
 
 		for(R row: topRec) {
-			int hash = (int) blockTopRec.getAsInt(row, ColName.HASH_COL);
+			int hash = blockTopRec.getAsInt(row, ColName.HASH_COL);
 			ZFrame<D,R,C> matchingRecords = getMatchingRecords(row, blockTopRec, blocked, hash);
 			getPipeUtil().write(matchingRecords, getVerifyBlockingPipeUtil().getBlockSamplesPipe(args, ColName.BLOCK_SAMPLES + hash));
 		}
@@ -77,10 +80,8 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	protected ZFrame<D,R,C> getMatchingRecords(R row, ZFrame<D,R,C> blockTopRec, ZFrame<D,R,C> blocked, int hash){
-		long count = (long) blockTopRec.getAsLong(row, ColName.HASH_COUNTS_COL);
-		int sampleSize = Math.max(1, (int) Math.ceil(count * percentageOfBlockedRecords));
 		ZFrame<D,R,C> matchingRecords = null;
-		matchingRecords = blocked.filter(blocked.equalTo(ColName.HASH_COL,String.valueOf(hash))).limit(sampleSize);
+		matchingRecords = blocked.filter(blocked.equalTo(ColName.HASH_COL,String.valueOf(hash))).sample(false,0.1d);
 		return matchingRecords;
 	}
 
