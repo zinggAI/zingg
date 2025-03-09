@@ -24,7 +24,7 @@ import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.executor.SparkVerifyBlocker;
 import zingg.spark.core.executor.SparkVerifyBlockingPipes;
-import zingg.spark.core.util.SparkCleanUpUtil;
+import zingg.spark.core.util.SparkVerifyBlockingCleanUpUtil;
 
 @ExtendWith(TestSparkBase.class)
 public class TestSparkVerifyBlocking extends TestVerifyBlocking<SparkSession,Dataset<Row>,Row,Column,DataType> {
@@ -59,7 +59,7 @@ public class TestSparkVerifyBlocking extends TestVerifyBlocking<SparkSession,Dat
 
     @Override
     public ICleanUpUtil<SparkSession> getCleanupUtil() {
-        return SparkCleanUpUtil.getInstance();
+        return SparkVerifyBlockingCleanUpUtil.getInstance();
     } 
 
     
