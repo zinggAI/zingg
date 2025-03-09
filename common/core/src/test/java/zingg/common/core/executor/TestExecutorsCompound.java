@@ -5,10 +5,14 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.jupiter.api.AfterEach;
 
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.ZinggException;
 import zingg.common.core.executor.validate.FindAndLabelValidator;
 import zingg.common.core.executor.validate.TrainMatchValidator;
+import zingg.common.core.util.ICleanUpUtil;
+import zingg.common.core.util.TestType;
 
 public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutorsGeneric<S, D, R, C, T> {
 
@@ -35,5 +39,17 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 	protected abstract TrainMatchValidator<S, D, R, C, T> getTrainMatchValidator(TrainMatcher<S, D, R, C, T> trainMatch);
 
 	protected abstract TrainMatcher<S, D, R, C, T> getTrainMatcher() throws ZinggClientException;
+
+	@AfterEach
+	public void performCleanup() {
+		ICleanUpUtil<S> cleanUpUtil = getCleanupUtil();
+		boolean cleanupDone = cleanUpUtil.performCleanup(session, TestType.COMPOUND, getModelId());
+		if (!cleanupDone) {
+			LOG.error("Unable to perform cleanup!!");
+			throw new ZinggException("Unable to perform cleanup");
+		}
+	}
+
+	public abstract ICleanUpUtil<S> getCleanupUtil();
 
 }

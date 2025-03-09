@@ -18,11 +18,13 @@ import zingg.common.client.util.WithSession;
 import zingg.common.core.executor.Labeller;
 import zingg.common.core.executor.TestExecutorsSingle;
 import zingg.common.core.executor.Trainer;
+import zingg.common.core.util.ICleanUpUtil;
 import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.executor.labeller.ProgrammaticSparkLabeller;
 import zingg.spark.core.executor.validate.SparkTrainerValidator;
+import zingg.spark.core.util.SparkCleanUpUtil;
 
 @ExtendWith(TestSparkBase.class)
 public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,Dataset<Row>,Row,Column,DataType> {
@@ -93,6 +95,11 @@ public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,D
 		IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
 		iWithSession.setSession(session);
 		return new SparkDFObjectUtil(iWithSession);
+	}
+
+	@Override
+	public ICleanUpUtil<SparkSession> getCleanupUtil() {
+		return SparkCleanUpUtil.getInstance();
 	}
 
 }

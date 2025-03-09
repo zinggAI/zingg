@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
@@ -15,10 +16,13 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
+import zingg.common.core.ZinggException;
 import zingg.common.core.context.Context;
 import zingg.common.core.executor.blockingverifier.data.BlockingVerifyData;
 import zingg.common.core.executor.blockingverifier.model.BlockCountsData;
 import zingg.common.core.executor.blockingverifier.model.BlockedData;
+import zingg.common.core.util.ICleanUpUtil;
+import zingg.common.core.util.TestType;
 
 public abstract class TestVerifyBlocking<S,D,R,C,T> {
     
@@ -92,5 +96,15 @@ public abstract class TestVerifyBlocking<S,D,R,C,T> {
 
     public abstract String getMassagedTableName(String hash);
 
+    @AfterEach
+	public void performCleanup() {
+		ICleanUpUtil<S> cleanUpUtil = getCleanupUtil();
+		boolean cleanupDone = cleanUpUtil.performCleanup(context.getSession(), TestType.VERIFYBLOCKING, "junit_vb");
+		if (!cleanupDone) {
+			LOG.error("Unable to perform cleanup!!");
+			throw new ZinggException("Unable to perform cleanup");
+		}
+	}
 
+	public abstract ICleanUpUtil<S> getCleanupUtil();
 }
