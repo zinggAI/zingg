@@ -60,6 +60,16 @@ public class TestSparkVerifyBlocking extends TestVerifyBlocking<SparkSession,Dat
     @Override
     public ICleanUpUtil<SparkSession> getCleanupUtil() {
         return SparkVerifyBlockingCleanUpUtil.getInstance();
+    }
+
+    @Override
+    public String getModelId() {
+        return "junit_vb";
+    }
+
+    @Override
+    public SparkSession getSession() {
+        return zinggSparkContext.getSession();
     } 
 
     

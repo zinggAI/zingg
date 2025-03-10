@@ -32,9 +32,9 @@ public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,D
 	protected static final String CONFIGLINK_FILE = "zingg/spark/core/executor/single/configSparkLinkTest.json";
 	protected static final String TEST1_DATA_FILE = "zingg/spark/core/executor/test1.csv";
 	protected static final String TEST2_DATA_FILE = "zingg/spark/core/executor/test2.csv";
-	private final SparkSession sparkSession;
 	public static final Log LOG = LogFactory.getLog(TestSparkExecutorsSingle.class);
 	
+	private final SparkSession sparkSession;
 	protected ZinggSparkContext ctx;
 	
 	public TestSparkExecutorsSingle(SparkSession sparkSession) throws IOException, ZinggClientException {
@@ -100,6 +100,11 @@ public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,D
 	@Override
 	public ICleanUpUtil<SparkSession> getCleanupUtil() {
 		return SparkCleanUpUtil.getInstance();
+	}
+
+	@Override
+	public SparkSession getSession() {
+		return ctx.getSession();
 	}
 
 }

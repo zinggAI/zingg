@@ -12,9 +12,10 @@ import zingg.common.core.ZinggException;
 import zingg.common.core.executor.validate.FindAndLabelValidator;
 import zingg.common.core.executor.validate.TrainMatchValidator;
 import zingg.common.core.util.ICleanUpUtil;
+import zingg.common.core.util.IPerformCleanUpUtil;
 import zingg.common.core.util.TestType;
 
-public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutorsGeneric<S, D, R, C, T> {
+public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutorsGeneric<S, D, R, C, T> implements IPerformCleanUpUtil<S>{
 
 	public static final Log LOG = LogFactory.getLog(TestExecutorsCompound.class);
 	
@@ -42,14 +43,7 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 
 	@AfterEach
 	public void performCleanup() {
-		ICleanUpUtil<S> cleanUpUtil = getCleanupUtil();
-		boolean cleanupDone = cleanUpUtil.performCleanup(session, TestType.COMPOUND, getModelId());
-		if (!cleanupDone) {
-			LOG.error("Unable to perform cleanup!!");
-			throw new ZinggException("Unable to perform cleanup");
-		}
+		performCleanup(TestType.COMPOUND);
 	}
-
-	public abstract ICleanUpUtil<S> getCleanupUtil();
 
 }

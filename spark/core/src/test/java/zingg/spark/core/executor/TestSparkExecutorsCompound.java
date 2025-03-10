@@ -76,5 +76,10 @@ public class TestSparkExecutorsCompound extends TestExecutorsCompound<SparkSessi
 	public ICleanUpUtil<SparkSession> getCleanupUtil() {
 		return SparkCleanUpUtil.getInstance();
 	}
+
+	@Override
+	public SparkSession getSession() {
+		return ctx.getSession();
+	}
 	
 }
