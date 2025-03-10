@@ -2,10 +2,10 @@ package zingg.common.core.hash;
 
 
 public class LastWord extends BaseHash<String,String>{
+
 	public LastWord() {
 	    setName("lastWord");		
 	}
-
 			
 	public String call(String field) {
 		String r = null;
@@ -13,7 +13,7 @@ public class LastWord extends BaseHash<String,String>{
 			r = field;
 		}
 		else {
-			String[] v= field.trim().split(" ");
+			String[] v= field.split(" ");
 			return v[v.length-1];
 		}
 		return r;
