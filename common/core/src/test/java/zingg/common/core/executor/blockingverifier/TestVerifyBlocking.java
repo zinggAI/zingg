@@ -96,7 +96,7 @@ public abstract class TestVerifyBlocking<S,D,R,C,T> implements IPerformCleanUpUt
     public abstract String getMassagedTableName(String hash);
 
     @AfterEach
-	public void performCleanup() {
+	public void cleanTestStateData() {
 		performCleanup(TestType.VERIFYBLOCKING);
     }
 }

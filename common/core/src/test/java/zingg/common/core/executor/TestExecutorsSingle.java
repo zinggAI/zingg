@@ -74,7 +74,7 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 	protected abstract Linker<S, D, R, C, T> getLinker() throws ZinggClientException;	
 
 	@AfterEach
-	public void performCleanup() {
+	public void cleanTestStateData() {
 		performCleanup(TestType.SINGLE);
 	}
 

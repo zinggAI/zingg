@@ -42,7 +42,7 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 	protected abstract TrainMatcher<S, D, R, C, T> getTrainMatcher() throws ZinggClientException;
 
 	@AfterEach
-	public void performCleanup() {
+	public void cleanTestStateData() {
 		performCleanup(TestType.COMPOUND);
 	}
 
