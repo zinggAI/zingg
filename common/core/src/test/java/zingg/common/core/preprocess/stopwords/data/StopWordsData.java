@@ -1,11 +1,11 @@
-package zingg.common.core.preprocess.data;
+package zingg.common.core.preprocess.stopwords.data;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import zingg.common.core.preprocess.model.PostStopWordProcess;
-import zingg.common.core.preprocess.model.PriorStopWordProcess;
-import zingg.common.core.preprocess.model.Statement;
+import zingg.common.core.preprocess.stopwords.model.PostStopWordProcess;
+import zingg.common.core.preprocess.stopwords.model.PriorStopWordProcess;
+import zingg.common.core.preprocess.stopwords.model.Statement;
 
 public class StopWordsData {
 

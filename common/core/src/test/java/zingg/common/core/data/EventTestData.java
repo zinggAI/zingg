@@ -1,8 +1,8 @@
 package zingg.common.core.data;
 
-import zingg.common.core.model.InputDataModel;
-import zingg.common.core.preprocess.model.PostStopWordProcess;
-import zingg.common.core.preprocess.model.PriorStopWordProcess;
+import zingg.common.core.model.model.InputDataModel;
+import zingg.common.core.preprocess.stopwords.model.PostStopWordProcess;
+import zingg.common.core.preprocess.stopwords.model.PriorStopWordProcess;
 
 import java.util.ArrayList;
 import java.util.List;

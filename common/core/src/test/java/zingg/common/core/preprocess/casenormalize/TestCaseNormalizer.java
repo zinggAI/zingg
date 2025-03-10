@@ -9,7 +9,7 @@ import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
 import zingg.common.core.context.IContext;
 import zingg.common.core.data.EventTestData;
-import zingg.common.core.model.InputDataModel;
+import zingg.common.core.model.model.InputDataModel;
 
 import java.util.ArrayList;
 import java.util.List;

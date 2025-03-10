@@ -16,10 +16,10 @@ import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
 import zingg.common.core.data.EventTestData;
-import zingg.common.core.preprocess.data.StopWordsData;
-import zingg.common.core.preprocess.model.PostStopWordProcess;
-import zingg.common.core.preprocess.model.PriorStopWordProcess;
-import zingg.common.core.preprocess.model.Statement;
+import zingg.common.core.preprocess.stopwords.data.StopWordsData;
+import zingg.common.core.preprocess.stopwords.model.PostStopWordProcess;
+import zingg.common.core.preprocess.stopwords.model.PriorStopWordProcess;
+import zingg.common.core.preprocess.stopwords.model.Statement;
 import zingg.common.core.util.StopWordRemoverUtility;
 
 public abstract class TestStopWordsBase<S, D, R, C, T> {
