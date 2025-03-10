@@ -15,6 +15,7 @@ import java.util.List;
 import static org.apache.spark.sql.functions.lower;
 
 public class SparkCaseNormalizer extends CaseNormalizer<SparkSession, Dataset<Row>, Row, Column, DataType> {
+    
     private static final long serialVersionUID = 1L;
     protected static String name = "zingg.spark.core.preprocess.casenormalize.SparkCaseNormalizer";
 
