@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.MatchType;
+import zingg.common.client.IMatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -95,10 +95,10 @@ public abstract class TestModelBase<S,D,R,C,T> {
         
         List<FieldDefinition> fdList = new ArrayList<FieldDefinition>(4);
 
-        ArrayList<MatchType> matchTypelistId = new ArrayList<MatchType>();
-        matchTypelistId.add((MatchType) MatchTypes.DONT_USE);
-        ArrayList<MatchType> matchTypelistFuzzy = new ArrayList<MatchType>();
-        matchTypelistFuzzy.add((MatchType) MatchTypes.FUZZY);
+        ArrayList<IMatchType> matchTypelistId = new ArrayList<IMatchType>();
+        matchTypelistId.add(MatchTypes.DONT_USE);
+        ArrayList<IMatchType> matchTypelistFuzzy = new ArrayList<IMatchType>();
+        matchTypelistFuzzy.add(MatchTypes.FUZZY);
 
         FieldDefinition idFD = new FieldDefinition();
         idFD.setDataType("int");
