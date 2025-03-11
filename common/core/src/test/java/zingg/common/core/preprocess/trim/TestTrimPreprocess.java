@@ -13,7 +13,7 @@ import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
 import zingg.common.core.context.IContext;
 import zingg.common.core.model.model.InputDataModel;
-import zingg.common.core.preprocess.casenormalize.data.EventTestData;
+import zingg.common.core.preprocess.trim.data.TrimTestData;
 import zingg.common.core.util.MultiFieldPreprocessorUtility;
 
 public abstract class TestTrimPreprocess<S, D, R, C, T> {
@@ -34,11 +34,11 @@ public abstract class TestTrimPreprocess<S, D, R, C, T> {
         List<List<FieldDefinition>> trimPreprocessorsFields = getFieldDefinitions();
         List<FieldDefinition> fieldDefinitions = trimPreprocessorsFields.get(0);
 
-        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreCaseNormalization(), InputDataModel.class);
-        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostCaseNormalizationAllFields(), InputDataModel.class);
-
+        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
+        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimOnAllFields(), InputDataModel.class);
         ZFrame<D, R, C> trimmedDF = getCaseNormalizedAndTrimmedDF(getTrimPreprocessor(context, fieldDefinitions), inputDF);
-
+        trimmedDF.show();
+        expectedDF.show();
         assertTrue(trimmedDF.except(expectedDF).isEmpty());
         assertTrue(expectedDF.except(trimmedDF).isEmpty());
     }
@@ -49,11 +49,11 @@ public abstract class TestTrimPreprocess<S, D, R, C, T> {
         List<List<FieldDefinition>> trimPreprocessorsFields = getFieldDefinitions();
         List<FieldDefinition> fieldDefinitions = trimPreprocessorsFields.get(1);
 
-        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreCaseNormalization(), InputDataModel.class);
-        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostCaseNormalizationField1(), InputDataModel.class);
-
+        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
+        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimOnField1(), InputDataModel.class);
         ZFrame<D, R, C> trimmedDF = getCaseNormalizedAndTrimmedDF(getTrimPreprocessor(context, fieldDefinitions), inputDF);
-
+        trimmedDF.show();
+        expectedDF.show();
         assertTrue(trimmedDF.except(expectedDF).isEmpty());
         assertTrue(expectedDF.except(trimmedDF).isEmpty());
     }
@@ -64,11 +64,11 @@ public abstract class TestTrimPreprocess<S, D, R, C, T> {
         List<List<FieldDefinition>> trimPreprocessorsFields = getFieldDefinitions();
         List<FieldDefinition> fieldDefinitions = trimPreprocessorsFields.get(2);
 
-        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreCaseNormalization(), InputDataModel.class);
-        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostCaseNormalizationNone(), InputDataModel.class);
-
+        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
+        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimOnNone(), InputDataModel.class);
         ZFrame<D, R, C> trimmedDF = getCaseNormalizedAndTrimmedDF(getTrimPreprocessor(context, fieldDefinitions), inputDF);
-
+        trimmedDF.show();
+        expectedDF.show();
         assertTrue(trimmedDF.except(expectedDF).isEmpty());
         assertTrue(expectedDF.except(trimmedDF).isEmpty());
     }
@@ -79,11 +79,11 @@ public abstract class TestTrimPreprocess<S, D, R, C, T> {
         List<List<FieldDefinition>> trimPreprocessorsFields = getFieldDefinitions();
         List<FieldDefinition> fieldDefinitions = trimPreprocessorsFields.get(3);
 
-        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreCaseNormalization(), InputDataModel.class);
-        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostCaseNormalizationWhenMatchTypeDont_Use(), InputDataModel.class);
-
+        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
+        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimWhenMatchTypeDont_Use(), InputDataModel.class);
         ZFrame<D, R, C> trimmedDF = getCaseNormalizedAndTrimmedDF(getTrimPreprocessor(context, fieldDefinitions), inputDF);
-
+        trimmedDF.show();
+        expectedDF.show();
         assertTrue(trimmedDF.except(expectedDF).isEmpty());
         assertTrue(expectedDF.except(trimmedDF).isEmpty());
     }

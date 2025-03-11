@@ -18,6 +18,7 @@ import zingg.common.core.preprocess.trim.TrimPreprocessor;
 import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
+import zingg.spark.core.util.SparkTrimPreprocessUtility;
 
 @ExtendWith(TestSparkBase.class)
 public class TestSparkTrimPreprocess extends TestTrimPreprocess<SparkSession, Dataset<Row>, Row, Column, DataType> {
@@ -26,7 +27,7 @@ public class TestSparkTrimPreprocess extends TestTrimPreprocess<SparkSession, Da
     public static ZinggSparkContext zsCTX = new ZinggSparkContext();
 
     public TestSparkTrimPreprocess(SparkSession sparkSession) throws ZinggClientException {
-        super(new SparkDFObjectUtil(iWithSession), zsCTX);
+        super(new SparkDFObjectUtil(iWithSession), new SparkTrimPreprocessUtility(zsCTX), zsCTX);
         iWithSession.setSession(sparkSession);
         zsCTX.init(sparkSession);
     }

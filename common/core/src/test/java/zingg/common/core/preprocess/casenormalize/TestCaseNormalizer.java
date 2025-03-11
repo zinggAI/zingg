@@ -12,7 +12,7 @@ import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
 import zingg.common.core.context.IContext;
 import zingg.common.core.model.model.InputDataModel;
-import zingg.common.core.preprocess.trim.data.TrimTestData;
+import zingg.common.core.preprocess.casenormalize.data.EventTestData;
 import zingg.common.core.util.MultiFieldPreprocessorUtility;
 
 
@@ -34,9 +34,8 @@ public abstract class TestCaseNormalizer<S, D, R, C, T> {
         List<List<FieldDefinition>> caseNormalizersFields = getFieldDefinitions();
         List<FieldDefinition> fieldDefinitions = caseNormalizersFields.get(0);
 
-        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
-        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimOnAllFields(), InputDataModel.class);
-
+        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreCaseNormalization(), InputDataModel.class);
+        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostCaseNormalizationAllFields(), InputDataModel.class);
         ZFrame<D, R, C> caseNormalizedDF = getCaseNormalizedDF(getCaseNormalizer(context, fieldDefinitions), inputDF);
 
         assertTrue(caseNormalizedDF.except(expectedDF).isEmpty());
@@ -48,12 +47,11 @@ public abstract class TestCaseNormalizer<S, D, R, C, T> {
 
         List<List<FieldDefinition>> caseNormalizersFields = getFieldDefinitions();
         List<FieldDefinition> fieldDefinitions = caseNormalizersFields.get(1);
-
-        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
-        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimOnField1(), InputDataModel.class);
-
+             
+        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreCaseNormalization(), InputDataModel.class);
+        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostCaseNormalizationField1(), InputDataModel.class);
         ZFrame<D, R, C> caseNormalizedDF = getCaseNormalizedDF(getCaseNormalizer(context, fieldDefinitions), inputDF);
-
+    
         assertTrue(caseNormalizedDF.except(expectedDF).isEmpty());
         assertTrue(expectedDF.except(caseNormalizedDF).isEmpty());
     }
@@ -63,10 +61,9 @@ public abstract class TestCaseNormalizer<S, D, R, C, T> {
 
         List<List<FieldDefinition>> caseNormalizersFields = getFieldDefinitions();
         List<FieldDefinition> fieldDefinitions = caseNormalizersFields.get(2);
-
-        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
-        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimOnNone(), InputDataModel.class);
-
+        
+        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreCaseNormalization(), InputDataModel.class);
+        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostCaseNormalizationNone(), InputDataModel.class);
         ZFrame<D, R, C> caseNormalizedDF = getCaseNormalizedDF(getCaseNormalizer(context, fieldDefinitions), inputDF);
 
         assertTrue(caseNormalizedDF.except(expectedDF).isEmpty());
@@ -79,9 +76,8 @@ public abstract class TestCaseNormalizer<S, D, R, C, T> {
         List<List<FieldDefinition>> caseNormalizersFields = getFieldDefinitions();
         List<FieldDefinition> fieldDefinitions = caseNormalizersFields.get(3);
 
-        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
-        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimWhenMatchTypeDont_Use(), InputDataModel.class);
-
+        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreCaseNormalization(), InputDataModel.class);
+        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostCaseNormalizationWhenMatchTypeDont_Use(), InputDataModel.class);
         ZFrame<D, R, C> caseNormalizedDF = getCaseNormalizedDF(getCaseNormalizer(context, fieldDefinitions), inputDF);
 
         assertTrue(caseNormalizedDF.except(expectedDF).isEmpty());

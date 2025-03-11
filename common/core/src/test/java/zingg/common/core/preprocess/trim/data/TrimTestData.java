@@ -23,12 +23,12 @@ public class TrimTestData {
     public static List<InputDataModel> getDataInputPostTrimOnField1() {
 
         List<InputDataModel> sample = new ArrayList<InputDataModel>();
-        sample.add(new InputDataModel("10", "the zingg is a spark application", "tWo",
-                "Yes. a good Application", "test"));
-        sample.add(new InputDataModel("20", "it is very popular in data science", "THREE", "TRUE indeed",
+        sample.add(new InputDataModel("10", "the zingg is a spark application", "tWo ",
+                "Yes. a good Application ", "test"));
+        sample.add(new InputDataModel("20", "it is very popular in data science", " THREE", "TRUE indeed ",
                 "test"));
-        sample.add(new InputDataModel("30", "it is written in java and scala", "four", "", "test"));
-        sample.add(new InputDataModel("40", "best of luck to zingg mobile/t-mobile", "FIVE", "thank you", "test"));
+        sample.add(new InputDataModel("30", "it is written in java and scala", "four ", "", "test"));
+        sample.add(new InputDataModel("40", "best of luck to zingg mobile/t-mobile", " FIVE", "thank you ", "test"));
 
         return sample;
     }
