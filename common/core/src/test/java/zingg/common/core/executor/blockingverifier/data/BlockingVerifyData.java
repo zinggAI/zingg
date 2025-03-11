@@ -16,6 +16,12 @@ public class BlockingVerifyData {
         sample.add(new BlockedData("102", "rec-1041-org", "tyler", "froud", "burramurra avenue", "san remo", "sa", "7812219", "test", "3915"));
         sample.add(new BlockedData("103", "rec-1041-dup-1", "tyler", "frjd", "burramura avenue", "san remo", "sa", "7812219", "test", "3915"));
         sample.add(new BlockedData("98", "rec-1044-dup-3", "nicole", "carbone", "simpsonary barracks", "toowoomba", "wa", "8190756", "test", "3930"));
+        sample.add(new BlockedData("19", "rec-1039-dup-11", "matikld_a", "mEstrv_", "Retirementvillage", "taringa_", "", "2563099", "T_EST10", "-3910"));
+        sample.add(new BlockedData("10", "rec-1040-dup-12", "matlida", "mestrvvv", "re.tir.e.ment village", "taringa", "", "2563100", "test11", "-3910"));
+        sample.add(new BlockedData("11", "rec-1041-dup-13", "mAtild", "MESTTRV", "REtirement v!llage", "tariNGA", "", "2563111", "tesT12", "-3910"));
+        sample.add(new BlockedData("12", "rec-1042-dup-14", "M@TILDA", "mestrvv", "RETIRee Village", "Tari-ng@", "", "2563122", "Test13", "-3910"));
+        sample.add(new BlockedData("18", "rec-1048-dup-20", "Mtil_d@", "mest__rv", "rETIREMENT!VILLAGE", "targinga", "", "2563188", "Tst19", "-3910"));
+        sample.add(new BlockedData("19", "rec-1049-dup-21", "matilDA@", "MEStr_V", "ReTiReMenT_vil-lage", "TariNgA", "", "2563199", "Tes_t20", "-3910"));
         sample.add(new BlockedData("34", "rec-1042-dup-0", "kiandra", "", "rustenburg sth", "girgarre", "qld", "3328205", "test", "3925"));
         sample.add(new BlockedData("123", "rec-1041-dup-21", "tyler", "frojd", "burramurra avenue", "san rem", "sa", "7812219", "test", "3915"));
         sample.add(new BlockedData("124", "rec-1041-dup-22", "tyler", "froud", "burramurra avenue", "san remo", "sa", "781221", "test", "3915"));
@@ -90,16 +96,37 @@ public class BlockingVerifyData {
         sample.add(new BlockedData("12", "rec-1042-dup-14", "M@TILDA", "mestrvv", "RETIR Village", "Tari-ng@", "", "2563122", "Test13", "-3910"));
         sample.add(new BlockedData("18", "rec-1048-dup-20", "Mtil_d@", "mestrv", "rETIREMENT!VILLAGE", "taringa", "", "2563188", "Tst19", "-3910"));
         sample.add(new BlockedData("19", "rec-1049-dup-21", "matilDA@", "MEStr_V", "ReTiReMenT_vil-lage", "TariNgA", "", "2563199", "Tes_t20", "-3910"));
-                        
+        sample.add(new BlockedData("104", "rec-1041-dup-2", "tyl#er", "frod", "burramurra ave", "san rmeo", "sa", "7812219", "test", "3915"));
+        sample.add(new BlockedData("105", "rec-1041-dup-3", "tyl@er", "frojd", "burramura avenu", "san remo", "sa", "7812219", "test", "3915"));
+        sample.add(new BlockedData("106", "rec-1041-dup-4", "tyer", "froud", "burramura avenue", "san remo", "sa", "7812219", "test", "3915"));
+        sample.add(new BlockedData("107", "rec-1041-dup-5", "tyl__r", "frojd", "burramurra ave", "san rmeo", "sa", "7812219", "test", "3915"));
+        sample.add(new BlockedData("108", "rec-1041-dup-6", "tyl+er", "foud", "buramurra avenue", "san remo", "sa", "7812219", "test", "3915"));
+        sample.add(new BlockedData("109", "rec-1041-dup-7", "tyl87er", "frojd", "burramurra avnue", "san rmeo", "sa", "7812219", "test", "3915"));
+        sample.add(new BlockedData("110", "rec-1041-dup-8", "ty8ler", "frojd", "burrmurra avenue", "san remo", "sa", "7812219", "test", "3915"));
+        sample.add(new BlockedData("111", "rec-1041-dup-9", "tyl%er", "frojd", "burramurra avenue", "san rmo", "sa", "7812219", "test", "3915"));    
+        sample.add(new BlockedData("109", "rec-1041-dup-7", "tyl87er", "frojd", "burramurra avnue", "san r0meo", "sa", "7812219", "test", "3915"));
+        sample.add(new BlockedData("110", "rec-1041-dup-8", "ty8ler", "frojd", "burrmurra avenue", "san re9mo", "sa", "7812219", "test", "3915"));
+        sample.add(new BlockedData("111", "rec-1041-dup-9", "tyl%er", "frojd", "burramurra avenue", "sa4n rmo", "sa", "7812219", "test", "3915"));     
+        sample.add(new BlockedData("14", "rec-1034-dup-6", "matild@", "m3strv", "retirement vllage", "TARING@", "", "2563044", "teSt5", "-3910"));
+        sample.add(new BlockedData("15", "rec-1035-dup-7", "matil-da", "mesT_Rv", "Rtrmnt vlg", "taring.", "", "2563055", "TEST6", "-3910"));
+        sample.add(new BlockedData("16", "rec-1036-dup-8", "m@tilda", "meStrv", "RETIREMENT-VILLAGE", "tari#nga", "", "2563066", "tesT7", "-3910"));
+        sample.add(new BlockedData("17", "rec-1037-dup-9", "MATLDA", "mes TRV", "Ret Village", "TARINGA", "", "2563077", "tst8", "-3910"));
+        sample.add(new BlockedData("18", "rec-1038-dup-10", "Matila", "mestRev", "RetiReMENT vil", "taringaa", "", "2563088", "tESt9", "-3910"));
+        sample.add(new BlockedData("19", "rec-1039-dup-11", "matild_a", "mEstrv_", "Retirementvillage", "taringa_", "", "2563099", "T_EST10", "-3910"));
+        sample.add(new BlockedData("10", "rec-1040-dup-12", "matlida", "mestrvvv", "re.tir.e.ment village", "taringa", "", "2563100", "test11", "-3910"));
+        sample.add(new BlockedData("11", "rec-1041-dup-13", "mAtild", "MESTRV", "REtirement v!llage", "tariNGA", "", "2563111", "tesT12", "-3910"));
+        sample.add(new BlockedData("12", "rec-1042-dup-14", "M@TILDA", "mestrvv", "RETIR Village", "Tari-ng@", "", "2563122", "Test13", "-3910"));
+        sample.add(new BlockedData("18", "rec-1048-dup-20", "Mtil_d@", "mestrv", "rETIREMENT!VILLAGE", "taringa", "", "2563188", "Tst19", "-3910"));
+        sample.add(new BlockedData("19", "rec-1049-dup-21", "matilDA@", "MEStr_V", "ReTiReMenT_vil-lage", "TariNgA", "", "2563199", "Tes_t20", "-3910"));                    
         return sample;
     }
 
     public static List<BlockCountsData> getExpectedBlockedDF1() {
 
         List<BlockCountsData> sample = new ArrayList<BlockCountsData>();
-        sample.add(new BlockCountsData(3915, 29L)); 
+        sample.add(new BlockCountsData(3915, 40L)); 
+        sample.add(new BlockCountsData(-3910, 36L));
         sample.add(new BlockCountsData(3930, 25L));
-        sample.add(new BlockCountsData(-3910, 19L));
         sample.add(new BlockCountsData(3925, 3L));
         sample.add(new BlockCountsData(-3945, 2L));
         sample.add(new BlockCountsData(3950, 1L));
