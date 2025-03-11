@@ -4,8 +4,8 @@
     "propertyFile": "./config/zingg.conf",
     "reportFile" : "./perf_test/perf_test_report/testReport_febrl120K.json",
     "directory": ".",
-    "snowflakeSetup": null,
-    "snowflakeTeardown": null,
+    "setup": null,
+    "teardown": null,
     "tests": {
         "train": "{zinggScript} --phase train --conf ./examples/febrl120k/config120k.json --properties-file {propertyFile}",
         "match": "{zinggScript} --phase match --conf ./examples/febrl120k/config120k.json --properties-file {propertyFile}"
