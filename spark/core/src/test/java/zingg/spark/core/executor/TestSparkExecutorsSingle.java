@@ -18,11 +18,13 @@ import zingg.common.client.util.WithSession;
 import zingg.common.core.executor.Labeller;
 import zingg.common.core.executor.TestExecutorsSingle;
 import zingg.common.core.executor.Trainer;
+import zingg.common.core.util.ICleanUpUtil;
 import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.executor.labeller.ProgrammaticSparkLabeller;
 import zingg.spark.core.executor.validate.SparkTrainerValidator;
+import zingg.spark.core.util.SparkCleanUpUtil;
 
 @ExtendWith(TestSparkBase.class)
 public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,Dataset<Row>,Row,Column,DataType> {
@@ -30,9 +32,9 @@ public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,D
 	protected static final String CONFIGLINK_FILE = "zingg/spark/core/executor/single/configSparkLinkTest.json";
 	protected static final String TEST1_DATA_FILE = "zingg/spark/core/executor/test1.csv";
 	protected static final String TEST2_DATA_FILE = "zingg/spark/core/executor/test2.csv";
-	private final SparkSession sparkSession;
 	public static final Log LOG = LogFactory.getLog(TestSparkExecutorsSingle.class);
 	
+	private final SparkSession sparkSession;
 	protected ZinggSparkContext ctx;
 	
 	public TestSparkExecutorsSingle(SparkSession sparkSession) throws IOException, ZinggClientException {
@@ -93,6 +95,16 @@ public class TestSparkExecutorsSingle extends TestExecutorsSingle<SparkSession,D
 		IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();
 		iWithSession.setSession(session);
 		return new SparkDFObjectUtil(iWithSession);
+	}
+
+	@Override
+	public ICleanUpUtil<SparkSession> getCleanupUtil() {
+		return SparkCleanUpUtil.getInstance();
+	}
+
+	@Override
+	public SparkSession getSession() {
+		return ctx.getSession();
 	}
 
 }
