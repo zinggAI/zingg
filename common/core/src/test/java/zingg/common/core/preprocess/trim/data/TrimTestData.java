@@ -1,26 +1,26 @@
-package zingg.common.core.preprocess.casenormalize.data;
-
-import zingg.common.core.model.model.InputDataModel;
+package zingg.common.core.preprocess.trim.data;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventTestData {
+import zingg.common.core.model.model.InputDataModel;
 
-    public static List<InputDataModel> getDataInputPreCaseNormalization() {
+public class TrimTestData {
+
+    public static List<InputDataModel> getDataInputPreTrim() {
 
         List<InputDataModel> sample = new ArrayList<InputDataModel>();
-        sample.add(new InputDataModel("10", "The ZINGG IS a SPARK AppLiCation", "tWo",
-                "Yes. a good Application", "test"));
-        sample.add(new InputDataModel("20", "It is VERY POpuLar in Data SCIENCE", "THREE", "TRUE indeed",
+        sample.add(new InputDataModel("10", " The ZINGG IS a SPARK AppLiCation", "tWo ",
+                "Yes. a good Application ", "test"));
+        sample.add(new InputDataModel("20", "It is VERY POpuLar in Data SCIENCE ", " THREE", "TRUE indeed ",
                 "test"));
-        sample.add(new InputDataModel("30", "It is WRITTEN in java and SCala", "four", "", "test"));
-        sample.add(new InputDataModel("40", "Best of LUCK to ZINGG Mobile/T-Mobile", "FIVE", "thank you", "test"));
+        sample.add(new InputDataModel("30", " It is WRITTEN in java and SCala", "four ", "", "test"));
+        sample.add(new InputDataModel("40", "Best of LUCK to ZINGG Mobile/T-Mobile ", " FIVE", "thank you ", "test"));
 
         return sample;
     }
 
-    public static List<InputDataModel> getDataInputPostCaseNormalizationField1() {
+    public static List<InputDataModel> getDataInputPostTrimOnField1() {
 
         List<InputDataModel> sample = new ArrayList<InputDataModel>();
         sample.add(new InputDataModel("10", "the zingg is a spark application", "tWo",
@@ -33,7 +33,7 @@ public class EventTestData {
         return sample;
     }
 
-    public static List<InputDataModel> getDataInputPostCaseNormalizationAllFields() {
+    public static List<InputDataModel> getDataInputPostTrimOnAllFields() {
 
         List<InputDataModel> sample = new ArrayList<InputDataModel>();
         sample.add(new InputDataModel("10", "the zingg is a spark application", "two",
@@ -46,7 +46,7 @@ public class EventTestData {
         return sample;
     }
 
-    public static List<InputDataModel> getDataInputPostCaseNormalizationNone() {
+    public static List<InputDataModel> getDataInputPostTrimOnNone() {
 
         List<InputDataModel> sample = new ArrayList<InputDataModel>();
         sample.add(new InputDataModel("10", "The ZINGG IS a SPARK AppLiCation", "tWo",
@@ -59,7 +59,7 @@ public class EventTestData {
         return sample;
     }
 
-    public static List<InputDataModel> getDataInputPostCaseNormalizationWhenMatchTypeDont_Use() {
+    public static List<InputDataModel> getDataInputPostTrimWhenMatchTypeDont_Use() {
 
         List<InputDataModel> sample = new ArrayList<InputDataModel>();
         sample.add(new InputDataModel("10", "The ZINGG IS a SPARK AppLiCation", "two",
@@ -71,4 +71,5 @@ public class EventTestData {
 
         return sample;
     }
+    
 }
