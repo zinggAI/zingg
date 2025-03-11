@@ -22,9 +22,6 @@ import zingg.spark.client.util.SparkModelHelper;
 import zingg.spark.client.util.SparkPipeUtil;
 import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
-
-import zingg.spark.core.executor.SparkVerifyBlocker;
-import zingg.spark.core.executor.SparkVerifyBlockingPipes;
 import zingg.spark.core.util.SparkVerifyBlockingCleanUpUtil;
 
 @ExtendWith(TestSparkBase.class)
