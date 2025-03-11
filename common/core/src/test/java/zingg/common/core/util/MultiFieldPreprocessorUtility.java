@@ -7,15 +7,15 @@ import zingg.common.client.FieldDefinition;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZinggClientException;
 
-public abstract class CaseNormalizerUtility<S, D, R, C, T> {
+public abstract class MultiFieldPreprocessorUtility<S, D, R, C, T> {
     
-    protected List<List<FieldDefinition>> caseNormalizersFields;
+    protected List<List<FieldDefinition>> multiFieldsList;
 
-    public CaseNormalizerUtility() throws ZinggClientException {
-        this.caseNormalizersFields = new ArrayList<List<FieldDefinition>>();
+    public MultiFieldPreprocessorUtility() throws ZinggClientException {
+        this.multiFieldsList = new ArrayList<List<FieldDefinition>>();
     }
 
-    public void buildCaseNormailzersFields() throws ZinggClientException{
+    public void buildFieldDefinitions() throws ZinggClientException{
 
         FieldDefinition fieldDefinition1 = new FieldDefinition();
         fieldDefinition1.setFieldName("field1");
@@ -42,16 +42,16 @@ public abstract class CaseNormalizerUtility<S, D, R, C, T> {
         fieldDefinition5.setMatchType(List.of(MatchTypes.DONT_USE));
         fieldDefinition5.setDataType("STRING");
 
-        addCaseNormalizersFields(List.of(fieldDefinition1, fieldDefinition2, fieldDefinition3));
-        addCaseNormalizersFields(List.of(fieldDefinition1));
-        addCaseNormalizersFields(null);
-        addCaseNormalizersFields(List.of(fieldDefinition4, fieldDefinition2, fieldDefinition5));
+        addFieldDefinitionsList(List.of(fieldDefinition1, fieldDefinition2, fieldDefinition3));
+        addFieldDefinitionsList(List.of(fieldDefinition1));
+        addFieldDefinitionsList(null);
+        addFieldDefinitionsList(List.of(fieldDefinition4, fieldDefinition2, fieldDefinition5));
 
     }
 
-    public List<List<FieldDefinition>> getCaseNormalizersFields() {
-        return this.caseNormalizersFields;
+    public List<List<FieldDefinition>> getFieldDefinitions() {
+        return this.multiFieldsList;
     }
 
-    protected abstract void addCaseNormalizersFields(List<FieldDefinition> fd);
+    protected abstract void addFieldDefinitionsList(List<FieldDefinition> fd);
 }

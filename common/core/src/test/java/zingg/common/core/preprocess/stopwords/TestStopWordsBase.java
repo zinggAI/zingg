@@ -43,8 +43,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 			String stopWords = "\\b(a|an|the|is|It|of|yes|no|I|has|have|you)\\b\\s?".toLowerCase();
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getData1Original(), Statement.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getData1Expected(), Statement.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getDataPreStopWordsSingleColumn(), Statement.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getDataPostStopWordsSingleColumn(), Statement.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(0);
 			assertFalse(stopWordsRemover.isApplicable());
@@ -61,8 +61,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 		//check functionality of preprocess on dataset with header in csv as StopWord
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getData2Original(), PriorStopWordProcess.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getData2Expected(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getDataPreStopWordsPreprocess(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getDataPostStopWordsPreprocess(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(1);
 			assertTrue(stopWordsRemover.isApplicable());
@@ -73,13 +73,13 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	}
 
 	@Test
-	public void testStopWordColumnMissingFromStopWordFile() throws ZinggClientException, Exception {
+	public void testStopWordHeaderMissingFromStopWordFile() throws ZinggClientException, Exception {
 
 			//check functionality of preprocess on dataset with header in csv as Header - dummy to ensure it is being ignored by default
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getData3Original(), PriorStopWordProcess.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getData3Expected(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getDataPreStopWordsPreprocess(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getDataPostStopWordsPreprocess(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(2);
 			assertTrue(stopWordsRemover.isApplicable());
@@ -95,8 +95,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			//check functionality of preprocess on dataset with multiple columns in csv - check default is first column
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getData3Original(), PriorStopWordProcess.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getData3Expected(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getDataPreStopWordsPreprocess(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getDataPostStopWordsPreprocess(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(3);
 			assertTrue(stopWordsRemover.isApplicable());
@@ -110,8 +110,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testForOriginalDataAfterPostProcess() throws Exception {
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getData4original(), PriorStopWordProcess.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getData4Expected(), PostStopWordProcess.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getDataBeforePostProcessLinked(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getDataAfterPostProcessLinked(), PostStopWordProcess.class);
 
 			ZFrame<D, R, C> newZFrame = context.getDSUtil().postprocess(zFrameExpected, zFrameOriginal);
 
@@ -128,69 +128,13 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 	@Test
 	public void testOriginalDataAfterPostProcessLinked() throws Exception {
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(TestStopWordsData.getData5Original(), PriorStopWordProcess.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(TestStopWordsData.getData5Actual(), PostStopWordProcess.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(TestStopWordsData.getDataBeforePostProcessLinked(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(TestStopWordsData.getDataAfterPostProcessLinked(), PostStopWordProcess.class);
 			
 			ZFrame<D, R, C> newZFrame = context.getDSUtil().postprocessLinked(zFrameExpected, zFrameOriginal);
 			
 			assertTrue(newZFrame.select("field1", "field2", "field3").except(zFrameOriginal.select("field1", "field2", "field3")).isEmpty());
 			assertTrue(zFrameOriginal.select("field1", "field2", "field3").except(newZFrame.select("field1", "field2", "field3")).isEmpty());
-	}
-
-	@Test
-	public void testOriginalDataAfterPostprocessLinked() {
-			StructType schemaActual = new StructType(new StructField[] {
-					new StructField(ColName.CLUSTER_COLUMN, DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.PREDICTION_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.SCORE_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.MATCH_FLAG_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field1", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field2", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field3", DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
-			});
-
-			StructType schemaOriginal = new StructType(new StructField[] {
-					new StructField(ColName.ID_COL, DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field1", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field2", DataTypes.StringType, false, Metadata.empty()),
-					new StructField("field3", DataTypes.StringType, false, Metadata.empty()),
-					new StructField(ColName.SOURCE_COL, DataTypes.StringType, false, Metadata.empty())
-			});
-
-			Dataset<Row> original = sparkSession.createDataFrame(
-					Arrays.asList(
-							RowFactory.create("10", "The zingg is a spark application", "two",
-									"Yes. a good application", "test"),
-							RowFactory.create("20", "It is very popular in data science", "Three", "true indeed",
-									"test"),
-							RowFactory.create("30", "It is written in java and scala", "four", "", "test"),
-							RowFactory.create("40", "Best of luck to zingg", "Five", "thank you", "test")),
-					schemaOriginal);
-
-			Dataset<Row> actual = sparkSession.createDataFrame(
-					Arrays.asList(
-							RowFactory.create("1648811730857:10", "10", "1.0", "0.555555", "-1",
-									"The zingg spark application", "two", "Yes. good application", "test"),
-							RowFactory.create("1648811730857:20", "20", "1.0", "1.0", "-1",
-									"It very popular data science", "Three", "true indeed", "test"),
-							RowFactory.create("1648811730857:30", "30", "1.0", "0.999995", "-1",
-									"It written java scala", "four", "", "test"),
-							RowFactory.create("1648811730857:40", "40", "1.0", "1.0", "-1", "Best luck zingg", "Five",
-									"thank", "test")),
-					schemaActual);
-			
-			System.out.println("testOriginalDataAfterPostprocessLinked original :");
-			original.show(200);
-			
-			Dataset<Row> newDataset = ((SparkFrame)(new LinkOutputBuilder(zinggSparkContext.getDSUtil(), args).postprocessLinked(new SparkFrame(actual), new SparkFrame(original)))).df();
-			
-			System.out.println("testOriginalDataAfterPostprocessLinked newDataset :");
-			newDataset.show(200);
-			
-			assertTrue(newDataset.select("field1", "field2", "field3").except(original.select("field1", "field2", "field3")).isEmpty());
-			assertTrue(original.select("field1", "field2", "field3").except(newDataset.select("field1", "field2", "field3")).isEmpty());
 	}
 	*/
 

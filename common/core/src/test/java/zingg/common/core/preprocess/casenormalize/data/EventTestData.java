@@ -84,7 +84,7 @@ public class EventTestData {
         return sample;
     }
 
-    public static List<InputDataModel> getDataInputPostCaseNormalizationWhenMatchTypeDONT_USE() {
+    public static List<InputDataModel> getDataInputPostCaseNormalizationWhenMatchTypeDont_Use() {
 
         List<InputDataModel> sample = new ArrayList<InputDataModel>();
         sample.add(new InputDataModel("10", "The ZINGG IS a SPARK AppLiCation", "two",
