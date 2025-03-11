@@ -16,11 +16,16 @@ import zingg.common.client.util.WithSession;
 import zingg.common.core.executor.blockingverifier.IVerifyBlockingPipes;
 import zingg.common.core.executor.blockingverifier.TestVerifyBlocking;
 import zingg.common.core.executor.blockingverifier.VerifyBlocking;
+import zingg.common.core.util.ICleanUpUtil;
 import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.client.util.SparkModelHelper;
 import zingg.spark.client.util.SparkPipeUtil;
 import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
+
+import zingg.spark.core.executor.SparkVerifyBlocker;
+import zingg.spark.core.executor.SparkVerifyBlockingPipes;
+import zingg.spark.core.util.SparkVerifyBlockingCleanUpUtil;
 
 @ExtendWith(TestSparkBase.class)
 public class TestSparkVerifyBlocking extends TestVerifyBlocking<SparkSession,Dataset<Row>,Row,Column,DataType> {
@@ -51,6 +56,21 @@ public class TestSparkVerifyBlocking extends TestVerifyBlocking<SparkSession,Dat
     @Override
     public String getMassagedTableName(String hash) {
         return (ColName.BLOCK_SAMPLES + hash);
+    }
+
+    @Override
+    public ICleanUpUtil<SparkSession> getCleanupUtil() {
+        return SparkVerifyBlockingCleanUpUtil.getInstance();
+    }
+
+    @Override
+    public String getModelId() {
+        return "junit_vb";
+    }
+
+    @Override
+    public SparkSession getSession() {
+        return zinggSparkContext.getSession();
     } 
 
     

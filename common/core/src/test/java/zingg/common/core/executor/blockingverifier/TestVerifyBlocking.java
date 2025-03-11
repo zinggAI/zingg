@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.Arguments;
@@ -19,8 +20,10 @@ import zingg.common.core.context.Context;
 import zingg.common.core.executor.blockingverifier.data.BlockingVerifyData;
 import zingg.common.core.executor.blockingverifier.model.BlockCountsData;
 import zingg.common.core.executor.blockingverifier.model.BlockedData;
+import zingg.common.core.util.IPerformCleanUpUtil;
+import zingg.common.core.util.TestType;
 
-public abstract class TestVerifyBlocking<S,D,R,C,T> {
+public abstract class TestVerifyBlocking<S,D,R,C,T> implements IPerformCleanUpUtil<S>{
     
     public static final Log LOG = LogFactory.getLog(TestVerifyBlocking.class);
     protected Context<S, D, R, C, T> context;
@@ -91,5 +94,8 @@ public abstract class TestVerifyBlocking<S,D,R,C,T> {
 
     public abstract String getMassagedTableName(String hash);
 
-
+    @AfterEach
+	public void cleanTestStateData() {
+		performCleanup(TestType.VERIFYBLOCKING);
+    }
 }
