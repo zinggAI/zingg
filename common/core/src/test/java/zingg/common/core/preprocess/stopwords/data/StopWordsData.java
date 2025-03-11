@@ -60,7 +60,7 @@ public class StopWordsData {
         List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
         sample.add(new PriorStopWordProcess("10", "the zingg is a spark application", "two",
                 "Yes. a good application", "test"));
-        sample.add(new PriorStopWordProcess("20", "it is very popular in Data Science", "Three", "true indeed",
+        sample.add(new PriorStopWordProcess("20", "it is very popular in header data science", "Three", "true indeed",
                 "test"));
         sample.add(new PriorStopWordProcess("30", "it is written in java and scala", "four", "", "test"));
         sample.add(new PriorStopWordProcess("40", "best of luck to zingg mobile/t-mobile", "Five", "thank you", "test"));
@@ -72,7 +72,7 @@ public class StopWordsData {
 
         List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
         sample.add(new PriorStopWordProcess("10", "zingg spark application", "two", "Yes. a good application", "test"));
-        sample.add(new PriorStopWordProcess("20", "very popular Data Science", "Three", "true indeed", "test"));
+        sample.add(new PriorStopWordProcess("20", "very popular header data science", "Three", "true indeed", "test"));
         sample.add(new PriorStopWordProcess("30", "written java scala", "four", "", "test"));
         sample.add(new PriorStopWordProcess("40", "best luck to zingg ", "Five", "thank you", "test"));
 
@@ -134,5 +134,6 @@ public class StopWordsData {
 
         return sample;
     }
+
     
 }

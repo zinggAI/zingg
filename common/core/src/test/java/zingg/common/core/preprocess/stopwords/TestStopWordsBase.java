@@ -15,7 +15,6 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
-import zingg.common.core.data.EventTestData;
 import zingg.common.core.preprocess.stopwords.data.StopWordsData;
 import zingg.common.core.preprocess.stopwords.model.PostStopWordProcess;
 import zingg.common.core.preprocess.stopwords.model.PriorStopWordProcess;
@@ -96,8 +95,8 @@ public abstract class TestStopWordsBase<S, D, R, C, T> {
 			//check functionality of preprocess on dataset with multiple columns in csv - check default is first column
 			List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers = getStopWordsRemovers();
 
-			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(EventTestData.getData3Original(), PriorStopWordProcess.class);
-			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(EventTestData.getData3Expected(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameOriginal = dfObjectUtil.getDFFromObjectList(StopWordsData.getData3Original(), PriorStopWordProcess.class);
+			ZFrame<D, R, C> zFrameExpected = dfObjectUtil.getDFFromObjectList(StopWordsData.getData3Expected(), PriorStopWordProcess.class);
 
 			StopWordsRemover<S, D, R, C, T> stopWordsRemover = stopWordsRemovers.get(3);
 			assertTrue(stopWordsRemover.isApplicable());

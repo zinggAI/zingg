@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import zingg.common.client.*;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
-import zingg.common.core.data.EventTestData;
+import zingg.common.core.preprocess.casenormalize.data.EventTestData;
 import zingg.common.core.preprocess.stopwords.model.PriorStopWordProcess;
 
 public abstract class TestPreprocessors<S,D,R,C,T> {
