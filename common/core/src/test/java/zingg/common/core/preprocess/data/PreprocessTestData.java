@@ -11,11 +11,11 @@ public class PreprocessTestData {
 
         List<PriorStopWordProcess> sample = new ArrayList<PriorStopWordProcess>();
         sample.add(new PriorStopWordProcess(" 10 ", " The ZINGG IS a SpaRk AppLiCation ", "two",
-                "Yes. a good application", "test"));
-        sample.add(new PriorStopWordProcess("20", "It is VERY POpuLar in Data SCIENCE", " Three ", " true indeed ",
+                " Yes. a good application ", "test"));
+        sample.add(new PriorStopWordProcess("20", " It is VERY POpuLar in Data SCIENCE", " Three ", " true indeed ",
                 "test"));
-        sample.add(new PriorStopWordProcess("30", "It is WRITTEN in java and SCala", "four", "", " test "));
-        sample.add(new PriorStopWordProcess("40", " Best of LUCK to zingg Mobile/T-Mobile  ", "Five", "thank you", "test"));
+        sample.add(new PriorStopWordProcess("30", " It is WRITTEN in java and SCala", "four", "", " test "));
+        sample.add(new PriorStopWordProcess("40", " Best of LUCK to zingg Mobile/T-Mobile  ", "Five", " thank you ", "test"));
 
         return sample;
     }
