@@ -15,22 +15,10 @@ public class TestFieldDefinition {
 	@Test
 	public void testConvertAListOFMatchTypesIntoString() {
 		try {
-			List<IMatchType> matchType = Arrays.asList(MatchTypes.EMAIL, MatchTypes.FUZZY, MatchTypes.NULL_OR_BLANK);
+			List<MatchType> matchType = Arrays.asList(MatchType.EMAIL, MatchType.FUZZY, MatchType.NULL_OR_BLANK);
 			String expectedString = "EMAIL,FUZZY,NULL_OR_BLANK";
 			String strMatchType = FieldDefinition.MatchTypeSerializer.getStringFromMatchType(matchType);
 			assertEquals(expectedString, strMatchType);
-		} catch (Exception | ZinggClientException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Test
-	public void testConvertAListOFStringIntoMatchTypes() {
-		try{
-			String mtString = "FUZZY,NULL_OR_BLANK";
-			List<IMatchType> expectedString = Arrays.asList(MatchTypes.FUZZY, MatchTypes.NULL_OR_BLANK);
-			List<IMatchType> matchTypeString = FieldDefinition.MatchTypeDeserializer.getMatchTypeFromString(mtString);
-			assertEquals(expectedString, matchTypeString);
 		} catch (Exception | ZinggClientException e) {
 			e.printStackTrace();
 		}

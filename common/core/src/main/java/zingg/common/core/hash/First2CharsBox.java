@@ -10,7 +10,7 @@ public class First2CharsBox extends BaseHash<String,Integer>{
 		 if (field == null || field.trim().length() <= 2) {
 				return 0;
 			} else {
-				String sub = field.trim().substring(0, 2);
+				String sub = field.trim().toLowerCase().substring(0, 2);
 				if (sub.compareTo("aa") >= 0 && sub.compareTo("jz") < 0) {
 					return 1;
 			} else if (sub.compareTo("jz") >= 0 && sub.compareTo("oz") < 0) {

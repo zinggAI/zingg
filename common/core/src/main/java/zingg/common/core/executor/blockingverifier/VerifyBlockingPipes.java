@@ -13,6 +13,15 @@ public abstract class VerifyBlockingPipes<S,D,R,C> implements IVerifyBlockingPip
     Pipe<D,R,C> blockSamplesPipe; 
     IModelHelper<D,R,C> modelHelper;
     
+    public IModelHelper<D, R, C> getModelHelper() {
+        return this.modelHelper;
+    }
+
+
+    public void setModelHelper(IModelHelper<D, R, C> mh) {
+        this.modelHelper = mh;
+    }
+
 
     public VerifyBlockingPipes(PipeUtilBase<S,D,R,C> pipeUtil, long timestamp, IModelHelper<D, R, C> mh) {
     	setPipeUtil(pipeUtil);
@@ -46,30 +55,18 @@ public abstract class VerifyBlockingPipes<S,D,R,C> implements IVerifyBlockingPip
         this.blockSamplesPipe = blockSamplesPipe;
     }
 
+   
+
+
     @Override
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
-    }
-
-    @Override
-    public PipeUtilBase<S,D,R,C> getPipeUtil(){
-        return pipeUtil;
     }
 
 
     @Override
     public void setPipeUtil(PipeUtilBase<S, D, R, C> pipeUtil) {
         this.pipeUtil = pipeUtil;
-    }
-
-    @Override
-    public IModelHelper<D, R, C> getModelHelper() {
-        return this.modelHelper;
-    }
-
-    @Override
-    public void setModelHelper(IModelHelper<D, R, C> mh) {
-        this.modelHelper = mh;
     }
 
     

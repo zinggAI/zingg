@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
-import zingg.common.client.MatchTypes;
+import zingg.common.client.MatchType;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
@@ -36,7 +36,7 @@ public abstract class ModelUtil<S,T, D,R,C> {
         if (args.getFieldDefinition() != null) {
 			featurers = new LinkedHashMap<FieldDefinition, Feature<T>>();
 			for (FieldDefinition def : args.getFieldDefinition()) {
-				if (! (def.getMatchType() == null || def.getMatchType().contains(MatchTypes.DONT_USE))) {
+				if (! (def.getMatchType() == null || def.getMatchType().contains(MatchType.DONT_USE))) {
 					Feature fea =  (Feature) getFeatureFactory().get(def.getDataType());
 					fea.init(def);
 					featurers.put(def, fea);			

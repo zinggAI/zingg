@@ -30,7 +30,7 @@ public class TestSparkDocumenter extends TestDocumenterBase<SparkSession, Datase
 	}
 
 	@Override
-	protected DocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType> getDocumenter(IContext<SparkSession, Dataset<Row>, Row, Column, DataType> context, IArguments args, ClientOptions options) {
+	public DocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType> getDocumenter(IContext<SparkSession, Dataset<Row>, Row, Column, DataType> context, IArguments args, ClientOptions options) {
 		return new SparkModelDocumenter(context, args, options);
 	}
 

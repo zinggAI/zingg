@@ -8,7 +8,6 @@ import zingg.common.client.util.ColValues;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
 import zingg.common.core.executor.Labeller;
-import zingg.common.core.preprocess.IPreprocMap;
 
 public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	
@@ -105,10 +104,4 @@ public class ProgrammaticLabeller<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 	protected void setPrefixMatchLength(int length) {
 		this.PREFIX_MATCH_LENGTH = length;
 	}
-
-	@Override
-	public IPreprocMap<S, D, R, C, T> getPreprocMap() {
-		//nothing required here
-		return null;
-	}
-}
+ }

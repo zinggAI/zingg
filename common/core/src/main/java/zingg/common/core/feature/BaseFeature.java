@@ -7,7 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.IMatchType;
+import zingg.common.client.MatchType;
 import zingg.common.core.similarity.function.SimFunction;
 
 public abstract class BaseFeature<T> implements Feature<T> {
@@ -34,7 +34,7 @@ public abstract class BaseFeature<T> implements Feature<T> {
 	/**
 	 * @return the fieldType
 	 */
-	public List<? extends IMatchType> getMatchType() {
+	public List<MatchType> getMatchType() {
 		return fieldDefinition.getMatchType();
 	}
 

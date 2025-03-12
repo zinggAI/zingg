@@ -139,8 +139,11 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 		return dropFeatureCols(predictCore(data), isDrop);
 	}
 
+
+	
+	
 	@Override
-    public ZFrame<Dataset<Row>,Row,Column> predictCore(ZFrame<Dataset<Row>,Row,Column> data) {
+	public ZFrame<Dataset<Row>,Row,Column> predictCore(ZFrame<Dataset<Row>,Row,Column> data) {
 		//create features
 		LOG.info("threshold while predicting is " + lr.getThreshold());
 		//lr.setThreshold(0.95);

@@ -9,7 +9,7 @@ public class TestOnlyAlphabetsAffineGapSimilarity {
 	
 	
 	@Test
-	public void testNotSameAlphabets() {
+	public void testNotSameAlhpabets() {
 		OnlyAlphabetsAffineGapSimilarity sim = new OnlyAlphabetsAffineGapSimilarity();
 		double score = sim.call("I have 1 number", "I have no number");
 		assertTrue(1 > score);

@@ -21,8 +21,6 @@ public interface IVerifyBlockingPipes<S,D,R,C>  {
 
     public void setPipeUtil(PipeUtilBase<S,D,R,C> pipeUtil);
 
-    public PipeUtilBase<S,D,R,C> getPipeUtil();
-
     public IModelHelper<D,R, C> getModelHelper();
 
     public void setModelHelper(IModelHelper<D,R,C> imh);

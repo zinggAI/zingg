@@ -13,10 +13,9 @@ import zingg.common.client.util.ColValues;
 import zingg.common.core.block.Canopy;
 import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
-import zingg.common.core.preprocess.IPreprocessors;
-import zingg.common.core.preprocess.stopwords.StopWordsRemover;
+import zingg.common.core.preprocess.StopWordsRemover;
 
-public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements IPreprocessors<S,D,R,C,T>{
+public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.TrainingDataFinder";
@@ -47,7 +46,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				ZFrame<D,R,C> trFile = getTraining();					
 
 				if (trFile != null) {
-					trFile = preprocess(trFile).cache();
+					trFile = getStopWords().preprocessForStopWords(trFile);
 					ZFrame<D,R,C> trPairs = getDSUtil().joinWithItself(trFile, ColName.CLUSTER_COLUMN, true);
 						
 						posPairs = trPairs.filter(trPairs.equalTo(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_MATCH));
@@ -66,8 +65,8 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 					
 					
 				if (posPairs == null || posPairs.count() <= 5) {
-					ZFrame<D,R,C> posSamples = getPositiveSamples(data);
-					//ZFrame<D,R,C> posSamples = preprocess(posSamplesOriginal);
+					ZFrame<D,R,C> posSamplesOriginal = getPositiveSamples(data);
+					ZFrame<D,R,C> posSamples = getStopWords().preprocessForStopWords(posSamplesOriginal);
 					//posSamples.printSchema();
 					if (posPairs != null) {
 						//posPairs.printSchema();
@@ -84,7 +83,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 				sampleOrginal = getFieldDefColumnsDS(sampleOrginal);
 				LOG.info("Preprocessing DS for stopWords");
 
-				ZFrame<D,R,C> sample = preprocess(sampleOrginal);
+				ZFrame<D,R,C> sample = getStopWords().preprocessForStopWords(sampleOrginal);
 
 				Tree<Canopy<R>> tree = getBlockingTreeUtil().createBlockingTree(sample, posPairs, 1, -1, args, getHashUtil().getHashFunctionList());
 				//tree.print(2);	
@@ -182,7 +181,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 		return pos.union(neg);
 	}
 
-	public ZFrame<D,R,C> getPositiveSamples(ZFrame<D,R,C> data) throws Exception, ZinggClientException {
+	public ZFrame<D,R,C> getPositiveSamples(ZFrame<D,R,C> data) throws Exception {
 		if (LOG.isDebugEnabled()) {
 			long count = data.count();
 			LOG.debug("Total count is " + count);
@@ -195,7 +194,6 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 			LOG.debug("Sampled " + posSample.count());
 		}
 		posSample = posSample.cache();
-		posSample = preprocess(posSample);
 		ZFrame<D,R,C> posPairs = getDSUtil().joinWithItself(posSample, ColName.ID_COL, false);
 		
 		LOG.info("Created positive sample pairs ");

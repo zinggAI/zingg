@@ -19,7 +19,6 @@ import zingg.common.client.util.WithSession;
 import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.core.executor.Labeller;
-import zingg.spark.core.preprocess.ISparkPreprocMapSupplier;
 
 
 /**
@@ -27,7 +26,7 @@ import zingg.spark.core.preprocess.ISparkPreprocMapSupplier;
  * 
  *
  */
-public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Column,DataType> implements ISparkPreprocMapSupplier {
+public class SparkLabeller extends Labeller<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkLabeller";

@@ -24,12 +24,11 @@ import zingg.common.core.match.output.IMatchOutputBuilder;
 import zingg.common.core.model.Model;
 import zingg.common.core.pairs.IPairBuilder;
 import zingg.common.core.pairs.SelfPairBuilder;
-import zingg.common.core.preprocess.IPreprocessors;
-import zingg.common.core.preprocess.stopwords.StopWordsRemover;
+import zingg.common.core.preprocess.StopWordsRemover;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
 
-public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements IPreprocessors<S,D,R,C,T> {
+public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.Matcher";
@@ -179,7 +178,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			// read input, filter, remove self joins
 			ZFrame<D,R,C>  testDataOriginal = getTestData();
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
-			ZFrame<D,R,C>  testData = preprocess(testDataOriginal);
+			ZFrame<D,R,C>  testData = getStopWords().preprocessForStopWords(testDataOriginal);
 			//testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
 			long count = testData.count();

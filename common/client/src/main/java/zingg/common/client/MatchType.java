@@ -1,68 +1,86 @@
 package zingg.common.client;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Field types used in defining the types of fields for matching. See the field
  * definitions and the user guide for more details
  */
 
-public class MatchType implements IMatchType, Serializable{
+public enum MatchType implements Serializable {
+	/**
+	 * Short words like first names and organizations with focus on first
+	 * characters matching
+	 */
+	FUZZY("FUZZY"),
 
-	private static final long serialVersionUID = 1L;
-	protected String name;
+	/**
+	 * Fields needing exact matches
+	 */
+	EXACT("EXACT"),
 
-	public MatchType(){
-		
+	
+	/**
+	 * Many times pin code is xxxxx-xxxx and has to be matched with xxxxx.
+	 */
+	PINCODE("PINCODE"),
+
+	/**
+	 * an email type which is supposed to look at only the first part of the email and ignore the domain.
+	 */
+	EMAIL("EMAIL"),
+
+	/**
+	 * Long descriptive text, usually more than a couple of words for example
+	 * product descriptions
+	 */
+	TEXT("TEXT"),
+
+	/**
+	 * Strings containing numbers which need to be same. Example in addresses,
+	 * we dont want 4th street to match 5th street
+	 * Matching numbers with deviations
+	 */
+	NUMERIC("NUMERIC"),
+	/*eg P301d, P00231*/
+	NUMERIC_WITH_UNITS("NUMBER_WITH_UNITS"),
+	NULL_OR_BLANK("NULL_OR_BLANK"),
+	ONLY_ALPHABETS_EXACT("ONLY_ALPHABETS_EXACT"),
+	ONLY_ALPHABETS_FUZZY("ONLY_ALPHABETS_FUZZY"),
+	DONT_USE("DONT_USE");
+
+	private String value;
+	private static Map<String, MatchType> types;
+
+	MatchType(String type) {
+		this.value = type;
 	}
 
-	public MatchType(String n){
-		this.name = n;
-		MatchTypes.put(this);
-	}
-
-	@Override
-	public String getName() {
-		return this.name;
-	}
-
-	@Override
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		MatchType other = (MatchType) obj;
-		if (name == null) {
-			if (other.name != null){
-				return false;
-			}
-		} 
-		else if (!name.equalsIgnoreCase(other.name)){
-			return false;
+	private static void init() {
+		types = new HashMap<String, MatchType>();
+		for (MatchType f : MatchType.values()) {
+			types.put(f.value, f);
 		}
-		return true;
 	}
 
-	@Override
-	public String toString() {
-		return name;
+	@JsonCreator
+	public static MatchType getMatchType(String t) throws ZinggClientException{
+		if (types == null) {
+			init();
+		}
+		MatchType type = types.get(t.trim().toUpperCase());
+		if (type == null) throw new ZinggClientException("Unsupported Match Type: " + t);
+		return type;
+	}
+
+	@JsonValue
+	public String value() {
+		return value;
 	}
 
 }

@@ -9,6 +9,7 @@ public class IntegerSimilarityFunction extends SimFunction<Integer> {
 
 	public IntegerSimilarityFunction() {
 		super("IntegerSimilarityFunction");
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override

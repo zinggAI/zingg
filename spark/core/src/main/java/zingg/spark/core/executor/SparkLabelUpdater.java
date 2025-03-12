@@ -21,7 +21,6 @@ import zingg.common.core.executor.LabelUpdater;
 import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.core.context.ZinggSparkContext;
 import org.apache.spark.sql.SparkSession;
-	import zingg.spark.core.preprocess.ISparkPreprocMapSupplier;
 
 
 /**
@@ -29,7 +28,7 @@ import org.apache.spark.sql.SparkSession;
  * 
  *
  */
-public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, Row, Column,DataType> implements ISparkPreprocMapSupplier {
+public class SparkLabelUpdater extends LabelUpdater<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkLabelUpdater";

@@ -38,6 +38,7 @@ public class TestArguments {
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = argsUtil.substituteVariables(template, env);
 			IArguments args = (IArguments) argsUtil.createArgumentsFromJSONString(json, "");
+
 			assertEquals(args.getData()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
 			assertEquals(args.getData()[0].getFormat(), env.get(KEY_FORMAT));
 			assertEquals(args.getModelId(), env.get(KEY_MODEL_ID));
@@ -166,6 +167,7 @@ public class TestArguments {
 			String template = new String(encoded, StandardCharsets.UTF_8);
 			String json = argsUtil.substituteVariables(template, env);
 			IArguments args = (IArguments) argsUtil.createArgumentsFromJSONString(json, "");
+
 			//Numeric within quotes are allowed
 			assertEquals(args.getModelId(), env.get(KEY_MODEL_ID));
 		} catch (IOException | ZinggClientException e) {
@@ -210,11 +212,11 @@ public class TestArguments {
 	public void testMatchTypeMultiple() {
 			IArguments args;
             try {
-                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile(), "test");
-				List<? extends IMatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
+                args = (IArguments) argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile(), "test");
+				List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
 				assertEquals(2, fNameMatchType.size());
-				assertEquals(MatchTypes.FUZZY, fNameMatchType.get(0));
-				assertEquals(MatchTypes.NULL_OR_BLANK, fNameMatchType.get(1));
+				assertEquals(MatchType.FUZZY, fNameMatchType.get(0));
+				assertEquals(MatchType.NULL_OR_BLANK, fNameMatchType.get(1));
 
 				
             } catch (Exception | ZinggClientException e) {
@@ -229,12 +231,11 @@ public class TestArguments {
 	public void testMatchTypeWrong() {
 			IArguments args;
             try {
-                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
+                args = (IArguments) argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
 				//List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
-				//fail("config had error, should have flagged");
+				fail("config had error, should have flagged");
 				
             } catch (Exception | ZinggClientException e) {
-				LOG.info("config had error, should have flagged");
 //                e.printStackTrace();
             }
 			
@@ -247,16 +248,20 @@ public class TestArguments {
 		IArguments argsFromJsonFile;  
 		try{
 			//Converting to JSON using toString()
-			argsFromJsonFile = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile(), "test");
+			argsFromJsonFile = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
 			String strFromJsonFile = argsFromJsonFile.toString();
 
 			IArguments argsFullCycle = argsUtil.createArgumentsFromJSONString(strFromJsonFile, "");
 
-			assertEquals(argsFullCycle.getFieldDefinition().get(0).getName(), argsFromJsonFile.getFieldDefinition().get(0).getName());
-			assertEquals(argsFullCycle.getFieldDefinition().get(2).getName(), argsFromJsonFile.getFieldDefinition().get(2).getName());
+			assertEquals(argsFullCycle.getFieldDefinition().get(0), argsFromJsonFile.getFieldDefinition().get(0));
+			assertEquals(argsFullCycle.getFieldDefinition().get(2), argsFromJsonFile.getFieldDefinition().get(2));
 			assertEquals(argsFullCycle.getModelId(), argsFromJsonFile.getModelId());
+//			assertEquals(argsFullCycle.getZinggModelDir(), argsFromJsonFile.getZinggModelDir());
 			assertEquals(argsFullCycle.getNumPartitions(), argsFromJsonFile.getNumPartitions());
 			assertEquals(argsFullCycle.getLabelDataSampleSize() ,argsFromJsonFile.getLabelDataSampleSize());
+			assertEquals(argsFullCycle.getTrainingSamples(),argsFromJsonFile.getTrainingSamples());
+			assertEquals(argsFullCycle.getOutput(),argsFromJsonFile.getOutput());
+			assertEquals(argsFullCycle.getData(),argsFromJsonFile.getData());
 			assertEquals(argsFullCycle.getZinggDir(),argsFromJsonFile.getZinggDir());
 			assertEquals(argsFullCycle.getJobId(),argsFromJsonFile.getJobId());
 

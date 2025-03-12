@@ -31,7 +31,8 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
  * @author sgoyal
  *
  */
-public class FieldDefinition implements Named, Serializable {
+public class FieldDefinition implements Named,
+		Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,7 +40,7 @@ public class FieldDefinition implements Named, Serializable {
 	
 	@JsonDeserialize(using = MatchTypeDeserializer.class)
 	@JsonSerialize(using = MatchTypeSerializer.class)
-	public List<? extends IMatchType> matchType;
+	public List<MatchType> matchType;
 	
 	//@JsonSerialize(using = DataTypeSerializer.class)
 	public String dataType;
@@ -51,21 +52,17 @@ public class FieldDefinition implements Named, Serializable {
 	public FieldDefinition() {
 	}
 
-	public String getFields() { 
-		return fields; 
-	}
+	public String getFields() { return fields; }
 
-	public void setFields(String fields) {
-		this.fields = fields;
-	}	
+	public void setFields(String fields) { this.fields = fields;}	
 	
 	/**
 	 * Get the field type of the class
 	 * 
 	 * @return the type
 	 */
-	public List<? extends IMatchType> getMatchType() {
-		return this.matchType;
+	public List<MatchType> getMatchType() {
+		return matchType;
 	}
 
 	/**
@@ -76,12 +73,12 @@ public class FieldDefinition implements Named, Serializable {
 	 *            the type to set
 	*/
 	@JsonDeserialize(using = MatchTypeDeserializer.class)	
-	public void setMatchType(List<? extends IMatchType> type) {
+	public void setMatchType(List<MatchType> type) {
 		this.matchType = type; //MatchTypeDeserializer.getMatchTypeFromString(type);
 	}
 
 	
-	public void setMatchTypeInternal(IMatchType... type) {
+	public void setMatchTypeInternal(MatchType... type) {
 		this.matchType = Arrays.asList(type);
 	}
 	
@@ -116,7 +113,7 @@ public class FieldDefinition implements Named, Serializable {
 	}
 
 	public String getFieldName() {
-		return this.fieldName;
+		return fieldName;
 	}
 
 	public void setFieldName(String fieldName) {
@@ -125,7 +122,7 @@ public class FieldDefinition implements Named, Serializable {
 
 	@JsonIgnore
 	public boolean isDontUse() {
-        return (matchType != null && matchType.contains(MatchTypes.DONT_USE));
+        return (matchType != null && matchType.contains(MatchType.DONT_USE));
     }
 
 	@Override
@@ -188,17 +185,17 @@ public class FieldDefinition implements Named, Serializable {
 		}
 	}*/
 
-	public static class MatchTypeSerializer extends StdSerializer<List<IMatchType>> {
+	public static class MatchTypeSerializer extends StdSerializer<List<MatchType>> {
 		public MatchTypeSerializer() {
 			this(null);
 		}
 
-		public MatchTypeSerializer(Class<List<IMatchType>> t) {
+		public MatchTypeSerializer(Class<List<MatchType>> t) {
 			super(t);
 		}
 
 		@Override
-		public void serialize(List<IMatchType> matchType, JsonGenerator jsonGen, SerializerProvider provider)
+		public void serialize(List<MatchType> matchType, JsonGenerator jsonGen, SerializerProvider provider)
 				throws IOException, JsonProcessingException {
 			try {
 				jsonGen.writeObject(getStringFromMatchType(matchType));
@@ -208,14 +205,14 @@ public class FieldDefinition implements Named, Serializable {
 			}
 		}
 
-		public static String getStringFromMatchType(List<IMatchType> matchType) throws ZinggClientException {
+		public static String getStringFromMatchType(List<MatchType> matchType) throws ZinggClientException {
 			return String.join(",", matchType.stream()
-					.map(p -> p.getName())
+					.map(p -> p.value())
 					.collect(Collectors.toList()));
 		}
 	}
 
-	public static class MatchTypeDeserializer extends StdDeserializer<List<IMatchType>> {
+	public static class MatchTypeDeserializer extends StdDeserializer<List<MatchType>> {
 		private static final long serialVersionUID = 1L;
 		
 		public MatchTypeDeserializer() { 
@@ -225,7 +222,7 @@ public class FieldDefinition implements Named, Serializable {
 		   super(t); 
 		} 
 		@Override 
-		public List<IMatchType> deserialize(JsonParser parser, DeserializationContext context) 
+		public List<MatchType> deserialize(JsonParser parser, DeserializationContext context) 
 		   throws IOException, JsonProcessingException { 
 			ObjectMapper mapper = new ObjectMapper();
 			try{
@@ -233,16 +230,16 @@ public class FieldDefinition implements Named, Serializable {
 				LOG.debug("Deserializing custom type");
 				return getMatchTypeFromString(mapper.readValue(parser, String.class)); 
 			}
-			catch(Exception | ZinggClientException e) {
+			catch(ZinggClientException e) {
 				throw new IOException(e);
 			}
 		}   
 
-		public static List<IMatchType> getMatchTypeFromString(String m) throws ZinggClientException, Exception{
-			List<IMatchType> matchTypes = new ArrayList<IMatchType>();
+		public static List<MatchType> getMatchTypeFromString(String m) throws ZinggClientException{
+			List<MatchType> matchTypes = new ArrayList<MatchType>();
 		    String[] matchTypeFromConfig = m.split(","); 
 			for (String s: matchTypeFromConfig) { 
-				IMatchType mt = MatchTypes.getByName(s);
+				MatchType mt = MatchType.getMatchType(s);
 				matchTypes.add(mt);
 			}     
 		   return matchTypes; 

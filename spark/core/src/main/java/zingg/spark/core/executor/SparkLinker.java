@@ -14,13 +14,12 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.core.executor.Linker;
 import zingg.common.core.model.Model;
-import zingg.common.core.preprocess.stopwords.StopWordsRemover;
+import zingg.common.core.preprocess.StopWordsRemover;
 import zingg.spark.core.context.ZinggSparkContext;
-import zingg.spark.core.preprocess.ISparkPreprocMapSupplier;
-import zingg.spark.core.preprocess.stopwords.SparkStopWordsRemover;
+import zingg.spark.core.preprocess.SparkStopWordsRemover;
 
 
-public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,DataType> implements ISparkPreprocMapSupplier {
+public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,DataType> {
 
 	private static final long serialVersionUID = 1L;
 	public static String name = "zingg.spark.core.executor.SparkLinker";
@@ -50,7 +49,7 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
 
 	@Override
 	public StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
-		return new SparkStopWordsRemover(getContext());
+		return new SparkStopWordsRemover(getContext(),getArgs());
 	}
 	
 }

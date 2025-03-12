@@ -23,31 +23,31 @@ public class TestFirst3CharsBox {
     @Test
     public void testFirst3CharsBox3() {
         First3CharsBox value = getInstance();
-        assertEquals(2, value.call("india"));
+        assertEquals(2, value.call("India"));
     }
     
     @Test
     public void testFirst3CharsBox4() {
         First3CharsBox value = getInstance();
-        assertEquals(3, value.call("izzze"));
+        assertEquals(3, value.call("Izzze"));
     }
 
     @Test
     public void testFirst3CharsBox5() {
         First3CharsBox value = getInstance();
-        assertEquals(4, value.call("noddy"));
+        assertEquals(4, value.call("Noddy"));
     }
     
     @Test
     public void testFirst3CharsBox6() {
         First3CharsBox value = getInstance();
-        assertEquals(5, value.call("sunday"));
+        assertEquals(5, value.call("Sunday"));
     }
 
     @Test
     public void testFirst3CharsBox7() {
         First3CharsBox value = getInstance();
-        assertEquals(6, value.call("uzzzz"));
+        assertEquals(6, value.call("Uzzzz"));
     }
 
     @Test
