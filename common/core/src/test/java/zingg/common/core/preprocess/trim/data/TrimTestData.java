@@ -23,30 +23,17 @@ public class TrimTestData {
     public static List<InputDataModel> getDataInputPostTrimOnField1() {
 
         List<InputDataModel> sample = new ArrayList<InputDataModel>();
-        sample.add(new InputDataModel("10", "the zingg is a spark application", "tWo ",
+        sample.add(new InputDataModel("10", "The ZINGG IS a SPARK AppLiCation", "tWo ",
                 "Yes. a good Application ", "test"));
-        sample.add(new InputDataModel("20", "it is very popular in data science", " THREE", "TRUE indeed ",
+        sample.add(new InputDataModel("20", "It is VERY POpuLar in Data SCIENCE", " THREE", "TRUE indeed ",
                 "test"));
-        sample.add(new InputDataModel("30", "it is written in java and scala", "four ", "", "test"));
-        sample.add(new InputDataModel("40", "best of luck to zingg mobile/t-mobile", " FIVE", "thank you ", "test"));
+        sample.add(new InputDataModel("30", "It is WRITTEN in java and SCala", "four ", "", "test"));
+        sample.add(new InputDataModel("40", "Best of LUCK to ZINGG Mobile/T-Mobile", " FIVE", "thank you ", "test"));
 
         return sample;
     }
 
     public static List<InputDataModel> getDataInputPostTrimOnAllFields() {
-
-        List<InputDataModel> sample = new ArrayList<InputDataModel>();
-        sample.add(new InputDataModel("10", "the zingg is a spark application", "two",
-                "yes. a good application", "test"));
-        sample.add(new InputDataModel("20", "it is very popular in data science", "three", "true indeed",
-                "test"));
-        sample.add(new InputDataModel("30", "it is written in java and scala", "four", "", "test"));
-        sample.add(new InputDataModel("40", "best of luck to zingg mobile/t-mobile", "five", "thank you", "test"));
-
-        return sample;
-    }
-
-    public static List<InputDataModel> getDataInputPostTrimOnNone() {
 
         List<InputDataModel> sample = new ArrayList<InputDataModel>();
         sample.add(new InputDataModel("10", "The ZINGG IS a SPARK AppLiCation", "tWo",
@@ -59,15 +46,28 @@ public class TrimTestData {
         return sample;
     }
 
+    public static List<InputDataModel> getDataInputPostTrimOnNone() {
+
+        List<InputDataModel> sample = new ArrayList<InputDataModel>();
+        sample.add(new InputDataModel("10", " The ZINGG IS a SPARK AppLiCation", "tWo ",
+                "Yes. a good Application ", "test"));
+        sample.add(new InputDataModel("20", "It is VERY POpuLar in Data SCIENCE ", " THREE", "TRUE indeed ",
+                "test"));
+        sample.add(new InputDataModel("30", " It is WRITTEN in java and SCala", "four ", "", "test"));
+        sample.add(new InputDataModel("40", "Best of LUCK to ZINGG Mobile/T-Mobile ", " FIVE", "thank you ", "test"));
+
+        return sample;
+    }
+
     public static List<InputDataModel> getDataInputPostTrimWhenMatchTypeDont_Use() {
 
         List<InputDataModel> sample = new ArrayList<InputDataModel>();
-        sample.add(new InputDataModel("10", "The ZINGG IS a SPARK AppLiCation", "two",
-                "Yes. a good Application", "test"));
-        sample.add(new InputDataModel("20", "It is VERY POpuLar in Data SCIENCE", "three", "TRUE indeed",
+        sample.add(new InputDataModel("10", " The ZINGG IS a SPARK AppLiCation", "tWo",
+                "Yes. a good Application ", "test"));
+        sample.add(new InputDataModel("20", "It is VERY POpuLar in Data SCIENCE ", "THREE", "TRUE indeed ",
                 "test"));
-        sample.add(new InputDataModel("30", "It is WRITTEN in java and SCala", "four", "", "test"));
-        sample.add(new InputDataModel("40", "Best of LUCK to ZINGG Mobile/T-Mobile", "five", "thank you", "test"));
+        sample.add(new InputDataModel("30", " It is WRITTEN in java and SCala", "four", "", "test"));
+        sample.add(new InputDataModel("40", "Best of LUCK to ZINGG Mobile/T-Mobile ", "FIVE", "thank you ", "test"));
 
         return sample;
     }
