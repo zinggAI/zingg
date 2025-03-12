@@ -28,7 +28,7 @@ public class SparkTrimPreprocessor extends TrimPreprocessor<SparkSession, Datase
     }
 
     @Override
-    protected ZFrame<Dataset<Row>, Row, Column> applyTrimPreprocess(ZFrame<Dataset<Row>, Row, Column> incomingDataFrame, List<String> relevantFields) {
+    public ZFrame<Dataset<Row>, Row, Column> applyPreprocessor(ZFrame<Dataset<Row>, Row, Column> incomingDataFrame, List<String> relevantFields) {
         String[] incomingDFColumns = incomingDataFrame.columns();
         Column[] trimValues = new Column[relevantFields.size()];
         String[] relevantFieldsArray = new String[relevantFields.size()];

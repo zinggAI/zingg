@@ -27,7 +27,7 @@ public class SparkCaseNormalizer extends CaseNormalizer<SparkSession, Dataset<Ro
     }
 
     @Override
-    protected ZFrame<Dataset<Row>, Row, Column> applyCaseNormalizer(ZFrame<Dataset<Row>, Row, Column> incomingDataFrame, List<String> relevantFields) {
+    public ZFrame<Dataset<Row>, Row, Column> applyPreprocessor(ZFrame<Dataset<Row>, Row, Column> incomingDataFrame, List<String> relevantFields) {
         String[] incomingDFColumns = incomingDataFrame.columns();
         Column[] caseNormalizedValues = new Column[relevantFields.size()];
         String[] relevantFieldsArray = new String[relevantFields.size()];
