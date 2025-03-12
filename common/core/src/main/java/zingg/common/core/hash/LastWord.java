@@ -9,11 +9,11 @@ public class LastWord extends BaseHash<String,String>{
 			
 	public String call(String field) {
 		String r = null;
-		if (field == null ) {
+		if (field == null || field.isEmpty() ) {
 			r = field;
 		}
 		else {
-			String[] v= field.split(" ");
+			String[] v = field.split(" ");
 			return v[v.length-1];
 		}
 		return r;

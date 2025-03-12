@@ -54,7 +54,7 @@ public abstract class CaseNormalizer<S,D,R,C,T> implements IMultiFieldPreprocess
     public ZFrame<D, R, C> preprocess(ZFrame<D, R, C> df) {
         try {
             LOG.info("Applying case normalization on input dataframe");
-            List<String> relevantFields = getRelevantFields();
+            List<String> relevantFields = getRelevantFields(STRING_TYPE);
             return applyCaseNormalizer(df, relevantFields);
         } catch (Exception exception) {
             LOG.warn("Error occurred while performing case normalization, skipping it, " + exception);
@@ -70,17 +70,6 @@ public abstract class CaseNormalizer<S,D,R,C,T> implements IMultiFieldPreprocess
     @Override
     public List<? extends FieldDefinition> getFieldDefinitions() {
         return this.fieldDefinitions;
-    }
-
-    private List<String> getRelevantFields() {
-        List<String> stringFields = new ArrayList<>();
-        for (FieldDefinition fieldDefinition : fieldDefinitions) {
-            if (fieldDefinition.dataType != null && fieldDefinition.matchType != null &&
-                    fieldDefinition.dataType.equalsIgnoreCase(STRING_TYPE) && !fieldDefinition.matchType.contains(MatchTypes.DONT_USE)) {
-                stringFields.add(fieldDefinition.fieldName);
-            }
-        }
-        return stringFields;
     }
 
     protected abstract ZFrame<D, R, C> applyCaseNormalizer(ZFrame<D, R, C> incomingDataFrame, List<String> relevantFields);
