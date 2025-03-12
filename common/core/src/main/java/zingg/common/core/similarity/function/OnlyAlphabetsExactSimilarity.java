@@ -36,7 +36,7 @@ public class OnlyAlphabetsExactSimilarity extends StringSimilarityDistanceFuncti
 			if (score1 != 1.0d && score2 != 1.0d) {
 				first = first.replaceAll("[0-9.]", "");
 				second = second.replaceAll("[0-9.]", "");
-				score = first.equalsIgnoreCase(second)? 1.0d : 0.0d;
+				score = first.equals(second)? 1.0d : 0.0d;
 			}
 			else {
 				score = 1.0d;
