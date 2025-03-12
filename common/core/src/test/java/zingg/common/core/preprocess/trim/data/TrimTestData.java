@@ -14,7 +14,7 @@ public class TrimTestData {
                 "Yes. a good Application ", "test"));
         sample.add(new InputDataModel("20", "It is VERY POpuLar in Data SCIENCE ", " THREE", "TRUE indeed ",
                 "test"));
-        sample.add(new InputDataModel("30", " It is WRITTEN in java and SCala", "four ", "", "test"));
+        sample.add(new InputDataModel("30", " It is WRITTEN in java and SCala", "four ", "      ", "test"));
         sample.add(new InputDataModel("40", "Best of LUCK to ZINGG Mobile/T-Mobile ", " FIVE", "thank you ", "test"));
 
         return sample;
@@ -27,7 +27,7 @@ public class TrimTestData {
                 "Yes. a good Application ", "test"));
         sample.add(new InputDataModel("20", "It is VERY POpuLar in Data SCIENCE", " THREE", "TRUE indeed ",
                 "test"));
-        sample.add(new InputDataModel("30", "It is WRITTEN in java and SCala", "four ", "", "test"));
+        sample.add(new InputDataModel("30", "It is WRITTEN in java and SCala", "four ", "      ", "test"));
         sample.add(new InputDataModel("40", "Best of LUCK to ZINGG Mobile/T-Mobile", " FIVE", "thank you ", "test"));
 
         return sample;
@@ -53,7 +53,7 @@ public class TrimTestData {
                 "Yes. a good Application ", "test"));
         sample.add(new InputDataModel("20", "It is VERY POpuLar in Data SCIENCE ", " THREE", "TRUE indeed ",
                 "test"));
-        sample.add(new InputDataModel("30", " It is WRITTEN in java and SCala", "four ", "", "test"));
+        sample.add(new InputDataModel("30", " It is WRITTEN in java and SCala", "four ", "      ", "test"));
         sample.add(new InputDataModel("40", "Best of LUCK to ZINGG Mobile/T-Mobile ", " FIVE", "thank you ", "test"));
 
         return sample;
@@ -66,7 +66,7 @@ public class TrimTestData {
                 "Yes. a good Application ", "test"));
         sample.add(new InputDataModel("20", "It is VERY POpuLar in Data SCIENCE ", "THREE", "TRUE indeed ",
                 "test"));
-        sample.add(new InputDataModel("30", " It is WRITTEN in java and SCala", "four", "", "test"));
+        sample.add(new InputDataModel("30", " It is WRITTEN in java and SCala", "four", "      ", "test"));
         sample.add(new InputDataModel("40", "Best of LUCK to ZINGG Mobile/T-Mobile ", "FIVE", "thank you ", "test"));
 
         return sample;

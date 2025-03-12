@@ -3,12 +3,9 @@ package zingg.common.core.preprocess.casenormalize;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
 import zingg.common.core.context.IContext;
 import zingg.common.core.preprocess.IMultiFieldPreprocessor;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CaseNormalizer<S,D,R,C,T> implements IMultiFieldPreprocessor<S,D,R,C,T> {
