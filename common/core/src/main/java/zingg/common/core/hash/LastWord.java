@@ -14,7 +14,9 @@ public class LastWord extends BaseHash<String,String>{
 		}
 		else {
 			String[] v = field.split(" ");
-			return v[v.length-1];
+			if(v.length != 0){
+				return v[v.length-1];
+			}
 		}
 		return r;
 	}
