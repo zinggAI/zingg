@@ -1,8 +1,6 @@
 name: performance-test-febrl120K
 
-on:
-  schedule:
-    - cron: "0 0 */3 * *"
+on: push
 
 jobs:
   perf-test:
