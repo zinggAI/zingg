@@ -23,14 +23,12 @@ public class FirstChars extends BaseHash<String,String>{
 				r = field;
 			}
 			else{
-				field = field.trim();
 				if (field.length() <= (endIndex)) {
-			
-				r = field; 
-			}
-			else {
-				r = field.trim().substring(0, endIndex);
-			}
+					r = field; 
+				}
+				else {
+					r = field.substring(0, endIndex);
+				}
 			}
 			//LOG.debug("Applying " + this.getName() + " on " + field + " and returning " + r);
 			return r;

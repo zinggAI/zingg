@@ -8,7 +8,6 @@ import zingg.common.core.preprocess.stopwords.StopWordsRemover;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class StopWordRemoverUtility<S, D, R, C, T> {
 

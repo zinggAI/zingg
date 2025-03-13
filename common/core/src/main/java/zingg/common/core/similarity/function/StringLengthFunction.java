@@ -18,10 +18,10 @@ public class StringLengthFunction {/*extends StringSimilarityFunction {
 		double score2 = 0.0;
 		double score = 0.0;
 		try {
-			if (!(first == null || first.trim().equals(""))) {
+			if (!(first == null || first.equals(""))) {
 				score1 = first.length();
 			}
-			if (!(second == null || second.trim().equals(""))) {
+			if (!(second == null || second.equals(""))) {
 				score2 = second.length();
 			}
 			score = score1 * score2;
