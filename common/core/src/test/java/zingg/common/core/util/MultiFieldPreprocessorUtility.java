@@ -49,8 +49,25 @@ public abstract class MultiFieldPreprocessorUtility<S, D, R, C, T> {
 
     }
 
-    public List<List<FieldDefinition>> getFieldDefinitions() {
-        return this.multiFieldsList;
+    public List<FieldDefinition> getFieldDefinitionsWhenAllFieldsString(){
+        //fieldDefinition1,fieldDefinition2,fieldDefinition3 - all are included in preprocess of datatype String
+        return multiFieldsList.get(0);
+    }
+
+    public List<FieldDefinition> getFieldDefinitionsWhenSomeFieldsString(){
+        //fieldDefinition1 - preprocess is only applied to field1 of datatype String
+        return multiFieldsList.get(1);
+    }
+
+    public List<FieldDefinition> getFieldDefinitionsWhenNoneFieldsString(){
+        //preprocess is applied to none of the fields
+        return multiFieldsList.get(2);
+    }
+
+    public List<FieldDefinition> getFieldDefinitionsWhenSingleFieldStringAndDont_UseMatchType(){
+        //fieldDefinition4, fieldDefinition2, fieldDefinition5 - preprocess is only applied to field2 of datatype String
+        //field1 and field3 - they are of datatype String but are not being used for preprocess
+        return multiFieldsList.get(3);
     }
 
     protected abstract void addFieldDefinitionsList(List<FieldDefinition> fd);

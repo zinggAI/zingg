@@ -22,17 +22,17 @@ public abstract class TestCaseNormalizer<S, D, R, C, T> {
     private final MultiFieldPreprocessorUtility<S, D, R, C, T> multiFieldPreprocessorUtility;
     private final Context<S, D, R, C, T> context;
 
-    public TestCaseNormalizer(DFObjectUtil<S, D, R, C> dfObjectUtil, MultiFieldPreprocessorUtility<S, D, R, C, T> multiFieldPreprocessorUtility, Context<S, D, R, C, T> context) {
+    public TestCaseNormalizer(DFObjectUtil<S, D, R, C> dfObjectUtil, MultiFieldPreprocessorUtility<S, D, R, C, T> multiFieldPreprocessorUtility, Context<S, D, R, C, T> context) throws ZinggClientException {
         this.dfObjectUtil = dfObjectUtil;
         this.multiFieldPreprocessorUtility = multiFieldPreprocessorUtility;
         this.context = context;
+        multiFieldPreprocessorUtility.buildFieldDefinitions();
     }
 
     @Test
     public void testCaseNormalizationWhenAllFieldsString() throws Exception, ZinggClientException {
 
-        List<List<FieldDefinition>> caseNormalizersFields = getFieldDefinitions();
-        List<FieldDefinition> fieldDefinitions = caseNormalizersFields.get(0);
+        List<FieldDefinition> fieldDefinitions = multiFieldPreprocessorUtility.getFieldDefinitionsWhenAllFieldsString();
 
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreCaseNormalization(), InputDataModel.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostCaseNormalizationAllFields(), InputDataModel.class);
@@ -45,8 +45,7 @@ public abstract class TestCaseNormalizer<S, D, R, C, T> {
     @Test
     public void testCaseNormalizationWhenSomeFieldsString() throws Exception, ZinggClientException {
 
-        List<List<FieldDefinition>> caseNormalizersFields = getFieldDefinitions();
-        List<FieldDefinition> fieldDefinitions = caseNormalizersFields.get(1);
+        List<FieldDefinition> fieldDefinitions = multiFieldPreprocessorUtility.getFieldDefinitionsWhenSomeFieldsString();
              
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreCaseNormalization(), InputDataModel.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostCaseNormalizationField1(), InputDataModel.class);
@@ -59,8 +58,7 @@ public abstract class TestCaseNormalizer<S, D, R, C, T> {
     @Test
     public void testCaseNormalizationWhenNoneFieldsString() throws Exception, ZinggClientException {
 
-        List<List<FieldDefinition>> caseNormalizersFields = getFieldDefinitions();
-        List<FieldDefinition> fieldDefinitions = caseNormalizersFields.get(2);
+        List<FieldDefinition> fieldDefinitions = multiFieldPreprocessorUtility.getFieldDefinitionsWhenNoneFieldsString();
         
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreCaseNormalization(), InputDataModel.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostCaseNormalizationNone(), InputDataModel.class);
@@ -73,8 +71,7 @@ public abstract class TestCaseNormalizer<S, D, R, C, T> {
     @Test
     public void testCaseNormalizationWhenSingleFieldStringAndDont_UseMatchType() throws Exception, ZinggClientException {
 
-        List<List<FieldDefinition>> caseNormalizersFields = getFieldDefinitions();
-        List<FieldDefinition> fieldDefinitions = caseNormalizersFields.get(3);
+        List<FieldDefinition> fieldDefinitions = multiFieldPreprocessorUtility.getFieldDefinitionsWhenSingleFieldStringAndDont_UseMatchType();
 
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreCaseNormalization(), InputDataModel.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostCaseNormalizationWhenMatchTypeDont_Use(), InputDataModel.class);
@@ -90,8 +87,4 @@ public abstract class TestCaseNormalizer<S, D, R, C, T> {
 
     protected abstract CaseNormalizer<S, D, R, C, T> getCaseNormalizer(IContext<S, D, R, C, T> context, List<? extends FieldDefinition> fieldDefinitions);
 
-    private List<List<FieldDefinition>> getFieldDefinitions() throws ZinggClientException {
-		multiFieldPreprocessorUtility.buildFieldDefinitions();
-		return multiFieldPreprocessorUtility.getFieldDefinitions();
-	}
 }

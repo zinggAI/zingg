@@ -22,17 +22,17 @@ public abstract class TestTrimPreprocess<S, D, R, C, T> {
     private final MultiFieldPreprocessorUtility<S, D, R, C, T> multiFieldPreprocessorUtility;
     private final Context<S, D, R, C, T> context;
 
-    public TestTrimPreprocess(DFObjectUtil<S, D, R, C> dfObjectUtil, MultiFieldPreprocessorUtility<S, D, R, C, T> multiFieldPreprocessorUtility, Context<S, D, R, C, T> context) {
+    public TestTrimPreprocess(DFObjectUtil<S, D, R, C> dfObjectUtil, MultiFieldPreprocessorUtility<S, D, R, C, T> multiFieldPreprocessorUtility, Context<S, D, R, C, T> context) throws ZinggClientException {
         this.dfObjectUtil = dfObjectUtil;
         this.multiFieldPreprocessorUtility = multiFieldPreprocessorUtility;
         this.context = context;
+        multiFieldPreprocessorUtility.buildFieldDefinitions();
     }
 
     @Test
     public void testTrimPreprocessWhenAllFieldsString() throws Exception, ZinggClientException {
 
-        List<List<FieldDefinition>> trimPreprocessorsFields = getFieldDefinitions();
-        List<FieldDefinition> fieldDefinitions = trimPreprocessorsFields.get(0);
+        List<FieldDefinition> fieldDefinitions = multiFieldPreprocessorUtility.getFieldDefinitionsWhenAllFieldsString();
 
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimOnAllFields(), InputDataModel.class);
@@ -45,8 +45,7 @@ public abstract class TestTrimPreprocess<S, D, R, C, T> {
     @Test
     public void testTrimPreprocessWhenSomeFieldsString() throws Exception, ZinggClientException {
 
-        List<List<FieldDefinition>> trimPreprocessorsFields = getFieldDefinitions();
-        List<FieldDefinition> fieldDefinitions = trimPreprocessorsFields.get(1);
+        List<FieldDefinition> fieldDefinitions = multiFieldPreprocessorUtility.getFieldDefinitionsWhenSomeFieldsString();
 
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimOnField1(), InputDataModel.class);
@@ -59,8 +58,7 @@ public abstract class TestTrimPreprocess<S, D, R, C, T> {
     @Test
     public void testTrimPreprocessWhenNoneFieldsString() throws Exception, ZinggClientException {
 
-        List<List<FieldDefinition>> trimPreprocessorsFields = getFieldDefinitions();
-        List<FieldDefinition> fieldDefinitions = trimPreprocessorsFields.get(2);
+        List<FieldDefinition> fieldDefinitions = multiFieldPreprocessorUtility.getFieldDefinitionsWhenNoneFieldsString();
 
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimOnNone(), InputDataModel.class);
@@ -73,8 +71,7 @@ public abstract class TestTrimPreprocess<S, D, R, C, T> {
     @Test
     public void testTrimPreprocessWhenSingleFieldStringAndDont_UseMatchType() throws Exception, ZinggClientException {
 
-        List<List<FieldDefinition>> trimPreprocessorsFields = getFieldDefinitions();
-        List<FieldDefinition> fieldDefinitions = trimPreprocessorsFields.get(3);
+        List<FieldDefinition> fieldDefinitions = multiFieldPreprocessorUtility.getFieldDefinitionsWhenSingleFieldStringAndDont_UseMatchType();
 
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimWhenMatchTypeDont_Use(), InputDataModel.class);
@@ -90,8 +87,4 @@ public abstract class TestTrimPreprocess<S, D, R, C, T> {
     
     protected abstract TrimPreprocessor<S, D, R, C, T> getTrimPreprocessor(IContext<S, D, R, C, T> context, List<? extends FieldDefinition> fieldDefinitions);
 
-    private List<List<FieldDefinition>> getFieldDefinitions() throws ZinggClientException {
-		multiFieldPreprocessorUtility.buildFieldDefinitions();
-		return multiFieldPreprocessorUtility.getFieldDefinitions();
-	}
 }

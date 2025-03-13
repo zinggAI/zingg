@@ -11,7 +11,7 @@ public class TestLastWord {
 	@Test
 	public void testLastWord1() {
 	    LastWord value = getInstance();
-		assertEquals("gupta", value.call("vikas gupta"));
+		assertEquals("gupta", value.call(" vikas gupta "));
 	}
 
     @Test
@@ -25,7 +25,13 @@ public class TestLastWord {
         LastWord value = getInstance();
         assertEquals(null, value.call(null));
     }
-	
+
+    @Test
+    public void testLastWord4() {
+        LastWord value = getInstance();
+        assertEquals(null, value.call("  "));
+    }
+
     private LastWord getInstance() {
         return new LastWord();
     }
