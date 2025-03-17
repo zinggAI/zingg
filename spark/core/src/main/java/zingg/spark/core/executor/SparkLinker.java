@@ -13,6 +13,7 @@ import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.core.executor.Linker;
+import zingg.common.core.match.data.IDataGetter;
 import zingg.common.core.model.Model;
 import zingg.common.core.preprocess.stopwords.StopWordsRemover;
 import zingg.spark.core.context.ZinggSparkContext;
@@ -51,6 +52,14 @@ public class SparkLinker extends Linker<SparkSession, Dataset<Row>, Row, Column,
 	@Override
 	public StopWordsRemover<SparkSession, Dataset<Row>, Row, Column, DataType> getStopWords() {
 		return new SparkStopWordsRemover(getContext());
+	}
+
+	@Override
+	public IDataGetter<SparkSession, Dataset<Row>, Row, Column> getDataGetter(){
+		if (dataGetter == null){
+			this.dataGetter = new SparkLinkDataGetter();
+		}
+		return dataGetter;
 	}
 	
 }

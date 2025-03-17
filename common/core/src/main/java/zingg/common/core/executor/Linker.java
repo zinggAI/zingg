@@ -61,13 +61,6 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 		return iPairBuilder;
 	}
 
-	@Override
-	public IDataGetter<S,D,R,C> getDataGetter(){
-		if (dataGetter == null){
-			this.dataGetter = new LinkDataGetter<S, D, R, C>();
-		}
-		return dataGetter;
-	}
 
 	@Override
 	public IInputData<D, R, C> getBlocked(IInputData<D, R, C> testData) throws Exception, ZinggClientException {

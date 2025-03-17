@@ -20,6 +20,6 @@ public class MatchInputData<D, R, C> implements IInputData<D, R, C> {
 
     @Override
     public ZFrame<D, R, C> getTotalInput() {
-        return input;
+        return this.input;
     }
 }
