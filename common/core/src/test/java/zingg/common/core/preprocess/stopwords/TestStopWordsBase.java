@@ -19,17 +19,17 @@ import zingg.common.core.preprocess.stopwords.data.StopWordsData;
 import zingg.common.core.preprocess.stopwords.model.PostStopWordProcess;
 import zingg.common.core.preprocess.stopwords.model.PriorStopWordProcess;
 import zingg.common.core.preprocess.stopwords.model.Statement;
-import zingg.common.core.util.StopWordRemoverUtility;
+import zingg.common.core.util.AStopWordRemoverUtility;
 
 public abstract class TestStopWordsBase<S, D, R, C, T> {
 
 	public static final Log LOG = LogFactory.getLog(TestStopWordsBase.class);
 	private final DFObjectUtil<S, D, R, C> dfObjectUtil;
-	private final StopWordRemoverUtility<S, D, R, C, T> stopWordRemoverUtility;
+	private final AStopWordRemoverUtility<S, D, R, C, T> stopWordRemoverUtility;
 	private final Context<S, D, R, C, T> context;
 
 
-	public TestStopWordsBase(DFObjectUtil<S, D, R, C> dfObjectUtil, StopWordRemoverUtility<S, D, R, C, T> stopWordRemoverUtility, Context<S, D, R, C, T> context) {
+	public TestStopWordsBase(DFObjectUtil<S, D, R, C> dfObjectUtil, AStopWordRemoverUtility<S, D, R, C, T> stopWordRemoverUtility, Context<S, D, R, C, T> context) {
 		this.dfObjectUtil = dfObjectUtil;
 		this.stopWordRemoverUtility = stopWordRemoverUtility;
 		this.context = context;

@@ -16,6 +16,7 @@ public class PreprocessTestData {
                 "test"));
         sample.add(new PriorStopWordProcess("30", " It is WRITTEN in java and SCala", "four", "", " test "));
         sample.add(new PriorStopWordProcess("40", " Best of LUCK to zingg Mobile/T-Mobile  ", "Five", " thank you ", "test"));
+        sample.add(new PriorStopWordProcess("50"," " , "SIX", null,"test"));
 
         return sample;
     }
@@ -27,6 +28,7 @@ public class PreprocessTestData {
         sample.add(new PriorStopWordProcess("20", "very popular data science", " Three ", "true indeed", "test"));
         sample.add(new PriorStopWordProcess("30", "written java scala", "four", "", " test "));
         sample.add(new PriorStopWordProcess("40", "best luck to zingg ", "Five", "thank you", "test"));
+        sample.add(new PriorStopWordProcess("50","" , "SIX", null,"test"));
 
         return sample;
     }

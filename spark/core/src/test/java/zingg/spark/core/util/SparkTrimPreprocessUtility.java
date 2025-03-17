@@ -10,9 +10,9 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZinggClientException;
-import zingg.common.core.util.MultiFieldPreprocessorUtility;
+import zingg.common.core.util.AMultiFieldPreprocessorUtility;
 
-public class SparkTrimPreprocessUtility extends MultiFieldPreprocessorUtility<SparkSession, Dataset<Row>, Row, Column, DataType> {
+public class SparkTrimPreprocessUtility extends AMultiFieldPreprocessorUtility<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
     public SparkTrimPreprocessUtility() throws ZinggClientException {
         super();

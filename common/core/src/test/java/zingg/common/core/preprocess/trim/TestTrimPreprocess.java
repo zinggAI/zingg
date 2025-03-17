@@ -14,15 +14,15 @@ import zingg.common.core.context.Context;
 import zingg.common.core.context.IContext;
 import zingg.common.core.model.model.InputDataModel;
 import zingg.common.core.preprocess.trim.data.TrimTestData;
-import zingg.common.core.util.MultiFieldPreprocessorUtility;
+import zingg.common.core.util.AMultiFieldPreprocessorUtility;
 
 public abstract class TestTrimPreprocess<S, D, R, C, T> {
 
     private final DFObjectUtil<S, D, R, C> dfObjectUtil;
-    private final MultiFieldPreprocessorUtility<S, D, R, C, T> multiFieldPreprocessorUtility;
+    private final AMultiFieldPreprocessorUtility<S, D, R, C, T> multiFieldPreprocessorUtility;
     private final Context<S, D, R, C, T> context;
 
-    public TestTrimPreprocess(DFObjectUtil<S, D, R, C> dfObjectUtil, MultiFieldPreprocessorUtility<S, D, R, C, T> multiFieldPreprocessorUtility, Context<S, D, R, C, T> context) throws ZinggClientException {
+    public TestTrimPreprocess(DFObjectUtil<S, D, R, C> dfObjectUtil, AMultiFieldPreprocessorUtility<S, D, R, C, T> multiFieldPreprocessorUtility, Context<S, D, R, C, T> context) throws ZinggClientException {
         this.dfObjectUtil = dfObjectUtil;
         this.multiFieldPreprocessorUtility = multiFieldPreprocessorUtility;
         this.context = context;

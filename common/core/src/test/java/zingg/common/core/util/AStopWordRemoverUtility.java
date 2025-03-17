@@ -9,11 +9,11 @@ import zingg.common.core.preprocess.stopwords.StopWordsRemover;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class StopWordRemoverUtility<S, D, R, C, T> {
+public abstract class AStopWordRemoverUtility<S, D, R, C, T> {
 
     protected final List<StopWordsRemover<S, D, R, C, T>> stopWordsRemovers;
 
-    public StopWordRemoverUtility() throws ZinggClientException {
+    public AStopWordRemoverUtility() throws ZinggClientException {
         this.stopWordsRemovers = new ArrayList<StopWordsRemover<S, D, R, C, T>>();;
     }
 

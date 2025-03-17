@@ -7,11 +7,11 @@ import zingg.common.client.FieldDefinition;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZinggClientException;
 
-public abstract class MultiFieldPreprocessorUtility<S, D, R, C, T> {
+public abstract class AMultiFieldPreprocessorUtility<S, D, R, C, T> {
     
     protected List<List<FieldDefinition>> multiFieldsList;
 
-    public MultiFieldPreprocessorUtility() throws ZinggClientException {
+    public AMultiFieldPreprocessorUtility() throws ZinggClientException {
         this.multiFieldsList = new ArrayList<List<FieldDefinition>>();
     }
 
