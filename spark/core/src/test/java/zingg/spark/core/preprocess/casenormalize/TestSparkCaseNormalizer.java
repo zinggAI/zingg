@@ -27,7 +27,7 @@ public class TestSparkCaseNormalizer extends TestCaseNormalizer<SparkSession, Da
     public static ZinggSparkContext zsCTX = new ZinggSparkContext();
 
     public TestSparkCaseNormalizer(SparkSession sparkSession) throws ZinggClientException {
-        super(new SparkDFObjectUtil(iWithSession), new SparkCaseNormalizerUtility(zsCTX), zsCTX);
+        super(new SparkDFObjectUtil(iWithSession), new SparkCaseNormalizerUtility(), zsCTX);
         iWithSession.setSession(sparkSession);
         zsCTX.init(sparkSession);
     }

@@ -27,7 +27,7 @@ public class TestSparkTrimPreprocess extends TestTrimPreprocess<SparkSession, Da
     public static ZinggSparkContext zsCTX = new ZinggSparkContext();
 
     public TestSparkTrimPreprocess(SparkSession sparkSession) throws ZinggClientException {
-        super(new SparkDFObjectUtil(iWithSession), new SparkTrimPreprocessUtility(zsCTX), zsCTX);
+        super(new SparkDFObjectUtil(iWithSession), new SparkTrimPreprocessUtility(), zsCTX);
         iWithSession.setSession(sparkSession);
         zsCTX.init(sparkSession);
     }

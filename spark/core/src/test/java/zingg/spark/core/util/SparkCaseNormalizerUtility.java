@@ -10,23 +10,17 @@ import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZinggClientException;
-import zingg.common.core.context.Context;
 import zingg.common.core.util.MultiFieldPreprocessorUtility;
-import zingg.spark.core.preprocess.casenormalize.SparkCaseNormalizer;
 
 public class SparkCaseNormalizerUtility extends MultiFieldPreprocessorUtility<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
-    private final Context<SparkSession, Dataset<Row>, Row, Column, DataType> context;
-
-    public SparkCaseNormalizerUtility(Context<SparkSession, Dataset<Row>, Row, Column, DataType> context) throws ZinggClientException {
+    public SparkCaseNormalizerUtility() throws ZinggClientException {
         super();
-        this.context = context;
     }
 
     @Override
     public void addFieldDefinitionsList(List<FieldDefinition> fd){
         super.multiFieldsList.add(fd);
-        new SparkCaseNormalizer(context,fd);
     }
     
 }
