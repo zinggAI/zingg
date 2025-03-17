@@ -5,6 +5,8 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
+import zingg.common.client.model.IInputData;
+import zingg.common.client.model.LinkInputData;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DSUtil;
 
@@ -17,10 +19,10 @@ public class SelfPairBuilderSourceSensitive<S, D, R, C> extends SelfPairBuilder<
 	}
 	
 	@Override
-	public ZFrame<D,R,C> getPairs(ZFrame<D,R,C> blocked, ZFrame<D,R,C> bAll) throws Exception{
+	public ZFrame<D,R,C> getPairs(IInputData<D,R,C> blockedInput, IInputData<D,R,C> bAll) throws Exception{
 		// THIS LOG IS NEEDED FOR PLAN CALCULATION USING COUNT, DO NOT REMOVE
-		LOG.info("in getBlocks, blocked count is " + blocked.count());
-		return getDSUtil().joinWithItselfSourceSensitive(blocked, ColName.HASH_COL, args).cache();
+		LOG.info("in getBlocks, blocked count is " + blockedInput.getTotalInput().count());
+		return getDSUtil().joinWithItselfSourceSensitive((LinkInputData<D, R, C>) blockedInput, ColName.HASH_COL, args).cache();
 	}
 
 }

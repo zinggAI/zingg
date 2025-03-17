@@ -6,6 +6,8 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.model.IInputData;
+import zingg.common.client.model.MatchInputData;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.match.data.IDataGetter;
 
@@ -26,8 +28,9 @@ public class InputDataGetter<S,D,R,C> implements IDataGetter<S,D,R,C>{
 	}
 
     @Override
-    public ZFrame<D, R, C> getData(IArguments args, PipeUtilBase<S, D, R, C> p) throws ZinggClientException {
-        return p.read(true, true, args.getNumPartitions(), true, args.getData());
+    public IInputData<D, R, C> getData(IArguments args, PipeUtilBase<S, D, R, C> p) throws ZinggClientException {
+        ZFrame<D, R, C> inputDF = p.read(true, true, args.getNumPartitions(), true, args.getData());
+        return new MatchInputData<D, R, C>(inputDF);
     }
     
 }
