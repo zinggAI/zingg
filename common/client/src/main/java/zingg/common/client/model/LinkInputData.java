@@ -30,6 +30,6 @@ public class LinkInputData<D, R, C> implements IInputData<D, R, C> {
 
     @Override
     public ZFrame<D, R, C> getTotalInput() {
-        return inputOne.unionAll(inputTwo);
+        return inputOne.union(inputTwo);
     }
 }
