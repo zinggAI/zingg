@@ -21,7 +21,8 @@ public class SelfPairBuilderSourceSensitive<S, D, R, C> extends SelfPairBuilder<
 	@Override
 	public ZFrame<D,R,C> getPairs(IInputData<D,R,C> blockedInput, IInputData<D,R,C> bAll) throws Exception{
 		// THIS LOG IS NEEDED FOR PLAN CALCULATION USING COUNT, DO NOT REMOVE
-		LOG.info("in getBlocks, blocked count is " + blockedInput.getTotalInput().count());
+		LOG.info("in getBlocks, blocked count is " +
+				((LinkInputData<D, R, C>) blockedInput).getInputOne().count() + ((LinkInputData<D, R, C>) blockedInput).getInputTwo().count());
 		return getDSUtil().joinWithItselfSourceSensitive((LinkInputData<D, R, C>) blockedInput, ColName.HASH_COL, args).cache();
 	}
 
