@@ -10,6 +10,7 @@ import zingg.common.client.data.IData;
 import zingg.common.client.data.LinkInputData;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.core.filter.PredictionFilter;
+import zingg.common.core.match.data.IDataGetter;
 import zingg.common.core.match.output.IMatchOutputBuilder;
 import zingg.common.core.match.output.LinkOutputBuilder;
 import zingg.common.core.pairs.IPairBuilder;
@@ -59,6 +60,14 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 			iPairBuilder = new SelfPairBuilderSourceSensitive<S, D, R, C> (getDSUtil(),args);
 		}
 		return iPairBuilder;
+	}
+
+	@Override
+	public IDataGetter<S, D, R, C> getDataGetter(){
+		if (dataGetter == null){
+			this.dataGetter = new LinkDataGetter<S, D, R, C>();
+		}
+		return dataGetter;
 	}
 
 	@Override
