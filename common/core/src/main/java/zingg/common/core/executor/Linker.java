@@ -5,7 +5,8 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.model.IInputData;
+import zingg.common.client.model.AData;
+import zingg.common.client.model.BlockedData;
 import zingg.common.client.model.LinkInputData;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.core.filter.PredictionFilter;
@@ -14,6 +15,7 @@ import zingg.common.core.match.output.LinkOutputBuilder;
 import zingg.common.core.pairs.IPairBuilder;
 import zingg.common.core.pairs.SelfPairBuilderSourceSensitive;
 
+import java.util.Arrays;
 
 
 public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
@@ -32,7 +34,7 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	}
 
 	@Override
-	protected ZFrame<D,R,C> getActualDupes(IInputData<D,R,C> blocked, IInputData<D,R,C> testData) throws Exception, ZinggClientException{
+	protected ZFrame<D,R,C> getActualDupes(AData<D,R,C> blocked, AData<D,R,C> testData) throws Exception, ZinggClientException{
 		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
 		return getActualDupes(blocked, testData,predictionFilter, getIPairBuilder(), null);
 	}	
@@ -61,27 +63,27 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 
 
 	@Override
-	public IInputData<D, R, C> getBlocked(IInputData<D, R, C> testData) throws Exception, ZinggClientException {
-		ZFrame<D, R, C> blockedInputOneData = getBlocker().getBlocked(((LinkInputData<D, R, C>)testData).getInputOne(),args, getModelHelper(),getBlockingTreeUtil());
-		ZFrame<D, R, C> blockedInputTwoData = getBlocker().getBlocked(((LinkInputData<D, R, C>)testData).getInputTwo(),args, getModelHelper(),getBlockingTreeUtil());
-		return new LinkInputData<>(blockedInputOneData, blockedInputTwoData);
+	public AData<D, R, C> getBlocked(AData<D, R, C> testData) throws Exception, ZinggClientException {
+		BlockedData<D, R, C> blockedInputOneData = getBlocker().getBlocked(((LinkInputData<D, R, C>)testData).getInputOne(),args, getModelHelper(),getBlockingTreeUtil());
+		BlockedData<D, R, C> blockedInputTwoData = getBlocker().getBlocked(((LinkInputData<D, R, C>)testData).getInputTwo(),args, getModelHelper(),getBlockingTreeUtil());
+		return new LinkInputData<>(Arrays.asList(blockedInputOneData.getBlockedRecords(), blockedInputTwoData.getBlockedRecords()));
 	}
 
 	@Override
-	protected IInputData<D, R, C> getPreprocessedInputData(IInputData<D, R, C> inputData) throws ZinggClientException {
+	protected AData<D, R, C> getPreprocessedInputData(AData<D, R, C> inputData) throws ZinggClientException {
 		ZFrame<D, R, C> inputOneData = ((LinkInputData<D, R, C>)inputData).getInputOne();
 		ZFrame<D, R, C> inputTwoData = ((LinkInputData<D, R, C>)inputData).getInputTwo();
 		inputOneData = preprocess(inputOneData);
 		inputTwoData = preprocess(inputTwoData);
-		return new LinkInputData<D, R, C>(inputOneData, inputTwoData);
+		return new LinkInputData<D, R, C>(Arrays.asList(inputOneData, inputTwoData));
 	}
 
 	@Override
-	protected IInputData<D, R, C> getFieldDefColumnsDF(IInputData<D, R, C> inputData) {
+	protected AData<D, R, C> getFieldDefColumnsDF(AData<D, R, C> inputData) throws ZinggClientException {
 		ZFrame<D, R, C> inputOneData = ((LinkInputData<D, R, C>)inputData).getInputOne();
 		ZFrame<D, R, C> inputTwoData = ((LinkInputData<D, R, C>)inputData).getInputTwo();
 		inputOneData = getFieldDefColumnsDS(inputOneData);
 		inputTwoData = getFieldDefColumnsDS(inputTwoData);
-		return new LinkInputData<D, R, C>(inputOneData, inputTwoData);
+		return new LinkInputData<D, R, C>(Arrays.asList(inputOneData, inputTwoData));
 	}
 }

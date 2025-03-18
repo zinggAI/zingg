@@ -1,25 +1,28 @@
 package zingg.common.client.model;
 
 import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
 
-public class MatchInputData<D, R, C> implements IInputData<D, R, C> {
+import java.util.ArrayList;
+import java.util.List;
 
-    private ZFrame<D, R, C> input;
+public class MatchInputData<D, R, C> extends AData<D, R, C> {
+
+    public MatchInputData(List<ZFrame<D, R, C>> inputs) {
+        super(inputs);
+    }
 
     public MatchInputData(ZFrame<D, R, C> input) {
-        this.input = input;
+        setInput(input);
     }
 
     public void setInput(ZFrame<D, R, C> input) {
-        this.input = input;
+        data = new ArrayList<ZFrame<D, R, C>>();
+        data.add(input);
     }
 
-    public ZFrame<D, R, C> getInput() {
-        return this.input;
+    public ZFrame<D, R, C> getInput() throws ZinggClientException {
+        return getCombinedData();
     }
 
-    @Override
-    public ZFrame<D, R, C> getTotalInput() {
-        return this.input;
-    }
 }
