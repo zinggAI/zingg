@@ -57,8 +57,8 @@ public abstract class StopWordsRemover<S,D,R,C,T> implements ISingleFieldPreproc
 				List<String> wordList = getWordList(stopWords,stopWordColumn);
 				String pattern = getPattern(wordList);
 				df = removeStopWordsFromDF(df, fd.getFieldName(), pattern);
+				return df;
 			}
-			return df;
 		} catch (Exception | ZinggClientException exception) {
 			LOG.warn("Error occurred while applying stopword preprocessing, skipping, " + exception);
 		}

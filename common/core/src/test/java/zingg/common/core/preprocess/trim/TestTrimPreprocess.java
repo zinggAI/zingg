@@ -36,7 +36,7 @@ public abstract class TestTrimPreprocess<S, D, R, C, T> {
 
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimOnAllFields(), InputDataModel.class);
-        ZFrame<D, R, C> trimmedDF = getCaseNormalizedAndTrimmedDF(getTrimPreprocessor(context, fieldDefinitions), inputDF);
+        ZFrame<D, R, C> trimmedDF = getTrimmedDF(getTrimPreprocessor(context, fieldDefinitions), inputDF);
 
         assertTrue(trimmedDF.except(expectedDF).isEmpty());
         assertTrue(expectedDF.except(trimmedDF).isEmpty());
@@ -49,7 +49,7 @@ public abstract class TestTrimPreprocess<S, D, R, C, T> {
 
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimOnField1(), InputDataModel.class);
-        ZFrame<D, R, C> trimmedDF = getCaseNormalizedAndTrimmedDF(getTrimPreprocessor(context, fieldDefinitions), inputDF);
+        ZFrame<D, R, C> trimmedDF = getTrimmedDF(getTrimPreprocessor(context, fieldDefinitions), inputDF);
 
         assertTrue(trimmedDF.except(expectedDF).isEmpty());
         assertTrue(expectedDF.except(trimmedDF).isEmpty());
@@ -62,7 +62,7 @@ public abstract class TestTrimPreprocess<S, D, R, C, T> {
 
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimOnNone(), InputDataModel.class);
-        ZFrame<D, R, C> trimmedDF = getCaseNormalizedAndTrimmedDF(getTrimPreprocessor(context, fieldDefinitions), inputDF);
+        ZFrame<D, R, C> trimmedDF = getTrimmedDF(getTrimPreprocessor(context, fieldDefinitions), inputDF);
 
         assertTrue(trimmedDF.except(expectedDF).isEmpty());
         assertTrue(expectedDF.except(trimmedDF).isEmpty());
@@ -75,13 +75,14 @@ public abstract class TestTrimPreprocess<S, D, R, C, T> {
 
         ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPreTrim(), InputDataModel.class);
         ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(TrimTestData.getDataInputPostTrimWhenMatchTypeDont_Use(), InputDataModel.class);
-        ZFrame<D, R, C> trimmedDF = getCaseNormalizedAndTrimmedDF(getTrimPreprocessor(context, fieldDefinitions), inputDF);
+        ZFrame<D, R, C> trimmedDF = getTrimmedDF(getTrimPreprocessor(context, fieldDefinitions), inputDF);
 
         assertTrue(trimmedDF.except(expectedDF).isEmpty());
         assertTrue(expectedDF.except(trimmedDF).isEmpty());
     }
 
-    private ZFrame<D, R, C> getCaseNormalizedAndTrimmedDF(TrimPreprocessor<S, D, R, C, T> trimPreprocessor, ZFrame<D, R, C> inputDF) throws ZinggClientException {
+    private ZFrame<D, R, C> getTrimmedDF(TrimPreprocessor<S, D, R, C, T> trimPreprocessor, ZFrame<D, R, C> inputDF) throws ZinggClientException {
+        trimPreprocessor.init();
         return trimPreprocessor.preprocess(inputDF);
     }
     

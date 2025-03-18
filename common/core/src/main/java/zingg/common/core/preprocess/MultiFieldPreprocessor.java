@@ -1,5 +1,6 @@
 package zingg.common.core.preprocess;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -13,6 +14,7 @@ public abstract class MultiFieldPreprocessor<S,D,R,C,T> implements IMultiFieldPr
 
     private static final long serialVersionUID = 1L;
     private static final String STRING_TYPE = "string";
+    protected List<String> relevantFields = new ArrayList<String>();
     protected static String name = "zingg.common.core.preprocess.MultiFieldPreprocessor";
     public static final Log LOG = LogFactory.getLog(MultiFieldPreprocessor.class);
 
@@ -35,7 +37,9 @@ public abstract class MultiFieldPreprocessor<S,D,R,C,T> implements IMultiFieldPr
 
     @Override
     public void init() {
-
+        if(getFieldDefinitions() != null){
+            relevantFields = getRelevantFields(STRING_TYPE);
+        }
     }
 
     @Override
@@ -45,14 +49,16 @@ public abstract class MultiFieldPreprocessor<S,D,R,C,T> implements IMultiFieldPr
 
     @Override
     public boolean isApplicable() {
-        return true;
+        return (relevantFields.size()!= 0);
     }
 
     @Override
     public ZFrame<D, R, C> preprocess(ZFrame<D, R, C> df) {
         try {
-            LOG.info("Applying preprocessor on input dataframe");
-            return applyPreprocessor(df, getRelevantFields(STRING_TYPE));
+            if(isApplicable()){
+                LOG.info("Applying preprocessor on input dataframe");
+                return applyPreprocessor(df, relevantFields);
+            }
         } catch (Exception exception) {
             LOG.warn("Error occurred while performing preprocess, skipping it, " + exception);
         }

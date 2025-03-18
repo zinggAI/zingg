@@ -21,7 +21,7 @@ public interface IMultiFieldPreprocessor<S, D, R, C, T> extends IPreprocessor<S,
     public ZFrame<D, R, C> applyPreprocessor(ZFrame<D, R, C> incomingDataFrame, List<String> relevantFields);
 
     default List<String> getRelevantFields(String type) {
-        List<String> stringFields = new ArrayList<>();
+        List<String> stringFields = new ArrayList<String>();
         for (FieldDefinition fieldDefinition : getFieldDefinitions()) {
             if (fieldDefinition.dataType != null && fieldDefinition.matchType != null &&
                     fieldDefinition.dataType.equalsIgnoreCase(type) && !fieldDefinition.matchType.contains(MatchTypes.DONT_USE)) {

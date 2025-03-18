@@ -82,6 +82,7 @@ public abstract class TestCaseNormalizer<S, D, R, C, T> {
     }
 
     private ZFrame<D, R, C> getCaseNormalizedDF(CaseNormalizer<S, D, R, C, T> caseNormalizer, ZFrame<D, R, C> inputDF) throws ZinggClientException {
+        caseNormalizer.init();
         return caseNormalizer.preprocess(inputDF);
     }
 
