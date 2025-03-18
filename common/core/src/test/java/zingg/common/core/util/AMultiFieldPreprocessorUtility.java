@@ -42,9 +42,14 @@ public abstract class AMultiFieldPreprocessorUtility<S, D, R, C, T> {
         fieldDefinition5.setMatchType(List.of(MatchTypes.DONT_USE));
         fieldDefinition5.setDataType("STRING");
 
+        FieldDefinition fieldDefinition6 = new FieldDefinition();
+        fieldDefinition6.setFieldName("field3");
+        fieldDefinition6.setMatchType(List.of(MatchTypes.FUZZY));
+        fieldDefinition6.setDataType("INTEGER");
+
         addFieldDefinitionsList(List.of(fieldDefinition1, fieldDefinition2, fieldDefinition3));
         addFieldDefinitionsList(List.of(fieldDefinition1));
-        addFieldDefinitionsList(null);
+        addFieldDefinitionsList(List.of(fieldDefinition6));
         addFieldDefinitionsList(List.of(fieldDefinition4, fieldDefinition2, fieldDefinition5));
 
     }
@@ -60,7 +65,7 @@ public abstract class AMultiFieldPreprocessorUtility<S, D, R, C, T> {
     }
 
     public List<FieldDefinition> getFieldDefinitionsWhenNoneFieldsString(){
-        //preprocess is applied to none of the fields
+        //preprocess is applied to none of the fields because their datatype is not string
         return multiFieldsList.get(2);
     }
 

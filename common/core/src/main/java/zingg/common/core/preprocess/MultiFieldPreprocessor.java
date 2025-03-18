@@ -37,9 +37,7 @@ public abstract class MultiFieldPreprocessor<S,D,R,C,T> implements IMultiFieldPr
 
     @Override
     public void init() {
-        if(getFieldDefinitions() != null){
-            relevantFields = getRelevantFields(STRING_TYPE);
-        }
+        relevantFields = getRelevantFields(STRING_TYPE);
     }
 
     @Override
