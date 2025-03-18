@@ -23,10 +23,10 @@ public class SameFirstWordFunction extends AffineGapSimilarityFunction {
 		double score2 = 0.0;
 		double score = 0.0;
 		try {
-			if (!(first == null || first.trim().equals(""))) {
+			if (!(first == null || first.equals(""))) {
 				score1 = 1.0d;
 			}
-			if (!(second == null || second.trim().equals(""))) {
+			if (!(second == null || second.equals(""))) {
 				score2 = 1.0d;
 			}
 			if (score1 == 1.0d && score2 == 1.0d) {
@@ -34,9 +34,9 @@ public class SameFirstWordFunction extends AffineGapSimilarityFunction {
 				SJaroWinkler gap1 = new SJaroWinkler();
 				String f = first.split("\\s+")[0];
 				String s = second.split("\\s+")[0];
-				if (!(f == null || f.trim().equals("")) && !(s == null || s.trim().equals(""))) {
-					score = gap.score(f.trim(), s.trim());
-					score1 = gap1.score(f.trim(), s.trim());
+				if (!(f == null || f.equals("")) && !(s == null || s.equals(""))) {
+					score = gap.score(f, s);
+					score1 = gap1.score(f, s);
 					
 					//LOG.debug(gap.explainScore(first, second));
 					gap = null;
@@ -58,8 +58,8 @@ public class SameFirstWordFunction extends AffineGapSimilarityFunction {
 
 	@Override
 	public Double call(String first, String second) {
-		if (first == null || first.trim().length() ==0) return 1d;
-		if (second == null || second.trim().length() ==0) return 1d;
+		if (first == null || first.length() ==0) return 1d;
+		if (second == null || second.length() ==0) return 1d;
 		String f = first.split("-")[0];
 		String s = second.split("-")[0];
 		double score = super.call(f, s);

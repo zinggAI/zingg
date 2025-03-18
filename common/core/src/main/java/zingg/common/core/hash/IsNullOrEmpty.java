@@ -9,7 +9,7 @@ public class IsNullOrEmpty extends BaseHash<String,Boolean>{
 
 
 	public Boolean call(String field) {
-		 return (field == null || ((String ) field).trim().length() == 0);
+		 return (field == null || ((String ) field).length() == 0);
 	}
 
 }

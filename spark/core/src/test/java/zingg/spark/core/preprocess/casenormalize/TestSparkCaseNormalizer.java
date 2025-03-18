@@ -16,6 +16,7 @@ import zingg.common.core.preprocess.casenormalize.TestCaseNormalizer;
 import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
+import zingg.spark.core.util.SparkCaseNormalizerUtility;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class TestSparkCaseNormalizer extends TestCaseNormalizer<SparkSession, Da
     public static ZinggSparkContext zsCTX = new ZinggSparkContext();
 
     public TestSparkCaseNormalizer(SparkSession sparkSession) throws ZinggClientException {
-        super(new SparkDFObjectUtil(iWithSession), zsCTX);
+        super(new SparkDFObjectUtil(iWithSession), new SparkCaseNormalizerUtility(), zsCTX);
         iWithSession.setSession(sparkSession);
         zsCTX.init(sparkSession);
     }

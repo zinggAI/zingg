@@ -2,7 +2,6 @@ package zingg.common.core.preprocess;
 
 import java.io.Serializable;
 
-import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.context.IContext;

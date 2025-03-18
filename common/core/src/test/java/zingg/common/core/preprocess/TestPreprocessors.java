@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 import zingg.common.client.*;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
-import zingg.common.core.data.EventTestData;
-import zingg.common.core.preprocess.model.PriorStopWordProcess;
+import zingg.common.core.preprocess.data.PreprocessTestData;
+import zingg.common.core.preprocess.stopwords.model.PriorStopWordProcess;
 
 public abstract class TestPreprocessors<S,D,R,C,T> {
 
@@ -36,8 +36,8 @@ public abstract class TestPreprocessors<S,D,R,C,T> {
         
         IPreprocessors<S,D,R,C,T> preprocessors = getPreprocessors(context);
         
-        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPreProcessed(), PriorStopWordProcess.class);
-        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(EventTestData.getDataInputPostProcessed(), PriorStopWordProcess.class);
+        ZFrame<D,R,C> inputDF = dfObjectUtil.getDFFromObjectList(PreprocessTestData.getDataInputPreProcessed(), PriorStopWordProcess.class);
+        ZFrame<D,R,C> expectedDF = dfObjectUtil.getDFFromObjectList(PreprocessTestData.getDataInputPostProcessed(), PriorStopWordProcess.class);
 
         preprocessors.setArgs(args);
         ZFrame<D,R,C> resultDF = preprocessors.preprocess(inputDF);
@@ -49,7 +49,7 @@ public abstract class TestPreprocessors<S,D,R,C,T> {
 
     private List<FieldDefinition>  getFieldDefinitions() {
         /*
-            only field1 and field3 will be lower cased
+            only field1 and field3 will be lower cased and trimmed
          */
         List<FieldDefinition> fieldDefs = new ArrayList<FieldDefinition>();
         String stopWordsFileName1 = Objects.requireNonNull(TestPreprocessors.class.getResource("../../../../preProcess/stopwords/stopWords.csv")).getFile();
