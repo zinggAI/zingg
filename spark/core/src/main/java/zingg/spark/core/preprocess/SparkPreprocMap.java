@@ -15,6 +15,7 @@ import zingg.common.core.preprocess.IPreprocTypes;
 import zingg.common.core.preprocess.IPreprocessor;
 import zingg.spark.core.preprocess.casenormalize.SparkCaseNormalizer;
 import zingg.spark.core.preprocess.stopwords.SparkStopWordsRemover;
+import zingg.spark.core.preprocess.trim.SparkTrimPreprocessor;
 
 public class SparkPreprocMap implements IPreprocMap<SparkSession,Dataset<Row>,Row,Column,DataType> {
 
@@ -24,6 +25,7 @@ public class SparkPreprocMap implements IPreprocMap<SparkSession,Dataset<Row>,Ro
         sparkPreprocMap = new HashMap<IPreprocType,Class<? extends IPreprocessor<SparkSession, Dataset<Row>, Row, Column, DataType>>>();
         sparkPreprocMap.put(IPreprocTypes.STOPWORDS, SparkStopWordsRemover.class);
         sparkPreprocMap.put(IPreprocTypes.LOWERCASE, SparkCaseNormalizer.class);
+        sparkPreprocMap.put(IPreprocTypes.TRIM, SparkTrimPreprocessor.class);
     }
 
     @Override

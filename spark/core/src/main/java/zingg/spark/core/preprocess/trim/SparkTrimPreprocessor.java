@@ -1,41 +1,43 @@
-package zingg.spark.core.preprocess.casenormalize;
+package zingg.spark.core.preprocess.trim;
+
+import java.util.List;
 
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
+
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
 import zingg.common.core.context.IContext;
-import zingg.common.core.preprocess.casenormalize.CaseNormalizer;
+import zingg.common.core.preprocess.trim.TrimPreprocessor;
+import static org.apache.spark.sql.functions.trim;
 
-import java.util.List;
+public class SparkTrimPreprocessor extends TrimPreprocessor<SparkSession, Dataset<Row>, Row, Column, DataType>{
 
-import static org.apache.spark.sql.functions.lower;
-
-public class SparkCaseNormalizer extends CaseNormalizer<SparkSession, Dataset<Row>, Row, Column, DataType> {
-    
     private static final long serialVersionUID = 1L;
-    protected static String name = "zingg.spark.core.preprocess.casenormalize.SparkCaseNormalizer";
+    protected static String name = "zingg.spark.core.preprocess.trim.SparkTrimPreprocessor";
 
-    public SparkCaseNormalizer() {
+    public SparkTrimPreprocessor() {
         super();
     }
-    public SparkCaseNormalizer(IContext<SparkSession, Dataset<Row>, Row, Column, DataType> context, List<? extends FieldDefinition> fieldDefinitions) {
+    
+    public SparkTrimPreprocessor(IContext<SparkSession, Dataset<Row>, Row, Column, DataType> context, List<? extends FieldDefinition> fieldDefinitions) {
         super(context, fieldDefinitions);
     }
 
     @Override
     public ZFrame<Dataset<Row>, Row, Column> applyPreprocessor(ZFrame<Dataset<Row>, Row, Column> incomingDataFrame, List<String> relevantFields) {
         String[] incomingDFColumns = incomingDataFrame.columns();
-        Column[] caseNormalizedValues = new Column[relevantFields.size()];
+        Column[] trimValues = new Column[relevantFields.size()];
         String[] relevantFieldsArray = new String[relevantFields.size()];
         for (int idx = 0; idx < relevantFields.size(); idx++) {
-            caseNormalizedValues[idx] = lower(incomingDataFrame.col(relevantFields.get(idx)));
+            trimValues[idx] = trim(incomingDataFrame.col(relevantFields.get(idx)));
             relevantFieldsArray[idx] = relevantFields.get(idx);
         }
 
-        return incomingDataFrame.withColumns(relevantFieldsArray, caseNormalizedValues).select(incomingDFColumns);
+        return incomingDataFrame.withColumns(relevantFieldsArray, trimValues).select(incomingDFColumns);
     }
+    
 }
