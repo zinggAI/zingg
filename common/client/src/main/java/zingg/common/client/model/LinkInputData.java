@@ -1,15 +1,18 @@
 package zingg.common.client.model;
 
 import zingg.common.client.ZFrame;
+import zingg.common.client.ZinggClientException;
 
-public class LinkInputData<D, R, C> implements IInputData<D, R, C> {
+import java.util.List;
+
+public class LinkInputData<D, R, C> extends AData<D, R, C> {
 
     private ZFrame<D, R, C> inputOne;
     private ZFrame<D, R, C> inputTwo;
 
-    public LinkInputData(ZFrame<D, R, C> inputOne, ZFrame<D, R, C> inputTwo) {
-        this.inputOne = inputOne;
-        this.inputTwo = inputTwo;
+    public LinkInputData(List<ZFrame<D, R, C>> inputs) throws ZinggClientException {
+        super(inputs);
+        setLinkerInputs(inputs);
     }
 
     public void setInputOne(ZFrame<D, R, C> inputOne) {
@@ -28,8 +31,14 @@ public class LinkInputData<D, R, C> implements IInputData<D, R, C> {
         return inputTwo;
     }
 
-    @Override
-    public ZFrame<D, R, C> getTotalInput() {
-        return inputOne.union(inputTwo);
+    private void setLinkerInputs(List<ZFrame<D, R, C>> inputs) throws ZinggClientException {
+        //TODO what if data contains > 2 pipes
+        if (inputs.size() >= 2){
+            setInputOne(inputs.get(0));
+            setInputTwo(inputs.get(1));
+        } else {
+            throw new ZinggClientException("Excepted at-least two inputs for linker");
+        }
     }
+
 }

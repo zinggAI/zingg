@@ -5,7 +5,8 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
-import zingg.common.client.model.IInputData;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.model.AData;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DSUtil;
 
@@ -21,8 +22,8 @@ public class SelfPairBuilder<S, D, R, C> implements IPairBuilder<S, D, R, C> {
 	}
 	
 	@Override
-	public ZFrame<D, R, C> getPairs(IInputData<D,R,C> blockedInput, IInputData<D,R,C>bAll) throws Exception {
-		ZFrame<D, R, C> blocked = blockedInput.getTotalInput().repartition(args.getNumPartitions(), blockedInput.getTotalInput().col(ColName.HASH_COL)).cache();
+	public ZFrame<D, R, C> getPairs(AData<D,R,C> blockedInput, AData<D,R,C> bAll) throws Exception, ZinggClientException {
+		ZFrame<D, R, C> blocked = blockedInput.getCombinedData().repartition(args.getNumPartitions(), blockedInput.getCombinedData().col(ColName.HASH_COL)).cache();
 		ZFrame<D,R,C>joinH =  getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
 		joinH = joinH.filter(joinH.gt(ColName.ID_COL));
 		/*ZFrame<D,R,C>joinH = blocked.as("first").joinOnCol(blocked.as("second"), ColName.HASH_COL)

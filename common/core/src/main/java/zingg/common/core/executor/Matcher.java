@@ -11,7 +11,8 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ISelectedCols;
 import zingg.common.client.cols.PredictionColsSelector;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
-import zingg.common.client.model.IInputData;
+import zingg.common.client.model.AData;
+import zingg.common.client.model.BlockedData;
 import zingg.common.client.model.MatchInputData;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
@@ -85,7 +86,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		this.toWrite = toWrite;
 	}
 
-	public IInputData<D, R, C> getTestData() throws ZinggClientException{
+	public AData<D, R, C> getTestData() throws ZinggClientException{
 		return getDataGetter().getData(args, getPipeUtil());
 	}
 
@@ -106,9 +107,9 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		//return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
 	}
 
-	public IInputData<D, R, C> getBlocked(IInputData<D, R, C> testData) throws Exception, ZinggClientException {
-		ZFrame<D, R, C> blockedInputData = getBlocker().getBlocked(testData.getTotalInput(),args, getModelHelper(),getBlockingTreeUtil());
-		return new MatchInputData<D, R, C>(blockedInputData);
+	public AData<D, R, C> getBlocked(AData<D, R, C> testData) throws Exception, ZinggClientException {
+		BlockedData<D, R, C> blockedInputData = getBlocker().getBlocked(testData.getCombinedData(),args, getModelHelper(),getBlockingTreeUtil());
+		return new MatchInputData<D, R, C>(blockedInputData.getBlockedRecords());
 	}
 
 	public IBlocker<S,D,R,C,T> getBlocker(){
@@ -129,7 +130,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		this.iPairBuilder = p;
 	}
 	
-	public ZFrame<D,R,C> getPairs(IInputData<D,R,C>blocked, IInputData<D,R,C>bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception{
+	public ZFrame<D,R,C> getPairs(AData<D,R,C> blocked, AData<D,R,C> bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception, ZinggClientException {
 		return iPairBuilder.getPairs(blocked, bAll);
 	}
 
@@ -151,7 +152,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		return dupes;
 	}
 
-	protected ZFrame<D,R,C> getActualDupes(IInputData<D,R,C> blocked, IInputData<D,R,C> testData) throws Exception, ZinggClientException{
+	protected ZFrame<D,R,C> getActualDupes(AData<D,R,C> blocked, AData<D,R,C> testData) throws Exception, ZinggClientException{
 		return getActualDupes(blocked, testData, getPredictionFilter(), getIPairBuilder(), getPredictionColsSelector());
 	}
 
@@ -166,7 +167,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		this.predictionColsSelector = s;
 	}
 
-	protected ZFrame<D,R,C> getActualDupes(IInputData<D,R,C> blocked, IInputData<D,R,C> testData, IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder, ISelectedCols colsSelector) throws Exception, ZinggClientException{
+	protected ZFrame<D,R,C> getActualDupes(AData<D,R,C> blocked, AData<D,R,C> testData, IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder, ISelectedCols colsSelector) throws Exception, ZinggClientException{
 		ZFrame<D,R,C> blocks = getPairs(blocked, testData, iPairBuilder);
 		ZFrame<D,R,C>dupesActual = predictOnBlocks(blocks); 
 		ZFrame<D, R, C> filteredData = predictionFilter.filter(dupesActual);
@@ -180,20 +181,20 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
     public void execute() throws ZinggClientException {
         try {
 			// read input, filter, remove self joins
-			IInputData<D, R, C> testDataOriginal = getTestData();
+			AData<D, R, C> testDataOriginal = getTestData();
 			testDataOriginal = getFieldDefColumnsDF(testDataOriginal);
-			IInputData<D, R, C> testData = getPreprocessedInputData(testDataOriginal);
+			AData<D, R, C> testData = getPreprocessedInputData(testDataOriginal);
 			//testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
-			long count = testData.getTotalInput().count();
+			long count = testData.getCombinedData().count();
 			LOG.info("Read " + count);
 			Analytics.track(Metric.DATA_COUNT, count, args.getCollectMetrics());
 
-			IInputData<D, R, C> blockedInput = getBlocked(testData);
+			AData<D, R, C> blockedInput = getBlocked(testData);
 			LOG.info("Blocked ");
 			if (LOG.isDebugEnabled()) {
-				LOG.debug("Num distinct hashes " + blockedInput.getTotalInput().select(ColName.HASH_COL).distinct().count());
-				blockedInput.getTotalInput().show();
+				LOG.debug("Num distinct hashes " + blockedInput.getCombinedData().select(ColName.HASH_COL).distinct().count());
+				blockedInput.getCombinedData().show();
 			}
 			//LOG.warn("Num distinct hashes " + blocked.agg(functions.approx_count_distinct(ColName.HASH_COL)).count());
 			ZFrame<D,R,C> dupesActual = getActualDupes(blockedInput, testData);
@@ -201,7 +202,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			//dupesActual.explain();
 			//dupesActual.toJavaRDD().saveAsTextFile("/tmp/zdupes");
 			
-			writeOutput(testDataOriginal.getTotalInput(), dupesActual);
+			writeOutput(testDataOriginal.getCombinedData(), dupesActual);
 			
 		} catch (Exception e) {
 			if (LOG.isDebugEnabled()) e.printStackTrace();
@@ -210,14 +211,14 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		}
     }
 
-	protected IInputData<D, R, C> getFieldDefColumnsDF(IInputData<D, R, C> testDataOriginal) {
-		ZFrame<D, R, C> totalInput = testDataOriginal.getTotalInput();
+	protected AData<D, R, C> getFieldDefColumnsDF(AData<D, R, C> testDataOriginal) throws ZinggClientException {
+		ZFrame<D, R, C> totalInput = testDataOriginal.getCombinedData();
 		totalInput =  getFieldDefColumnsDS(totalInput).cache();
 		return new MatchInputData<D, R, C>(totalInput);
 	}
 
-	protected IInputData<D, R, C> getPreprocessedInputData(IInputData<D, R, C> inputData) throws ZinggClientException {
-		ZFrame<D, R, C> inputDataDF = inputData.getTotalInput();
+	protected AData<D, R, C> getPreprocessedInputData(AData<D, R, C> inputData) throws ZinggClientException {
+		ZFrame<D, R, C> inputDataDF = inputData.getCombinedData();
 		inputDataDF = preprocess(inputDataDF);
 		return new MatchInputData<D, R, C>(inputDataDF);
 	}

@@ -8,7 +8,8 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
-import zingg.common.client.model.IInputData;
+import zingg.common.client.model.AData;
+import zingg.common.client.model.BlockedData;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.Blocker;
@@ -36,15 +37,15 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
     public void execute() throws ZinggClientException {
         try {
 			setTimestamp(timestamp);
-			IInputData<D,R,C>  testDataOriginal = getTestData();
-			ZFrame<D, R, C> testDataOriginalDF =  getFieldDefColumnsDS(testDataOriginal.getTotalInput()).cache();
-			ZFrame<D,R,C> blocked = getBlockedData(testDataOriginalDF);
+			AData<D,R,C> testDataOriginal = getTestData();
+			ZFrame<D, R, C> testDataOriginalDF =  getFieldDefColumnsDS(testDataOriginal.getCombinedData()).cache();
+			BlockedData<D,R,C> blocked = getBlockedData(testDataOriginalDF);
 			
 			//get the no of counts per hash
-			ZFrame<D,R,C> blockCounts = getBlockCounts(blocked);	
+			ZFrame<D,R,C> blockCounts = getBlockCounts(blocked.getBlockedRecords());
 			getPipeUtil().write(blockCounts,getVerifyBlockingPipeUtil().getCountsPipe(args));
 			//get the records associated with the top 3 hashes
-			getBlockSamples(blocked, blockCounts,verifyBlockingPipeUtil);
+			getBlockSamples(blocked.getBlockedRecords(), blockCounts,verifyBlockingPipeUtil);
 			
 		} catch (Exception e) {
 			if (LOG.isDebugEnabled()){
@@ -105,7 +106,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		this.verifyBlockingPipeUtil = verifyBlockingPipeUtil;
 	}
 
-	public IInputData<D, R, C> getTestData() throws ZinggClientException{
+	public AData<D, R, C> getTestData() throws ZinggClientException{
 		return getDataGetter().getData(args,getPipeUtil());
 	}
 
@@ -116,7 +117,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return dataGetter;
 	}
 
-	public ZFrame<D,R,C> getBlockedData(ZFrame<D,R,C> testDataOriginal) throws ZinggClientException, Exception{
+	public BlockedData<D,R,C> getBlockedData(ZFrame<D,R,C> testDataOriginal) throws ZinggClientException, Exception{
 		return getBlocker().getBlocked(testDataOriginal,args, getModelHelper(),getBlockingTreeUtil());
 		
 	}
