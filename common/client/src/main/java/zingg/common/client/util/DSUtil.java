@@ -51,7 +51,14 @@ public abstract class DSUtil<S, D, R, C> {
 		}
 	}
 
-	
+	public ZFrame<D, R, C> getBlockedDF(BlockedData<D, R, C>[] blockedData) {
+		ZFrame<D, R, C> blockedDataDF = blockedData[0].getData();
+		for (int idx = 1; idx < blockedData.length; idx++){
+			blockedDataDF = blockedDataDF.union(blockedData[idx].getData());
+		}
+
+		return blockedDataDF;
+	}
 
 	public ZFrame<D, R, C> join(ZFrame<D, R, C> lines, ZFrame<D, R, C> lines1, String joinColumn, boolean filter) {
 		ZFrame<D, R, C> pairs = lines.join(lines1, joinColumn);
@@ -122,7 +129,7 @@ public abstract class DSUtil<S, D, R, C> {
 		return join(blockedOne, blockedTwo, joinColumn, false);
 	}
 
-	
+
 
 	public  ZFrame<D, R, C> alignDupes(ZFrame<D, R, C> dupesActual, IArguments args) {
 		dupesActual = dupesActual.cache();
