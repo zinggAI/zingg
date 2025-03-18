@@ -5,8 +5,8 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
-import zingg.common.client.model.AData;
-import zingg.common.client.model.LinkInputData;
+import zingg.common.client.data.BlockedData;
+import zingg.common.client.data.IData;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DSUtil;
 
@@ -19,11 +19,12 @@ public class SelfPairBuilderSourceSensitive<S, D, R, C> extends SelfPairBuilder<
 	}
 	
 	@Override
-	public ZFrame<D,R,C> getPairs(AData<D,R,C> blockedInput, AData<D,R,C> bAll) throws Exception{
+	public ZFrame<D,R,C> getPairs(BlockedData<D,R,C>[] blockedInput, IData<D,R,C> bAll) throws Exception{
+		BlockedData<D, R, C> blockedOne = blockedInput[0];
+		BlockedData<D, R, C> blockedTwo = blockedInput[1];
 		// THIS LOG IS NEEDED FOR PLAN CALCULATION USING COUNT, DO NOT REMOVE
-		LOG.info("in getBlocks, blocked count is " +
-				((LinkInputData<D, R, C>) blockedInput).getInputOne().count() + ((LinkInputData<D, R, C>) blockedInput).getInputTwo().count());
-		return getDSUtil().joinWithItselfSourceSensitive((LinkInputData<D, R, C>) blockedInput, ColName.HASH_COL, args).cache();
+		LOG.info("in getBlocks, blocked count is " + blockedOne.getData().count() + blockedTwo.getData().count());
+		return getDSUtil().joinWithItselfSourceSensitive(blockedOne, blockedTwo, ColName.HASH_COL, args).cache();
 	}
 
 }
