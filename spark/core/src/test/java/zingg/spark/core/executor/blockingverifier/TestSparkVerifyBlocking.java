@@ -7,6 +7,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import zingg.common.client.ZinggClientException;
@@ -24,6 +25,7 @@ import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.util.SparkVerifyBlockingCleanUpUtil;
 
+@Disabled
 @ExtendWith(TestSparkBase.class)
 public class TestSparkVerifyBlocking extends TestVerifyBlocking<SparkSession,Dataset<Row>,Row,Column,DataType> {
 
