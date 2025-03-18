@@ -3,7 +3,7 @@ package zingg.common.core.executor;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.model.LinkInputData;
+import zingg.common.client.data.LinkInputData;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.match.data.IDataGetter;
 

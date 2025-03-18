@@ -7,7 +7,7 @@ import zingg.common.client.IMatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.model.LinkInputData;
+import zingg.common.client.data.BlockedData;
 import zingg.common.client.pipe.Pipe;
 
 import java.util.ArrayList;
@@ -112,14 +112,14 @@ public abstract class DSUtil<S, D, R, C> {
 		ZFrame<D, R, C> lines1 = getPrefixedColumnsDS(lines); 
 		return join(lines, lines1, joinColumn, filter);
 	}
-	
-	public  ZFrame<D, R, C> joinWithItselfSourceSensitive(LinkInputData<D,R,C> blockedInput, String joinColumn, IArguments args) throws Exception {
 
-		ZFrame<D, R, C> sourceOneInput = blockedInput.getInputOne();
-		ZFrame<D, R, C> sourceTwoInput = blockedInput.getInputTwo();
-		sourceTwoInput = getPrefixedColumnsDS(sourceTwoInput);
+	public  ZFrame<D, R, C> joinWithItselfSourceSensitive(BlockedData<D,R,C> blockedInputOne, BlockedData<D,R,C> blockedInputTwo, String joinColumn, IArguments args) throws Exception {
 
-		return join(sourceOneInput, sourceTwoInput, joinColumn, false);
+		ZFrame<D, R, C> blockedOne = blockedInputOne.getData();
+		ZFrame<D, R, C> blockedTwo = blockedInputTwo.getData();
+		blockedTwo = getPrefixedColumnsDS(blockedTwo);
+
+		return join(blockedOne, blockedTwo, joinColumn, false);
 	}
 
 	
