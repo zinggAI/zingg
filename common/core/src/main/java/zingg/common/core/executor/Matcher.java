@@ -181,6 +181,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
         try {
 			// read input, filter, remove self joins
 			IInputData<D, R, C> testDataOriginal = getTestData();
+			testDataOriginal = getFieldDefColumnsDF(testDataOriginal);
 			IInputData<D, R, C> testData = getPreprocessedInputData(testDataOriginal);
 			//testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
@@ -209,11 +210,16 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		}
     }
 
-	protected IInputData<D, R, C> getPreprocessedInputData(IInputData<D, R, C> testDataOriginal) throws ZinggClientException {
+	protected IInputData<D, R, C> getFieldDefColumnsDF(IInputData<D, R, C> testDataOriginal) {
 		ZFrame<D, R, C> totalInput = testDataOriginal.getTotalInput();
 		totalInput =  getFieldDefColumnsDS(totalInput).cache();
-		ZFrame<D,R,C>  testData = preprocess(totalInput);
-		return new MatchInputData<D, R, C>(testData);
+		return new MatchInputData<D, R, C>(totalInput);
+	}
+
+	protected IInputData<D, R, C> getPreprocessedInputData(IInputData<D, R, C> inputData) throws ZinggClientException {
+		ZFrame<D, R, C> inputDataDF = inputData.getTotalInput();
+		inputDataDF = preprocess(inputDataDF);
+		return new MatchInputData<D, R, C>(inputDataDF);
 	}
 
 	public void setMatchOutputBuilder(IMatchOutputBuilder<S,D,R,C> o){

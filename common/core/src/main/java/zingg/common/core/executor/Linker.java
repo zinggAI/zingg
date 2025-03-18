@@ -68,13 +68,20 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	}
 
 	@Override
-	protected IInputData<D, R, C> getPreprocessedInputData(IInputData<D, R, C> testDataOriginal) throws ZinggClientException {
-		ZFrame<D, R, C> inputOneData = ((LinkInputData<D, R, C>)testDataOriginal).getInputOne();
-		ZFrame<D, R, C> inputTwoData = ((LinkInputData<D, R, C>)testDataOriginal).getInputTwo();
-		inputOneData =  getFieldDefColumnsDS(inputOneData).cache();
-		inputTwoData =  getFieldDefColumnsDS(inputTwoData).cache();
-		ZFrame<D,R,C>  testInputOneData = preprocess(inputOneData);
-		ZFrame<D,R,C>  testInputTwoData = preprocess(inputTwoData);
-		return new LinkInputData<D, R, C>(testInputOneData, testInputTwoData);
+	protected IInputData<D, R, C> getPreprocessedInputData(IInputData<D, R, C> inputData) throws ZinggClientException {
+		ZFrame<D, R, C> inputOneData = ((LinkInputData<D, R, C>)inputData).getInputOne();
+		ZFrame<D, R, C> inputTwoData = ((LinkInputData<D, R, C>)inputData).getInputTwo();
+		inputOneData = preprocess(inputOneData);
+		inputTwoData = preprocess(inputTwoData);
+		return new LinkInputData<D, R, C>(inputOneData, inputTwoData);
+	}
+
+	@Override
+	protected IInputData<D, R, C> getFieldDefColumnsDF(IInputData<D, R, C> inputData) {
+		ZFrame<D, R, C> inputOneData = ((LinkInputData<D, R, C>)inputData).getInputOne();
+		ZFrame<D, R, C> inputTwoData = ((LinkInputData<D, R, C>)inputData).getInputTwo();
+		inputOneData = getFieldDefColumnsDS(inputOneData);
+		inputTwoData = getFieldDefColumnsDS(inputTwoData);
+		return new LinkInputData<D, R, C>(inputOneData, inputTwoData);
 	}
 }
