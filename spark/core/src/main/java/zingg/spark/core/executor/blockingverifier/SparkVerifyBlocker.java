@@ -19,7 +19,7 @@ import zingg.spark.core.context.ZinggSparkContext;
 public class SparkVerifyBlocker extends VerifyBlocking<SparkSession,Dataset<Row>,Row,Column,DataType> {
 
     private static final long serialVersionUID = 1L;
-	public static String name = "zingg.spark.core.executor.SparkVerifyBlocker";
+	public static String name = SparkVerifyBlocker.class.getName();
 	public static final Log LOG = LogFactory.getLog(SparkVerifyBlocker.class);    
 
     public SparkVerifyBlocker() {
