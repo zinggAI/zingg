@@ -5,29 +5,15 @@ import zingg.common.client.ZinggClientException;
 
 import java.util.List;
 
-public class LinkInputData<D, R, C> implements IData<D, R, C> {
-
-    private ZFrame<D, R, C> primaryInput;
-    private ZFrame<D, R, C> secondaryInput;
+public class LinkInputData<D, R, C> extends AMultiInputData<D, R, C> {
 
     public LinkInputData(List<ZFrame<D, R, C>> inputs) throws ZinggClientException {
+        super(inputs);
+    }
+
+    @Override
+    protected void setInputs(List<ZFrame<D, R, C>> inputs) throws ZinggClientException {
         setLinkerInputs(inputs);
-    }
-
-    public void setPrimaryInput(ZFrame<D, R, C> primaryInput) {
-        this.primaryInput = primaryInput;
-    }
-
-    public void setSecondaryInput(ZFrame<D, R, C> inputTwo) {
-        this.secondaryInput = inputTwo;
-    }
-
-    public ZFrame<D, R, C> getPrimaryInput() {
-        return this.primaryInput;
-    }
-
-    public ZFrame<D, R, C> getSecondaryInput() {
-        return secondaryInput;
     }
 
     private void setLinkerInputs(List<ZFrame<D, R, C>> inputs) throws ZinggClientException {
@@ -38,15 +24,5 @@ public class LinkInputData<D, R, C> implements IData<D, R, C> {
         } else {
             throw new ZinggClientException("Excepted at-least two inputs for linker");
         }
-    }
-
-    @Override
-    public ZFrame<D, R, C> getData() {
-        return primaryInput.union(secondaryInput);
-    }
-
-    @Override
-    public InputType getInputType() {
-        return InputType.MULTI;
     }
 }
