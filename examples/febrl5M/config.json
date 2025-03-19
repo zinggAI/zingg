@@ -82,9 +82,9 @@
 			"props": {
 				"location": "examples/febrl5M/febrl_data_5M_part1.csv.gz",
 				"delimiter": ",",
-				"header":false					
+				"header":true
 			},
-			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
+			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, age string, phone string, ssn string, blockingno string"
 		},
 			{
 			"name":"test2", 
@@ -94,7 +94,7 @@
 				"delimiter": ",",
 				"header":false					
 			},
-			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
+			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, age string, phone string, ssn string, blockingno string"
 		},
 			{
 			"name":"test3", 
@@ -104,7 +104,7 @@
 				"delimiter": ",",
 				"header":false					
 			},
-			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
+			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, age string, phone string, ssn string, blockingno string"
 		}
 		],
 		"labelDataSampleSize" : 0.01,
