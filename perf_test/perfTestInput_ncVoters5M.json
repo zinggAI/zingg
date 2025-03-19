@@ -1,0 +1,13 @@
+{
+  "testName" : "ncVoters_5M",
+  "zinggScript": "./scripts/zingg.sh",
+  "propertyFile": "./config/zingg.conf",
+  "reportFile" : "./perf_test/perf_test_report/testReport_ncVoters5M.json",
+  "directory": ".",
+  "setup": null,
+  "teardown": null,
+  "tests": {
+    "train": "{zinggScript} --phase train --conf ./examples/ncVoters5M/config.json --properties-file {propertyFile}",
+    "match": "{zinggScript} --phase match --conf ./examples/ncVoters5M/config.json --properties-file {propertyFile}"
+  }
+}

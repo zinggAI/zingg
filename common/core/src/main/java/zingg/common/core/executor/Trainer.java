@@ -12,9 +12,10 @@ import zingg.common.core.block.Tree;
 import zingg.common.core.model.Model;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
-import zingg.common.core.preprocess.StopWordsRemover;
+import zingg.common.core.preprocess.IPreprocessors;
+import zingg.common.core.preprocess.stopwords.StopWordsRemover;
 
-public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
+public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements IPreprocessors<S,D,R,C,T>{
 
 	protected static String name = "zingg.Trainer";
 	public static final Log LOG = LogFactory.getLog(Trainer.class);    
@@ -28,9 +29,8 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			ZFrame<D,R,C> positives = null;
 			ZFrame<D,R,C> negatives = null;
 			ZFrame<D,R,C> traOriginal = getDSUtil().getTraining(getPipeUtil(), args, getModelHelper());
-			ZFrame<D,R,C> tra = getStopWords().preprocessForStopWords(traOriginal);
+			ZFrame<D,R,C> tra = preprocess(traOriginal).cache();
 			tra = getDSUtil().joinWithItself(tra, ColName.CLUSTER_COLUMN, true);
-			tra = tra.cache();
 			positives = tra.filter(tra.equalTo(ColName.MATCH_FLAG_COL,ColValues.MATCH_TYPE_MATCH));
 			negatives = tra.filter(tra.equalTo(ColName.MATCH_FLAG_COL,ColValues.MATCH_TYPE_NOT_A_MATCH));
 			
@@ -39,7 +39,7 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 				
 			ZFrame<D,R,C> testDataOriginal = getPipeUtil().read(true, args.getNumPartitions(), false, args.getData());
 			LOG.debug("testDataOriginal schema is " +testDataOriginal.showSchema());
-			ZFrame<D,R,C> testData = getStopWords().preprocessForStopWords(testDataOriginal);
+			ZFrame<D,R,C> testData = preprocess(testDataOriginal);
 
 			Tree<Canopy<R>> blockingTree = getBlockingTreeUtil().createBlockingTreeFromSample(testData,  positives, 0.5,
 					-1, args, getHashUtil().getHashFunctionList());

@@ -2,6 +2,7 @@ package zingg.common.core.hash;
 
 
 public class LastChars extends BaseHash<String,String>{
+	
 	private int numChars;
 	
 	public LastChars(int endIndex) {
@@ -15,8 +16,7 @@ public class LastChars extends BaseHash<String,String>{
 			r = field;
 		}
 		else {
-			field = field.trim().toLowerCase();
-			r= field.trim().toLowerCase().substring(Math.max(field.length() - numChars, 0));
+			r= field.substring(Math.max(field.length() - numChars, 0));
 		}
 		return r;
 	}

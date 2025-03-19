@@ -50,7 +50,7 @@ public class TestSparkStopWordsRecommender extends TestStopWordsRecommenderBase<
 
 	@Override
 	public String getStopWordColName() {
-		return ColName.STOPWORD_COL;
+		return ColName.COL_WORD;
 	}
 
 

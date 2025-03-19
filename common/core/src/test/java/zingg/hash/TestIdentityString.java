@@ -11,8 +11,9 @@ public class TestIdentityString {
 	@Test
 	public void testIdentityString() {
 	    IdentityString value = getInstance();
-		assertEquals("unhappy", value.call(" UnHappy "));
+		assertEquals("unhappy", value.call("unhappy"));
 	}
+
     @Test
 	public void testIdentityString2() {
 		IdentityString value = getInstance();

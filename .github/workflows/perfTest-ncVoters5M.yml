@@ -1,0 +1,49 @@
+name: performance-test-ncVoters5M
+
+on:
+  schedule:
+    - cron: "0 3 */3 * *"
+
+jobs:
+  perf-test:
+    name: performance-test-ncVoters5M
+    runs-on: ubuntu-latest
+    env:
+      SPARK_MASTER: local[*]
+      ZINGG_HOME: assembly/target
+      ZINGG_USER: zingg_user
+      INPUT : "./perf_test/perfTestInput_ncVoters5M.json"
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v3 # checkout the repository content to github runner.
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12.7 #install the python needed
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: temurin
+      - name: setup spark
+        uses: vemonet/setup-spark@v1
+        with:
+          spark-version: '3.5.0'
+          hadoop-version: '3'
+      - name: check spark
+        run: spark-submit --version
+      - name: mvn clean
+        run: mvn clean
+      - name: Build with Maven
+        run: mvn clean compile package -DskipTests=true
+      - name: download and execute py script
+        run: |
+          wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
+          python perfTestRunner.py
+      - name: Commit test results
+        if: always()
+        run: |
+          git config user.name nitish
+          git config user.email nitish1814@github.com
+          git add perf_test/perf_test_report/*.json
+          git commit -m "report generated"
+          git push
