@@ -1,5 +1,5 @@
 #!/bin/bash
-ZINGG_JARS=$ZINGG_HOME/zingg-0.4.1-SNAPSHOT.jar
+ZINGG_JARS=$ZINGG_HOME/zingg-0.5.0.jar
 EMAIL=zingg@zingg.ai
 LICENSE=zinggLicense.txt
 log4j_setting="-Dlog4j2.configurationFile=file:log4j2.properties"
