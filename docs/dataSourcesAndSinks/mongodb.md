@@ -13,7 +13,7 @@ nav_order: 5
 		"name":"mongodb", 
 		"format":"mongo", 
 		"props": {
-			"uri": "mongodb://127.0.0.1/people.contacts"		
+			"url": "mongodb://127.0.0.1/people.contacts"		
 			}	
 		}]
 
