@@ -1,11 +1,9 @@
 ---
 description: >-
-  Defining match types for enterprise
+  Defining match types to support generic mappings as well as get domain knowledge
 ---
 
 # Advanced Match Types
-
-## Defining match types to support generic mappings as well as get domain knowledge
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
@@ -42,12 +40,8 @@ This way we can match the given field on multiple criteria such as nicknames and
   ["Charles", "Charlie", "Chuck"],
   ["James", "Jim", "Jimmy"],
   ["Thomas", "Tom", "Tommy"]
+...
 ]   
 ```
 
-### Snowflake:
-
-
-
-### Databricks:
 
