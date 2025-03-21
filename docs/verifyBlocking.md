@@ -26,6 +26,7 @@ The output contains two directories -&#x20;
 
 We can see the counts per block and the top 10% records associated with the top 3 blocks by counts in the directories respectively.
 
+
 In the **Zingg Enterprise** version, all the blocks are persisted and we get the complete details.
 
 For  **Zingg Enterprise for Snowflake**, verifyBlocking generates tables with the names:
