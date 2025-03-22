@@ -27,4 +27,4 @@ Below is the config file snippet that references a few environment variables.
 "collectMetrics": $collectMetrics$
 ```
 
-Environment variables must be enclosed within dollar signs **$var$** to take effect. Also, the config file name must be _suffixed_ with \***.env**. As usual, `String`variables need to be put _within_ quotes **"$var$"**, `Boolean` and `Numeric` values should be put _without_ quotes **$var$**.
+Environment variables must be enclosed within dollar signs **`$var$`** to take effect. Also, the config file name must be _suffixed_ with \***.env**. As usual, `String` variables need to be put _within_ quotes **`"$var$"`**, `Boolean` and `Numeric` values should be put _without_ quotes **`$var$`**.

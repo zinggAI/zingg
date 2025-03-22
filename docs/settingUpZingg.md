@@ -89,7 +89,7 @@ Open `.bashrc` and add env variables at the end of the file.
 ```
 vim ~/.bashrc
 export SPARK_HOME=/opt/spark
-export SPARK_MASTER=local[\*]
+export SPARK_MASTER=local[*]
 export MAVEN_HOME=/home/ubuntu/apache-maven-3.8.8
 export ZINGG_HOME=<path_to_zingg>/assembly/target
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64

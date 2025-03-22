@@ -4,7 +4,7 @@ description: For a different Spark version or compiling latest code
 
 # Compiling From Source
 
-If you need to compile the latest code or build for a different Spark version, you can clone this repo and
+If you need to compile the latest code or build for a different Spark version, you can clone this [repo](https://github.com/zinggAI/zingg/tree/main) and
 
 * Install **maven**
 * Install **JDK 1.8**
