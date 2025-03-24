@@ -1,6 +1,7 @@
 name: PMD
 on:
-  push:
+  schedule:
+  - cron: '0 4 * * 5'
    
   pull_request:
     paths-ignore:
