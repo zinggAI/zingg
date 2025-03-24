@@ -3,7 +3,7 @@ title: Adding incremental data
 parent: Step By Step Guide
 nav_order: 10
 description: >-
-  Building a continuosly updated identity graph with new, updated and deleted
+  Building a continuously updated identity graph with new, updated, and deleted
   records
 ---
 
