@@ -28,7 +28,7 @@ public class SparkVerifyBlockingPipes extends VerifyBlockingPipes<SparkSession,D
     }
 
     private String getName(IArguments args, long timestamp, String type){
-        return getModelHelper().getModel(args) + "/blocks/" + timestamp + "/" + type;
+        return args.getZinggDir() + "/" + args.getModelId() + "/blocks/" + timestamp + "/" + type;
     }
 
     

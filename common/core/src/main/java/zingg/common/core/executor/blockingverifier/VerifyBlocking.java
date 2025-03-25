@@ -13,10 +13,11 @@ import zingg.common.client.util.ColName;
 import zingg.common.core.block.Blocker;
 import zingg.common.core.block.IBlocker;
 import zingg.common.core.block.InputDataGetter;
+import zingg.common.core.preprocess.IPreprocessors;
 import zingg.common.core.executor.ZinggBase;
 import zingg.common.core.match.data.IDataGetter;
 
-public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
+public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements IPreprocessors<S,D,R,C,T>{
 
 	private static final long serialVersionUID = 1L;
 	protected static String name = "zingg.common.core.executor.blockingverifier.VerifyBlocking";
@@ -36,11 +37,13 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
         try {
 			setTimestamp(timestamp);
 			ZFrame<D,R,C>  testDataOriginal = getTestData();
-			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
-			ZFrame<D,R,C> blocked = getBlockedData(testDataOriginal);
+			ZFrame<D,R,C> dataPreprocessed = preprocess(testDataOriginal);
+			dataPreprocessed =  getFieldDefColumnsDS(dataPreprocessed).cache();
+			ZFrame<D,R,C> blocked = getBlockedData(dataPreprocessed);
 			
 			//get the no of counts per hash
-			ZFrame<D,R,C> blockCounts = getBlockCounts(blocked);	
+			ZFrame<D,R,C> blockCounts = getBlockCounts(blocked);
+			LOG.info("Total num comparison for classifier  " + getNumComparisons(blockCounts));	
 			getPipeUtil().write(blockCounts,getVerifyBlockingPipeUtil().getCountsPipe(args));
 			//get the records associated with the top 3 hashes
 			getBlockSamples(blocked, blockCounts,verifyBlockingPipeUtil);
@@ -62,6 +65,8 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	protected int getNoOfBlocks(){
 		return 3;
 	}
+
+	protected abstract double getNumComparisons(ZFrame<D,R,C> blockCounts);
 
 	protected ZFrame<D,R,C> getTopRecordsDF(ZFrame<D,R,C> blockCounts){
 		return blockCounts.select(ColName.HASH_COL,ColName.HASH_COUNTS_COL).sortDescending(ColName.HASH_COUNTS_COL).limit(getNoOfBlocks());
