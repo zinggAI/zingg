@@ -2,12 +2,13 @@ package zingg.spark.core.executor.blockingverifier;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.internal.config.R;
+
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
+import static org.apache.spark.sql.functions.*;
 
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IZArgs;
@@ -19,7 +20,6 @@ import zingg.common.core.executor.blockingverifier.VerifyBlocking;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.common.client.util.ColName;
 import zingg.spark.core.preprocess.ISparkPreprocMapSupplier;
-import static org.apache.spark.sql.functions.*;
 
 public class SparkVerifyBlocker extends VerifyBlocking<SparkSession,Dataset<Row>,Row,Column,DataType> implements ISparkPreprocMapSupplier{
 
