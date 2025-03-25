@@ -13,6 +13,7 @@ from typing import Any
 import pandas as pd
 from pyspark import SparkContext, SQLContext
 from pyspark.sql import DataFrame, SparkSession
+import pyspark
 
 
 LOG = logging.getLogger("zingg")
@@ -20,6 +21,8 @@ LOG = logging.getLogger("zingg")
 _spark_ctxt = None
 _sqlContext = None
 _spark = None
+_jvm = None
+_gateway = None
 _zingg_jar = 'zingg-0.5.0.jar'
 
 
@@ -27,9 +30,13 @@ def initSparkClient():
     global _spark_ctxt
     global _sqlContext
     global _spark
+    global _jvm
+    global  _gateway
     _spark_ctxt = SparkContext.getOrCreate()
     _sqlContext = SQLContext(_spark_ctxt)
     _spark = SparkSession.builder.getOrCreate()
+    _jvm = _spark_ctxt._jvm
+    _gateway = _spark_ctxt._gateway
     return 1
 
 
@@ -43,10 +50,20 @@ def initDataBricksConectClient():
     _sqlContext = SQLContext(_spark_ctxt)
     return 1
 
+def setUpJVMSpark(javaSparkContext):
+    global _sqlContext
+    global _spark
+    global _jvm
+    global  _gateway
+    _gateway = pyspark.java_gateway.launch_gateway()
+    _jvm = pyspark.java_gateway.launch_gateway().jvm
+    conf = pyspark.conf.SparkConf(True, _gateway.jvm, javaSparkContext.getConf())
+    sparkContext = pyspark.SparkContext(gateway=_gateway, jsc=javaSparkContext, conf=conf)
+    _spark = SparkSession(sparkContext)
+    _sqlContext = SQLContext(sparkContext)
 
 def initClient():
     global _spark_ctxt
-    global _sqlContext
     global _spark
     if _spark_ctxt is None:
         DATABRICKS_CONNECT = os.getenv("DATABRICKS_CONNECT")
@@ -65,14 +82,10 @@ def getSparkContext():
 
 
 def getSparkSession():
-    if _spark is None:
-        initClient()
     return _spark
 
 
 def getSqlContext():
-    if _sqlContext is None:
-        initClient()
     return _sqlContext
 
 
@@ -141,15 +154,21 @@ def getJVM():
                 ),
             }
         )
-    return getSparkContext()._jvm
+    if _jvm is not None:
+        return _jvm
+    else:
+        return pyspark.java_gateway.launch_gateway().jvm
 
 
 def getGateway():
-    return getSparkContext()._gateway
+    if _gateway is not None:
+        return _gateway
+    else:
+        pyspark.java_gateway.launch_gateway()
 
 
 ColName = getJVM().zingg.common.client.util.ColName
-MatchType = getJVM().zingg.common.client.MatchType
+MatchTypes = getJVM().zingg.common.client.MatchTypes
 ClientOptions = getJVM().zingg.common.client.ClientOptions
 ZinggOptions = getJVM().zingg.common.client.ZinggOptions
 LabelMatchType = getJVM().zingg.common.core.util.LabelMatchType
@@ -197,6 +216,7 @@ class Zingg:
     def init(self):
         """Method to initialize zingg client by reading internal configurations and functions"""
         self.client.init()
+        setUpJVMSpark(self.client.getJavaSparkContext())
 
     def execute(self):
         """Method to execute this class object"""
@@ -470,6 +490,7 @@ class ZinggWithSpark(Zingg):
 
     """
     def __init__(self, args, options):
+        initClient()
         self.client = getJVM().zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions(), getSparkSession()._jsparkSession)
 
 
@@ -803,12 +824,18 @@ class FieldDefinition:
     :type matchType: MatchType
     """
 
-    def __init__(self, name, dataType, *matchType):
+    def __init__(self, name, dataType, matchType):
         self.fd = getJVM().zingg.common.client.FieldDefinition()
         self.fd.setFieldName(name)
         self.fd.setDataType(self.stringify(dataType))
-        self.fd.setMatchType(matchType)
+        self.fd.setMatchTypeInternal(self.getMatchTypeArray(matchType))
         self.fd.setFields(name)
+
+    def getMatchTypeArray(self, matchType):
+        matchTypeClass = getJVM().zingg.common.client.IMatchType
+        matchTypeArray = getGateway().new_array(matchTypeClass, 1)
+        matchTypeArray[0] = matchType
+        return matchTypeArray
 
     def setStopWords(self, stopWords):
         """Method to add stopwords to this class object

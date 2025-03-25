@@ -25,9 +25,12 @@ public class ArgumentsUtil<A extends IZArgs> {
 	private static final String ESC = "\\";
 	private static final String PATTERN_ENV_VAR = ESC + ENV_VAR_MARKER_START + "(.+?)" + ESC + ENV_VAR_MARKER_END;
 	public static final Log LOG = LogFactory.getLog(ArgumentsUtil.class);	
-	
-	
-	
+
+	//default no args constructor
+	public ArgumentsUtil() {
+		this((Class<A>) Arguments.class);
+	}
+
 
 	public ArgumentsUtil(Class<A> argsClass) {
 		this.argsClass = argsClass;

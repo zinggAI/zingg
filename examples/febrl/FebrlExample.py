@@ -2,19 +2,22 @@ import sys
 from zingg.client import *
 from zingg.pipes import *
 
+#init the client to set up jvm connection
+initClient()
+
 #build the arguments for zingg
 args = Arguments()
 #set field definitions
-fname = FieldDefinition("fname", "string", MatchType.FUZZY)
-lname = FieldDefinition("lname", "string", MatchType.FUZZY)
-stNo = FieldDefinition("stNo", "string", MatchType.FUZZY)
-add1 = FieldDefinition("add1","string", MatchType.FUZZY)
-add2 = FieldDefinition("add2", "string", MatchType.FUZZY)
-city = FieldDefinition("city", "string", MatchType.FUZZY)
-areacode = FieldDefinition("areacode", "string", MatchType.FUZZY)
-state = FieldDefinition("state", "string", MatchType.FUZZY)
-dob = FieldDefinition("dob", "string", MatchType.FUZZY)
-ssn = FieldDefinition("ssn", "string", MatchType.FUZZY)
+fname = FieldDefinition("fname", "string", MatchTypes.FUZZY)
+lname = FieldDefinition("lname", "string", MatchTypes.FUZZY)
+stNo = FieldDefinition("stNo", "string", MatchTypes.FUZZY)
+add1 = FieldDefinition("add1","string", MatchTypes.FUZZY)
+add2 = FieldDefinition("add2", "string", MatchTypes.FUZZY)
+city = FieldDefinition("city", "string", MatchTypes.FUZZY)
+areacode = FieldDefinition("areacode", "string", MatchTypes.FUZZY)
+state = FieldDefinition("state", "string", MatchTypes.FUZZY)
+dob = FieldDefinition("dob", "string", MatchTypes.FUZZY)
+ssn = FieldDefinition("ssn", "string", MatchTypes.FUZZY)
 
 fieldDefs = [fname, lname, stNo, add1, add2, city, areacode, state, dob, ssn]
 
@@ -35,7 +38,7 @@ outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
 
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"match"])
+options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
 
 #if one needs to pass properties-file and other command line args
 # ./scripts/zingg.sh --run examples/febrl/FebrlExample.py --phase trainMatch --properties-file config/zingg.conf
