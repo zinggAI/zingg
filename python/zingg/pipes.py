@@ -10,9 +10,17 @@ from zingg.client import *
 
 LOG = logging.getLogger("zingg.pipes")
 
-JPipe = getJVM().zingg.spark.client.pipe.SparkPipe
-FilePipe = getJVM().zingg.common.client.pipe.FilePipe
-JStructType = getJVM().org.apache.spark.sql.types.StructType
+JPipe = None
+FilePipe = None
+JStructType = None
+
+def setupPipes():
+    global JPipe
+    global FilePipe
+    global JStructType
+    JPipe = getJVM().zingg.spark.client.pipe.SparkPipe
+    FilePipe = getJVM().zingg.common.client.pipe.FilePipe
+    JStructType = getJVM().org.apache.spark.sql.types.StructType
 
 class Pipe:
     """ Pipe class for working with different data-pipelines. Actual pipe def in the args. One pipe can be used at multiple places with different tables, locations, queries, etc
@@ -24,6 +32,7 @@ class Pipe:
     """
 
     def __init__(self, name, format):
+        setupPipes()
         self.pipe = getJVM().zingg.spark.client.pipe.SparkPipe()
         self.pipe.setName(name)
         self.pipe.setFormat(format)
@@ -74,6 +83,7 @@ class CsvPipe(Pipe):
     :type schema: Schema or None
     """
     def __init__(self, name, location = None, schema = None):
+        setupPipes()
         Pipe.__init__(self, name, JPipe.FORMAT_CSV)
         if(location != None):
             Pipe.addProperty(self, FilePipe.LOCATION, location)
@@ -120,6 +130,7 @@ class BigQueryPipe(Pipe):
     TEMP_GCS_BUCKET="temporaryGcsBucket"
 
     def __init__(self,name):
+        setupPipes()
         Pipe.__init__(self, name, JPipe.FORMAT_BIGQUERY)
 
     def setCredentialFile(self, file):
@@ -170,6 +181,7 @@ class SnowflakePipe(Pipe):
     DBTABLE = "dbtable"
 
     def __init__(self,name):
+        setupPipes()
         Pipe.__init__(self, name, JPipe.FORMAT_SNOWFLAKE)
         Pipe.addProperty(self, "application", "zinggai_zingg")
         
@@ -241,6 +253,7 @@ class InMemoryPipe(Pipe):
     """    
 
     def __init__(self, name, df = None):
+        setupPipes()
         Pipe.__init__(self, name, JPipe.FORMAT_INMEMORY)
         if (df is not None):
             self.setDataset(df)

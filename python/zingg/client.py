@@ -25,6 +25,20 @@ _jvm = None
 _gateway = None
 _zingg_jar = 'zingg-0.5.0.jar'
 
+#JVM Base Objects
+ColName = None
+MatchTypes = None
+ZinggOptions = None
+LabelMatchType = None
+
+_jvm_flag = False
+
+
+UpdateLabelMode = "Overwrite"
+
+
+session_type = os.environ.get('SESSION_TYPE', 'CLUSTER')
+
 
 def initSparkClient():
     global _spark_ctxt
@@ -50,14 +64,28 @@ def initDataBricksConectClient():
     _sqlContext = SQLContext(_spark_ctxt)
     return 1
 
-def setUpJVMSpark(javaSparkContext):
+def setupJVMInPy4j():
+    global _jvm_flag
+    if _jvm_flag is False:
+        global _gateway
+        global _jvm
+        _gateway = pyspark.java_gateway.launch_gateway()
+        _jvm = pyspark.java_gateway.launch_gateway().jvm
+        _jvm_flag = True
+
+def setupJVMAndSpark():
+    global _jvm_flag
+    if _jvm_flag is False:
+        initSparkClient()
+        _jvm_flag = True
+
+
+def setUpSparkInPy4j(javaSparkContext):
     global _sqlContext
     global _spark
     global _jvm
-    global  _gateway
-    _gateway = pyspark.java_gateway.launch_gateway()
-    _jvm = pyspark.java_gateway.launch_gateway().jvm
-    conf = pyspark.conf.SparkConf(True, _gateway.jvm, javaSparkContext.getConf())
+    global _gateway
+    conf = pyspark.conf.SparkConf(True, _jvm, javaSparkContext.getConf())
     sparkContext = pyspark.SparkContext(gateway=_gateway, jsc=javaSparkContext, conf=conf)
     _spark = SparkSession(sparkContext)
     _sqlContext = SQLContext(sparkContext)
@@ -166,13 +194,24 @@ def getGateway():
     else:
         pyspark.java_gateway.launch_gateway()
 
+def setupJVMBaseObjects():
+    global ColName
+    global MatchTypes
+    global ZinggOptions
+    global LabelMatchType
+    ColName = getJVM().zingg.common.client.util.ColName
+    MatchTypes = getJVM().zingg.common.client.MatchTypes
+    ZinggOptions = getJVM().zingg.common.client.ZinggOptions
+    LabelMatchType = getJVM().zingg.common.core.util.LabelMatchType
 
-ColName = getJVM().zingg.common.client.util.ColName
-MatchTypes = getJVM().zingg.common.client.MatchTypes
-ClientOptions = getJVM().zingg.common.client.ClientOptions
-ZinggOptions = getJVM().zingg.common.client.ZinggOptions
-LabelMatchType = getJVM().zingg.common.core.util.LabelMatchType
-UpdateLabelMode = "Overwrite"
+#The first thing to do is set the JVM
+#then setup base JVM objects
+if session_type == 'PY4J':
+    setupJVMInPy4j()
+else:
+    setupJVMAndSpark()
+
+setupJVMBaseObjects()
 
 
 def getDfFromDs(data):
@@ -212,11 +251,14 @@ class Zingg:
         self.inpArgs = args
         self.inpOptions = options
         self.client = getJVM().zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions())
+        setupJVMBaseObjects()
 
     def init(self):
         """Method to initialize zingg client by reading internal configurations and functions"""
         self.client.init()
-        setUpJVMSpark(self.client.getJavaSparkContext())
+        #spark has not been set from sess
+        if _spark is None:
+            setUpSparkInPy4j(self.client.getJavaSparkContext())
 
     def execute(self):
         """Method to execute this class object"""
@@ -490,7 +532,9 @@ class ZinggWithSpark(Zingg):
 
     """
     def __init__(self, args, options):
-        initClient()
+        setupJVMBaseObjects()
+        if _spark is None:
+            setupJVMAndSpark()
         self.client = getJVM().zingg.spark.client.SparkClient(args.getArgs(), options.getClientOptions(), getSparkSession()._jsparkSession)
 
 
