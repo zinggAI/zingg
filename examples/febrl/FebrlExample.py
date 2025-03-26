@@ -35,13 +35,15 @@ outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
 
 args.setOutput(outputPipe)
 
-options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
+# options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
 
 #if one needs to pass properties-file and other command line args
 # ./scripts/zingg.sh --run examples/febrl/FebrlExample.py --phase trainMatch --properties-file config/zingg.conf
 # comment the above and uncomment the line below
-# options = ClientOptions(sys.argv[1:])
+options = ClientOptions(sys.argv[1:])
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
+#flag represent collectMetrics
+zingg.printBanner(True)
 zingg.initAndExecute()
