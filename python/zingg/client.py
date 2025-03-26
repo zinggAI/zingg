@@ -256,7 +256,6 @@ class Zingg:
     def init(self):
         """Method to initialize zingg client by reading internal configurations and functions"""
         self.client.init()
-        #spark has not been set from sess
         if _spark is None:
             setUpSparkInPy4j(self.client.getJavaSparkContext())
 
