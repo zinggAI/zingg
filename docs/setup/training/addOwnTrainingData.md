@@ -12,7 +12,8 @@ If you already have some training data that you want to start with, you can use 
 
 The training data supplied to Zingg should have a **z\_cluster** column that groups the records together. The **z\_cluster** uniquely identifies the group. We also need to add the **z\_isMatch** column which is **1** if the pairs _match_ or **0** if they do _not_ match. The **z\_isMatch** value has to be the same for all the records in the **z\_cluster** group. They either match with each other or they don't.
 
-An example is provided in [GitHub training data](../../../examples/febrl/training.csv).
+An example is provided in [GitHub training data](../../../examples/febrl/training.csv).  
+Here, the first column specifies the z_cluster, the second column specifies the z_isMatch value and the remaining columns are the ones which are used for training the model.
 
 The above training data can be specified using [trainingSamples attribute in the configuration.](../../../examples/febrl/configWithTrainingSamples.json)
 
