@@ -40,6 +40,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> imp
 			ZFrame<D,R,C> dataPreprocessed = preprocess(testDataOriginal);
 			dataPreprocessed =  getFieldDefColumnsDS(dataPreprocessed).cache();
 			ZFrame<D,R,C> blocked = getBlockedData(dataPreprocessed);
+			//ZFrame<D,R,C> joins =  getDSUtil().joinWithItselfSourceSensitive(blocked, ColName.HASH_COL, args).cache();
 			
 			//get the no of counts per hash
 			ZFrame<D,R,C> blockCounts = getBlockCounts(blocked);
@@ -66,7 +67,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> imp
 		return 3;
 	}
 
-	protected abstract double getNumComparisons(ZFrame<D,R,C> blockCounts);
+	public abstract double getNumComparisons(ZFrame<D,R,C> blockCounts);
 
 	protected ZFrame<D,R,C> getTopRecordsDF(ZFrame<D,R,C> blockCounts){
 		return blockCounts.select(ColName.HASH_COL,ColName.HASH_COUNTS_COL).sortDescending(ColName.HASH_COUNTS_COL).limit(getNoOfBlocks());

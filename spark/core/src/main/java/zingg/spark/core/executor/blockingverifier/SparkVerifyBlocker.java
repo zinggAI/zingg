@@ -43,7 +43,7 @@ public class SparkVerifyBlocker extends VerifyBlocking<SparkSession,Dataset<Row>
     }
 
     @Override
-    protected double getNumComparisons(ZFrame<Dataset<Row>, Row, Column> blockCounts){
+    public double getNumComparisons(ZFrame<Dataset<Row>, Row, Column> blockCounts){
         ZFrame<Dataset<Row>, Row, Column> result = blockCounts.select(sum(pow(ColName.HASH_COUNTS_COL, 2)).alias("sum_of_squares"));
         return result.collectAsList().get(0).getDouble(0);
     }
