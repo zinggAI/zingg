@@ -22,6 +22,17 @@ def setupPipes():
     FilePipe = getJVM().zingg.common.client.pipe.FilePipe
     JStructType = getJVM().org.apache.spark.sql.types.StructType
 
+
+#getters for pipe
+def getJPipe():
+    return JPipe
+
+def getFilePipe():
+    return FilePipe
+
+def getJStructPipe():
+    return JStructType
+
 class Pipe:
     """ Pipe class for working with different data-pipelines. Actual pipe def in the args. One pipe can be used at multiple places with different tables, locations, queries, etc
 
