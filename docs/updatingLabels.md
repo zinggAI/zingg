@@ -9,4 +9,4 @@ You can then invoke the updater by invoking\
 
 This brings up the console labeler which accepts the **cluster id** of the pairs you want to update.
 
-![Shows records and asks user to update yes, no, can't say on the CLI.](../assets/update.gif)
+![Shows records and asks user to update yes, no, can't say on the CLI.](../assets/updatelabelvertical.gif)
