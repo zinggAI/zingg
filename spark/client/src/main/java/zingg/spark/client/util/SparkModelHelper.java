@@ -44,7 +44,6 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 	 * @return the path for internal Zingg usage
 	 */
 	@Override
-	
 	public String getZinggBaseTrainingDataDir(IZArgs args) {
 		return getZinggBaseModelDir(args) + "/trainingData/";
 	}
@@ -57,7 +56,6 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 	 * @return the path for internal Zingg usage
 	 */
 	@Override
-	
 	public String getZinggTrainingDataUnmarkedDir(IZArgs args) {
 		return this.getZinggBaseTrainingDataDir(args) + "/unmarked/";
 	}
@@ -68,7 +66,6 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 	 * @return the path for internal Zingg usage
 	 */
 	@Override
-	
 	public String getZinggTrainingDataMarkedDir(IZArgs args) {
 		return this.getZinggBaseTrainingDataDir(args) + "/marked/";
 	}
@@ -113,7 +110,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 	}
 
 	@Override
-	public  Pipe<Dataset<Row>, Row, Column>getTrainingDataMarkedPipe(IZArgs args) {
+	public Pipe<Dataset<Row>, Row, Column> getTrainingDataMarkedPipe(IZArgs args) {
 		Pipe<Dataset<Row>, Row, Column>p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, getZinggTrainingDataMarkedDir(args));
@@ -121,7 +118,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 	}
 	
 	@Override
-	public  Pipe<Dataset<Row>, Row, Column>getModelDocumentationPipe(IZArgs args) {
+	public Pipe<Dataset<Row>, Row, Column> getModelDocumentationPipe(IZArgs args) {
 		Pipe<Dataset<Row>, Row, Column>p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_TEXT);
 		p.setProp(FilePipe.LOCATION, getZinggModelDocFile(args));
@@ -131,7 +128,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 	
 
 	@Override
-	public  Pipe<Dataset<Row>, Row, Column>getBlockingTreePipe(IZArgs args) {
+	public Pipe<Dataset<Row>, Row, Column> getBlockingTreePipe(IZArgs args) {
 		SparkPipe p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
 		p.setProp(FilePipe.LOCATION, getBlockFile(args));

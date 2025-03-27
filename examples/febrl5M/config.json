@@ -1,0 +1,115 @@
+{	
+	"fieldDefinition":[
+		{
+			"fieldName" : "id",
+			"matchType" : "dont_use",
+			"fields" : "id",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "fname",
+			"matchType" : "fuzzy",
+			"fields" : "fname",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "lname",
+			"matchType" : "fuzzy",
+			"fields" : "lname",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "stNo",
+			"matchType": "exact",
+			"fields" : "stNo",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "add1",
+			"matchType": "fuzzy",
+			"fields" : "add1",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "add2",
+			"matchType": "fuzzy",
+			"fields" : "add2",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "city",
+			"matchType": "fuzzy",
+			"fields" : "city",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "areacode",
+			"matchType": "exact",
+			"fields" : "areacode",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "state",
+			"matchType": "fuzzy",
+			"fields" : "state",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "dob",
+			"matchType": "fuzzy",
+			"fields" : "dob",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "ssn",
+			"matchType": "fuzzy",
+			"fields" : "ssn",
+			"dataType": "string" 
+		}
+		],
+		"output" : [{
+			"name":"output", 
+			"format":"csv", 
+			"props": {
+				"location": "/tmp/zinggOutput",
+				"delimiter": ",",
+				"header":true
+			}
+		}],
+		"data" : [{
+			"name":"test1", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/febrl5M/febrl_data_5M_part1.csv.gz",
+				"delimiter": ",",
+				"header":true
+			},
+			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, age string, phone string, ssn string, blockingno string"
+		},
+			{
+			"name":"test2", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/febrl5M/febrl_data_5M_part2.csv.gz",
+				"delimiter": ",",
+				"header":false					
+			},
+			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, age string, phone string, ssn string, blockingno string"
+		},
+			{
+			"name":"test3", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/febrl5M/febrl_data_5M_part3.csv.gz",
+				"delimiter": ",",
+				"header":false					
+			},
+			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, age string, phone string, ssn string, blockingno string"
+		}
+		],
+		"labelDataSampleSize" : 0.01,
+		"numPartitions":4000,
+		"modelId": 107,
+		"zinggDir": "models"
+
+}
