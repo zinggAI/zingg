@@ -1,3 +1,5 @@
+![]("https://static.scarf.sh/a.png?x-pxid=b96858f2-6fe2-4fdf-a68b-946527ca3daf")
+
 [![Java CI/CD](https://github.com/zinggAI/zingg/actions/workflows/build.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/build.yml)
 [![pages-build-deployment](https://github.com/zinggAI/zingg/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/pages/pages-build-deployment)
 [![CodeQL](https://github.com/zinggAI/zingg/actions/workflows/codeql.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/codeql.yml)
