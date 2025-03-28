@@ -25,6 +25,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 	
 	private static final long serialVersionUID = 1L;
 	protected static final String zFactoryClassName = "zingg.spark.core.executor.SparkZFactory";
+	private JavaSparkContext javaSparkContext;
 
 	public SparkClient(IZArgs args, ClientOptions options) throws ZinggClientException {
 		super(args, options, zFactoryClassName);
@@ -92,6 +93,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 			if (!ctx.getCheckpointDir().isPresent()) {
 				ctx.setCheckpointDir(String.valueOf(sparkContext.getCheckpointDir()));
 			}
+			javaSparkContext = ctx;
 			setSession(s);
 			return s;
 		}
@@ -108,5 +110,9 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 			return p;
 		}
 	}
-	
+
+
+	public JavaSparkContext getJavaSparkContext() {
+		return javaSparkContext;
+	}
 }
