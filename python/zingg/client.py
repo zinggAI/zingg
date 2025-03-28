@@ -874,14 +874,20 @@ class FieldDefinition:
         self.fd = getJVM().zingg.common.client.FieldDefinition()
         self.fd.setFieldName(name)
         self.fd.setDataType(self.stringify(dataType))
-        self.fd.setMatchTypeInternal(self.getMatchTypeArray(matchType))
+        self.fd.setMatchType(self.getMatchTypeArray(matchType))
         self.fd.setFields(name)
 
     def getMatchTypeArray(self, matchType):
-        matchTypeClass = getJVM().zingg.common.client.IMatchType
-        matchTypeArray = getGateway().new_array(matchTypeClass, 1)
-        matchTypeArray[0] = matchType
-        return matchTypeArray
+        java_list_class = getJVM().java.util.ArrayList
+        java_match_type_list = java_list_class()
+
+        #matchType can be instance of list or not
+        if isinstance(matchType, list):
+            for element in matchType:
+                java_match_type_list.add(element)
+        else:
+            java_match_type_list.add(matchType)
+        return java_match_type_list
 
     def setStopWords(self, stopWords):
         """Method to add stopwords to this class object

@@ -4,6 +4,7 @@ EMAIL=zingg@zingg.ai
 LICENSE=zinggLicense.txt
 log4j_setting="-Dlog4j2.configurationFile=file:log4j2.properties"
 
+export SESSION_TYPE="PY4J"
 POSITIONAL_ARGS=() # Need to save all the arguments in the list
 while [[ $# -gt 0 ]]; do
 	case $1 in
@@ -15,6 +16,7 @@ while [[ $# -gt 0 ]]; do
 			;;
 		--run)
 			# this option is to run a user script (python)
+			  export SESSION_TYPE="CLUSTER"
 			  RUN_PYTHON_PHASE=1
 			  PYTHON_SCRIPT="$2"
 			  shift # past argument "run"
