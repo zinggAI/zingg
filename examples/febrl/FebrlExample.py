@@ -44,6 +44,4 @@ options = ClientOptions([ClientOptions.PHASE,"findTrainingData"])
 
 #Zingg execution for the given phase
 zingg = Zingg(args, options)
-#flag represent collectMetrics
-zingg.printBanner(True)
 zingg.initAndExecute()

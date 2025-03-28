@@ -279,9 +279,6 @@ class Zingg:
         else:
             self.client.execute()
 
-    def printBanner(self, collectMetrics):
-        self.client.printBanner(collectMetrics)
-
     def executeLabel(self):
         """Method to run label phase"""
         self.client.getTrainingDataModel().setMarkedRecordsStat(self.getMarkedRecords())

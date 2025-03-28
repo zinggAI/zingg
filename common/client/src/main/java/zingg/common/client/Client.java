@@ -209,8 +209,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			else {
 				arguments = getArgsUtil(phase).createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
 			}
-			printBanner(arguments.getCollectMetrics());
-			
+
 			client = getClient(arguments, options);
 			client.init();
 			// after setting arguments etc. as some of the listeners need it
@@ -258,6 +257,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public void init() throws ZinggClientException {
+		printBanner(arguments.getCollectMetrics());
 		zingg.setClientOptions(getOptions());
 		zingg.init(getArguments(), getSession(),getOptions());
 		if (session != null) zingg.setSession(session);
