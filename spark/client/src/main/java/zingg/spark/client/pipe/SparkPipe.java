@@ -53,16 +53,8 @@ public class SparkPipe extends Pipe<Dataset<Row>, Row, Column> {
 		setMode(SaveMode.Overwrite.toString());
     }
 
-    public static String massageLocation(String name){
-        name = name.replaceAll("-", "");
-        name = name.replaceAll("@","");
-        name = name.replaceAll(",","");
-        name = name.replaceAll(":","");
-        return name;
-    }
-
     public void setLocation(String fileName){
-        this.props.put(FilePipe.LOCATION, massageLocation(fileName));
+        this.props.put(FilePipe.LOCATION, fileName);
     }
 
 	
