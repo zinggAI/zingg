@@ -28,7 +28,15 @@ public class SparkVerifyBlockingPipes extends VerifyBlockingPipes<SparkSession,D
     }
 
     private String getName(IArguments args, long timestamp, String type){
-        return args.getZinggDir() + "/" + args.getModelId() + "/blocks/" + timestamp + "/" + type;
+        return args.getZinggDir() + "/" + args.getModelId() + "/blocks/" + timestamp + "/" + massageHashValue(type);
+    }
+
+    public static String massageHashValue(String name){
+        name = name.replaceAll("-", "NEG");
+        name = name.replaceAll("@","");
+        name = name.replaceAll(",","");
+        name = name.replaceAll(":","");
+        return name;
     }
 
     
