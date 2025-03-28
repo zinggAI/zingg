@@ -5,16 +5,16 @@ from zingg.pipes import *
 #build the arguments for zingg
 args = Arguments()
 #set field definitions
-fname = FieldDefinition("fname", "string", MatchTypes.FUZZY)
-lname = FieldDefinition("lname", "string", [MatchTypes.FUZZY])
-stNo = FieldDefinition("stNo", "string", [MatchTypes.FUZZY])
-add1 = FieldDefinition("add1","string", [MatchTypes.FUZZY])
-add2 = FieldDefinition("add2", "string", [MatchTypes.FUZZY])
-city = FieldDefinition("city", "string", [MatchTypes.FUZZY])
-areacode = FieldDefinition("areacode", "string", [MatchTypes.FUZZY])
-state = FieldDefinition("state", "string", [MatchTypes.FUZZY])
-dob = FieldDefinition("dob", "string", [MatchTypes.FUZZY])
-ssn = FieldDefinition("ssn", "string", [MatchTypes.FUZZY])
+fname = FieldDefinition("fname", "string", MatchType.FUZZY)
+lname = FieldDefinition("lname", "string", MatchType.FUZZY)
+stNo = FieldDefinition("stNo", "string", MatchType.FUZZY)
+add1 = FieldDefinition("add1","string", MatchType.FUZZY)
+add2 = FieldDefinition("add2", "string", MatchType.FUZZY)
+city = FieldDefinition("city", "string", MatchType.FUZZY)
+areacode = FieldDefinition("areacode", "string", MatchType.FUZZY)
+state = FieldDefinition("state", "string", MatchType.FUZZY)
+dob = FieldDefinition("dob", "string", MatchType.FUZZY)
+ssn = FieldDefinition("ssn", "string", MatchType.FUZZY)
 
 fieldDefs = [fname, lname, stNo, add1, add2, city, areacode, state, dob, ssn]
 

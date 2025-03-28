@@ -27,7 +27,7 @@ _zingg_jar = 'zingg-0.5.0.jar'
 
 #JVM Base Objects
 ColName = None
-MatchTypes = None
+MatchType = None
 ZinggOptions = None
 LabelMatchType = None
 
@@ -196,11 +196,11 @@ def getGateway():
 
 def setupJVMBaseObjects():
     global ColName
-    global MatchTypes
+    global MatchType
     global ZinggOptions
     global LabelMatchType
     ColName = getJVM().zingg.common.client.util.ColName
-    MatchTypes = getJVM().zingg.common.client.MatchTypes
+    MatchType = getJVM().zingg.common.client.MatchTypes
     ZinggOptions = getJVM().zingg.common.client.ZinggOptions
     LabelMatchType = getJVM().zingg.common.core.util.LabelMatchType
 
@@ -867,7 +867,7 @@ class FieldDefinition:
     :type matchType: MatchType
     """
 
-    def __init__(self, name, dataType, matchType):
+    def __init__(self, name, dataType, *matchType):
         self.fd = getJVM().zingg.common.client.FieldDefinition()
         self.fd.setFieldName(name)
         self.fd.setDataType(self.stringify(dataType))
@@ -878,12 +878,8 @@ class FieldDefinition:
         java_list_class = getJVM().java.util.ArrayList
         java_match_type_list = java_list_class()
 
-        #matchType can be instance of list or not
-        if isinstance(matchType, list):
-            for element in matchType:
-                java_match_type_list.add(element)
-        else:
-            java_match_type_list.add(matchType)
+        for element in matchType:
+            java_match_type_list.add(element)
         return java_match_type_list
 
     def setStopWords(self, stopWords):
