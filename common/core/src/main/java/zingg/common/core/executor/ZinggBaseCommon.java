@@ -70,11 +70,11 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
         Analytics.track(Metric.EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000, true);
         Analytics.track(Metric.MODEL_ID, getArgs().getModelId(), true);
 		Analytics.track(Metric.ZINGG_VERSION, "0.5.0", true);
-        Analytics.trackEnvValue(Metric.ZINGG_HOME, true); 
-        Analytics.trackEnv(Metric.DATABRICKS_RUNTIME_VERSION, true);
+        Analytics.trackEnv(Metric.ZINGG_HOME, true); 
+        Analytics.trackEnvValue(Metric.DATABRICKS_RUNTIME_VERSION, true);
         Analytics.track(Metric.COUNTRY, Locale.getDefault().getCountry(), true);
         
-        Analytics.trackEnv(Metric.DB_INSTANCE_TYPE, collectMetrics);
+        Analytics.trackEnvValue(Metric.DB_INSTANCE_TYPE, collectMetrics);
         Analytics.trackPropValue(Metric.JAVA_VERSION, collectMetrics); 
         Analytics.trackPropValue(Metric.OS_ARCH, collectMetrics); 
         Analytics.trackPropValue(Metric.OS_NAME, collectMetrics); 
