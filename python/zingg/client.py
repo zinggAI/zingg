@@ -27,7 +27,7 @@ _zingg_jar = 'zingg-0.5.0.jar'
 
 #JVM Base Objects
 ColName = None
-MatchTypes = None
+MatchType = None
 ZinggOptions = None
 LabelMatchType = None
 
@@ -196,11 +196,11 @@ def getGateway():
 
 def setupJVMBaseObjects():
     global ColName
-    global MatchTypes
+    global MatchType
     global ZinggOptions
     global LabelMatchType
     ColName = getJVM().zingg.common.client.util.ColName
-    MatchTypes = getJVM().zingg.common.client.MatchTypes
+    MatchType = getJVM().zingg.common.client.MatchTypes
     ZinggOptions = getJVM().zingg.common.client.ZinggOptions
     LabelMatchType = getJVM().zingg.common.core.util.LabelMatchType
 
@@ -278,9 +278,6 @@ class Zingg:
                 self.client.execute()
         else:
             self.client.execute()
-
-    def printBanner(self, collectMetrics):
-        self.client.printBanner(collectMetrics)
 
     def executeLabel(self):
         """Method to run label phase"""
@@ -870,18 +867,20 @@ class FieldDefinition:
     :type matchType: MatchType
     """
 
-    def __init__(self, name, dataType, matchType):
+    def __init__(self, name, dataType, *matchType):
         self.fd = getJVM().zingg.common.client.FieldDefinition()
         self.fd.setFieldName(name)
         self.fd.setDataType(self.stringify(dataType))
-        self.fd.setMatchTypeInternal(self.getMatchTypeArray(matchType))
+        self.fd.setMatchType(self.getMatchTypeArray(matchType))
         self.fd.setFields(name)
 
     def getMatchTypeArray(self, matchType):
-        matchTypeClass = getJVM().zingg.common.client.IMatchType
-        matchTypeArray = getGateway().new_array(matchTypeClass, 1)
-        matchTypeArray[0] = matchType
-        return matchTypeArray
+        java_list_class = getJVM().java.util.ArrayList
+        java_match_type_list = java_list_class()
+
+        for element in matchType:
+            java_match_type_list.add(element)
+        return java_match_type_list
 
     def setStopWords(self, stopWords):
         """Method to add stopwords to this class object
