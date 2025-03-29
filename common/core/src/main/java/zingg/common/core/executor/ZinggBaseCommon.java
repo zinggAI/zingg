@@ -1,6 +1,7 @@
 package zingg.common.core.executor;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -58,28 +59,26 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
         getContext().setSession(s);
     }
    
-    public void track( boolean collectMetrics){
-
-    }
+    
     public abstract IZArgs getArgs();
 
 	public abstract void setArgs(IZArgs a);
    
 	public void postMetrics() {
         boolean collectMetrics = getArgs().getCollectMetrics();
-        track(false);
-        Analytics.track(Metric.EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000, collectMetrics);
-		Analytics.track(Metric.ZINGG_VERSION, "0.4.1-SNAPSHOT", collectMetrics);
-        Analytics.trackEnvProp(Metric.DATABRICKS_RUNTIME_VERSION, collectMetrics);
-        Analytics.trackEnvProp(Metric.DB_INSTANCE_TYPE, collectMetrics);
-        Analytics.trackEnvProp(Metric.JAVA_HOME, collectMetrics); 
-        Analytics.trackEnvProp(Metric.JAVA_VERSION, collectMetrics); 
-        Analytics.trackEnvProp(Metric.OS_ARCH, collectMetrics); 
-        Analytics.trackEnvProp(Metric.OS_NAME, collectMetrics); 
-        //Analytics.trackEnvProp(Metric.USER_NAME, collectMetrics); 
-        //Analytics.trackEnvProp(Metric.USER_HOME, collectMetrics); 
+      
+        Analytics.track(Metric.EXEC_TIME, (System.currentTimeMillis() - startTime) / 1000, true);
+        Analytics.track(Metric.MODEL_ID, getArgs().getModelId(), true);
+		Analytics.track(Metric.ZINGG_VERSION, "0.5.0", true);
+        Analytics.trackEnvValue(Metric.ZINGG_HOME, true); 
+        Analytics.trackEnv(Metric.DATABRICKS_RUNTIME_VERSION, true);
+        Analytics.track(Metric.COUNTRY, Locale.getDefault().getCountry(), true);
+        
+        Analytics.trackEnv(Metric.DB_INSTANCE_TYPE, collectMetrics);
+        Analytics.trackPropValue(Metric.JAVA_VERSION, collectMetrics); 
+        Analytics.trackPropValue(Metric.OS_ARCH, collectMetrics); 
+        Analytics.trackPropValue(Metric.OS_NAME, collectMetrics); 
         Analytics.trackDomain(Metric.DOMAIN, collectMetrics);
-        Analytics.track(Metric.ZINGG_VERSION, "0.4.1-SNAPSHOT", collectMetrics);
         Analytics.postEvent(zinggOption.getName(), collectMetrics);
 	}
 

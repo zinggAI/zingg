@@ -14,6 +14,8 @@ import zingg.common.client.IZingg;
 import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.PipeUtilBase;
+import zingg.common.core.util.Analytics;
+import zingg.common.core.util.Metric;
 import zingg.spark.client.util.SparkPipeUtil;
 /**
  * This is the main point of interface with the Zingg matching product.
@@ -35,6 +37,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 
 	public SparkClient(IZArgs args, ClientOptions options, SparkSession s) throws ZinggClientException {
 		super(args, options, s, zFactoryClassName);
+		Analytics.track(Metric.IS_PYTHON, "true", args.getCollectMetrics());
 	}
 
 	
