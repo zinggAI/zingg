@@ -14,6 +14,8 @@ import zingg.common.client.IZingg;
 import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.PipeUtilBase;
+import zingg.common.core.util.Analytics;
+import zingg.common.core.util.Metric;
 import zingg.spark.client.util.SparkPipeUtil;
 /**
  * This is the main point of interface with the Zingg matching product.
@@ -25,6 +27,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 	
 	private static final long serialVersionUID = 1L;
 	protected static final String zFactoryClassName = "zingg.spark.core.executor.SparkZFactory";
+	private JavaSparkContext javaSparkContext;
 
 	public SparkClient(IZArgs args, ClientOptions options) throws ZinggClientException {
 		super(args, options, zFactoryClassName);
@@ -34,6 +37,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 
 	public SparkClient(IZArgs args, ClientOptions options, SparkSession s) throws ZinggClientException {
 		super(args, options, s, zFactoryClassName);
+		Analytics.track(Metric.IS_PYTHON, "true", args.getCollectMetrics());
 	}
 
 	
@@ -92,6 +96,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 			if (!ctx.getCheckpointDir().isPresent()) {
 				ctx.setCheckpointDir(String.valueOf(sparkContext.getCheckpointDir()));
 			}
+			javaSparkContext = ctx;
 			setSession(s);
 			return s;
 		}
@@ -108,5 +113,9 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 			return p;
 		}
 	}
-	
+
+
+	public JavaSparkContext getJavaSparkContext() {
+		return javaSparkContext;
+	}
 }

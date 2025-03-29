@@ -6,6 +6,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  ZINGG_USER: zingg_user
+
 jobs:
   build:
     runs-on: ubuntu-latest

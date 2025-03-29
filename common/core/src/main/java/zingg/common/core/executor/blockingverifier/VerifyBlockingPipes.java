@@ -71,6 +71,5 @@ public abstract class VerifyBlockingPipes<S,D,R,C> implements IVerifyBlockingPip
     public void setModelHelper(IModelHelper<D, R, C> mh) {
         this.modelHelper = mh;
     }
-
     
 }

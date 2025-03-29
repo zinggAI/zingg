@@ -1,3 +1,5 @@
+![]("https://static.scarf.sh/a.png?x-pxid=b96858f2-6fe2-4fdf-a68b-946527ca3daf")
+
 [![Java CI/CD](https://github.com/zinggAI/zingg/actions/workflows/build.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/build.yml)
 [![pages-build-deployment](https://github.com/zinggAI/zingg/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/pages/pages-build-deployment)
 [![CodeQL](https://github.com/zinggAI/zingg/actions/workflows/codeql.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/codeql.yml)
@@ -30,7 +32,7 @@ Zingg is an ML based tool for entity resolution. The following features set Zing
 - Ability to connect to [disparate data sources](https://docs.zingg.ai/zingg/connectors). Local and cloud file systems in any format, enterprise applications and relational, NoSQL and cloud databases and warehouses
 - Ability to scale to large volumes of data. [See why this is important](https://docs.zingg.ai/zingg/zmodels/) and [Zingg performance numbers](https://docs.zingg.ai/zingg/stepbystep/hardwaresizing)
 - [Interactive training data builder](https://docs.zingg.ai/zingg/stepbystep/createtrainingdata/label) using active learning that builds models on frugally small training samples to high accuracy.
-![Shows records and asks user to mark yes, no, cant say on the cli.](/assets/label.gif) 
+![Shows records and asks user to mark yes, no, cant say on the cli.](/assets/labelvertical.gif) 
 - Ability to define domain specific functions to improve matching  
 - Out of the box support for English as well as Chinese, Thai, Japanese, Hindi and other languages
 
@@ -67,8 +69,8 @@ See Zingg in action [here](https://www.youtube.com/watch?v=zOabyZxN9b0)
 
 The easiest way to get started with Zingg is through Docker and by running the prebuilt models.
 ```
-docker pull zingg/zingg:0.5.0
-docker run -it zingg/zingg:0.5.0 bash
+docker pull zingg/zingg:0.4.0
+docker run -it zingg/zingg:0.4.0 bash
 ./scripts/zingg.sh --phase match --conf examples/febrl/config.json
 ``` 
 
@@ -101,7 +103,7 @@ The similarity model helps Zingg predict which record pairs match. Similarity is
 
 To build these models, training data is needed. Zingg comes with an interactive learner to rapidly build training sets. 
 
-![Shows records and asks user to mark yes, no, cant say on the cli.](assets/label2.gif) 
+![Shows records and asks user to mark yes, no, cant say on the cli.](assets/labelallvertical.gif) 
 
 ## Pretrained models
 

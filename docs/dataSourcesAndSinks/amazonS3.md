@@ -6,9 +6,9 @@ Zingg can use AWS S3 as a source and sink
 
 * Set a bucket, for example - _zingg28032023_ and a folder inside it,for example - _zingg_
 
-* Create aws access key and export via env vars (ensure that the user with below keys has read/write access to above)
-	`export AWS_ACCESS_KEY_ID=<access key id>`
-	`export AWS_SECRET_ACCESS_KEY=<access key>`
+* Create aws access key and export via env vars (ensure that the user with below keys has read/write access to above)  
+	`export AWS_ACCESS_KEY_ID=<access key id>`  
+	`export AWS_SECRET_ACCESS_KEY=<access key>`  
 	(if mfa is enabled AWS_SESSION_TOKEN env var would also be needed )
 
 * Download _hadoop-aws-3.1.0.jar_ and _aws-java-sdk-bundle-1.11.271.jar_ via maven

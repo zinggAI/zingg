@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
+import zingg.common.core.ZinggException;
 import zingg.common.core.context.IContext;
 
 public abstract class MultiFieldPreprocessor<S,D,R,C,T> implements IMultiFieldPreprocessor<S,D,R,C,T> {
@@ -58,7 +59,8 @@ public abstract class MultiFieldPreprocessor<S,D,R,C,T> implements IMultiFieldPr
                 return applyPreprocessor(df, relevantFields);
             }
         } catch (Exception exception) {
-            LOG.warn("Error occurred while performing preprocess, skipping it, " + exception);
+            LOG.warn("Error occurred while performing preprocess" + exception);
+            throw new ZinggException("Error occurred while performing preprocess");
         }
         return df;
     }

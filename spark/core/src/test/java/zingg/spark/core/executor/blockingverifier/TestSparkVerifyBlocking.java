@@ -24,7 +24,6 @@ import zingg.spark.client.util.SparkPipeUtil;
 import zingg.spark.core.TestSparkBase;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.util.SparkVerifyBlockingCleanUpUtil;
-
 @Disabled
 @ExtendWith(TestSparkBase.class)
 public class TestSparkVerifyBlocking extends TestVerifyBlocking<SparkSession,Dataset<Row>,Row,Column,DataType> {
@@ -54,7 +53,8 @@ public class TestSparkVerifyBlocking extends TestVerifyBlocking<SparkSession,Dat
 
     @Override
     public String getMassagedTableName(String hash) {
-        return (ColName.BLOCK_SAMPLES + hash);
+        String result = hash.startsWith("-") ? "NEG" + hash.substring(1) : hash;
+        return (ColName.BLOCK_SAMPLES + result);
     }
 
     @Override

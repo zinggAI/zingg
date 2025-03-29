@@ -11,7 +11,7 @@ The label phase opens an _interactive_ learner where the user can mark the pairs
 
 `./zingg.sh --phase label --conf config.json <optional --showConcise=true|false>`
 
-![Shows records and asks user to mark yes, no, can't say on the cli.](../../../assets/label.gif)
+![Shows records and asks user to mark yes, no, can't say on the cli.](../../../assets/labelvertical.gif)
 
 Proceed running **findTrainingData** followed by label phases till you have at least 30-40 positives, or when you see the predictions by Zingg converging with the output you want. At each stage, the user will get different variations of attributes across the records. Zingg performs pretty well with even a small number of training, as the samples to be labeled are chosen by the algorithm itself.
 

@@ -44,21 +44,25 @@ public class Analytics {
 
 	public static void track(String metricName, String metricValue, boolean collectMetrics) {
 		if (collectMetrics) {
-			getMetrics().put(metricName, metricValue);
+			String metricNameToSend = metricName.replace(".", "_");
+			getMetrics().put(metricNameToSend, metricValue);
 		}
 	}
 
-	public static void trackEnvProp(String metricName, boolean collectMetrics) {
-		if (collectMetrics) {
-			try{
-				if (System.getProperty(metricName) != null) {
-					getMetrics().put(metricName, "true");
-				}
-			}
-			catch(Exception e){
-				getMetrics().put(metricName, "Exception " + e.getMessage());
-			}
-		}
+	public static void trackEnv(String metricName, boolean collectMetrics) {
+		track(metricName, String.valueOf(System.getenv(metricName) != null), collectMetrics);
+	}
+
+	public static void trackProp(String metricName, boolean collectMetrics) {
+		track(metricName, String.valueOf(System.getProperty(metricName) != null), collectMetrics);
+	}
+
+	public static void trackEnvValue(String metricName, boolean collectMetrics) {
+		track(metricName, System.getenv(metricName), collectMetrics);
+	}
+
+	public static void trackPropValue(String metricName, boolean collectMetrics) {
+		track(metricName, System.getProperty(metricName), collectMetrics);
 	}
 
 	public static void track(String metricName, double metricValue, boolean collectMetrics) {
@@ -66,6 +70,14 @@ public class Analytics {
 	}
 
 	public static String getDomain(){
+		try {
+			return InetAddress.getLocalHost().getCanonicalHostName();
+		} catch (UnknownHostException e) {
+			return "CouldntGetCanicalHostName";
+		}
+	}
+
+	public static String getHost(){
 
 		try {
 			return InetAddress.getLocalHost().getHostName();
@@ -81,7 +93,7 @@ public class Analytics {
 	public static String getUserId() {
 		String userId = System.getenv(ZINGG_USER_ENV); // Fetch the environment variable
 		if (userId == null || userId.isEmpty()) {
-			userId = getDomain(); // Default to domain if environment variable is not set
+			userId = getHost(); // Default to domain if environment variable is not set
 		}
 		return userId;
 	}

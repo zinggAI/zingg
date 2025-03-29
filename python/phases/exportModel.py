@@ -19,7 +19,7 @@ def main():
     options = ClientOptions(sys.argv[1:])
     options.setPhase("peekModel")
     arguments = Arguments.createArgumentsFromJSON(options.getConf(), options.getPhase())
-    client = ZinggWithSpark(arguments, options)
+    client = Zingg(arguments, options)
     client.init()
 
     pMarkedDF = getPandasDfFromDs(client.getMarkedRecords())
@@ -45,7 +45,7 @@ def export_data(labelledData, location):
     print(trainingSampleColumns)
 
     # Exporting the labelled data as CSV
-    trainingSamples.toPandas().to_csv(os.path.join(location,r'exportedData.csv'))
+    trainingSamples.toPandas().to_csv(os.path.join(location,r'exportedData.csv'), index=False)
 
     
 if __name__ == "__main__":
