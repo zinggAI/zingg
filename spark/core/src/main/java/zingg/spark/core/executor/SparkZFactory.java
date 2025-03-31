@@ -6,7 +6,6 @@ import zingg.common.client.IZingg;
 import zingg.common.client.IZinggFactory;
 import zingg.common.client.options.ZinggOption;
 import zingg.common.client.options.ZinggOptions;
-import zingg.spark.core.executor.blockingverifier.SparkVerifyBlocker;
 
 public class SparkZFactory implements IZinggFactory{
 
@@ -25,7 +24,6 @@ public class SparkZFactory implements IZinggFactory{
         zinggers.put(ZinggOptions.UPDATE_LABEL, SparkLabelUpdater.name);
         zinggers.put(ZinggOptions.FIND_AND_LABEL, SparkFindAndLabeller.name);
         zinggers.put(ZinggOptions.RECOMMEND, SparkRecommender.name);
-        zinggers.put(ZinggOptions.VERIFY_BLOCKING, SparkVerifyBlocker.name);
         zinggers.put(ZinggOptions.PEEK_MODEL, SparkPythonPhaseRunner.name);
     }
 
