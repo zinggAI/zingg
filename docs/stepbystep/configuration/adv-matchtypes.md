@@ -44,4 +44,5 @@ This way we can match the given field on multiple criteria such as nicknames and
 ]   
 ```
 
+[^1]: Zingg Enterprise is an advance version of Zingg Community with production grade features
 

@@ -7,6 +7,8 @@ description: Understanding how blocking is working before running match or link
 
 # Verification of Blocking Model
 
+[Zingg Enterprise Feature](#user-content-fn-1)[^1]
+
 The Blocking Model ensures that Zingg stays performant. Column spread and values are learnt for the Blocking Model through the training data. Sometimes Zingg jobs are slow or fail due to a poorly learnt blocking model. This can happen due to a variety of reasons like:
 
 * A user adds significantly larger training samples compared to the labelling learnt by Zingg. The manually added training samples may have the same type of columns and blocking rules learnt are not generic enough. For example, providing California state only training data when the matching is using the State column and data has multiple states.
@@ -24,11 +26,10 @@ The output contains two directories -&#x20;
 
 `zinggDir/modelId/blocks/timestamp/counts`  `zinggDir/modelId/blocks/timestamp/blockSamples`
 
-We can see the counts per block and the top 10% records associated with the top 3 blocks by counts in the directories respectively.
-
-
-In the **Zingg Enterprise** version, all the blocks are persisted and we get the complete details.
+We can see the counts per block and the top 10% records associated with all the blocks.
 
 For  **Zingg Enterprise for Snowflake**, verifyBlocking generates tables with the names:
 
 `zingg_modelId_blocks_timestamp_counts` where we can see the counts per block and `zingg_modelId_blocks_timestamp_blockSamples_hash` where we can see the records associated with the blocks.
+
+[^1]: Zingg Enterprise is an advance version of Zingg Community with production grade features
