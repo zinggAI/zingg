@@ -8,4 +8,5 @@ Model Id    Description
 104         North Carolina Voters 5M under ncVoters5M/
 105         iTunes Amazon under iTunes-amazon/
 106         BeerAdvo RateBeer under beerAdvo-rateBeer/
+107         prebuilt model created with febrl data (5,000,000 records) using febrl5M/
 9999        Model for UCB Small images https://amazon-berkeley-objects.s3.amazonaws.com/index.html 
