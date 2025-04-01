@@ -7,7 +7,7 @@ description: >-
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
-Zingg Enterprise allows the ability to plug rule-based deterministic matching along with already Zingg AI's probabilistic matching. If the data contains _sure_ identifiers like emails, SSNs, passport-ids etc, we can use these attributes to resolve records.
+Zingg Enterprise allows the ability to plug rule-based [deterministic matching](https://www.learningfromdata.zingg.ai/p/deterministic-matching-vs-probabilistic) along with already Zingg AI's probabilistic matching. If the data contains _sure_ identifiers like emails, SSNs, passport-ids etc, we can use these attributes to resolve records.
 
 The deterministic matching flow is weaved into Zingg's flow to ensure that each record which has a match finds one, probabilistically, deterministically or both. If the data has known identifiers, Zingg Enterprise's Deterministic Matching highly improves both matching accuracy and performance.
 
