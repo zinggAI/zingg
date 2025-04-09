@@ -1,9 +1,9 @@
 {	
 	"fieldDefinition":[
 		{
-			"fieldName" : "recId",
+			"fieldName" : "id",
 			"matchType" : "dont_use",
-			"fields" : "recId",
+			"fields" : "id",
 			"dataType": "string" 
 		},
 		{
@@ -84,7 +84,7 @@
 				"delimiter": ",",
 				"header":false					
 			},
-			"schema": "recId string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string" 
+			"schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string" 
 			}
 		],
 		"labelDataSampleSize" : 0.5,
