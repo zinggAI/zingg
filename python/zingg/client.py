@@ -23,7 +23,7 @@ _sqlContext = None
 _spark = None
 _jvm = None
 _gateway = None
-_zingg_jar = 'zingg-0.5.0.jar'
+_zingg_jar = 'zingg-0.6.0.jar'
 
 #JVM Base Objects
 ColName = None
