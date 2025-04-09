@@ -123,7 +123,7 @@ public class Analytics {
 		rootNode.set("events", eventList);
 		rootNode.put("user_id", getUserId());
 		String metricEvent = rootNode.toString();
-		LOG.warn("event is " + metricEvent);
+		LOG.info("event is " + metricEvent);
 		Analytics.sendEvents(metricEvent);
 	}
 
