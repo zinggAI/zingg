@@ -8,6 +8,7 @@ import zingg.common.client.IArguments;
 import zingg.common.client.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.core.ZinggException;
 import zingg.common.core.context.IContext;
 
 public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, INeedsPreprocOrder {
@@ -40,10 +41,9 @@ public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, 
                     dfp = executeAndBuildPreprocessedDF(ip, dfp);
                 }
             }
-        } catch(Exception e){
-            if (LOG.isDebugEnabled()) {
-                e.printStackTrace();
-            }
+        } catch (Exception exception) {
+            LOG.warn("Error occurred while performing preprocessor" + exception);
+            throw new ZinggException("Error occurred while performing preprocessor");
         }
         return dfp;
     }
