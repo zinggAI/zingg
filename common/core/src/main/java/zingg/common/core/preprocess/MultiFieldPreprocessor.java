@@ -59,8 +59,8 @@ public abstract class MultiFieldPreprocessor<S,D,R,C,T> implements IMultiFieldPr
                 return applyPreprocessor(df, relevantFields);
             }
         } catch (Exception exception) {
-            LOG.warn("Error occurred while performing preprocess" + exception);
-            throw new ZinggException("Error occurred while performing preprocess");
+            LOG.warn("Error occurred while performing multifield preprocessor" + exception);
+            throw new ZinggException("Error occurred while performing multifield preprocessor");
         }
         return df;
     }
