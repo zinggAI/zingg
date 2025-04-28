@@ -21,9 +21,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ListMap;
 import zingg.common.client.util.PipeUtilBase;
-import zingg.common.core.block.Block;
-import zingg.common.core.block.Canopy;
-import zingg.common.core.block.Tree;
+import zingg.common.core.block.*;
 import zingg.common.core.hash.HashFunction;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.spark.client.SparkFrame;
@@ -89,6 +87,6 @@ public Block<Dataset<Row>, Row, Column, DataType> getBlock(ZFrame<Dataset<Row>, 
                                                            ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions,
                                                            long blockSize, IArguments arguments) {
         // TODO Auto-generated method stub
-        return new SparkBlock(sample, positives, hashFunctions, blockSize);
+        return new SparkBlock(sample, positives, hashFunctions, blockSize, new DefaultFieldDefinitionStrategy<Row>());
 }
 }
