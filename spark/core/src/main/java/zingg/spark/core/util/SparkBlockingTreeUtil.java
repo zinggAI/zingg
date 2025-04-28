@@ -16,13 +16,12 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 
+import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ListMap;
 import zingg.common.client.util.PipeUtilBase;
-import zingg.common.core.block.Block;
-import zingg.common.core.block.Canopy;
-import zingg.common.core.block.Tree;
+import zingg.common.core.block.*;
 import zingg.common.core.hash.HashFunction;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.spark.client.SparkFrame;
@@ -86,8 +85,8 @@ public Tree<Canopy<Row>> readBlockingTree(Arguments args) throws Exception, Zing
 public Block<Dataset<Row>, Row, Column, DataType> getBlock(ZFrame<Dataset<Row>, Row, Column> sample,
                                                            ZFrame<Dataset<Row>, Row, Column> positives,
                                                            ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions,
-                                                           long blockSize) {
+                                                           long blockSize, IArguments arguments) {
         // TODO Auto-generated method stub
-        return new SparkBlock(sample, positives, hashFunctions, blockSize);
+        return new SparkBlock(sample, positives, hashFunctions, blockSize, new DefaultFieldDefinitionStrategy<Row>());
 }
 }
