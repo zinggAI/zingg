@@ -20,6 +20,4 @@ Zingg is a quick and scalable way to build a single source of truth for core bus
 
 ![# Zingg - Data Mastering At Scale with ML](../assets/dataMastering.png)
 
-## Book Office Hours
-
-If you want to schedule a 30-min call with our team to help you get set up, please select some time directly [here](https://calendly.com/sonalgoyal/30min).
+##
