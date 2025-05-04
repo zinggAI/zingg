@@ -24,5 +24,5 @@ Zingg is a quick and scalable way to build a single source of truth for core bus
 
 ## Ask For Help
 
-If you want to understand if Zingg is a fit for your use case or have other questions or suggestions, join our Slack.&#x20;
+If you want to understand if Zingg is a fit for your use case or have other questions or suggestions, join our [Slack.](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA)
 
