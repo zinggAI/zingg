@@ -1,5 +1,5 @@
 ---
-title: Verifying the blocked data
+title: Comparing two models
 parent: Step By Step Guide
 nav_order: 15
 description: Comparison of two outputs with different models
