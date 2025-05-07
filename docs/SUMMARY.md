@@ -50,6 +50,8 @@
   * [Explanation of Models](modelexplain.md)
   * [Approval of Clusters](approval.md)
   * [Combining Different Match Models](relations.md)
+  * [Model Difference](modeldiff.md)
+  * [Persistent ZINGG ID](reassignZinggId.md)
 * [Data Sources and Sinks](dataSourcesAndSinks/connectors.md)
   * [Zingg Pipes](dataSourcesAndSinks/pipes.md)
   * [Databricks](dataSourcesAndSinks/databricks.md)
