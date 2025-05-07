@@ -1,40 +1,25 @@
 ---
 description: >-
-  Defining match types to support generic mappings as well as get domain knowledge
+  Defining match types to support generic mappings as well as get domain
+  knowledge
 ---
 
-# Advanced Match Types
+# User Defined Mapping Match Types
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
-**Advanced matchType**
+**Leveraging domain expertise to push matching accuracy**
 
-We come across many cases where multiple entities all map to a single entity or a single entity can be used in place of them. This may be in cases such as nicknames, company abbreviations and gender among others. For example, we have multiple records with nicknames such as ["Will", "Bill", "William"], ["John", "Johnny", "Jack"] where each set of map links to one person. So in this case, Will will map to William, Bill will map to William and all of them will be assigned to the same cluster given the rest of the fields also match. So, we can support generic mappings and help increasing domain knowledge as well.  
+While the Zingg matching algorithms learn a lot of variations from the user labels, completely different attributes pose a challenge to matching accuracy. In the case of nicknames, or company abberviations, domain input can greatly enhance matching accuracy. Zingg's `MAPPING` match type is built for such cases. &#x20;
 
-Here, a json containing all mappings such as [“Will”, “Bill”, “William”], [“IBM", "International Business Machine”], ["0", "M", "Male"] needs to be created and stored according to user's requirement. For example, we make a json for company abbreviations and store is as `companies.json`. They will be added in the config as **MAPPING_COMPANIES** along with other match types for the required field.
+To leverage user expertise for nicknames for example, the user can supply Zingg with a mapping json file `nicknames.json` which denotes nicknames. Zingg has prebuilt mappings for company names, nicknames etc. Or you can define your own mappings too.&#x20;
 
-This way we can match the given field on multiple criteria such as nicknames and abbreviations. Multiple match types, separated by commas, can also be used. For example **MAPPING_COMPANIES**, **FUZZY** and **NULL_OR_BLANK** can be used for a single field.
+Here is the structure of the json:
 
 
-```json
-"fieldDefinition":[
-   	{
-   		"fieldName" : "name",
-   		"matchType" : "mapping_companies,exact",
-   		"fields" : "name",
-   		"dataType": "string"
-   	},
-```
 
-### The mapping match type can be integrated as follows:
-
-`export ZINGG_CONF_HOME=<path to json with abbreviations>`
-
-### Example nicknames_test.json:
-
-```json
-[  
-  ["Will", "Bill", "William"],
+<pre class="language-json"><code class="lang-json"><strong>[  
+</strong>  ["Will", "Bill", "William"],
   ["John", "Johnny", "Jack"],
   ["Robert", "Rob", "Bob", "Bobby"],
   ["Charles", "Charlie", "Chuck"],
@@ -42,7 +27,42 @@ This way we can match the given field on multiple criteria such as nicknames and
   ["Thomas", "Tom", "Tommy"]
 ...
 ]   
+</code></pre>
+
+Each line here represents common nicknames which represent the same name.&#x20;
+
+To use this mapping within Zingg, define the field's match type as `MAPPING_<filename>` which in our case would be `mapping_nicknames`
+
+```json
+"fieldDefinition":[
+   	{
+   		"fieldName" : "name",
+   		"matchType" : "mapping_nicknames, fuzzy",
+   		"fields" : "name",
+   		"dataType": "string"
+   	}
+```
+
+### Transform and Match
+
+The `MAPPING` match type can also be used to transform and normalise categorical data. Let us say different data sources have different representations of gender. In one, gender is represented as M and F, in another it is noted as Male, Female and in the third as 1 and 2. Instead of transofmring the gender column beforehand, one could create a mapping json called `gender.json` .&#x20;
+
+<pre><code><strong>[  
+</strong>  ["M", "Male", "1"],
+  ["F", "Female", "2"]
+]  
+</code></pre>
+
+When we use it for the gender field like below, Zingg would automatically handle the transofmration so that you dont have to.&#x20;
+
+```
+"fieldDefinition":[
+   	{
+   		"fieldName" : "gender",
+   		"matchType" : "mapping_gender, exact",
+   		"fields" : "gender",
+   		"dataType": "string"
+   	},
 ```
 
 [^1]: Zingg Enterprise is an advance version of Zingg Community with production grade features
-
