@@ -27,7 +27,7 @@ jobs:
       - name: setup spark
         uses: vemonet/setup-spark@v1
         with:
-          spark-version: '3.5.0'
+          spark-version: '3.5.5'
           hadoop-version: '3'
       - name: check spark
         run: spark-submit --version
