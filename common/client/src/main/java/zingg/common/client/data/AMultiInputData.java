@@ -3,6 +3,7 @@ package zingg.common.client.data;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AMultiInputData<D, R, C> implements IData<D, R, C> {
@@ -31,8 +32,8 @@ public abstract class AMultiInputData<D, R, C> implements IData<D, R, C> {
     }
 
     @Override
-    public ZFrame<D, R, C> getData() {
-        return primaryInput.union(secondaryInput);
+    public List<ZFrame<D, R, C>> getData() {
+        return new ArrayList<>(List.of(primaryInput.union(secondaryInput)));
     }
 
     @Override
@@ -41,4 +42,9 @@ public abstract class AMultiInputData<D, R, C> implements IData<D, R, C> {
     }
 
     protected abstract void setInputs(List<ZFrame<D, R, C>> inputs) throws ZinggClientException;
+
+    @Override
+    public long count() {
+        return primaryInput.count() + secondaryInput.count();
+    }
 }

@@ -5,7 +5,6 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.data.BlockedData;
 import zingg.common.client.data.IData;
 import zingg.common.client.data.LinkInputData;
 import zingg.common.client.options.ZinggOptions;
@@ -35,7 +34,7 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	}
 
 	@Override
-	protected ZFrame<D,R,C> getActualDupes(BlockedData<D,R,C>[] blocked, IData<D,R,C> testData) throws Exception, ZinggClientException{
+	protected ZFrame<D,R,C> getActualDupes(IData<D, R, C> blocked, IData<D,R,C> testData) throws Exception, ZinggClientException{
 		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
 		return getActualDupes(blocked, testData,predictionFilter, getIPairBuilder(), null);
 	}	
