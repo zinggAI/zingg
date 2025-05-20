@@ -51,15 +51,6 @@ public abstract class DSUtil<S, D, R, C> {
 		}
 	}
 
-	public ZFrame<D, R, C> getBlockedDF(BlockedData<D, R, C>[] blockedData) {
-		ZFrame<D, R, C> blockedDataDF = blockedData[0].getData();
-		for (int idx = 1; idx < blockedData.length; idx++){
-			blockedDataDF = blockedDataDF.union(blockedData[idx].getData());
-		}
-
-		return blockedDataDF;
-	}
-
 	public ZFrame<D, R, C> join(ZFrame<D, R, C> lines, ZFrame<D, R, C> lines1, String joinColumn, boolean filter) {
 		ZFrame<D, R, C> pairs = lines.join(lines1, joinColumn);
 		//in training, we only need that record matches only with lines bigger than itself
@@ -120,13 +111,11 @@ public abstract class DSUtil<S, D, R, C> {
 		return join(lines, lines1, joinColumn, filter);
 	}
 
-	public  ZFrame<D, R, C> joinWithItselfSourceSensitive(BlockedData<D,R,C> blockedInputOne, BlockedData<D,R,C> blockedInputTwo, String joinColumn, IArguments args) throws Exception {
+	public  ZFrame<D, R, C> joinWithItselfSourceSensitive(ZFrame<D,R,C> blockedInputOne, ZFrame<D,R,C> blockedInputTwo, String joinColumn, IArguments args) throws Exception {
 
-		ZFrame<D, R, C> blockedOne = blockedInputOne.getData();
-		ZFrame<D, R, C> blockedTwo = blockedInputTwo.getData();
-		blockedTwo = getPrefixedColumnsDS(blockedTwo);
+		blockedInputTwo = getPrefixedColumnsDS(blockedInputTwo);
 
-		return join(blockedOne, blockedTwo, joinColumn, false);
+		return join(blockedInputOne, blockedInputTwo, joinColumn, false);
 	}
 
 

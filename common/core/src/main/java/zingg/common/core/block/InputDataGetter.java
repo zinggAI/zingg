@@ -11,6 +11,9 @@ import zingg.common.client.data.IData;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.match.data.IDataGetter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class InputDataGetter<S,D,R,C> implements IDataGetter<S,D,R,C>{
 
     private static final long serialVersionUID = 1L;
@@ -30,7 +33,7 @@ public class InputDataGetter<S,D,R,C> implements IDataGetter<S,D,R,C>{
     @Override
     public IData<D, R, C> getData(IArguments args, PipeUtilBase<S, D, R, C> p) throws ZinggClientException {
         ZFrame<D, R, C> inputDF = p.read(true, true, args.getNumPartitions(), true, args.getData());
-        return new GenericData<D, R, C>(inputDF);
+        return new GenericData<D, R, C>(new ArrayList<>(List.of(inputDF)));
     }
     
 }

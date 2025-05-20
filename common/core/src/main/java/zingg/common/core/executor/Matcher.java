@@ -11,12 +11,13 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ISelectedCols;
 import zingg.common.client.cols.PredictionColsSelector;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
-import zingg.common.client.data.BlockedData;
 import zingg.common.client.data.IData;
 import zingg.common.client.data.MatchInputData;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.*;
+import zingg.common.core.executor.processunit.IDataProcessUnit;
+import zingg.common.core.executor.processunit.impl.BlockDataProcessingUnit;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.match.data.IDataGetter;
@@ -29,6 +30,9 @@ import zingg.common.core.preprocess.IPreprocessors;
 import zingg.common.core.preprocess.stopwords.StopWordsRemover;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements IPreprocessors<S,D,R,C,T> {
 
@@ -105,9 +109,9 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		//return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
 	}
 
-	public BlockedData<D, R, C>[] getBlocked(IData<D, R, C> testData) throws Exception, ZinggClientException {
-		IBlockProvider<S, D, R, C, T> blockProvider = new BlockProvider<S, D, R, C, T>(getBlocker());
-		return blockProvider.getBlockedData(testData, args, getModelHelper(), getBlockingTreeUtil());
+	public IData<D, R, C> getBlocked(IData<D, R, C> testData) throws Exception, ZinggClientException {
+		IDataProcessUnit<D, R, C> iDataProcessUnit = new BlockDataProcessingUnit<S, D, R, C, T>(getBlocker(), args, getModelHelper(), getBlockingTreeUtil());
+		return iDataProcessUnit.process(testData);
 	}
 
 	public IBlocker<S,D,R,C,T> getBlocker(){
@@ -128,7 +132,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		this.iPairBuilder = p;
 	}
 	
-	public ZFrame<D,R,C> getPairs(BlockedData<D, R, C>[] blocked, IData<D,R,C> bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception, ZinggClientException {
+	public ZFrame<D,R,C> getPairs(IData<D, R, C> blocked, IData<D,R,C> bAll, IPairBuilder<S, D, R, C> iPairBuilder) throws Exception, ZinggClientException {
 		return iPairBuilder.getPairs(blocked, bAll);
 	}
 
@@ -150,7 +154,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		return dupes;
 	}
 
-	protected ZFrame<D,R,C> getActualDupes(BlockedData<D, R, C>[] blocked, IData<D,R,C> testData) throws Exception, ZinggClientException{
+	protected ZFrame<D,R,C> getActualDupes(IData<D, R, C> blocked, IData<D,R,C> testData) throws Exception, ZinggClientException{
 		return getActualDupes(blocked, testData, getPredictionFilter(), getIPairBuilder(), getPredictionColsSelector());
 	}
 
@@ -165,7 +169,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		this.predictionColsSelector = s;
 	}
 
-	protected ZFrame<D,R,C> getActualDupes(BlockedData<D, R, C>[] blocked, IData<D,R,C> testData, IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder, ISelectedCols colsSelector) throws Exception, ZinggClientException{
+	protected ZFrame<D,R,C> getActualDupes(IData<D, R, C> blocked, IData<D,R,C> testData, IFilter<D, R, C> predictionFilter, IPairBuilder<S, D, R, C> iPairBuilder, ISelectedCols colsSelector) throws Exception, ZinggClientException{
 		ZFrame<D,R,C> blocks = getPairs(blocked, testData, iPairBuilder);
 		ZFrame<D,R,C>dupesActual = predictOnBlocks(blocks); 
 		ZFrame<D, R, C> filteredData = predictionFilter.filter(dupesActual);
@@ -184,16 +188,16 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			IData<D, R, C> testData = getPreprocessedInputData(testDataOriginal);
 			//testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
-			long count = testData.getData().count();
+			long count = testData.count();
 			LOG.info("Read " + count);
 			Analytics.track(Metric.DATA_COUNT, count, args.getCollectMetrics());
 
-			BlockedData<D, R, C>[] blockedInput = getBlocked(testData);
+			IData<D, R, C> blockedInput = getBlocked(testData);
 			LOG.info("Blocked ");
 			if (LOG.isDebugEnabled()) {
 				count = 0;
-                for (BlockedData<D, R, C> drcBlockedData : blockedInput) {
-                    count += drcBlockedData.getData().select(ColName.HASH_COL).distinct().count();
+                for (ZFrame<D, R, C> drcBlockedData : blockedInput.getData()) {
+                    count += drcBlockedData.select(ColName.HASH_COL).distinct().count();
                 }
 				LOG.debug("Num distinct hashes " + count);
 			}
@@ -203,7 +207,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			//dupesActual.explain();
 			//dupesActual.toJavaRDD().saveAsTextFile("/tmp/zdupes");
 			
-			writeOutput(testDataOriginal.getData(), dupesActual);
+			writeOutput(testDataOriginal.getData().get(0), dupesActual);
 			
 		} catch (Exception e) {
 			if (LOG.isDebugEnabled()) e.printStackTrace();
@@ -213,15 +217,15 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
     }
 
 	protected IData<D, R, C> getFieldDefColumnsDF(IData<D, R, C> testDataOriginal) throws ZinggClientException {
-		ZFrame<D, R, C> totalInput = testDataOriginal.getData();
+		ZFrame<D, R, C> totalInput = testDataOriginal.getData().get(0);
 		totalInput =  getFieldDefColumnsDS(totalInput).cache();
-		return new MatchInputData<D, R, C>(totalInput);
+		return new MatchInputData<D, R, C>(new ArrayList<>(List.of(totalInput)));
 	}
 
 	protected IData<D, R, C> getPreprocessedInputData(IData<D, R, C> inputData) throws ZinggClientException {
-		ZFrame<D, R, C> inputDataDF = inputData.getData();
+		ZFrame<D, R, C> inputDataDF = inputData.getData().get(0);
 		inputDataDF = preprocess(inputDataDF);
-		return new MatchInputData<D, R, C>(inputDataDF);
+		return new MatchInputData<D, R, C>(new ArrayList<>(List.of(inputDataDF)));
 	}
 
 	public void setMatchOutputBuilder(IMatchOutputBuilder<S,D,R,C> o){
