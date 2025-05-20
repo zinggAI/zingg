@@ -5,6 +5,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.data.BlockedData;
 import zingg.common.client.data.IData;
+import zingg.common.client.data.LinkInputData;
 import zingg.common.client.util.IModelHelper;
 import zingg.common.core.block.IBlocker;
 import zingg.common.core.executor.processunit.IDataProcessUnit;
@@ -30,9 +31,16 @@ public class BlockDataProcessingUnit<S, D, R, C, T> implements IDataProcessUnit<
     @Override
     public BlockedData<D, R, C> process(IData<D, R, C> data) throws ZinggClientException, Exception {
         List<ZFrame<D, R, C>> blockedZFrames = new ArrayList<>();
-        for (ZFrame<D, R, C> zFrame : data.getData()) {
-            ZFrame<D, R, C> currentBlocked = blocker.getBlocked(zFrame, arguments, modelHelper, blockingTreeUtil);
-            blockedZFrames.add(currentBlocked);
+        if (data instanceof LinkInputData) {
+            ZFrame<D, R, C> primaryBlocked = blocker.getBlocked(((LinkInputData<D, R, C>) data).getPrimaryInput(), arguments, modelHelper, blockingTreeUtil);
+            ZFrame<D, R, C> secondaryBlocked = blocker.getBlocked(((LinkInputData<D, R, C>) data).getSecondaryInput(), arguments, modelHelper, blockingTreeUtil);
+            blockedZFrames.add(primaryBlocked);
+            blockedZFrames.add(secondaryBlocked);
+        } else {
+            for (ZFrame<D, R, C> zFrame : data.getData()) {
+                ZFrame<D, R, C> currentBlocked = blocker.getBlocked(zFrame, arguments, modelHelper, blockingTreeUtil);
+                blockedZFrames.add(currentBlocked);
+            }
         }
         return new BlockedData<>(blockedZFrames);
     }
