@@ -5,9 +5,9 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.data.IData;
-import zingg.common.client.data.LinkInputData;
+import zingg.common.core.data.IData;
 import zingg.common.client.options.ZinggOptions;
+import zingg.common.core.data.IDataImpl;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.match.data.IDataGetter;
 import zingg.common.core.match.output.IMatchOutputBuilder;
@@ -71,19 +71,19 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 
 	@Override
 	protected IData<D, R, C> getPreprocessedInputData(IData<D, R, C> inputData) throws ZinggClientException {
-		ZFrame<D, R, C> primaryInput = ((LinkInputData<D, R, C>)inputData).getPrimaryInput();
-		ZFrame<D, R, C> secondaryInput = ((LinkInputData<D, R, C>)inputData).getSecondaryInput();
+		ZFrame<D, R, C> primaryInput = inputData.getData().get(0);
+		ZFrame<D, R, C> secondaryInput = inputData.getData().get(1);
 		primaryInput = preprocess(primaryInput);
 		secondaryInput = preprocess(secondaryInput);
-		return new LinkInputData<D, R, C>(Arrays.asList(primaryInput, secondaryInput));
+		return new IDataImpl<>(Arrays.asList(primaryInput, secondaryInput));
 	}
 
 	@Override
 	protected IData<D, R, C> getFieldDefColumnsDF(IData<D, R, C> inputData) throws ZinggClientException {
-		ZFrame<D, R, C> primaryInput = ((LinkInputData<D, R, C>)inputData).getPrimaryInput();
-		ZFrame<D, R, C> secondaryInput = ((LinkInputData<D, R, C>)inputData).getSecondaryInput();
+		ZFrame<D, R, C> primaryInput =inputData.getData().get(0);;
+		ZFrame<D, R, C> secondaryInput = inputData.getData().get(1);
 		primaryInput = getFieldDefColumnsDS(primaryInput);
 		secondaryInput = getFieldDefColumnsDS(secondaryInput);
-		return new LinkInputData<D, R, C>(Arrays.asList(primaryInput, secondaryInput));
+		return new IDataImpl<>(Arrays.asList(primaryInput, secondaryInput));
 	}
 }

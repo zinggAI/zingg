@@ -7,7 +7,6 @@ import zingg.common.client.IMatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.data.BlockedData;
 import zingg.common.client.pipe.Pipe;
 
 import java.util.ArrayList;

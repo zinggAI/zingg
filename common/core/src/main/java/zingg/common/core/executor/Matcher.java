@@ -11,13 +11,13 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ISelectedCols;
 import zingg.common.client.cols.PredictionColsSelector;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
-import zingg.common.client.data.IData;
-import zingg.common.client.data.MatchInputData;
+import zingg.common.core.data.IDataImpl;
+import zingg.common.core.data.IData;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.*;
 import zingg.common.core.executor.processunit.IDataProcessUnit;
-import zingg.common.core.executor.processunit.impl.BlockDataProcessingUnit;
+import zingg.common.core.executor.processunit.impl.BlockerProcessingUnit;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.match.data.IDataGetter;
@@ -110,8 +110,8 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 	}
 
 	public IData<D, R, C> getBlocked(IData<D, R, C> testData) throws Exception, ZinggClientException {
-		IDataProcessUnit<D, R, C> iDataProcessUnit = new BlockDataProcessingUnit<S, D, R, C, T>(getBlocker(), args, getModelHelper(), getBlockingTreeUtil());
-		return iDataProcessUnit.process(testData);
+		IDataProcessUnit<D, R, C> dataProcessUnit = new BlockerProcessingUnit<S, D, R, C, T>(getBlocker(), args, getModelHelper(), getBlockingTreeUtil());
+		return testData.compute(dataProcessUnit);
 	}
 
 	public IBlocker<S,D,R,C,T> getBlocker(){
@@ -219,13 +219,13 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 	protected IData<D, R, C> getFieldDefColumnsDF(IData<D, R, C> testDataOriginal) throws ZinggClientException {
 		ZFrame<D, R, C> totalInput = testDataOriginal.getData().get(0);
 		totalInput =  getFieldDefColumnsDS(totalInput).cache();
-		return new MatchInputData<D, R, C>(new ArrayList<>(List.of(totalInput)));
+		return new IDataImpl<>(new ArrayList<>(List.of(totalInput)));
 	}
 
 	protected IData<D, R, C> getPreprocessedInputData(IData<D, R, C> inputData) throws ZinggClientException {
 		ZFrame<D, R, C> inputDataDF = inputData.getData().get(0);
 		inputDataDF = preprocess(inputDataDF);
-		return new MatchInputData<D, R, C>(new ArrayList<>(List.of(inputDataDF)));
+		return new IDataImpl<>(new ArrayList<>(List.of(inputDataDF)));
 	}
 
 	public void setMatchOutputBuilder(IMatchOutputBuilder<S,D,R,C> o){
