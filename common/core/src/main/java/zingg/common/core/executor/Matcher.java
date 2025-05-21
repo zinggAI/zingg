@@ -11,13 +11,14 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ISelectedCols;
 import zingg.common.client.cols.PredictionColsSelector;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
-import zingg.common.core.data.IDataImpl;
 import zingg.common.core.data.IData;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.*;
 import zingg.common.core.executor.processunit.IDataProcessUnit;
 import zingg.common.core.executor.processunit.impl.BlockerProcessingUnit;
+import zingg.common.core.executor.processunit.impl.PreprocessorProcessingUnit;
+import zingg.common.core.executor.processunit.impl.ZidAndFieldSelectorUnit;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.match.data.IDataGetter;
@@ -30,9 +31,6 @@ import zingg.common.core.preprocess.IPreprocessors;
 import zingg.common.core.preprocess.stopwords.StopWordsRemover;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements IPreprocessors<S,D,R,C,T> {
 
@@ -103,10 +101,10 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		return dataGetter;
 	}
 
-	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
+	public IData<D, R, C> getFieldDefColumnsDS(IData<D, R, C> testDataOriginal) throws ZinggClientException, Exception {
 		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
-		return testDataOriginal.select(zidAndFieldDefSelector.getCols());
-		//return getDSUtil().getFieldDefColumnsDS(testDataOriginal, args, true);
+		IDataProcessUnit<D, R, C> zidAndFieldSelectorUnit = new ZidAndFieldSelectorUnit<>(zidAndFieldDefSelector);
+		return testDataOriginal.compute(zidAndFieldSelectorUnit);
 	}
 
 	public IData<D, R, C> getBlocked(IData<D, R, C> testData) throws Exception, ZinggClientException {
@@ -216,16 +214,13 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		}
     }
 
-	protected IData<D, R, C> getFieldDefColumnsDF(IData<D, R, C> testDataOriginal) throws ZinggClientException {
-		ZFrame<D, R, C> totalInput = testDataOriginal.getData().get(0);
-		totalInput =  getFieldDefColumnsDS(totalInput).cache();
-		return new IDataImpl<>(new ArrayList<>(List.of(totalInput)));
+	protected IData<D, R, C> getFieldDefColumnsDF(IData<D, R, C> testDataOriginal) throws ZinggClientException, Exception {
+		return getFieldDefColumnsDS(testDataOriginal);
 	}
 
-	protected IData<D, R, C> getPreprocessedInputData(IData<D, R, C> inputData) throws ZinggClientException {
-		ZFrame<D, R, C> inputDataDF = inputData.getData().get(0);
-		inputDataDF = preprocess(inputDataDF);
-		return new IDataImpl<>(new ArrayList<>(List.of(inputDataDF)));
+	protected IData<D, R, C> getPreprocessedInputData(IData<D, R, C> inputData) throws ZinggClientException, Exception {
+		PreprocessorProcessingUnit<S, D, R, C, T> preprocessorProcessingUnit = new PreprocessorProcessingUnit<>(this);
+		return inputData.compute(preprocessorProcessingUnit);
 	}
 
 	public void setMatchOutputBuilder(IMatchOutputBuilder<S,D,R,C> o){

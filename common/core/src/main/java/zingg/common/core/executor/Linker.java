@@ -7,15 +7,12 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.data.IData;
 import zingg.common.client.options.ZinggOptions;
-import zingg.common.core.data.IDataImpl;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.match.data.IDataGetter;
 import zingg.common.core.match.output.IMatchOutputBuilder;
 import zingg.common.core.match.output.LinkOutputBuilder;
 import zingg.common.core.pairs.IPairBuilder;
 import zingg.common.core.pairs.SelfPairBuilderSourceSensitive;
-
-import java.util.Arrays;
 
 
 public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
@@ -69,21 +66,4 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 		return dataGetter;
 	}
 
-	@Override
-	protected IData<D, R, C> getPreprocessedInputData(IData<D, R, C> inputData) throws ZinggClientException {
-		ZFrame<D, R, C> primaryInput = inputData.getData().get(0);
-		ZFrame<D, R, C> secondaryInput = inputData.getData().get(1);
-		primaryInput = preprocess(primaryInput);
-		secondaryInput = preprocess(secondaryInput);
-		return new IDataImpl<>(Arrays.asList(primaryInput, secondaryInput));
-	}
-
-	@Override
-	protected IData<D, R, C> getFieldDefColumnsDF(IData<D, R, C> inputData) throws ZinggClientException {
-		ZFrame<D, R, C> primaryInput =inputData.getData().get(0);;
-		ZFrame<D, R, C> secondaryInput = inputData.getData().get(1);
-		primaryInput = getFieldDefColumnsDS(primaryInput);
-		secondaryInput = getFieldDefColumnsDS(secondaryInput);
-		return new IDataImpl<>(Arrays.asList(primaryInput, secondaryInput));
-	}
 }

@@ -19,6 +19,7 @@ import zingg.common.core.block.InputDataGetter;
 import zingg.common.core.executor.ZinggBase;
 import zingg.common.core.executor.processunit.IDataProcessUnit;
 import zingg.common.core.executor.processunit.impl.BlockerProcessingUnit;
+import zingg.common.core.executor.processunit.impl.ZidAndFieldSelectorUnit;
 import zingg.common.core.match.data.IDataGetter;
 
 public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
@@ -41,8 +42,8 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
         try {
 			setTimestamp(timestamp);
 			IData<D,R,C> testDataOriginal = getTestData();
-			ZFrame<D, R, C> testDataOriginalDF =  getFieldDefColumnsDS(testDataOriginal.getData().get(0)).cache();
-			IData<D,R,C> blocked = getBlockedData(new IDataImpl<>(new ArrayList<>(List.of(testDataOriginalDF))));
+			IData<D, R, C> testDataOriginalDF =  getFieldDefColumnsDS(testDataOriginal);
+			IData<D,R,C> blocked = getBlockedData(testDataOriginalDF);
 			
 			//get the no of counts per hash
 			ZFrame<D,R,C> blockCounts = getBlockCounts(blocked.getData().get(0));
@@ -90,9 +91,10 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 		return matchingRecords;
 	}
 
-	public ZFrame<D, R, C> getFieldDefColumnsDS(ZFrame<D, R, C> testDataOriginal) {
+	public IData<D, R, C> getFieldDefColumnsDS(IData<D, R, C> testDataOriginal) throws ZinggClientException, Exception {
 		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
-		return testDataOriginal.select(zidAndFieldDefSelector.getCols());
+		IDataProcessUnit<D, R, C> zidAndFieldSelectorUnit = new ZidAndFieldSelectorUnit<>(zidAndFieldDefSelector);
+		return testDataOriginal.compute(zidAndFieldSelectorUnit);
 	}
 
 	public long getTimestamp() {
