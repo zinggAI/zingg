@@ -1,6 +1,5 @@
 package zingg.common.core.executor.blockingverifier;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -9,7 +8,6 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
-import zingg.common.core.data.IDataImpl;
 import zingg.common.core.data.IData;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
@@ -18,8 +16,7 @@ import zingg.common.core.block.IBlocker;
 import zingg.common.core.block.InputDataGetter;
 import zingg.common.core.executor.ZinggBase;
 import zingg.common.core.executor.processunit.IDataProcessUnit;
-import zingg.common.core.executor.processunit.impl.BlockerProcessingUnit;
-import zingg.common.core.executor.processunit.impl.ZidAndFieldSelectorUnit;
+import zingg.common.core.executor.processunit.impl.ColsSelectorUnit;
 import zingg.common.core.match.data.IDataGetter;
 
 public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
@@ -93,7 +90,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	public IData<D, R, C> getFieldDefColumnsDS(IData<D, R, C> testDataOriginal) throws ZinggClientException, Exception {
 		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
-		IDataProcessUnit<D, R, C> zidAndFieldSelectorUnit = new ZidAndFieldSelectorUnit<>(zidAndFieldDefSelector);
+		IDataProcessUnit<D, R, C> zidAndFieldSelectorUnit = new ColsSelectorUnit<>(zidAndFieldDefSelector);
 		return testDataOriginal.compute(zidAndFieldSelectorUnit);
 	}
 
@@ -123,13 +120,12 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	public IData<D, R, C> getBlockedData(IData<D, R, C> testData) throws Exception, ZinggClientException {
-		IDataProcessUnit<D, R, C> dataProcessUnit = new BlockerProcessingUnit<S, D, R, C, T>(getBlocker(), args, getModelHelper(), getBlockingTreeUtil());
-		return testData.compute(dataProcessUnit);
+		return testData.compute(getBlocker());
 	}
 
 	public IBlocker<S,D,R,C,T> getBlocker(){
 		if (blocker == null){
-			this.blocker = new Blocker<S,D,R,C,T>(getBlockingTreeUtil());
+			this.blocker = new Blocker<S,D,R,C,T>(getBlockingTreeUtil(), args, getModelHelper());
 		}
 		return blocker;
 	}
