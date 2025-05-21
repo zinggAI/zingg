@@ -202,7 +202,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			//dupesActual.explain();
 			//dupesActual.toJavaRDD().saveAsTextFile("/tmp/zdupes");
 			
-			writeOutput(testDataOriginal.getData().get(0), dupesActual);
+			writeOutput(testDataOriginal.getPrimary(), dupesActual);
 			
 		} catch (Exception e) {
 			if (LOG.isDebugEnabled()) e.printStackTrace();

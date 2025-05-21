@@ -7,6 +7,8 @@ import zingg.common.core.executor.processunit.IDataProcessUnit;
 import java.util.List;
 
 public interface IData<D, R, C> {
+    ZFrame<D, R, C> getPrimary();
+    ZFrame<D, R, C> getSecondary();
     List<ZFrame<D, R, C>> getData();
     InputType getInputType();
     long count();

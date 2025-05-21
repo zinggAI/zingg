@@ -23,6 +23,30 @@ public class IDataImpl<D, R, C> implements IData<D, R, C> {
         this.data = data;
     }
 
+    @Override
+    public ZFrame<D, R, C> getPrimary() {
+        ZFrame<D, R, C> primary = null;
+        if (!data.isEmpty()) {
+            primary = data.get(0);
+        }
+        return primary;
+    }
+
+    @Override
+    public ZFrame<D, R, C> getSecondary() {
+        ZFrame<D, R, C> secondary = null;
+        if (data.size() > 1) {
+            for (ZFrame<D, R, C> zFrame : data) {
+                if (secondary == null) {
+                    secondary = zFrame;
+                } else {
+                    secondary = secondary.union(zFrame);
+                }
+            }
+        }
+        return secondary;
+    }
+
     public List<ZFrame<D, R, C>> getData() {
         return this.data;
     }
