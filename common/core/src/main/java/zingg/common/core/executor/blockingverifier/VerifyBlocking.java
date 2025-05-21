@@ -9,9 +9,8 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
-import zingg.common.client.data.BlockedData;
-import zingg.common.client.data.GenericData;
-import zingg.common.client.data.IData;
+import zingg.common.core.data.IDataImpl;
+import zingg.common.core.data.IData;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.Blocker;
@@ -19,7 +18,7 @@ import zingg.common.core.block.IBlocker;
 import zingg.common.core.block.InputDataGetter;
 import zingg.common.core.executor.ZinggBase;
 import zingg.common.core.executor.processunit.IDataProcessUnit;
-import zingg.common.core.executor.processunit.impl.BlockDataProcessingUnit;
+import zingg.common.core.executor.processunit.impl.BlockerProcessingUnit;
 import zingg.common.core.match.data.IDataGetter;
 
 public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
@@ -43,7 +42,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			setTimestamp(timestamp);
 			IData<D,R,C> testDataOriginal = getTestData();
 			ZFrame<D, R, C> testDataOriginalDF =  getFieldDefColumnsDS(testDataOriginal.getData().get(0)).cache();
-			IData<D,R,C> blocked = getBlockedData(new GenericData<>(new ArrayList<>(List.of(testDataOriginalDF))));
+			IData<D,R,C> blocked = getBlockedData(new IDataImpl<>(new ArrayList<>(List.of(testDataOriginalDF))));
 			
 			//get the no of counts per hash
 			ZFrame<D,R,C> blockCounts = getBlockCounts(blocked.getData().get(0));
@@ -122,8 +121,8 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 	}
 
 	public IData<D, R, C> getBlockedData(IData<D, R, C> testData) throws Exception, ZinggClientException {
-		IDataProcessUnit<D, R, C> iDataProcessUnit = new BlockDataProcessingUnit<S, D, R, C, T>(getBlocker(), args, getModelHelper(), getBlockingTreeUtil());
-		return iDataProcessUnit.process(testData);
+		IDataProcessUnit<D, R, C> dataProcessUnit = new BlockerProcessingUnit<S, D, R, C, T>(getBlocker(), args, getModelHelper(), getBlockingTreeUtil());
+		return testData.compute(dataProcessUnit);
 	}
 
 	public IBlocker<S,D,R,C,T> getBlocker(){

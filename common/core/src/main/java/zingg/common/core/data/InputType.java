@@ -1,4 +1,4 @@
-package zingg.common.client.data;
+package zingg.common.core.data;
 
 public enum InputType {
     SINGLE,
