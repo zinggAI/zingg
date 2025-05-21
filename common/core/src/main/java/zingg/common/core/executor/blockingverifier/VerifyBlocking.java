@@ -43,10 +43,10 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 			IData<D,R,C> blocked = getBlockedData(testDataOriginalDF);
 			
 			//get the no of counts per hash
-			ZFrame<D,R,C> blockCounts = getBlockCounts(blocked.getData().get(0));
+			ZFrame<D,R,C> blockCounts = getBlockCounts(blocked.getPrimary());
 			getPipeUtil().write(blockCounts,getVerifyBlockingPipeUtil().getCountsPipe(args));
 			//get the records associated with the top 3 hashes
-			getBlockSamples(blocked.getData().get(0), blockCounts,verifyBlockingPipeUtil);
+			getBlockSamples(blocked.getPrimary(), blockCounts,verifyBlockingPipeUtil);
 			
 		} catch (Exception e) {
 			if (LOG.isDebugEnabled()){
