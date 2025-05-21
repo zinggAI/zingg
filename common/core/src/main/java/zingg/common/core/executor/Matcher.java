@@ -16,9 +16,7 @@ import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.*;
 import zingg.common.core.executor.processunit.IDataProcessUnit;
-import zingg.common.core.executor.processunit.impl.BlockerProcessingUnit;
-import zingg.common.core.executor.processunit.impl.PreprocessorProcessingUnit;
-import zingg.common.core.executor.processunit.impl.ZidAndFieldSelectorUnit;
+import zingg.common.core.executor.processunit.impl.ColsSelectorUnit;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
 import zingg.common.core.match.data.IDataGetter;
@@ -103,18 +101,17 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 
 	public IData<D, R, C> getFieldDefColumnsDS(IData<D, R, C> testDataOriginal) throws ZinggClientException, Exception {
 		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
-		IDataProcessUnit<D, R, C> zidAndFieldSelectorUnit = new ZidAndFieldSelectorUnit<>(zidAndFieldDefSelector);
+		IDataProcessUnit<D, R, C> zidAndFieldSelectorUnit = new ColsSelectorUnit<>(zidAndFieldDefSelector);
 		return testDataOriginal.compute(zidAndFieldSelectorUnit);
 	}
 
 	public IData<D, R, C> getBlocked(IData<D, R, C> testData) throws Exception, ZinggClientException {
-		IDataProcessUnit<D, R, C> dataProcessUnit = new BlockerProcessingUnit<S, D, R, C, T>(getBlocker(), args, getModelHelper(), getBlockingTreeUtil());
-		return testData.compute(dataProcessUnit);
+		return testData.compute(getBlocker());
 	}
 
 	public IBlocker<S,D,R,C,T> getBlocker(){
 		if (blocker == null){
-			this.blocker = new Blocker<S,D,R,C,T>(getBlockingTreeUtil());
+			this.blocker = new Blocker<S,D,R,C,T>(getBlockingTreeUtil(), args, getModelHelper());
 		}
 		return blocker;
 	}
@@ -219,8 +216,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 	}
 
 	protected IData<D, R, C> getPreprocessedInputData(IData<D, R, C> inputData) throws ZinggClientException, Exception {
-		PreprocessorProcessingUnit<S, D, R, C, T> preprocessorProcessingUnit = new PreprocessorProcessingUnit<>(this);
-		return inputData.compute(preprocessorProcessingUnit);
+		return inputData.compute(this);
 	}
 
 	public void setMatchOutputBuilder(IMatchOutputBuilder<S,D,R,C> o){
