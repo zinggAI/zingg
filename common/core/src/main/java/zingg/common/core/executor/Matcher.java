@@ -15,7 +15,7 @@ import zingg.common.core.data.IData;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.core.block.*;
-import zingg.common.core.executor.processunit.IDataProcessUnit;
+import zingg.common.core.executor.processunit.IDataProcessor;
 import zingg.common.core.executor.processunit.impl.ColsSelectorUnit;
 import zingg.common.core.filter.IFilter;
 import zingg.common.core.filter.PredictionFilter;
@@ -101,7 +101,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 
 	public IData<D, R, C> getFieldDefColumnsDS(IData<D, R, C> testDataOriginal) throws ZinggClientException, Exception {
 		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
-		IDataProcessUnit<D, R, C> zidAndFieldSelectorUnit = new ColsSelectorUnit<>(zidAndFieldDefSelector);
+		IDataProcessor<D, R, C> zidAndFieldSelectorUnit = new ColsSelectorUnit<>(zidAndFieldDefSelector);
 		return testDataOriginal.compute(zidAndFieldSelectorUnit);
 	}
 

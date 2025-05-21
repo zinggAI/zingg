@@ -10,9 +10,9 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.ZinggException;
 import zingg.common.core.context.IContext;
-import zingg.common.core.executor.processunit.IDataProcessUnit;
+import zingg.common.core.executor.processunit.IDataProcessor;
 
-public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, INeedsPreprocOrder, IDataProcessUnit<D, R, C> {
+public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, INeedsPreprocOrder, IDataProcessor<D, R, C> {
 
     public static final Log LOG = LogFactory.getLog(IPreprocessors.class);
     
