@@ -3,9 +3,9 @@ package zingg.common.core.executor.processunit.impl;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ISelectedCols;
-import zingg.common.core.executor.processunit.IDataProcessUnit;
+import zingg.common.core.executor.processunit.IDataProcessor;
 
-public class ColsSelectorUnit<D, R, C> implements IDataProcessUnit<D, R, C> {
+public class ColsSelectorUnit<D, R, C> implements IDataProcessor<D, R, C> {
 
     private final ISelectedCols colsSelector;
 

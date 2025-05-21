@@ -15,7 +15,7 @@ import zingg.common.core.block.Blocker;
 import zingg.common.core.block.IBlocker;
 import zingg.common.core.block.InputDataGetter;
 import zingg.common.core.executor.ZinggBase;
-import zingg.common.core.executor.processunit.IDataProcessUnit;
+import zingg.common.core.executor.processunit.IDataProcessor;
 import zingg.common.core.executor.processunit.impl.ColsSelectorUnit;
 import zingg.common.core.match.data.IDataGetter;
 
@@ -90,7 +90,7 @@ public abstract class VerifyBlocking<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>{
 
 	public IData<D, R, C> getFieldDefColumnsDS(IData<D, R, C> testDataOriginal) throws ZinggClientException, Exception {
 		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition());
-		IDataProcessUnit<D, R, C> zidAndFieldSelectorUnit = new ColsSelectorUnit<>(zidAndFieldDefSelector);
+		IDataProcessor<D, R, C> zidAndFieldSelectorUnit = new ColsSelectorUnit<>(zidAndFieldDefSelector);
 		return testDataOriginal.compute(zidAndFieldSelectorUnit);
 	}
 
