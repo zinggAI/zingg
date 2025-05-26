@@ -8,6 +8,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.graphframes.GraphFrame;
 
+import org.graphframes.lib.ConnectedComponents;
 import scala.collection.JavaConverters;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
@@ -37,13 +38,22 @@ public class SparkGraphUtil implements GraphUtil<Dataset<Row>, Row, Column> {
 		GraphFrame gf = new GraphFrame(v, e);
 		//gf = gf.dropIsolatedVertices();
 		//Dataset<Row> returnGraph = gf.connectedComponents().setAlgorithm("graphx").run().cache();
-		Dataset<Row> returnGraph = gf.connectedComponents().run().cache();
+
+		Dataset<Row> returnGraph = setCheckpointInterval(gf.connectedComponents()).run().cache();
 		//reverse back o avoid graphframes id :-()
 		returnGraph = returnGraph.join(vertices, returnGraph.col("id").equalTo(vertices.col(ColName.ID_COL)));
 		returnGraph = returnGraph.drop(ColName.ID_COL).withColumnRenamed("id", ColName.ID_COL);		
 		returnGraph = returnGraph.withColumnRenamed("component", ColName.CLUSTER_COLUMN);
 		returnGraph = returnGraph.withColumnRenamed(ColName.ID_EXTERNAL_COL, ColName.ID_EXTERNAL_ORIG_COL);
 		return new SparkFrame(returnGraph);
+	}
+
+	private ConnectedComponents setCheckpointInterval(ConnectedComponents connectedComponents) {
+		String connectedComponentCheckpointInterval = System.getenv("CONNECTED_COMPONENT_CHECKPOINT_INTERVAL");
+		if (connectedComponentCheckpointInterval == null) {
+			return connectedComponents;
+		}
+		return connectedComponents.setCheckpointInterval(Integer.parseInt(connectedComponentCheckpointInterval));
 	}
 
 	
