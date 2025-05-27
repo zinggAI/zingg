@@ -17,6 +17,8 @@ import zingg.spark.client.SparkFrame;
 
 public class SparkGraphUtil implements GraphUtil<Dataset<Row>, Row, Column> {
 
+	private static final String CHECKPOINT_INTERVAL_ENV_VARIABLE = "ZINGG_CONNECTED_COMPONENT_CHECKPOINT_INTERVAL";
+
 	public ZFrame<Dataset<Row>, Row, Column> buildGraph(ZFrame<Dataset<Row>, Row, Column> vOrig, ZFrame<Dataset<Row>, Row, Column> ed) {
 		// we need to transform the input here by using stop words
 		//rename id field which is a common field in data to another field as it 
@@ -49,7 +51,7 @@ public class SparkGraphUtil implements GraphUtil<Dataset<Row>, Row, Column> {
 	}
 
 	private ConnectedComponents setCheckpointInterval(ConnectedComponents connectedComponents) {
-		String connectedComponentCheckpointInterval = System.getenv("CONNECTED_COMPONENT_CHECKPOINT_INTERVAL");
+		String connectedComponentCheckpointInterval = System.getenv(CHECKPOINT_INTERVAL_ENV_VARIABLE);
 		if (connectedComponentCheckpointInterval == null) {
 			return connectedComponents;
 		}
