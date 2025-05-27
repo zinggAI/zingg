@@ -198,7 +198,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			//dupesActual.explain();
 			//dupesActual.toJavaRDD().saveAsTextFile("/tmp/zdupes");
 			
-			writeOutput(testDataOriginal, dupesActual);		
+			writeOutput(getOutput(testDataOriginal, dupesActual));		
 			
 		} catch (Exception e) {
 			if (LOG.isDebugEnabled()) e.printStackTrace();
@@ -218,13 +218,16 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		return this.matchOutputBuilder;
 	}
 
-	
-	public void writeOutput( ZFrame<D,R,C>  testDataOriginal,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException {
+	public ZFrame<D,R,C> getOutput(ZFrame<D,R,C>  testDataOriginal,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException, Exception{
+		ZFrame<D, R, C> graphWithScores = getMatchOutputBuilder().getOutput(testDataOriginal, dupesActual);
+		return graphWithScores;
+	}
+
+	public void writeOutput( ZFrame<D,R,C>  graphWithScores) throws ZinggClientException {
 		try{
 		//input dupes are pairs
 		///pick ones according to the threshold by user
 		//all clusters consolidated in one place
-		ZFrame<D, R, C> graphWithScores = getMatchOutputBuilder().getOutput(testDataOriginal, dupesActual);
 		setOutput(graphWithScores);
 		if (args.getOutput() != null && toWrite) {
 				getPipeUtil().write(graphWithScores, args.getOutput());
@@ -235,7 +238,6 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		}
 		
 	}
-
 	
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
 	
