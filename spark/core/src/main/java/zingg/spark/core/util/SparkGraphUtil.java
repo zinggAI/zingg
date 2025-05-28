@@ -8,7 +8,6 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.graphframes.GraphFrame;
 
-import org.graphframes.lib.ConnectedComponents;
 import scala.collection.JavaConverters;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
