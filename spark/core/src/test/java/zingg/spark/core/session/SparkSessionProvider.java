@@ -27,11 +27,17 @@ public class SparkSessionProvider {
                 if (sparkDriverMemory == null) {
                     sparkDriverMemory = "1g";
                 }
+                String aqeFlag = System.getenv("ZINGG_AQE_ENABLED");
+                if (aqeFlag == null) {
+                    //by default disable AQE
+                    aqeFlag = "false";
+                }
                 sparkSession = SparkSession
                         .builder()
                         .master("local[*]")
                         .appName("ZinggJunit")
                         .config("spark.debug.maxToStringFields", 100)
+                        .config("spark.sql.adaptive.enabled", Boolean.parseBoolean(aqeFlag))
                         .config("spark.driver.memory", sparkDriverMemory)
                         .getOrCreate();
                 SparkContext sparkContext = sparkSession.sparkContext();
