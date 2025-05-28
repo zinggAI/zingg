@@ -65,16 +65,4 @@ public class LinkOutputBuilder<S,D,R,C>  extends AOutputBuilder<S,D,R,C> {
 		return dupes1;
 	}
 
-    public ZFrame<D,R,C> getSelectedCols(ZFrame<D,R,C> actual){
-        List<C> cols = new ArrayList<C>();
-        cols.add(actual.col(ColName.CLUSTER_COLUMN));	
-    	cols.add(actual.col(ColName.ID_COL));
-    	cols.add(actual.col(ColName.SCORE_COL));
-    	cols.add(actual.col(ColName.SOURCE_COL));	
-    
-    	ZFrame<D,R,C> zFieldsFromActual = actual.select(cols);
-        return zFieldsFromActual;
-
-    }
-
 }
