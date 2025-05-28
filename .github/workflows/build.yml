@@ -8,7 +8,6 @@ concurrency:
 
 env:
   ZINGG_USER: zingg_user
-  ZINGG_CONNECTED_COMPONENT_CHECKPOINT_INTERVAL: 1
 
 jobs:
   build:
