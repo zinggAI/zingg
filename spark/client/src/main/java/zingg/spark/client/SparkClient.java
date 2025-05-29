@@ -81,15 +81,9 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 		if (session!=null) {
 			return session;
 		} else {
-			String aqeFlag = System.getenv("ZINGG_AQE_ENABLED");
-			if (aqeFlag == null) {
-				//by default disable AQE
-				aqeFlag = "false";
-			}
 			SparkSession s = SparkSession
                     .builder()
                     .appName("Zingg")
-					.config("spark.sql.adaptive.enabled", Boolean.parseBoolean(aqeFlag))
                     .getOrCreate();
 			SparkContext sparkContext = s.sparkContext();
 			if (sparkContext.getCheckpointDir().isEmpty()) {
