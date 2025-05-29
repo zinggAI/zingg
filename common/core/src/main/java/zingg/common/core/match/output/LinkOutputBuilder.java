@@ -9,7 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IArguments;
 import zingg.common.client.ZFrame;
-import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DSUtil;
 
@@ -22,12 +21,10 @@ public class LinkOutputBuilder<S,D,R,C>  extends AOutputBuilder<S,D,R,C> {
     }
   
     @Override
-    public ZFrame<D,R,C> getOutput(ZFrame<D, R, C> sampleOriginal, ZFrame<D, R, C> dupesActual) 
-    throws ZinggClientException, Exception{
+    public ZFrame<D,R,C> getOutput(ZFrame<D, R, C> sampleOriginal, ZFrame<D, R, C> dupesActual) {
         dupesActual = dupesActual.withColumn(ColName.CLUSTER_COLUMN, dupesActual.col(ColName.ID_COL));
 		dupesActual = getDSUtil().addUniqueCol(dupesActual, ColName.CLUSTER_COLUMN);
 		ZFrame<D,R,C>dupes2 =  alignLinked(dupesActual, args);
-		dupes2 =  postprocessLinked(dupes2, sampleOriginal);
 		LOG.debug("uncertain output schema is " + dupes2.showSchema());
         return dupes2;
 
@@ -68,24 +65,4 @@ public class LinkOutputBuilder<S,D,R,C>  extends AOutputBuilder<S,D,R,C> {
 		return dupes1;
 	}
 
-    public ZFrame<D,R,C> getSelectedCols(ZFrame<D,R,C> actual){
-        List<C> cols = new ArrayList<C>();
-        cols.add(actual.col(ColName.CLUSTER_COLUMN));	
-    	cols.add(actual.col(ColName.ID_COL));
-    	cols.add(actual.col(ColName.SCORE_COL));
-    	cols.add(actual.col(ColName.SOURCE_COL));	
-    
-    	ZFrame<D,R,C> zFieldsFromActual = actual.select(cols);
-        return zFieldsFromActual;
-
-    }
-
-    public ZFrame<D,R,C> postprocessLinked(ZFrame<D,R,C> actual, ZFrame<D,R,C> orig) {
-    	ZFrame<D,R,C> zFieldsFromActual = getSelectedCols(actual);
-    	ZFrame<D,R,C> joined = zFieldsFromActual.join(orig,ColName.ID_COL,ColName.SOURCE_COL)
-    					.drop(zFieldsFromActual.col(ColName.SOURCE_COL))
-    					.drop(ColName.ID_COL);
-    	
-    	return joined;
-    }
 }
