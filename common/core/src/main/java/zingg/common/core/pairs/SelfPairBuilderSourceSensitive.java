@@ -19,8 +19,8 @@ public class SelfPairBuilderSourceSensitive<S, D, R, C> extends SelfPairBuilder<
 	
 	@Override
 	public ZFrame<D,R,C> getPairs(IData<D, R, C> blockedInput, IData<D,R,C> bAll) throws Exception{
-		ZFrame<D, R, C> blockedOne = blockedInput.getPrimary();
-		ZFrame<D, R, C> blockedTwo = blockedInput.getSecondary();
+		ZFrame<D, R, C> blockedOne = blockedInput.getByIndex(0);
+		ZFrame<D, R, C> blockedTwo = blockedInput.getByIndex(1);
 		// THIS LOG IS NEEDED FOR PLAN CALCULATION USING COUNT, DO NOT REMOVE
 		LOG.info("in getBlocks, blocked count is " + blockedOne.count() + blockedTwo.count());
 		return getDSUtil().joinWithItselfSourceSensitive(blockedOne, blockedTwo, ColName.HASH_COL, args).cache();
