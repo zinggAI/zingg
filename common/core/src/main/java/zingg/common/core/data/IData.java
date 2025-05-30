@@ -7,8 +7,6 @@ import zingg.common.core.executor.processunit.IDataProcessor;
 import java.util.List;
 
 public interface IData<D, R, C> {
-    ZFrame<D, R, C> getPrimary();
-    ZFrame<D, R, C> getSecondary();
     ZFrame<D, R, C> getByIndex(int index);
     List<ZFrame<D, R, C>> getData();
     long count();

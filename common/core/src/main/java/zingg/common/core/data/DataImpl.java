@@ -31,24 +31,6 @@ public class DataImpl<D, R, C> implements IData<D, R, C> {
     }
 
     @Override
-    public ZFrame<D, R, C> getPrimary() {
-        ZFrame<D, R, C> primary = null;
-        if (data != null && !data.isEmpty()) {
-            primary = data.get(0);
-        }
-        return primary;
-    }
-
-    @Override
-    public ZFrame<D, R, C> getSecondary() {
-        ZFrame<D, R, C> secondary = null;
-        if (data != null && data.size() > 1) {
-            secondary = data.get(1);
-        }
-        return secondary;
-    }
-
-    @Override
     public ZFrame<D, R, C> getByIndex(int index) {
         ZFrame<D, R, C> indexedZFrame = null;
         if (data != null && index < data.size()) {
