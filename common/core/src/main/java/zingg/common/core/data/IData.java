@@ -10,5 +10,6 @@ public interface IData<D, R, C> {
     ZFrame<D, R, C> getByIndex(int index);
     List<ZFrame<D, R, C>> getData();
     long count();
+    void cache();
     IData<D, R, C> compute(IDataProcessor<D, R, C> dataProcessUnit) throws ZinggClientException, Exception;
 }

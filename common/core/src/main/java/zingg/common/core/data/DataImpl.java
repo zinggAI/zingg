@@ -54,6 +54,14 @@ public class DataImpl<D, R, C> implements IData<D, R, C> {
     }
 
     @Override
+    public void cache() {
+        for (int idx = 0; idx < data.size(); idx++) {
+            ZFrame<D, R, C> zFrame = data.get(idx);
+            data.add(idx, zFrame.cache());
+        }
+    }
+
+    @Override
     public IData<D, R, C> compute(IDataProcessor<D, R, C> dataProcessUnit) throws ZinggClientException, Exception {
         List<ZFrame<D, R, C>> computedZFrames = new ArrayList<>();
         for (ZFrame<D, R, C> zFrame : data) {
