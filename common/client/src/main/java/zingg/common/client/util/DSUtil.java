@@ -69,7 +69,7 @@ public abstract class DSUtil<S, D, R, C> {
 	}
 
 	public ZFrame<D, R, C> joinZColFirst(ZFrame<D, R, C> lines, ZFrame<D, R, C> lines1, String joinColumn, boolean filter) {
-		ZFrame<D, R, C> pairs = lines.joinRight(lines1, joinColumn);
+		ZFrame<D, R, C> pairs = lines.joinOnCol(lines1, joinColumn);
 		//in training, we only need that record matches only with lines bigger than itself
 		//in the case of normal as well as in the case of linking
 		if (LOG.isDebugEnabled()) {

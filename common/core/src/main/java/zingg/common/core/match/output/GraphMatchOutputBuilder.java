@@ -58,7 +58,7 @@ public class GraphMatchOutputBuilder<S,D,R,C> extends AOutputBuilder<S,D,R,C>{
 
 	public ZFrame<D,R,C> getScores(ZFrame<D, R, C> graph, ZFrame<D, R, C> dupesActual) throws Exception{
 		//write score
-		ZFrame<D,R,C>score = getMinMaxScores(dupesActual, graph).cache();
+		ZFrame<D,R,C> score = getMinMaxScores(dupesActual, graph).cache();
 		//score.toJavaRDD().coalesce(1).saveAsTextFile("/tmp/zallscoresAvg");
 		graph = graph.repartition(args.getNumPartitions(), graph.col(ColName.ID_COL)).cache();
 		if (LOG.isDebugEnabled()) {
