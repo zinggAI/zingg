@@ -15,6 +15,7 @@ import java.util.List;
 public class DataImpl<D, R, C> implements IData<D, R, C> {
 
     protected final List<ZFrame<D, R, C>> data;
+    private String name;
 
     public DataImpl(List<ZFrame<D, R, C>> data) {
         this.data = data;
@@ -28,6 +29,16 @@ public class DataImpl<D, R, C> implements IData<D, R, C> {
 
     public void addData(ZFrame<D, R, C> inputZFrame) {
         this.data.add(inputZFrame);
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -51,6 +62,15 @@ public class DataImpl<D, R, C> implements IData<D, R, C> {
             count += zFrame.count();;
         }
         return count;
+    }
+
+    @Override
+    public IData<D, R, C> cache() {
+        List<ZFrame<D, R, C>> cachedZFrames = new ArrayList<>();
+        for (ZFrame<D, R, C> zFrame : data) {
+            cachedZFrames.add(zFrame.cache());
+        }
+        return new DataImpl<>(cachedZFrames);
     }
 
     @Override

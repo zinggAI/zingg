@@ -1,9 +1,9 @@
 {
     "date": "2025-06-01",
-    "time": "00:45:52",
+    "time": "01:46:31",
     "test": "febrl_120K",
     "results": {
-        "train": 1.45,
-        "match": 5.43
+        "train": 1.47,
+        "match": 5.08
     }
 }
