@@ -1,6 +1,7 @@
-package zingg.common.core.preprocess.stopwords.model;
+package zingg.common.core.preprocess.model;
 
 public class PostStopWordProcess {
+    
     public final String z_cluster;
     public final String z_zid;
     public final String z_prediction;

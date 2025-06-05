@@ -14,7 +14,7 @@ import zingg.common.client.*;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
 import zingg.common.core.preprocess.data.PreprocessTestData;
-import zingg.common.core.preprocess.stopwords.model.PriorStopWordProcess;
+import zingg.common.core.preprocess.model.PriorStopWordProcess;
 
 public abstract class TestPreprocessors<S,D,R,C,T> {
 
@@ -28,7 +28,7 @@ public abstract class TestPreprocessors<S,D,R,C,T> {
 	}
     
     @Test
-    public void TestPreprocessorsFlow() throws ZinggClientException, Exception{
+    public void testPreprocessorsFlow() throws ZinggClientException, Exception{
         IArguments args = new Arguments();
 
         List<FieldDefinition> fieldDefs = getFieldDefinitions();
@@ -50,7 +50,7 @@ public abstract class TestPreprocessors<S,D,R,C,T> {
     private List<FieldDefinition>  getFieldDefinitions() {
         /*
             only field1 and field3 will be lower cased and trimmed
-         */
+        */
         List<FieldDefinition> fieldDefs = new ArrayList<FieldDefinition>();
         String stopWordsFileName1 = Objects.requireNonNull(TestPreprocessors.class.getResource("../../../../preProcess/stopwords/stopWords.csv")).getFile();
         FieldDefinition fieldDefinition1 = new FieldDefinition();
