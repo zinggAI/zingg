@@ -37,7 +37,6 @@ public class SparkGraphUtil implements GraphUtil<Dataset<Row>, Row, Column> {
 		GraphFrame gf = new GraphFrame(v, e);
 		//gf = gf.dropIsolatedVertices();
 		//Dataset<Row> returnGraph = gf.connectedComponents().setAlgorithm("graphx").run().cache();
-
 		Dataset<Row> returnGraph = gf.connectedComponents().run().cache();
 		//reverse back o avoid graphframes id :-()
 		returnGraph = returnGraph.join(vertices, returnGraph.col("id").equalTo(vertices.col(ColName.ID_COL)));
