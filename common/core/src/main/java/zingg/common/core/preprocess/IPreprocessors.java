@@ -10,9 +10,8 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.ZinggException;
 import zingg.common.core.context.IContext;
-import zingg.common.core.executor.processunit.IDataProcessor;
 
-public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, INeedsPreprocOrder, IDataProcessor<D, R, C> {
+public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, INeedsPreprocOrder {
 
     public static final Log LOG = LogFactory.getLog(IPreprocessors.class);
     
@@ -55,8 +54,4 @@ public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, 
         return preprocessor.preprocess(inputDF);
     }
 
-    @Override
-    default ZFrame<D, R, C> process(ZFrame<D, R, C> data) throws ZinggClientException {
-        return preprocess(data);
-    }
 }

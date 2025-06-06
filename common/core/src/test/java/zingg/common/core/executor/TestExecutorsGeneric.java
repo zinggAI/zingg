@@ -35,6 +35,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
 	public abstract List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException;
 
+	//public abstract void tearDown();	
 
 	 @Test
 	public void testExecutors() throws ZinggClientException, IOException {
