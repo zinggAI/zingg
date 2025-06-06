@@ -5,14 +5,13 @@ import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
-import zingg.common.core.data.IData;
 import zingg.common.client.options.ZinggOptions;
 import zingg.common.core.filter.PredictionFilter;
-import zingg.common.core.match.data.IDataGetter;
 import zingg.common.core.match.output.IMatchOutputBuilder;
 import zingg.common.core.match.output.LinkOutputBuilder;
 import zingg.common.core.pairs.IPairBuilder;
 import zingg.common.core.pairs.SelfPairBuilderSourceSensitive;
+
 
 
 public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
@@ -31,7 +30,7 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 	}
 
 	@Override
-	protected ZFrame<D,R,C> getActualDupes(IData<D, R, C> blocked, IData<D,R,C> testData) throws Exception, ZinggClientException{
+	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
 		PredictionFilter<D, R, C> predictionFilter = new PredictionFilter<D, R, C>();
 		return getActualDupes(blocked, testData,predictionFilter, getIPairBuilder(), null);
 	}	
@@ -57,13 +56,5 @@ public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 		}
 		return iPairBuilder;
 	}
-
-	@Override
-	public IDataGetter<S, D, R, C> getDataGetter(){
-		if (dataGetter == null){
-			this.dataGetter = new LinkDataGetter<S, D, R, C>();
-		}
-		return dataGetter;
-	}
-
+	
 }
