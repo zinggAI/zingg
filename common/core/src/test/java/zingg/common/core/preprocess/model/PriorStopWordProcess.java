@@ -1,6 +1,7 @@
-package zingg.common.core.preprocess.stopwords.model;
+package zingg.common.core.preprocess.model;
 
 public class PriorStopWordProcess {
+    
     public final String z_zid;
     public final String field1;
     public final String field2;
