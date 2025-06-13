@@ -1,6 +1,7 @@
-package zingg.common.core.preprocess.stopwords.model;
+package zingg.common.core.preprocess.model;
 
 public class Statement {
+    
     public final String statement;
 
     public Statement(String statement) {
