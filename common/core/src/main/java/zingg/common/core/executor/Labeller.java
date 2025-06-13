@@ -39,8 +39,11 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 			ZFrame<D,R,C>  unmarkedRecords = getUnmarkedRecords();
 			ZFrame<D, R, C> preprocessedUnmarkedRecords = preprocess(unmarkedRecords);
 			ZFrame<D,R,C>  updatedLabelledRecords = processRecordsCli(preprocessedUnmarkedRecords);
-			ZFrame<D, R, C> postProcessedLabelledRecords = labellerUtil.postProcessLabel(updatedLabelledRecords, unmarkedRecords);
-			getTrainingDataModel().writeLabelledOutput(postProcessedLabelledRecords,args);
+			//only post processing if there are labelled records
+			if(updatedLabelledRecords != null){
+				ZFrame<D, R, C> postProcessedLabelledRecords = labellerUtil.postProcessLabel(updatedLabelledRecords, unmarkedRecords);
+				getTrainingDataModel().writeLabelledOutput(postProcessedLabelledRecords,args);
+			}
 			LOG.info("Finished labelling phase");
 		} catch (Exception e) {
 			e.printStackTrace();
