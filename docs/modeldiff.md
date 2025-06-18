@@ -17,11 +17,12 @@ Comparison of the two outputs becomes important in such a case and understanding
 
 ### The model difference phase is run as follows:
 
-`./scripts/zingg.sh --phase diff –conf <path to original conf> --compareTo <path to new conf>`
+`./scripts/zingg.sh --phase diff –conf <path to new model conf> --compareTo <path to original conf>`
 
 The output will be as follows -&#x20;
 
-`zingg_modelDiff_originalModelId_newModelId` 
+`zingg_modelDiff_originalModelId_newModelId` in case of snowflake
+`zinggDir/newModelId/modeldiff/originalModelId_newModelId` in case of spark
 
 The output will contain records that have been impacted due to changes in clusters as a result of the new model trained. 
 
