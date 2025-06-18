@@ -68,17 +68,6 @@ public abstract class DSUtil<S, D, R, C> {
 		return pairs;
 	}
 
-	public ZFrame<D, R, C> joinZColFirst(ZFrame<D, R, C> lines, ZFrame<D, R, C> lines1, String joinColumn, boolean filter) {
-		ZFrame<D, R, C> pairs = lines.joinOnCol(lines1, joinColumn);
-		//in training, we only need that record matches only with lines bigger than itself
-		//in the case of normal as well as in the case of linking
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("pairs length " + pairs.count());
-		}
-		if (filter) pairs = pairs.filter(pairs.gt(ColName.ID_COL));		
-		return pairs;
-	}
-
 	public ZFrame<D, R, C> addUniqueCol(ZFrame<D, R, C> dupesActual, String colName) {
 		String append = System.currentTimeMillis() + ":";
 		dupesActual = dupesActual.withColumn(colName + "temp", 

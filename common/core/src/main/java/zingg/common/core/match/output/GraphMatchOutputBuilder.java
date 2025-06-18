@@ -94,8 +94,15 @@ public class GraphMatchOutputBuilder<S,D,R,C> extends AOutputBuilder<S,D,R,C>{
 	}
 
     protected ZFrame<D, R, C> getGraphWithScoresOrig(ZFrame<D, R, C> graph, ZFrame<D, R, C> score) {
-		ZFrame<D,R,C>graphWithScores = getDSUtil().joinZColFirst(
-			score, graph, ColName.ID_COL, false).cache();
+		graph = graph.withColumnRenamed(ColName.ID_COL, ColName.COL_PREFIX + ColName.ID_COL);
+		ZFrame<D, R, C> pairs = score.join(graph, ColName.ID_COL, true, "right");
+		//in training, we only need that record matches only with lines bigger than itself
+		//in the case of normal as well as in the case of linking
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("pairs length " + pairs.count());
+		}
+		//if (filter) pairs = pairs.filter(pairs.gt(ColName.ID_COL));		
+		ZFrame<D,R,C> graphWithScores = pairs.drop(ColName.COL_PREFIX + ColName.ID_COL).cache();
 		return graphWithScores;
 	}
 
