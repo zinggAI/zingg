@@ -1,12 +1,6 @@
 {	
 	"fieldDefinition":[
 		{
-			"fieldName" : "id",
-			"matchType" : "dont_use",
-			"fields" : "id",
-			"dataType": "string"
-		},
-		{
 			"fieldName" : "fname",
 			"matchType" : "fuzzy",
 			"fields" : "fname",
