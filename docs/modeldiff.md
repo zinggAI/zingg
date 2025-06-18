@@ -17,7 +17,7 @@ Comparison of the two outputs becomes important in such a case and understanding
 
 ### The model difference phase is run as follows:
 
-`./scripts/zingg.sh --phase diff –conf <path to new model conf> --compareTo <path to original conf>`
+`./scripts/zingg.sh --phase diff --conf <path to new model conf> --compareTo <path to original conf>`
 
 The output will be as follows -&#x20;
 
