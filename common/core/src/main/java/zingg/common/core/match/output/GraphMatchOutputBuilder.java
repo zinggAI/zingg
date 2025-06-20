@@ -28,13 +28,11 @@ public class GraphMatchOutputBuilder<S,D,R,C> extends AOutputBuilder<S,D,R,C>{
         return graphUtil;
     }
 
-    
-
     public void setGraphUtil(GraphUtil<D, R, C> graphUtil) {
         this.graphUtil = graphUtil;
     }
 
-    public ZFrame<D, R, C> getOutput(ZFrame<D, R, C> blocked, ZFrame<D, R, C> dupesActual) throws ZinggClientException, Exception {
+	public ZFrame<D,R,C> getGraph(ZFrame<D, R, C> blocked, ZFrame<D, R, C> dupesActual) throws ZinggClientException{
 		//-1 is initial suggestion, 1 is add, 0 is deletion, 2 is unsure
 		/*blocked = blocked.drop(ColName.HASH_COL);
 		blocked = blocked.drop(ColName.SOURCE_COL);
@@ -54,8 +52,13 @@ public class GraphMatchOutputBuilder<S,D,R,C> extends AOutputBuilder<S,D,R,C>{
 			graph.show();
 
 		}
+
+		return graph;
+	}
+
+	public ZFrame<D,R,C> getScores(ZFrame<D, R, C> graph, ZFrame<D, R, C> dupesActual) throws Exception{
 		//write score
-		ZFrame<D,R,C>score = getMinMaxScores(dupesActual, graph).cache();
+		ZFrame<D,R,C> score = getMinMaxScores(dupesActual, graph).cache();
 		//score.toJavaRDD().coalesce(1).saveAsTextFile("/tmp/zallscoresAvg");
 		graph = graph.repartition(args.getNumPartitions(), graph.col(ColName.ID_COL)).cache();
 		if (LOG.isDebugEnabled()) {
@@ -63,6 +66,10 @@ public class GraphMatchOutputBuilder<S,D,R,C> extends AOutputBuilder<S,D,R,C>{
 		}
 		ZFrame<D, R, C> graphWithScores = getGraphWithScores(graph, score);
 			//graphWithScores.toJavaRDD().saveAsTextFile("/tmp/zgraphWScores");
+		return graphWithScores;	
+	}
+
+	public ZFrame<D, R, C> dropColumns(ZFrame<D, R, C> graphWithScores){
 		graphWithScores = graphWithScores.drop(ColName.HASH_COL);
 		graphWithScores = graphWithScores.drop(ColName.COL_PREFIX + ColName.ID_COL);
 		graphWithScores = graphWithScores.drop(ColName.ID_COL);
@@ -79,9 +86,23 @@ public class GraphMatchOutputBuilder<S,D,R,C> extends AOutputBuilder<S,D,R,C>{
 		return graphWithScores;
 	}
 
+    public ZFrame<D, R, C> getOutput(ZFrame<D, R, C> blocked, ZFrame<D, R, C> dupesActual) throws ZinggClientException, Exception {
+		ZFrame<D,R,C> graph = getGraph(blocked, dupesActual);
+		ZFrame<D,R,C> score = getScores(graph, dupesActual);
+		ZFrame<D, R, C> graphWithScores = dropColumns(score);
+		return graphWithScores;
+	}
+
     protected ZFrame<D, R, C> getGraphWithScoresOrig(ZFrame<D, R, C> graph, ZFrame<D, R, C> score) {
-		ZFrame<D,R,C>graphWithScores = getDSUtil().joinZColFirst(
-			score, graph, ColName.ID_COL, false).cache();
+		graph = graph.withColumnRenamed(ColName.ID_COL, ColName.COL_PREFIX + ColName.ID_COL);
+		ZFrame<D, R, C> pairs = score.join(graph, ColName.ID_COL, true, "right");
+		//in training, we only need that record matches only with lines bigger than itself
+		//in the case of normal as well as in the case of linking
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("pairs length " + pairs.count());
+		}
+		//if (filter) pairs = pairs.filter(pairs.gt(ColName.ID_COL));		
+		ZFrame<D,R,C> graphWithScores = pairs.drop(ColName.COL_PREFIX + ColName.ID_COL).cache();
 		return graphWithScores;
 	}
 
