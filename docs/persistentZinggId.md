@@ -17,7 +17,7 @@ We want to provide a user-friendly and easy way for any Zingg user to be able to
 
 ### The reassign phase is run as follows:
 
-`./scripts/zingg.sh --phase reassignZinggId –conf <ath to new conf> --originalZinggId <path to original conf>`
+`./scripts/zingg.sh --phase reassignZinggId --conf <path to new model conf> --originalZinggId <path to original conf>`
 
 The output will be updating the output of the new run with the ZINGG_ID in NEW_OUTPUT and keeping a backup of the new output as NEW_OUTPUT_timestamp.
 
