@@ -52,6 +52,7 @@
   * [Combining Different Match Models](relations.md)
   * [Model Difference](modeldiff.md)
   * [Persistent ZINGG ID](persistentZinggId.md)
+  * [Match Statistics](stats.md)
 * [Data Sources and Sinks](dataSourcesAndSinks/connectors.md)
   * [Zingg Pipes](dataSourcesAndSinks/pipes.md)
   * [Databricks](dataSourcesAndSinks/databricks.md)
