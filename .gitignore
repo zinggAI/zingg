@@ -25,6 +25,7 @@ python/docs/_build/_doctrees
 **/.DS_Store
 perf_test/perf_test_report/testReport_ncVoters5M.json
 perf_test/perf_test_report/testReport_febrl120K.json
+assembly/dependency-reduced-pom.xml
 
 # Python stuff
 .env
