@@ -55,20 +55,18 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 		LOG.warn("Reading " + p);
 		try {
 
-		if (p.getFormat().equals(Pipe.FORMAT_INMEMORY)) {
-			input = p.getDataset(); //.df();
-		}
-		else {		
+				
 			if (p.getProps().containsKey(FilePipe.LOCATION)) {
 				input = reader.load(p.get(FilePipe.LOCATION));
 			}
 			else {
 				input = reader.load();
 			}
-    }
+    
 			if (addSource) {
 				input = input.withColumn(ColName.SOURCE_COL, p.getName());
 			}
+
 			p.setDataset(input);
 		} catch (Exception ex) {
 			LOG.warn(ex.getMessage());
@@ -195,10 +193,6 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 		
 			LOG.warn("Writing output " + p);
 			
-			if (p.getFormat().equals(Pipe.FORMAT_INMEMORY)) {
- 				p.setDataset(toWriteOrig);
-				return;
-			}
 			//SparkPipe sPipe = (SparkPipe) p;
 			if (p.getMode() != null) {
 				writer.setMode(p.getMode()); //SaveMode.valueOf(p.getMode()));
