@@ -45,6 +45,7 @@ public class Analytics {
 	public static void track(String metricName, String metricValue, boolean collectMetrics) {
 		if (collectMetrics) {
 			String metricNameToSend = metricName.replace(".", "_");
+			if (metricValue == null) metricValue = "";
 			getMetrics().put(metricNameToSend, metricValue);
 		}
 	}
@@ -123,7 +124,7 @@ public class Analytics {
 		rootNode.set("events", eventList);
 		rootNode.put("user_id", getUserId());
 		String metricEvent = rootNode.toString();
-		LOG.warn("event is " + metricEvent);
+		LOG.debug("event is " + metricEvent);
 		Analytics.sendEvents(metricEvent);
 	}
 
@@ -142,7 +143,7 @@ public class Analytics {
 			uri = builder.build();
 			URL url = uri.toURL();
    			String response = executePostRequest(url.toString(), param);
-			LOG.warn("Analytics event " + response);
+			LOG.debug("Analytics event " + response);
     		} catch (IOException | URISyntaxException e) {
 			if(LOG.isDebugEnabled()) e.printStackTrace();
 		}

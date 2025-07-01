@@ -214,7 +214,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			client.init();
 			// after setting arguments etc. as some of the listeners need it
 			client.execute();
-			client.postMetrics();
+			
 			LOG.warn("Zingg processing has completed");				
 		} 
 		catch(ZinggClientException e) {
@@ -279,6 +279,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	
 	public void execute() throws ZinggClientException {
 		zingg.execute();
+		postMetrics();
  	}
 
 	public void postMetrics() throws ZinggClientException {

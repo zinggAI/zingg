@@ -107,7 +107,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
         //byte [] byteArrayBack = (byte[]) tree.df().head().get(0);
 		byte[] byteArrayBack = getTreeFromDF(tree);
         Tree<Canopy<R>> blockingTree = null;
-        LOG.warn("byte array back is " + byteArrayBack);
+        LOG.debug("byte array back is " + byteArrayBack);
         blockingTree =  (Tree<Canopy<R>>) Util.revertObjectFromByteArray(byteArrayBack);
         return blockingTree;
 	}
