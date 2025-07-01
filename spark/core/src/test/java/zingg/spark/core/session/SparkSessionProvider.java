@@ -26,7 +26,7 @@ public class SparkSessionProvider {
         if (sparkSession == null) {
             try {
                 SparkSession.Builder builder = SparkSession
-                        .builder().config("spark.sql.adaptive.enabled", false)
+                        .builder()
                         .master("local[*]")
                         .appName("ZinggJunit");
                 Properties props = new Properties();
