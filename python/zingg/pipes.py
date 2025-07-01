@@ -38,7 +38,7 @@ class Pipe:
 
     :param name: name of the pipe
     :type name: String
-    :param format: formate of pipe e.g. bigquery,InMemory, etc.
+    :param format: formate of pipe e.g. bigquery,csv, etc.
     :type format: Format
     """
 

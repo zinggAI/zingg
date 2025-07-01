@@ -9,7 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
-//import zingg.common.client.pipe.InMemoryPipe;
 import zingg.common.client.pipe.Pipe;
 
 //import com.datastax.spark.connector.cql.*;
