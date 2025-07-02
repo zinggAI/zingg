@@ -7,7 +7,6 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 
 import zingg.common.client.ZFrame;
-//import zingg.common.client.pipe.InMemoryPipe;
 import zingg.common.client.util.DFReader;
 import zingg.common.client.util.DFWriter;
 import zingg.common.client.util.PipeUtil;
