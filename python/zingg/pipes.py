@@ -38,7 +38,7 @@ class Pipe:
 
     :param name: name of the pipe
     :type name: String
-    :param format: formate of pipe e.g. bigquery,InMemory, etc.
+    :param format: formate of pipe e.g. bigquery,csv, etc.
     :type format: Format
     """
 
@@ -252,46 +252,3 @@ class SnowflakePipe(Pipe):
         :type dbtable: String
         """
         Pipe.addProperty(self, "dbtable", dbtable)     
-        
-
-class InMemoryPipe(Pipe):
-    """ Pipe Class for working with InMemory pipeline
-
-    :param name: name of the pipe
-    :type name: String
-    :param df: provide dataset for this pipe (optional)
-    :type df: Dataset or None
-    """    
-
-    def __init__(self, name, df = None):
-        setupPipes()
-        Pipe.__init__(self, name, JPipe.FORMAT_INMEMORY)
-        if (df is not None):
-            self.setDataset(df)
-
-    def setDataset(self, df):
-        """ Method to set DataFrame of the pipe
-        
-        :param df: pandas or spark dataframe for the pipe
-        :type df: DataFrame
-        """
-        if (isinstance(df, pd.DataFrame)):
-            print('schema of pandas df is ' , Pipe.getPipe(self).getSchema())
-            if (Pipe.getPipe(self).getSchema() is not None):
-                ds = getSparkSession().createDataFrame(df, schema=Pipe.getPipe(self).getSchema())
-            else:
-                ds = getSparkSession().createDataFrame(df)
-            
-            Pipe.getPipe(self).setDataset(ds._jdf)
-        elif (isinstance(df, DataFrame)):
-            Pipe.getPipe(self).setDataset(df._jdf)
-        else:
-            LOG.error(" setDataset(): NUll or Unsupported type: %s", type(df))
-
-    def getDataset(self):
-        """ Method to get Dataset from pipe
-        
-        :return: dataset of the pipe in the format of spark dataset 
-        :rtype: Dataset<Row>
-        """
-        return Pipe.getPipe(self).getDataset().df()
