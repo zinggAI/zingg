@@ -53,25 +53,31 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 		ZFrame<D,R,C> input = null;
 		LOG.warn("Reading " + p);
 		try {
-
-				
-			if (p.getProps().containsKey(FilePipe.LOCATION)) {
-				input = reader.load(p.get(FilePipe.LOCATION));
-			}
-			else {
-				input = reader.load();
-			}
-    
-			if (addSource) {
-				input = input.withColumn(ColName.SOURCE_COL, p.getName());
-			}
-
+			input = load(reader, p, input);
+			input = loadWithSource(reader, p, input, addSource);
 			p.setDataset(input);
 		} catch (Exception ex) {
 			LOG.warn(ex.getMessage());
 			throw new ZinggClientException("Could not read data.", ex);
 		}
-		return getZFrame(input); //new SparkFrame(input);
+		return getZFrame(input); 
+	}
+
+	protected ZFrame<D,R,C> load(DFReader<D,R,C> reader, Pipe<D,R,C> p, ZFrame<D,R,C> input) throws ZinggClientException{
+		if (p.getProps().containsKey(FilePipe.LOCATION)) {
+			input = reader.load(p.get(FilePipe.LOCATION));
+		}
+		else {
+			input = reader.load();
+		}
+		return input;
+	}
+
+	protected ZFrame<D,R,C> loadWithSource(DFReader<D,R,C> reader, Pipe<D,R,C> p, ZFrame<D,R,C> input, boolean addSource) throws ZinggClientException{
+		if (addSource) {
+				input = input.withColumn(ColName.SOURCE_COL, p.getName());
+		}
+		return input;
 	}
 
 	public  ZFrame<D,R,C> readInternal(Pipe<D,R,C> p, 
@@ -182,23 +188,17 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 		return rows;
 	}
 	
-	public  void write(ZFrame<D,R,C> toWriteOrig, 
-		Pipe<D,R,C>... pipes) throws ZinggClientException {
-		try {
-			for (Pipe<D,R,C> p: pipes) {
-			//Dataset<Row> toWrite = toWriteOrig.df();
-			//DataFrameWriter writer = toWrite.write();
-			DFWriter writer = getWriter(toWriteOrig);
-		
-			LOG.warn("Writing output " + p);
-			
-			//SparkPipe sPipe = (SparkPipe) p;
-			if (p.getMode() != null) {
-				writer.setMode(p.getMode()); //SaveMode.valueOf(p.getMode()));
-			}
-			else {
-				writer.setMode("Append"); //SaveMode.valueOf("Append"));
-			}
+	public DFWriter<D,R,C> setUpWriter(ZFrame<D,R,C> toWriteOrig, Pipe<D,R,C> p) {
+		//Dataset<Row> toWrite = toWriteOrig.df();
+		//DataFrameWriter writer = toWrite.write();
+		DFWriter<D,R,C> writer = getWriter(toWriteOrig);
+		//SparkPipe sPipe = (SparkPipe) p;
+		if (p.getMode() != null) {
+			writer.setMode(p.getMode()); //SaveMode.valueOf(p.getMode()));
+		}
+		else {
+			writer.setMode("Append"); //SaveMode.valueOf("Append"));
+		}
 			/* 
 			if (p.getFormat().equals(Pipe.FORMAT_ELASTIC)) {
 				ctx.getConf().set(ElasticPipe.NODE, p.getProps().get(ElasticPipe.NODE));
@@ -207,13 +207,17 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 				ctx.getConf().set(ElasticPipe.RESOURCE, p.getName());
 			}
 			*/
-			writer = writer.format(p.getFormat());
+		writer = writer.format(p.getFormat());
 			
-			for (String key: p.getProps().keySet()) {
-				writer = writer.option(key, p.get(key));
-			}
-			if (p.getFormat() == Pipe.FORMAT_CASSANDRA) {
-				/*
+		for (String key: p.getProps().keySet()) {
+			writer = writer.option(key, p.get(key));
+		}
+
+		return writer;
+	}
+
+	public void handleCassandraFormat(DFWriter<D,R,C> writer, Pipe<D,R,C> p, ZFrame<D,R,C> toWriteOrig){
+		/*
 				ctx.getConf().set(CassandraPipe.HOST, p.getProps().get(CassandraPipe.HOST));
 				toWrite.sparkSession().conf().set(CassandraPipe.HOST, p.getProps().get(CassandraPipe.HOST));
 				//df.createCassandraTable(p.get("keyspace"), p.get("table"), opPk, opCl, CassandraConnector.apply(ctx.getConf()));
@@ -257,34 +261,35 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 				catch(Exception e) {
 					e.printStackTrace();
 					LOG.warn("Writing issue");
-				}*/
-			}
-			else if (p.getProps().containsKey("location")) {
-				LOG.warn("Writing file");
-				writer.save(p.get(FilePipe.LOCATION));
-			}	
-			else if (p.getFormat().equals(Pipe.FORMAT_JDBC)){
-				writer = getWriter(toWriteOrig);
-				writer = writer.format(p.getFormat());				
+				}
+			*/	
+	}
+	
+	public void handleLocation(DFWriter<D,R,C> writer, Pipe<D,R,C> p){
+		LOG.warn("Writing file");
+		writer.save(p.get(FilePipe.LOCATION));
+	}
 
-				//SparkPipe sPipe = (SparkPipe) p;
-				if (p.getMode() != null) {
-					writer.setMode(p.getMode()); //SaveMode.valueOf(p.getMode()));
+	public void handleJDBCFormat(Pipe<D,R,C> p, ZFrame<D,R,C> toWriteOrig){
+		DFWriter<D,R,C> writer = setUpWriter(toWriteOrig, p);
+		writer.save();			
+	}
+
+	public void write(ZFrame<D,R,C> toWriteOrig, 
+		Pipe<D,R,C>... pipes) throws ZinggClientException {
+		try {
+			for (Pipe<D,R,C> p: pipes) {
+				LOG.warn("Writing output " + p);
+				DFWriter<D,R,C> writer = setUpWriter(toWriteOrig, p);
+				if (p.getFormat() == Pipe.FORMAT_CASSANDRA) {
+                	handleCassandraFormat(writer, p, toWriteOrig);
+				} else if (p.getProps().containsKey("location")) {
+					handleLocation(writer, p);
+				} else if (p.getFormat().equals(Pipe.FORMAT_JDBC)) {
+					handleJDBCFormat(p, toWriteOrig);
+				} else {
+					writer.save();
 				}
-				else {
-					writer.setMode("Append") ;//SaveMode.valueOf("Append"));
-				}
-				for (String key: p.getProps().keySet()) {
-					writer = writer.option(key, p.get(key));
-				}
-				writer.save();
-			}
-			else {			
-				writer.save();
-			
-			}
-			
-			
 			}
 		} catch (Exception ex) {
 			throw new ZinggClientException(ex.getMessage());
@@ -303,8 +308,6 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 	}
 	*/
 
-	
-	
 	@Override
 	public String getPipesAsString(Pipe<D,R,C>[] pipes) {
 		return Arrays.stream(pipes)
