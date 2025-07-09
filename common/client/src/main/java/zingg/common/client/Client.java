@@ -217,28 +217,16 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			client.postMetrics();
 			LOG.warn("Zingg processing has completed");				
 		} 
-		catch(ZinggClientException e) {
+		catch(Throwable throwable) {
 			success = false;
 			if (options != null && options.get(ClientOptions.EMAIL) != null) {
 				Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
 					"Zingg Error ",
-					e.getMessage()));
+						throwable.getMessage()));
 			}
 			LOG.warn("Apologies for this message. Zingg has encountered an error. "
-					+ e.getMessage());;
-			if (LOG.isDebugEnabled()) e.printStackTrace();
-		}
-		catch( Throwable e) {
-			success = false;
-			if (options != null && options.get(ClientOptions.EMAIL) != null) {
-				Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
-					"Zingg Error ",
-					e.getMessage()));
-			}
-			LOG.warn("Apologies for this message. Zingg has encountered an error. "
-					+ e.getMessage());
-					e.printStackTrace();
-			if (LOG.isDebugEnabled()) e.printStackTrace();
+					+ throwable.getMessage());
+			if (LOG.isDebugEnabled()) throwable.printStackTrace();
 		}
 		finally {
 			try {
