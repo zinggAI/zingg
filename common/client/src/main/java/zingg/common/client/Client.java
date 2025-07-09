@@ -187,7 +187,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public void mainMethod(String... args) {
 		Client<S,D,R,C,T> client = null;
 		ClientOptions options = null;
-		
+		boolean success = true;
 		try {
 			
 			for (String a: args) LOG.debug("args " + a);
@@ -217,26 +217,16 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			
 			LOG.warn("Zingg processing has completed");				
 		} 
-		catch(ZinggClientException e) {
+		catch(Throwable throwable) {
+			success = false;
 			if (options != null && options.get(ClientOptions.EMAIL) != null) {
 				Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
 					"Zingg Error ",
-					e.getMessage()));
+						throwable.getMessage()));
 			}
 			LOG.warn("Apologies for this message. Zingg has encountered an error. "
-					+ e.getMessage());;
-			if (LOG.isDebugEnabled()) e.printStackTrace();
-		}
-		catch( Throwable e) {
-			if (options != null && options.get(ClientOptions.EMAIL) != null) {
-				Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
-					"Zingg Error ",
-					e.getMessage()));
-			}
-			LOG.warn("Apologies for this message. Zingg has encountered an error. "
-					+ e.getMessage());
-					e.printStackTrace();
-			if (LOG.isDebugEnabled()) e.printStackTrace();
+					+ throwable.getMessage());
+			if (LOG.isDebugEnabled()) throwable.printStackTrace();
 		}
 		finally {
 			try {
@@ -245,12 +235,18 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 					//client.postMetrics();
 					client.stop();
 				}
+				if (!success) {
+					System.exit(1);
+				}
 			}
 			catch(ZinggClientException e) {
 				if (options != null && options.get(ClientOptions.EMAIL) != null) {
 					Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
 						"Zingg Error ",
 						e.getMessage()));
+				}
+				if (!success) {
+					System.exit(1);
 				}
 			}
 		}
