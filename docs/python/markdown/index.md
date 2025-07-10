@@ -1,4 +1,4 @@
-# Python API
+# Community Python API
 
 ## Zingg Entity Resolution Python Package
 

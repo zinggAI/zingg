@@ -42,6 +42,7 @@ public interface PipeUtilBase<S, D, R, C> {
 	public ZFrame<D,R,C> addLineNo (ZFrame<D,R,C> input);
 
 	public DFWriter<D,R,C> getWriter(ZFrame<D,R,C> input);
+
 	public DFReader<D,R,C> getReader();
 	
 }

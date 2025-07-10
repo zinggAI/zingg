@@ -26,8 +26,6 @@ public class SparkDFReader implements DFReader<Dataset<Row>, Row, Column> {
         return this;
     }
 
-    
-
     public DFReader<Dataset<Row>, Row, Column> format(String f) {
         this.reader.format(f);
         return this;
