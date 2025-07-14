@@ -192,7 +192,7 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 			for (Pipe<D,R,C> p: pipes) {
 			//Dataset<Row> toWrite = toWriteOrig.df();
 			//DataFrameWriter writer = toWrite.write();
-			DFWriter writer = getWriter(toWriteOrig);
+			DFWriter<D,R,C> writer = getWriter(toWriteOrig);
 		
 			LOG.warn("Writing output " + p);
 			
@@ -208,19 +208,19 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 			for (String key: p.getProps().keySet()) {
 				writer = writer.option(key, p.get(key));
 			}
-			save(p, writer);
+			save(p, writer, toWriteOrig);
 			}
 		} catch (Exception ex) {
 			throw new ZinggClientException(ex.getMessage());
 		}
 	}
 
-	public DFWriter getWriterWithFormat(DFWriter writer, Pipe p) {
+	public DFWriter<D,R,C> getWriterWithFormat(DFWriter<D,R,C> writer, Pipe<D,R,C> p) {
 		writer = writer.format(p.getFormat());
 		return writer;
 	}
 
-	public void save(Pipe p, DFWriter writer){
+	public void save(Pipe<D,R,C> p, DFWriter<D,R,C> writer, ZFrame<D,R,C> toWriteOrig){
 		if (p.getProps().containsKey("location")) {
 				LOG.warn("Writing file");
 				writer.save(p.get(FilePipe.LOCATION));
