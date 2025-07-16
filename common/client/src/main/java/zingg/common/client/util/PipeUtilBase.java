@@ -9,39 +9,39 @@ import zingg.common.client.pipe.Pipe;
 public interface PipeUtilBase<S, D, R, C> {
 	
 
-	public ZFrame<D, R, C> readInternal(Pipe<D, R, C> p, boolean addSource) throws ZinggClientException;
+	ZFrame<D, R, C> readInternal(Pipe<D, R, C> p, boolean addSource) throws ZinggClientException;
 
-	public  ZFrame<D, R, C> readInternal(boolean addLineNo,
-		boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException;
+	ZFrame<D, R, C> readInternal(boolean addLineNo,
+                                 boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException;
 	
-	public ZFrame<D,R,C> readInternal(boolean addExtraCol, boolean addLineNo,
-			boolean addSource, Pipe<D,R,C>... pipes) throws ZinggClientException;
+	ZFrame<D,R,C> readInternal(boolean addExtraCol, boolean addLineNo,
+                               boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException;
 
-	public  ZFrame<D, R, C> read(boolean addLineNo, boolean addSource, Pipe<D, R, C>... pipes) 
+	ZFrame<D, R, C> read(boolean addLineNo, boolean addSource, Pipe<D, R, C>... pipes)
 		throws ZinggClientException;
 
 	
-	public  ZFrame<D, R, C> read(boolean addLineNo, int numPartitions,
-		boolean addSource, Pipe<D, R, C>... pipes)
+	ZFrame<D, R, C> read(boolean addLineNo, int numPartitions,
+                         boolean addSource, Pipe<D, R, C>... pipes)
 		throws ZinggClientException;
 
-	public  ZFrame<D,R,C> read(boolean addExtraCol, boolean addLineNo, int numPartitions,
-			boolean addSource, Pipe<D,R,C>... pipes) throws ZinggClientException;
+	ZFrame<D,R,C> read(boolean addExtraCol, boolean addLineNo, int numPartitions,
+                       boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException;
 
-	public void write(ZFrame<D, R, C> toWriteOrig, Pipe<D, R, C>... pipes)
+	void write(ZFrame<D, R, C> toWriteOrig, Pipe<D, R, C>... pipes)
 		throws ZinggClientException;
 
-	public String getPipesAsString(Pipe<D,R,C>[] pipes);
+	String getPipesAsString(Pipe<D, R, C>[] pipes);
 
-	public S getSession();
+	S getSession();
 
-	public void setSession(S session);
+	void setSession(S session);
 
-	public ZFrame<D,R,C> getZFrame(ZFrame<D,R,C> z);
+	ZFrame<D,R,C> getZFrame(ZFrame<D, R, C> z);
 
-	public ZFrame<D,R,C> addLineNo (ZFrame<D,R,C> input);
+	ZFrame<D,R,C> addLineNo(ZFrame<D, R, C> input);
 
-	public DFWriter<D,R,C> getWriter(ZFrame<D,R,C> input);
-	public DFReader<D,R,C> getReader();
+	DFWriter<D,R,C> getWriter(ZFrame<D, R, C> input);
+	DFReader<D,R,C> getReader();
 	
 }
