@@ -1,930 +1,865 @@
-::: wy-grid-for-nav
-::: wy-side-scroll
-::: wy-side-nav-search
-[Zingg Enterprise](index.html){.icon .icon-home}
+# Zingg Enterpise EC Entity Resolution Package
 
-::: {role="search"}
-:::
-:::
-
-::: {.wy-menu .wy-menu-vertical spy="affix" role="navigation" aria-label="Navigation menu"}
--   [Zingg Enterpise Entity Resolution Package](#){.current .reference
-    .internal}
-    -   [zinggEC.enterprise.common.ApproverArguments](#zinggec-enterprise-common-approverarguments){.reference
-        .internal}
-    -   [[`ApproverArguments`{.docutils .literal
-        .notranslate}]{.pre}](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments){.reference
-        .internal}
-        -   [[`ApproverArguments.getApprovalQuery()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.getApprovalQuery){.reference
-            .internal}
-        -   [[`ApproverArguments.getArgs()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.getArgs){.reference
-            .internal}
-        -   [[`ApproverArguments.getDestination()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.getDestination){.reference
-            .internal}
-        -   [[`ApproverArguments.getParentArgs()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.getParentArgs){.reference
-            .internal}
-        -   [[`ApproverArguments.setApprovalQuery()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.setApprovalQuery){.reference
-            .internal}
-        -   [[`ApproverArguments.setArgs()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.setArgs){.reference
-            .internal}
-        -   [[`ApproverArguments.setDestination()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.setDestination){.reference
-            .internal}
-        -   [[`ApproverArguments.setParentArgs()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.setParentArgs){.reference
-            .internal}
-    -   [zinggEC.enterprise.common.IncrementalArguments](#zinggec-enterprise-common-incrementalarguments){.reference
-        .internal}
-    -   [[`IncrementalArguments`{.docutils .literal
-        .notranslate}]{.pre}](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments){.reference
-        .internal}
-        -   [[`IncrementalArguments.getArgs()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getArgs){.reference
-            .internal}
-        -   [[`IncrementalArguments.getDeleteAction()`{.docutils
-            .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getDeleteAction){.reference
-            .internal}
-        -   [[`IncrementalArguments.getDeletedData()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getDeletedData){.reference
-            .internal}
-        -   [[`IncrementalArguments.getIncrementalData()`{.docutils
-            .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getIncrementalData){.reference
-            .internal}
-        -   [[`IncrementalArguments.getParentArgs()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getParentArgs){.reference
-            .internal}
-        -   [[`IncrementalArguments.setArgs()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setArgs){.reference
-            .internal}
-        -   [[`IncrementalArguments.setDeleteAction()`{.docutils
-            .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setDeleteAction){.reference
-            .internal}
-        -   [[`IncrementalArguments.setDeletedData()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setDeletedData){.reference
-            .internal}
-        -   [[`IncrementalArguments.setIncrementalData()`{.docutils
-            .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setIncrementalData){.reference
-            .internal}
-        -   [[`IncrementalArguments.setParentArgs()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setParentArgs){.reference
-            .internal}
-    -   [zinggEC.enterprise.common.MappingMatchType](#zinggec-enterprise-common-mappingmatchtype){.reference
-        .internal}
-    -   [[`MappingMatchType`{.docutils .literal
-        .notranslate}]{.pre}](#zinggEC.enterprise.common.MappingMatchType.MappingMatchType){.reference
-        .internal}
-        -   [[`MappingMatchType.getMappingMatchType()`{.docutils
-            .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.MappingMatchType.MappingMatchType.getMappingMatchType){.reference
-            .internal}
-    -   [zinggEC.enterprise.common.epipes](#zinggec-enterprise-common-epipes){.reference
-        .internal}
-    -   [[`ECsvPipe`{.docutils .literal
-        .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.ECsvPipe){.reference
-        .internal}
-        -   [[`ECsvPipe.setDelimiter()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.ECsvPipe.setDelimiter){.reference
-            .internal}
-        -   [[`ECsvPipe.setHeader()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.ECsvPipe.setHeader){.reference
-            .internal}
-        -   [[`ECsvPipe.setLocation()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.ECsvPipe.setLocation){.reference
-            .internal}
-    -   [[`EPipe`{.docutils .literal
-        .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.EPipe){.reference
-        .internal}
-        -   [[`EPipe.getPassthroughExpr()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.EPipe.getPassthroughExpr){.reference
-            .internal}
-        -   [[`EPipe.getPassthruData()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.EPipe.getPassthruData){.reference
-            .internal}
-        -   [[`EPipe.getUsableData()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.EPipe.getUsableData){.reference
-            .internal}
-        -   [[`EPipe.hasPassThru()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.EPipe.hasPassThru){.reference
-            .internal}
-        -   [[`EPipe.setPassthroughExpr()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.EPipe.setPassthroughExpr){.reference
-            .internal}
-    -   [[`InMemoryPipe`{.docutils .literal
-        .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.InMemoryPipe){.reference
-        .internal}
-        -   [[`InMemoryPipe.getDataset()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.InMemoryPipe.getDataset){.reference
-            .internal}
-        -   [[`InMemoryPipe.setDataset()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.InMemoryPipe.setDataset){.reference
-            .internal}
-    -   [[`UCPipe`{.docutils .literal
-        .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.UCPipe){.reference
-        .internal}
-        -   [[`UCPipe.setTable()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.UCPipe.setTable){.reference
-            .internal}
-    -   [zinggEC.enterprise.common.EArguments](#zinggec-enterprise-common-earguments){.reference
-        .internal}
-    -   [[`DeterministicMatching`{.docutils .literal
-        .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.DeterministicMatching){.reference
-        .internal}
-        -   [[`DeterministicMatching.getDeterministicMatching()`{.docutils
-            .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.DeterministicMatching.getDeterministicMatching){.reference
-            .internal}
-    -   [[`EArguments`{.docutils .literal
-        .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.EArguments){.reference
-        .internal}
-        -   [[`EArguments.getArgs()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.EArguments.getArgs){.reference
-            .internal}
-        -   [[`EArguments.getData()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.EArguments.getData){.reference
-            .internal}
-        -   [[`EArguments.getDeterministicMatching()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.EArguments.getDeterministicMatching){.reference
-            .internal}
-        -   [[`EArguments.getFieldDefinition()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.EArguments.getFieldDefinition){.reference
-            .internal}
-        -   [[`EArguments.getPassthroughExpr()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.EArguments.getPassthroughExpr){.reference
-            .internal}
-        -   [[`EArguments.getPrimaryKey()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.EArguments.getPrimaryKey){.reference
-            .internal}
-        -   [[`EArguments.setArgs()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.EArguments.setArgs){.reference
-            .internal}
-        -   [[`EArguments.setBlockingModel()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.EArguments.setBlockingModel){.reference
-            .internal}
-        -   [[`EArguments.setData()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.EArguments.setData){.reference
-            .internal}
-        -   [[`EArguments.setDeterministicMatchingCondition()`{.docutils
-            .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.EArguments.setDeterministicMatchingCondition){.reference
-            .internal}
-        -   [[`EArguments.setFieldDefinition()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.EArguments.setFieldDefinition){.reference
-            .internal}
-        -   [[`EArguments.setPassthroughExpr()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EArguments.EArguments.setPassthroughExpr){.reference
-            .internal}
-    -   [zinggEC.enterprise.common.EFieldDefinition](#zinggec-enterprise-common-efielddefinition){.reference
-        .internal}
-    -   [[`EFieldDefinition`{.docutils .literal
-        .notranslate}]{.pre}](#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition){.reference
-        .internal}
-        -   [[`EFieldDefinition.getMatchTypeArray()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition.getMatchTypeArray){.reference
-            .internal}
-        -   [[`EFieldDefinition.getPrimaryKey()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition.getPrimaryKey){.reference
-            .internal}
-        -   [[`EFieldDefinition.setPrimaryKey()`{.docutils .literal
-            .notranslate}]{.pre}](#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition.setPrimaryKey){.reference
-            .internal}
-:::
-:::
-
-::: {.section .wy-nav-content-wrap toggle="wy-nav-shift"}
-[Zingg Enterprise](index.html)
-
-::: wy-nav-content
-::: rst-content
-::: {role="navigation" aria-label="Page navigation"}
--   [](index.html){.icon .icon-home aria-label="Home"}
--   Zingg Enterpise Entity Resolution Package
--   [View page source](_sources/zinggEC.rst.txt){rel="nofollow"}
-
-------------------------------------------------------------------------
-:::
-
-::: {.document role="main" itemscope="itemscope" itemtype="http://schema.org/Article"}
-::: {itemprop="articleBody"}
-::: {#zingg-enterpise-entity-resolution-package .section}
-# Zingg Enterpise Entity Resolution Package[](#zingg-enterpise-entity-resolution-package "Link to this heading"){.headerlink}
-
-Zingg Enterprise Python APIs for entity resolution, record linkage, data
-mastering and deduplication using ML
-([https://www.zingg.ai](https://www.zingg.ai){.reference .external})
+Zingg Enterprise Python APIs for entity resolution, record linkage, data mastering and deduplication using ML
+([https://www.zingg.ai](https://www.zingg.ai))
 
 requires python 3.6+; spark 3.5.0 Otherwise,
-[`zinggES.enterprise.spark.ESparkClient()`{.xref .py .py-func .docutils
-.literal .notranslate}]{.pre} cannot be executed
+[`zinggES.enterprise.spark.ESparkClient.EZingg()`](#zinggES.enterprise.spark.ESparkClient.EZingg) cannot be executed
 
-::: {.toctree-wrapper .compound}
-:::
-
-::: {#zinggec-enterprise-common-approverarguments .section}
-[]{#module-zinggEC.enterprise.common.ApproverArguments}[]{#module-zinggEC}
-
-## zinggEC.enterprise.common.ApproverArguments[](#zinggec-enterprise-common-approverarguments "Link to this heading"){.headerlink}
+## zinggEC.enterprise.common.ApproverArguments
 
 This module is to set up the approval feature
-:::
 
-*[[class]{.pre}]{.k}[ ]{.w}*[[zinggEC.enterprise.common.ApproverArguments.]{.pre}]{.sig-prename .descclassname}[[ApproverArguments]{.pre}]{.sig-name .descname}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments){.reference .internal}[](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments "Link to this definition"){.headerlink}
+_class
+_zinggEC.enterprise.common.ApproverArguments.ApproverArguments[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments)
 
-:   Bases: [`object`{.xref .py .py-class .docutils .literal
-    .notranslate}]{.pre}
+    
 
-    [[getApprovalQuery]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.getApprovalQuery){.reference .internal}[](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.getApprovalQuery "Link to this definition"){.headerlink}
+Bases: `object`
 
-    :   Method to get query for approval
+getApprovalQuery()[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.getApprovalQuery)
 
-        Returns[:]{.colon}
+    
 
-        :   query in string format for approval condition
+Method to get query for approval
 
-        Return type[:]{.colon}
+Returns:
 
-        :   String
+    
 
-    [[getArgs]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.getArgs){.reference .internal}[](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.getArgs "Link to this definition"){.headerlink}
+query in string format for approval condition
 
-    :   Method to get ApproverArguments
+Return type:
 
-        Returns[:]{.colon}
+    
 
-        :   ApproverArguments parameter value
+String
 
-        Return type[:]{.colon}
+getArgs()[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.getArgs)
 
-        :   [ApproverArguments](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments "zinggEC.enterprise.common.ApproverArguments.ApproverArguments"){.reference
-            .internal}
+    
 
-    [[getDestination]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.getDestination){.reference .internal}[](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.getDestination "Link to this definition"){.headerlink}
+Method to get ApproverArguments
 
-    :   Method to get the destination of output
+Returns:
 
-        Returns[:]{.colon}
+    
 
-        :   Array of data contained in EPipes
+ApproverArguments parameter value
 
-        Return type[:]{.colon}
+Return type:
 
-        :   Array\[[EPipe](#zinggEC.enterprise.common.epipes.EPipe "zinggEC.enterprise.common.epipes.EPipe"){.reference
-            .internal}\]
+    
 
-    [[getParentArgs]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.getParentArgs){.reference .internal}[](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.getParentArgs "Link to this definition"){.headerlink}
+ApproverArguments
 
-    :   Method to get EArguments
+getDestination()[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.getDestination)
 
-        Returns[:]{.colon}
+    
 
-        :   EArguments parameter value
+Method to get the destination of output
 
-        Return type[:]{.colon}
+Returns:
 
-        :   [EArguments](#zinggEC.enterprise.common.EArguments.EArguments "zinggEC.enterprise.common.EArguments.EArguments"){.reference
-            .internal}
+    
 
-    [[setApprovalQuery]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[approval_query]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.setApprovalQuery){.reference .internal}[](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.setApprovalQuery "Link to this definition"){.headerlink}
+Array of data contained in EPipes
 
-    :   Method to set query for approval
+Return type:
 
-        Parameters[:]{.colon}
+    
 
-        :   **approval_query** (*String*) -- setting a query in string
-            format for approval condition
+Array[EPipe]
 
-    [[setArgs]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[arguments_obj]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.setArgs){.reference .internal}[](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.setArgs "Link to this definition"){.headerlink}
+getParentArgs()[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.getParentArgs)
 
-    :   Method to set ApproverArguments
+    
 
-        Parameters[:]{.colon}
+Method to get EArguments
 
-        :   **argumentsObj**
-            ([*ApproverArguments*](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments "zinggEC.enterprise.common.ApproverArguments.ApproverArguments"){.reference
-            .internal}) -- ApproverArguments object
+Returns:
 
-    [[setDestination]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[\*]{.pre}]{.o}[[pipes]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.setDestination){.reference .internal}[](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.setDestination "Link to this definition"){.headerlink}
+    
 
-    :   Method to set the multiple pipes for output destination
+EArguments parameter value
 
-        Parameters[:]{.colon}
+Return type:
 
-        :   **pipes** (*EPipes*) -- EPipes object
+    
 
-    [[setParentArgs]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[argumentsObj]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.setParentArgs){.reference .internal}[](#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.setParentArgs "Link to this definition"){.headerlink}
+EArguments
 
-    :   Method to set EArguments
+setApprovalQuery(_approval_query_)[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.setApprovalQuery)
 
-        Parameters[:]{.colon}
+    
 
-        :   **argumentsObj**
-            ([*EArguments*](#zinggEC.enterprise.common.EArguments.EArguments "zinggEC.enterprise.common.EArguments.EArguments"){.reference
-            .internal}) -- EArguments object
+Method to set query for approval
 
-::: {#zinggec-enterprise-common-incrementalarguments .section}
-[]{#module-zinggEC.enterprise.common.IncrementalArguments}
+Parameters:
 
-## zinggEC.enterprise.common.IncrementalArguments[](#zinggec-enterprise-common-incrementalarguments "Link to this heading"){.headerlink}
+    
+
+**approval_query** (_String_) – setting a query in string format for approval
+condition
+
+setArgs(_arguments_obj_)[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.setArgs)
+
+    
+
+Method to set ApproverArguments
+
+Parameters:
+
+    
+
+**argumentsObj** (_ApproverArguments_) – ApproverArguments object
+
+setDestination(_*
+pipes_)[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.setDestination)
+
+    
+
+Method to set the multiple pipes for output destination
+
+Parameters:
+
+    
+
+**pipes** (_EPipes_) – EPipes object
+
+setParentArgs(_argumentsObj_)[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.setParentArgs)
+
+    
+
+Method to set EArguments
+
+Parameters:
+
+    
+
+**argumentsObj** (_EArguments_) – EArguments object
+
+## zinggEC.enterprise.common.IncrementalArguments
 
 This module is to set up the incremental feature
-:::
 
-*[[class]{.pre}]{.k}[ ]{.w}*[[zinggEC.enterprise.common.IncrementalArguments.]{.pre}]{.sig-prename .descclassname}[[IncrementalArguments]{.pre}]{.sig-name .descname}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments){.reference .internal}[](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments "Link to this definition"){.headerlink}
+_class
+_zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments)
 
-:   Bases: [`object`{.xref .py .py-class .docutils .literal
-    .notranslate}]{.pre}
+    
 
-    [[getArgs]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getArgs){.reference .internal}[](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getArgs "Link to this definition"){.headerlink}
+Bases: `object`
 
-    :   Method to get IncrementalArguments
+getArgs()[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getArgs)
 
-        Returns[:]{.colon}
+    
 
-        :   IncrementalArguments parameter value
+Method to get IncrementalArguments
 
-        Return type[:]{.colon}
+Returns:
 
-        :   [IncrementalArguments](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments "zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments"){.reference
-            .internal}
+    
 
-    [[getDeleteAction]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getDeleteAction){.reference .internal}[](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getDeleteAction "Link to this definition"){.headerlink}
+IncrementalArguments parameter value
 
-    :   Method to get Delete Action
+Return type:
 
-        Returns[:]{.colon}
+    
 
-        :   DeleteAction parameter value
+IncrementalArguments
 
-        Return type[:]{.colon}
+getDeleteAction()[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getDeleteAction)
 
-        :   DeleteAction
+    
 
-    [[getDeletedData]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getDeletedData){.reference .internal}[](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getDeletedData "Link to this definition"){.headerlink}
+Method to get Delete Action
 
-    :   Method to get Deleted Data
+Returns:
 
-        Returns[:]{.colon}
+    
 
-        :   data that needs to be deleted from incremental run
+DeleteAction parameter value
 
-        Return type[:]{.colon}
+Return type:
 
-        :   Array\[[EPipe](#zinggEC.enterprise.common.epipes.EPipe "zinggEC.enterprise.common.epipes.EPipe"){.reference
-            .internal}\]
+    
 
-    [[getIncrementalData]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getIncrementalData){.reference .internal}[](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getIncrementalData "Link to this definition"){.headerlink}
+DeleteAction
 
-    :   Method to get Incremental Data
+getDeletedData()[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getDeletedData)
 
-        Returns[:]{.colon}
+    
 
-        :   data that needs to be passed for incremental run
+Method to get Deleted Data
 
-        Return type[:]{.colon}
+Returns:
 
-        :   Array\[[EPipe](#zinggEC.enterprise.common.epipes.EPipe "zinggEC.enterprise.common.epipes.EPipe"){.reference
-            .internal}\]
+    
 
-    [[getParentArgs]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getParentArgs){.reference .internal}[](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getParentArgs "Link to this definition"){.headerlink}
+data that needs to be deleted from incremental run
 
-    :   Method to get EArguments
+Return type:
 
-        Returns[:]{.colon}
+    
 
-        :   EArguments parameter value
+Array[EPipe]
 
-        Return type[:]{.colon}
+getIncrementalData()[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getIncrementalData)
 
-        :   [EArguments](#zinggEC.enterprise.common.EArguments.EArguments "zinggEC.enterprise.common.EArguments.EArguments"){.reference
-            .internal}
+    
 
-    [[setArgs]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[argumentsObj]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setArgs){.reference .internal}[](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setArgs "Link to this definition"){.headerlink}
+Method to get Incremental Data
 
-    :   Method to set IncrementalArguments
+Returns:
 
-        Parameters[:]{.colon}
+    
 
-        :   **argumentsObj**
-            ([*IncrementalArguments*](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments "zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments"){.reference
-            .internal}) -- IncrementalArguments object
+data that needs to be passed for incremental run
 
-    [[setDeleteAction]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[deleteAction]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setDeleteAction){.reference .internal}[](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setDeleteAction "Link to this definition"){.headerlink}
+Return type:
 
-    :   Method to set Delete Action
+    
 
-        Parameters[:]{.colon}
+Array[EPipe]
 
-        :   **deleteAction** (*DeleteAction*) -- DeleteAction object
+getParentArgs()[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getParentArgs)
 
-    [[setDeletedData]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[\*]{.pre}]{.o}[[pipes]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setDeletedData){.reference .internal}[](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setDeletedData "Link to this definition"){.headerlink}
+    
 
-    :   Method to set Deleted Data
+Method to get EArguments
 
-        Parameters[:]{.colon}
+Returns:
 
-        :   **pipes** (*EPipes*) -- EPipes object
+    
 
-    [[setIncrementalData]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[\*]{.pre}]{.o}[[pipes]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setIncrementalData){.reference .internal}[](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setIncrementalData "Link to this definition"){.headerlink}
+EArguments parameter value
 
-    :   Method to set Incremental Data
+Return type:
 
-        Parameters[:]{.colon}
+    
 
-        :   **pipes** (*EPipes*) -- EPipes object
+EArguments
 
-    [[setParentArgs]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[argumentsObj]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setParentArgs){.reference .internal}[](#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setParentArgs "Link to this definition"){.headerlink}
+setArgs(_argumentsObj_)[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setArgs)
 
-    :   Method to set EArguments
+    
 
-        Parameters[:]{.colon}
+Method to set IncrementalArguments
 
-        :   **argumentsObj**
-            ([*EArguments*](#zinggEC.enterprise.common.EArguments.EArguments "zinggEC.enterprise.common.EArguments.EArguments"){.reference
-            .internal}) -- EArguments object
+Parameters:
 
-::: {#zinggec-enterprise-common-mappingmatchtype .section}
-[]{#module-zinggEC.enterprise.common.MappingMatchType}
+    
 
-## zinggEC.enterprise.common.MappingMatchType[](#zinggec-enterprise-common-mappingmatchtype "Link to this heading"){.headerlink}
+**argumentsObj** (_IncrementalArguments_) – IncrementalArguments object
+
+setDeleteAction(_deleteAction_)[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setDeleteAction)
+
+    
+
+Method to set Delete Action
+
+Parameters:
+
+    
+
+**deleteAction** (_DeleteAction_) – DeleteAction object
+
+setDeletedData(_*
+pipes_)[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setDeletedData)
+
+    
+
+Method to set Deleted Data
+
+Parameters:
+
+    
+
+**pipes** (_EPipes_) – EPipes object
+
+setIncrementalData(_*
+pipes_)[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setIncrementalData)
+
+    
+
+Method to set Incremental Data
+
+Parameters:
+
+    
+
+**pipes** (_EPipes_) – EPipes object
+
+setParentArgs(_argumentsObj_)[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setParentArgs)
+
+    
+
+Method to set EArguments
+
+Parameters:
+
+    
+
+**argumentsObj** (_EArguments_) – EArguments object
+
+## zinggEC.enterprise.common.MappingMatchType
 
 This module is to work with the mapping match type which is used for
 leveraging domain expertise to push matching accuracy. Also saves time
 massaging data before matching.
-:::
 
-*[[class]{.pre}]{.k}[ ]{.w}*[[zinggEC.enterprise.common.MappingMatchType.]{.pre}]{.sig-prename .descclassname}[[MappingMatchType]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[name]{.pre}]{.n}*, *[[value]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/MappingMatchType.html#MappingMatchType){.reference .internal}[](#zinggEC.enterprise.common.MappingMatchType.MappingMatchType "Link to this definition"){.headerlink}
+_class _zinggEC.enterprise.common.MappingMatchType.MappingMatchType(_name_ ,
+_value_)[[source]](_modules/zinggEC/enterprise/common/MappingMatchType.html#MappingMatchType)
 
-:   Bases: [`object`{.xref .py .py-class .docutils .literal
-    .notranslate}]{.pre}
+    
 
-    MappingMatchType class for defining mappings required for matching
-    on a field
+Bases: `object`
 
-    Parameters[:]{.colon}
+MappingMatchType class for defining mappings required for matching on a field
 
-    :   -   **name** (*String*) -- name of the match type - MAPPING
+Parameters:
 
-        -   **format** (*String*) -- name of the json containing
-            mappings
+    
 
-    [[getMappingMatchType]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/MappingMatchType.html#MappingMatchType.getMappingMatchType){.reference .internal}[](#zinggEC.enterprise.common.MappingMatchType.MappingMatchType.getMappingMatchType "Link to this definition"){.headerlink}
+  * **name** (_String_) – name of the match type - MAPPING
 
-    :   Method to get mapping match type
+  * **format** (_String_) – name of the json containing mappings
 
-        Returns[:]{.colon}
+getMappingMatchType()[[source]](_modules/zinggEC/enterprise/common/MappingMatchType.html#MappingMatchType.getMappingMatchType)
 
-        :   mapping match type containg name and value
+    
 
-        Return type[:]{.colon}
+Method to get mapping match type
 
-        :   [MappingMatchType](#zinggEC.enterprise.common.MappingMatchType.MappingMatchType "zinggEC.enterprise.common.MappingMatchType.MappingMatchType"){.reference
-            .internal}
+Returns:
 
-::: {#zinggec-enterprise-common-epipes .section}
-[]{#module-zinggEC.enterprise.common.epipes}
+    
 
-## zinggEC.enterprise.common.epipes[](#zinggec-enterprise-common-epipes "Link to this heading"){.headerlink}
+mapping match type containg name and value
+
+Return type:
+
+    
+
+MappingMatchType
+
+## zinggEC.enterprise.common.epipes
 
 This module is submodule of zingg to work with different types of Pipes
-supported in Enterprise. Classes of this module inherit the EPipe class,
-and use that class to create many different types of pipes.
-:::
+supported in Enterprise. Classes of this module inherit the EPipe class, and
+use that class to create many different types of pipes.
 
-*[[class]{.pre}]{.k}[ ]{.w}*[[zinggEC.enterprise.common.epipes.]{.pre}]{.sig-prename .descclassname}[[ECsvPipe]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[name]{.pre}]{.n}*, *[[location]{.pre}]{.n}[[=]{.pre}]{.o}[[None]{.pre}]{.default_value}*, *[[schema]{.pre}]{.n}[[=]{.pre}]{.o}[[None]{.pre}]{.default_value}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#ECsvPipe){.reference .internal}[](#zinggEC.enterprise.common.epipes.ECsvPipe "Link to this definition"){.headerlink}
+_class _zinggEC.enterprise.common.epipes.ECsvPipe(_name_ , _location =None_,
+_schema
+=None_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#ECsvPipe)
 
-:   Bases: [[`EPipe`{.xref .py .py-class .docutils .literal
-    .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.EPipe "zinggEC.enterprise.common.epipes.EPipe"){.reference
-    .internal}
+    
 
-    Class CsvPipe: used for working with text files which uses a pipe
-    symbol to separate units of text that belong in different columns.
+Bases: `EPipe`
 
-    Parameters[:]{.colon}
+Class CsvPipe: used for working with text files which uses a pipe symbol to
+separate units of text that belong in different columns.
 
-    :   -   **name** (*String*) -- name of the pipe.
+Parameters:
 
-        -   **location** (*String* *or* *None*) -- (optional) location
-            from where we read data
+    
 
-        -   **schema** (*Schema* *or* *None*) -- (optional) json schema
-            for the pipe
+  * **name** (_String_) – name of the pipe.
 
-    [[setDelimiter]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[delimiter]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#ECsvPipe.setDelimiter){.reference .internal}[](#zinggEC.enterprise.common.epipes.ECsvPipe.setDelimiter "Link to this definition"){.headerlink}
+  * **location** (_String_ _or_ _None_) – (optional) location from where we read data
 
-    :   This method is used to define delimiter of CsvPipe
+  * **schema** (_Schema_ _or_ _None_) – (optional) json schema for the pipe
 
-        Parameters[:]{.colon}
+setDelimiter(_delimiter_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#ECsvPipe.setDelimiter)
 
-        :   **delimiter** (*String*) -- a sequence of one or more
-            characters for specifying the boundary between separate,
-            independent regions in data streams
+    
 
-    [[setHeader]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[header]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#ECsvPipe.setHeader){.reference .internal}[](#zinggEC.enterprise.common.epipes.ECsvPipe.setHeader "Link to this definition"){.headerlink}
+This method is used to define delimiter of CsvPipe
 
-    :   Method to set header property of pipe
+Parameters:
 
-        Parameters[:]{.colon}
+    
 
-        :   **header** (*String* *(\'true\' / \'false\')*) -- true if
-            pipe have header, false otherwise
+**delimiter** (_String_) – a sequence of one or more characters for specifying
+the boundary between separate, independent regions in data streams
 
-    [[setLocation]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[location]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#ECsvPipe.setLocation){.reference .internal}[](#zinggEC.enterprise.common.epipes.ECsvPipe.setLocation "Link to this definition"){.headerlink}
+setHeader(_header_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#ECsvPipe.setHeader)
 
-    :   Method to set location of pipe
+    
 
-        Parameters[:]{.colon}
+Method to set header property of pipe
 
-        :   **location** (*String*) -- location from where we read data
+Parameters:
 
-```{=html}
-<!-- -->
-```
+    
 
-*[[class]{.pre}]{.k}[ ]{.w}*[[zinggEC.enterprise.common.epipes.]{.pre}]{.sig-prename .descclassname}[[EPipe]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[name]{.pre}]{.n}*, *[[format]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#EPipe){.reference .internal}[](#zinggEC.enterprise.common.epipes.EPipe "Link to this definition"){.headerlink}
+**header** (_String_ _(__'true' / 'false'__)_) – true if pipe have header,
+false otherwise
 
-:   Bases: [`Pipe`{.xref .py .py-class .docutils .literal
-    .notranslate}]{.pre}
+setLocation(_location_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#ECsvPipe.setLocation)
 
-    EPipe class for working with different data-pipelines. Actual pipe
-    def in the args. One pipe can be used at multiple places with
-    different tables, locations, queries, etc
+    
 
-    Parameters[:]{.colon}
+Method to set location of pipe
 
-    :   -   **name** (*String*) -- name of the pipe
+Parameters:
 
-        -   **format** (*Format*) -- format of pipe e.g. inMemory,
-            delta, etc.
+    
 
-    [[getPassthroughExpr]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#EPipe.getPassthroughExpr){.reference .internal}[](#zinggEC.enterprise.common.epipes.EPipe.getPassthroughExpr "Link to this definition"){.headerlink}
+**location** (_String_) – location from where we read data
 
-    :   Method to get pass through condition
+_class _zinggEC.enterprise.common.epipes.EPipe(_name_ ,
+_format_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#EPipe)
 
-        Returns[:]{.colon}
+    
 
-        :   pass through conditions in string format
+Bases: `Pipe`
 
-        Return type[:]{.colon}
+EPipe class for working with different data-pipelines. Actual pipe def in the
+args. One pipe can be used at multiple places with different tables,
+locations, queries, etc
 
-        :   String
+Parameters:
 
-    [[getPassthruData]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#EPipe.getPassthruData){.reference .internal}[](#zinggEC.enterprise.common.epipes.EPipe.getPassthruData "Link to this definition"){.headerlink}
+    
 
-    :   Method to get records which satisfy pass through condition
+  * **name** (_String_) – name of the pipe
 
-        return: pandas or spark dataframe containing records which
-        satisfy pass through condition :rtype: DataFrame
+  * **format** (_Format_) – format of pipe e.g. inMemory, delta, etc.
 
-    [[getUsableData]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#EPipe.getUsableData){.reference .internal}[](#zinggEC.enterprise.common.epipes.EPipe.getUsableData "Link to this definition"){.headerlink}
+getPassthroughExpr()[[source]](_modules/zinggEC/enterprise/common/epipes.html#EPipe.getPassthroughExpr)
 
-    :   Method to get records which do not satisfy pass through
-        condition
+    
 
-        return: pandas or spark dataframe containing records which do
-        not satisfy pass through condition :rtype: DataFrame
+Method to get pass through condition
 
-    [[hasPassThru]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#EPipe.hasPassThru){.reference .internal}[](#zinggEC.enterprise.common.epipes.EPipe.hasPassThru "Link to this definition"){.headerlink}
+Returns:
 
-    :   Method to check if there is a pass through condition
+    
 
-        Returns[:]{.colon}
+pass through conditions in string format
 
-        :   whether pass through condition is present or not
+Return type:
 
-        Return type[:]{.colon}
+    
 
-        :   boolean
+String
 
-    [[setPassthroughExpr]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[passthroughExpr]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#EPipe.setPassthroughExpr){.reference .internal}[](#zinggEC.enterprise.common.epipes.EPipe.setPassthroughExpr "Link to this definition"){.headerlink}
+getPassthruData()[[source]](_modules/zinggEC/enterprise/common/epipes.html#EPipe.getPassthruData)
 
-    :   Method to set pass through condition
+    
 
-        Parameters[:]{.colon}
+Method to get records which satisfy pass through condition
 
-        :   **passthroughExpr** (*String*) -- String condition for
-            records to not be considered
+return: pandas or spark dataframe containing records which satisfy pass
+through condition :rtype: DataFrame
 
-```{=html}
-<!-- -->
-```
+getUsableData()[[source]](_modules/zinggEC/enterprise/common/epipes.html#EPipe.getUsableData)
 
-*[[class]{.pre}]{.k}[ ]{.w}*[[zinggEC.enterprise.common.epipes.]{.pre}]{.sig-prename .descclassname}[[InMemoryPipe]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[name]{.pre}]{.n}*, *[[df]{.pre}]{.n}[[=]{.pre}]{.o}[[None]{.pre}]{.default_value}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#InMemoryPipe){.reference .internal}[](#zinggEC.enterprise.common.epipes.InMemoryPipe "Link to this definition"){.headerlink}
+    
 
-:   Bases: [[`EPipe`{.xref .py .py-class .docutils .literal
-    .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.EPipe "zinggEC.enterprise.common.epipes.EPipe"){.reference
-    .internal}
+Method to get records which do not satisfy pass through condition
 
-    Pipe Class for working with InMemory pipeline :param name: name of
-    the pipe :type name: String :param df: provide dataset for this pipe
-    (optional) :type df: Dataset or None
+return: pandas or spark dataframe containing records which do not satisfy pass
+through condition :rtype: DataFrame
 
-    [[getDataset]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#InMemoryPipe.getDataset){.reference .internal}[](#zinggEC.enterprise.common.epipes.InMemoryPipe.getDataset "Link to this definition"){.headerlink}
+hasPassThru()[[source]](_modules/zinggEC/enterprise/common/epipes.html#EPipe.hasPassThru)
 
-    :   Method to get Dataset from pipe
+    
 
-        Returns[:]{.colon}
+Method to check if there is a pass through condition
 
-        :   dataset of the pipe in the format of spark dataset
+Returns:
 
-        Return type[:]{.colon}
+    
 
-        :   Dataset\<Row\>
+whether pass through condition is present or not
 
-    [[setDataset]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[df]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#InMemoryPipe.setDataset){.reference .internal}[](#zinggEC.enterprise.common.epipes.InMemoryPipe.setDataset "Link to this definition"){.headerlink}
+Return type:
 
-    :   Method to set DataFrame of the pipe
+    
 
-        Parameters[:]{.colon}
+boolean
 
-        :   **df** (*DataFrame*) -- pandas or spark dataframe for the
-            pipe
+setPassthroughExpr(_passthroughExpr_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#EPipe.setPassthroughExpr)
 
-```{=html}
-<!-- -->
-```
+    
 
-*[[class]{.pre}]{.k}[ ]{.w}*[[zinggEC.enterprise.common.epipes.]{.pre}]{.sig-prename .descclassname}[[UCPipe]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[name]{.pre}]{.n}*, *[[table]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#UCPipe){.reference .internal}[](#zinggEC.enterprise.common.epipes.UCPipe "Link to this definition"){.headerlink}
+Method to set pass through condition
 
-:   Bases: [[`EPipe`{.xref .py .py-class .docutils .literal
-    .notranslate}]{.pre}](#zinggEC.enterprise.common.epipes.EPipe "zinggEC.enterprise.common.epipes.EPipe"){.reference
-    .internal}
+Parameters:
 
-    Pipe Class for working with Delta tables in Unity Catalog of
-    Databricks
+    
 
-    Parameters[:]{.colon}
+**passthroughExpr** (_String_) – String condition for records to not be
+considered
 
-    :   -   **name** (*String*) -- name of the pipe
+_class _zinggEC.enterprise.common.epipes.InMemoryPipe(_name_ , _df
+=None_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#InMemoryPipe)
 
-        -   **table** (*String*) -- table from where we read data in the
-            Catalog Volumes
+    
 
-    [[setTable]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[table]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/epipes.html#UCPipe.setTable){.reference .internal}[](#zinggEC.enterprise.common.epipes.UCPipe.setTable "Link to this definition"){.headerlink}
+Bases: `EPipe`
 
-    :   Method to set table in pipe
+Pipe Class for working with InMemory pipeline :param name: name of the pipe
+:type name: String :param df: provide dataset for this pipe (optional) :type
+df: Dataset or None
 
-        Parameters[:]{.colon}
+getDataset()[[source]](_modules/zinggEC/enterprise/common/epipes.html#InMemoryPipe.getDataset)
 
-        :   **table** (*String*) -- table from where we read data
+    
 
-::: {#zinggec-enterprise-common-earguments .section}
-[]{#module-zinggEC.enterprise.common.EArguments}
+Method to get Dataset from pipe
 
-## zinggEC.enterprise.common.EArguments[](#zinggec-enterprise-common-earguments "Link to this heading"){.headerlink}
+Returns:
 
-This module is to work with different types of features supported in
-Zingg Enterprise.
-:::
+    
 
-*[[class]{.pre}]{.k}[ ]{.w}*[[zinggEC.enterprise.common.EArguments.]{.pre}]{.sig-prename .descclassname}[[DeterministicMatching]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[\*]{.pre}]{.o}[[matchCond]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#DeterministicMatching){.reference .internal}[](#zinggEC.enterprise.common.EArguments.DeterministicMatching "Link to this definition"){.headerlink}
+dataset of the pipe in the format of spark dataset
 
-:   Bases: [`object`{.xref .py .py-class .docutils .literal
-    .notranslate}]{.pre}
+Return type:
 
-    [[getDeterministicMatching]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#DeterministicMatching.getDeterministicMatching){.reference .internal}[](#zinggEC.enterprise.common.EArguments.DeterministicMatching.getDeterministicMatching "Link to this definition"){.headerlink}
+    
 
-    :   Method to get DeterministicMatching criteria
+Dataset<Row>
 
-        Returns[:]{.colon}
+setDataset(_df_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#InMemoryPipe.setDataset)
 
-        :   DeterministicMatching parameter value
+    
 
-        Return type[:]{.colon}
+Method to set DataFrame of the pipe
 
-        :   [DeterministicMatching](#zinggEC.enterprise.common.EArguments.DeterministicMatching "zinggEC.enterprise.common.EArguments.DeterministicMatching"){.reference
-            .internal}
+Parameters:
 
-```{=html}
-<!-- -->
-```
+    
 
-*[[class]{.pre}]{.k}[ ]{.w}*[[zinggEC.enterprise.common.EArguments.]{.pre}]{.sig-prename .descclassname}[[EArguments]{.pre}]{.sig-name .descname}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#EArguments){.reference .internal}[](#zinggEC.enterprise.common.EArguments.EArguments "Link to this definition"){.headerlink}
+**df** (_DataFrame_) – pandas or spark dataframe for the pipe
 
-:   Bases: [`Arguments`{.xref .py .py-class .docutils .literal
-    .notranslate}]{.pre}
+_class _zinggEC.enterprise.common.epipes.UCPipe(_name_ ,
+_table_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#UCPipe)
 
-    [[getArgs]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getArgs){.reference .internal}[](#zinggEC.enterprise.common.EArguments.EArguments.getArgs "Link to this definition"){.headerlink}
+    
 
-    :   Method to get EArguments
+Bases: `EPipe`
 
-        Returns[:]{.colon}
+Pipe Class for working with Delta tables in Unity Catalog of Databricks
 
-        :   EArguments parameter value
+Parameters:
 
-        Return type[:]{.colon}
+    
 
-        :   [EArguments](#zinggEC.enterprise.common.EArguments.EArguments "zinggEC.enterprise.common.EArguments.EArguments"){.reference
-            .internal}
+  * **name** (_String_) – name of the pipe
 
-    [[getData]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getData){.reference .internal}[](#zinggEC.enterprise.common.EArguments.EArguments.getData "Link to this definition"){.headerlink}
+  * **table** (_String_) – table from where we read data in the Catalog Volumes
 
-    :   Method to get data from multiple pipes
+setTable(_table_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#UCPipe.setTable)
 
-        Returns[:]{.colon}
+    
 
-        :   Array of data contained in EPipes
+Method to set table in pipe
 
-        Return type[:]{.colon}
+Parameters:
 
-        :   Array\[[EPipe](#zinggEC.enterprise.common.epipes.EPipe "zinggEC.enterprise.common.epipes.EPipe"){.reference
-            .internal}\]
+    
 
-    [[getDeterministicMatching]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getDeterministicMatching){.reference .internal}[](#zinggEC.enterprise.common.EArguments.EArguments.getDeterministicMatching "Link to this definition"){.headerlink}
+**table** (_String_) – table from where we read data
 
-    :   Method to get DeterministicMatching criteria
+## zinggEC.enterprise.common.EArguments
 
-        Returns[:]{.colon}
+This module is to work with different types of features supported in Zingg
+Enterprise.
 
-        :   DeterministicMatching parameter value
+_class _zinggEC.enterprise.common.EArguments.DeterministicMatching(_*
+matchCond_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#DeterministicMatching)
 
-        Return type[:]{.colon}
+    
 
-        :   [DeterministicMatching](#zinggEC.enterprise.common.EArguments.DeterministicMatching "zinggEC.enterprise.common.EArguments.DeterministicMatching"){.reference
-            .internal}
+Bases: `object`
 
-    [[getFieldDefinition]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getFieldDefinition){.reference .internal}[](#zinggEC.enterprise.common.EArguments.EArguments.getFieldDefinition "Link to this definition"){.headerlink}
+getDeterministicMatching()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#DeterministicMatching.getDeterministicMatching)
 
-    :   Method to get all field definitions to be used for matching
+    
 
-        Returns[:]{.colon}
+Method to get DeterministicMatching criteria
 
-        :   all field definitions in list format
+Returns:
 
-        Return type[:]{.colon}
+    
 
-        :   List\[[EFieldDefinition](#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition "zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition"){.reference
-            .internal}\]
+DeterministicMatching parameter value
 
-    [[getPassthroughExpr]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getPassthroughExpr){.reference .internal}[](#zinggEC.enterprise.common.EArguments.EArguments.getPassthroughExpr "Link to this definition"){.headerlink}
+Return type:
 
-    :   Method to get pass through condition
+    
 
-        Returns[:]{.colon}
+DeterministicMatching
 
-        :   pass through conditions in string format
+_class
+_zinggEC.enterprise.common.EArguments.EArguments[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments)
 
-        Return type[:]{.colon}
+    
 
-        :   String
+Bases: `Arguments`
 
-    [[getPrimaryKey]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getPrimaryKey){.reference .internal}[](#zinggEC.enterprise.common.EArguments.EArguments.getPrimaryKey "Link to this definition"){.headerlink}
+getArgs()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getArgs)
 
-    :   Method to get the fields containing the primary keys
+    
 
-        Returns[:]{.colon}
+Method to get EArguments
 
-        :   all primary keys defined for field definitions in list
-            format
+Returns:
 
-        Return type[:]{.colon}
+    
 
-        :   List\[[EFieldDefinition](#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition "zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition"){.reference
-            .internal}\]
+EArguments parameter value
 
-    [[setArgs]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[argumentsObj]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setArgs){.reference .internal}[](#zinggEC.enterprise.common.EArguments.EArguments.setArgs "Link to this definition"){.headerlink}
+Return type:
 
-    :   Method to set EArguments
+    
 
-        Parameters[:]{.colon}
+EArguments
 
-        :   **argumentsObj**
-            ([*EArguments*](#zinggEC.enterprise.common.EArguments.EArguments "zinggEC.enterprise.common.EArguments.EArguments"){.reference
-            .internal}) -- EArguments object
+getData()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getData)
 
-    [[setBlockingModel]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[blockingModel]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setBlockingModel){.reference .internal}[](#zinggEC.enterprise.common.EArguments.EArguments.setBlockingModel "Link to this definition"){.headerlink}
+    
 
-    :   Method to set the Blocking Model used for creating model
+Method to get data from multiple pipes
 
-        Parameters[:]{.colon}
+Returns:
 
-        :   **blockingModel** (*String*) -- value as DEFAULT or WIDER
+    
 
-    [[setData]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[\*]{.pre}]{.o}[[pipes]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setData){.reference .internal}[](#zinggEC.enterprise.common.EArguments.EArguments.setData "Link to this definition"){.headerlink}
+Array of data contained in EPipes
 
-    :   Method to set the multiple pipes for data
+Return type:
 
-        Parameters[:]{.colon}
+    
 
-        :   **pipes** (*EPipes*) -- EPipes object
+Array[EPipe]
 
-    [[setDeterministicMatchingCondition]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[\*]{.pre}]{.o}[[detMatchConds]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setDeterministicMatchingCondition){.reference .internal}[](#zinggEC.enterprise.common.EArguments.EArguments.setDeterministicMatchingCondition "Link to this definition"){.headerlink}
+getDeterministicMatching()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getDeterministicMatching)
 
-    :   Method to set the DeterministicMatchingCondition used for
-        matching
+    
 
-        Parameters[:]{.colon}
+Method to get DeterministicMatching criteria
 
-        :   **detMatchConds**
-            ([*DeterministicMatching*](#zinggEC.enterprise.common.EArguments.DeterministicMatching "zinggEC.enterprise.common.EArguments.DeterministicMatching"){.reference
-            .internal}) -- DeterministicMatching object
+Returns:
 
-    [[setFieldDefinition]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[fieldDef]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setFieldDefinition){.reference .internal}[](#zinggEC.enterprise.common.EArguments.EArguments.setFieldDefinition "Link to this definition"){.headerlink}
+    
 
-    :   Method to set the field definitions
+DeterministicMatching parameter value
 
-        Parameters[:]{.colon}
+Return type:
 
-        :   **fieldDef**
-            ([*EFieldDefinition*](#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition "zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition"){.reference
-            .internal}) -- EFieldDefiniton object
+    
 
-    [[setPassthroughExpr]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[passthroughExpr]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setPassthroughExpr){.reference .internal}[](#zinggEC.enterprise.common.EArguments.EArguments.setPassthroughExpr "Link to this definition"){.headerlink}
+DeterministicMatching
 
-    :   Method to set pass through condition
+getFieldDefinition()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getFieldDefinition)
 
-        Parameters[:]{.colon}
+    
 
-        :   **passthroughExpr** (*String*) -- String condition for
-            records to not be considered
+Method to get all field definitions to be used for matching
 
-::: {#zinggec-enterprise-common-efielddefinition .section}
-[]{#module-zinggEC.enterprise.common.EFieldDefinition}
+Returns:
 
-## zinggEC.enterprise.common.EFieldDefinition[](#zinggec-enterprise-common-efielddefinition "Link to this heading"){.headerlink}
+    
 
-This module is to work with the extended functionality of field
-definitions
-:::
+all field definitions in list format
 
-*[[class]{.pre}]{.k}[ ]{.w}*[[zinggEC.enterprise.common.EFieldDefinition.]{.pre}]{.sig-prename .descclassname}[[EFieldDefinition]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[name]{.pre}]{.n}*, *[[dataType]{.pre}]{.n}*, *[[\*]{.pre}]{.o}[[matchType]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EFieldDefinition.html#EFieldDefinition){.reference .internal}[](#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition "Link to this definition"){.headerlink}
+Return type:
 
-:   Bases: [`FieldDefinition`{.xref .py .py-class .docutils .literal
-    .notranslate}]{.pre}
+    
 
-    This class defines each field that we use in matching. We can use
-    this to configure the properties of each field we use for matching
-    in Zingg.
+List[EFieldDefinition]
 
-    Parameters[:]{.colon}
+getPassthroughExpr()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getPassthroughExpr)
 
-    :   -   **name** (*String*) -- name of the field
+    
 
-        -   **dataType** (*String*) -- type of the data e.g. string,
-            float, etc.
+Method to get pass through condition
 
-        -   **matchType** (*MatchType*) -- match type of this field e.g.
-            FUSSY, EXACT, etc. including user-defined mapping match
-            types
+Returns:
 
-    [[getMatchTypeArray]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[matchType]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EFieldDefinition.html#EFieldDefinition.getMatchTypeArray){.reference .internal}[](#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition.getMatchTypeArray "Link to this definition"){.headerlink}
+    
 
-    :   Method to get the match types associated with a field
+pass through conditions in string format
 
-        Parameters[:]{.colon}
+Return type:
 
-        :   **matchType** (*List\[IMatchType\]*) -- list of match types
-            associated with a field
+    
 
-    [[getPrimaryKey]{.pre}]{.sig-name .descname}[(]{.sig-paren}[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EFieldDefinition.html#EFieldDefinition.getPrimaryKey){.reference .internal}[](#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition.getPrimaryKey "Link to this definition"){.headerlink}
+String
 
-    :   Method to check if the field contains the primary key
+getPrimaryKey()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getPrimaryKey)
 
-        Returns[:]{.colon}
+    
 
-        :   true or false depending on if the field contains the primary
-            key
+Method to get the fields containing the primary keys
 
-        Return type[:]{.colon}
+Returns:
 
-        :   boolean
+    
 
-    [[setPrimaryKey]{.pre}]{.sig-name .descname}[(]{.sig-paren}*[[primaryKey]{.pre}]{.n}*[)]{.sig-paren}[[[\[source\]]{.pre}]{.viewcode-link}](_modules/zinggEC/enterprise/common/EFieldDefinition.html#EFieldDefinition.setPrimaryKey){.reference .internal}[](#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition.setPrimaryKey "Link to this definition"){.headerlink}
+all primary keys defined for field definitions in list format
 
-    :   Method to set the field containing the primary key
+Return type:
 
-        Parameters[:]{.colon}
+    
 
-        :   **primaryKey** (*boolean*) -- true or false depending on if
-            the field contains the primary key
-:::
-:::
-:::
+List[EFieldDefinition]
 
-::: {.rst-footer-buttons role="navigation" aria-label="Footer"}
-[[]{.fa .fa-arrow-circle-left aria-hidden="true"}
-Previous](index.html "Zingg Enterpise Entity Resolution Python Package"){.btn
-.btn-neutral .float-left accesskey="p" rel="prev"}
-:::
+setArgs(_argumentsObj_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setArgs)
 
-------------------------------------------------------------------------
+    
 
-::: {role="contentinfo"}
-© Copyright 2025, Zingg.AI.
-:::
+Method to set EArguments
+
+Parameters:
+
+    
+
+**argumentsObj** (_EArguments_) – EArguments object
+
+setBlockingModel(_blockingModel_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setBlockingModel)
+
+    
+
+Method to set the Blocking Model used for creating model
+
+Parameters:
+
+    
+
+**blockingModel** (_String_) – value as DEFAULT or WIDER
+
+setData(_*
+pipes_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setData)
+
+    
+
+Method to set the multiple pipes for data
+
+Parameters:
+
+    
+
+**pipes** (_EPipes_) – EPipes object
+
+setDeterministicMatchingCondition(_*
+detMatchConds_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setDeterministicMatchingCondition)
+
+    
+
+Method to set the DeterministicMatchingCondition used for matching
+
+Parameters:
+
+    
+
+**detMatchConds** (_DeterministicMatching_) – DeterministicMatching object
+
+setFieldDefinition(_fieldDef_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setFieldDefinition)
+
+    
+
+Method to set the field definitions
+
+Parameters:
+
+    
+
+**fieldDef** (_EFieldDefinition_) – EFieldDefiniton object
+
+setPassthroughExpr(_passthroughExpr_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setPassthroughExpr)
+
+    
+
+Method to set pass through condition
+
+Parameters:
+
+    
+
+**passthroughExpr** (_String_) – String condition for records to not be
+considered
+
+## zinggEC.enterprise.common.EFieldDefinition
+
+This module is to work with the extended functionality of field definitions
+
+_class _zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition(_name_ ,
+_dataType_ , _*
+matchType_)[[source]](_modules/zinggEC/enterprise/common/EFieldDefinition.html#EFieldDefinition)
+
+    
+
+Bases: `FieldDefinition`
+
+This class defines each field that we use in matching. We can use this to
+configure the properties of each field we use for matching in Zingg.
+
+Parameters:
+
+    
+
+  * **name** (_String_) – name of the field
+
+  * **dataType** (_String_) – type of the data e.g. string, float, etc.
+
+  * **matchType** (_MatchType_) – match type of this field e.g. FUSSY, EXACT, etc. including user-defined mapping match types
+
+getMatchTypeArray(_matchType_)[[source]](_modules/zinggEC/enterprise/common/EFieldDefinition.html#EFieldDefinition.getMatchTypeArray)
+
+    
+
+Method to get the match types associated with a field
+
+Parameters:
+
+    
+
+**matchType** (_List_ _[__IMatchType_ _]_) – list of match types associated
+with a field
+
+getPrimaryKey()[[source]](_modules/zinggEC/enterprise/common/EFieldDefinition.html#EFieldDefinition.getPrimaryKey)
+
+    
+
+Method to check if the field contains the primary key
+
+Returns:
+
+    
+
+true or false depending on if the field contains the primary key
+
+Return type:
+
+    
+
+boolean
+
+setPrimaryKey(_primaryKey_)[[source]](_modules/zinggEC/enterprise/common/EFieldDefinition.html#EFieldDefinition.setPrimaryKey)
+
+    
+
+Method to set the field containing the primary key
+
+Parameters:
+
+    
+
+**primaryKey** (_boolean_) – true or false depending on if the field contains
+the primary key
+
+[ Previous](index.html "Zingg Enterpise Entity Resolution Python Package")
+
+* * *
+
+(C) Copyright 2025, Zingg.AI.
 
 Built with [Sphinx](https://www.sphinx-doc.org/) using a
-[theme](https://github.com/readthedocs/sphinx_rtd_theme) provided by
-[Read the Docs](https://readthedocs.org).
-:::
-:::
-:::
-:::
+[theme](https://github.com/readthedocs/sphinx_rtd_theme) provided by [Read the
+Docs](https://readthedocs.org).
+
