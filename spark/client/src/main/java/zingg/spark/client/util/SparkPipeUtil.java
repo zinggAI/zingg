@@ -39,8 +39,7 @@ public class SparkPipeUtil extends PipeUtil<SparkSession, Dataset<Row>, Row, Col
 	}
 
 	public DFReader<Dataset<Row>, Row, Column> getReader() {
-		SparkDFReader reader = new SparkDFReader(this.session);
-		return reader;
+        return new SparkDFReader(this.session);
 	}
 
 	public DFWriter<Dataset<Row>, Row, Column> getWriter(ZFrame<Dataset<Row>, Row, Column> toWrite){
