@@ -1,4 +1,4 @@
-# Zingg Enterpise ES Entity Resolution Package
+# Zingg Enterpise ES Entity Resolution Package
 
 Zingg Enterprise Python APIs for entity resolution, record linkage, data mastering and deduplication using ML
 ([https://www.zingg.ai](https://www.zingg.ai))
