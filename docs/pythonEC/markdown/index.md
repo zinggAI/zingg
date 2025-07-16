@@ -1,0 +1,77 @@
+# Enterpise Python API
+
+## Zingg Enterprise Entity Resolution Python Package
+
+Zingg Enterprise Python APIs for entity resolution, identity resolution, record linkage, data mastering and deduplication using ML ([https://www.zingg.ai](https://www.zingg.ai))
+
+**NOTE**
+
+Requires **python 3.6+**; **spark 3.5.0.** Otherwise,
+[`zinggES.enterprise.spark.ESparkClient.EZingg()`](zinggES.md#zinggES.enterprise.spark.ESparkClient.EZingg) cannot be executed
+
+  * [Zingg Enterpise Entity Resolution Package](zinggEC.md)
+    * [`ApproverArguments`](zinggEC.md#zinggEC.enterprise.common.ApproverArguments.ApproverArguments)
+      * [`ApproverArguments.getApprovalQuery()`](zinggEC.md#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.getApprovalQuery)
+      * [`ApproverArguments.getArgs()`](zinggEC.md#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.getArgs)
+      * [`ApproverArguments.getDestination()`](zinggEC.md#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.getDestination)
+      * [`ApproverArguments.getParentArgs()`](zinggEC.md#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.getParentArgs)
+      * [`ApproverArguments.setApprovalQuery()`](zinggEC.md#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.setApprovalQuery)
+      * [`ApproverArguments.setArgs()`](zinggEC.md#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.setArgs)
+      * [`ApproverArguments.setDestination()`](zinggEC.md#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.setDestination)
+      * [`ApproverArguments.setParentArgs()`](zinggEC.md#zinggEC.enterprise.common.ApproverArguments.ApproverArguments.setParentArgs)
+    * [`IncrementalArguments`](zinggEC.md#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments)
+      * [`IncrementalArguments.getArgs()`](zinggEC.md#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getArgs)
+      * [`IncrementalArguments.getDeleteAction()`](zinggEC.md#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getDeleteAction)
+      * [`IncrementalArguments.getDeletedData()`](zinggEC.md#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getDeletedData)
+      * [`IncrementalArguments.getIncrementalData()`](zinggEC.md#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getIncrementalData)
+      * [`IncrementalArguments.getParentArgs()`](zinggEC.md#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.getParentArgs)
+      * [`IncrementalArguments.setArgs()`](zinggEC.md#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setArgs)
+      * [`IncrementalArguments.setDeleteAction()`](zinggEC.md#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setDeleteAction)
+      * [`IncrementalArguments.setDeletedData()`](zinggEC.md#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setDeletedData)
+      * [`IncrementalArguments.setIncrementalData()`](zinggEC.md#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setIncrementalData)
+      * [`IncrementalArguments.setParentArgs()`](zinggEC.md#zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments.setParentArgs)
+    * [`MappingMatchType`](zinggEC.md#zinggEC.enterprise.common.MappingMatchType.MappingMatchType)
+      * [`MappingMatchType.getMappingMatchType()`](zinggEC.md#zinggEC.enterprise.common.MappingMatchType.MappingMatchType.getMappingMatchType)
+    * [`ECsvPipe`](zinggEC.md#zinggEC.enterprise.common.epipes.ECsvPipe)
+      * [`ECsvPipe.setDelimiter()`](zinggEC.md#zinggEC.enterprise.common.epipes.ECsvPipe.setDelimiter)
+      * [`ECsvPipe.setHeader()`](zinggEC.md#zinggEC.enterprise.common.epipes.ECsvPipe.setHeader)
+      * [`ECsvPipe.setLocation()`](zinggEC.md#zinggEC.enterprise.common.epipes.ECsvPipe.setLocation)
+    * [`EPipe`](zinggEC.md#zinggEC.enterprise.common.epipes.EPipe)
+      * [`EPipe.getPassthroughExpr()`](zinggEC.md#zinggEC.enterprise.common.epipes.EPipe.getPassthroughExpr)
+      * [`EPipe.getPassthruData()`](zinggEC.md#zinggEC.enterprise.common.epipes.EPipe.getPassthruData)
+      * [`EPipe.getUsableData()`](zinggEC.md#zinggEC.enterprise.common.epipes.EPipe.getUsableData)
+      * [`EPipe.hasPassThru()`](zinggEC.md#zinggEC.enterprise.common.epipes.EPipe.hasPassThru)
+      * [`EPipe.setPassthroughExpr()`](zinggEC.md#zinggEC.enterprise.common.epipes.EPipe.setPassthroughExpr)
+    * [`InMemoryPipe`](zinggEC.md#zinggEC.enterprise.common.epipes.InMemoryPipe)
+      * [`InMemoryPipe.getDataset()`](zinggEC.md#zinggEC.enterprise.common.epipes.InMemoryPipe.getDataset)
+      * [`InMemoryPipe.setDataset()`](zinggEC.md#zinggEC.enterprise.common.epipes.InMemoryPipe.setDataset)
+    * [`UCPipe`](zinggEC.md#zinggEC.enterprise.common.epipes.UCPipe)
+      * [`UCPipe.setTable()`](zinggEC.md#zinggEC.enterprise.common.epipes.UCPipe.setTable)
+    * [`DeterministicMatching`](zinggEC.md#zinggEC.enterprise.common.EArguments.DeterministicMatching)
+      * [`DeterministicMatching.getDeterministicMatching()`](zinggEC.md#zinggEC.enterprise.common.EArguments.DeterministicMatching.getDeterministicMatching)
+    * [`EArguments`](zinggEC.md#zinggEC.enterprise.common.EArguments.EArguments)
+      * [`EArguments.getArgs()`](zinggEC.md#zinggEC.enterprise.common.EArguments.EArguments.getArgs)
+      * [`EArguments.getData()`](zinggEC.md#zinggEC.enterprise.common.EArguments.EArguments.getData)
+      * [`EArguments.getDeterministicMatching()`](zinggEC.md#zinggEC.enterprise.common.EArguments.EArguments.getDeterministicMatching)
+      * [`EArguments.getFieldDefinition()`](zinggEC.md#zinggEC.enterprise.common.EArguments.EArguments.getFieldDefinition)
+      * [`EArguments.getPassthroughExpr()`](zinggEC.md#zinggEC.enterprise.common.EArguments.EArguments.getPassthroughExpr)
+      * [`EArguments.getPrimaryKey()`](zinggEC.md#zinggEC.enterprise.common.EArguments.EArguments.getPrimaryKey)
+      * [`EArguments.setArgs()`](zinggEC.md#zinggEC.enterprise.common.EArguments.EArguments.setArgs)
+      * [`EArguments.setBlockingModel()`](zinggEC.md#zinggEC.enterprise.common.EArguments.EArguments.setBlockingModel)
+      * [`EArguments.setData()`](zinggEC.md#zinggEC.enterprise.common.EArguments.EArguments.setData)
+      * [`EArguments.setDeterministicMatchingCondition()`](zinggEC.md#zinggEC.enterprise.common.EArguments.EArguments.setDeterministicMatchingCondition)
+      * [`EArguments.setFieldDefinition()`](zinggEC.md#zinggEC.enterprise.common.EArguments.EArguments.setFieldDefinition)
+      * [`EArguments.setPassthroughExpr()`](zinggEC.md#zinggEC.enterprise.common.EArguments.EArguments.setPassthroughExpr)
+    * [`EFieldDefinition`](zinggEC.md#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition)
+      * [`EFieldDefinition.getMatchTypeArray()`](zinggEC.md#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition.getMatchTypeArray)
+      * [`EFieldDefinition.getPrimaryKey()`](zinggEC.md#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition.getPrimaryKey)
+      * [`EFieldDefinition.setPrimaryKey()`](zinggEC.md#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition.setPrimaryKey)
+
+## API Reference
+
+  * [Module Index](py-modindex.md)
+  * [Index](genindex.md)
+  * [Search Page](search.md)
+
+
+
