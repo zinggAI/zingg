@@ -651,7 +651,7 @@ Pipe class for working with different data-pipelines. Actual pipe def in the arg
 
 * **Parameters:**
   * **name** (*String*) – name of the pipe
-  * **format** (*Format*) – formate of pipe e.g. bigquery,csv, etc.
+  * **format** (*Format*) – format of pipe e.g. bigquery,csv, etc.
 
 #### addProperty(name, value)
 

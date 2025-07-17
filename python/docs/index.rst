@@ -3,11 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Zingg Entity Resolution Python Package
+Community Zingg Entity Resolution Python Package
 ============================================================================
    
  
-Zingg Python APIs for entity resolution, identity resolution, record linkage, data mastering and deduplication using ML
+Community Zingg Python APIs for entity resolution, identity resolution, record linkage, data mastering and deduplication using ML
 (https://www.zingg.ai) 
 
 
@@ -59,9 +59,7 @@ Example API Usage
    args.setNumPartitions(4)
    args.setLabelDataSampleSize(0.5)
 
-   #reading dataset into inputPipe and settint it up in 'args'
-   #below line should not be required if you are reading from in memory dataset
-   #in that case, replace df with input df
+   #reading dataset into inputPipe and setting it up in 'args'
    schema = "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
    inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
    args.setData(inputPipe)
