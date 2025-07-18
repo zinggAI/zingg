@@ -6,412 +6,242 @@ Zingg Enterprise Python APIs for entity resolution, record linkage, data masteri
 requires python 3.6+; spark 3.5.0 Otherwise,
 [`zinggES.enterprise.spark.ESparkClient.EZingg()`](#zinggES.enterprise.spark.ESparkClient.EZingg) cannot be executed
 
+<a id="module-zinggEC"></a>
+
+<a id="module-zinggEC.enterprise.common.ApproverArguments"></a>
+
 ## zinggEC.enterprise.common.ApproverArguments
 
 This module is to set up the approval feature
 
-_class
-_zinggEC.enterprise.common.ApproverArguments.ApproverArguments[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments)
-
-    
+### *class* zinggEC.enterprise.common.ApproverArguments.ApproverArguments
 
 Bases: `object`
 
-getApprovalQuery()[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.getApprovalQuery)
-
-    
+#### getApprovalQuery()
 
 Method to get query for approval
 
-Returns:
+* **Returns:**
+  query in string format for approval condition
+* **Return type:**    
+  String
 
-    
-
-query in string format for approval condition
-
-Return type:
-
-    
-
-String
-
-getArgs()[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.getArgs)
-
-    
+#### getArgs()
 
 Method to get ApproverArguments
 
-Returns:
+* **Returns:**
+  ApproverArguments parameter value
+* **Return type:**
+  ApproverArguments
 
-    
-
-ApproverArguments parameter value
-
-Return type:
-
-    
-
-ApproverArguments
-
-getDestination()[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.getDestination)
-
-    
+#### getDestination()
 
 Method to get the destination of output
 
-Returns:
+* **Returns:**
+  Array of data contained in EPipes
+* **Return type:**
+  Array[EPipe]
 
-    
-
-Array of data contained in EPipes
-
-Return type:
-
-    
-
-Array[EPipe]
-
-getParentArgs()[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.getParentArgs)
-
-    
+#### getParentArgs()
 
 Method to get EArguments
 
-Returns:
+* **Returns:**  
+  EArguments parameter value
+* **Return type:**
+  EArguments
 
-    
-
-EArguments parameter value
-
-Return type:
-
-    
-
-EArguments
-
-setApprovalQuery(_approval_query_)[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.setApprovalQuery)
-
-    
+#### setApprovalQuery(approval_query)
 
 Method to set query for approval
 
-Parameters:
+* **Parameters:**  
+  **approval_query** (*String*) – setting a query in string format for approval condition
 
-    
-
-**approval_query** (_String_) – setting a query in string format for approval
-condition
-
-setArgs(_arguments_obj_)[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.setArgs)
-
-    
+#### setArgs(arguments_obj)
 
 Method to set ApproverArguments
 
-Parameters:
+* **Parameters:**  
+  **argumentsObj** (*ApproverArguments*) – ApproverArguments object
 
+#### setDestination(*pipes)
     
-
-**argumentsObj** (_ApproverArguments_) – ApproverArguments object
-
-setDestination(_*
-pipes_)[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.setDestination)
-
-    
-
 Method to set the multiple pipes for output destination
 
-Parameters:
+* **Parameters:**   
+  **pipes** (*EPipes*) – EPipes object
 
-    
-
-**pipes** (_EPipes_) – EPipes object
-
-setParentArgs(_argumentsObj_)[[source]](_modules/zinggEC/enterprise/common/ApproverArguments.html#ApproverArguments.setParentArgs)
-
-    
+#### setParentArgs(argumentsObj)
 
 Method to set EArguments
 
-Parameters:
+* **Parameters:**
+  **argumentsObj** (*EArguments*) – EArguments object
 
-    
+<a id="module-zinggEC.enterprise.common.IncrementalArguments"></a>  
 
-**argumentsObj** (_EArguments_) – EArguments object
-
-## zinggEC.enterprise.common.IncrementalArguments
+## zinggEC.enterprise.common.IncrementalArguments
 
 This module is to set up the incremental feature
 
-_class
-_zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments)
-
-    
+### *class* zinggEC.enterprise.common.IncrementalArguments.IncrementalArguments
 
 Bases: `object`
 
-getArgs()[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getArgs)
-
-    
+#### getArgs()
 
 Method to get IncrementalArguments
 
-Returns:
+* **Returns:**
+  IncrementalArguments parameter value
+* **Return type:**
+  IncrementalArguments
 
-    
-
-IncrementalArguments parameter value
-
-Return type:
-
-    
-
-IncrementalArguments
-
-getDeleteAction()[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getDeleteAction)
-
-    
+#### getDeleteAction()   
 
 Method to get Delete Action
 
-Returns:
+* **Returns:**  
+  DeleteAction parameter value
+* **Return type:**
+  DeleteAction
 
-    
-
-DeleteAction parameter value
-
-Return type:
-
-    
-
-DeleteAction
-
-getDeletedData()[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getDeletedData)
-
-    
+#### getDeletedData()
 
 Method to get Deleted Data
 
-Returns:
+* **Returns:**
+  data that needs to be deleted from incremental run
+* **Return type:**   
+  Array[EPipe]
 
-    
-
-data that needs to be deleted from incremental run
-
-Return type:
-
-    
-
-Array[EPipe]
-
-getIncrementalData()[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getIncrementalData)
-
-    
+#### getIncrementalData()
 
 Method to get Incremental Data
 
-Returns:
+* **Returns:**
+  data that needs to be passed for incremental run
+* **Return type:** 
+  Array[EPipe]
 
-    
-
-data that needs to be passed for incremental run
-
-Return type:
-
-    
-
-Array[EPipe]
-
-getParentArgs()[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.getParentArgs)
-
-    
+#### getParentArgs()
 
 Method to get EArguments
 
-Returns:
+* **Returns:**  
+  EArguments parameter value
+* **Return type:**
+  EArguments
 
-    
-
-EArguments parameter value
-
-Return type:
-
-    
-
-EArguments
-
-setArgs(_argumentsObj_)[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setArgs)
-
-    
+#### setArgs(argumentsObj)
 
 Method to set IncrementalArguments
 
-Parameters:
+* **Parameters:**
+  **argumentsObj** (*IncrementalArguments*) – IncrementalArguments object
 
-    
-
-**argumentsObj** (_IncrementalArguments_) – IncrementalArguments object
-
-setDeleteAction(_deleteAction_)[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setDeleteAction)
-
-    
+#### setDeleteAction(deleteAction)
 
 Method to set Delete Action
 
-Parameters:
+* **Parameters:** 
+  **deleteAction** (*DeleteAction*) – DeleteAction object
 
-    
-
-**deleteAction** (_DeleteAction_) – DeleteAction object
-
-setDeletedData(_*
-pipes_)[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setDeletedData)
-
-    
+#### setDeletedData(*pipes)
 
 Method to set Deleted Data
 
-Parameters:
+* **Parameters:** 
+  **pipes** (*EPipes*) – EPipes object
 
-    
-
-**pipes** (_EPipes_) – EPipes object
-
-setIncrementalData(_*
-pipes_)[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setIncrementalData)
-
-    
+#### setIncrementalData(*pipes)
 
 Method to set Incremental Data
 
-Parameters:
+* **Parameters:** 
+  **pipes** (*EPipes*) – EPipes object
 
-    
-
-**pipes** (_EPipes_) – EPipes object
-
-setParentArgs(_argumentsObj_)[[source]](_modules/zinggEC/enterprise/common/IncrementalArguments.html#IncrementalArguments.setParentArgs)
-
-    
+#### setParentArgs(argumentsObj)
 
 Method to set EArguments
 
-Parameters:
+* **Parameters:**
+  **argumentsObj** (*EArguments*) – EArguments object
 
-    
+<a id="module-zinggEC.enterprise.common.MappingMatchType"></a>
 
-**argumentsObj** (_EArguments_) – EArguments object
-
-## zinggEC.enterprise.common.MappingMatchType
+## zinggEC.enterprise.common.MappingMatchType
 
 This module is to work with the mapping match type which is used for
 leveraging domain expertise to push matching accuracy. Also saves time
 massaging data before matching.
 
-_class _zinggEC.enterprise.common.MappingMatchType.MappingMatchType(_name_ ,
-_value_)[[source]](_modules/zinggEC/enterprise/common/MappingMatchType.html#MappingMatchType)
-
-    
+### *class* zinggEC.enterprise.common.MappingMatchType.MappingMatchType(name ,value)
 
 Bases: `object`
 
 MappingMatchType class for defining mappings required for matching on a field
 
-Parameters:
+* **Parameters:**
+  * **name** (*String*) – name of the match type - MAPPING
+  * **format** (*String*) – name of the json containing mappings
 
-    
-
-  * **name** (_String_) – name of the match type - MAPPING
-
-  * **format** (_String_) – name of the json containing mappings
-
-getMappingMatchType()[[source]](_modules/zinggEC/enterprise/common/MappingMatchType.html#MappingMatchType.getMappingMatchType)
-
-    
+#### getMappingMatchType()
 
 Method to get mapping match type
 
-Returns:
+* **Returns:**    
+  mapping match type containg name and value
+* **Return type:** 
+  MappingMatchType
 
-    
+<a id="module-zinggEC.enterprise.common.epipes"></a>
 
-mapping match type containg name and value
-
-Return type:
-
-    
-
-MappingMatchType
-
-## zinggEC.enterprise.common.epipes
+## zinggEC.enterprise.common.epipes
 
 This module is submodule of zingg to work with different types of Pipes
 supported in Enterprise. Classes of this module inherit the EPipe class, and
 use that class to create many different types of pipes.
 
-_class _zinggEC.enterprise.common.epipes.ECsvPipe(_name_ , _location =None_,
-_schema
-=None_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#ECsvPipe)
-
-    
+### *class* zinggEC.enterprise.common.epipes.ECsvPipe(name , location =None, schema =None)
 
 Bases: `EPipe`
 
 Class CsvPipe: used for working with text files which uses a pipe symbol to
 separate units of text that belong in different columns.
 
-Parameters:
+* **Parameters:**
+  * **name** (*String*) – name of the pipe.
+  * **location** (*String_or_None*) – (optional) location from where we read data
+  * **schema** (*Schema_or_None*) – (optional) json schema for the pipe
 
-    
-
-  * **name** (_String_) – name of the pipe.
-
-  * **location** (_String_ _or_ _None_) – (optional) location from where we read data
-
-  * **schema** (_Schema_ _or_ _None_) – (optional) json schema for the pipe
-
-setDelimiter(_delimiter_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#ECsvPipe.setDelimiter)
-
-    
+#### setDelimiter(*delimiter*)
 
 This method is used to define delimiter of CsvPipe
 
-Parameters:
-
-    
-
-**delimiter** (_String_) – a sequence of one or more characters for specifying
+* **Parameters:**  
+  **delimiter** (*String*) – a sequence of one or more characters for specifying
 the boundary between separate, independent regions in data streams
 
-setHeader(_header_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#ECsvPipe.setHeader)
-
-    
+#### setHeader(*header*)
 
 Method to set header property of pipe
 
-Parameters:
+* **Parameters:**
+  **header** (*String('true' / 'false')*) – true if pipe have header, false otherwise
 
-    
-
-**header** (_String_ _(__'true' / 'false'__)_) – true if pipe have header,
-false otherwise
-
-setLocation(_location_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#ECsvPipe.setLocation)
-
-    
+#### setLocation(*location*)
 
 Method to set location of pipe
 
-Parameters:
+* **Parameters:**
+  **location** (*String*) – location from where we read data
 
-    
-
-**location** (_String_) – location from where we read data
-
-_class _zinggEC.enterprise.common.epipes.EPipe(_name_ ,
-_format_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#EPipe)
-
-    
+### *class* zinggEC.enterprise.common.epipes.EPipe(name ,format)
 
 Bases: `Pipe`
 
@@ -419,447 +249,254 @@ EPipe class for working with different data-pipelines. Actual pipe def in the
 args. One pipe can be used at multiple places with different tables,
 locations, queries, etc
 
-Parameters:
+* **Parameters:** 
+  * **name** (*String*) – name of the pipe
+  * **format** (*Format*) – format of pipe e.g. inMemory, delta, etc.
 
-    
-
-  * **name** (_String_) – name of the pipe
-
-  * **format** (_Format_) – format of pipe e.g. inMemory, delta, etc.
-
-getPassthroughExpr()[[source]](_modules/zinggEC/enterprise/common/epipes.html#EPipe.getPassthroughExpr)
-
-    
+#### getPassthroughExpr()
 
 Method to get pass through condition
 
-Returns:
+* **Returns:**
+  pass through conditions in string format
+* **Return type:**  
+  String
 
-    
-
-pass through conditions in string format
-
-Return type:
-
-    
-
-String
-
-getPassthruData()[[source]](_modules/zinggEC/enterprise/common/epipes.html#EPipe.getPassthruData)
-
-    
+#### getPassthruData()
 
 Method to get records which satisfy pass through condition
 
-return: pandas or spark dataframe containing records which satisfy pass
-through condition :rtype: DataFrame
+* **Returns:**
+  pandas or spark dataframe containing records which satisfy pass through condition
+* **Return type:**  
+  DataFrame
 
-getUsableData()[[source]](_modules/zinggEC/enterprise/common/epipes.html#EPipe.getUsableData)
-
-    
+#### getUsableData()
 
 Method to get records which do not satisfy pass through condition
 
-return: pandas or spark dataframe containing records which do not satisfy pass
-through condition :rtype: DataFrame
+* **Returns:**
+  pandas or spark dataframe containing records which do not satisfy pass through condition
+* **Return type:**  
+  DataFrame
 
-hasPassThru()[[source]](_modules/zinggEC/enterprise/common/epipes.html#EPipe.hasPassThru)
-
-    
+#### hasPassThru()
 
 Method to check if there is a pass through condition
 
-Returns:
+* **Returns:**   
+  whether pass through condition is present or not
+* **Return type:**  
+  boolean
 
-    
-
-whether pass through condition is present or not
-
-Return type:
-
-    
-
-boolean
-
-setPassthroughExpr(_passthroughExpr_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#EPipe.setPassthroughExpr)
-
-    
+#### setPassthroughExpr(*passthroughExpr*)
 
 Method to set pass through condition
 
-Parameters:
+* **Parameters:**
+  **passthroughExpr** (*String*) – String condition for records to not be considered
 
-    
-
-**passthroughExpr** (_String_) – String condition for records to not be
-considered
-
-_class _zinggEC.enterprise.common.epipes.InMemoryPipe(_name_ , _df
-=None_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#InMemoryPipe)
-
-    
+### *class* zinggEC.enterprise.common.epipes.InMemoryPipe(name , df=None)
 
 Bases: `EPipe`
 
-Pipe Class for working with InMemory pipeline :param name: name of the pipe
-:type name: String :param df: provide dataset for this pipe (optional) :type
-df: Dataset or None
+Pipe Class for working with InMemory pipeline
 
-getDataset()[[source]](_modules/zinggEC/enterprise/common/epipes.html#InMemoryPipe.getDataset)
 
-    
+* **Parameters:**
+  * **name** (*String*) – name of the pipe
+  * **df** (*Dataset or None*) – provide dataset for this pipe(optional)
+
+#### getDataset()
 
 Method to get Dataset from pipe
 
-Returns:
+* **Returns:**
+  dataset of the pipe in the format of spark dataset
+* **Return type:**   
+  Dataset<Row>
 
-    
-
-dataset of the pipe in the format of spark dataset
-
-Return type:
-
-    
-
-Dataset<Row>
-
-setDataset(_df_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#InMemoryPipe.setDataset)
-
-    
+#### setDataset(*df*)
 
 Method to set DataFrame of the pipe
 
-Parameters:
+* **Parameters:**
+  **df** (*DataFrame*) – pandas or spark dataframe for the pipe
 
-    
-
-**df** (_DataFrame_) – pandas or spark dataframe for the pipe
-
-_class _zinggEC.enterprise.common.epipes.UCPipe(_name_ ,
-_table_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#UCPipe)
-
-    
+### *class* zinggEC.enterprise.common.epipes.UCPipe(name ,table)  
 
 Bases: `EPipe`
 
 Pipe Class for working with Delta tables in Unity Catalog of Databricks
 
-Parameters:
+* **Parameters:**
+  * **name** (*String*) – name of the pipe
+  * **table** (*String*) – table from where we read data in the Catalog Volumes
 
-    
-
-  * **name** (_String_) – name of the pipe
-
-  * **table** (_String_) – table from where we read data in the Catalog Volumes
-
-setTable(_table_)[[source]](_modules/zinggEC/enterprise/common/epipes.html#UCPipe.setTable)
-
-    
+#### setTable(table)
 
 Method to set table in pipe
 
-Parameters:
+* **Parameters:**
+  **table** (*String*) – table from where we read data
 
-    
+<a id="module-zinggEC.enterprise.common.EArguments"></a>  
 
-**table** (_String_) – table from where we read data
-
-## zinggEC.enterprise.common.EArguments
+## zinggEC.enterprise.common.EArguments
 
 This module is to work with different types of features supported in Zingg
 Enterprise.
 
-_class _zinggEC.enterprise.common.EArguments.DeterministicMatching(_*
-matchCond_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#DeterministicMatching)
-
-    
+### *class* zinggEC.enterprise.common.EArguments.DeterministicMatching(*matchCond)
 
 Bases: `object`
 
-getDeterministicMatching()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#DeterministicMatching.getDeterministicMatching)
-
-    
+#### getDeterministicMatching()
 
 Method to get DeterministicMatching criteria
 
-Returns:
+* **Returns:**
+  DeterministicMatching parameter value
+* **Return type:**  
+  DeterministicMatching
 
-    
-
-DeterministicMatching parameter value
-
-Return type:
-
-    
-
-DeterministicMatching
-
-_class
-_zinggEC.enterprise.common.EArguments.EArguments[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments)
-
-    
+### *class* zinggEC.enterprise.common.EArguments.EArguments
 
 Bases: `Arguments`
 
-getArgs()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getArgs)
-
-    
+#### getArgs()
 
 Method to get EArguments
 
-Returns:
+* **Returns:** 
+  EArguments parameter value
+* **Return type:**
+  EArguments
 
-    
-
-EArguments parameter value
-
-Return type:
-
-    
-
-EArguments
-
-getData()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getData)
-
-    
+#### getData()
 
 Method to get data from multiple pipes
 
-Returns:
+* **Returns:** 
+  Array of data contained in EPipes
+* **Return type:**
+  Array[EPipe]
 
-    
-
-Array of data contained in EPipes
-
-Return type:
-
-    
-
-Array[EPipe]
-
-getDeterministicMatching()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getDeterministicMatching)
-
-    
+#### getDeterministicMatching()
 
 Method to get DeterministicMatching criteria
 
-Returns:
+* **Returns:**
+  DeterministicMatching parameter value
+* **Return type:**
+  DeterministicMatching
 
-    
-
-DeterministicMatching parameter value
-
-Return type:
-
-    
-
-DeterministicMatching
-
-getFieldDefinition()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getFieldDefinition)
-
-    
+#### getFieldDefinition()
 
 Method to get all field definitions to be used for matching
 
-Returns:
+* **Returns:**
+  all field definitions in list format
+* **Return type:**
+  List[EFieldDefinition]
 
-    
-
-all field definitions in list format
-
-Return type:
-
-    
-
-List[EFieldDefinition]
-
-getPassthroughExpr()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getPassthroughExpr)
-
-    
+#### getPassthroughExpr()  
 
 Method to get pass through condition
 
-Returns:
+* **Returns:**   
+  pass through conditions in string format
+* **Return type:**
+  String
 
-    
-
-pass through conditions in string format
-
-Return type:
-
-    
-
-String
-
-getPrimaryKey()[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.getPrimaryKey)
-
-    
+#### getPrimaryKey()  
 
 Method to get the fields containing the primary keys
 
-Returns:
+* **Returns:**
+  all primary keys defined for field definitions in list format
+* **Return type:** 
+  List[EFieldDefinition]
 
-    
-
-all primary keys defined for field definitions in list format
-
-Return type:
-
-    
-
-List[EFieldDefinition]
-
-setArgs(_argumentsObj_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setArgs)
-
-    
+#### setArgs(argumentsObj)
 
 Method to set EArguments
 
-Parameters:
+* **Parameters:**   
+  **argumentsObj** (*EArguments*) – EArguments object
 
-    
-
-**argumentsObj** (_EArguments_) – EArguments object
-
-setBlockingModel(_blockingModel_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setBlockingModel)
-
-    
+#### setBlockingModel(blockingModel)
 
 Method to set the Blocking Model used for creating model
 
-Parameters:
+* **Parameters:**
+  **blockingModel** (*String*) – value as DEFAULT or WIDER
 
-    
-
-**blockingModel** (_String_) – value as DEFAULT or WIDER
-
-setData(_*
-pipes_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setData)
-
-    
+#### setData(*pipes)
 
 Method to set the multiple pipes for data
 
-Parameters:
+* **Parameters:**
+  **pipes** (*EPipes*) – EPipes object
 
-    
-
-**pipes** (_EPipes_) – EPipes object
-
-setDeterministicMatchingCondition(_*
-detMatchConds_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setDeterministicMatchingCondition)
-
-    
+#### setDeterministicMatchingCondition(*detMatchConds)
 
 Method to set the DeterministicMatchingCondition used for matching
 
-Parameters:
+* **Parameters:**
+  **detMatchConds** (*DeterministicMatching*) – DeterministicMatching object
 
-    
-
-**detMatchConds** (_DeterministicMatching_) – DeterministicMatching object
-
-setFieldDefinition(_fieldDef_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setFieldDefinition)
-
-    
+#### setFieldDefinition(fieldDef)
 
 Method to set the field definitions
 
-Parameters:
+* **Parameters:**
+  **fieldDef** (*EFieldDefinition*) – EFieldDefiniton object
 
-    
-
-**fieldDef** (_EFieldDefinition_) – EFieldDefiniton object
-
-setPassthroughExpr(_passthroughExpr_)[[source]](_modules/zinggEC/enterprise/common/EArguments.html#EArguments.setPassthroughExpr)
-
-    
+#### setPassthroughExpr(passthroughExpr)
 
 Method to set pass through condition
 
-Parameters:
+* **Parameters:**
+  **passthroughExpr** (*String*) – String condition for records to not be considered
 
-    
+<a id="module-zinggEC.enterprise.common.EFieldDefinition"></a>
 
-**passthroughExpr** (_String_) – String condition for records to not be
-considered
-
-## zinggEC.enterprise.common.EFieldDefinition
+## zinggEC.enterprise.common.EFieldDefinition
 
 This module is to work with the extended functionality of field definitions
 
-_class _zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition(_name_ ,
-_dataType_ , _*
-matchType_)[[source]](_modules/zinggEC/enterprise/common/EFieldDefinition.html#EFieldDefinition)
-
-    
+### *class* zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition(name ,dataType , *matchType) 
 
 Bases: `FieldDefinition`
 
 This class defines each field that we use in matching. We can use this to
 configure the properties of each field we use for matching in Zingg.
 
-Parameters:
+* **Parameters:**
+  * **name** (*String*) – name of the field
+  * **dataType** (*String*) – type of the data e.g. string, float, etc.
+  * **matchType** (*MatchType*) – match type of this field e.g. FUSSY, EXACT, etc. including user-defined mapping match types
 
-    
-
-  * **name** (_String_) – name of the field
-
-  * **dataType** (_String_) – type of the data e.g. string, float, etc.
-
-  * **matchType** (_MatchType_) – match type of this field e.g. FUSSY, EXACT, etc. including user-defined mapping match types
-
-getMatchTypeArray(_matchType_)[[source]](_modules/zinggEC/enterprise/common/EFieldDefinition.html#EFieldDefinition.getMatchTypeArray)
-
-    
+#### getMatchTypeArray(matchType) 
 
 Method to get the match types associated with a field
 
-Parameters:
+* **Parameters:**   
+  **matchType** (*List[IMatchType]*) – list of match types associated with a field
 
-    
-
-**matchType** (_List_ _[__IMatchType_ _]_) – list of match types associated
-with a field
-
-getPrimaryKey()[[source]](_modules/zinggEC/enterprise/common/EFieldDefinition.html#EFieldDefinition.getPrimaryKey)
-
-    
+#### getPrimaryKey()
 
 Method to check if the field contains the primary key
 
-Returns:
+* **Returns:**
+  true or false depending on if the field contains the primary key
+* **Return type:**
+  boolean
 
-    
-
-true or false depending on if the field contains the primary key
-
-Return type:
-
-    
-
-boolean
-
-setPrimaryKey(_primaryKey_)[[source]](_modules/zinggEC/enterprise/common/EFieldDefinition.html#EFieldDefinition.setPrimaryKey)
-
-    
-
+#### setPrimaryKey(primaryKey)
+ 
 Method to set the field containing the primary key
 
-Parameters:
-
-    
-
-**primaryKey** (_boolean_) – true or false depending on if the field contains
-the primary key
-
-[ Previous](index.html "Zingg Enterpise Entity Resolution Python Package")
-
-* * *
-
-(C) Copyright 2025, Zingg.AI.
-
-Built with [Sphinx](https://www.sphinx-doc.org/) using a
-[theme](https://github.com/readthedocs/sphinx_rtd_theme) provided by [Read the
-Docs](https://readthedocs.org).
-
+* **Parameters:**   
+  **primaryKey** (*boolean*) – true or false depending on if the field contains the primary key
