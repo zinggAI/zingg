@@ -7,8 +7,6 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.arguments.loader.LoaderType;
 import zingg.common.client.arguments.model.IZArgs;
 
-import java.rmi.NoSuchObjectException;
-
 public class ArgumentBuilder<A extends IZArgs> {
     private final IArgumentService<A> argumentService;
     private static ArgumentBuilder<?> argumentBuilder = null;
@@ -24,7 +22,7 @@ public class ArgumentBuilder<A extends IZArgs> {
      * This method is responsible for building arguments
      * @return arguments
      */
-    public A buildArguments(ClientOptions clientOptions) throws NoSuchObjectException, ZinggClientException {
+    public A buildArguments(ClientOptions clientOptions) throws ZinggClientException {
         try {
             String configInput = clientOptions.get(ClientOptions.CONF).getValue();
             LoaderType loaderType = getLoaderType(configInput);
