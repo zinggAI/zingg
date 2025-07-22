@@ -16,6 +16,8 @@ import com.fasterxml.jackson.core.json.JsonWriteFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.module.scala.DefaultScalaModule;
+import zingg.common.client.arguments.model.Arguments;
+import zingg.common.client.arguments.model.IZArgs;
 
 public class ArgumentsUtil<A extends IZArgs> {
 	

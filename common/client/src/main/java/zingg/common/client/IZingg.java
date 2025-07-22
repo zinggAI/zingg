@@ -1,5 +1,7 @@
 package zingg.common.client;
 
+import zingg.common.client.arguments.model.IZArgs;
+
 public interface IZingg<S,D,R,C> extends IZinggModelInfo<S, D, R, C> {
 
 	public void init(IZArgs args, S session, ClientOptions options)

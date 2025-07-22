@@ -1,4 +1,4 @@
-package zingg.common.client;
+package zingg.common.client.arguments.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.JsonStringify;
 
@@ -118,7 +120,7 @@ public class Arguments extends ZArgs implements Serializable, IArguments {
 	}
 
 	@Override
-	public void setNumPartitions(int numPartitions) throws ZinggClientException{
+	public void setNumPartitions(int numPartitions) throws ZinggClientException {
 		if (numPartitions != -1 && numPartitions <= 0){
 			throw new ZinggClientException(
 					"Number of partitions can be greater than 0 for user specified partitioning or equal to -1 for system decided partitioning");

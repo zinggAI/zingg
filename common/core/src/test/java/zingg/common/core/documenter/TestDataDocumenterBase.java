@@ -11,10 +11,10 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;

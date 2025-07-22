@@ -8,6 +8,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
+import zingg.common.client.arguments.model.Arguments;
+import zingg.common.client.arguments.model.IArguments;
 
 
 public class TestFieldDefUtil {
