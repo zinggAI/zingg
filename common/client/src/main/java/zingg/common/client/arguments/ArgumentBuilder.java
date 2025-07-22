@@ -1,5 +1,7 @@
 package zingg.common.client.arguments;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.arguments.loader.LoaderType;
@@ -12,6 +14,7 @@ public class ArgumentBuilder<A extends IZArgs> {
     private static ArgumentBuilder<?> argumentBuilder = null;
     private static final String JSON = "json";
     private static final String ENV = "env";
+    private static final Log LOG = LogFactory.getLog(ArgumentBuilder.class);
 
     private ArgumentBuilder(Class<A> argsClass) {
         this.argumentService = new ArgumentServiceImpl<>(argsClass);
@@ -22,9 +25,15 @@ public class ArgumentBuilder<A extends IZArgs> {
      * @return arguments
      */
     public A buildArguments(ClientOptions clientOptions) throws NoSuchObjectException, ZinggClientException {
-        String configInput = clientOptions.get(ClientOptions.CONF).getValue();
-        LoaderType loaderType = getLoaderType(configInput);
-        return argumentService.loadArguments(configInput, loaderType);
+        try {
+            String configInput = clientOptions.get(ClientOptions.CONF).getValue();
+            LoaderType loaderType = getLoaderType(configInput);
+            LOG.info("Building arguments for type " + loaderType + " ....");
+            return argumentService.loadArguments(configInput, loaderType);
+        } catch (Throwable exception) {
+            LOG.info("Exception occurred while building arguments " + exception);
+            throw new ZinggClientException("Failed to build arguments");
+        }
     }
 
     @SuppressWarnings("unchecked")
