@@ -5,9 +5,10 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.arguments.ArgumentServiceImpl;
+import zingg.common.client.arguments.loader.LoaderType;
 import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.arguments.model.Arguments;
-import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
@@ -35,7 +36,7 @@ public class ExecutorTester<S, D, R, C, T>{
 	}
 
 	public IArguments setupArgs(String configFile, String phase) throws ZinggClientException, IOException {
-		args = new ArgumentsUtil<Arguments>(Arguments.class).createArgumentsFromJSON(getClass().getClassLoader().getResource(configFile).getFile(), phase);
+		args = new ArgumentServiceImpl<Arguments>(Arguments.class).loadArguments(getClass().getClassLoader().getResource(configFile).getFile(), LoaderType.FILE);
 		args = updateLocation(args);
 		args.setModelId(modelId);
 		return args;

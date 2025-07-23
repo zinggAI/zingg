@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.rmi.NoSuchObjectException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +15,12 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
+import zingg.common.client.arguments.ArgumentServiceImpl;
+import zingg.common.client.arguments.IArgumentService;
+import zingg.common.client.arguments.loader.LoaderType;
 import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.arguments.model.IArguments;
+import zingg.common.client.arguments.util.EnvironmentVariableSubstitutor;
 
 
 public class TestArguments {
@@ -23,9 +28,14 @@ public class TestArguments {
 	private static final String KEY_HEADER = "header";
 	private static final String KEY_FORMAT = "format";
 	private static final String KEY_MODEL_ID = "modelId";
-
+	protected final IArgumentService<Arguments> argumentService;
 	public static final Log LOG = LogFactory.getLog(TestArguments.class);
-	protected ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
+	protected final EnvironmentVariableSubstitutor environmentVariableSubstitutor;
+
+	public TestArguments() {
+		this.argumentService = new ArgumentServiceImpl<>(Arguments.class);
+		this.environmentVariableSubstitutor = new EnvironmentVariableSubstitutor();
+	}
 	
 	@Test
 	public void testSubstituteVariablesWithAllEnvVarSet() {
@@ -38,11 +48,11 @@ public class TestArguments {
 			byte[] encoded = Files
 					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = argsUtil.substituteVariables(template, env);
-			IArguments args = (IArguments) argsUtil.createArgumentsFromJSONString(json, "");
-			assertEquals(args.getData()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
-			assertEquals(args.getData()[0].getFormat(), env.get(KEY_FORMAT));
-			assertEquals(args.getModelId(), env.get(KEY_MODEL_ID));
+			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
+			IArguments arguments = argumentService.loadArguments(substitutedJsonString, LoaderType.JSON);
+			assertEquals(arguments.getData()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
+			assertEquals(arguments.getData()[0].getFormat(), env.get(KEY_FORMAT));
+			assertEquals(arguments.getModelId(), env.get(KEY_MODEL_ID));
 		} catch (IOException | ZinggClientException e) {
 			fail("Unexpected exception " + e.getMessage());
 		}
@@ -59,8 +69,8 @@ public class TestArguments {
 					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = argsUtil.substituteVariables(template, env);
-			IArguments args = (IArguments) argsUtil.createArgumentsFromJSONString(json, "");
+			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
+			IArguments args = argumentService.loadArguments(substitutedJsonString, LoaderType.JSON);
 			fail("Exception was expected due to missing environment variable");
  		} catch (IOException | ZinggClientException e) {
 			LOG.warn("Expected exception received due to missing environment variable");
@@ -79,8 +89,8 @@ public class TestArguments {
 					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = argsUtil.substituteVariables(template, env);
-			IArguments args = (IArguments) argsUtil.createArgumentsFromJSONString(json, "");
+			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
+			IArguments args = argumentService.loadArguments(substitutedJsonString, LoaderType.JSON);
 
 			fail("Exception was expected for blank value for an environment variable");
  		} catch (IOException | ZinggClientException e) {
@@ -101,8 +111,8 @@ public class TestArguments {
 					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = argsUtil.substituteVariables(template, env);
-			argsUtil.createArgumentsFromJSONString(json, "");
+			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
+			IArguments args = argumentService.loadArguments(substitutedJsonString, LoaderType.JSON);
  
 			fail("Exception was expected for invalid value for a Boolean variable");
  		} catch (IOException | ZinggClientException e) {
@@ -122,8 +132,8 @@ public class TestArguments {
 					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = argsUtil.substituteVariables(template, env);
-			IArguments args = (IArguments) argsUtil.createArgumentsFromJSONString(json, "");
+			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
+			IArguments args = argumentService.loadArguments(substitutedJsonString, LoaderType.JSON);
  
 			assertEquals(args.getOutput()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
 		} catch (IOException | ZinggClientException e) {
@@ -144,8 +154,8 @@ public class TestArguments {
 					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = argsUtil.substituteVariables(template, env);
-			argsUtil.createArgumentsFromJSONString(json, "");
+			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
+			IArguments args = argumentService.loadArguments(substitutedJsonString, LoaderType.JSON);
 
 			fail("Exception was expected for invalid value for a Numeric variable");
 		} catch (IOException | ZinggClientException e) {
@@ -166,8 +176,8 @@ public class TestArguments {
 					Paths.get(getClass().getResource("../../../testArguments/testNumericWithinQuotesTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = argsUtil.substituteVariables(template, env);
-			IArguments args = (IArguments) argsUtil.createArgumentsFromJSONString(json, "");
+			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
+			IArguments args = argumentService.loadArguments(substitutedJsonString, LoaderType.JSON);
 			//Numeric within quotes are allowed
 			assertEquals(args.getModelId(), env.get(KEY_MODEL_ID));
 		} catch (IOException | ZinggClientException e) {
@@ -188,8 +198,8 @@ public class TestArguments {
 					Paths.get(getClass().getResource("../../../testArguments/testMalformedConfigTemplate.json.env").getFile()));
 
 			String template = new String(encoded, StandardCharsets.UTF_8);
-			String json = argsUtil.substituteVariables(template, env);
-			IArguments args = (IArguments) argsUtil.createArgumentsFromJSONString(json, "");
+			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
+			IArguments args = argumentService.loadArguments(substitutedJsonString, LoaderType.JSON);
 
 			fail("Exception was expected for malformed variable in json");
 		} catch (IOException | ZinggClientException e) {
@@ -201,18 +211,20 @@ public class TestArguments {
 	public void testInvalidFilePath() {
 		String filePath = "../dummyFilename";
 		try {
-			argsUtil.createArgumentsFromJSONTemplate(filePath, "");
+			argumentService.loadArguments(filePath, LoaderType.TEMPLATE_FILE);
 			fail("Exception was expected for invalid filepath or name");
 		} catch (ZinggClientException e) {
 			LOG.warn("Expected exception received: NoSuchFileException");
-		}
-	}
+		} catch (NoSuchObjectException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 	@Test
 	public void testMatchTypeMultiple() {
 			IArguments args;
             try {
-                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile(), "test");
+				args = argumentService.loadArguments(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile(), LoaderType.FILE);
 				List<? extends IMatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
 				assertEquals(2, fNameMatchType.size());
 				assertEquals(MatchTypes.FUZZY, fNameMatchType.get(0));
@@ -231,28 +243,20 @@ public class TestArguments {
 	public void testMatchTypeWrong() {
 			IArguments args;
             try {
-                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile(), "test");
-				//List<MatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
-				//fail("config had error, should have flagged");
-				
+				args = argumentService.loadArguments(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile(), LoaderType.FILE);
             } catch (Exception | ZinggClientException e) {
 				LOG.info("config had error, should have flagged");
-//                e.printStackTrace();
             }
-			
-			
-		
 	}
 
 	@Test
 	public void testJsonStringify(){
 		IArguments argsFromJsonFile;  
 		try{
-			//Converting to JSON using toString()
-			argsFromJsonFile = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile(), "test");
+			argsFromJsonFile = argumentService.loadArguments(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile(), LoaderType.FILE);
 			String strFromJsonFile = argsFromJsonFile.toString();
 
-			IArguments argsFullCycle = argsUtil.createArgumentsFromJSONString(strFromJsonFile, "");
+			IArguments argsFullCycle = argumentService.loadArguments(strFromJsonFile, LoaderType.JSON);
 
 			assertEquals(argsFullCycle.getFieldDefinition().get(0).getName(), argsFromJsonFile.getFieldDefinition().get(0).getName());
 			assertEquals(argsFullCycle.getFieldDefinition().get(2).getName(), argsFromJsonFile.getFieldDefinition().get(2).getName());
@@ -263,7 +267,7 @@ public class TestArguments {
 			assertEquals(argsFullCycle.getJobId(),argsFromJsonFile.getJobId());
 
 		} catch (Exception | ZinggClientException e) {
-			e.printStackTrace();
+			LOG.error("Error occurred while running tests " + e.getMessage());
 		}
 
 	}		

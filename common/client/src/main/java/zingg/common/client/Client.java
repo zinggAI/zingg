@@ -30,7 +30,6 @@ import zingg.common.client.util.PipeUtilBase;
 public abstract class Client<S,D,R,C,T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	protected IZArgs arguments;
-//	protected ArgumentsUtil<?> argsUtil;
 	protected IZingg<S,D,R,C> zingg;
 	protected ClientOptions options;
 	protected S session;
@@ -302,14 +301,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public void setOptions(ClientOptions options) {
 		this.options = options;
 	}
-
-
-//	protected ArgumentsUtil<?> getArgsUtil(String phase) {
-//		if (argsUtil==null) {
-//			argsUtil = new ArgumentsUtil(Arguments.class);
-//		}
-//		return argsUtil;
-//	}
 
 	public void addListener(Class<? extends IEvent> eventClass, IEventListener listener) {
         EventsListener.getInstance().addListener(eventClass, listener);

@@ -5,7 +5,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.BeforeEach;
 
-import zingg.common.client.ArgumentsUtil;
+import zingg.common.client.arguments.ArgumentServiceImpl;
+import zingg.common.client.arguments.IArgumentService;
+import zingg.common.client.arguments.loader.LoaderType;
 import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.arguments.model.Arguments;
 
@@ -16,8 +18,8 @@ public class TestDocumenter {
     @BeforeEach
     public void setUp(){
         try {
-            ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
-			IArguments args = argsUtil.createArgumentsFromJSON(getClass().getResource("/testDocumenter/config.json").getFile());
+            IArgumentService<Arguments> argumentService = new ArgumentServiceImpl<>(Arguments.class);
+			IArguments args = argumentService.loadArguments(getClass().getResource("/testDocumenter/config.json").getFile(), LoaderType.FILE);
            	//fail("Exception was expected for missing config file");
 		} catch (Throwable e) {
             e.printStackTrace();

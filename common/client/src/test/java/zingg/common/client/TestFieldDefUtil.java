@@ -8,6 +8,9 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
+import zingg.common.client.arguments.ArgumentServiceImpl;
+import zingg.common.client.arguments.IArgumentService;
+import zingg.common.client.arguments.loader.LoaderType;
 import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.arguments.model.IArguments;
 
@@ -15,15 +18,20 @@ import zingg.common.client.arguments.model.IArguments;
 public class TestFieldDefUtil {
 
 	public static final Log LOG = LogFactory.getLog(TestFieldDefUtil.class);
-	protected ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
-	
-	protected FieldDefUtil fieldDefUtil = new FieldDefUtil();
+    protected final IArgumentService<Arguments> argumentService;
+    protected final FieldDefUtil fieldDefUtil;
+
+    public TestFieldDefUtil() {
+        this.argumentService = new ArgumentServiceImpl<>(Arguments.class);
+        this.fieldDefUtil = new FieldDefUtil();
+    }
+
 
 	@Test
 	public void testMatchTypeFilter() {
 			IArguments args;
             try {
-                args = argsUtil.createArgumentsFromJSON(getClass().getResource("../../../testArguments/configTestDontUse.json").getFile(), "test");
+                args = argumentService.loadArguments(getClass().getResource("../../../testArguments/configTestDontUse.json").getFile(), LoaderType.FILE);
                 List<? extends FieldDefinition> dontUseList = fieldDefUtil.getFieldDefinitionDontUse(args.getFieldDefinition()); 
                 assertEquals(dontUseList.size(), 3);
                 

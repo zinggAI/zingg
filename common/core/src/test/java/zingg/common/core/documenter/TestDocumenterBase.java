@@ -18,7 +18,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.arguments.model.Arguments;
-import zingg.common.client.ArgumentsUtil;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.ZinggClientException;
@@ -30,17 +29,16 @@ public abstract class TestDocumenterBase<S,D,R,C,T> {
     public static final Log LOG = LogFactory.getLog(TestDocumenterBase.class);
 	  protected Context<S, D, R, C, T> context;
     private final String TEST_DOC_TEMPLATE = "documenter/testDocumenterTemplate.ftlh";
-	  public ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
 	  private IArguments docArguments = new Arguments();
     private final IArguments args = new Arguments();
 
 
     public TestDocumenterBase(){
-	  }
+	}
 	
-	  public void initialize(Context<S, D, R, C, T> context) throws ZinggClientException {
+	public void initialize(Context<S, D, R, C, T> context) throws ZinggClientException {
 		this.context = context;
-	  }
+	}
 
     protected abstract DocumenterBase<S,D,R,C,T> getDocumenter(IContext<S,D,R,C,T> context, IArguments args, ClientOptions options);
 
