@@ -4,6 +4,7 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.client.arguments.loader.ArgumentsLoader;
 import zingg.common.client.arguments.loader.LoaderFactory;
 import zingg.common.client.arguments.loader.LoaderType;
+import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.arguments.writer.ArgumentsWriter;
 import zingg.common.client.arguments.writer.WriterFactory;
@@ -13,6 +14,11 @@ import java.rmi.NoSuchObjectException;
 
 public class ArgumentServiceImpl<A extends IZArgs> implements IArgumentService<A> {
     private final Class<A> argsClass;
+
+    @SuppressWarnings("unchecked")
+    public ArgumentServiceImpl() {
+        this((Class<A>) Arguments.class);
+    }
 
     public ArgumentServiceImpl(Class<A> argsClass) {
         this.argsClass = argsClass;
