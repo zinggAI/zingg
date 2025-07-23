@@ -11,6 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
 import zingg.common.client.*;
+import zingg.common.client.arguments.model.Arguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
 import zingg.common.core.preprocess.data.PreprocessTestData;

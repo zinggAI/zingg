@@ -4,8 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IArguments;
-import zingg.common.client.IZArgs;
+import zingg.common.client.arguments.model.IArguments;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.cols.ISelectedCols;

@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.HasStopWords;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 
 public class StopWordUtility implements Serializable {
 

@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.Client;
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 
 public class TestSparkClient {
 
