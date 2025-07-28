@@ -9,12 +9,11 @@ import zingg.common.client.arguments.model.IZArgs;
 
 public class ArgumentBuilder<A extends IZArgs> {
     private final IArgumentService<A> argumentService;
-    private static ArgumentBuilder<?> argumentBuilder = null;
     private static final String JSON = "json";
     private static final String ENV = "env";
     private static final Log LOG = LogFactory.getLog(ArgumentBuilder.class);
 
-    private ArgumentBuilder(Class<A> argsClass) {
+    public ArgumentBuilder(Class<A> argsClass) {
         this.argumentService = new ArgumentServiceImpl<>(argsClass);
     }
 
@@ -32,14 +31,6 @@ public class ArgumentBuilder<A extends IZArgs> {
             LOG.info("Exception occurred while building arguments " + exception);
             throw new ZinggClientException("Failed to build arguments");
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <A extends IZArgs> ArgumentBuilder<A> getInstance(Class<A> argsClass) {
-        if (argumentBuilder == null) {
-            argumentBuilder = new ArgumentBuilder<>(argsClass);
-        }
-        return (ArgumentBuilder<A>) argumentBuilder;
     }
 
     protected LoaderType getLoaderType(String configInput) {

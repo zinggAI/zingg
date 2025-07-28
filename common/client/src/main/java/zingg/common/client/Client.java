@@ -258,7 +258,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	protected ArgumentBuilder<Arguments> getArgumentBuilder() {
-		return ArgumentBuilder.getInstance(Arguments.class);
+		return new ArgumentBuilder<>(Arguments.class);
 	}
 
 	public void init() throws ZinggClientException {
