@@ -4,9 +4,9 @@ import zingg.common.client.arguments.model.IZArgs;
 
 import java.rmi.NoSuchObjectException;
 
-public class WriterFactory {
+public class WriterFactory<A extends IZArgs> {
 
-    public static <A extends IZArgs> ArgumentsWriter<A> getArgumentsWriter(WriterType writerType) throws NoSuchObjectException {
+    public ArgumentsWriter<A> getArgumentsWriter(WriterType writerType) throws NoSuchObjectException {
         switch (writerType) {
             case FILE:
                 return new FileArgumentsWriter<A>();

@@ -4,8 +4,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.arguments.loader.LoaderFactory;
 import zingg.common.client.arguments.loader.LoaderType;
 import zingg.common.client.arguments.model.IZArgs;
+import zingg.common.client.arguments.writer.WriterFactory;
 
 public class ArgumentBuilder<A extends IZArgs> {
     private final IArgumentService<A> argumentService;
@@ -15,6 +17,10 @@ public class ArgumentBuilder<A extends IZArgs> {
 
     public ArgumentBuilder(Class<A> argsClass) {
         this.argumentService = new ArgumentServiceImpl<>(argsClass);
+    }
+
+    public ArgumentBuilder(Class<A> argsClass, LoaderFactory<A> loaderFactory, WriterFactory<A> writerFactory) {
+        this.argumentService = new ArgumentServiceImpl<>(argsClass, loaderFactory, writerFactory);
     }
 
     /**

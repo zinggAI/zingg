@@ -4,9 +4,9 @@ import zingg.common.client.arguments.model.IZArgs;
 
 import java.rmi.NoSuchObjectException;
 
-public class LoaderFactory {
+public class LoaderFactory<A extends IZArgs> {
 
-    public static <A extends IZArgs> ArgumentsLoader<A> getArgumentsLoader(LoaderType loaderType, Class<A> argsClass) throws NoSuchObjectException {
+    public ArgumentsLoader<A> getArgumentsLoader(LoaderType loaderType, Class<A> argsClass) throws NoSuchObjectException {
         switch (loaderType) {
             case FILE:
                 return new FileArgumentLoader<A>(argsClass);

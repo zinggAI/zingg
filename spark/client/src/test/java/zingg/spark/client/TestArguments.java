@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import zingg.common.client.arguments.ArgumentServiceImpl;
 import zingg.common.client.arguments.IArgumentService;
+import zingg.common.client.arguments.loader.LoaderFactory;
 import zingg.common.client.arguments.loader.LoaderType;
 import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.FieldDefinition;
@@ -18,6 +19,7 @@ import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.IMatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.arguments.writer.WriterFactory;
 import zingg.common.client.pipe.Pipe;
 import zingg.spark.client.pipe.SparkPipe;
 
@@ -27,7 +29,7 @@ public class TestArguments {
 	protected final IArgumentService<Arguments> argumentService;
 
 	public TestArguments() {
-		this.argumentService = new ArgumentServiceImpl<>(Arguments.class);
+		this.argumentService = new ArgumentServiceImpl<>(Arguments.class, new LoaderFactory<>(),new WriterFactory<>());
 	}
 	@Test
 	public void testWriteArgumentObjectToJSONFile() {

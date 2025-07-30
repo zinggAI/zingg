@@ -257,7 +257,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 	}
 
-	protected ArgumentBuilder<Arguments> getArgumentBuilder() {
+	protected ArgumentBuilder<? extends IZArgs> getArgumentBuilder() {
 		return new ArgumentBuilder<>(Arguments.class);
 	}
 
