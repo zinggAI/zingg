@@ -204,17 +204,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			String phase = options.get(ClientOptions.PHASE).value.trim();
 			ZinggOptions.verifyPhase(phase);
 			ArgumentBuilder argumentBuilder = getArgumentBuilder();
-//			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
-//				arguments = getArgsUtil(phase).createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
-//			}
-//			else if (options.get(ClientOptions.CONF).value.endsWith("env")) {
-//				arguments = getArgsUtil(phase).createArgumentsFromJSONTemplate(options.get(ClientOptions.CONF).value, phase);
-//			}
-//			else {
-//				arguments = getArgsUtil(phase).createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
-//			}
 			arguments = argumentBuilder.buildArguments(options);
-
 			client = getClient(arguments, options);
 			client.init();
 			// after setting arguments etc. as some of the listeners need it
