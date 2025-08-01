@@ -1,16 +1,17 @@
-package zingg.common.client;
+package zingg.common.client.arguments.model;
 
 import java.io.IOException;
 import java.io.StringWriter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
 
 import com.fasterxml.jackson.core.JsonParser;
 
 
-public abstract class ZArgs implements IZArgs{
+public abstract class ZArgs implements IZArgs {
     String zinggDir = IZArgs.ZINGG_DIR;
     String modelId = IZArgs.MODEL_ID;
     int jobId = 1;
@@ -112,7 +113,7 @@ public abstract class ZArgs implements IZArgs{
 	 * 
 	 * @param outputDir
 	 *            where the match result is saved
-	 * @throws ZinggClientException 
+	 * @throws ZinggClientException
 	 */
 	@Override
 	public void setOutput(Pipe[] outputDir) throws ZinggClientException {

@@ -2,7 +2,7 @@ package zingg.common.client.util;
 
 
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.IMatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;

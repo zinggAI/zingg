@@ -8,7 +8,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.DataType;
 
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IZArgs;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.options.ZinggOptions;
 

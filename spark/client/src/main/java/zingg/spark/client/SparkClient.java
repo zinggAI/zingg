@@ -11,7 +11,7 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.Client;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IZingg;
-import zingg.common.client.IZArgs;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.util.Analytics;

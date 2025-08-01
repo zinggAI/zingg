@@ -1,5 +1,6 @@
-package zingg.common.client;
+package zingg.common.client.arguments.model;
 
+import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
 
 /**
@@ -62,7 +63,7 @@ public interface IZArgs {
 	 * 
 	 * @param outputDir
 	 *            where the match result is saved
-	 * @throws ZinggClientException 
+	 * @throws ZinggClientException
 	 */
 	void setOutput(Pipe[] outputDir) throws ZinggClientException;
 
