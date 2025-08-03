@@ -1,5 +1,6 @@
 package zingg.common.client.arguments.loader;
 
+import zingg.common.client.arguments.loader.template.TemplateFileArgumentLoader;
 import zingg.common.client.arguments.model.IZArgs;
 
 import java.rmi.NoSuchObjectException;

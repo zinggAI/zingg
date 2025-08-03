@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import zingg.common.client.arguments.ArgumentServiceImpl;
 import zingg.common.client.arguments.IArgumentService;
 import zingg.common.client.arguments.loader.LoaderFactory;
-import zingg.common.client.arguments.loader.LoaderType;
 import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.arguments.model.IArguments;
@@ -63,10 +62,10 @@ public class TestArguments {
 				args.setBlockSize(400L);
 				args.setCollectMetrics(true);
 				args.setModelId("500");
-				argumentService.loadArguments("/tmp/configFromArgObject.json", LoaderType.FILE);
+				argumentService.loadArguments("/tmp/configFromArgObject.json");
 
 				//reload the same config file to check if deserialization is successful
-				IArguments newArgs = (IArguments) argumentService.loadArguments("/tmp/configFromArgObject.json", LoaderType.FILE);
+				IArguments newArgs = (IArguments) argumentService.loadArguments("/tmp/configFromArgObject.json");
 				assertEquals(newArgs.getModelId(), "500", "Model id is different");
 				assertEquals(newArgs.getBlockSize(), 400L, "Block size is different");
 				assertEquals(newArgs.getFieldDefinition().get(0).getFieldName(), "fname", "Field Definition[0]'s name is different");

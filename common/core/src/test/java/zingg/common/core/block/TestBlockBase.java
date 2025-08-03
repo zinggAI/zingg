@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import zingg.common.client.arguments.ArgumentServiceImpl;
 import zingg.common.client.arguments.IArgumentService;
-import zingg.common.client.arguments.loader.LoaderType;
 import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.arguments.model.IArguments;
@@ -60,7 +59,7 @@ public abstract class TestBlockBase<S, D, R, C, T> {
 	private IArguments getArguments() throws ZinggClientException, NoSuchObjectException {
 		String configFilePath = Objects.requireNonNull(getClass().getResource("../../../../testFebrl/config.json")).getFile();
 
-		IArguments args = argumentService.loadArguments(configFilePath, LoaderType.FILE);
+		IArguments args = argumentService.loadArguments(configFilePath);
 
 		List<FieldDefinition> fdList = getFieldDefList();
 

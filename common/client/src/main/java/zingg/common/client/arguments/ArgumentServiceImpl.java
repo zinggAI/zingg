@@ -16,6 +16,8 @@ public class ArgumentServiceImpl<A extends IZArgs> implements IArgumentService<A
     private final Class<A> argsClass;
     private final LoaderFactory<A> loaderFactory;
     private final WriterFactory<A> writerFactory;
+    private static final String JSON = "json";
+    private static final String ENV = "env";
 
     @SuppressWarnings("unchecked")
     public ArgumentServiceImpl() {
@@ -35,15 +37,25 @@ public class ArgumentServiceImpl<A extends IZArgs> implements IArgumentService<A
     }
 
     @Override
-    public A loadArguments(String path, LoaderType loaderType) throws ZinggClientException, NoSuchObjectException {
+    public A loadArguments(String path) throws ZinggClientException, NoSuchObjectException {
+        LoaderType loaderType = getLoaderType(path);
         ArgumentsLoader<A> argumentsLoader = loaderFactory.getArgumentsLoader(loaderType, argsClass);
         return argumentsLoader.load(path);
     }
 
     @Override
-    public void writeArguments(String path, IZArgs args, WriterType writerType) throws ZinggClientException, NoSuchObjectException {
+    public void writeArguments(String path, IZArgs args) throws ZinggClientException, NoSuchObjectException {
         ArgumentsWriter<A> argumentsWriter = writerFactory.getArgumentsWriter(WriterType.JSON);
         argumentsWriter.write(path, args);
+    }
+
+    protected LoaderType getLoaderType(String configInput) {
+        if (configInput.endsWith(JSON)) {
+            return LoaderType.FILE;
+        } else if (configInput.endsWith(ENV)) {
+            return LoaderType.TEMPLATE_FILE;
+        }
+        return LoaderType.JSON;
     }
 
 }

@@ -10,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 import zingg.common.client.arguments.ArgumentServiceImpl;
 import zingg.common.client.arguments.IArgumentService;
-import zingg.common.client.arguments.loader.LoaderType;
 import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.arguments.model.IArguments;
 
@@ -31,7 +30,7 @@ public class TestFieldDefUtil {
 	public void testMatchTypeFilter() {
 			IArguments args;
             try {
-                args = argumentService.loadArguments(getClass().getResource("../../../testArguments/configTestDontUse.json").getFile(), LoaderType.FILE);
+                args = argumentService.loadArguments(getClass().getResource("../../../testArguments/configTestDontUse.json").getFile());
                 List<? extends FieldDefinition> dontUseList = fieldDefUtil.getFieldDefinitionDontUse(args.getFieldDefinition()); 
                 assertEquals(dontUseList.size(), 3);
                 

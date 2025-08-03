@@ -1,8 +1,8 @@
-package zingg.common.client.arguments.loader;
+package zingg.common.client.arguments.loader.template;
 
+import zingg.common.client.arguments.loader.ArgumentsLoader;
 import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.ZinggClientException;
-import zingg.common.client.arguments.util.EnvironmentVariableSubstitutor;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

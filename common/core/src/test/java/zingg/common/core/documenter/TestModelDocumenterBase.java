@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 
 import zingg.common.client.arguments.ArgumentServiceImpl;
 import zingg.common.client.arguments.IArgumentService;
-import zingg.common.client.arguments.loader.LoaderType;
 import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.arguments.model.IArguments;
@@ -47,7 +46,7 @@ public abstract class TestModelDocumenterBase<S,D,R,C,T> {
 		try {
 			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
 			IArgumentService<Arguments> argsUtil = new ArgumentServiceImpl<>(Arguments.class);
-			docArguments = argsUtil.loadArguments(configPath, LoaderType.FILE);
+			docArguments = argsUtil.loadArguments(configPath);
 			String zinggDirPath = getClass().getResource("../../../../"+docArguments.getZinggDir()).getFile();
 			docArguments.setZinggDir(zinggDirPath);
 		} catch (Throwable e) {

@@ -5,7 +5,8 @@ import java.io.Serializable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.arguments.ArgumentBuilder;
+import zingg.common.client.arguments.ArgumentServiceImpl;
+import zingg.common.client.arguments.IArgumentService;
 import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.arguments.model.IZArgs;
@@ -203,8 +204,8 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			}
 			String phase = options.get(ClientOptions.PHASE).value.trim();
 			ZinggOptions.verifyPhase(phase);
-			ArgumentBuilder argumentBuilder = getArgumentBuilder();
-			arguments = argumentBuilder.buildArguments(options);
+			IArgumentService argumentService = getArgumentService();
+			arguments = argumentService.loadArguments(options.get(ClientOptions.CONF).getValue());
 			client = getClient(arguments, options);
 			client.init();
 			// after setting arguments etc. as some of the listeners need it
@@ -247,8 +248,8 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 	}
 
-	protected ArgumentBuilder<? extends IZArgs> getArgumentBuilder() {
-		return new ArgumentBuilder<>(Arguments.class);
+	protected IArgumentService<? extends IZArgs> getArgumentService() {
+		return new ArgumentServiceImpl<>(Arguments.class);
 	}
 
 	public void init() throws ZinggClientException {

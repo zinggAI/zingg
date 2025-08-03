@@ -676,8 +676,7 @@ class Arguments:
         :param fileName: The CONF parameter value of ClientOption object or file address of json file
         :type fileName: String
         """
-        writerType = getJVM().zingg.common.client.arguments.writer.WriterType.FILE
-        getJVM().zingg.common.client.arguments.ArgumentServiceImpl().writeArguments(fileName, self.args, writerType)
+        getJVM().zingg.common.client.arguments.ArgumentServiceImpl().writeArguments(fileName, self.args)
 
     def setStopWordsCutoff(self, stopWordsCutoff):
         """Method to set stopWordsCutoff parameter value
@@ -709,8 +708,7 @@ class Arguments:
         :rtype: pointer(Arguments)
         """
         obj = Arguments()
-        loaderType = getJVM().zingg.common.client.arguments.loader.LoaderType.FILE
-        obj.args = getJVM().zingg.common.client.argumentst.ArgumentServiceImpl().loadArguments(fileName, loaderType)
+        obj.args = getJVM().zingg.common.client.argumentst.ArgumentServiceImpl().loadArguments(fileName)
         return obj
 
     def writeArgumentsToJSONString(self):
@@ -724,14 +722,12 @@ class Arguments:
         :rtype: pointer(Arguments)
         """
         jsonString = getJVM().java.lang.String()
-        writerType = getJVM().zingg.common.client.arguments.writer.WriterType.JSON
-        return getJVM().zingg.common.client.arguments.ArgumentServiceImpl().writeArguments(jsonString, self.args, writerType)
+        return getJVM().zingg.common.client.arguments.ArgumentServiceImpl().writeArguments(jsonString, self.args)
 
     @staticmethod
     def createArgumentsFromJSONString(jsonArgs, phase):
         obj = Arguments()
-        loaderType = getJVM().zingg.common.client.arguments.loader.LoaderType.JSON
-        obj.args = getJVM().zingg.common.client.arguments.ArgumentServiceImpl().loadArguments(jsonArgs, loaderType)
+        obj.args = getJVM().zingg.common.client.arguments.ArgumentServiceImpl().loadArguments(jsonArgs)
         return obj
 
     def copyArgs(self, phase):
