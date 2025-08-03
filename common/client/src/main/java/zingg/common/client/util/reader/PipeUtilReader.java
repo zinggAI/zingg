@@ -19,19 +19,22 @@ public abstract class PipeUtilReader<S, D, R, C> implements IPipeUtilReader<D, R
         this.session = session;
     }
 
+    @SafeVarargs
     @Override
-    public ZFrame<D, R, C> read(boolean addLineNo, boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException {
+    public final ZFrame<D, R, C> read(boolean addLineNo, boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException {
         ZFrame<D, R, C> rows = readMultiplePipes(false, addLineNo, addSource, pipes);
         return rows.cache();
     }
 
+    @SafeVarargs
     @Override
-    public ZFrame<D, R, C> read(boolean addLineNo, int numPartitions, boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException {
+    public final ZFrame<D, R, C> read(boolean addLineNo, int numPartitions, boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException {
         return read(false, addLineNo, numPartitions, addSource, pipes);
     }
 
+    @SafeVarargs
     @Override
-    public ZFrame<D, R, C> read(boolean addExtraCol, boolean addLineNo, int numPartitions, boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException {
+    public final ZFrame<D, R, C> read(boolean addExtraCol, boolean addLineNo, int numPartitions, boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException {
         ZFrame<D, R, C> rows = readMultiplePipes(addExtraCol, addLineNo, addSource, pipes);
         return rows.repartition(numPartitions).cache();
     }
@@ -51,7 +54,7 @@ public abstract class PipeUtilReader<S, D, R, C> implements IPipeUtilReader<D, R
         try {
             LOG.warn("Reading " + pipe);
             DFReader<D, R, C> reader = buildReaderFromPipe(pipe);
-            ReadStrategy<D, R, C> strategy = new ReadStrategyFactory<D, R, C>().getStrategy(pipe);
+            ReadStrategy<D, R, C> strategy = getReadStrategy(pipe);
             ZFrame<D, R, C> frame = strategy.read(reader, pipe);
             if (addSource) {
                 frame = frame.withColumn(ColName.SOURCE_COL, pipe.getName());
@@ -64,7 +67,8 @@ public abstract class PipeUtilReader<S, D, R, C> implements IPipeUtilReader<D, R
         }
     }
 
-    protected ZFrame<D, R, C> readMultiplePipes(boolean addExtraCol, boolean addLineNo, boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException {
+    @SafeVarargs
+    protected final ZFrame<D, R, C> readMultiplePipes(boolean addExtraCol, boolean addLineNo, boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException {
         ZFrame<D, R, C> result = null;
         for (Pipe<D, R, C> pipe : pipes) {
             ZFrame<D, R, C> current = readSinglePipe(pipe, addSource);
@@ -89,4 +93,7 @@ public abstract class PipeUtilReader<S, D, R, C> implements IPipeUtilReader<D, R
 
     protected abstract ZFrame<D, R, C> addLineNo(ZFrame<D, R, C> data);
     protected abstract DFReader<D, R, C> getReader();
+    protected ReadStrategy<D, R, C> getReadStrategy(Pipe<D, R, C> pipe) {
+        return new ReadStrategyFactory<D, R, C>().getStrategy(pipe);
+    }
 }

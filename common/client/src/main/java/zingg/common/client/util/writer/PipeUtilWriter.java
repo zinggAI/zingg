@@ -10,8 +10,9 @@ import zingg.common.client.util.DFWriter;
 public abstract class PipeUtilWriter<D, R, C> implements IPipeUtilWriter<D, R, C> {
     private   final Log LOG = LogFactory.getLog(PipeUtilWriter.class);
 
+
     public void write(ZFrame<D, R, C> toWriteOrig, Pipe<D, R, C>... pipes) throws ZinggClientException {
-        WriterStrategyFactory<D, R, C> strategyFactory = new WriterStrategyFactory<>(getWriter(toWriteOrig));
+        WriterStrategyFactory<D, R, C> strategyFactory = getWriteStrategyFactory(toWriteOrig);
         try {
             for (Pipe<D, R, C> pipe : pipes) {
                 LOG.warn("Writing output " + pipe);
@@ -27,4 +28,7 @@ public abstract class PipeUtilWriter<D, R, C> implements IPipeUtilWriter<D, R, C
         }
     }
     protected abstract DFWriter<D,R,C> getWriter(ZFrame<D, R, C> input);
+    protected WriterStrategyFactory<D, R, C> getWriteStrategyFactory(ZFrame<D, R, C> toWriteOrig) {
+        return new WriterStrategyFactory<>(getWriter(toWriteOrig));
+    }
 }
