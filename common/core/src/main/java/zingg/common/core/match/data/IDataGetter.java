@@ -1,6 +1,6 @@
 package zingg.common.core.match.data;
 
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.PipeUtilBase;

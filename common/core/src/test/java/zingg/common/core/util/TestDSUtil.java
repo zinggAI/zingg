@@ -12,10 +12,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.IArguments;
-import zingg.common.client.MatchType;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;

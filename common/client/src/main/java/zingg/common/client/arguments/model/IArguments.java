@@ -1,10 +1,12 @@
-package zingg.common.client;
+package zingg.common.client.arguments.model;
 
 import java.util.List;
 
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
 
-public interface IArguments extends IZArgs{
+public interface IArguments extends IZArgs {
 
 	void setThreshold(double threshold);
 
