@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -54,8 +55,10 @@ public class TestArguments {
 			assertEquals(arguments.getModelId(), env.get(KEY_MODEL_ID));
 		} catch (IOException | ZinggClientException e) {
 			fail("Unexpected exception " + e.getMessage());
-		}
-	}
+		} catch (InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 	@Test
 	public void testSubstituteVariablesWithMissingEnvVar() {
@@ -71,7 +74,8 @@ public class TestArguments {
 			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
 			IArguments args = argumentService.loadArguments(substitutedJsonString);
 			fail("Exception was expected due to missing environment variable");
- 		} catch (IOException | ZinggClientException e) {
+ 		} catch (IOException | ZinggClientException | InvocationTargetException | InstantiationException |
+                  IllegalAccessException | NoSuchMethodException e) {
 			LOG.warn("Expected exception received due to missing environment variable");
  		}
 	}
@@ -92,7 +96,8 @@ public class TestArguments {
 			IArguments args = argumentService.loadArguments(substitutedJsonString);
 
 			fail("Exception was expected for blank value for an environment variable");
- 		} catch (IOException | ZinggClientException e) {
+ 		} catch (IOException | ZinggClientException | InvocationTargetException | InstantiationException |
+                  IllegalAccessException | NoSuchMethodException e) {
  			LOG.warn("Expected exception received due to blank value for an environment variable");
 		}
 	}
@@ -114,7 +119,8 @@ public class TestArguments {
 			IArguments args = argumentService.loadArguments(substitutedJsonString);
  
 			fail("Exception was expected for invalid value for a Boolean variable");
- 		} catch (IOException | ZinggClientException e) {
+ 		} catch (IOException | ZinggClientException | InvocationTargetException | InstantiationException |
+                  IllegalAccessException | NoSuchMethodException e) {
 			LOG.warn("Expected exception received due to invalid value for a Boolean variable");
  		}
 	}
@@ -135,7 +141,8 @@ public class TestArguments {
 			IArguments args = argumentService.loadArguments(substitutedJsonString);
  
 			assertEquals(args.getOutput()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
-		} catch (IOException | ZinggClientException e) {
+		} catch (IOException | ZinggClientException | InvocationTargetException | InstantiationException |
+                 IllegalAccessException | NoSuchMethodException e) {
 			fail("Exception was not expected for valid value for a Boolean variable within quotes");
 
 		}
@@ -157,7 +164,8 @@ public class TestArguments {
 			IArguments args = argumentService.loadArguments(substitutedJsonString);
 
 			fail("Exception was expected for invalid value for a Numeric variable");
-		} catch (IOException | ZinggClientException e) {
+		} catch (IOException | ZinggClientException | InvocationTargetException | InstantiationException |
+                 IllegalAccessException | NoSuchMethodException e) {
 			LOG.warn("Expected exception received due to invalid value for a Numeric variable");
 		}
 	}
@@ -179,7 +187,8 @@ public class TestArguments {
 			IArguments args = argumentService.loadArguments(substitutedJsonString);
 			//Numeric within quotes are allowed
 			assertEquals(args.getModelId(), env.get(KEY_MODEL_ID));
-		} catch (IOException | ZinggClientException e) {
+		} catch (IOException | ZinggClientException | InvocationTargetException | InstantiationException |
+                 IllegalAccessException | NoSuchMethodException e) {
 			fail("Unexpected exception in testNumericWithinQuotes()" + e.getMessage());
 		}
 	}
@@ -201,7 +210,8 @@ public class TestArguments {
 			IArguments args = argumentService.loadArguments(substitutedJsonString);
 
 			fail("Exception was expected for malformed variable in json");
-		} catch (IOException | ZinggClientException e) {
+		} catch (IOException | ZinggClientException | InvocationTargetException | InstantiationException |
+                 IllegalAccessException | NoSuchMethodException e) {
 			LOG.warn("Expected exception received due to malformed variable in json");
 		}
 	}
@@ -212,7 +222,8 @@ public class TestArguments {
 		try {
 			argumentService.loadArguments(filePath);
 			fail("Exception was expected for invalid filepath or name");
-		} catch (ZinggClientException e) {
+		} catch (ZinggClientException | InvocationTargetException | InstantiationException | IllegalAccessException |
+                 NoSuchMethodException e) {
 			LOG.warn("Expected exception received: NoSuchFileException");
 		} catch (NoSuchObjectException e) {
             throw new RuntimeException(e);

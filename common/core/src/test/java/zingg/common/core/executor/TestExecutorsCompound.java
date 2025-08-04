@@ -1,6 +1,7 @@
 package zingg.common.core.executor;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -23,7 +24,7 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 	}
 
 	@Override
-	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException{
+	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		FindAndLabeller<S, D, R, C, T> findAndLabel = getFindAndLabeller();
 		FindAndLabelValidator<S, D, R, C, T> falValidator = new FindAndLabelValidator<S, D, R, C, T>(findAndLabel);
 		ExecutorTester<S, D, R, C, T> et = new FindAndLabellerExecutorTester<>(findAndLabel, falValidator,getConfigFile(),getModelId(),getDFObjectUtil());
