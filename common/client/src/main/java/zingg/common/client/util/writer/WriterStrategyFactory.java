@@ -10,7 +10,7 @@ import zingg.common.client.util.writer.impl.JdbcWriterStrategy;
 import java.rmi.NoSuchObjectException;
 
 public class WriterStrategyFactory<D, R, C> {
-    private final DFWriter<D, R, C> dfWriter;
+    protected final DFWriter<D, R, C> dfWriter;
 
     public WriterStrategyFactory(DFWriter<D, R, C> dfWriter) {
         this.dfWriter = dfWriter;

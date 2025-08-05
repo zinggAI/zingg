@@ -8,10 +8,10 @@ import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.DFWriter;
 
 public abstract class PipeUtilWriter<D, R, C> implements IPipeUtilWriter<D, R, C> {
-    private   final Log LOG = LogFactory.getLog(PipeUtilWriter.class);
+    private final Log LOG = LogFactory.getLog(PipeUtilWriter.class);
 
-
-    public void write(ZFrame<D, R, C> toWriteOrig, Pipe<D, R, C>... pipes) throws ZinggClientException {
+    @SafeVarargs
+    public final void write(ZFrame<D, R, C> toWriteOrig, Pipe<D, R, C>... pipes) throws ZinggClientException {
         WriterStrategyFactory<D, R, C> strategyFactory = getWriteStrategyFactory(toWriteOrig);
         try {
             for (Pipe<D, R, C> pipe : pipes) {
