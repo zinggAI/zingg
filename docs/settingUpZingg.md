@@ -35,9 +35,9 @@ sudo apt update
 
 **Note:** It is suggested to fork the repository to your account and then clone the repository.
 
-**Step 2: Install JDK 1.8 (Java Development Kit)**
+**Step 2: Install JDK 11 (Java Development Kit)**
 
-* Follow this [tutorial](https://linuxize.com/post/install-java-on-ubuntu-20-04/) to install Java8 JDK1.8 in Ubuntu.
+* Follow this [tutorial](https://linuxize.com/post/install-java-on-ubuntu-20-04/) to install Java 11 JDK 11 in Ubuntu.
 * For example:
 
 ```
@@ -116,7 +116,7 @@ mvn --version
 
 **Step 6: Compile The Zingg Repository**
 
-* Run the following to compile the Zingg Repository -
+* Make sure you are executing the following commands in the same terminal window where you saved the bashrc. Run the following to compile the Zingg Repository -
 
 ```
 git branch
@@ -150,3 +150,17 @@ For example, **-Dspark=3.5** you still face an error, include **-Dmaven.test.ski
 * Run this script in the terminal opened in Zingg clones directory `./scripts/zingg.sh --phase findTrainingData --conf examples/febrl/config.json`
 
 **If everything is right, it should show Zingg banner.**
+
+**Step 9: Run Zingg To label Data**
+
+* Run this script in the terminal opened in Zingg clones directory `./scripts/zingg.sh --phase label --conf examples/febrl/config.json --properties-file config/zingg.conf`
+
+**Step 10: Run Zingg To train model based on labelling**
+
+* Run this script in the terminal opened in Zingg clones directory `./scripts/zingg.sh --phase train --conf examples/febrl/config.json --properties-file config/zingg.conf`
+
+**Step 11: Run Zingg To prepare final output data**
+
+* Run this script in the terminal opened in Zingg clones directory `./scripts/zingg.sh --phase match --conf examples/febrl/config.json --properties-file config/zingg.conf`
+* change directory `cd /tmp/zinggOutput` (path provided in config file) to see the output files.
+
