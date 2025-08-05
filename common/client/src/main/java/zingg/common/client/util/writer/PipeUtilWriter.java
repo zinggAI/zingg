@@ -5,7 +5,6 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
-import zingg.common.client.util.DFWriter;
 
 public abstract class PipeUtilWriter<D, R, C> implements IPipeUtilWriter<D, R, C> {
     private final Log LOG = LogFactory.getLog(PipeUtilWriter.class);

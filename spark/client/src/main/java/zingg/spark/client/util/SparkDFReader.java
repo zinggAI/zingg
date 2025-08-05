@@ -7,7 +7,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.StructType;
 
 import zingg.common.client.ZFrame;
-import zingg.common.client.util.DFReader;
+import zingg.common.client.util.reader.DFReader;
 import zingg.spark.client.SparkFrame;
 import org.apache.spark.sql.SparkSession;
 

@@ -4,7 +4,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
-import zingg.common.client.util.DFReader;
+import zingg.common.client.util.reader.DFReader;
 import zingg.common.client.util.reader.ReadStrategy;
 
 public class FileReadStrategy<D, R, C> implements ReadStrategy<D, R, C> {

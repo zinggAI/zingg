@@ -2,7 +2,7 @@ package zingg.common.client.util.writer.impl;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.pipe.Pipe;
-import zingg.common.client.util.DFWriter;
+import zingg.common.client.util.writer.DFWriter;
 import zingg.common.client.util.writer.WriterStrategy;
 
 public class JdbcWriterStrategy<D, R, C> implements WriterStrategy<D, R, C> {

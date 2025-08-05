@@ -5,7 +5,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import zingg.common.client.ZFrame;
-import zingg.common.client.util.DFReader;
+import zingg.common.client.util.reader.DFReader;
 import zingg.common.client.util.reader.PipeUtilReader;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.client.util.SparkDFReader;

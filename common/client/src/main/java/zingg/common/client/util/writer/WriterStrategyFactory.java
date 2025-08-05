@@ -1,7 +1,6 @@
 package zingg.common.client.util.writer;
 
 import zingg.common.client.pipe.Pipe;
-import zingg.common.client.util.DFWriter;
 import zingg.common.client.util.writer.impl.CassandraWriterStrategy;
 import zingg.common.client.util.writer.impl.FileWriterStrategy;
 import zingg.common.client.util.writer.impl.InMemoryWriterStrategy;

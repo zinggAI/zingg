@@ -6,9 +6,6 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.ColName;
-import zingg.common.client.util.DFReader;
-
-import java.util.Map;
 
 public abstract class PipeUtilReader<S, D, R, C> implements IPipeUtilReader<D, R, C> {
 
@@ -39,21 +36,10 @@ public abstract class PipeUtilReader<S, D, R, C> implements IPipeUtilReader<D, R
         return rows.repartition(numPartitions).cache();
     }
 
-    protected DFReader<D, R, C> buildReaderFromPipe(Pipe<D, R, C> pipe) {
-        DFReader<D, R, C> reader = getReader().format(pipe.getFormat());
-        if (pipe.getSchema() != null) {
-            reader = reader.setSchema(pipe.getSchema());
-        }
-        for (Map.Entry<String, String> entry : pipe.getProps().entrySet()) {
-            reader = reader.option(entry.getKey(), entry.getValue());
-        }
-        return reader.option("mode", "PERMISSIVE");
-    }
-
     protected ZFrame<D, R, C> readSinglePipe(Pipe<D, R, C> pipe, boolean addSource) throws ZinggClientException {
         try {
             LOG.warn("Reading " + pipe);
-            DFReader<D, R, C> reader = buildReaderFromPipe(pipe);
+            DFReader<D, R, C> reader = Helper.initializeReaderForPipe(pipe, getReader());
             ReadStrategy<D, R, C> strategy = getReadStrategy(pipe);
             ZFrame<D, R, C> frame = strategy.read(reader, pipe);
             if (addSource) {

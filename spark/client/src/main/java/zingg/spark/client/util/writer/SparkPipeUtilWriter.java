@@ -4,7 +4,7 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import zingg.common.client.ZFrame;
-import zingg.common.client.util.DFWriter;
+import zingg.common.client.util.writer.DFWriter;
 import zingg.common.client.util.writer.PipeUtilWriter;
 import zingg.spark.client.util.SparkDFWriter;
 

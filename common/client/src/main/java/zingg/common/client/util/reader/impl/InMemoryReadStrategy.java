@@ -2,7 +2,7 @@ package zingg.common.client.util.reader.impl;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.pipe.Pipe;
-import zingg.common.client.util.DFReader;
+import zingg.common.client.util.reader.DFReader;
 import zingg.common.client.util.reader.ReadStrategy;
 
 public class InMemoryReadStrategy<D, R, C> implements ReadStrategy<D, R, C> {
