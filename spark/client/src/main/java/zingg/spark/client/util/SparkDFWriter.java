@@ -7,7 +7,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 
 import zingg.common.client.ZFrame;
-import zingg.common.client.util.DFWriter;
+import zingg.common.client.util.writer.DFWriter;
 
 public class SparkDFWriter implements DFWriter<Dataset<Row>, Row, Column>{
     private DataFrameWriter writer;
