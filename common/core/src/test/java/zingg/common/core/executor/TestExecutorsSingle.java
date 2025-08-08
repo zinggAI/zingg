@@ -1,6 +1,7 @@
 package zingg.common.core.executor;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -26,7 +27,7 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 	}
 
 	@Override
-	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException{
+	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 	  	
 		getBaseExecutors();
 		getAdditionalExecutors();
@@ -34,7 +35,7 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 		return executorTesterList;
 	}
 
-	public void getBaseExecutors() throws ZinggClientException, IOException{
+	public void getBaseExecutors() throws ZinggClientException, IOException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 
 		TrainingDataFinder<S, D, R, C, T> tdf = getTrainingDataFinder();
     	Labeller<S, D, R, C, T> labeler = getLabeller();
@@ -47,7 +48,7 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 
 	}
 
-	public void getAdditionalExecutors() throws ZinggClientException, IOException{
+	public void getAdditionalExecutors() throws ZinggClientException, IOException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		
 		Matcher<S, D, R, C, T> matcher = getMatcher();
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher),getConfigFile(),getModelId(),getDFObjectUtil()));

@@ -65,7 +65,7 @@ public class TestArguments {
 				argumentService.loadArguments("/tmp/configFromArgObject.json");
 
 				//reload the same config file to check if deserialization is successful
-				IArguments newArgs = (IArguments) argumentService.loadArguments("/tmp/configFromArgObject.json");
+				IArguments newArgs = argumentService.loadArguments("/tmp/configFromArgObject.json");
 				assertEquals(newArgs.getModelId(), "500", "Model id is different");
 				assertEquals(newArgs.getBlockSize(), 400L, "Block size is different");
 				assertEquals(newArgs.getFieldDefinition().get(0).getFieldName(), "fname", "Field Definition[0]'s name is different");
