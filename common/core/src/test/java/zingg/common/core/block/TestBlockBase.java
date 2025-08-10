@@ -2,7 +2,6 @@ package zingg.common.core.block;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.lang.reflect.InvocationTargetException;
 import java.rmi.NoSuchObjectException;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +56,7 @@ public abstract class TestBlockBase<S, D, R, C, T> {
 		blockingTree.toString();
 	}
 
-	private IArguments getArguments() throws ZinggClientException, NoSuchObjectException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	private IArguments getArguments() throws ZinggClientException, NoSuchObjectException {
 		String configFilePath = Objects.requireNonNull(getClass().getResource("../../../../testFebrl/config.json")).getFile();
 
 		IArguments args = argumentService.loadArguments(configFilePath);

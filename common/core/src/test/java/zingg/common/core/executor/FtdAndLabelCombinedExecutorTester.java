@@ -7,7 +7,6 @@ import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.executor.validate.ExecutorValidator;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 public class FtdAndLabelCombinedExecutorTester<S, D, R, C, T> extends MatchThresholdBasedExecutorTester<S, D, R, C, T> {
 
@@ -17,7 +16,7 @@ public class FtdAndLabelCombinedExecutorTester<S, D, R, C, T> extends MatchThres
     //setting labeller properties here
     //ftd properties are already set by super
     public FtdAndLabelCombinedExecutorTester(ZinggBase<S, D, R, C, T> ftdExecutor, ExecutorValidator<S, D, R, C, T> ftdValidator, String configFile,
-                                             ZinggBase<S, D, R, C, T> labelExecutor, ExecutorValidator<S, D, R, C, T> labelValidator, String modelId, DFObjectUtil<S,D,R,C> dfObjectUtil) throws ZinggClientException, IOException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+                                             ZinggBase<S, D, R, C, T> labelExecutor, ExecutorValidator<S, D, R, C, T> labelValidator, String modelId, DFObjectUtil<S,D,R,C> dfObjectUtil) throws ZinggClientException, IOException, NoSuchMethodException {
         super(ftdExecutor, ftdValidator,configFile,modelId,dfObjectUtil);
         this.labelExecutor = labelExecutor;
         this.labelValidator = labelValidator;

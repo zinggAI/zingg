@@ -9,7 +9,6 @@ import zingg.common.core.ZinggException;
 import zingg.common.core.executor.validate.ExecutorValidator;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 public abstract class MatchThresholdBasedExecutorTester<S, D, R, C, T> extends ExecutorTester<S, D, R, C, T>{
 
@@ -23,7 +22,7 @@ public abstract class MatchThresholdBasedExecutorTester<S, D, R, C, T> extends E
     protected long notAMatchCount = 0;
 
     public MatchThresholdBasedExecutorTester(ZinggBase<S, D, R, C, T> executor, ExecutorValidator<S, D, R, C, T> validator, String configFile, String modelId, DFObjectUtil<S, D, R, C> dfObjectUtil)
-            throws ZinggClientException, IOException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+            throws ZinggClientException, IOException {
         super(executor, validator, configFile, modelId, dfObjectUtil);
     }
 

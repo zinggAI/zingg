@@ -10,7 +10,6 @@ import zingg.common.client.arguments.writer.ArgumentsWriter;
 import zingg.common.client.arguments.writer.WriterFactory;
 import zingg.common.client.arguments.writer.WriterType;
 
-import java.lang.reflect.InvocationTargetException;
 import java.rmi.NoSuchObjectException;
 
 public class ArgumentServiceImpl<A extends IZArgs> implements IArgumentService<A> {
@@ -38,7 +37,7 @@ public class ArgumentServiceImpl<A extends IZArgs> implements IArgumentService<A
     }
 
     @Override
-    public A loadArguments(String path) throws ZinggClientException, NoSuchObjectException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public A loadArguments(String path) throws ZinggClientException, NoSuchObjectException {
         LoaderType loaderType = getLoaderType(path);
         ArgumentsLoader<A> argumentsLoader = loaderFactory.getArgumentsLoader(loaderType, argsClass);
         return argumentsLoader.load(path);
@@ -48,12 +47,6 @@ public class ArgumentServiceImpl<A extends IZArgs> implements IArgumentService<A
     public void writeArguments(String path, IZArgs args) throws ZinggClientException, NoSuchObjectException {
         ArgumentsWriter<A> argumentsWriter = writerFactory.getArgumentsWriter(WriterType.JSON);
         argumentsWriter.write(path, args);
-    }
-
-    @Override
-    public A loadArguments() throws NoSuchObjectException, ZinggClientException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-        ArgumentsLoader<A> argumentsLoader = loaderFactory.getArgumentsLoader(LoaderType.DEFAULT, argsClass);
-        return argumentsLoader.load();
     }
 
     protected LoaderType getLoaderType(String configInput) {

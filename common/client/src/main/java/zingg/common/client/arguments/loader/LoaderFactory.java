@@ -15,8 +15,6 @@ public class LoaderFactory<A extends IZArgs> {
                 return new JsonArgumentLoader<A>(argsClass);
             case TEMPLATE_FILE:
                 return new TemplateFileArgumentLoader<A>(argsClass);
-            case DEFAULT:
-                return new DefaultArgumentLoader<A>(argsClass);
             default:
                 throw new NoSuchObjectException("No such loader exists: " + loaderType.name());
         }

@@ -1,7 +1,7 @@
 package zingg.common.core.executor;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import java.rmi.NoSuchObjectException;
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -27,7 +27,7 @@ public class ExecutorTester<S, D, R, C, T>{
 	protected String modelId;
 	protected DFObjectUtil<S,D,R,C> dfObjectUtil;
 	
-	public ExecutorTester(ZinggBase<S, D, R, C, T> executor,ExecutorValidator<S, D, R, C, T> validator, String configFile, String modelId, DFObjectUtil<S,D,R,C> dfObjectUtil) throws ZinggClientException, IOException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public ExecutorTester(ZinggBase<S, D, R, C, T> executor,ExecutorValidator<S, D, R, C, T> validator, String configFile, String modelId, DFObjectUtil<S,D,R,C> dfObjectUtil) throws ZinggClientException, IOException {
 		this.executor = executor;
 		this.validator = validator;
 		this.configFile = configFile;
@@ -36,7 +36,7 @@ public class ExecutorTester<S, D, R, C, T>{
 		setupArgs();
 	}
 
-	public IArguments setupArgs(String configFile, String phase) throws ZinggClientException, IOException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public IArguments setupArgs(String configFile, String phase) throws ZinggClientException, NoSuchObjectException {
 		args = new ArgumentServiceImpl<Arguments>(Arguments.class).loadArguments(Objects.requireNonNull(getClass().getClassLoader().getResource(configFile)).getFile());
 		args = updateLocation(args);
 		args.setModelId(modelId);
@@ -54,7 +54,7 @@ public class ExecutorTester<S, D, R, C, T>{
 		return args;
 	}
 
-	public void setupArgs() throws ZinggClientException, IOException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public void setupArgs() throws ZinggClientException, IOException {
 		this.args = setupArgs(configFile, "");
 	}
 

@@ -7,11 +7,10 @@ import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.executor.validate.ExecutorValidator;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 public class FindAndLabellerExecutorTester<S, D, R, C, T> extends MatchThresholdBasedExecutorTester<S, D, R, C, T> {
 
-    public FindAndLabellerExecutorTester(ZinggBase<S, D, R, C, T> ftdLabelerExecutor, ExecutorValidator<S, D, R, C, T> ftdLabelerValidator, String configFile, String modelId, DFObjectUtil<S, D, R, C> dfObjectUtil) throws ZinggClientException, IOException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public FindAndLabellerExecutorTester(ZinggBase<S, D, R, C, T> ftdLabelerExecutor, ExecutorValidator<S, D, R, C, T> ftdLabelerValidator, String configFile, String modelId, DFObjectUtil<S, D, R, C> dfObjectUtil) throws ZinggClientException, IOException{
         super(ftdLabelerExecutor, ftdLabelerValidator, configFile, modelId, dfObjectUtil);
     }
 
