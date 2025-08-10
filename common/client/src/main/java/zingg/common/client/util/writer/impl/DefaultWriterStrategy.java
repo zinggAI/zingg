@@ -5,10 +5,10 @@ import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.writer.DFWriter;
 import zingg.common.client.util.writer.WriterStrategy;
 
-public class JdbcWriterStrategy<D, R, C> implements WriterStrategy<D, R, C> {
+public class DefaultWriterStrategy<D, R, C> implements WriterStrategy<D, R, C> {
     private final DFWriter<D, R, C> dfWriter;
 
-    public JdbcWriterStrategy(DFWriter<D, R, C> dfWriter) {
+    public DefaultWriterStrategy(DFWriter<D, R, C> dfWriter) {
         this.dfWriter = dfWriter;
     }
 
