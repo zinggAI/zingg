@@ -1,24 +1,10 @@
 package zingg.common.client.util;
 
-import zingg.common.client.ZFrame;
-import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
+import zingg.common.client.util.reader.IPipeUtilReader;
+import zingg.common.client.util.writer.IPipeUtilWriter;
 
-public interface PipeUtilBase<S, D, R, C> {
-
-	ZFrame<D, R, C> read(boolean addLineNo, boolean addSource, Pipe<D, R, C>... pipes)
-		throws ZinggClientException;
-
-	
-	ZFrame<D, R, C> read(boolean addLineNo, int numPartitions,
-                         boolean addSource, Pipe<D, R, C>... pipes)
-		throws ZinggClientException;
-
-	ZFrame<D,R,C> read(boolean addExtraCol, boolean addLineNo, int numPartitions,
-                       boolean addSource, Pipe<D, R, C>... pipes) throws ZinggClientException;
-
-	void write(ZFrame<D, R, C> toWriteOrig, Pipe<D, R, C>... pipes)
-		throws ZinggClientException;
+public interface PipeUtilBase<S, D, R, C> extends IPipeUtilReader<D, R, C>, IPipeUtilWriter<D, R, C> {
 
 	String getPipesAsString(Pipe<D, R, C>[] pipes);
 
