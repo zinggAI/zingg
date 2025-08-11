@@ -4,17 +4,17 @@ USER 0
 RUN apt-get update && \
 	apt install -y curl vim 
 ENV SPARK_MASTER local[*]
-ENV ZINGG_HOME /zingg-0.5.0
+ENV ZINGG_HOME /zingg-0.5.1
 ENV PATH $ZINGG_HOME/scripts:$PATH
 ENV LANG C.UTF-8
 WORKDIR /
 USER root
-WORKDIR /zingg-0.5.0
-RUN curl --location https://github.com/zinggAI/zingg/releases/download/v0.5.0/zingg-0.5.0-spark-3.5.0.tar.gz | \
+WORKDIR /zingg-0.5.1
+RUN curl --location https://github.com/zinggAI/zingg/releases/download/v0.5.1/zingg-0.5.1-spark-3.5.0.tar.gz | \
 tar --extract --gzip --strip=1 
 RUN pip install -r python/requirements.txt
 RUN pip install zingg
-RUN chmod -R a+rwx /zingg-0.5.0/models
-RUN chown -R spark /zingg-0.5.0/models
+RUN chmod -R a+rwx /zingg-0.5.1/models
+RUN chown -R spark /zingg-0.5.1/models
 USER spark
 

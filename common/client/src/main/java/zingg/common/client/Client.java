@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.event.events.IEvent;
+import zingg.common.client.event.events.ZinggFailEvent;
 import zingg.common.client.event.events.ZinggStartEvent;
 import zingg.common.client.event.events.ZinggStopEvent;
 import zingg.common.client.event.listeners.EventsListener;
@@ -230,13 +231,16 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 		finally {
 			try {
-				EventsListener.getInstance().fireEvent(new ZinggStopEvent());
+
 				if (client != null) {
 					//client.postMetrics();
 					client.stop();
 				}
 				if (!success) {
+					EventsListener.getInstance().fireEvent(new ZinggFailEvent());
 					System.exit(1);
+				}else{
+					EventsListener.getInstance().fireEvent(new ZinggStopEvent());
 				}
 			}
 			catch(ZinggClientException e) {
@@ -328,7 +332,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public String getProductVersion(){
-		return "0.5.0";
+		return "0.5.1";
 	}
 
 	public Long getMarkedRecordsStat(ZFrame<D,R,C>  markedRecords, long value) {
