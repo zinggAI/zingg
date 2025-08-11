@@ -8,10 +8,8 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.AfterEach;
 
 import zingg.common.client.ZinggClientException;
-import zingg.common.core.ZinggException;
 import zingg.common.core.executor.validate.FindAndLabelValidator;
 import zingg.common.core.executor.validate.TrainMatchValidator;
-import zingg.common.core.util.ICleanUpUtil;
 import zingg.common.core.util.IPerformCleanUpUtil;
 import zingg.common.core.util.TestType;
 
@@ -23,7 +21,7 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 	}
 
 	@Override
-	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException{
+	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException, NoSuchMethodException {
 		FindAndLabeller<S, D, R, C, T> findAndLabel = getFindAndLabeller();
 		FindAndLabelValidator<S, D, R, C, T> falValidator = new FindAndLabelValidator<S, D, R, C, T>(findAndLabel);
 		ExecutorTester<S, D, R, C, T> et = new FindAndLabellerExecutorTester<>(findAndLabel, falValidator,getConfigFile(),getModelId(),getDFObjectUtil());
