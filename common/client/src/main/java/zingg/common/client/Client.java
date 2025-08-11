@@ -250,6 +250,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 						e.getMessage()));
 				}
 				if (!success) {
+					EventsListener.getInstance().fireEvent(new ZinggFailEvent());
 					System.exit(1);
 				}
 			}
