@@ -7,10 +7,10 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 
 import zingg.common.client.ZFrame;
-import zingg.common.client.util.writer.DFWriter;
+import zingg.common.client.util.writer.IDFWriter;
 
-public class SparkDFWriter implements DFWriter<Dataset<Row>, Row, Column>{
-    private DataFrameWriter writer;
+public class SparkDFWriter implements IDFWriter<Dataset<Row>, Row, Column> {
+    private final DataFrameWriter<Row> writer;
 
     public SparkDFWriter(ZFrame<Dataset<Row>, Row, Column> toWriteOrig) {
         Dataset<Row> toWrite = toWriteOrig.df();
@@ -23,11 +23,11 @@ public class SparkDFWriter implements DFWriter<Dataset<Row>, Row, Column>{
         this.writer.mode(SaveMode.valueOf(s));
 
     }
-    public DFWriter<Dataset<Row>, Row, Column> format(String f) {
+    public IDFWriter<Dataset<Row>, Row, Column> format(String f) {
         writer.format(f);
         return this;
     }
-    public DFWriter<Dataset<Row>, Row, Column> option(String k, String v) {
+    public IDFWriter<Dataset<Row>, Row, Column> option(String k, String v) {
         writer.option(k,v);
         return this;
     }

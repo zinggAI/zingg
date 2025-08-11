@@ -7,9 +7,9 @@ import zingg.common.client.util.writer.impl.InMemoryWriterStrategy;
 import zingg.common.client.util.writer.impl.DefaultWriterStrategy;
 
 public class WriterStrategyFactory<D, R, C> {
-    protected final DFWriter<D, R, C> dfWriter;
+    protected final IDFWriter<D, R, C> dfWriter;
 
-    public WriterStrategyFactory(DFWriter<D, R, C> dfWriter) {
+    public WriterStrategyFactory(IDFWriter<D, R, C> dfWriter) {
         this.dfWriter = dfWriter;
     }
 

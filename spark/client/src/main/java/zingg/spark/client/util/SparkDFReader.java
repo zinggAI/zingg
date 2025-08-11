@@ -7,11 +7,11 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.StructType;
 
 import zingg.common.client.ZFrame;
-import zingg.common.client.util.reader.DFReader;
+import zingg.common.client.util.reader.IDFReader;
 import zingg.spark.client.SparkFrame;
 import org.apache.spark.sql.SparkSession;
 
-public class SparkDFReader implements DFReader<Dataset<Row>, Row, Column> {
+public class SparkDFReader implements IDFReader<Dataset<Row>, Row, Column> {
 
     private final DataFrameReader reader;
 
@@ -19,21 +19,21 @@ public class SparkDFReader implements DFReader<Dataset<Row>, Row, Column> {
         this.reader = s.read();
     }
 
-    public DFReader<Dataset<Row>, Row, Column> getReader() {
+    public IDFReader<Dataset<Row>, Row, Column> getReader() {
         return this;
     }
 
-    public DFReader<Dataset<Row>, Row, Column> format(String f) {
+    public IDFReader<Dataset<Row>, Row, Column> format(String f) {
         this.reader.format(f);
         return this;
     }
 
-    public DFReader<Dataset<Row>, Row, Column> option(String k, String v){
+    public IDFReader<Dataset<Row>, Row, Column> option(String k, String v){
         this.reader.option(k,v);
         return this;
     }
 
-    public DFReader<Dataset<Row>, Row, Column> setSchema(String s) {
+    public IDFReader<Dataset<Row>, Row, Column> setSchema(String s) {
         this.reader.schema(StructType.fromDDL(s));
         return this;
     }

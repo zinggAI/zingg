@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class Helper {
 
-    public static <D, R, C> DFReader<D, R, C> initializeReaderForPipe(Pipe<D, R, C> pipe, DFReader<D, R, C> dfReader) {
-        DFReader<D, R, C> reader = dfReader.format(pipe.getFormat());
+    public static <D, R, C> IDFReader<D, R, C> initializeReaderForPipe(Pipe<D, R, C> pipe, IDFReader<D, R, C> dFReader) {
+        IDFReader<D, R, C> reader = dFReader.format(pipe.getFormat());
         if (pipe.getSchema() != null) {
             reader = reader.setSchema(pipe.getSchema());
         }
