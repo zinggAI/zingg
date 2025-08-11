@@ -91,8 +91,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 			}
 			JavaSparkContext ctx = JavaSparkContext.fromSparkContext(sparkContext);
 					JavaSparkContext.jarOfClass(IZingg.class);
-					LOG.debug("Context " + ctx.toString());
-					//initHashFns();
+					LOG.debug("Context " + ctx);
 			if (!ctx.getCheckpointDir().isPresent()) {
 				ctx.setCheckpointDir(String.valueOf(sparkContext.getCheckpointDir()));
 			}
@@ -100,7 +99,6 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 			setSession(s);
 			return s;
 		}
-		
 	}
 	
 	@Override
