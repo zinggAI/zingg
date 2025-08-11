@@ -9,12 +9,12 @@ description: From pre-built Docker image with all dependencies included
 The easiest way to get started is to pull the Docker image with the last release of Zingg.
 
 ```
-docker pull zingg/zingg:0.5.1
-docker run -it zingg/zingg:0.5.1 bash
+docker pull zingg/zingg:0.5.0
+docker run -it zingg/zingg:0.5.0 bash
 ```
 In case of permission denied, try mapping /tmp of docker with user's machine /tmp
 ```
-docker run -v /tmp:/tmp -it zingg/zingg:0.5.1 bash
+docker run -v /tmp:/tmp -it zingg/zingg:0.5.0 bash
 ```
 
 To know more about Docker, please refer to the official [Docker documentation](https://docs.docker.com/).

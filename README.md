@@ -7,7 +7,7 @@
 [![performance-test-febrl120K](https://github.com/zinggAI/zingg/actions/workflows/perfTest-febrl120K.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/perfTest-febrl120K.yml)
 [![performance-test-ncVoters5M](https://github.com/zinggAI/zingg/actions/workflows/perfTest-ncVoters5M.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/perfTest-ncVoters5M.yml)
 
-## 0.5.1 release of Zingg is coming soon!
+## 0.5.0 release of Zingg is coming soon!
 
 ## The Problem
 

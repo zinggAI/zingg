@@ -24,7 +24,7 @@ The following details are captured:
 
 An example analytics event while running Zingg is
 ```
-event is {"client_id":"localhost","events":[{"name":"match","params":{"executionTime":"1.743246748E9","country":"IN","zingg_version":"0.5.1","modelId":"100","domain":"localhost","java_version":"11.0.18","os_arch":"aarch64","os_name":"Mac OS X","DB_INSTANCE_TYPE":null,"DATABRICKS_RUNTIME_VERSION":null,"dataCount":"65.0","ZINGG_HOME":"true"}}],"user_id":"zingg"}
+event is {"client_id":"localhost","events":[{"name":"match","params":{"executionTime":"1.743246748E9","country":"IN","zingg_version":"0.5.0","modelId":"100","domain":"localhost","java_version":"11.0.18","os_arch":"aarch64","os_name":"Mac OS X","DB_INSTANCE_TYPE":null,"DATABRICKS_RUNTIME_VERSION":null,"dataCount":"65.0","ZINGG_HOME":"true"}}],"user_id":"zingg"}
 ```
 
 To view the information captured while running Zingg, edit log4j2.properties and turn loggin level of zingg_analytics to warn
