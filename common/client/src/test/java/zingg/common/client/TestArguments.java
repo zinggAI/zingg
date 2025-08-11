@@ -55,7 +55,7 @@ public class TestArguments {
 		} catch (IOException | ZinggClientException e) {
 			fail("Unexpected exception " + e.getMessage());
 		}
-	}
+    }
 
 	@Test
 	public void testSubstituteVariablesWithMissingEnvVar() {

@@ -42,16 +42,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 
 	
 	public SparkClient() {
-		/*SparkSession session = SparkSession
-                .builder()
-                .appName("Zingg")
-                .getOrCreate();
-		JavaSparkContext ctx = JavaSparkContext.fromSparkContext(session.sparkContext());
-        JavaSparkContext.jarOfClass(IZingg.class);
-		
-		*/
 		super(zFactoryClassName);
-
 	}
 
 
@@ -91,8 +82,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 			}
 			JavaSparkContext ctx = JavaSparkContext.fromSparkContext(sparkContext);
 					JavaSparkContext.jarOfClass(IZingg.class);
-					LOG.debug("Context " + ctx.toString());
-					//initHashFns();
+					LOG.debug("Context " + ctx);
 			if (!ctx.getCheckpointDir().isPresent()) {
 				ctx.setCheckpointDir(String.valueOf(sparkContext.getCheckpointDir()));
 			}
