@@ -220,11 +220,11 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		} 
 		catch(Throwable throwable) {
 			success = false;
-			if (options != null && options.get(ClientOptions.EMAIL) != null) {
-				Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
-					"Zingg Error ",
-						throwable.getMessage()));
-			}
+//			if (options != null && options.get(ClientOptions.EMAIL) != null) {
+//				Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
+//					"Zingg Error ",
+//						throwable.getMessage()));
+//			}
 			LOG.warn("Apologies for this message. Zingg has encountered an error. "
 					+ throwable.getMessage());
 			if (LOG.isDebugEnabled()) throwable.printStackTrace();
