@@ -14,6 +14,4 @@ public interface IDFReader<D, R, C> {
     IDFReader<D,R,C> setSchema(String s);
 
     ZFrame<D,R,C> load() throws ZinggClientException;
-
-    ZFrame<D,R,C> load(String location) throws ZinggClientException;
 }
