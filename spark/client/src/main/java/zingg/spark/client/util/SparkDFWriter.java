@@ -18,22 +18,25 @@ public class SparkDFWriter implements IDFWriter<Dataset<Row>, Row, Column> {
         
     }
 
-
+    @Override
     public void setMode(String s) {
         this.writer.mode(SaveMode.valueOf(s));
 
     }
+
+    @Override
     public IDFWriter<Dataset<Row>, Row, Column> format(String f) {
         writer.format(f);
         return this;
     }
+
+    @Override
     public IDFWriter<Dataset<Row>, Row, Column> option(String k, String v) {
         writer.option(k,v);
         return this;
     }
-    public void save(String location) {
-        writer.save(location);
-    }
+
+    @Override
     public void save() {
         writer.save();
     }

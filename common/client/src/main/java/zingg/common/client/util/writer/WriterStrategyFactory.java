@@ -2,7 +2,6 @@ package zingg.common.client.util.writer;
 
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.writer.impl.CassandraWriterStrategy;
-import zingg.common.client.util.writer.impl.FileWriterStrategy;
 import zingg.common.client.util.writer.impl.InMemoryWriterStrategy;
 import zingg.common.client.util.writer.impl.DefaultWriterStrategy;
 
@@ -19,11 +18,8 @@ public class WriterStrategyFactory<D, R, C> {
             return new InMemoryWriterStrategy<>();
         } else if (Pipe.FORMAT_CASSANDRA.equals(format)) {
             return new CassandraWriterStrategy<>();
-        } else if (pipe.getProps().containsKey("location")) {
-            return new FileWriterStrategy<>(dfWriter);
-        } else {
-            return new DefaultWriterStrategy<>(dfWriter);
         }
+        return new DefaultWriterStrategy<>(dfWriter);
     }
 }
 

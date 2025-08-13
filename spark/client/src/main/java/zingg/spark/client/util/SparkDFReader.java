@@ -19,31 +19,32 @@ public class SparkDFReader implements IDFReader<Dataset<Row>, Row, Column> {
         this.reader = s.read();
     }
 
+    @Override
     public IDFReader<Dataset<Row>, Row, Column> getReader() {
         return this;
     }
 
+    @Override
     public IDFReader<Dataset<Row>, Row, Column> format(String f) {
         this.reader.format(f);
         return this;
     }
 
+    @Override
     public IDFReader<Dataset<Row>, Row, Column> option(String k, String v){
         this.reader.option(k,v);
         return this;
     }
 
+    @Override
     public IDFReader<Dataset<Row>, Row, Column> setSchema(String s) {
         this.reader.schema(StructType.fromDDL(s));
         return this;
     }
 
+    @Override
     public ZFrame<Dataset<Row>, Row, Column> load() {
         return new SparkFrame(this.reader.load());
     }
 
-    public ZFrame<Dataset<Row>, Row, Column> load(String location) {
-        return new SparkFrame(this.reader.load(location));
-    }
-    
 }
