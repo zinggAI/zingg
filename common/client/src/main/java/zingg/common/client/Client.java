@@ -220,11 +220,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		} 
 		catch(Throwable throwable) {
 			success = false;
-//			if (options != null && options.get(ClientOptions.EMAIL) != null) {
-//				Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
-//					"Zingg Error ",
-//						throwable.getMessage()));
-//			}
 			LOG.warn("Apologies for this message. Zingg has encountered an error. "
 					+ throwable.getMessage());
 			if (LOG.isDebugEnabled()) throwable.printStackTrace();
@@ -232,8 +227,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		finally {
 			try {
 				if (!success) {
-					EventsListener.getInstance().fireEvent(new ZinggFailEvent());
-					System.exit(1);
+					handleFailureAndExit();
 				}else{
 					EventsListener.getInstance().fireEvent(new ZinggStopEvent());
 				}
@@ -250,8 +244,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 						e.getMessage()));
 				}
 				if (!success) {
-					EventsListener.getInstance().fireEvent(new ZinggFailEvent());
-					System.exit(1);
+					handleFailureAndExit();
 				}
 			}
 		}
@@ -305,7 +298,11 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			argsUtil = new ArgumentsUtil(Arguments.class);
 		}
 		return argsUtil;
-	}    
+	}
+	protected void handleFailureAndExit() {
+		EventsListener.getInstance().fireEvent(new ZinggFailEvent());
+		System.exit(1);
+	}
 
 	public void addListener(Class<? extends IEvent> eventClass, IEventListener listener) {
         EventsListener.getInstance().addListener(eventClass, listener);
