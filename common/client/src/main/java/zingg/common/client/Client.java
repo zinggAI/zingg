@@ -225,28 +225,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			if (LOG.isDebugEnabled()) throwable.printStackTrace();
 		}
 		finally {
-			try {
-				if (!success) {
-					handleFailureAndExit();
-				}else{
-					EventsListener.getInstance().fireEvent(new ZinggStopEvent());
-				}
-
-				if (client != null) {
-					//client.postMetrics();
-					client.stop();
-				}
-			}
-			catch(ZinggClientException e) {
-				if (options != null && options.get(ClientOptions.EMAIL) != null) {
-					Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
-						"Zingg Error ",
-						e.getMessage()));
-				}
-				if (!success) {
-					handleFailureAndExit();
-				}
-			}
+			cleanupAndExit(success, client);
 		}
 	}
 
@@ -302,6 +281,27 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	protected void handleFailureAndExit() {
 		EventsListener.getInstance().fireEvent(new ZinggFailEvent());
 		System.exit(1);
+	}
+
+	protected void cleanupAndExit(boolean success, Client<S,D,R,C,T> client) {
+		if (!success) {
+			EventsListener.getInstance().fireEvent(new ZinggFailEvent());
+		} else {
+			EventsListener.getInstance().fireEvent(new ZinggStopEvent());
+		}
+
+		try {
+			if (client != null) {
+				client.stop();
+			}
+			if (success) {
+				System.exit(0);
+			} else {
+				System.exit(1);
+			}
+		} catch (ZinggClientException e) {
+			System.exit(1);
+		}
 	}
 
 	public void addListener(Class<? extends IEvent> eventClass, IEventListener listener) {
