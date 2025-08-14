@@ -278,10 +278,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		}
 		return argsUtil;
 	}
-	protected void handleFailureAndExit() {
-		EventsListener.getInstance().fireEvent(new ZinggFailEvent());
-		System.exit(1);
-	}
 
 	protected void cleanupAndExit(boolean success, Client<S,D,R,C,T> client) {
 		if (!success) {
