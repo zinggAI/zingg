@@ -27,7 +27,6 @@ public abstract class ClientRunner<S, D, R, C> {
             lifecycleManager.run(client);
             LOG.warn("Zingg processing has completed");
         } catch (Throwable ex) {
-            LOG.info(" ------- Error here ----------- " + ex.getMessage());
             success = false;
             errorNotifier.notify(options, "Error running Zingg job", ex.getMessage());
         } finally {
