@@ -7,7 +7,9 @@ public class BannerPrinter {
 
     private static final Log LOG = LogFactory.getLog(BannerPrinter.class);
 
-    public void print(String productName, String version, boolean collectMetrics) {
+    public void print(boolean collectMetrics) {
+        String productName = getProductName();
+        String version = getProductVersion();
         LOG.info("");
         LOG.info("**************************************************************************");
         LOG.info("*                                                                        *");
@@ -38,4 +40,7 @@ public class BannerPrinter {
             LOG.info("");
         }
     }
+
+    public static String getProductName(){ return "Zingg AI"; }
+    public static String getProductVersion(){ return "0.6.0"; }
 }

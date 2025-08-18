@@ -18,6 +18,11 @@ public class SparkClientRunner extends ClientRunner<SparkSession, Dataset<Row>, 
     }
 
     @Override
+    protected IZinggFactory getZinggFactory() throws ZinggClientException {
+        return ZinggFactoryProvider.getZinggFactory("zingg.spark.core.executor.SparkZFactory");
+    }
+
+    @Override
     protected Client<SparkSession, Dataset<Row>, Row, Column> getClient(BannerPrinter bannerPrinter, IZingg<SparkSession, Dataset<Row>, Row, Column> zingg, ClientOptions clientOptions, IZArgs args) {
         SparkClient sparkClient = new SparkClient(bannerPrinter);
         sparkClient.setOptions(clientOptions);

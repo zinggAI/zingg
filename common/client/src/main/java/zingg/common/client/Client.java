@@ -18,7 +18,7 @@ public abstract class Client<S,D,R,C> {
     }
 
     public void init() throws ZinggClientException {
-        banner.print(getProductName(), getProductVersion(), arguments.getCollectMetrics());
+        banner.print(arguments.getCollectMetrics());
         zingg.init(arguments, sessionManager.get(), options);
     }
 
@@ -35,9 +35,6 @@ public abstract class Client<S,D,R,C> {
     }
 
     public abstract PipeUtilBase<S, D, R, C> getPipeUtil();
-    public String getProductName(){ return "Zingg AI"; }
-    public String getProductVersion(){ return "0.6.0"; }
-
     public void setArguments(IZArgs arguments) {
         this.arguments = arguments;
     }

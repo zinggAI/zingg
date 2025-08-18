@@ -6,6 +6,7 @@ import zingg.common.client.arguments.ArgumentServiceImpl;
 import zingg.common.client.arguments.IArgumentService;
 import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.arguments.model.IZArgs;
+import zingg.common.client.options.ZinggOptions;
 
 import java.rmi.NoSuchObjectException;
 
@@ -42,8 +43,10 @@ public abstract class ClientRunner<S, D, R, C> {
         IZArgs args = service.loadArguments(options.get(ClientOptions.CONF).getValue());
         return getArgumentAssembler().assemble(args, options);
     }
-    protected IZingg<S, D, R, C> createZingg(ClientOptions options) throws ZinggClientException {
-        return getZinggFactoryProvider().create(options.get(ClientOptions.PHASE).getValue());
+    protected IZingg<S, D, R, C> createZingg(ClientOptions options) throws ZinggClientException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        IZinggFactory zinggFactory = getZinggFactory();
+        String phase = options.get(ClientOptions.PHASE).getValue();
+        return zinggFactory.get(ZinggOptions.getByValue(phase));
     }
     protected IArgumentService getArgumentService() {
         return new ArgumentServiceImpl(Arguments.class);
@@ -51,9 +54,6 @@ public abstract class ClientRunner<S, D, R, C> {
     protected  ArgumentsAssembler getArgumentAssembler() {
         return new ArgumentsAssembler();
     }
-    protected ZinggFactoryProvider<S, D, R, C> getZinggFactoryProvider() {
-        return new ZinggFactoryProvider<>("zingg.spark.core.executor.SparkZFactory");
-    }
-
+    protected abstract IZinggFactory getZinggFactory() throws ZinggClientException;
     protected abstract Client<S, D, R, C> getClient(BannerPrinter bannerPrinter, IZingg<S, D, R, C> zingg, ClientOptions clientOptions, IZArgs args);
 }

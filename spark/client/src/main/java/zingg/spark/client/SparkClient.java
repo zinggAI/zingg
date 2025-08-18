@@ -5,6 +5,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.*;
 import zingg.common.client.BannerPrinter;
 import zingg.common.client.Client;
+import zingg.common.client.IZingg;
 import zingg.common.client.SessionManager;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.spark.client.util.SparkPipeUtil;
@@ -15,14 +16,20 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column>
 
     public SparkClient(BannerPrinter bannerPrinter) {
         super(new SessionManager<>(() -> {
-            SparkSession spark = SparkSession.builder()
+            SparkSession sparkSession = SparkSession
+                    .builder()
                     .appName("Zingg")
-                    .master("local[*]")
-                    .config("spark.sql.shuffle.partitions", "8")
                     .getOrCreate();
-
-            spark.sparkContext().setCheckpointDir("/tmp/checkpoint");
-            return spark;
+            SparkContext sparkContext = sparkSession.sparkContext();
+            if (sparkContext.getCheckpointDir().isEmpty()) {
+                sparkContext.setCheckpointDir("/tmp/checkpoint");
+            }
+            JavaSparkContext ctx = JavaSparkContext.fromSparkContext(sparkContext);
+            JavaSparkContext.jarOfClass(IZingg.class);
+            if (!ctx.getCheckpointDir().isPresent()) {
+                ctx.setCheckpointDir(String.valueOf(sparkContext.getCheckpointDir()));
+            }
+            return sparkSession;
         }), bannerPrinter);
     }
 
