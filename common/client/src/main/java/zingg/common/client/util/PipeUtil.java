@@ -9,7 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
-//import zingg.common.client.pipe.InMemoryPipe;
 import zingg.common.client.pipe.Pipe;
 
 //import com.datastax.spark.connector.cql.*;
@@ -50,25 +49,27 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 		return reader;
 	}
 
-	protected  ZFrame<D,R,C> read(DFReader<D,R,C> reader, Pipe<D,R,C> p, boolean addSource) throws ZinggClientException{
+	public ZFrame<D,R,C> getInput(Pipe<D,R,C> p, DFReader<D,R,C> reader) throws ZinggClientException{
 		ZFrame<D,R,C> input = null;
-		LOG.warn("Reading " + p);
-		try {
-
-		if (p.getFormat().equals(Pipe.FORMAT_INMEMORY)) {
-			input = p.getDataset(); //.df();
-		}
-		else {		
 			if (p.getProps().containsKey(FilePipe.LOCATION)) {
 				input = reader.load(p.get(FilePipe.LOCATION));
 			}
 			else {
 				input = reader.load();
 			}
-    }
+			return input;
+	}
+
+	protected  ZFrame<D,R,C> read(DFReader<D,R,C> reader, Pipe<D,R,C> p, boolean addSource) throws ZinggClientException{
+		ZFrame<D,R,C> input = null;
+		LOG.warn("Reading " + p);
+		try {
+			input = getInput(p, reader);
+    
 			if (addSource) {
 				input = input.withColumn(ColName.SOURCE_COL, p.getName());
 			}
+
 			p.setDataset(input);
 		} catch (Exception ex) {
 			LOG.warn(ex.getMessage());
@@ -191,14 +192,10 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 			for (Pipe<D,R,C> p: pipes) {
 			//Dataset<Row> toWrite = toWriteOrig.df();
 			//DataFrameWriter writer = toWrite.write();
-			DFWriter writer = getWriter(toWriteOrig);
+			DFWriter<D,R,C> writer = getWriter(toWriteOrig);
 		
 			LOG.warn("Writing output " + p);
 			
-			if (p.getFormat().equals(Pipe.FORMAT_INMEMORY)) {
- 				p.setDataset(toWriteOrig);
-				return;
-			}
 			//SparkPipe sPipe = (SparkPipe) p;
 			if (p.getMode() != null) {
 				writer.setMode(p.getMode()); //SaveMode.valueOf(p.getMode()));
@@ -206,98 +203,32 @@ public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C>{
 			else {
 				writer.setMode("Append"); //SaveMode.valueOf("Append"));
 			}
-			/* 
-			if (p.getFormat().equals(Pipe.FORMAT_ELASTIC)) {
-				ctx.getConf().set(ElasticPipe.NODE, p.getProps().get(ElasticPipe.NODE));
-				ctx.getConf().set(ElasticPipe.PORT, p.getProps().get(ElasticPipe.PORT));
-				ctx.getConf().set(ElasticPipe.ID, ColName.ID_COL);
-				ctx.getConf().set(ElasticPipe.RESOURCE, p.getName());
-			}
-			*/
-			writer = writer.format(p.getFormat());
+			writer = getWriterWithFormat(writer, p);
 			
 			for (String key: p.getProps().keySet()) {
 				writer = writer.option(key, p.get(key));
 			}
-			if (p.getFormat() == Pipe.FORMAT_CASSANDRA) {
-				/*
-				ctx.getConf().set(CassandraPipe.HOST, p.getProps().get(CassandraPipe.HOST));
-				toWrite.sparkSession().conf().set(CassandraPipe.HOST, p.getProps().get(CassandraPipe.HOST));
-				//df.createCassandraTable(p.get("keyspace"), p.get("table"), opPk, opCl, CassandraConnector.apply(ctx.getConf()));
-				
-				CassandraConnector connector = CassandraConnector.apply(ctx.getConf());
-				try (Session session = connector.openSession()) {
-					ResultSet rs = session.execute("SELECT table_name FROM system_schema.tables WHERE keyspace_name='" 
-								+ p.get(CassandraPipe.KEYSPACE) + "' AND table_name='" + p.get(CassandraPipe.TABLE) + "'");
-					if (rs.all().size() == 0) {
-						List<String> pk =  new ArrayList<String>();
-						if (p.get(CassandraPipe.PRIMARY_KEY) != null) {
-							//pk.add(p.get(CassandraPipe.PRIMARY_KEY));
-							pk = Arrays.asList(p.get(CassandraPipe.PRIMARY_KEY).split(","));
-						}
-						Option<Seq<String>> opPk = Option.apply(JavaConverters.asScalaIteratorConverter(pk.iterator()).asScala().toSeq());
-						List<String> cl =  new ArrayList<String>();
-						
-						if (p.getAddProps()!= null && p.getAddProps().containsKey("clusterBy")) {
-							cl=Arrays.asList(p.getAddProps().get("clusterBy").split(","));
-						}
-						Option<Seq<String>> opCl = Option.apply(JavaConverters.asScalaIteratorConverter(cl.iterator()).asScala().toSeq());
-						
-						DataFrameFunctions df = new DataFrameFunctions(toWrite); 
-						LOG.warn("received cassandra table  - " + p.get(CassandraPipe.KEYSPACE) + " and " + p.get(CassandraPipe.TABLE));
-						df.createCassandraTable(p.get(CassandraPipe.KEYSPACE), p.get(CassandraPipe.TABLE), opPk, opCl, CassandraConnector.apply(ctx.getConf()));
-						if (p.getAddProps()!= null && p.getAddProps().containsKey("indexBy")) {
-							LOG.warn("creating index on cassandra");
-
-							session.execute("CREATE INDEX " +  p.getAddProps().get("indexBy") + p.get(CassandraPipe.KEYSPACE) + "_" +  
-									p.get(CassandraPipe.TABLE) + "_idx ON " + p.get(CassandraPipe.KEYSPACE) + "." +  
-									p.get(CassandraPipe.TABLE) + "(" + p.getAddProps().get("indexBy") + 
-									")");
-						}
-					}
-					else {
-						LOG.warn("existing cassandra table  - " + p.get(CassandraPipe.KEYSPACE) + " and " + p.get(CassandraPipe.TABLE));
-					
-					}
-					
-				}
-				catch(Exception e) {
-					e.printStackTrace();
-					LOG.warn("Writing issue");
-				}*/
-			}
-			else if (p.getProps().containsKey("location")) {
-				LOG.warn("Writing file");
-				writer.save(p.get(FilePipe.LOCATION));
-			}	
-			else if (p.getFormat().equals(Pipe.FORMAT_JDBC)){
-				writer = getWriter(toWriteOrig);
-				writer = writer.format(p.getFormat());				
-
-				//SparkPipe sPipe = (SparkPipe) p;
-				if (p.getMode() != null) {
-					writer.setMode(p.getMode()); //SaveMode.valueOf(p.getMode()));
-				}
-				else {
-					writer.setMode("Append") ;//SaveMode.valueOf("Append"));
-				}
-				for (String key: p.getProps().keySet()) {
-					writer = writer.option(key, p.get(key));
-				}
-				writer.save();
-			}
-			else {			
-				writer.save();
-			
-			}
-			
-			
+			save(p, writer, toWriteOrig);
 			}
 		} catch (Exception ex) {
 			throw new ZinggClientException(ex.getMessage());
 		}
 	}
 
+	public DFWriter<D,R,C> getWriterWithFormat(DFWriter<D,R,C> writer, Pipe<D,R,C> p) {
+		writer = writer.format(p.getFormat());
+		return writer;
+	}
+
+	public void save(Pipe<D,R,C> p, DFWriter<D,R,C> writer, ZFrame<D,R,C> toWriteOrig){
+		if (p.getProps().containsKey("location")) {
+				LOG.warn("Writing file");
+				writer.save(p.get(FilePipe.LOCATION));
+			}	
+			else{
+				writer.save();
+			}
+	}
 	/*
 	public  void writePerSource(Dataset<Row> toWrite, Arguments args, JavaSparkContext ctx, Pipe[] pipes ) throws ZinggClientException {
 		List<Row> sources = toWrite.select(ColName.SOURCE_COL).distinct().collectAsList();

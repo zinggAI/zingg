@@ -12,6 +12,7 @@ import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.ListMap;
 import zingg.common.client.util.WithSession;
 import zingg.common.core.block.Block;
+import zingg.common.core.block.DefaultFieldDefinitionStrategy;
 import zingg.common.core.block.TestBlockingTreeUtil;
 import zingg.common.core.hash.HashFunction;
 import zingg.common.core.util.BlockingTreeUtil;
@@ -54,6 +55,6 @@ public class TestSparkBlockingTreeUtil extends TestBlockingTreeUtil<SparkSession
 
     @Override
     protected Block<Dataset<Row>, Row, Column, DataType> getBlock(ZFrame<Dataset<Row>, Row, Column> sample, ZFrame<Dataset<Row>, Row, Column> positives, ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions, long blockSize) {
-        return new SparkBlock(sample, positives, hashFunctions, blockSize);
+        return new SparkBlock(sample, positives, hashFunctions, blockSize, new DefaultFieldDefinitionStrategy<Row>());
     }
 }

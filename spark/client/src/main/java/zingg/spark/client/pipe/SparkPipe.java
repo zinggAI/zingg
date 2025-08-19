@@ -57,5 +57,8 @@ public class SparkPipe extends Pipe<Dataset<Row>, Row, Column> {
         this.props.put(FilePipe.LOCATION, fileName);
     }
 
+    public void setTable(String tableName){
+        this.props.put(FilePipe.TABLE, tableName);
+    }
 	
 }
