@@ -297,15 +297,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		this.options = options;
 	}
 
-
-
-	protected ArgumentsUtil<?> getArgsUtil(String phase) {	
-		if (argsUtil==null) {
-			argsUtil = new ArgumentsUtil(Arguments.class);
-		}
-		return argsUtil;
-	}
-
 	protected void cleanupAndExit(boolean success, Client<S,D,R,C,T> client) {
 		if (!success) {
 			EventsListener.getInstance().fireEvent(new ZinggFailEvent());

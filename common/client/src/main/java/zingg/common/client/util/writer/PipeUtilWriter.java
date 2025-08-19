@@ -17,10 +17,6 @@ public abstract class PipeUtilWriter<D, R, C> implements IPipeUtilWriter<D, R, C
                 LOG.warn("Writing output " + pipe);
                 WriterStrategy<D, R, C> strategy = strategyFactory.getStrategy(pipe);
                 strategy.write(toWriteOrig, pipe);
-
-                if (Pipe.FORMAT_INMEMORY.equals(pipe.getFormat())) {
-                    return;
-                }
             }
         } catch (Exception ex) {
             throw new ZinggClientException(ex.getMessage());
