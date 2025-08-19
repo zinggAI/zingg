@@ -15,8 +15,7 @@ import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
-
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.ListMap;
