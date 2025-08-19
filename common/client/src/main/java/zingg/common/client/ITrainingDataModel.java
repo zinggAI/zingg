@@ -1,5 +1,6 @@
 package zingg.common.client;
 
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.pipe.Pipe;
 
 public interface ITrainingDataModel<S, D, R, C> {

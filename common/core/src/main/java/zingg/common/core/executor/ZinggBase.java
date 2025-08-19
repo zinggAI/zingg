@@ -4,8 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IArguments;
-import zingg.common.client.IZArgs;
+import zingg.common.client.arguments.model.IArguments;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -80,7 +80,6 @@ public abstract class ZinggBase<S,D, R, C, T> extends ZinggBaseCommon<S, D, R, C
 		Analytics.track(Metric.OUTPUT_FORMAT, getPipeUtil().getPipesAsString(args.getOutput()), collectMetrics);
         Analytics.track(Metric.MODEL_ID, args.getModelId(), collectMetrics);
         Analytics.track(Metric.STOPWORDS,new StopWordUtility().getFieldDefinitionNamesWithStopwords(args), collectMetrics);
-
     }
 
 

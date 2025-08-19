@@ -7,7 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ZFrame;
@@ -37,7 +37,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 
 
 	public abstract Block<D,R,C,T> getBlock(ZFrame<D,R,C> sample, ZFrame<D,R,C> positives, 
-		ListMap<T, HashFunction<D,R,C,T>>hashFunctions, long blockSize);
+		ListMap<T, HashFunction<D,R,C,T>>hashFunctions, long blockSize, IArguments arguments);
 
 
 	public Tree<Canopy<R>> createBlockingTree(ZFrame<D,R,C> testData,
@@ -55,7 +55,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 		LOG.info("Learning indexing rules for block size " + blockSize);
        
 		positives = positives.coalesce(1); 
-		Block<D,R,C,T> cblock = getBlock(sample, positives, hashFunctions, blockSize);
+		Block<D,R,C,T> cblock = getBlock(sample, positives, hashFunctions, blockSize, args);
 		Canopy<R> root = new Canopy<R>(sample.collectAsList(), positives.collectAsList());
 
 		List<FieldDefinition> fd = new ArrayList<FieldDefinition> ();
@@ -107,7 +107,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
         //byte [] byteArrayBack = (byte[]) tree.df().head().get(0);
 		byte[] byteArrayBack = getTreeFromDF(tree);
         Tree<Canopy<R>> blockingTree = null;
-        LOG.warn("byte array back is " + byteArrayBack);
+        LOG.debug("byte array back is " + byteArrayBack);
         blockingTree =  (Tree<Canopy<R>>) Util.revertObjectFromByteArray(byteArrayBack);
         return blockingTree;
 	}

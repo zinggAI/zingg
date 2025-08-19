@@ -5,7 +5,13 @@ import java.io.Serializable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.arguments.ArgumentServiceImpl;
+import zingg.common.client.arguments.IArgumentService;
+import zingg.common.client.arguments.model.Arguments;
+import zingg.common.client.arguments.model.IArguments;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.event.events.IEvent;
+import zingg.common.client.event.events.ZinggFailEvent;
 import zingg.common.client.event.events.ZinggStartEvent;
 import zingg.common.client.event.events.ZinggStopEvent;
 import zingg.common.client.event.listeners.EventsListener;
@@ -26,7 +32,6 @@ import zingg.common.client.util.PipeUtilBase;
 public abstract class Client<S,D,R,C,T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	protected IZArgs arguments;
-	protected ArgumentsUtil<?> argsUtil;
 	protected IZingg<S,D,R,C> zingg;
 	protected ClientOptions options;
 	protected S session;
@@ -200,25 +205,18 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			}
 			String phase = options.get(ClientOptions.PHASE).value.trim();
 			ZinggOptions.verifyPhase(phase);
-			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
-					arguments = getArgsUtil(phase).createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
-			}
-			else if (options.get(ClientOptions.CONF).value.endsWith("env")) {
-				arguments = getArgsUtil(phase).createArgumentsFromJSONTemplate(options.get(ClientOptions.CONF).value, phase);
-			}
-			else {
-				arguments = getArgsUtil(phase).createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
-			}
-
+			IArgumentService argumentService = getArgumentService();
+			arguments = argumentService.loadArguments(options.get(ClientOptions.CONF).getValue());
 			client = getClient(arguments, options);
 			client.init();
 			// after setting arguments etc. as some of the listeners need it
 			client.execute();
-			client.postMetrics();
+			
 			LOG.warn("Zingg processing has completed");				
 		} 
 		catch(Throwable throwable) {
 			success = false;
+
 			if (options != null && options.get(ClientOptions.EMAIL) != null) {
 				Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
 					"Zingg Error ",
@@ -229,6 +227,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			if (LOG.isDebugEnabled()) throwable.printStackTrace();
 		}
 		finally {
+			cleanupAndExit(success, client);
 			try {
 				EventsListener.getInstance().fireEvent(new ZinggStopEvent());
 				if (client != null) {
@@ -250,6 +249,10 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 				}
 			}
 		}
+	}
+
+	protected IArgumentService<? extends IZArgs> getArgumentService() {
+		return new ArgumentServiceImpl<>(Arguments.class);
 	}
 
 	public void init() throws ZinggClientException {
@@ -275,6 +278,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	
 	public void execute() throws ZinggClientException {
 		zingg.execute();
+		postMetrics();
  	}
 
 	public void postMetrics() throws ZinggClientException {
@@ -294,12 +298,35 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 
+
 	protected ArgumentsUtil<?> getArgsUtil(String phase) {	
 		if (argsUtil==null) {
 			argsUtil = new ArgumentsUtil(Arguments.class);
 		}
 		return argsUtil;
-	}    
+	}
+
+	protected void cleanupAndExit(boolean success, Client<S,D,R,C,T> client) {
+		if (!success) {
+			EventsListener.getInstance().fireEvent(new ZinggFailEvent());
+		} else {
+			EventsListener.getInstance().fireEvent(new ZinggStopEvent());
+		}
+
+		try {
+			if (client != null) {
+				client.stop();
+			}
+			if (success) {
+				System.exit(0);
+			} else {
+				System.exit(1);
+			}
+		} catch (ZinggClientException e) {
+			System.exit(1);
+		}
+	}
+
 
 	public void addListener(Class<? extends IEvent> eventClass, IEventListener listener) {
         EventsListener.getInstance().addListener(eventClass, listener);

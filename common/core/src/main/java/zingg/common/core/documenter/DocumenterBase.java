@@ -10,7 +10,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import freemarker.template.Version;
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IZArgs;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
 import zingg.common.core.context.IContext;

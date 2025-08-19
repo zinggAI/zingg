@@ -55,7 +55,7 @@ public abstract class MultiFieldPreprocessor<S,D,R,C,T> implements IMultiFieldPr
     public ZFrame<D, R, C> preprocess(ZFrame<D, R, C> df) {
         try {
             if(isApplicable()){
-                LOG.info("Applying preprocessor on input dataframe");
+                LOG.debug("Applying preprocessor on input dataframe");
                 return applyPreprocessor(df, relevantFields);
             }
         } catch (Exception exception) {

@@ -7,7 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IZArgs;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.IZingg;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.ITrainingDataModel;
@@ -71,10 +71,11 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
         Analytics.track(Metric.MODEL_ID, getArgs().getModelId(), true);
 		Analytics.track(Metric.ZINGG_VERSION, "0.6.0", true);
         Analytics.trackEnv(Metric.ZINGG_HOME, true); 
-        Analytics.trackEnvValue(Metric.DATABRICKS_RUNTIME_VERSION, true);
+		Analytics.trackEnvValue(Metric.DATABRICKS_RUNTIME_VERSION, true);
         Analytics.track(Metric.COUNTRY, Locale.getDefault().getCountry(), true);
         
         Analytics.trackEnvValue(Metric.DB_INSTANCE_TYPE, collectMetrics);
+        Analytics.trackEnv(Metric.ZINGG_HOME, collectMetrics); 
         Analytics.trackPropValue(Metric.JAVA_VERSION, collectMetrics); 
         Analytics.trackPropValue(Metric.OS_ARCH, collectMetrics); 
         Analytics.trackPropValue(Metric.OS_NAME, collectMetrics); 

@@ -1,8 +1,8 @@
-# Python API
+# Community Python API
 
-## Zingg Entity Resolution Python Package
+## Community Zingg Entity Resolution Python Package
 
-Zingg Python APIs for entity resolution, identity resolution, record linkage, data mastering and deduplication using ML ([https://www.zingg.ai](https://www.zingg.ai))
+Community Zingg Python APIs for entity resolution, identity resolution, record linkage, data mastering and deduplication using ML ([https://www.zingg.ai](https://www.zingg.ai))
 
 **NOTE**
 
@@ -102,9 +102,6 @@ Requires **python 3.6+**; **spark 3.5.0.** Otherwise, [`zingg.client.Zingg()`](z
     * [`CsvPipe.setDelimiter()`](zingg.md#zingg.pipes.CsvPipe.setDelimiter)
     * [`CsvPipe.setHeader()`](zingg.md#zingg.pipes.CsvPipe.setHeader)
     * [`CsvPipe.setLocation()`](zingg.md#zingg.pipes.CsvPipe.setLocation)
-  * [`InMemoryPipe`](zingg.md#zingg.pipes.InMemoryPipe)
-    * [`InMemoryPipe.getDataset()`](zingg.md#zingg.pipes.InMemoryPipe.getDataset)
-    * [`InMemoryPipe.setDataset()`](zingg.md#zingg.pipes.InMemoryPipe.setDataset)
   * [`Pipe`](zingg.md#zingg.pipes.Pipe)
     * [`Pipe.addProperty()`](zingg.md#zingg.pipes.Pipe.addProperty)
     * [`Pipe.getPipe()`](zingg.md#zingg.pipes.Pipe.getPipe)
@@ -161,9 +158,7 @@ args.setZinggDir("models")
 args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
 
-#reading dataset into inputPipe and settint it up in 'args'
-#below line should not be required if you are reading from in memory dataset
-#in that case, replace df with input df
+#reading dataset into inputPipe and setting it up in 'args'
 schema = "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
 inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
 args.setData(inputPipe)
