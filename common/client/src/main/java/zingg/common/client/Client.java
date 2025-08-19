@@ -11,6 +11,7 @@ import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.event.events.IEvent;
+import zingg.common.client.event.events.ZinggFailEvent;
 import zingg.common.client.event.events.ZinggStartEvent;
 import zingg.common.client.event.events.ZinggStopEvent;
 import zingg.common.client.event.listeners.EventsListener;
@@ -215,6 +216,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		} 
 		catch(Throwable throwable) {
 			success = false;
+
 			if (options != null && options.get(ClientOptions.EMAIL) != null) {
 				Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
 					"Zingg Error ",
@@ -225,6 +227,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			if (LOG.isDebugEnabled()) throwable.printStackTrace();
 		}
 		finally {
+			cleanupAndExit(success, client);
 			try {
 				EventsListener.getInstance().fireEvent(new ZinggStopEvent());
 				if (client != null) {
@@ -293,6 +296,37 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public void setOptions(ClientOptions options) {
 		this.options = options;
 	}
+
+
+
+	protected ArgumentsUtil<?> getArgsUtil(String phase) {	
+		if (argsUtil==null) {
+			argsUtil = new ArgumentsUtil(Arguments.class);
+		}
+		return argsUtil;
+	}
+
+	protected void cleanupAndExit(boolean success, Client<S,D,R,C,T> client) {
+		if (!success) {
+			EventsListener.getInstance().fireEvent(new ZinggFailEvent());
+		} else {
+			EventsListener.getInstance().fireEvent(new ZinggStopEvent());
+		}
+
+		try {
+			if (client != null) {
+				client.stop();
+			}
+			if (success) {
+				System.exit(0);
+			} else {
+				System.exit(1);
+			}
+		} catch (ZinggClientException e) {
+			System.exit(1);
+		}
+	}
+
 
 	public void addListener(Class<? extends IEvent> eventClass, IEventListener listener) {
         EventsListener.getInstance().addListener(eventClass, listener);
