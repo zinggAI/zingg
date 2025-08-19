@@ -16,10 +16,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import zingg.common.client.Arguments;
-import zingg.common.client.ArgumentsUtil;
+import zingg.common.client.arguments.ArgumentServiceImpl;
+import zingg.common.client.arguments.IArgumentService;
+import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
@@ -44,8 +45,8 @@ public abstract class TestModelDocumenterBase<S,D,R,C,T> {
 
 		try {
 			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
-			ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
-			docArguments = argsUtil.createArgumentsFromJSON(configPath);
+			IArgumentService<Arguments> argsUtil = new ArgumentServiceImpl<>(Arguments.class);
+			docArguments = argsUtil.loadArguments(configPath);
 			String zinggDirPath = getClass().getResource("../../../../"+docArguments.getZinggDir()).getFile();
 			docArguments.setZinggDir(zinggDirPath);
 		} catch (Throwable e) {

@@ -2,7 +2,7 @@ package zingg.common.client.util;
 
 import zingg.common.client.pipe.*;
 
-import zingg.common.client.IZArgs;
+import zingg.common.client.arguments.model.IZArgs;
 
 public interface IModelHelper<D,R,C> {
 

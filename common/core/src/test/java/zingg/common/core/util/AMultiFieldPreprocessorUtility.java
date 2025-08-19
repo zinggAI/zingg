@@ -39,17 +39,22 @@ public abstract class AMultiFieldPreprocessorUtility<S, D, R, C, T> {
 
         FieldDefinition fieldDefinition5 = new FieldDefinition();
         fieldDefinition5.setFieldName("field3");
-        fieldDefinition5.setMatchType(List.of(MatchTypes.DONT_USE));
-        fieldDefinition5.setDataType("STRING");
+        fieldDefinition5.setMatchType(List.of(MatchTypes.EXACT));
+        fieldDefinition5.setDataType("INTEGER");
 
         FieldDefinition fieldDefinition6 = new FieldDefinition();
-        fieldDefinition6.setFieldName("field3");
+        fieldDefinition6.setFieldName("z_zid");
         fieldDefinition6.setMatchType(List.of(MatchTypes.FUZZY));
         fieldDefinition6.setDataType("INTEGER");
 
+        FieldDefinition fieldDefinition7 = new FieldDefinition();
+        fieldDefinition7.setFieldName("field2");
+        fieldDefinition7.setMatchType(List.of(MatchTypes.FUZZY));
+        fieldDefinition7.setDataType("BOOLEAN");
+
         addFieldDefinitionsList(List.of(fieldDefinition1, fieldDefinition2, fieldDefinition3));
         addFieldDefinitionsList(List.of(fieldDefinition1));
-        addFieldDefinitionsList(List.of(fieldDefinition6));
+        addFieldDefinitionsList(List.of(fieldDefinition6, fieldDefinition7));
         addFieldDefinitionsList(List.of(fieldDefinition4, fieldDefinition2, fieldDefinition5));
 
     }
@@ -71,7 +76,7 @@ public abstract class AMultiFieldPreprocessorUtility<S, D, R, C, T> {
 
     public List<FieldDefinition> getFieldDefinitionsWhenSingleFieldStringAndDont_UseMatchType(){
         //fieldDefinition4, fieldDefinition2, fieldDefinition5 - preprocess is only applied to field2 of datatype String
-        //field1 and field3 - they are of datatype String but are not being used for preprocess
+        //field1 and field3 - they are of datatype String and Integer but are not being used for preprocess
         return multiFieldsList.get(3);
     }
 

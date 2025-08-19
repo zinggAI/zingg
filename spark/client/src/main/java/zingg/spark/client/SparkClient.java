@@ -11,7 +11,7 @@ import org.apache.spark.sql.types.DataType;
 import zingg.common.client.Client;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IZingg;
-import zingg.common.client.IZArgs;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.util.Analytics;
@@ -42,16 +42,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 
 	
 	public SparkClient() {
-		/*SparkSession session = SparkSession
-                .builder()
-                .appName("Zingg")
-                .getOrCreate();
-		JavaSparkContext ctx = JavaSparkContext.fromSparkContext(session.sparkContext());
-        JavaSparkContext.jarOfClass(IZingg.class);
-		
-		*/
 		super(zFactoryClassName);
-
 	}
 
 
@@ -91,8 +82,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 			}
 			JavaSparkContext ctx = JavaSparkContext.fromSparkContext(sparkContext);
 					JavaSparkContext.jarOfClass(IZingg.class);
-					LOG.debug("Context " + ctx.toString());
-					//initHashFns();
+					LOG.debug("Context " + ctx);
 			if (!ctx.getCheckpointDir().isPresent()) {
 				ctx.setCheckpointDir(String.valueOf(sparkContext.getCheckpointDir()));
 			}

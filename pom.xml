@@ -55,7 +55,7 @@
 				</property>
 			</activation>
 			<properties>
-				<spark.version>3.5.0</spark.version>
+				<spark.version>3.5.5</spark.version>
 				<scala.version>2.12.10</scala.version>
 				<spark.binary.version>3.5</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
@@ -64,7 +64,7 @@
 		</profile>
 	</profiles>
 	<properties>
-		<zingg.version>0.5.0</zingg.version>
+		<zingg.version>0.6.0</zingg.version>
 		<skipTests>false</skipTests>
 		<failIfNoTests>false</failIfNoTests>
 		<maven.compiler.source>11</maven.compiler.source>

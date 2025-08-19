@@ -5,10 +5,12 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
-import zingg.common.client.Arguments;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.Arguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.IZingg;
 import zingg.spark.core.context.ZinggSparkContext;
+
+import java.util.Properties;
 
 public class SparkSessionProvider {
 
@@ -23,17 +25,16 @@ public class SparkSessionProvider {
     private void initializeSession() {
         if (sparkSession == null) {
             try {
-                String sparkDriverMemory = System.getenv("SPARK_DRIVER_MEMORY");
-                if (sparkDriverMemory == null) {
-                    sparkDriverMemory = "1g";
-                }
-                sparkSession = SparkSession
+                SparkSession.Builder builder = SparkSession
                         .builder()
                         .master("local[*]")
-                        .appName("ZinggJunit")
-                        .config("spark.debug.maxToStringFields", 100)
-                        .config("spark.driver.memory", sparkDriverMemory)
-                        .getOrCreate();
+                        .appName("ZinggJunit");
+                Properties props = new Properties();
+                props.load(getClass().getResourceAsStream("/zingg.properties"));
+                for (String key : props.stringPropertyNames()) {
+                    builder = builder.config(key, props.getProperty(key));
+                }
+                sparkSession = builder.getOrCreate();
                 SparkContext sparkContext = sparkSession.sparkContext();
                 long driverMemory = sparkContext.getConf().getSizeAsGb("spark.driver.memory", "0");
                 System.out.println("Spark driver memory: " + driverMemory + " GB");
@@ -65,8 +66,6 @@ public class SparkSessionProvider {
         }
         return sparkSessionProvider;
     }
-
-
 
     //set getters
     public SparkSession getSparkSession() {

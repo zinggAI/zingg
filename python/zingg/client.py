@@ -23,7 +23,7 @@ _sqlContext = None
 _spark = None
 _jvm = None
 _gateway = None
-_zingg_jar = 'zingg-0.5.0.jar'
+_zingg_jar = 'zingg-0.6.0.jar'
 
 #JVM Base Objects
 ColName = None
@@ -546,7 +546,7 @@ class Arguments:
     """
 
     def __init__(self):
-        self.args = getJVM().zingg.common.client.Arguments()
+        self.args = getJVM().zingg.common.client.arguments.model.Arguments()
 
     def setFieldDefinition(self, fieldDef):
         """Method convert python objects to java FieldDefinition objects and set the field definitions associated with this client
@@ -676,7 +676,7 @@ class Arguments:
         :param fileName: The CONF parameter value of ClientOption object or file address of json file
         :type fileName: String
         """
-        getJVM().zingg.common.client.ArgumentsUtil().writeArgumentsToJSON(fileName, self.args)
+        getJVM().zingg.common.client.arguments.ArgumentServiceImpl().writeArguments(fileName, self.args)
 
     def setStopWordsCutoff(self, stopWordsCutoff):
         """Method to set stopWordsCutoff parameter value
@@ -708,7 +708,7 @@ class Arguments:
         :rtype: pointer(Arguments)
         """
         obj = Arguments()
-        obj.args = getJVM().zingg.common.client.ArgumentsUtil().createArgumentsFromJSON(fileName, phase)
+        obj.args = getJVM().zingg.common.client.argumentst.ArgumentServiceImpl().loadArguments(fileName)
         return obj
 
     def writeArgumentsToJSONString(self):
@@ -721,12 +721,13 @@ class Arguments:
         :return: The pointer containing address of the this class object
         :rtype: pointer(Arguments)
         """
-        return getJVM().zingg.common.client.ArgumentsUtil().writeArgumentstoJSONString(self.args)
+        jsonString = getJVM().java.lang.String()
+        return getJVM().zingg.common.client.arguments.ArgumentServiceImpl().writeArguments(jsonString, self.args)
 
     @staticmethod
     def createArgumentsFromJSONString(jsonArgs, phase):
         obj = Arguments()
-        obj.args = getJVM().zingg.common.client.ArgumentsUtil().createArgumentsFromJSONString(jsonArgs, phase)
+        obj.args = getJVM().zingg.common.client.arguments.ArgumentServiceImpl().loadArguments(jsonArgs)
         return obj
 
     def copyArgs(self, phase):
