@@ -23,7 +23,7 @@ Sometimes we want to lookup certain records in match output, The lookup feature 
       "name":"lookup-output",
       "format":"csv",
       "props": {
-        "location": "/tmp/zinggOutput/lookup",
+        "path": "/tmp/zinggOutput/lookup",
         "delimiter": ",",
         "header":true
       }
