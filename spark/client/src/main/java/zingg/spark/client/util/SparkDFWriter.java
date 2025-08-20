@@ -10,7 +10,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.util.writer.IDFWriter;
 
 public class SparkDFWriter implements IDFWriter<Dataset<Row>, Row, Column> {
-    private final DataFrameWriter<Row> writer;
+    protected final DataFrameWriter<Row> writer;
 
     public SparkDFWriter(ZFrame<Dataset<Row>, Row, Column> toWriteOrig) {
         Dataset<Row> toWrite = toWriteOrig.df();

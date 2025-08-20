@@ -13,7 +13,7 @@ import org.apache.spark.sql.SparkSession;
 
 public class SparkDFReader implements IDFReader<Dataset<Row>, Row, Column> {
 
-    private final DataFrameReader reader;
+    protected final DataFrameReader reader;
 
     public SparkDFReader(SparkSession s) {
         this.reader = s.read();
