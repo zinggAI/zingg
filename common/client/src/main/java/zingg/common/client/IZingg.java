@@ -4,29 +4,26 @@ import zingg.common.client.arguments.model.IZArgs;
 
 public interface IZingg<S,D,R,C> extends IZinggModelInfo<S, D, R, C> {
 
-	public void init(IZArgs args, S session, ClientOptions options)
+	void init(IZArgs args, S session, ClientOptions options)
 			throws ZinggClientException;
 
-	public void execute() throws ZinggClientException;
+	void execute() throws ZinggClientException;
 
-	public void cleanup() throws ZinggClientException;
+	void cleanup() throws ZinggClientException;
 
-	//public ZinggOptions getZinggOptions();	
+	String getName();
 
-	public String getName();
+	void postMetrics();
 
-	public void postMetrics();
+	void setClientOptions(ClientOptions clientOptions);
 
-		
-	public void setClientOptions(ClientOptions clientOptions);
+	ClientOptions getClientOptions();
 
-	public ClientOptions getClientOptions(); 
+	void setSession(S session);
 
-	public void setSession(S session);
+	IZArgs getArgs();
 
-	public IZArgs getArgs();
-
-	public void setArgs(IZArgs a);
+	void setArgs(IZArgs a);
 	
 	
 }
