@@ -7,36 +7,36 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 
 import zingg.common.client.ZFrame;
-import zingg.common.client.util.DFWriter;
+import zingg.common.client.util.writer.IDFWriter;
 
-public class SparkDFWriter implements DFWriter<Dataset<Row>, Row, Column>{
-
-    protected DataFrameWriter writer;
+public class SparkDFWriter implements IDFWriter<Dataset<Row>, Row, Column> {
+    protected final DataFrameWriter<Row> writer;
 
     public SparkDFWriter(ZFrame<Dataset<Row>, Row, Column> toWriteOrig) {
         Dataset<Row> toWrite = toWriteOrig.df();
 		this.writer = toWrite.write();
+        
     }
 
+    @Override
     public void setMode(String s) {
         this.writer.mode(SaveMode.valueOf(s));
 
     }
 
-    public DFWriter<Dataset<Row>, Row, Column> format(String f) {
+    @Override
+    public IDFWriter<Dataset<Row>, Row, Column> format(String f) {
         writer.format(f);
         return this;
     }
 
-    public DFWriter<Dataset<Row>, Row, Column> option(String k, String v) {
+    @Override
+    public IDFWriter<Dataset<Row>, Row, Column> option(String k, String v) {
         writer.option(k,v);
         return this;
     }
 
-    public void save(String location) {
-        writer.save(location);
-    }
-    
+    @Override
     public void save() {
         writer.save();
     }

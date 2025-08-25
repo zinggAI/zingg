@@ -65,7 +65,7 @@
 			"name":"output", 
 			"format":"csv", 
 			"props": {
-				"location": "/tmp/junit_integration_spark/single/zinggOutput",
+				"path": "/tmp/junit_integration_spark/single/zinggOutput",
 				"delimiter": ",",
 				"header":true
 			}
@@ -74,7 +74,7 @@
 			"name":"test1", 
 			"format":"csv", 
 			"props": {
-				"location": "./zingg/spark/core/executor/test1.csv",
+				"path": "./zingg/spark/core/executor/test1.csv",
 				"delimiter": ",",
 				"header":false					
 			},
@@ -84,7 +84,7 @@
 			"name":"test2", 
 			"format":"csv", 
 			"props": {
-				"location": "./zingg/spark/core/executor/test2.csv",
+				"path": "./zingg/spark/core/executor/test2.csv",
 				"delimiter": ",",
 				"header":false					
 			},

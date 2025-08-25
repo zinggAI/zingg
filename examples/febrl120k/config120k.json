@@ -65,7 +65,7 @@
 			"name":"output", 
 			"format":"csv", 
 			"props": {
-				"location": "/tmp/zinggOutput",
+				"path": "/tmp/zinggOutput",
 				"delimiter": ",",
 				"header":true
 			}
@@ -74,7 +74,7 @@
 			"name":"test", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/febrl120k/test.csv.gz",
+				"path": "examples/febrl120k/test.csv.gz",
 				"delimiter": ",",
 				"header":false					
 			},

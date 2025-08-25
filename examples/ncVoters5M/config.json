@@ -35,7 +35,7 @@
 			"name":"output", 
 			"format":"csv", 
 			"props": {
-				"location": "/tmp/zinggOutput",
+				"path": "/tmp/zinggOutput",
 				"delimiter": ",",
 				"header":true
 			}
@@ -44,7 +44,7 @@
 			"name":"test", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/ncVoters5M/5Party-ocp20/",
+				"path": "examples/ncVoters5M/5Party-ocp20/",
 				"delimiter": ",",
 				"header":false					
 			},
