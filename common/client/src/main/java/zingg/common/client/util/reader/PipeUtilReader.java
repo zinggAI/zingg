@@ -40,8 +40,7 @@ public abstract class PipeUtilReader<S, D, R, C> implements IPipeUtilReader<D, R
         try {
             LOG.warn("Reading " + pipe);
             IDFReader<D, R, C> reader = Helper.initializeReaderForPipe(pipe, getReader());
-            ReadStrategy<D, R, C> strategy = getReadStrategy(pipe);
-            ZFrame<D, R, C> frame = strategy.read(reader, pipe);
+            ZFrame<D, R, C> frame = reader.read(pipe);
             if (addSource) {
                 frame = frame.withColumn(ColName.SOURCE_COL, pipe.getName());
             }
@@ -79,7 +78,4 @@ public abstract class PipeUtilReader<S, D, R, C> implements IPipeUtilReader<D, R
 
     protected abstract ZFrame<D, R, C> addLineNo(ZFrame<D, R, C> data);
     protected abstract IDFReader<D, R, C> getReader();
-    protected ReadStrategy<D, R, C> getReadStrategy(Pipe<D, R, C> pipe) {
-        return new ReadStrategyFactory<D, R, C>().getStrategy(pipe);
-    }
 }
