@@ -21,7 +21,7 @@ public abstract class Client<S,D,R,C> {
     public void init() throws ZinggClientException {
         banner.print(arguments.getCollectMetrics());
         zingg.init(arguments, sessionManager.get(), options);
-        ListenerManager.initializeListeners();
+        initializeListeners();
     }
 
     public void execute() throws ZinggClientException {
@@ -34,6 +34,18 @@ public abstract class Client<S,D,R,C> {
 
     public void stop() throws ZinggClientException {
         zingg.cleanup();
+    }
+
+    protected void initializeListeners() {
+        ListenerManager listenerManager = new ListenerManager();
+        listenerManager.initializeListeners();
+    }
+
+    public S getSession() {
+        return sessionManager.get();
+    }
+    public SessionManager<S> getSessionManager() {
+        return sessionManager;
     }
 
     public abstract PipeUtilBase<S, D, R, C> getPipeUtil();

@@ -33,11 +33,6 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column>
         }), bannerPrinter);
     }
 
-
-    public SparkSession getSession() {
-        return sessionManager.get();
-    }
-
     @Override
     public PipeUtilBase<SparkSession, Dataset<Row>, Row, Column> getPipeUtil() {
         return new SparkPipeUtil(getSession());
