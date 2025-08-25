@@ -643,32 +643,6 @@ Method to set location of pipe
 * **Parameters:**
   **location** (*String*) – location from where we read data
 
-### *class* zingg.pipes.InMemoryPipe(name, df=None)
-
-Bases: [`Pipe`](#zingg.pipes.Pipe)
-
-Pipe Class for working with InMemory pipeline
-
-* **Parameters:**
-  * **name** (*String*) – name of the pipe
-  * **df** (*Dataset* *or* *None*) – provide dataset for this pipe (optional)
-
-#### getDataset()
-
-Method to get Dataset from pipe
-
-* **Returns:**
-  dataset of the pipe in the format of spark dataset
-* **Return type:**
-  Dataset<Row>
-
-#### setDataset(df)
-
-Method to set DataFrame of the pipe
-
-* **Parameters:**
-  **df** (*DataFrame*) – pandas or spark dataframe for the pipe
-
 ### *class* zingg.pipes.Pipe(name, format)
 
 Bases: `object`
@@ -677,7 +651,7 @@ Pipe class for working with different data-pipelines. Actual pipe def in the arg
 
 * **Parameters:**
   * **name** (*String*) – name of the pipe
-  * **format** (*Format*) – formate of pipe e.g. bigquery,InMemory, etc.
+  * **format** (*Format*) – format of pipe e.g. bigquery,csv, etc.
 
 #### addProperty(name, value)
 

@@ -22,6 +22,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 
 	public static final Log LOG = LogFactory.getLog(Block.class);
 	private final IHashFunctionUtility<D, R, C, T> hashFunctionUtility;
+	private FieldDefinitionStrategy<R> fieldDefinitionStrategy;
 
 	protected ZFrame<D,R,C> dupes;
 	// Class[] types;
@@ -46,11 +47,12 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	}
 
 	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes,
-		ListMap<T, HashFunction<D, R, C, T>> functionsMap, long maxSize) {
+		ListMap<T, HashFunction<D, R, C, T>> functionsMap, long maxSize, FieldDefinitionStrategy<R> fieldDefinitionStrategy) {
 		this(training, dupes);
 		this.functionsMap = functionsMap;
 		// functionsMap.prettyPrint();
 		this.maxSize = maxSize;
+		this.fieldDefinitionStrategy = fieldDefinitionStrategy;
 	}
 
 	/**
@@ -374,12 +376,13 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	}
 
 	public List<FieldDefinition> getFieldOfInterestList(List<FieldDefinition> fieldDefinitions, Canopy<R> node) {
-		FieldDefinitionStrategy<R> fieldDefinitionStrategy = new DefaultFieldDefinitionStrategy<R>();
 		return fieldDefinitionStrategy.getAdjustedFieldDefinitions(fieldDefinitions, node);
 	}
 
 	public abstract FeatureFactory<T> getFeatureFactory();
-	
-	
+
+	public void setFieldDefinitionStrategy(FieldDefinitionStrategy<R> fieldDefinitionStrategy) {
+		this.fieldDefinitionStrategy = fieldDefinitionStrategy;
+	}
 }
 
