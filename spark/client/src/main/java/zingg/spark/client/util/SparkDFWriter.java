@@ -51,7 +51,7 @@ public class SparkDFWriter implements IDFWriter<Dataset<Row>, Row, Column> {
     @Override
     public void write(Pipe<Dataset<Row>, Row, Column> pipe) throws Exception {
         WriterStrategy<Dataset<Row>, Row, Column> writerStrategy = getWriteStrategyFactory().getStrategy(pipe);
-        writerStrategy.write(zFrameToWrite);
+        writerStrategy.write(zFrameToWrite, pipe);
     }
 
     public void initializeWriterForPipe(Pipe<Dataset<Row>, Row, Column> pipe) {
