@@ -15,12 +15,17 @@ import zingg.common.client.util.reader.ReadStrategyFactory;
 import zingg.spark.client.SparkFrame;
 import org.apache.spark.sql.SparkSession;
 
+import java.util.Map;
+
 public class SparkDFReader implements IDFReader<Dataset<Row>, Row, Column> {
+    private static final String PATH = "path";
+    private static final String LOCATION = "location";
 
     protected final DataFrameReader reader;
 
-    public SparkDFReader(SparkSession s) {
+    public SparkDFReader(SparkSession s, Pipe<Dataset<Row>, Row, Column> pipe) {
         this.reader = s.read();
+        initializeReaderForPipe(pipe);
     }
 
     @Override
@@ -59,6 +64,22 @@ public class SparkDFReader implements IDFReader<Dataset<Row>, Row, Column> {
 
     protected ReadStrategy<Dataset<Row>, Row, Column> getReadStrategy(Pipe<Dataset<Row>, Row, Column> pipe) {
         return new ReadStrategyFactory<Dataset<Row>, Row, Column>().getStrategy(pipe);
+    }
+
+    protected void initializeReaderForPipe(Pipe<Dataset<Row>, Row, Column> pipe) {
+        this.format(pipe.getFormat());
+        if (pipe.getSchema() != null) {
+            this.setSchema(pipe.getSchema());
+        }
+        for (Map.Entry<String, String> entry : pipe.getProps().entrySet()) {
+            //back compatibility
+            if (LOCATION.equals(entry.getKey())) {
+                this.option(PATH, entry.getValue());
+            }   else {
+                this.option(entry.getKey(), entry.getValue());
+            }
+        }
+        this.option("mode", "PERMISSIVE");
     }
 
 }

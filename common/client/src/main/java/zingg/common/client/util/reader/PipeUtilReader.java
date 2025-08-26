@@ -39,7 +39,7 @@ public abstract class PipeUtilReader<S, D, R, C> implements IPipeUtilReader<D, R
     protected ZFrame<D, R, C> readSinglePipe(Pipe<D, R, C> pipe, boolean addSource) throws ZinggClientException {
         try {
             LOG.warn("Reading " + pipe);
-            IDFReader<D, R, C> reader = Helper.initializeReaderForPipe(pipe, getReader());
+            IDFReader<D, R, C> reader = getReader(pipe);
             ZFrame<D, R, C> frame = reader.read(pipe);
             if (addSource) {
                 frame = frame.withColumn(ColName.SOURCE_COL, pipe.getName());
@@ -77,5 +77,5 @@ public abstract class PipeUtilReader<S, D, R, C> implements IPipeUtilReader<D, R
     }
 
     protected abstract ZFrame<D, R, C> addLineNo(ZFrame<D, R, C> data);
-    protected abstract IDFReader<D, R, C> getReader();
+    protected abstract IDFReader<D, R, C> getReader(Pipe<D, R, C> pipe);
 }

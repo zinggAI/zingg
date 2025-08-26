@@ -11,19 +11,15 @@ public abstract class PipeUtilWriter<D, R, C> implements IPipeUtilWriter<D, R, C
 
     @SafeVarargs
     public final void write(ZFrame<D, R, C> toWriteOrig, Pipe<D, R, C>... pipes) throws ZinggClientException {
-        WriterStrategyFactory<D, R, C> strategyFactory = getWriteStrategyFactory(toWriteOrig);
         try {
             for (Pipe<D, R, C> pipe : pipes) {
+                IDFWriter<D, R, C> writer = getWriter(toWriteOrig, pipe);
                 LOG.warn("Writing output " + pipe);
-                WriterStrategy<D, R, C> strategy = strategyFactory.getStrategy(pipe);
-                strategy.write(toWriteOrig, pipe);
+                writer.write(pipe);
             }
         } catch (Exception ex) {
             throw new ZinggClientException(ex.getMessage());
         }
     }
-    protected abstract IDFWriter<D,R,C> getWriter(ZFrame<D, R, C> input);
-    protected WriterStrategyFactory<D, R, C> getWriteStrategyFactory(ZFrame<D, R, C> toWriteOrig) {
-        return new WriterStrategyFactory<>(getWriter(toWriteOrig));
-    }
+    protected abstract IDFWriter<D,R,C> getWriter(ZFrame<D, R, C> input, Pipe<D, R, C> pipe);
 }

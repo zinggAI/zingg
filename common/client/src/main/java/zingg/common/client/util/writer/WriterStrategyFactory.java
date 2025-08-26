@@ -2,7 +2,6 @@ package zingg.common.client.util.writer;
 
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.writer.impl.CassandraWriterStrategy;
-//import zingg.common.client.util.writer.impl.InMemoryWriterStrategy;
 import zingg.common.client.util.writer.impl.DefaultWriterStrategy;
 
 public class WriterStrategyFactory<D, R, C> {
