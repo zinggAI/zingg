@@ -37,6 +37,6 @@ public class TestPipeUtil {
 		assertEquals(Pipe.FORMAT_CSV, p.getFormat(), "Format is not CSV");
 		assertEquals("true", p.get(FilePipe.HEADER).toLowerCase(), "Property 'header' is set to 'false'");
 		assertEquals(SaveMode.Overwrite.toString(), p.getMode(), "SaveMode is not 'Overwrite'");
-		assertEquals(fileName, p.get(FilePipe.LOCATION), "Absolute location of file differs");
+		assertEquals(fileName, p.get(FilePipe.PATH), "Absolute location of file differs");
 	}
 }

@@ -12,7 +12,7 @@ nav_order: 5
 		"name":"parquetFiles", 
 		"format":"parquet", 
 		"props": {
-			"location": "/home/zingg"		
+			"path": "/home/zingg"		
 			}	
 		}]
 ```

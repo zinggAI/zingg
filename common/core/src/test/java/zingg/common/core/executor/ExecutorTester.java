@@ -45,16 +45,16 @@ public class ExecutorTester<S, D, R, C, T>{
 
 	public IArguments updateLocation(IArguments args){
 		for (Pipe p: args.getData()) {
-			if (p.getProps().containsKey("location")) {
-				String testOneFile = Objects.requireNonNull(getClass().getClassLoader().getResource(p.get("location"))).getFile();
+			if (p.getProps().containsKey("path")) {
+				String testOneFile = getClass().getClassLoader().getResource(p.get("path")).getFile();
 				// correct the location of test data
-				p.setProp("location", testOneFile);
+				p.setProp("path", testOneFile);
 			}
 		}
 		return args;
 	}
 
-	public void setupArgs() throws ZinggClientException, IOException {
+	public void setupArgs() throws ZinggClientException, IOException{
 		this.args = setupArgs(configFile, "");
 	}
 
