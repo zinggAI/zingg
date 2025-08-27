@@ -15,7 +15,6 @@ import zingg.common.client.util.writer.PipeUtilWriter;
 public abstract class PipeUtil<S,D,R,C> implements PipeUtilBase<S,D,R,C> {
 
 	protected S session;
-
 	public final Log LOG = LogFactory.getLog(PipeUtil.class);
 	protected final PipeUtilWriter<D, R, C> pipeUtilWriter;
 	protected final PipeUtilReader<S, D, R, C> pipeUtilReader;

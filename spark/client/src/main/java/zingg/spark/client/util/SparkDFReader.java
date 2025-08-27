@@ -8,6 +8,7 @@ import org.apache.spark.sql.types.StructType;
 
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.reader.IDFReader;
 import zingg.common.client.util.reader.ReadStrategy;
@@ -18,8 +19,6 @@ import org.apache.spark.sql.SparkSession;
 import java.util.Map;
 
 public class SparkDFReader implements IDFReader<Dataset<Row>, Row, Column> {
-    private static final String PATH = "path";
-    private static final String LOCATION = "location";
 
     protected final DataFrameReader reader;
 
@@ -73,8 +72,8 @@ public class SparkDFReader implements IDFReader<Dataset<Row>, Row, Column> {
         }
         for (Map.Entry<String, String> entry : pipe.getProps().entrySet()) {
             //back compatibility
-            if (LOCATION.equals(entry.getKey())) {
-                this.option(PATH, entry.getValue());
+            if (FilePipe.LOCATION.equals(entry.getKey())) {
+                this.option(FilePipe.PATH, entry.getValue());
             }   else {
                 this.option(entry.getKey(), entry.getValue());
             }

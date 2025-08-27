@@ -7,14 +7,13 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 
 import zingg.common.client.ZFrame;
+import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.writer.IDFWriter;
 import zingg.common.client.util.writer.WriterStrategy;
 import zingg.common.client.util.writer.WriterStrategyFactory;
 
 public class SparkDFWriter implements IDFWriter<Dataset<Row>, Row, Column> {
-    private static final String PATH = "path";
-    private static final String LOCATION = "location";
     protected final DataFrameWriter<Row> writer;
     protected final ZFrame<Dataset<Row>, Row, Column> zFrameToWrite;
 
@@ -59,8 +58,8 @@ public class SparkDFWriter implements IDFWriter<Dataset<Row>, Row, Column> {
         this.setMode(pipe.getMode() != null ? pipe.getMode() : "Append");
         for (String key : pipe.getProps().keySet()) {
             //back compatibility
-            if (LOCATION.equals(key)) {
-                this.option(PATH, pipe.get(key));
+            if (FilePipe.LOCATION.equals(key)) {
+                this.option(FilePipe.PATH, pipe.get(key));
             } else {
                 this.option(key, pipe.get(key));
             }
