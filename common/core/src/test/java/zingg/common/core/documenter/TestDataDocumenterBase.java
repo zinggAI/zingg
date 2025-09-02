@@ -58,7 +58,7 @@ public abstract class TestDataDocumenterBase<S,D,R,C,T> {
 		
 		for (int i = 0; i < dataPipeArr.length; i++) {
 			String file = getClass().getResource("../../../../documenter/test.csv").getFile();
-			dataPipeArr[i].setProp(FilePipe.LOCATION, file);
+			dataPipeArr[i].setProp(FilePipe.PATH, file);
 		}
 		dataDoc.setData(context.getPipeUtil().read(false, false, dataPipeArr));
 

@@ -105,7 +105,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 	public Pipe<Dataset<Row>, Row, Column> getTrainingDataUnmarkedPipe(IZArgs args) {
 		Pipe<Dataset<Row>, Row, Column>p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
-		p.setProp(FilePipe.LOCATION, getZinggTrainingDataUnmarkedDir(args));
+		p.setProp(FilePipe.PATH, getZinggTrainingDataUnmarkedDir(args));
 		return p;
 	}
 
@@ -113,7 +113,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 	public Pipe<Dataset<Row>, Row, Column> getTrainingDataMarkedPipe(IZArgs args) {
 		Pipe<Dataset<Row>, Row, Column>p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
-		p.setProp(FilePipe.LOCATION, getZinggTrainingDataMarkedDir(args));
+		p.setProp(FilePipe.PATH, getZinggTrainingDataMarkedDir(args));
 		return p;
 	}
 	
@@ -121,7 +121,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 	public Pipe<Dataset<Row>, Row, Column> getModelDocumentationPipe(IZArgs args) {
 		Pipe<Dataset<Row>, Row, Column>p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_TEXT);
-		p.setProp(FilePipe.LOCATION, getZinggModelDocFile(args));
+		p.setProp(FilePipe.PATH, getZinggModelDocFile(args));
 		return p;
 	}
 
@@ -131,7 +131,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 	public Pipe<Dataset<Row>, Row, Column> getBlockingTreePipe(IZArgs args) {
 		SparkPipe p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_PARQUET);
-		p.setProp(FilePipe.LOCATION, getBlockFile(args));
+		p.setProp(FilePipe.PATH, getBlockFile(args));
 		//p.setMode(SaveMode.Overwrite.toString());
 		
 		p.setOverwriteMode();
@@ -143,7 +143,7 @@ public class SparkModelHelper implements IModelHelper<Dataset<Row>, Row, Column>
 		SparkPipe p = new SparkPipe();
 		p.setFormat(Pipe.FORMAT_CSV);
 		p.setProp(FilePipe.HEADER, "true");
-		p.setProp(FilePipe.LOCATION, fileName);
+		p.setProp(FilePipe.PATH, fileName);
 		//p.setMode(SaveMode.Overwrite.toString());
 		p.setOverwriteMode();
 		return p;

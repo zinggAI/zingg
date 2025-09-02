@@ -26,7 +26,7 @@ Rerunning matching on entire datasets is wasteful, and we lose the lineage of ma
             "name":"customers_incr",   
             "format":"csv",   
             "props": {  
-                "location": "test-incr.csv",  
+                "path": "test-incr.csv",  
                 "delimiter": ",",  
                 "header":false  
             },  

@@ -13,7 +13,7 @@ Below is the config file snippet that references a few environment variables.
   "name":"unifiedCustomers", 
   "format":"net.snowflake.spark.snowflake",
   "props": {
-    "location": "$location$",
+    "path": "$location$",
     "delimiter": ",",
     "header": false,				
     "password": "$passwd",					
