@@ -7,38 +7,67 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 
 import zingg.common.client.ZFrame;
-import zingg.common.client.util.DFWriter;
+import zingg.common.client.pipe.FilePipe;
+import zingg.common.client.pipe.Pipe;
+import zingg.common.client.util.writer.IDFWriter;
+import zingg.common.client.util.writer.WriterStrategy;
+import zingg.common.client.util.writer.WriterStrategyFactory;
 
-public class SparkDFWriter implements DFWriter<Dataset<Row>, Row, Column>{
+public class SparkDFWriter implements IDFWriter<Dataset<Row>, Row, Column> {
+    protected final DataFrameWriter<Row> writer;
+    protected final ZFrame<Dataset<Row>, Row, Column> zFrameToWrite;
 
-    protected DataFrameWriter writer;
-
-    public SparkDFWriter(ZFrame<Dataset<Row>, Row, Column> toWriteOrig) {
+    public SparkDFWriter(ZFrame<Dataset<Row>, Row, Column> toWriteOrig, Pipe<Dataset<Row>, Row, Column> pipe) {
+        this.zFrameToWrite = toWriteOrig;
         Dataset<Row> toWrite = toWriteOrig.df();
 		this.writer = toWrite.write();
+        initializeWriterForPipe(pipe);
     }
 
+    @Override
     public void setMode(String s) {
         this.writer.mode(SaveMode.valueOf(s));
 
     }
 
-    public DFWriter<Dataset<Row>, Row, Column> format(String f) {
+    @Override
+    public IDFWriter<Dataset<Row>, Row, Column> format(String f) {
         writer.format(f);
         return this;
     }
 
-    public DFWriter<Dataset<Row>, Row, Column> option(String k, String v) {
+    @Override
+    public IDFWriter<Dataset<Row>, Row, Column> option(String k, String v) {
         writer.option(k,v);
         return this;
     }
 
-    public void save(String location) {
-        writer.save(location);
-    }
-    
+    @Override
     public void save() {
         writer.save();
+    }
+
+    @Override
+    public void write(Pipe<Dataset<Row>, Row, Column> pipe) throws Exception {
+        WriterStrategy<Dataset<Row>, Row, Column> writerStrategy = getWriteStrategyFactory().getStrategy(pipe);
+        writerStrategy.write(zFrameToWrite, pipe);
+    }
+
+    public void initializeWriterForPipe(Pipe<Dataset<Row>, Row, Column> pipe) {
+        this.format(pipe.getFormat());
+        this.setMode(pipe.getMode() != null ? pipe.getMode() : "Append");
+        for (String key : pipe.getProps().keySet()) {
+            //back compatibility
+            if (FilePipe.LOCATION.equals(key)) {
+                this.option(FilePipe.PATH, pipe.get(key));
+            } else {
+                this.option(key, pipe.get(key));
+            }
+        }
+    }
+
+    protected WriterStrategyFactory<Dataset<Row>, Row, Column> getWriteStrategyFactory() {
+        return new WriterStrategyFactory<>(this);
     }
     
 }

@@ -34,7 +34,7 @@
 			"name":"output", 
 			"format":"csv", 
 			"props": {
-				"location": "/tmp/zinggOutput",
+				"path": "/tmp/zinggOutput",
 				"delimiter": ",",
 				"header":false
 			}
@@ -43,7 +43,7 @@
 			"name":"beerAdvo", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/beerAdvo-rateBeer/BeerAdvo.csv.gz",
+				"path": "examples/beerAdvo-rateBeer/BeerAdvo.csv.gz",
 				"delimiter": ",",
 				"header":true					
 			},
@@ -53,7 +53,7 @@
 			"name":"rateBeer", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/beerAdvo-rateBeer/RateBeer.csv.gz",
+				"path": "examples/beerAdvo-rateBeer/RateBeer.csv.gz",
 				"delimiter": ",",
 				"header":true					
 			},

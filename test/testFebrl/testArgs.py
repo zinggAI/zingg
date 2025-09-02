@@ -545,7 +545,7 @@ class ArgumentsTest(TestCase):
                     "name": "output",
                     "format": "csv",
                     "props": {
-                        "location": "/tmp/zinggOutput",
+                        "path": "/tmp/zinggOutput",
                         "delimiter": ",",
                         "header": true
                     }
@@ -556,7 +556,7 @@ class ArgumentsTest(TestCase):
                     "name": "test",
                     "format": "csv",
                     "props": {
-                        "location": "examples/febrl/test.csv",
+                        "path": "examples/febrl/test.csv",
                         "delimiter": ",",
                         "header": false
                     },
@@ -706,7 +706,7 @@ class TestCsvPipe(TestCase):
         schema = "your_schema"
         pipe = CsvPipe("csv_pipe", location=location, schema=schema)
         
-        self.assertEqual(pipe.pipe.getProps()["location"], location)
+        self.assertEqual(pipe.pipe.getProps()["path"], location)
         self.assertEqual(pipe.pipe.getSchema(), schema)
     
     def test_init_with_location_and_schema(self):
