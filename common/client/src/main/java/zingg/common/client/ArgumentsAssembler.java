@@ -10,7 +10,7 @@ public class ArgumentsAssembler {
     public final Log LOG = LogFactory.getLog(ArgumentsAssembler.class);
 
     public IZArgs assemble(IZArgs args, ClientOptions options) {
-        int jobId = (int) (System.currentTimeMillis());
+        int jobId = Long.valueOf(System.currentTimeMillis()).intValue();;
 
         if (options.get(ClientOptions.JOBID) != null) {
             LOG.info("Using job id from command line");
