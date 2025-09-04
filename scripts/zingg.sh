@@ -54,7 +54,7 @@ if [[ $RUN_PYTHON_PHASE -eq 1 ]]; then
 elif [[ $RUN_PYTHON_DB_CONNECT_PHASE -eq 1 ]]; then
   EXECUTABLE="$PYTHON_SCRIPT_DB_CONNECT"
 else  
-  EXECUTABLE="--class zingg.spark.client.SparkClient $ZINGG_JARS"
+  EXECUTABLE="--class zingg.spark.client.SparkClientRunner $ZINGG_JARS"
 fi
 
 if [[ $RUN_PYTHON_DB_CONNECT_PHASE -eq 1 ]]; then
