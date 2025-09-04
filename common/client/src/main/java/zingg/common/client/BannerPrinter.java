@@ -41,6 +41,6 @@ public class BannerPrinter {
         }
     }
 
-    public static String getProductName(){ return "Zingg AI"; }
-    public static String getProductVersion(){ return "0.6.0"; }
+    protected String getProductName(){ return "Zingg AI"; }
+    protected String getProductVersion(){ return "0.6.0"; }
 }
