@@ -127,7 +127,7 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
 
    
 
-    public ModelUtil<S,T,D,R,C>  getModelUtil() {
+    public ModelUtil<S,D,R,C,T>  getModelUtil() {
         return context.getModelUtil();
     }
 

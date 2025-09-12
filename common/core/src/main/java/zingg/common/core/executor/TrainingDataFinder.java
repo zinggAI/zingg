@@ -112,7 +112,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 						if (LOG.isDebugEnabled()) {
 							LOG.debug("num blocks " + blocks.count());		
 						}
-						Model<S,T,D,R,C> model = getModelUtil().createModel(posPairs, negPairs, true, args);
+						Model<S,D,R,C,T> model = getModelUtil().createModel(posPairs, negPairs, true, args);
 						ZFrame<D,R,C> dupes = model.predict(blocks); 
 						if (LOG.isDebugEnabled()) {
 							LOG.debug("num dupes " + dupes.count());	

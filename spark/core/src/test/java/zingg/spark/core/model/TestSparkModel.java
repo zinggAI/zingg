@@ -35,7 +35,7 @@ public class TestSparkModel extends TestModelBase<SparkSession, Dataset<Row>, Ro
     }
 
     @Override
-    public ModelUtil<SparkSession, DataType, Dataset<Row>, Row, Column> getModelUtil() {
+    public ModelUtil<SparkSession, Dataset<Row>, Row, Column, DataType> getModelUtil() {
         return new SparkModelUtil(sparkSession);
     }
     

@@ -34,7 +34,7 @@ import zingg.spark.client.SparkFrame;
 import zingg.spark.core.similarity.SparkSimFunction;
 import zingg.spark.core.similarity.SparkTransformer;
 
-public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row, Column>{
+public class SparkModel extends Model<SparkSession, Dataset<Row>, Row, Column, DataType>{
 	
 	public static final Log LOG = LogFactory.getLog(SparkModel.class);
 	//private Map<FieldDefinition, Feature> featurers;
