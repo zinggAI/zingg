@@ -50,13 +50,13 @@ public class TestArguments {
 				Pipe inputPipe = new SparkPipe();
 				inputPipe.setName("test");
 				inputPipe.setFormat(Pipe.FORMAT_CSV);
-				inputPipe.setProp("location", "examples/febrl/test.csv");
+				inputPipe.setProp("path", "examples/febrl/test.csv");
 				args.setData(new Pipe[] {inputPipe});
 
 				Pipe outputPipe = new SparkPipe();
 				outputPipe.setName("output");
 				outputPipe.setFormat(Pipe.FORMAT_CSV);
-				outputPipe.setProp("location", "examples/febrl/output.csv");
+				outputPipe.setProp("path", "examples/febrl/output.csv");
 				args.setOutput(new Pipe[] {outputPipe});
 
 				args.setBlockSize(400L);
@@ -65,7 +65,7 @@ public class TestArguments {
 				argumentService.loadArguments("/tmp/configFromArgObject.json");
 
 				//reload the same config file to check if deserialization is successful
-				IArguments newArgs = (IArguments) argumentService.loadArguments("/tmp/configFromArgObject.json");
+				IArguments newArgs = argumentService.loadArguments("/tmp/configFromArgObject.json");
 				assertEquals(newArgs.getModelId(), "500", "Model id is different");
 				assertEquals(newArgs.getBlockSize(), 400L, "Block size is different");
 				assertEquals(newArgs.getFieldDefinition().get(0).getFieldName(), "fname", "Field Definition[0]'s name is different");

@@ -16,4 +16,9 @@ public abstract class ArgumentsLoader<A extends IZArgs> {
     }
 
     public abstract A load(String path) throws ZinggClientException;
+
+    public Class<A> getArgsClass() {
+        return this.argsClass;
+    }
+
 }

@@ -33,7 +33,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
 	protected abstract DFObjectUtil<S,D,R,C> getDFObjectUtil();
 
-	public abstract List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException;
+	public abstract List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException, NoSuchMethodException;
 
 	//public abstract void tearDown();	
 

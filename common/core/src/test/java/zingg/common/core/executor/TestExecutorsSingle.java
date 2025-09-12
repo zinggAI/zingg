@@ -26,7 +26,7 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 	}
 
 	@Override
-	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException{
+	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException, NoSuchMethodException {
 	  	
 		getBaseExecutors();
 		getAdditionalExecutors();
@@ -34,7 +34,7 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 		return executorTesterList;
 	}
 
-	public void getBaseExecutors() throws ZinggClientException, IOException{
+	public void getBaseExecutors() throws ZinggClientException, IOException, NoSuchMethodException {
 
 		TrainingDataFinder<S, D, R, C, T> tdf = getTrainingDataFinder();
     	Labeller<S, D, R, C, T> labeler = getLabeller();
@@ -47,7 +47,7 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 
 	}
 
-	public void getAdditionalExecutors() throws ZinggClientException, IOException{
+	public void getAdditionalExecutors() throws ZinggClientException, IOException {
 		
 		Matcher<S, D, R, C, T> matcher = getMatcher();
 		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher),getConfigFile(),getModelId(),getDFObjectUtil()));

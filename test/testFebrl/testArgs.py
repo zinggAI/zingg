@@ -545,7 +545,7 @@ class ArgumentsTest(TestCase):
                     "name": "output",
                     "format": "csv",
                     "props": {
-                        "location": "/tmp/zinggOutput",
+                        "path": "/tmp/zinggOutput",
                         "delimiter": ",",
                         "header": true
                     }
@@ -556,7 +556,7 @@ class ArgumentsTest(TestCase):
                     "name": "test",
                     "format": "csv",
                     "props": {
-                        "location": "examples/febrl/test.csv",
+                        "path": "examples/febrl/test.csv",
                         "delimiter": ",",
                         "header": false
                     },
@@ -706,7 +706,7 @@ class TestCsvPipe(TestCase):
         schema = "your_schema"
         pipe = CsvPipe("csv_pipe", location=location, schema=schema)
         
-        self.assertEqual(pipe.pipe.getProps()["location"], location)
+        self.assertEqual(pipe.pipe.getProps()["path"], location)
         self.assertEqual(pipe.pipe.getSchema(), schema)
     
     def test_init_with_location_and_schema(self):
@@ -809,45 +809,3 @@ class TestSnowflakePipe(TestCase):
         db_table = "my_table"
         pipe.setDbTable(db_table)
         self.assertEqual(pipe.pipe.getProps()["dbtable"], db_table)
-
-class TestInMemoryPipe(TestCase):  
-    def test_init(self):
-        name = "in_memory_pipe"
-        pipe = InMemoryPipe(name)
-        self.assertEqual(pipe.pipe.getName(), name)
-        self.assertEqual(pipe.pipe.getFormat(), "inMemory")
-
-    # def test_set_dataset(self):
-    #     name = "in_memory_pipe"
-    #     pipe = InMemoryPipe(name)
-    #     sample_data = [{"name": "John", "age": 30}, {"name": "Alice", "age": 25}]
-    #     df = pd.DataFrame(sample_data)
-    #     pipe.setDataset(df)
-    #     dataset = pipe.getDataset()
-    #     self.assertEqual(dataset.count(), len(sample_data))
-
-    # def test_set_dataset_with_schema(self):
-    #     name = "in_memory_pipe"
-    #     sample_data = [{"name": "John", "age": 30}, {"name": "Alice", "age": 25}]
-    #     schema = "name string, age int"
-    #     df = pd.DataFrame(sample_data)
-    #     pipe = InMemoryPipe(name)
-    #     pipe.setDataset(df)
-    #     dataset = pipe.getDataset()
-    #     self.assertEqual(dataset.count(), len(sample_data))
-
-    # def test_set_dataset_with_invalid_type(self):
-    #     name = "in_memory_pipe"
-    #     pipe = InMemoryPipe(name)
-    #     invalid_data = random.randint(1, 100)
-    #     with self.assertRaises(AttributeError):
-    #         pipe.setDataset(invalid_data)
-
-    # def test_get_dataset(self):
-    #     name = "in_memory_pipe"
-    #     sample_data = [{"name": "John", "age": 30}, {"name": "Alice", "age": 25}]
-    #     df = pd.DataFrame(sample_data)
-    #     pipe = InMemoryPipe(name)
-    #     pipe.setDataset(df)
-    #     dataset = pipe.getDataset()
-    #     self.assertEqual(dataset.count(), len(sample_data))

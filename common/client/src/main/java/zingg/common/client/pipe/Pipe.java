@@ -33,7 +33,6 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	public static final String FORMAT_ELASTIC = "org.elasticsearch.spark.sql";
 	public static final String FORMAT_EXASOL = "com.exasol.spark";
 	public static final String FORMAT_BIGQUERY = "bigquery";
-	public static final String FORMAT_INMEMORY = "inMemory";
 
 	String name;
 	String format;
@@ -44,24 +43,17 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	String schema;
 	String mode;
 
-	
-
-	
-
 	public String getSchema() {
 		return schema;
 	}
-
 
 	public void setSchema(String schema) {
 		this.schema = schema;
 	}
 
-
 	public String getName() {
 		return name;
 	}
-	
 	
 	@JsonValue
 	public void setName(String name) {
@@ -76,7 +68,6 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	public void setFormat(String sinkType) {
 		this.format = sinkType;
 	}
-
 	
 	@JsonValue
 	public void setProps(Map<String, String> props) {
@@ -102,22 +93,17 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 		return props.get(key);
 	}
 	
-	
 	public String getPreprocessors() {
 		return preprocessors;
 	}
-
 
 	public void setPreprocessors(String preprocessors) {
 		this.preprocessors = preprocessors;
 	}
 
-
-
 	public int getId() {
 		return id;
 	}
-
 
 	public void setId(int recId) {
 		this.id = recId;

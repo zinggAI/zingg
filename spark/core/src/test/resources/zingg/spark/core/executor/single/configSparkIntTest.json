@@ -3,7 +3,7 @@
 		"name":"trainingPos", 
 		"format":"csv", 
 		"props": {
-			"location": "./zingg/spark/core/executor/training.csv",
+			"path": "./zingg/spark/core/executor/training.csv",
 			"delimiter": ",",
 			"header":false,
 			"badRecordsPath":"/tmp/bad"					
@@ -83,7 +83,7 @@
 			"name":"output", 
 			"format":"csv", 
 			"props": {
-				"location": "/tmp/junit_integration_spark/single/zinggOutput",
+				"path": "/tmp/junit_integration_spark/single/zinggOutput",
 				"delimiter": ",",
 				"header":true
 			}
@@ -92,7 +92,7 @@
 			"name":"test", 
 			"format":"csv", 
 			"props": {
-				"location": "./zingg/spark/core/executor/test.csv",
+				"path": "./zingg/spark/core/executor/test.csv",
 				"delimiter": ",",
 				"header":false					
 			},
