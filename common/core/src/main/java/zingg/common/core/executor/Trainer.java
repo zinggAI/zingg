@@ -49,7 +49,7 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			getBlockingTreeUtil().writeBlockingTree(blockingTree, args, getModelHelper());
 			LOG.info("Learnt indexing rules and saved output at " + args.getZinggDir());
 			// model
-			Model<S,T,D,R,C> model = getModelUtil().createModel(positives, negatives, false, args);
+			Model<S,D,R,C,T> model = getModelUtil().createModel(positives, negatives, false, args);
 			model.save(getModelHelper().getModel(args));
 			LOG.info("Learnt similarity rules and saved output at " + args.getZinggDir());
 			Analytics.track(Metric.TRAINING_MATCHES, positives.count(), args.getCollectMetrics());

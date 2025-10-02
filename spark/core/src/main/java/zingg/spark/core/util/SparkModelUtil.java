@@ -18,7 +18,7 @@ import zingg.spark.core.model.SparkLabelModel;
 import zingg.spark.core.model.SparkModel;
 
 
-public class SparkModelUtil extends ModelUtil<SparkSession,DataType,Dataset<Row>, Row, Column> {
+public class SparkModelUtil extends ModelUtil<SparkSession,Dataset<Row>, Row, Column,DataType> {
 
     public static final Log LOG = LogFactory.getLog(SparkModelUtil.class);
     
@@ -27,8 +27,8 @@ public class SparkModelUtil extends ModelUtil<SparkSession,DataType,Dataset<Row>
         super(s);
     }
 
-	public Model<SparkSession,DataType,Dataset<Row>, Row, Column> getModel(boolean isLabel, IArguments args) throws ZinggClientException{
-        Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = null;
+	public Model<SparkSession,Dataset<Row>, Row, Column,DataType> getModel(boolean isLabel, IArguments args) throws ZinggClientException{
+        Model<SparkSession,Dataset<Row>, Row, Column,DataType> model = null;
         if (isLabel) {
             model = new SparkLabelModel(session, getFeaturers(args));
         }
@@ -39,9 +39,9 @@ public class SparkModelUtil extends ModelUtil<SparkSession,DataType,Dataset<Row>
     }
 
     @Override
-    public Model<SparkSession,DataType,Dataset<Row>, Row, Column> loadModel(boolean isLabel,
+    public Model<SparkSession,Dataset<Row>, Row, Column,DataType> loadModel(boolean isLabel,
         IArguments args, IModelHelper mh) throws ZinggClientException    {
-        Model<SparkSession,DataType,Dataset<Row>, Row, Column> model = getModel(isLabel, args);
+        Model<SparkSession,Dataset<Row>, Row, Column,DataType> model = getModel(isLabel, args);
         model.load(mh.getModel(args));
         return model;
      }

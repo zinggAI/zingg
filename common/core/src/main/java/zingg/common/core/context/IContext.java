@@ -19,9 +19,9 @@ public interface IContext <S, D, R, C, T> {
     
     public void setGraphUtil(GraphUtil<D, R, C> graphUtil);
     
-    public ModelUtil<S, T, D, R, C> getModelUtil();
+    public ModelUtil<S,D,R,C,T> getModelUtil();
     
-    public void setModelUtil(ModelUtil<S, T, D, R, C> modelUtil);
+    public void setModelUtil(ModelUtil<S, D, R, C, T> modelUtil);
     
     public PipeUtilBase<S, D, R, C> getPipeUtil();
     
