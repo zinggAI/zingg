@@ -42,8 +42,8 @@ jobs:
       - name: Commit test results
         if: always()
         run: |
-          git config user.name nitish
-          git config user.email nitish1814@github.com
+          git config user.name sonalgoyal
+          git config user.email sonalgoyal@github.com
           git add perf_test/perf_test_report/*.json
           git commit -m "report generated"
           git push
