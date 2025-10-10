@@ -5,10 +5,9 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
-import zingg.common.client.Client;
+import zingg.common.client.IZingg;
 import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.arguments.model.IArguments;
-import zingg.common.client.IZingg;
 import zingg.spark.client.SparkClient;
 import zingg.spark.core.context.ZinggSparkContext;
 
