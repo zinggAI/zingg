@@ -5,9 +5,10 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
+import zingg.common.client.IZingg;
 import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.arguments.model.IArguments;
-import zingg.common.client.IZingg;
+import zingg.spark.client.SparkClient;
 import zingg.spark.core.context.ZinggSparkContext;
 
 import java.util.Properties;
@@ -38,9 +39,8 @@ public class SparkSessionProvider {
                 SparkContext sparkContext = sparkSession.sparkContext();
                 long driverMemory = sparkContext.getConf().getSizeAsGb("spark.driver.memory", "0");
                 System.out.println("Spark driver memory: " + driverMemory + " GB");
-                if (sparkContext.getCheckpointDir().isEmpty()) {
-                    sparkContext.setCheckpointDir("/tmp/checkpoint");
-                }
+                SparkClient sparkClient = new SparkClient();
+                sparkClient.checkAndSetCheckpoint(sparkSession);
                 javaSparkContext = new JavaSparkContext(sparkContext);
                 JavaSparkContext.jarOfClass(IZingg.class);
                 if (!javaSparkContext.getCheckpointDir().isPresent()) {

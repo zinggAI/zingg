@@ -7,12 +7,11 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
-
 import zingg.common.client.Client;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IZingg;
-import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
@@ -27,6 +26,7 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 	
 	private static final long serialVersionUID = 1L;
 	protected static final String zFactoryClassName = "zingg.spark.core.executor.SparkZFactory";
+    private static final String DEFAULT_CHECKPOINT_DIR = "/tmp/checkpoint";
 	private JavaSparkContext javaSparkContext;
 
 	public SparkClient(IZArgs args, ClientOptions options) throws ZinggClientException {
@@ -70,16 +70,15 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 	@Override
 	public SparkSession getSession() {
 		if (session!=null) {
+            checkAndSetCheckpoint(session);
 			return session;
 		} else {
 			SparkSession s = SparkSession
                     .builder()
                     .appName("Zingg")
                     .getOrCreate();
+            checkAndSetCheckpoint(s);
 			SparkContext sparkContext = s.sparkContext();
-			if (sparkContext.getCheckpointDir().isEmpty()) {
-				sparkContext.setCheckpointDir("/tmp/checkpoint");
-			}
 			JavaSparkContext ctx = JavaSparkContext.fromSparkContext(sparkContext);
 					JavaSparkContext.jarOfClass(IZingg.class);
 					LOG.debug("Context " + ctx);
@@ -103,7 +102,12 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 			return p;
 		}
 	}
-
+    public void checkAndSetCheckpoint(SparkSession session) {
+        SparkContext sc = session.sparkContext();
+        if (sc.getCheckpointDir().isEmpty()) {
+            sc.setCheckpointDir(DEFAULT_CHECKPOINT_DIR);
+        }
+    }
 
 	public JavaSparkContext getJavaSparkContext() {
 		return javaSparkContext;
