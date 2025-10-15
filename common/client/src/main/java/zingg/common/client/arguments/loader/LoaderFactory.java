@@ -10,7 +10,7 @@ public class LoaderFactory<A extends IZArgs> {
     public ArgumentsLoader<A> getArgumentsLoader(LoaderType loaderType, Class<A> argsClass) throws NoSuchObjectException {
         switch (loaderType) {
             case FILE:
-                return new FileArgumentLoader<A>(argsClass);
+                return new TemplateFileArgumentLoader<A>(argsClass);
             case JSON:
                 return new JsonArgumentLoader<A>(argsClass);
             case TEMPLATE_FILE:

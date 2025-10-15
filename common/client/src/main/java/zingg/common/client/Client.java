@@ -109,8 +109,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		this.zingg = zingg; 
 	}
 
-	public void buildAndSetArguments(IZArgs args, ClientOptions options) {
-		setOptions(options);
+	protected void setJobId(IZArgs args){
 		int jobId = new Long(System.currentTimeMillis()).intValue();
 		if (options.get(options.JOBID)!= null) {
 			LOG.info("Using job id from command line");
@@ -121,6 +120,11 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		else if (args.getJobId() != -1) {
 			jobId = (args).getJobId();
 		}
+	}
+
+	public void buildAndSetArguments(IZArgs args, ClientOptions options) {
+		setOptions(options);
+		setJobId(args);
 		
 		//override value of zinggDir passed from command line
 		if (options.get(options.ZINGG_DIR)!= null) {
