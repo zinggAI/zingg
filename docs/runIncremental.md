@@ -11,7 +11,7 @@ description: >-
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
-Rerunning matching on entire datasets is wasteful, and we lose the lineage of matched records against a persistent identifier. Using the[ incremental flow](https://www.learningfromdata.zingg.ai/p/zingg-incremental-flow) feature in [Zingg Enterprise](https://www.zingg.ai/company/zingg-enterprise), incremental loads can be run to match existing pre-resolved entities. The new and updated records are matched to existing clusters, and new persistent [**ZINGG\_IDs**](https://www.learningfromdata.zingg.ai/p/hello-zingg-id) are generated for records that do not find a match. If a record gets updated and Zingg Enterprise discovers that it is a more suitable match with another cluster, it will be reassigned. Cluster assignment, merge, and unmerge happens automatically in the flow. Zingg Enterprise also takes care of human feedback on previously matched data to ensure that it does not override the approved records.
+Rerunning matching on entire datasets is wasteful, and we lose the lineage of matched records against a persistent identifier. Using the[ incremental flow](https://www.learningfromdata.zingg.ai/p/zingg-incremental-flow) feature in [Zingg Enterprise](https://www.zingg.ai/company/zingg-enterprise), incremental loads can be run to match existing pre-resolved entities. The new and updated records are matched to existing clusters, and new persistent [**ZINGG\_IDs**](https://www.learningfromdata.zingg.ai/p/hello-zingg-id) are generated for records that do not find a match. If a record gets updated and Zingg Enterprise discovers that it is a more suitable match with another cluster, it will be reassigned. The outputTmp section in the incremental configuration specifies a temporary output location for the results generated during the incremental matching process. This is where Zingg writes the intermediate or temporary results before final processing or merging with the main output. Cluster assignment, merge, and unmerge happens automatically in the flow. Zingg Enterprise also takes care of human feedback on previously matched data to ensure that it does not override the approved records.
 
 ### The incremental phase is run as follows:
 
@@ -32,7 +32,16 @@ Rerunning matching on entire datasets is wasteful, and we lose the lineage of ma
             },  
             "schema": "recId string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string"   
         }  
-    ]   
+    ],
+    "outputTmp" :{
+            "name":"customers_incr_temp",
+            "format":"csv",
+            "props": {
+              "location": "/tmp/zinggOutput_febrl_tmp",
+              "delimiter": ",",
+              "header":false
+            }
+    }   
 }  
 ```
 
@@ -104,6 +113,8 @@ incrArgs = IncrementalArguments()
 incrArgs.setParentArgs(args)  
 incrPipe = ECsvPipe("testFebrlIncr", "examples/febrl/test-incr.csv", schema)  
 incrArgs.setIncrementalData(incrPipe)  
+outputTempPipe = ECsvPipe("outputTemp", "/tmp/zinggOutput_febrl_tmp")
+incrArgs.setOutputTmp(outputTempPipe)
   
 options = ClientOptions([ClientOptions.PHASE,"runIncremental"])  
 zingg = EZingg(incrArgs, options)  
