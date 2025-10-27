@@ -5,11 +5,20 @@ import java.util.Map;
 
 public class StringRedactor {
 
-    protected String REDACT_PATTERN = "(?i)secret|password|token|access?key|key|sfPassword";
-    protected String REDACT_VALUE = "********(redacted)";
+    protected String REDACT_PATTERN;
+    protected String REDACT_VALUE;
 
-    public String redact(Map<String, String> values){
-        
+    public StringRedactor(){
+        REDACT_PATTERN = "(?i)secret|password|token|access?key|key|sfPassword";
+        REDACT_VALUE = "********(redacted)";
+    }
+
+    public StringRedactor(String pattern, String value){
+        REDACT_PATTERN = pattern;
+        REDACT_VALUE = value;
+    }
+
+    public Map<String, String> replace(Map<String, String> values){
         if (values != null){
             Map<String, String> valuesClone = new HashMap<String, String>();
             valuesClone.putAll(values);
@@ -18,6 +27,17 @@ public class StringRedactor {
                     valuesClone.put(key, REDACT_VALUE);
                 }
             }
+            return valuesClone;
+        }
+        else {
+            return values;
+        }
+    }
+
+    public String redact(Map<String, String> values){
+        
+        if (values != null){
+            Map<String, String> valuesClone = replace(values);
             return valuesClone.toString();
         }
         else {
