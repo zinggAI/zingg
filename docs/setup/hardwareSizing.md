@@ -19,5 +19,7 @@ Here are some performance numbers you can use to determine the appropriate hardw
 * 5m records of [North Carolina Voters](https://github.com/zinggAI/zingg/tree/main/examples/ncVoters5M) take \~4 hours on a 4 core, 10 GB RAM local Spark cluster.
 * 9m records with 3 fields - first name, last name, email take 45 minutes to run on AWS m5.24xlarge instance with 96 cores, 384 GB RAM
 * 80m records with 8-10 fields took less than 2 hours on 1 driver (128 GB RAM, 32 cores), 8 workers (224 GB RAM, 64 cores). This is a user-reported stat without any optimization.
+* <img width="2271" height="1091" alt="image" src="https://github.com/user-attachments/assets/4dadeb56-9d66-4ed2-be6e-e0f0b9ab68c6" />
+
 
 If you have up to a few million records, it may be easier to run Zingg on a single machine in Spark local mode.
