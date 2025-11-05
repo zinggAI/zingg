@@ -42,7 +42,7 @@
 				<scala.version>2.12.17</scala.version>
 				<spark.binary.version>3.4</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
-				<graphframes.version>0.8.3-spark3.4-s_2.12</graphframes.version>
+				<graphframes.version>0.10.0</graphframes.version>
 			</properties>
 		</profile>
 		<profile>
@@ -59,7 +59,7 @@
 				<scala.version>2.12.10</scala.version>
 				<spark.binary.version>3.5</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
-				<graphframes.version>0.8.3-spark3.5-s_2.12</graphframes.version>
+				<graphframes.version>0.10.0</graphframes.version>
 			</properties>
 		</profile>
 	</profiles>
