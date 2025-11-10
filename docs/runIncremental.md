@@ -11,7 +11,7 @@ description: >-
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
-Rerunning matching on entire datasets is wasteful, and we lose the lineage of matched records against a persistent identifier. Using the [ incremental flow](https://www.learningfromdata.zingg.ai/p/zingg-incremental-flow) feature in [Zingg Enterprise](https://www.zingg.ai/company/zingg-enterprise), incremental loads can be run to match existing pre-resolved entities. The new and updated records are matched to existing clusters, and new persistent [**ZINGG\_IDs**](https://www.learningfromdata.zingg.ai/p/hello-zingg-id) are generated for records that do not find a match.
+Rerunning matching on entire datasets is wasteful, and we lose the lineage of matched records against a persistent identifier. Using the [incremental flow](https://www.learningfromdata.zingg.ai/p/zingg-incremental-flow) feature in [Zingg Enterprise](https://www.zingg.ai), incremental loads can be run to match existing pre-resolved entities. The new and updated records are matched to existing clusters, and new persistent [**ZINGG\_IDs**](https://www.learningfromdata.zingg.ai/p/hello-zingg-id) are generated for records that do not find a match.
 
 If a record gets updated and Zingg Enterprise discovers that it is a more suitable match with another cluster, it will be reassigned. Cluster assignment, merge, and unmerge happens automatically in the flow. Zingg Enterprise also takes care of human feedback on previously matched data to ensure that it does not override the approved records.
 
@@ -42,7 +42,7 @@ The outputTmp section in the incremental configuration specifies a temporary out
             "props": {
               "location": "/tmp/zinggOutput_febrl_tmp",
               "delimiter": ",",
-              "header":false
+              "header":true
             }
     }   
 }  
