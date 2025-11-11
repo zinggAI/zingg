@@ -2,7 +2,7 @@ name: performance-test-ncVoters5M
 
 on:
   schedule:
-    - cron: "0 3 */3 * *"
+    - cron: "0 3 */3 * *" # runs every 3 days at 3 AM UTC
 
 jobs:
   perf-test:
@@ -12,7 +12,7 @@ jobs:
       SPARK_MASTER: local[*]
       ZINGG_HOME: assembly/target
       ZINGG_USER: zingg_user
-      INPUT : "./perf_test/perfTestInput_ncVoters5M.json"
+      INPUT : "zingg_community_performance_reports/perf_test/perfTestInput_ncVoters5M.json"
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content to github runner.
@@ -35,6 +35,8 @@ jobs:
         run: mvn clean
       - name: Build with Maven
         run: mvn clean compile package -DskipTests=true
+      - name: Clone performance reports repo
+        run: git clone https://github.com/zinggAI/zingg_community_performance_reports.git
       - name: download and execute py script
         run: |
           wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
@@ -42,6 +44,7 @@ jobs:
       - name: Commit test results
         if: always()
         run: |
+          cd zingg_community_performance_reports
           git config user.name sonalgoyal
           git config user.email sonalgoyal4@gmail.com
           git add perf_test/perf_test_report/*.json
