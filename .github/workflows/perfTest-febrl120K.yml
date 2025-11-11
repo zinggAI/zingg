@@ -46,7 +46,12 @@ jobs:
         run: |
           cd zingg_community_performance_reports
           git config user.name sonalgoyal
-          git config user.email sonalgoyal@github.com
-          git add perf_test/perf_test_report/*.json
-          git commit -m "report generated"
-          git push
+          git config user.email sonalgoyal4@github.com
+          git pull --rebase origin main || true
+          git add perf_test/perf_test_report/*.json || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit for perfTest-febrl120K."
+          else
+            git commit -m "report generated"
+            git push origin HEAD:main
+          fi
