@@ -84,8 +84,8 @@ jobs:
           cd zingg_community_performance_reports
           echo "Repo state before commit:"
           git status
-          git config user.name sonalgoyal
-          git config user.email sonalgoyal4@github.com
+          git config user.name padamprakash
+          git config user.email padamprakash@github.com
           git add perf_test/perf_test_report/*.json
           echo "Diff (cached):"
           git diff --cached --stat || true
