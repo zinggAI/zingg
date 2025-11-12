@@ -3,7 +3,7 @@ name: performance-test-febrl120K
 on:
   schedule:
     - cron: "0 0 */3 * *"
-
+  workflow_dispatch:
 jobs:
   perf-test:
     name: performance-test-febrl120K
