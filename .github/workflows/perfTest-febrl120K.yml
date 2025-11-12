@@ -3,7 +3,7 @@ name: performance-test-febrl120K
 on:
   schedule:
     - cron: "0 0 */3 * *" # runs every 3 days at 00 AM UTC
-
+  workflow_dispatch:
 jobs:
   perf-test:
     name: performance-test-febrl120K
@@ -12,10 +12,22 @@ jobs:
       SPARK_MASTER: local[*]
       ZINGG_HOME: assembly/target
       ZINGG_USER: zingg_user
-      INPUT : "zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
+      INPUT: "zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
     steps:
+      - name: Enable shell debug
+        run: |
+          set -x
+          echo "Starting job on $(uname -a)"
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content to github runner.
+      - name: Show top-level repo info
+        run: |
+          git rev-parse --show-toplevel
+          git remote -v
+          git branch -a
+          git status
+          echo "Current commit:"
+          git log --oneline -n 3
       - name: setup python
         uses: actions/setup-python@v4
         with:
@@ -29,29 +41,70 @@ jobs:
         with:
           spark-version: '3.5.5'
           hadoop-version: '3'
+          spark-url: 'https://github.com/zinggAI/spark_releases/releases/download/v3.5.5/spark-3.5.5-bin-hadoop3.tgz'
       - name: check spark
         run: spark-submit --version
       - name: mvn clean
         run: mvn clean
       - name: Build with Maven
         run: mvn clean compile package -DskipTests=true
-      - name: Clone performance reports repo
-        run: git clone https://github.com/zinggAI/zingg_community_performance_reports.git
+      - name: Clone performance reports repo (with debug)
+        run: |
+          set -e
+          echo "Cloning performance reports repo..."
+          git clone https://github.com/zinggAI/zingg_community_performance_reports.git
+          echo "Clone directory listing:"
+          ls -al
+          echo "Listing inside cloned repo:"
+          ls -al zingg_community_performance_reports || true
+      - name: verify INPUT file existence
+        run: |
+          echo "INPUT variable: $INPUT"
+          if [ -f "$INPUT" ]; then
+            echo "Found INPUT file at path: $INPUT"
+          else
+            echo "INPUT file NOT found at path: $INPUT"
+          fi
       - name: download and execute py script
         run: |
-          wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
+          wget -O perfTestRunner.py https://raw.githubusercontent.com/padam-prakash/zingg_performance-Padam/main/perfTestRunner.py
+          echo "First 20 lines:"
+          head -n 20 perfTestRunner.py
+          echo "Running script..."
           python perfTestRunner.py
+      - name: Show produced report files
+        run: |
+          echo "Searching for JSON report files..."
+          find . -name "testReport_*.json" -maxdepth 6
+          echo "Detailed listing under reports repo:"
+          ls -R zingg_community_performance_reports/perf_test/perf_test_report || true
       - name: Commit test results
         if: always()
         run: |
           cd zingg_community_performance_reports
+          echo "Entering reports repo at $(pwd)"
           git config user.name sonalgoyal
           git config user.email sonalgoyal4@github.com
+          echo "Fetching origin/main..."
+          git fetch origin main
+          echo "Rebasing onto origin/main (if behind)..."
           git pull --rebase origin main || true
-          git add perf_test/perf_test_report/*.json || true
+          git add perf_test/perf_test_report/*.json || echo "No JSON files to add."
+          echo "Diff (cached):"
+          git diff --cached --stat || true
           if git diff --cached --quiet; then
             echo "No changes to commit for perfTest-febrl120K."
           else
-            git commit -m "report generated"
-            git push origin HEAD:main
+            echo "Committing changes..."
+            GIT_TRACE=1 GIT_CURL_VERBOSE=1 git commit -m "report generated"
+            echo "Attempting push..."
+            if ! GIT_TRACE=1 GIT_CURL_VERBOSE=1 git push origin HEAD:main; then
+              echo "Initial push failed. Performing fetch + rebase retry..."
+              git fetch origin main
+              git rebase origin/main || (git rebase --abort && git reset --hard origin/main)
+              echo "Retrying push..."
+              GIT_TRACE=1 GIT_CURL_VERBOSE=1 git push origin HEAD:main || (echo "Final push failed" && exit 1)
+            fi
           fi
+          echo "Final remote state:"
+          git fetch origin main
