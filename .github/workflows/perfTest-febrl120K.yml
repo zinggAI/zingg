@@ -86,7 +86,6 @@ jobs:
           git status
           git config user.name sonalgoyal
           git config user.email sonalgoyal4@github.com
-#          Re-add JSON after potential stash pop
           git add perf_test/perf_test_report/*.json
           echo "Diff (cached):"
           git diff --cached --stat || true
@@ -102,13 +101,7 @@ jobs:
             echo "Rebasing onto origin/main..."
             git rebase origin/main || (echo "Rebase failed; resetting hard to origin/main" && git rebase --abort && git reset --hard origin/main)
             echo "Attempting push..."
-            if ! git push origin HEAD:main; then
-              echo "Push failed; retry after fetch/reset."
-              git fetch origin main
-              git reset --soft origin/main
-              git commit -m "report generated (retry)" || true
-              git push origin HEAD:main || (echo "Final push failed" && exit 1)
-            fi
+            git push origin HEAD:main
           fi
           echo "Final log:"
           git log --oneline -n 3
