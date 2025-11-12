@@ -88,12 +88,13 @@ jobs:
           git config user.email sonalgoyal4@github.com
       
           # Stage report JSON (if any)
-          git add perf_test/perf_test_report/*.json 2>/dev/null || true
+          echo "Staging report JSON (force)..."
+          git add -f perf_test/perf_test_report/*.json 2>/dev/null || true
       
           # If there are other unstaged changes, stash them to allow rebase
           if ! git diff --quiet; then
-          echo "Stashing non-staged changes before rebase..."
-          git stash push -u -m auto-pre-rebase
+            echo "Stashing non-staged changes before rebase..."
+            git stash push -u -m auto-pre-rebase
           fi
       
           echo "Fetching remote..."
@@ -103,8 +104,8 @@ jobs:
           git rebase origin/main || (echo "Rebase failed; resetting hard to origin/main" && git rebase --abort && git reset --hard origin/main)
           # Restore stashed changes (if any) but keep focus on JSON
           if git stash list | grep -q auto-pre-rebase; then
-          echo "Applying stashed changes..."
-          git stash pop || echo "Stash pop had conflicts; keeping staged JSON only."
+            echo "Applying stashed changes..."
+            git stash pop || echo "Stash pop had conflicts; keeping staged JSON only."
           fi
       
           # Re-add JSON after potential stash pop
