@@ -3,7 +3,7 @@ name: performance-test-ncVoters5M
 on:
   schedule:
     - cron: "0 3 */3 * *" # runs every 3 days at 3 AM UTC
-
+  workflow_dispatch:
 jobs:
   perf-test:
     name: performance-test-ncVoters5M
@@ -29,17 +29,24 @@ jobs:
         with:
           spark-version: '3.5.5'
           hadoop-version: '3'
+          spark-url: 'https://github.com/zinggAI/spark_releases/releases/download/v3.5.5/spark-3.5.5-bin-hadoop3.tgz'
       - name: check spark
         run: spark-submit --version
       - name: mvn clean
         run: mvn clean
       - name: Build with Maven
         run: mvn clean compile package -DskipTests=true
-      - name: Clone performance reports repo
-        run: git clone https://github.com/zinggAI/zingg_community_performance_reports.git
+      - name: Clone performance reports repo (with debug)
+        run: |
+          set -e
+          echo "Cloning performance reports repo..."
+          git clone https://x-access-token:${{ secrets.GH_PAT_SONAL }}@github.com/zinggAI/zingg_community_performance_reports.git
+          echo "Listing inside cloned repo:"
+          ls -al zingg_community_performance_reports || true
       - name: download and execute py script
         run: |
-          wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
+          wget -O perfTestRunner.py https://raw.githubusercontent.com/padam-prakash/zingg_performance-Padam/main/perfTestRunner.py
+          echo "Running script..."
           python perfTestRunner.py
       - name: Commit test results
         if: always()
@@ -47,11 +54,18 @@ jobs:
           cd zingg_community_performance_reports
           git config user.name sonalgoyal
           git config user.email sonalgoyal4@gmail.com
-          git pull --rebase origin main || true
-          git add perf_test/perf_test_report/*.json || true
+          git add perf_test/perf_test_report/*.json
           if git diff --cached --quiet; then
             echo "No changes to commit for perfTest-ncVoters5M."
           else
+            echo "Committing changes..."
             git commit -m "report generated"
+            
+            echo "Fetching remote..."
+            git fetch origin main
+            
+            echo "Rebasing onto origin/main..."
+            git rebase origin/main || (echo "Rebase failed; resetting hard to origin/main" && git rebase --abort && git reset --hard origin/main)
+            echo "Attempting push..."
             git push origin HEAD:main
           fi
