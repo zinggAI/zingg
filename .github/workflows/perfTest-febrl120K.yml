@@ -52,7 +52,7 @@ jobs:
         run: |
           set -e
           echo "Cloning performance reports repo..."
-          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/zinggAI/zingg_community_performance_reports.git
+          git clone git clone https://x-access-token:${{ secrets.GH_PAT_PADAM }}@github.com/zinggAI/zingg_community_performance_reports.git
           echo "Clone directory listing:"
           ls -al
           echo "Listing inside cloned repo:"
