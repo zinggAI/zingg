@@ -82,29 +82,48 @@ jobs:
         if: always()
         run: |
           cd zingg_community_performance_reports
-          echo "Entering reports repo at $(pwd)"
+          echo "Repo state before commit:"
+          git status
           git config user.name sonalgoyal
           git config user.email sonalgoyal4@github.com
-          echo "Fetching origin/main..."
+      
+          # Stage report JSON (if any)
+          git add perf_test/perf_test_report/*.json 2>/dev/null || true
+      
+          # If there are other unstaged changes, stash them to allow rebase
+          if ! git diff --quiet; then
+          echo "Stashing non-staged changes before rebase..."
+          git stash push -u -m auto-pre-rebase
+          fi
+      
+          echo "Fetching remote..."
           git fetch origin main
-          echo "Rebasing onto origin/main (if behind)..."
-          git pull --rebase origin main || true
-          git add perf_test/perf_test_report/*.json || echo "No JSON files to add."
+      
+          echo "Rebasing onto origin/main..."
+          git rebase origin/main || (echo "Rebase failed; resetting hard to origin/main" && git rebase --abort && git reset --hard origin/main)
+          # Restore stashed changes (if any) but keep focus on JSON
+          if git stash list | grep -q auto-pre-rebase; then
+          echo "Applying stashed changes..."
+          git stash pop || echo "Stash pop had conflicts; keeping staged JSON only."
+          fi
+      
+          # Re-add JSON after potential stash pop
+          git add perf_test/perf_test_report/*.json 2>/dev/null || true
           echo "Diff (cached):"
           git diff --cached --stat || true
           if git diff --cached --quiet; then
             echo "No changes to commit for perfTest-febrl120K."
           else
             echo "Committing changes..."
-            GIT_TRACE=1 GIT_CURL_VERBOSE=1 git commit -m "report generated"
+            git commit -m "report generated"
             echo "Attempting push..."
-            if ! GIT_TRACE=1 GIT_CURL_VERBOSE=1 git push origin HEAD:main; then
-              echo "Initial push failed. Performing fetch + rebase retry..."
+            if ! git push origin HEAD:main; then
+              echo "Push failed; retry after fetch/reset."
               git fetch origin main
-              git rebase origin/main || (git rebase --abort && git reset --hard origin/main)
-              echo "Retrying push..."
-              GIT_TRACE=1 GIT_CURL_VERBOSE=1 git push origin HEAD:main || (echo "Final push failed" && exit 1)
+              git reset --soft origin/main
+              git commit -m "report generated (retry)" || true
+              git push origin HEAD:main || (echo "Final push failed" && exit 1)
             fi
           fi
-          echo "Final remote state:"
-          git fetch origin main
+          echo "Final log:"
+          git log --oneline -n 3
