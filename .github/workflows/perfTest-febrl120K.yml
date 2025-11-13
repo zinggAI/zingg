@@ -5,28 +5,34 @@ on:
     - cron: "0 0 */3 * *" # runs every 3 days at 00 AM UTC
   workflow_dispatch:
 jobs:
-  spark:
-    uses: ./.github/workflows/setup-spark.yml
-    with:
-      spark-version: '3.5.5'
-      hadoop-version: '3'
-      spark-url: 'https://github.com/zinggAI/spark_releases/releases/download/v3.5.5/spark-3.5.5-bin-hadoop3.tgz'
+#  spark:
+#    uses: ./.github/workflows/setup-spark.yml
+#    with:
+#      spark-version: '3.5.5'
+#      hadoop-version: '3'
+#      spark-url: 'https://github.com/zinggAI/spark_releases/releases/download/v3.5.5/spark-3.5.5-bin-hadoop3.tgz'
 
   perf-test:
     name: performance-test-febrl120K
-    needs: spark
     runs-on: ubuntu-latest
     env:
       SPARK_MASTER: local[*]
-      SPARK_HOME: ${{ needs.spark.outputs.spark-home }}
       ZINGG_HOME: assembly/target
       ZINGG_USER: zingg_user
       INPUT: "zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content to github runner.
-      - name: Add Spark to PATH
-        run: echo "$SPARK_HOME/bin" >> "$GITHUB_PATH"
+      - name: Load Spark config
+        id: cfg
+        run: |
+          set -a
+          source spark.env
+          echo "spark_version=$SPARK_VERSION" >> "$GITHUB_OUTPUT"
+          echo "hadoop_version=$HADOOP_VERSION" >> "$GITHUB_OUTPUT"
+          echo "spark_url=$SPARK_URL" >> "$GITHUB_OUTPUT"
+#      - name: Add Spark to PATH
+#        run: echo "$SPARK_HOME/bin" >> "$GITHUB_PATH"
       - name: setup python
         uses: actions/setup-python@v4
         with:
@@ -35,9 +41,14 @@ jobs:
         with:
           java-version: '11'
           distribution: temurin
+      - name: Setup Spark
+        uses: vemonet/setup-spark@v1
+        with:
+          spark-version: ${{ steps.cfg.outputs.spark_version }}
+          hadoop-version: ${{ steps.cfg.outputs.hadoop_version }}
+          spark-url: ${{ steps.cfg.outputs.spark_url }}
       - name: check spark
         run: |
-          echo "SPARK_HOME=$SPARK_HOME"
           spark-submit --version
       - name: mvn clean
         run: mvn clean
