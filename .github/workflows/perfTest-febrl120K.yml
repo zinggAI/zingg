@@ -5,29 +5,26 @@ on:
     - cron: "0 0 */3 * *" # runs every 3 days at 00 AM UTC
   workflow_dispatch:
 jobs:
+  spark:
+    uses: zingg-padam/.github/workflows/setup-spark.yml@v1
+    with:
+      spark-version: '3.5.5'
+      hadoop-version: '3'
+      spark-url: 'https://github.com/zinggAI/spark_releases/releases/download/v3.5.5/spark-3.5.5-bin-hadoop3.tgz'
+
   perf-test:
     name: performance-test-febrl120K
+    needs: spark
     runs-on: ubuntu-latest
     env:
       SPARK_MASTER: local[*]
+      SPARK_HOME: ${{ needs.spark.outputs.spark-home }}
       ZINGG_HOME: assembly/target
       ZINGG_USER: zingg_user
       INPUT: "zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
     steps:
-      - name: Enable shell debug
-        run: |
-          set -x
-          echo "Starting job on $(uname -a)"
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content to github runner.
-      - name: Show top-level repo info
-        run: |
-          git rev-parse --show-toplevel
-          git remote -v
-          git branch -a
-          git status
-          echo "Current commit:"
-          git log --oneline -n 3
       - name: setup python
         uses: actions/setup-python@v4
         with:
@@ -36,14 +33,10 @@ jobs:
         with:
           java-version: '11'
           distribution: temurin
-      - name: setup spark
-        uses: vemonet/setup-spark@v1
-        with:
-          spark-version: '3.5.5'
-          hadoop-version: '3'
-          spark-url: 'https://github.com/zinggAI/spark_releases/releases/download/v3.5.5/spark-3.5.5-bin-hadoop3.tgz'
       - name: check spark
-        run: spark-submit --version
+        run: |
+          echo "SPARK_HOME=$SPARK_HOME"
+          spark-submit --version
       - name: mvn clean
         run: mvn clean
       - name: Build with Maven
@@ -53,31 +46,13 @@ jobs:
           set -e
           echo "Cloning performance reports repo..."
           git clone https://x-access-token:${{ secrets.GH_PAT_PADAM }}@github.com/zinggAI/zingg_community_performance_reports.git
-          echo "Clone directory listing:"
-          ls -al
           echo "Listing inside cloned repo:"
           ls -al zingg_community_performance_reports || true
-      - name: verify INPUT file existence
-        run: |
-          echo "INPUT variable: $INPUT"
-          if [ -f "$INPUT" ]; then
-            echo "Found INPUT file at path: $INPUT"
-          else
-            echo "INPUT file NOT found at path: $INPUT"
-          fi
       - name: download and execute py script
         run: |
           wget -O perfTestRunner.py https://raw.githubusercontent.com/padam-prakash/zingg_performance-Padam/main/perfTestRunner.py
-          echo "First 20 lines:"
-          head -n 20 perfTestRunner.py
           echo "Running script..."
           python perfTestRunner.py
-      - name: Show produced report files
-        run: |
-          echo "Searching for JSON report files..."
-          find . -name "testReport_*.json" -maxdepth 6
-          echo "Detailed listing under reports repo:"
-          ls -R zingg_community_performance_reports/perf_test/perf_test_report || true
       - name: Commit test results
         if: always()
         run: |
@@ -87,8 +62,6 @@ jobs:
           git config user.name padamprakash
           git config user.email padamprakash@github.com
           git add perf_test/perf_test_report/*.json
-          echo "Diff (cached):"
-          git diff --cached --stat || true
           if git diff --cached --quiet; then
             echo "No changes to commit for perfTest-febrl120K."
           else
@@ -103,5 +76,3 @@ jobs:
             echo "Attempting push..."
             git push origin HEAD:main
           fi
-          echo "Final log:"
-          git log --oneline -n 3

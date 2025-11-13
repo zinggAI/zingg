@@ -1,0 +1,37 @@
+name: setup-spark-reusable
+
+on:
+  workflow_call:
+    inputs:
+      spark-version:
+        type: string
+        required: false
+        default: '3.5.5'
+      hadoop-version:
+        type: string
+        required: false
+        default: '3'
+      spark-url:
+        type: string
+        required: false
+        default: 'https://github.com/zinggAI/spark_releases/releases/download/v3.5.5/spark-3.5.5-bin-hadoop3.tgz'
+    outputs:
+      spark-home:
+        description: Spark home directory
+        value: ${{ jobs.install-spark.outputs.spark-home }}
+
+jobs:
+  install-spark:
+    runs-on: ubuntu-latest
+    outputs:
+      spark-home: ${{ steps.export-env.outputs.spark-home }}
+    steps:
+      - name: Setup Spark
+        uses: vemonet/setup-spark@v1
+        with:
+          spark-version: ${{ inputs.spark-version }}
+          hadoop-version: ${{ inputs.hadoop-version }}
+          spark-url: ${{ inputs.spark-url }}
+      - name: Export Spark Home
+        id: export-env
+        run: echo "spark-home=$SPARK_HOME" >> "$GITHUB_OUTPUT"
