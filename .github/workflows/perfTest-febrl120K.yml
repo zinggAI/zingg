@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 jobs:
   spark:
-    uses: zingg-padam/.github/workflows/setup-spark.yml@v1
+    uses: ./.github/workflows/setup-spark.yml@v1
     with:
       spark-version: '3.5.5'
       hadoop-version: '3'
