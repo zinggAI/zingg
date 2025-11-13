@@ -5,13 +5,6 @@ on:
     - cron: "0 0 */3 * *" # runs every 3 days at 00 AM UTC
   workflow_dispatch:
 jobs:
-#  spark:
-#    uses: ./.github/workflows/setup-spark.yml
-#    with:
-#      spark-version: '3.5.5'
-#      hadoop-version: '3'
-#      spark-url: 'https://github.com/zinggAI/spark_releases/releases/download/v3.5.5/spark-3.5.5-bin-hadoop3.tgz'
-
   perf-test:
     name: performance-test-febrl120K
     runs-on: ubuntu-latest
@@ -26,13 +19,11 @@ jobs:
       - name: Load Spark config
         id: cfg
         run: |
-          set -a
+          set -a  #Automatically marks all subsequently defined variables for export
           source spark.env
           echo "spark_version=$SPARK_VERSION" >> "$GITHUB_OUTPUT"
           echo "hadoop_version=$HADOOP_VERSION" >> "$GITHUB_OUTPUT"
           echo "spark_url=$SPARK_URL" >> "$GITHUB_OUTPUT"
-#      - name: Add Spark to PATH
-#        run: echo "$SPARK_HOME/bin" >> "$GITHUB_PATH"
       - name: setup python
         uses: actions/setup-python@v4
         with:
@@ -41,39 +32,36 @@ jobs:
         with:
           java-version: '11'
           distribution: temurin
-      - name: Setup Spark
+      - name: setup spark
         uses: vemonet/setup-spark@v1
         with:
           spark-version: ${{ steps.cfg.outputs.spark_version }}
           hadoop-version: ${{ steps.cfg.outputs.hadoop_version }}
           spark-url: ${{ steps.cfg.outputs.spark_url }}
       - name: check spark
-        run: |
-          spark-submit --version
+        run: spark-submit --version
       - name: mvn clean
         run: mvn clean
       - name: Build with Maven
         run: mvn clean compile package -DskipTests=true
       - name: Clone performance reports repo (with debug)
         run: |
-          set -e
+          set -e #Exit immediately if a command exits with a non-zero status.
           echo "Cloning performance reports repo..."
-          git clone https://x-access-token:${{ secrets.GH_PAT_PADAM }}@github.com/zinggAI/zingg_community_performance_reports.git
+          git clone https://x-access-token:${{ secrets.GH_PAT_SONAL }}@github.com/zinggAI/zingg_community_performance_reports.git
           echo "Listing inside cloned repo:"
           ls -al zingg_community_performance_reports || true
       - name: download and execute py script
         run: |
-          wget -O perfTestRunner.py https://raw.githubusercontent.com/padam-prakash/zingg_performance-Padam/main/perfTestRunner.py
+          wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
           echo "Running script..."
           python perfTestRunner.py
       - name: Commit test results
         if: always()
         run: |
           cd zingg_community_performance_reports
-          echo "Repo state before commit:"
-          git status
-          git config user.name padamprakash
-          git config user.email padamprakash@github.com
+          git config user.name sonalgoyal
+          git config user.email sonalgoyal4@gmail.com
           git add perf_test/perf_test_report/*.json
           if git diff --cached --quiet; then
             echo "No changes to commit for perfTest-febrl120K."

@@ -16,6 +16,14 @@ jobs:
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content to github runner.
+      - name: Load Spark config
+        id: cfg
+        run: |
+          set -a  #Automatically marks all subsequently defined variables for export
+          source spark.env
+          echo "spark_version=$SPARK_VERSION" >> "$GITHUB_OUTPUT"
+          echo "hadoop_version=$HADOOP_VERSION" >> "$GITHUB_OUTPUT"
+          echo "spark_url=$SPARK_URL" >> "$GITHUB_OUTPUT"
       - name: setup python
         uses: actions/setup-python@v4
         with:
@@ -27,9 +35,9 @@ jobs:
       - name: setup spark
         uses: vemonet/setup-spark@v1
         with:
-          spark-version: '3.5.5'
-          hadoop-version: '3'
-          spark-url: 'https://github.com/zinggAI/spark_releases/releases/download/v3.5.5/spark-3.5.5-bin-hadoop3.tgz'
+          spark-version: ${{ steps.cfg.outputs.spark_version }}
+          hadoop-version: ${{ steps.cfg.outputs.hadoop_version }}
+          spark-url: ${{ steps.cfg.outputs.spark_url }}
       - name: check spark
         run: spark-submit --version
       - name: mvn clean
@@ -38,7 +46,7 @@ jobs:
         run: mvn clean compile package -DskipTests=true
       - name: Clone performance reports repo (with debug)
         run: |
-          set -e
+          set -e #Exit immediately if a command exits with a non-zero status.
           echo "Cloning performance reports repo..."
           git clone https://x-access-token:${{ secrets.GH_PAT_SONAL }}@github.com/zinggAI/zingg_community_performance_reports.git
           echo "Listing inside cloned repo:"
