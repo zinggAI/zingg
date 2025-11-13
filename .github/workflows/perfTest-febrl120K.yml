@@ -3,7 +3,7 @@ name: performance-test-febrl120K
 on:
   schedule:
     - cron: "0 0 */3 * *" # runs every 3 days at 00 AM UTC
-
+  workflow_dispatch:
 jobs:
   perf-test:
     name: performance-test-febrl120K
@@ -12,10 +12,18 @@ jobs:
       SPARK_MASTER: local[*]
       ZINGG_HOME: assembly/target
       ZINGG_USER: zingg_user
-      INPUT : "zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
+      INPUT: "zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content to github runner.
+      - name: Load Spark config
+        id: cfg
+        run: |
+          set -a  #Automatically marks all subsequently defined variables for export
+          source spark.env
+          echo "spark_version=$SPARK_VERSION" >> "$GITHUB_OUTPUT"
+          echo "hadoop_version=$HADOOP_VERSION" >> "$GITHUB_OUTPUT"
+          echo "spark_url=$SPARK_URL" >> "$GITHUB_OUTPUT"
       - name: setup python
         uses: actions/setup-python@v4
         with:
@@ -27,8 +35,9 @@ jobs:
       - name: setup spark
         uses: vemonet/setup-spark@v1
         with:
-          spark-version: '3.5.5'
-          hadoop-version: '3'
+          spark-version: ${{ steps.cfg.outputs.spark_version }}
+          hadoop-version: ${{ steps.cfg.outputs.hadoop_version }}
+          spark-url: ${{ steps.cfg.outputs.spark_url }}
       - name: check spark
         run: spark-submit --version
       - name: mvn clean
@@ -36,22 +45,35 @@ jobs:
       - name: Build with Maven
         run: mvn clean compile package -DskipTests=true
       - name: Clone performance reports repo
-        run: git clone https://github.com/zinggAI/zingg_community_performance_reports.git
+        run: |
+          set -e #Exit immediately if a command exits with a non-zero status.
+          echo "Cloning performance reports repo..."
+          git clone https://x-access-token:${{ secrets.GH_PAT_SONAL }}@github.com/zinggAI/zingg_community_performance_reports.git
+          echo "Listing inside cloned repo:"
+          ls -al zingg_community_performance_reports || true
       - name: download and execute py script
         run: |
           wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
+          echo "Running script..."
           python perfTestRunner.py
       - name: Commit test results
         if: always()
         run: |
           cd zingg_community_performance_reports
           git config user.name sonalgoyal
-          git config user.email sonalgoyal4@github.com
-          git pull --rebase origin main || true
-          git add perf_test/perf_test_report/*.json || true
+          git config user.email sonalgoyal4@gmail.com
+          git add perf_test/perf_test_report/*.json
           if git diff --cached --quiet; then
             echo "No changes to commit for perfTest-febrl120K."
           else
+            echo "Committing changes..."
             git commit -m "report generated"
+            
+            echo "Fetching remote..."
+            git fetch origin main
+            
+            echo "Rebasing onto origin/main..."
+            git rebase origin/main || (echo "Rebase failed; resetting hard to origin/main" && git rebase --abort && git reset --hard origin/main)
+            echo "Attempting push..."
             git push origin HEAD:main
           fi
