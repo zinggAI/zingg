@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content to github runner.
+      - name: Add Spark to PATH
+        run: echo "$SPARK_HOME/bin" >> "$GITHUB_PATH"
       - name: setup python
         uses: actions/setup-python@v4
         with:
