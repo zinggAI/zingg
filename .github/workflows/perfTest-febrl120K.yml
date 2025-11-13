@@ -44,7 +44,7 @@ jobs:
         run: mvn clean
       - name: Build with Maven
         run: mvn clean compile package -DskipTests=true
-      - name: Clone performance reports repo (with debug)
+      - name: Clone performance reports repo
         run: |
           set -e #Exit immediately if a command exits with a non-zero status.
           echo "Cloning performance reports repo..."
