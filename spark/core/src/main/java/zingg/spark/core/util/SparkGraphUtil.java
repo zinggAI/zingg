@@ -20,24 +20,24 @@ public class SparkGraphUtil implements GraphUtil<Dataset<Row>, Row, Column> {
 		// we need to transform the input here by using stop words
 		//rename id field which is a common field in data to another field as it 
 		//clashes with graphframes :-(
-		vOrig = vOrig.cache();
+		//vOrig = vOrig.cache();
 		Dataset<Row> vertices = vOrig.df();	
 		Dataset<Row> edges = ed.df();
 		vertices = vertices.withColumnRenamed(ColName.ID_EXTERNAL_ORIG_COL, ColName.ID_EXTERNAL_COL);
 		
 		Dataset<Row> v1 = vertices.withColumnRenamed(ColName.ID_COL, "id");
-		Dataset<Row> v = v1.select("id").cache();
+		Dataset<Row> v = v1.select("id").checkpoint();
 		List<Column> cols = new ArrayList<Column>();
 		cols.add(edges.col(ColName.ID_COL));
 		cols.add(edges.col(ColName.COL_PREFIX + ColName.ID_COL));
 		
 		Dataset<Row> e = edges.select(JavaConverters.asScalaIteratorConverter(
 				cols.iterator()).asScala().toSeq());
-		e = e.toDF("src","dst").cache();
+		e = e.toDF("src","dst").checkpoint(true);
 		GraphFrame gf = new GraphFrame(v, e);
 		//gf = gf.dropIsolatedVertices();
 		//Dataset<Row> returnGraph = gf.connectedComponents().setAlgorithm("graphx").run().cache();
-		Dataset<Row> returnGraph = gf.connectedComponents().run().cache();
+		Dataset<Row> returnGraph = gf.connectedComponents().run();
 		//reverse back o avoid graphframes id :-()
 		returnGraph = returnGraph.join(vertices, returnGraph.col("id").equalTo(vertices.col(ColName.ID_COL)));
 		returnGraph = returnGraph.drop(ColName.ID_COL).withColumnRenamed("id", ColName.ID_COL);		
