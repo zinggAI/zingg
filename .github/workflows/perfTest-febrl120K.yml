@@ -60,6 +60,7 @@ jobs:
         if: always()
         run: |
           cd zingg_community_performance_reports
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT_SONAL_ACTION }}@github.com/zinggAI/zingg_community_performance_reports.git
           git config user.name sonalgoyal
           git config user.email sonalgoyal4@gmail.com
           git add perf_test/perf_test_report/*.json
