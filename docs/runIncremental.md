@@ -110,4 +110,4 @@ zingg = EZingg(incrArgs, options)
 zingg.initAndExecute()  
 ```
 
-[^1]: Zingg Enterprise is the advance version of Zingg Community with production grade features. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.
+[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.
