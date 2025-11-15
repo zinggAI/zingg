@@ -10,4 +10,4 @@ nav_order: 13
 
 ### The approval phase is run as follows:
 
-[^1]: Zingg Enterprise is an advance version of Zingg Community with production grade features
+[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.
