@@ -32,4 +32,4 @@ For  **Zingg Enterprise for Snowflake**, verifyBlocking generates tables with th
 
 `zingg_modelId_blocks_timestamp_counts` where we can see the counts per block and `zingg_modelId_blocks_timestamp_blockSamples_hash` where we can see the records associated with the blocks.
 
-[^1]: Zingg Enterprise is an advance version of Zingg Community with production grade features
+[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.
