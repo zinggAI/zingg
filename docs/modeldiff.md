@@ -26,4 +26,4 @@ The output will be as follows -&#x20;
 
 The output will contain records that have been impacted due to changes in clusters as a result of the new model trained. 
 
-[^1]: Zingg Enterprise is an advance version of Zingg Community with production grade features
+[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.
