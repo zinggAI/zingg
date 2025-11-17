@@ -26,7 +26,7 @@ public class Blocker<S,D,R,C,T> implements IBlocker<S,D,R,C,T>{
 		LOG.warn("Blocking model location is " + imh.getBlockingTreePipe(args));
 		Tree<Canopy<R>> tree = blockingTreeUtil.readBlockingTree(args, imh);
 		ZFrame<D,R,C> blocked = blockingTreeUtil.getBlockHashes(testData, tree);
-		ZFrame<D,R,C> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL));
+		ZFrame<D,R,C> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
 		return blocked1;
 	}
 
@@ -35,7 +35,7 @@ public class Blocker<S,D,R,C,T> implements IBlocker<S,D,R,C,T>{
 		LOG.warn("Blocking model location is " + imh.getBlockingTreePipe(args));
 		Tree<Canopy<R>> tree = bTreeUtil.readBlockingTree(args, imh);
 		ZFrame<D,R,C> blocked = bTreeUtil.getBlockHashes(testData, tree);
-		ZFrame<D,R,C> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL));
+		ZFrame<D,R,C> blocked1 = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
 		return blocked1;
 	}
 
