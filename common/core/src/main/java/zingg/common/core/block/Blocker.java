@@ -16,7 +16,7 @@ public class Blocker<S,D,R,C,T> implements IBlocker<S,D,R,C,T>{
 	private static final Log LOG = LogFactory.getLog(Blocker.class);
 
 	BlockingTreeUtil<S,D,R,C,T> blockingTreeUtil;
-	IBlocker<S,D,R,C,T> blocker;
+	//IBlocker<S,D,R,C,T> blocker;
 
 	public Blocker(BlockingTreeUtil<S,D,R,C,T> blockingTreeUtil){
 		this.blockingTreeUtil = blockingTreeUtil;

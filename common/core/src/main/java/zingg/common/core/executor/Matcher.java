@@ -177,7 +177,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
         try {
 			// read input, filter, remove self joins
 			ZFrame<D,R,C>  testDataOriginal = getTestData();
-			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
+			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal);
 			ZFrame<D,R,C>  testData = preprocess(testDataOriginal);
 			//testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
