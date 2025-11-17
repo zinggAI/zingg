@@ -63,9 +63,9 @@ To write to BigQuery, a bucket needs to be created and assigned to the `temporar
 {
  "type": "service_account",
  "project_id": "mynotification-46566",
- "private_key_id": "905cbfd273ff9205d1cabfe06fa6908e54534",
+ "private_key_id": "905cbfd273ff9205d1ce06fa6908e54534",
  "private_key": "-----BEGIN PRIVATE KEY-----CERT.....",
- "client_id": "11143646541283115487",
+ "client_id": "11143646541215487",
  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
  "token_uri": "https://oauth2.googleapis.com/token",
  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
