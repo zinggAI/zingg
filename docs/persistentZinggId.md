@@ -21,4 +21,4 @@ We want to provide a user-friendly and easy way for any Zingg user to be able to
 
 The output will be updating the output of the new run with the ZINGG_ID in NEW_OUTPUT and keeping a backup of the new output as NEW_OUTPUT_timestamp.
 
-[^1]: Zingg Enterprise is an advance version of Zingg Community with production grade features
+[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.
