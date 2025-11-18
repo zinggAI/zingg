@@ -53,7 +53,7 @@ jobs:
           ls -al zingg_community_performance_reports || true
       - name: download and execute py script
         run: |
-          wget -O perfTestRunner.py https://raw.githubusercontent.com/padam-prakash/zingg_performance-Padam/main/perfTestRunner.py
+          wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
           echo "Running script..."
           python perfTestRunner.py
       - name: Commit test results
