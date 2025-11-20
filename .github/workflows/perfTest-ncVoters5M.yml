@@ -48,7 +48,7 @@ jobs:
         run: |
           set -e #Exit immediately if a command exits with a non-zero status.
           echo "Cloning performance reports repo..."
-          git clone https://x-access-token:${{ secrets.GH_PAT_SONAL }}@github.com/zinggAI/zingg_community_performance_reports.git
+          git clone https://x-access-token:${{ secrets.GH_PAT_SONAL_ACTION }}@github.com/zinggAI/zingg_community_performance_reports.git
           echo "Listing inside cloned repo:"
           ls -al zingg_community_performance_reports || true
       - name: download and execute py script
