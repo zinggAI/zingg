@@ -21,7 +21,7 @@ public class SelfPairBuilder<S, D, R, C> implements IPairBuilder<S, D, R, C> {
 	
 	@Override
 	public ZFrame<D, R, C> getPairs(ZFrame<D,R,C>blocked, ZFrame<D,R,C>bAll) throws Exception {
-		blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)); //.cache();
+		blocked = blocked.repartition(args.getNumPartitions(), blocked.col(ColName.HASH_COL)).cache();
 		ZFrame<D,R,C>joinH =  getDSUtil().joinWithItself(blocked, ColName.HASH_COL, true);
 		/* 
 		//joinH = joinH.filter(joinH.gt(ColName.ID_COL));
