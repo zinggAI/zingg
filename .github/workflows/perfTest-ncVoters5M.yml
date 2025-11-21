@@ -3,6 +3,7 @@ name: performance-test-ncVoters5M
 on:
   schedule:
     - cron: "0 3 */3 * *" # runs every 3 days at 3 AM UTC
+  workflow_dispatch:
 jobs:
   perf-test:
     name: performance-test-ncVoters5M
