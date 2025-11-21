@@ -22,6 +22,7 @@ import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.Email;
 import zingg.common.client.util.EmailBody;
 import zingg.common.client.util.PipeUtilBase;
+import zingg.common.client.validator.ValidatorService;
 
 /**
  * This is the main point of interface with the Zingg matching product.
@@ -211,6 +212,8 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			ZinggOptions.verifyPhase(phase);
 			IArgumentService argumentService = getArgumentService();
 			arguments = argumentService.loadArguments(options.get(ClientOptions.CONF).getValue());
+            //validate arguments
+            getValidatorService().validate(getArguments(), phase);
 			client = getClient(arguments, options);
 			client.init();
 			// after setting arguments etc. as some of the listeners need it
@@ -379,5 +382,9 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException {
 		return zingg.getTrainingDataModel();
 	}
+
+    protected ValidatorService getValidatorService() {
+        return new ValidatorService();
+    }
 
 }
