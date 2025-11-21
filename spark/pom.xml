@@ -37,6 +37,10 @@
   					<groupId>com.google.guava</groupId>
   					<artifactId>guava</artifactId>
 				</exclusion>
+				<exclusion>
+  					<groupId>org.apache.ivy</groupId>
+  					<artifactId>ivy</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
