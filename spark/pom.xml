@@ -34,6 +34,10 @@
   					<artifactId>netty-codec-http2</artifactId>
 				</exclusion>
 				<exclusion>
+  					<groupId>io.netty</groupId>
+  					<artifactId>netty-handler</artifactId>
+				</exclusion>
+				<exclusion>
   					<groupId>com.google.guava</groupId>
   					<artifactId>guava</artifactId>
 				</exclusion>
