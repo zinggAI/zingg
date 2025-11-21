@@ -38,6 +38,15 @@
   					<artifactId>netty-handler</artifactId>
 				</exclusion>
 				<exclusion>
+					<groupId>io.netty</groupId>
+  					<artifactId>netty-codec</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>io.netty</groupId>
+  					<artifactId>netty-codec-http</artifactId>
+				</exclusion>
+				<exclusion>
+				<exclusion>
   					<groupId>com.google.guava</groupId>
   					<artifactId>guava</artifactId>
 				</exclusion>
@@ -53,15 +62,6 @@
 					<groupId>org.apache.commons</groupId>
  					<artifactId>commons-compress</artifactId>
 				</exclusion>
-				<exclusion>
-					<groupId>io.netty</groupId>
-  					<artifactId>netty-codec</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>io.netty</groupId>
-  					<artifactId>netty-codec-http</artifactId>
-				</exclusion>
-				<exclusion>
 					<groupId>org.apache.commons</groupId>
   					<artifactId>commons-lang3</artifactId>
 				</exclusion>

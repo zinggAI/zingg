@@ -61,6 +61,15 @@
 				<scala.binary.version>2.12</scala.binary.version>
 				<graphframes.version>0.10.0</graphframes.version>
 			</properties>
+			<dependencies>
+				<dependency>
+				 <groupId>org.apache.spark</groupId>
+ 	                         <artifactId>spark-core_${scala.binary.version}</artifactId>
+ 	                         <version>${spark.version}</version>
+ 	                         <scope>test</scope>
+	
+				</dependency>
+			</dependencies>
 		</profile>
 	</profiles>
 	<properties>
