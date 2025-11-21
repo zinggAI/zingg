@@ -95,25 +95,25 @@
 		<dependency>
   					<groupId>io.netty</groupId>
   					<artifactId>netty-codec-http2</artifactId>
-					<version>4.1.122.Final</version>
+					<version>4.1.125.Final</version>
 					<scope>test</scope>
 				</dependency>
 				<dependency>
   					<groupId>io.netty</groupId>
   					<artifactId>netty-handler</artifactId>
-					<version>4.1.122.Final</version>
+					<version>4.1.125.Final</version>
 					<scope>test</scope>		
 				</dependency>
 				<dependency>
 					<groupId>io.netty</groupId>
   					<artifactId>netty-codec</artifactId>
-					<version>4.1.122.Final</version>
+					<version>4.1.125.Final</version>
 					<scope>test</scope>		
 				</dependency>
 				<dependency>
 					<groupId>io.netty</groupId>
   					<artifactId>netty-codec-http</artifactId>
-					<version>4.1.122.Final</version>
+					<version>4.1.125.Final</version>
 					<scope>test</scope>		
 				</dependency>
 	</dependencies>
