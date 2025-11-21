@@ -24,6 +24,32 @@
 			<artifactId>spark-core_${scala.binary.version}</artifactId>
 			<version>${spark.version}</version>
 			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+  					<groupId>org.apache.zookeeper</groupId>
+  					<artifactId>zookeeper</artifactId>
+				</exclusion>
+				<exclusion>
+  					<groupId>io.netty</groupId>
+  					<artifactId>netty-codec-http2</artifactId>
+				</exclusion>
+				<exclusion>
+  					<groupId>io.netty</groupId>
+  					<artifactId>netty-handler</artifactId>
+				</exclusion>
+				<exclusion>
+  					<groupId>com.google.guava</groupId>
+  					<artifactId>guava</artifactId>
+				</exclusion>
+				<exclusion>
+  					<groupId>org.apache.ivy</groupId>
+  					<artifactId>ivy</artifactId>
+				</exclusion>
+				<exclusion>
+  					<groupId>com.google.protobuf</groupId>
+  					<artifactId>protobuf-java</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.spark</groupId>
