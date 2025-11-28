@@ -1,10 +1,7 @@
 package zingg.common.client;
 
-import java.io.Serializable;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import zingg.common.client.arguments.ArgumentServiceImpl;
 import zingg.common.client.arguments.IArgumentService;
 import zingg.common.client.arguments.model.Arguments;
@@ -23,6 +20,8 @@ import zingg.common.client.util.Email;
 import zingg.common.client.util.EmailBody;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.client.validator.ValidatorService;
+
+import java.io.Serializable;
 
 /**
  * This is the main point of interface with the Zingg matching product.
@@ -212,8 +211,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			ZinggOptions.verifyPhase(phase);
 			IArgumentService argumentService = getArgumentService();
 			arguments = argumentService.loadArguments(options.get(ClientOptions.CONF).getValue());
-            //validate arguments
-            getValidatorService().validate(getArguments(), phase);
 			client = getClient(arguments, options);
 			client.init();
 			// after setting arguments etc. as some of the listeners need it
