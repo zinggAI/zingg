@@ -11,7 +11,7 @@ public class ZinggValidationException extends Exception {
         errors.add(msg);
     }
 
-    public void throwIfErrors() throws ZinggValidationException {
+    public void throwExceptionIfErrors() throws ZinggValidationException {
         if (!errors.isEmpty()) {
             throw this;
         }
