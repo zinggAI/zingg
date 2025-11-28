@@ -16,6 +16,11 @@ public abstract class StringSimilarityDistanceFunction extends StringSimilarityF
 		super(name);
 	}
 
+	public StringSimilarityDistanceFunction(String name, AbstractStringDistance gap) {
+		this(name);
+		this.gap = gap;
+	}
+
 	public StringSimilarityDistanceFunction(){}
 	
 	public AbstractStringDistance getDistanceFunction(){
@@ -29,7 +34,7 @@ public abstract class StringSimilarityDistanceFunction extends StringSimilarityF
 		if (first.equals(second)) return 1d;
 		double score = getDistanceFunction().score(first, second);
 		if (Double.isNaN(score)) return 0d; 
-		//LOG.warn(" score  " + gap +  " " + first + " " + second + " is " + score);
+		//LOG.warn(" score  " + gap.getClass().getName() +  " " + first + " " + second + " is " + score);
 		return score;		
 	}
 

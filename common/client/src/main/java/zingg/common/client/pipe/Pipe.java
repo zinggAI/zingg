@@ -85,14 +85,14 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	
 	public void clone(Pipe<D,R,C> p) {
 		if (p == null) return;
-		if (p.name != null){
-			this.name = new String(p.name);
+		if (p.getName() != null){
+			this.name = new String(p.getName());
 		}
-		if (p.format != null) {
-			this.format = new String(p.format);
+		if (p.getFormat() != null) {
+			this.format = new String(p.getFormat());
 		}
-		if (p.props != null) {
-			this.props = new HashMap<>(p.props);
+		if (p.getProps() != null) {
+			this.props = new HashMap<>(p.getProps());
 		}
 	}
 	

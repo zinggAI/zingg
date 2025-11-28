@@ -55,7 +55,6 @@ public class SparkModel extends Model<SparkSession, Dataset<Row>, Row, Column, D
 			Feature fea = f.get(fd);
 			List<SimFunction> sfList = fea.getSimFunctions();
 			for (SimFunction sf : sfList) {
-				
 				String outputCol = getColumnName(fd.fieldName, sf.getName(), count);
 				columnsAdded.add(outputCol);	
 				SparkTransformer st = new SparkTransformer(fd.fieldName, new SparkSimFunction(sf), outputCol);

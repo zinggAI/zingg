@@ -32,7 +32,16 @@ Rerunning matching on entire datasets is wasteful, and we lose the lineage of ma
             },  
             "schema": "recId string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string"   
         }  
-    ]   
+    ],
+    "outputTmp" :{
+            "name":"customers_incr_temp",
+            "format":"csv",
+            "props": {
+              "location": "/tmp/zinggOutput_febrl_tmp",
+              "delimiter": ",",
+              "header":true
+            }
+    }    
 }  
 ```
 
@@ -103,7 +112,10 @@ zingg.initAndExecute()
 incrArgs = IncrementalArguments()  
 incrArgs.setParentArgs(args)  
 incrPipe = ECsvPipe("testFebrlIncr", "examples/febrl/test-incr.csv", schema)  
-incrArgs.setIncrementalData(incrPipe)  
+incrArgs.setIncrementalData(incrPipe)
+outputTmpPipe = ECsvPipe("outputTmp", "/tmp/zinggOutput_febrl_tmp")
+outputTmpPipe.setHeader("true") 
+incrArgs.setOutputTmp(outputTmpPipe)
   
 options = ClientOptions([ClientOptions.PHASE,"runIncremental"])  
 zingg = EZingg(incrArgs, options)  
