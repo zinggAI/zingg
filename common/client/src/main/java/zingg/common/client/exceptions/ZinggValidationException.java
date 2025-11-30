@@ -1,6 +1,7 @@
 package zingg.common.client.exceptions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ZinggValidationException extends Exception {
@@ -23,7 +24,7 @@ public class ZinggValidationException extends Exception {
     }
 
     public List<String> getErrors() {
-        return errors;
+        return Collections.unmodifiableList(errors);
     }
 }
 
