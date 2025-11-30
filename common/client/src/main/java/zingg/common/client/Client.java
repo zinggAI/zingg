@@ -19,7 +19,6 @@ import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.Email;
 import zingg.common.client.util.EmailBody;
 import zingg.common.client.util.PipeUtilBase;
-import zingg.common.client.validator.ValidatorService;
 
 import java.io.Serializable;
 
@@ -380,8 +379,5 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		return zingg.getTrainingDataModel();
 	}
 
-    protected ValidatorService getValidatorService() {
-        return new ValidatorService();
-    }
 
 }
