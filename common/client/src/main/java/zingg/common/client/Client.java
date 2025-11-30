@@ -1,10 +1,7 @@
 package zingg.common.client;
 
-import java.io.Serializable;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import zingg.common.client.arguments.ArgumentServiceImpl;
 import zingg.common.client.arguments.IArgumentService;
 import zingg.common.client.arguments.model.Arguments;
@@ -22,6 +19,8 @@ import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.Email;
 import zingg.common.client.util.EmailBody;
 import zingg.common.client.util.PipeUtilBase;
+
+import java.io.Serializable;
 
 /**
  * This is the main point of interface with the Zingg matching product.
@@ -379,5 +378,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException {
 		return zingg.getTrainingDataModel();
 	}
+
 
 }
