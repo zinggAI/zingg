@@ -2,7 +2,6 @@ package zingg.spark.core.util;
 
 import java.io.File;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.spark.sql.SparkSession;
 
 import zingg.common.core.util.ICleanUpUtil;
@@ -25,7 +24,7 @@ public class SparkCleanUpUtil implements ICleanUpUtil<SparkSession> {
             File dir = new File(JUNIT_DIR + "/" + suffix);
             /* force delete since we want to make sure
             * dir gets deleted even if it is non-empty*/
-            FileUtils.forceDelete(dir);
+            dir.delete();
             return true;
         } catch (Exception exception) {
             return false;
