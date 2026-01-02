@@ -11,6 +11,6 @@ description: Finds the records that match with each other.
 
 As can be seen in the image below, matching records are given the same **z\_cluster** id. Each record also gets a **z\_minScore** and **z\_maxScore** which shows the _least/greatest_ it matched with other records in the same cluster.
 
-![Match results](../../assets/match.gif)
+![Match results](../.gitbook/assets/match.gif)
 
 If records across multiple sources have to be matched, the [link phase](link.md) should be used.

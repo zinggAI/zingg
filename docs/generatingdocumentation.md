@@ -8,4 +8,4 @@ Zingg generates readable documentation about the training data, including those 
 
 The generated documentation file can be viewed in a browser and looks like as below:
 
-![Training Data](../assets/documentation.png)
+![Training Data](.gitbook/assets/documentation.png)
