@@ -12,7 +12,9 @@ A) Install the specified **JDK** version
 
 B) Apache Spark - Download the specified version from spark.apache.org and unzip it in a folder under home
 
-Please add the following entries to `~/.bash_aliases`
+Please add the following entries to respective directory.
+Linux -  `~/.bash_aliases`
+macOS - `~/.zshrc`
 
 > `export JAVA_HOME=path to jdk`
 
