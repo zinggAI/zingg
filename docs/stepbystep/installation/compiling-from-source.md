@@ -6,7 +6,7 @@ description: For a different Spark version or compiling latest code
 
 If you need to compile the latest code or build for a different Spark version, you can clone this [repo](https://github.com/zinggAI/zingg/tree/main) and
 
-* Install **maven**
+* Install **maven 3.8.7**
 * Install **JDK 1.8**
 * Set `JAVA_HOME` to JDK base directory
 * Install **Apache Spark (version spark-3.5.0-bin-hadoop3)**
