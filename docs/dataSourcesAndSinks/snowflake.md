@@ -7,7 +7,7 @@ description: Identity Resolution on Snowflake
 
 # Snowflake
 
-Check a step-by-step tutorial at [Identity Resolution on Snowflake with open source Zingg](https://www.zingg.ai/documentation-article/a-step-by-step-guide-for-identity-resolution-on-snowflake-with-open-source-zingg).
+Check a step-by-step tutorial at [Identity Resolution on Snowflake with open source Zingg](https://www.zingg.ai/documentation-article/identifying-duplicates-in-snowflake-with-zingg).
 
 The config value for the data and output attributes of the JSON is:
 
