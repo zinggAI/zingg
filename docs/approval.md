@@ -8,6 +8,6 @@ nav_order: 13
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
-### The approval phase is run as follows:
+### The approval phase is run as follows: Coming Soon!
 
 [^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.

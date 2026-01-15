@@ -9,7 +9,7 @@ description: To get a better understanding of how the data is trained and matche
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
-### The explain phase is run as follows:
+### The phase explain mode is run as follows:
 
 `./scripts/zingg.sh --phase <phase for explanation> --conf <path to config> --mode explain --suffix <suffix for explain>`
 
