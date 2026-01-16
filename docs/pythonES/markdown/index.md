@@ -15,9 +15,4 @@ Requires **python 3.6+**; **spark 3.5.0.** Otherwise,
     * [`EZingg`](zinggES.md#zinggES.enterprise.spark.ESparkClient.EZingg)
     * [`EZinggWithSpark`](zinggES.md#zinggES.enterprise.spark.ESparkClient.EZinggWithSpark)
 
-## API Reference
-
-  * [Module Index](py-modindex.html)
-  * [Index](genindex.html)
-  * [Search Page](search.html)
 
