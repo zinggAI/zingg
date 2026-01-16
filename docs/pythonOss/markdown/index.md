@@ -123,12 +123,6 @@ Requires **python 3.6+**; **spark 3.5.0.** Otherwise, [`zingg.client.Zingg()`](z
     * [`SnowflakePipe.setUser()`](zingg.md#zingg.pipes.SnowflakePipe.setUser)
     * [`SnowflakePipe.setWarehouse()`](zingg.md#zingg.pipes.SnowflakePipe.setWarehouse)
 
-## API Reference
-
-* [Module Index](py-modindex.md)
-* [Index](genindex.md)
-* [Search Page](search.md)
-
 ## Example API Usage
 
 ```python
