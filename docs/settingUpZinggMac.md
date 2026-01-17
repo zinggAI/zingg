@@ -18,6 +18,12 @@ Homebrew is required to install system dependencies.
 brew --version
 ```
 
+**Note for Apple Silicon:** If `brew` is not found after installation, run:
+```bash
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc
+source ~/.zshrc
+```
+
 **Step 1: Install Git**
 
 ```
@@ -51,9 +57,15 @@ brew install openjdk@11
 
 * Link Java 11:
 
-```
-sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
-```
+  **For Apple Silicon (M1/M2/M3):**
+  ```bash
+  sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+  ```
+
+  **For Intel Macs:**
+  ```bash
+  sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+  ```
 
 * Verify:
 
