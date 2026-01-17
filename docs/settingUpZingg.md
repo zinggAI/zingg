@@ -1,8 +1,18 @@
 # Setting Up Zingg Development Environment
 
-The following steps will help you set up the Zingg Development Environment. While the steps remain the same across different OS, we have provided detailed instructions for Ubuntu OS. \
-\
-The below steps have been created using Ubuntu 22.04.2 LTS
+The following steps will help you set up the Zingg Development Environment. While the core steps remain the same across different OS, we have provided detailed instructions for **macOS** and **Ubuntu/WSL2**.
+
+### **Step 0: Initial OS Setup**
+
+#### **For macOS**
+Homebrew is required to install system dependencies.
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+**Note for Apple Silicon:** If `brew` is not found, run:
+`echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc && source ~/.zshrc`
+
+#### **For Ubuntu (WSL2 on Windows)**
 
 Make sure to update your Ubuntu installation:
 
@@ -28,6 +38,12 @@ sudo apt update
 
 **Step 1: Clone The Zingg Repository**
 
+#### **For macOS**
+```bash
+brew install git
+```
+
+#### **For Ubuntu**
 * Install and SetUp Git: **sudo apt install git**
 * Verify : **git --version**
 * Set up Git by following the [tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-20-04).
@@ -37,6 +53,13 @@ sudo apt update
 
 **Step 2: Install JDK 11 (Java Development Kit)**
 
+#### **For macOS**
+* Install OpenJDK 11: `brew install openjdk@11`
+* Link Java 11:
+  * **Apple Silicon:** `sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk`
+  * **Intel:** `sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk`
+
+#### **For Ubuntu**
 * Follow this [tutorial](https://linuxize.com/post/install-java-on-ubuntu-20-04/) to install Java 11 JDK 11 in Ubuntu.
 * For example:
 
@@ -48,7 +71,17 @@ java -version
 
 **Step 3: Install Apache Spark**
 
+#### **Common Steps**
 * Download Apache Spark - from the [Apache Spark Official Website](https://spark.apache.org/downloads.html).
+* For example for 3.5.0:
+```bash
+curl -O https://archive.apache.org/dist/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+tar -xvf spark-3.5.0-bin-hadoop3.tgz
+sudo mv spark-3.5.0-bin-hadoop3 /opt/spark
+rm spark-3.5.0-bin-hadoop3.tgz
+```
+
+#### **Original Ubuntu Instructions (Manual Wget)**
 * Install downloaded Apache Spark - on your Ubuntu by following [this tutorial](https://computingforgeeks.com/how-to-install-apache-spark-on-ubuntu-debian/).
 * For example for 3.5.0:
 
@@ -65,6 +98,12 @@ Make sure that Spark version you have installed is compatible with Java you have
 
 **Step 4: Install Apache Maven**
 
+#### **For macOS**
+```bash
+brew install maven
+```
+
+#### **For Ubuntu**
 * Install the latest **maven** package.
 * For example for 3.8.8:
 
@@ -84,6 +123,16 @@ Java version: 11.0.23, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd
 
 **Step 5: Update Environment Variables**
 
+#### **For macOS (~/.zshrc)**
+```bash
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
+export SPARK_HOME=/opt/spark
+export SPARK_MASTER=local[*]
+export ZINGG_HOME=<path_to_zingg>/assembly/target
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$JAVA_HOME/bin
+```
+
+#### **For Ubuntu (~/.bashrc)**
 Open `.bashrc` and add env variables at the end of the file.
 
 ```
@@ -142,6 +191,12 @@ For example, **-Dspark=3.5** you still face an error, include **-Dmaven.test.ski
 
 **Step 7: If you have any issue with 'SPARK\_LOCAL\_IP'**
 
+#### **For macOS**
+1. **Find your IP:** `ipconfig getifaddr en0`
+2. **Find your Hostname:** `hostname`
+3. **Update hosts:** `sudo nano /etc/hosts` and add `[your-ip] [your-hostname]` at the bottom.
+
+#### **For Ubuntu**
 * Install **net-tools** using **sudo apt-get install -y net-tools**
 * Run `ifconfig` in the terminal, find the **IP address** and paste the same in **/opt/hosts** IP address of your Pc-Name
 
