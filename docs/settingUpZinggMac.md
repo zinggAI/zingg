@@ -157,12 +157,52 @@ mvn clean compile package -Dspark=sparkVer -Dmaven.test.skip=true
 
 **Note:** Replace `sparkVer` with your Spark version (Example: **-Dspark=3.5**).
 
-**Step 8: Run Zingg To Find Training Data**
+**Step 8: Handling 'SPARK_LOCAL_IP' Issues**
 
-* Run this script in the terminal opened in Zingg cloned directory:
+If you encounter issues with `SPARK_LOCAL_IP`, follow these concise steps to fix it on macOS:
 
-```
+1.  **Find your IP:** `ipconfig getifaddr en0`
+2.  **Find your Hostname:** `hostname`
+3.  **Update hosts:** `sudo nano /etc/hosts`
+    *   Add a line at the bottom with: `your-ip  your-hostname`
+
+**Step 9: Run Zingg To Find Training Data**
+
+Run this script in the terminal opened in the Zingg clones directory:
+
+```bash
 ./scripts/zingg.sh --phase findTrainingData --conf examples/febrl/config.json
 ```
 
-**If everything is right, it should show Zingg banner.**
+If everything is configured correctly, you should see the Zingg banner.
+
+**Step 10: Run Zingg To Label Data**
+
+Run the following command to start the labeling process:
+
+```bash
+./scripts/zingg.sh --phase label --conf examples/febrl/config.json --properties-file config/zingg.conf
+```
+
+**Step 11: Run Zingg To Train Model**
+
+Once labeling is complete, run this command to train the model:
+
+```bash
+./scripts/zingg.sh --phase train --conf examples/febrl/config.json --properties-file config/zingg.conf
+```
+
+**Step 12: Run Zingg To Prepare Final Output Data**
+
+Finally, run the match phase to generate the output:
+
+```bash
+./scripts/zingg.sh --phase match --conf examples/febrl/config.json --properties-file config/zingg.conf
+```
+
+To view the output files, navigate to the output directory (as specified in your config file):
+
+```bash
+cd /tmp/zinggOutput
+ls -lh
+```
