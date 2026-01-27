@@ -29,8 +29,7 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 			processRecordsCli(markedRecords);
 			LOG.info("Finished updataLabelling phase");
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ZinggClientException(e.getMessage());
+			throw new ZinggClientException("Error in LabelUpdater.execute ", e);
 		}
 	}
 

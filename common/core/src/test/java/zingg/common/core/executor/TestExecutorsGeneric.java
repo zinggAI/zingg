@@ -38,7 +38,7 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	//public abstract void tearDown();	
 
 	 @Test
-	public void testExecutors() throws ZinggClientException, IOException {
+	public void testExecutors() throws ZinggClientException {
 		 try {
 			 List<ExecutorTester<S, D, R, C, T>> executorTesterList = getExecutors();
 			 for (ExecutorTester<S, D, R, C, T> executorTester : executorTesterList) {
@@ -46,9 +46,9 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 				 executorTester.initAndExecute(session);
 				 executorTester.validateResults();
 			 }
-		 } catch (Throwable throwable) {
-			throwable.printStackTrace();
-			throw new ZinggClientException("Exception occurred while running one or more test executors, " + throwable.getMessage());
+		 } catch (Exception e) {
+			e.printStackTrace();
+			throw new ZinggClientException("Exception occurred while running one or more test executors, ", e);
 		 }
 
 	}

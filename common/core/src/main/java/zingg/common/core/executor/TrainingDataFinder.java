@@ -138,7 +138,7 @@ public abstract class TrainingDataFinder<S,D,R,C,T> extends ZinggBase<S,D,R,C,T>
 			}
 			catch (Exception e) {
 				e.printStackTrace();
-				throw new ZinggClientException(e.getMessage());
+				throw new ZinggClientException("Error in TrainingDataFinder.execute: ", e);
 			}	
     }
 
