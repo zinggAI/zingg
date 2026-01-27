@@ -1,4 +1,4 @@
-# macOS Setup for Zingg
+# MacOS Setup for Zingg
 
 This guide provides specific instructions for setting up the Zingg development environment on macOS.
 
