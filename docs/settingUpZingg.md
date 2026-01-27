@@ -1,8 +1,12 @@
 # Setting Up Zingg Development Environment
 
-The following steps will help you set up the Zingg Development Environment. While the steps remain the same across different OS, we have provided detailed instructions for Ubuntu OS. \
-\
-The below steps have been created using Ubuntu 22.04.2 LTS
+The following steps will help you set up the Zingg Development Environment. While the core steps remain the same across different OS, we have provided detailed instructions for **Ubuntu/WSL2**. 
+
+For **macOS** users, please follow the [macOS Setup Guide](./macOSSetup.md).
+
+
+### **Step 0: Initial OS Setup (Ubuntu/WSL2)**
+
 
 Make sure to update your Ubuntu installation:
 
@@ -26,7 +30,7 @@ sudo apt update
 
 * Follow this [tutorial](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview) for more information.
 
-**Step 1: Clone The Zingg Repository**
+**Step 1: Clone The Zingg Repository (Ubuntu)**
 
 * Install and SetUp Git: **sudo apt install git**
 * Verify : **git --version**
@@ -35,7 +39,7 @@ sudo apt update
 
 **Note:** It is suggested to fork the repository to your account and then clone the repository.
 
-**Step 2: Install JDK 11 (Java Development Kit)**
+**Step 2: Install JDK 11 (Ubuntu)**
 
 * Follow this [tutorial](https://linuxize.com/post/install-java-on-ubuntu-20-04/) to install Java 11 JDK 11 in Ubuntu.
 * For example:
@@ -48,7 +52,17 @@ java -version
 
 **Step 3: Install Apache Spark**
 
+#### **Common Steps**
 * Download Apache Spark - from the [Apache Spark Official Website](https://spark.apache.org/downloads.html).
+* For example for 3.5.0:
+```bash
+curl -O https://archive.apache.org/dist/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+tar -xvf spark-3.5.0-bin-hadoop3.tgz
+sudo mv spark-3.5.0-bin-hadoop3 /opt/spark
+rm spark-3.5.0-bin-hadoop3.tgz
+```
+
+#### **Original Ubuntu Instructions (Manual Wget)**
 * Install downloaded Apache Spark - on your Ubuntu by following [this tutorial](https://computingforgeeks.com/how-to-install-apache-spark-on-ubuntu-debian/).
 * For example for 3.5.0:
 
@@ -63,7 +77,7 @@ Make sure that Spark version you have installed is compatible with Java you have
 
 **Note**: Zingg supports Spark 3.5 and the corresponding Java version.
 
-**Step 4: Install Apache Maven**
+**Step 4: Install Apache Maven (Ubuntu)**
 
 * Install the latest **maven** package.
 * For example for 3.8.8:
@@ -82,7 +96,7 @@ Maven home: /usr/share/maven
 Java version: 11.0.23, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
 ```
 
-**Step 5: Update Environment Variables**
+**Step 5: Update Environment Variables (Ubuntu - ~/.bashrc)**
 
 Open `.bashrc` and add env variables at the end of the file.
 
@@ -136,11 +150,10 @@ mvn clean compile package -Dspark=sparkVer -Dmaven.test.skip=true
 ```
 
 **Note:** Replace the `sparkVer` with the version of Spark you installed. \
-\
 For example, **-Dspark=3.5** you still face an error, include **-Dmaven.test.skip=true** with the above command.
 
 
-**Step 7: If you have any issue with 'SPARK\_LOCAL\_IP'**
+**Step 7: If you have any issue with 'SPARK_LOCAL_IP' (Ubuntu)**
 
 * Install **net-tools** using **sudo apt-get install -y net-tools**
 * Run `ifconfig` in the terminal, find the **IP address** and paste the same in **/opt/hosts** IP address of your Pc-Name
