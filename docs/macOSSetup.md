@@ -4,7 +4,9 @@ This guide provides specific instructions for setting up the Zingg development e
 
 ### **Step 0: Initial OS Setup**
 
-Homebrew is required to install system dependencies.
+Homebrew is the preferred package manager for macOS and makes installing system dependencies much easier. While you can install dependencies manually, this guide uses Homebrew for simplicity.
+
+Install Homebrew:
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
