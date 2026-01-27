@@ -7,7 +7,7 @@ package zingg.common.client;
  *
  */
 
-public class ZinggClientException extends Throwable {
+public class ZinggClientException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
