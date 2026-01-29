@@ -7,8 +7,5 @@ include requirements.txt
 recursive-include zingg/jars zingg*.jar
 recursive-include zingg/scripts zingg.sh
 recursive-include zingg/licenses LICENSE
-recursive-include zingg/examples/amazon-google *
-recursive-include zingg/examples/febrl *
-recursive-include zingg/models *
 recursive-include zingg/phases *.py
 recursive-include zingg/config *

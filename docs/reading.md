@@ -12,7 +12,7 @@ Entity Resolution and The Modern Data Stack:
 
 Identity Resolution and Why CDPs fail:
 
-* []()
+* [Customer Journey](https://www.gartner.com/en/articles/customer-journey)
 
 Entity Resolution using a graph database:
 
