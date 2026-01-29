@@ -48,9 +48,6 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 			try {
 				return update(lines);
 			} catch (Exception e) {
-				if (LOG.isDebugEnabled()) {
-					e.printStackTrace();
-				}
 				LOG.warn("An error has occured while Updating Label. " + e.getMessage());
 				throw new ZinggClientException("An error while updating label", e);
 			}

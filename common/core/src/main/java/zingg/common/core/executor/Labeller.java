@@ -132,9 +132,6 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 				LOG.warn("Processing finished.");
 				return updatedRecords;
 			} catch (Exception e) {
-				if (LOG.isDebugEnabled()) {
-					e.printStackTrace();
-				}
 				LOG.warn("Labelling error has occured " + e.getMessage());
 				throw new ZinggClientException("An error has occured while Labelling.", e);
 			}

@@ -62,7 +62,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			setZingg(args, options);					
 		}
 		catch (Exception e) {
-			e.printStackTrace();
 			throw new ZinggClientException("An error has occured while setting up the client", e);
 		}
 	}

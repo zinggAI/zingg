@@ -200,7 +200,6 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			writeOutput(getOutput(testDataOriginal, dupesActual));		
 			
 		} catch (Exception e) {
-			if (LOG.isDebugEnabled()) e.printStackTrace();
 			throw new ZinggClientException("Error in Matcher.execute ", e);
 		}
     }
