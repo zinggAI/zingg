@@ -31,4 +31,3 @@ assembly/dependency-reduced-pom.xml
 
 # Sphinx _build
 **/_build
-/models/*
