@@ -12,7 +12,7 @@ public class FileArgumentsWriter<A extends IZArgs> extends ArgumentsWriter<A> {
         try {
             objectMapper.writeValue(new File(filePath), args);
         } catch (Exception exception) {
-            throw new ZinggClientException("Error writing config to file: " + filePath);
+            throw new ZinggClientException("Error writing config to file: " + filePath, exception);
         }
     }
 }

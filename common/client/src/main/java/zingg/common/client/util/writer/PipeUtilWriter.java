@@ -18,7 +18,7 @@ public abstract class PipeUtilWriter<D, R, C> implements IPipeUtilWriter<D, R, C
                 writer.write(pipe);
             }
         } catch (Exception ex) {
-            throw new ZinggClientException(ex.getMessage());
+            throw new ZinggClientException("Error writing output", ex);
         }
     }
     protected abstract IDFWriter<D,R,C> getWriter(ZFrame<D, R, C> input, Pipe<D, R, C> pipe);
