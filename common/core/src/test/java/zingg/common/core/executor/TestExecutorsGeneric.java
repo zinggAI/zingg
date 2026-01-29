@@ -47,7 +47,6 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 				 executorTester.validateResults();
 			 }
 		 } catch (Exception e) {
-			e.printStackTrace();
 			throw new ZinggClientException("Exception occurred while running one or more test executors, ", e);
 		 }
 
