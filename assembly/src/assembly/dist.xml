@@ -56,14 +56,14 @@
       <directory>${project.parent.basedir}/examples</directory>
       <outputDirectory>examples</outputDirectory>
       <includes>
-        <include>**/*</include>
+        <include>febrl120k/**/*</include>
       </includes>
     </fileSet>
     <fileSet>
       <directory>${project.parent.basedir}/models</directory>
       <outputDirectory>models</outputDirectory>
       <includes>
-        <include>**/*</include>
+        <include>101/**/*</include>
       </includes>
     </fileSet>
     <fileSet>
