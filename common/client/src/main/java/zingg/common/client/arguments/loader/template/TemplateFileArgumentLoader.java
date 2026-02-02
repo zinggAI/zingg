@@ -23,6 +23,7 @@ public class TemplateFileArgumentLoader<A extends IZArgs> extends ArgumentsLoade
             String substituted = substitutor.substitute(content, System.getenv());
             return objectMapper.readValue(substituted, argsClass);
         } catch (Exception | ZinggClientException exception) {
+            exception.printStackTrace();
             throw new ZinggClientException("Unable to load template from: " + path);
         }
     }

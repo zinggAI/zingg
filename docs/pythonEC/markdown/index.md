@@ -74,9 +74,4 @@ Requires **python 3.6+**; **spark 3.5.0.** Otherwise,
       * [`EFieldDefinition.getPrimaryKey()`](zinggEC.md#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition.getPrimaryKey)
       * [`EFieldDefinition.setPrimaryKey()`](zinggEC.md#zinggEC.enterprise.common.EFieldDefinition.EFieldDefinition.setPrimaryKey)  
 
-## API Reference
-
-  * [Module Index](py-modindex.html)
-  * [Index](genindex.html)
-  * [Search Page](search.html)
 
