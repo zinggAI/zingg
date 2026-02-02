@@ -27,7 +27,7 @@ public abstract class Recommender<S,D,R,C, T> extends ZinggBase<S,D,R,C,T> {
 
 			LOG.info("Recommender finishes");
 		} catch (Exception e) {
-			throw new ZinggClientException("Error in Recommender.execute ", e);
+			throw new ZinggClientException("Error while running recommender: ", e);
 		}
 	}
 

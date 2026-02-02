@@ -31,7 +31,7 @@ public abstract class Documenter<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
 			LOG.info("Documenter finishes");
 		} catch (Exception e) {
-			throw new ZinggClientException("Error in Documenter.execute ", e);
+			throw new ZinggClientException("Error in documenting phase ", e);
 		}
 	}
 	

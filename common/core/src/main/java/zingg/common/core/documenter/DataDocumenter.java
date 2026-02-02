@@ -46,7 +46,7 @@ public abstract class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T
 			}
 			LOG.info("Data document generation finishes");
 		} catch (Exception e) {
-			throw new ZinggClientException("Error in DataDocumenter.process ", e);
+			throw new ZinggClientException("Error while documenting data ", e);
 		}
 	}
 

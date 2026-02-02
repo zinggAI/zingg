@@ -46,7 +46,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 			}
 			LOG.info("Finished labelling phase");
 		} catch (Exception e) {
-			throw new ZinggClientException("Error in Labeller.execute ", e);
+			throw new ZinggClientException("Error in labelling phase ", e);
 		}
 	}
 

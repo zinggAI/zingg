@@ -58,7 +58,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 
 			LOG.info("Model document generation finishes");
 		} catch (Exception e) {
-			throw new ZinggClientException("Error in ModelDocumenter.createModelDocument ", e);
+			throw new ZinggClientException("Error while documenting model ", e);
 		}
 	}
 

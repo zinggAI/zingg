@@ -56,7 +56,7 @@ public abstract class Trainer<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			Analytics.track(Metric.TRAINING_NONMATCHES, negatives.count(), args.getCollectMetrics());
 			LOG.info("Finished Learning phase");			
 		} catch (Exception e) {
-			throw new ZinggClientException("Error in Trainer.execute ", e);
+			throw new ZinggClientException("Error while running trainer: ", e);
 		}
     }
 
