@@ -1,8 +1,6 @@
-# Setting Up Zingg Development Environment
+# Ubuntu/WSL2 Setup Guide
 
-The following steps will help you set up the Zingg Development Environment. While the core steps remain the same across different OS, we have provided detailed instructions for **Ubuntu/WSL2**. 
-
-For **macOS** users, please follow the [macOS Setup Guide](./macOSSetup.md).
+The following steps will help you set up the Zingg Development Environment on **Ubuntu/WSL2**. 
 
 
 ### **Step 0: Initial OS Setup (Ubuntu/WSL2)**
