@@ -120,8 +120,39 @@ mvn clean compile package -Dspark=sparkVer -Dmaven.test.skip=true
 
 ---
 
+### **Step 8: Run Zingg To Find Training Data**
+
+* Run this script in the terminal opened in Zingg clones directory:
+```bash
+./scripts/zingg.sh --phase findTrainingData --conf examples/febrl/config.json
+```
+
+**If everything is right, it should show Zingg banner.**
+
 ---
 
-### **Next Steps**
+### **Step 9: Run Zingg To Label Data**
 
-After completing the macOS-specific setup above, refer to the [main setup guide](./settingUpZingg.md) for Steps 8-11 to run Zingg (findTrainingData, label, train, and match phases).
+* Run this script in the terminal opened in Zingg clones directory:
+```bash
+./scripts/zingg.sh --phase label --conf examples/febrl/config.json --properties-file config/zingg.conf
+```
+
+---
+
+### **Step 10: Run Zingg To Train Model Based On Labeling**
+
+* Run this script in the terminal opened in Zingg clones directory:
+```bash
+./scripts/zingg.sh --phase train --conf examples/febrl/config.json --properties-file config/zingg.conf
+```
+
+---
+
+### **Step 11: Run Zingg To Prepare Final Output Data**
+
+* Run this script in the terminal opened in Zingg clones directory:
+```bash
+./scripts/zingg.sh --phase match --conf examples/febrl/config.json --properties-file config/zingg.conf
+```
+* Change directory `cd /tmp/zinggOutput` (or the path provided in your config file) to see the output files.
