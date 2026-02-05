@@ -200,9 +200,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			writeOutput(getOutput(testDataOriginal, dupesActual));		
 			
 		} catch (Exception e) {
-			if (LOG.isDebugEnabled()) e.printStackTrace();
-			e.printStackTrace();
-			throw new ZinggClientException(e.getMessage());
+			throw new ZinggClientException("Error in matching phase ", e);
 		}
     }
 
@@ -233,8 +231,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		}
 		}
 		catch(Exception e) {
-			e.printStackTrace();
-            throw new ZinggClientException("Exception occurred while getting output, " + e.getMessage());
+            throw new ZinggClientException("Exception occurred while getting output, ", e);
 		}
 		
 	}

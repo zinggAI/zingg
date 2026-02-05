@@ -64,7 +64,7 @@ public class SparkPythonPhaseRunner extends ZinggBase<SparkSession, Dataset<Row>
 
 			LOG.info("Generic Python phase ends");
 		} catch (Exception exception) {
-			throw new ZinggClientException("Error occurred while executing python phase, " + exception.getMessage());
+			throw new ZinggClientException("Error occurred while executing python phase, ", exception);
 		}
 	}
 
