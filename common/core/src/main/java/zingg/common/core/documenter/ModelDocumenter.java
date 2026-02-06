@@ -29,7 +29,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 	protected static String name = "zingg.ModelDocumenter";
 	public static final Log LOG = LogFactory.getLog(ModelDocumenter.class);
 
-	private final String MODEL_TEMPLATE = "model.ftlh";
+	protected final String MODEL_TEMPLATE = "model.ftlh";
 	protected ModelColDocumenter<S,D,R,C,T> modelColDoc;
 	protected  ZFrame<D,R,C>  markedRecords;
 	protected  ZFrame<D,R,C>  unmarkedRecords;
@@ -62,7 +62,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		}
 	}
 
-	private void writeModelDocument(Map<String, Object> root) throws ZinggClientException {
+	protected void writeModelDocument(Map<String, Object> root) throws ZinggClientException {
 		checkAndCreateDir(getModelHelper().getZinggDocDir(args));
 		writeDocument(MODEL_TEMPLATE, root, getModelHelper().getZinggModelDocFile(args));
 	}
