@@ -21,7 +21,9 @@ public class TestDocumenter {
 			IArguments args = argumentService.loadArguments(getClass().getResource("/testDocumenter/config.json").getFile());
            	//fail("Exception was expected for missing config file");
 		} catch (Throwable e) {
-            e.printStackTrace();
+            if(LOG.isDebugEnabled()) {
+                e.printStackTrace();
+            }
 			LOG.info("Unexpected exception received " + e.getMessage());
             fail(e.getMessage());
 		}
