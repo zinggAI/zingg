@@ -25,7 +25,7 @@ If you’ve ever asked “how deterministic rules are performing?” or “did m
 
 ## What gets written
 
-Zingg writes run-scoped statistics to the stats directory whenever you run phases like match or incremental. The output currently comprises three types:
+Zingg writes statistics to the stats directory whenever you run phases like match or incremental. The output currently comprises three types:
 
 - SUMMARY: High-level run summary
 - CLUSTER: One row per cluster with connectivity metrics
@@ -81,7 +81,7 @@ statsOutputPipe.setHeader("true")
 - `z_cluster_count = n`: Number of records in the cluster (cluster size).
 - `z_cluster_edges`: Total number of edges (deterministic + probabilistic) among records in the cluster; i.e., all pairwise connections formed within the cluster.
 - `z_cluster_deterministic_edges`: Total number of deterministic edges among records in the cluster; i.e., rule-based matches.
-- `z_cluster_centrality = z_cluster_edges / (nC2)`: Density of connections in the cluster. Values near 1 → dense clusters (almost all pairs connected); lower values → sparse clusters.
+- `z_cluster_centrality = z_cluster_edges / (nC2)`: Edge density of connections in the cluster. Values near 1 → dense clusters (almost all pairs connected); lower values → sparse clusters.
 - `z_cluster_determinism = z_cluster_deterministic_edges / (nC2)`: Proportion of connectivity driven by deterministic rules. Higher means more rule-driven cluster cohesion.
 
 Note:
