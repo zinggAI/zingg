@@ -48,7 +48,7 @@
   * [Adding Incremental Data](runIncremental.md)
   * [Linking Across Datasets](setup/link.md)
   * [Lookup Data](lookup.md)
-  * [Explanation of Models](modelexplain.md)
+  * [Explanation of Models](explainOutput.md)
   * [Approval of Clusters](approval.md)
   * [Combining Different Match Models](relations.md)
   * [Model Difference](modeldiff.md)
