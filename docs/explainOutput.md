@@ -8,13 +8,13 @@ description: Get pair-level traceability for clusters with the Explain phase.
 
 The Explain phase shows how a chosen cluster (Zingg ID) came together, surfacing the record pairs that contributed, whether matched directly or transitively.
 
-Why it matters
+## Why it matters
 - Traceability & Governance: See exactly how clusters were formed.
 - Model Validation: Quickly check if results match expectations.
 - Human-in-the-loop Reviews: Share pair-level evidence with domain experts.
 - Operational Confidence: Build trust in production pipelines.
 
-What you’ll see
+## What you’ll see
 - A clear, pair-level view `(pk1, pk2)` for the selected Zingg ID
 - Concise, shareable insights that explain cluster composition
 
