@@ -341,6 +341,8 @@ Method to get  pointer address of this class
 * **Return type:**
   pointer([FieldDefinition](#zingg.client.FieldDefinition))
 
+#### getMatchTypeArray(matchType)
+
 #### setStopWords(stopWords)
 
 Method to add stopwords to this class object
@@ -560,6 +562,14 @@ This method is used for checking mandatory arguments and creating an arguments l
 * **Return type:**
   List
 
+### zingg.client.setUpSparkInPy4j(javaSparkContext)
+
+### zingg.client.setupJVMAndSpark()
+
+### zingg.client.setupJVMBaseObjects()
+
+### zingg.client.setupJVMInPy4j()
+
 <a id="module-zingg.pipes"></a>
 
 ## zingg.pipes
@@ -757,3 +767,11 @@ Method to set warehouse parameter to the pipe
 
 * **Parameters:**
   **warehouse** (*String*) – provide warehouse parameter.
+
+### zingg.pipes.getFilePipe()
+
+### zingg.pipes.getJPipe()
+
+### zingg.pipes.getJStructPipe()
+
+### zingg.pipes.setupPipes()

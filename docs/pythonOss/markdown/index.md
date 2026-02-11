@@ -1,12 +1,16 @@
-# Community Python API
+<!-- zingg documentation master file, created by
+sphinx-quickstart on Thu Jul  7 12:24:41 2022.
+You can adapt this file completely to your liking, but it should at least
+contain the root `toctree` directive. -->
 
-## Community Zingg Entity Resolution Python Package
+# Community Zingg Entity Resolution Python Package
 
-Community Zingg Python APIs for entity resolution, identity resolution, record linkage, data mastering and deduplication using ML ([https://www.zingg.ai](https://www.zingg.ai))
+Community Zingg Python APIs for entity resolution, identity resolution, record linkage, data mastering and deduplication using ML
+([https://www.zingg.ai](https://www.zingg.ai))
 
-**NOTE**
-
-Requires **python 3.6+**; **spark 3.5.0.** Otherwise, [`zingg.client.Zingg()`](zingg.md#zingg.client.Zingg) cannot be executed
+#### NOTE
+Requires python 3.6+; spark 3.5.0
+Otherwise, [`zingg.client.Zingg()`](zingg.md#zingg.client.Zingg) cannot be executed
 
 * [Zingg Entity Resolution Package](zingg.md)
   * [zingg.client](zingg.md#zingg-client)
@@ -40,10 +44,10 @@ Requires **python 3.6+**; **spark 3.5.0.** Otherwise, [`zingg.client.Zingg()`](z
     * [`ClientOptions.EMAIL`](zingg.md#zingg.client.ClientOptions.EMAIL)
     * [`ClientOptions.LICENSE`](zingg.md#zingg.client.ClientOptions.LICENSE)
     * [`ClientOptions.LOCATION`](zingg.md#zingg.client.ClientOptions.LOCATION)
-    * [`ClientOptions.MODEL_ID`](zingg.md#zingg.client.ClientOptions.MODEL\_ID)
+    * [`ClientOptions.MODEL_ID`](zingg.md#zingg.client.ClientOptions.MODEL_ID)
     * [`ClientOptions.PHASE`](zingg.md#zingg.client.ClientOptions.PHASE)
     * [`ClientOptions.REMOTE`](zingg.md#zingg.client.ClientOptions.REMOTE)
-    * [`ClientOptions.ZINGG_DIR`](zingg.md#zingg.client.ClientOptions.ZINGG\_DIR)
+    * [`ClientOptions.ZINGG_DIR`](zingg.md#zingg.client.ClientOptions.ZINGG_DIR)
     * [`ClientOptions.getClientOptions()`](zingg.md#zingg.client.ClientOptions.getClientOptions)
     * [`ClientOptions.getConf()`](zingg.md#zingg.client.ClientOptions.getConf)
     * [`ClientOptions.getLocation()`](zingg.md#zingg.client.ClientOptions.getLocation)
@@ -54,6 +58,7 @@ Requires **python 3.6+**; **spark 3.5.0.** Otherwise, [`zingg.client.Zingg()`](z
     * [`ClientOptions.setPhase()`](zingg.md#zingg.client.ClientOptions.setPhase)
   * [`FieldDefinition`](zingg.md#zingg.client.FieldDefinition)
     * [`FieldDefinition.getFieldDefinition()`](zingg.md#zingg.client.FieldDefinition.getFieldDefinition)
+    * [`FieldDefinition.getMatchTypeArray()`](zingg.md#zingg.client.FieldDefinition.getMatchTypeArray)
     * [`FieldDefinition.setStopWords()`](zingg.md#zingg.client.FieldDefinition.setStopWords)
     * [`FieldDefinition.stringify()`](zingg.md#zingg.client.FieldDefinition.stringify)
   * [`Zingg`](zingg.md#zingg.client.Zingg)
@@ -88,12 +93,16 @@ Requires **python 3.6+**; **spark 3.5.0.** Otherwise, [`zingg.client.Zingg()`](z
   * [`initDataBricksConectClient()`](zingg.md#zingg.client.initDataBricksConectClient)
   * [`initSparkClient()`](zingg.md#zingg.client.initSparkClient)
   * [`parseArguments()`](zingg.md#zingg.client.parseArguments)
+  * [`setUpSparkInPy4j()`](zingg.md#zingg.client.setUpSparkInPy4j)
+  * [`setupJVMAndSpark()`](zingg.md#zingg.client.setupJVMAndSpark)
+  * [`setupJVMBaseObjects()`](zingg.md#zingg.client.setupJVMBaseObjects)
+  * [`setupJVMInPy4j()`](zingg.md#zingg.client.setupJVMInPy4j)
   * [zingg.pipes](zingg.md#zingg-pipes)
   * [`BigQueryPipe`](zingg.md#zingg.pipes.BigQueryPipe)
-    * [`BigQueryPipe.CREDENTIAL_FILE`](zingg.md#zingg.pipes.BigQueryPipe.CREDENTIAL\_FILE)
+    * [`BigQueryPipe.CREDENTIAL_FILE`](zingg.md#zingg.pipes.BigQueryPipe.CREDENTIAL_FILE)
     * [`BigQueryPipe.TABLE`](zingg.md#zingg.pipes.BigQueryPipe.TABLE)
-    * [`BigQueryPipe.TEMP_GCS_BUCKET`](zingg.md#zingg.pipes.BigQueryPipe.TEMP\_GCS\_BUCKET)
-    * [`BigQueryPipe.VIEWS_ENABLED`](zingg.md#zingg.pipes.BigQueryPipe.VIEWS\_ENABLED)
+    * [`BigQueryPipe.TEMP_GCS_BUCKET`](zingg.md#zingg.pipes.BigQueryPipe.TEMP_GCS_BUCKET)
+    * [`BigQueryPipe.VIEWS_ENABLED`](zingg.md#zingg.pipes.BigQueryPipe.VIEWS_ENABLED)
     * [`BigQueryPipe.setCredentialFile()`](zingg.md#zingg.pipes.BigQueryPipe.setCredentialFile)
     * [`BigQueryPipe.setTable()`](zingg.md#zingg.pipes.BigQueryPipe.setTable)
     * [`BigQueryPipe.setTemporaryGcsBucket()`](zingg.md#zingg.pipes.BigQueryPipe.setTemporaryGcsBucket)
@@ -122,8 +131,18 @@ Requires **python 3.6+**; **spark 3.5.0.** Otherwise, [`zingg.client.Zingg()`](z
     * [`SnowflakePipe.setURL()`](zingg.md#zingg.pipes.SnowflakePipe.setURL)
     * [`SnowflakePipe.setUser()`](zingg.md#zingg.pipes.SnowflakePipe.setUser)
     * [`SnowflakePipe.setWarehouse()`](zingg.md#zingg.pipes.SnowflakePipe.setWarehouse)
+  * [`getFilePipe()`](zingg.md#zingg.pipes.getFilePipe)
+  * [`getJPipe()`](zingg.md#zingg.pipes.getJPipe)
+  * [`getJStructPipe()`](zingg.md#zingg.pipes.getJStructPipe)
+  * [`setupPipes()`](zingg.md#zingg.pipes.setupPipes)
 
-## Example API Usage
+# API Reference
+
+* [Module Index](py-modindex.md)
+* [Index](genindex.md)
+* [Search Page](search.md)
+
+# Example API Usage
 
 ```python
 from zingg.client import *
