@@ -18,14 +18,10 @@ Community Zingg Python APIs for entity resolution, identity resolution, record l
 
 .. toctree::
    :maxdepth: 3
+   :caption: API Documentation
 
-   zingg
-
-API Reference
-==================
-* :ref:`modindex`
-* :ref:`genindex`
-* :ref:`search`
+   zingg.client
+   zingg.pipes
 
 Example API Usage
 =================
