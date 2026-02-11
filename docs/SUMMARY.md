@@ -43,6 +43,7 @@
     * [Updating Labeled Pairs](updatingLabels.md)
     * [Documenting The Training Data](stepbystep/createtrainingdata/generatingdocumentation.md)
     * [Exporting Labeled Data](setup/training/exportLabeledData.md)
+    * [Model Difference](stepbystep/createtrainingdata/modeldiff.md)
   * [Ensuring Scalability](verifyBlocking.md)
   * [Building And Saving The Model](setup/train.md)
   * [Finding The Matches](setup/match.md)
@@ -77,7 +78,6 @@
   * [Running on Fabric](running/running-on-fabric.md)
 * [Zingg Models](zModels.md)
   * [Pre-Trained Models](pretrainedModels.md)
-  * [Model Difference](zmodels/modeldiff.md)
 * [Improving Accuracy](improving-accuracy/README.md)
   * [Ignoring Commonly Occuring Words While Matching](accuracy/stopWordsRemoval.md)
   * [Defining Domain Specific Blocking And Similarity Functions](accuracy/definingOwn.md)
@@ -96,7 +96,3 @@
 * [Frequently Asked Questions](faq.md)
 * [Reading Material](reading.md)
 * [Security And Privacy](security.md)
-
-## Group 1
-
-* [Page 1](group-1/page-1.md)

@@ -9,14 +9,16 @@ description: Under the hoods of the matching process
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
-The Output Statistics surface information about the linkages Zingg found among records within a cluster. While running Zingg incrementally, Output Statistics exposes how cluster numbers change as records get inserted and updated into the identity graph. If the number of clusters changes disproportionately to the number of records updated or added, an alert could be triggered. Match Statistics surfaces those insights by writing structured metrics for every match or incremental run, so you can:
+If you’ve ever asked “how deterministic rules are performing?” or “did my latest incremental run improve cluster quality?”, Output Statistics is your answer. The Output Statistics surface information about the linkages Zingg found among records within a cluster. While running Zingg incrementally, Output Statistics expose how cluster numbers change as records get inserted and updated into the identity graph. Match Statistics surfaces those insights by writing structured metrics for every match or incremental run, so you can:
 
 * See how dense or sparse your clusters are
 * Understand how much of a cluster is explained by deterministic rules vs. probabilistic links
 * Identify highly central records (connectors) and outliers
 * Track how clusters change across runs (growth, splits, merges, reassignments)
 
-If you’ve ever asked “how deterministic rules are performing?” or “did my latest incremental run improve cluster quality?”, Output Statistics is your answer.
+
+
+If the number of clusters changes disproportionately to the number of records updated or added, an alert could be triggered.&#x20;
 
 ***
 
