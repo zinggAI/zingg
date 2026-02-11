@@ -1,18 +1,105 @@
-# Enterprise Spark Python API
+<!-- Zingg Enterprise documentation master file, created by
+sphinx-quickstart on Wed Jul 16 19:15:34 2025.
+You can adapt this file completely to your liking, but it should at least
+contain the root `toctree` directive. -->
 
-## Zingg Enterpise ES Entity Resolution Python Package
+# Zingg Enterpise Entity Resolution Python Package
 
-Zingg Enterprise Python APIs for entity resolution, identity resolution,
-record linkage, data mastering and deduplication using ML ([https://www.zingg.ai](https://www.zingg.ai))
+Zingg Enterprise Python APIs for entity resolution, identity resolution, record linkage, data mastering and deduplication using ML
+([https://www.zingg.ai](https://www.zingg.ai))
 
-**NOTE**
+#### NOTE
+Requires python 3.6+; spark 3.5.0
+Otherwise, [`zinggES.enterprise.spark.ESparkClient()`](ESparkClient.md#module-zinggES.enterprise.spark.ESparkClient) cannot be executed
 
-Requires **python 3.6+**; **spark 3.5.0.** Otherwise,
-[`zinggES.enterprise.spark.ESparkClient.EZingg()`](zinggES.md#zinggES.enterprise.spark.ESparkClient.EZingg) cannot be executed
+* [Zingg Enterprise Spark Package](zinggES.md)
+  * [ESparkClient](ESparkClient.md)
+    * [zinggES.enterprise.spark.ESparkClient](ESparkClient.md#zingges-enterprise-spark-esparkclient)
+    * [`EZingg`](ESparkClient.md#zinggES.enterprise.spark.ESparkClient.EZingg)
+    * [`EZinggWithSpark`](ESparkClient.md#zinggES.enterprise.spark.ESparkClient.EZinggWithSpark)
 
-* [Zingg Enterpise Entity Resolution Package](zinggES.md)
-    * [zinggES.enterprise.spark.ESparkClient](zinggES.md#zingges-enterprise-spark-esparkclient)
-    * [`EZingg`](zinggES.md#zinggES.enterprise.spark.ESparkClient.EZingg)
-    * [`EZinggWithSpark`](zinggES.md#zinggES.enterprise.spark.ESparkClient.EZinggWithSpark)
+# API Reference
 
+* [Module Index](py-modindex.md)
+* [Index](genindex.md)
+* [Search Page](search.md)
 
+# Example API Usage
+
+```python
+from zingg.client import *
+from zingg.pipes import *
+from zinggEC.enterprise.common.ApproverArguments import *
+from zinggEC.enterprise.common.IncrementalArguments import *
+from zinggEC.enterprise.common.MappingMatchType import *
+from zinggEC.enterprise.common.epipes import *
+from zinggEC.enterprise.common.EArguments import *
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zinggES.enterprise.spark.ESparkClient import *
+import os
+
+#build the arguments for zingg
+args = EArguments()
+#set field definitions
+recId = EFieldDefinition("recId", "string", MatchType.DONT_USE)
+recId.setPrimaryKey(True)
+fname = EFieldDefinition("fname", "string", MatchType.FUZZY)
+# for mapping match type
+#fname = EFieldDefinition("fname", "string", MatchType.FUZZY, MappingMatchType("MAPPING", "NICKNAMES_TEST"))
+lname = EFieldDefinition("lname", "string", MatchType.FUZZY)
+stNo = EFieldDefinition("stNo", "string", MatchType.FUZZY)
+add1 = EFieldDefinition("add1","string", MatchType.FUZZY)
+add2 = EFieldDefinition("add2", "string", MatchType.FUZZY)
+city = EFieldDefinition("city", "string", MatchType.FUZZY)
+areacode = EFieldDefinition("areacode", "string", MatchType.FUZZY)
+state = EFieldDefinition("state", "string", MatchType.FUZZY)
+dob = EFieldDefinition("dob", "string", MatchType.FUZZY)
+ssn = EFieldDefinition("ssn", "string", MatchType.FUZZY)
+
+fieldDefs = [recId, fname, lname, stNo, add1, add2, city, areacode, state, dob, ssn]
+args.setFieldDefinition(fieldDefs)
+#set the modelid and the zingg dir
+args.setModelId("100")
+args.setZinggDir("./models")
+args.setNumPartitions(4)
+args.setLabelDataSampleSize(0.5)
+
+# Set the blocking strategy for the Zingg Model as either DEFAULT or WIDER - if you do not set anything, the model follows DEFAULT strategy
+args.setBlockingModel("DEFAULT")
+
+#setting pass thru condition
+args.setPassthroughExpr("fname = 'matilda'")
+
+#setting deterministic matching conditions
+dm1 = DeterministicMatching('fname','stNo','add1')
+dm2 = DeterministicMatching('ssn')
+dm3 = DeterministicMatching('fname','stNo','lname')
+args.setDeterministicMatchingCondition(dm1,dm2,dm3)
+
+#reading dataset into inputPipe and setting it up in 'args'
+#below line should not be required if you are reading from in memory dataset
+#in that case, replace df with input df
+schema = "recId string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
+inputPipe = ECsvPipe("testFebrl", "examples/febrl/test.csv", schema)
+args.setData(inputPipe)
+
+outputPipe = ECsvPipe("resultFebrl", "/tmp/febrlOutput")
+outputPipe.setHeader("true")
+args.setOutput(outputPipe)
+
+# Zingg execution for the given phase
+# options = ClientOptions([ClientOptions.PHASE,"findAndLabel"])
+
+options = ClientOptions([ClientOptions.PHASE,"trainMatch"])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
+
+incrArgs = IncrementalArguments()
+incrArgs.setParentArgs(args)
+incrPipe = ECsvPipe("testFebrlIncr", "examples/febrl/test-incr.csv", schema)
+incrArgs.setIncrementalData(incrPipe)
+
+incrOptions = ClientOptions([ClientOptions.PHASE,"runIncremental"])
+zinggIncr = EZingg(incrArgs, incrOptions)
+zinggIncr.initAndExecute()
+```
