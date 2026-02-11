@@ -5,30 +5,30 @@ nav_order: 7
 description: Understanding how blocking is working before running match or link
 ---
 
-# Verification of Blocking Model
+# Ensuring Scalability
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
-The Blocking Model ensures that Zingg stays performant. Column spread and values are learnt for the Blocking Model through the training data. Sometimes Zingg jobs are slow or fail due to a poorly learnt blocking model. This can happen due to a variety of reasons like:
+The [Blocking Model](zModels.md) ensures that Zingg stays performant by learning field heuristics and reducing the number of comparisons through the training data. A poorly learnt blocking model will cause Zingg matching jobs to become slow or not complete entirely. This can happen due to a variety of reasons like:
 
 * A user adds significantly larger training samples compared to the labelling learnt by Zingg. The manually added training samples may have the same type of columns and blocking rules learnt are not generic enough. For example, providing California state only training data when the matching is using the State column and data has multiple states.
 * When there is a natural bias in the data with lots of null columns used in matching.
 * When sufficient labeling has not been done.
 * When there a lot of non differentiating columns.
 
-Matching is computationally expensive, and If we can have an understanding of how blocking is working, we can decide whether we need to add more training data.
+Matching is computationally expensive, and If we can have an understanding of how blocking is working, we can decide whether we need to add more training data. The **verifyBlocking** phase lets us check if we have collected sufficient labels and have a good blocking model.
 
 ### The verifyBlocking phase is run as follows:
 
 `./scripts/zingg.sh --phase verifyBlocking --conf <path to conf> <optional --zinggDir <location of model>>`
 
-The output contains two directories -&#x20;
+The output contains two directories -
 
-`zinggDir/modelId/blocks/timestamp/counts`  `zinggDir/modelId/blocks/timestamp/blockSamples`
+`zinggDir/modelId/blocks/timestamp/counts` `zinggDir/modelId/blocks/timestamp/blockSamples`
 
 We can see the counts per block and the top 10% records associated with all the blocks.
 
-For  **Zingg Enterprise for Snowflake**, verifyBlocking generates tables with the names:
+For **Zingg Enterprise for Snowflake**, verifyBlocking generates tables with the names:
 
 `zingg_modelId_blocks_timestamp_counts` where we can see the counts per block and `zingg_modelId_blocks_timestamp_blockSamples_hash` where we can see the records associated with the blocks.
 

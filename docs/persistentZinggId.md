@@ -9,9 +9,11 @@ description: Reassign the ZINGG IDs for clusters from the original production mo
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
-Let's say we have a production flow already deployed, and there is a new release which introduces some additional features (e.g., nicknames, a better blocking tree, or additional hash functions). Or maybe there are changes to the classifiers which are expected to change the output of Zingg. 
+Coming Soon!
 
-Now, in that case, we already have existing ZINGG IDs which have gone into the operational systems. So, we want to reassign the ZINGG IDs for clusters from the original production model as far as possible. 
+Let's say we have a production flow already deployed, and there is a new release which introduces some additional features (e.g., nicknames, a better blocking tree, or additional hash functions). Or maybe there are changes to the classifiers which are expected to change the output of Zingg.
+
+Now, in that case, we already have existing ZINGG IDs which have gone into the operational systems. So, we want to reassign the ZINGG IDs for clusters from the original production model as far as possible.
 
 We want to provide a user-friendly and easy way for any Zingg user to be able to achieve this.
 
@@ -19,6 +21,6 @@ We want to provide a user-friendly and easy way for any Zingg user to be able to
 
 `./scripts/zingg.sh --phase reassignZinggId --conf <path to new model conf> --originalZinggId <path to original conf>`
 
-The output will be updating the output of the new run with the ZINGG_ID in NEW_OUTPUT and keeping a backup of the new output as NEW_OUTPUT_timestamp.
+The output will be updating the output of the new run with the ZINGG\_ID in NEW\_OUTPUT and keeping a backup of the new output as NEW\_OUTPUT\_timestamp.
 
 [^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.
