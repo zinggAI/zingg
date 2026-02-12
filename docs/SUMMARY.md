@@ -92,6 +92,8 @@
 * [Combining Different Match Models](relations.md)
 * [Reporting Bugs And Contributing](contributing.md)
   * [Setting Up Zingg Development Environment](settingUpZingg.md)
+    * [macOS Setup Guide](macOSSetup.md)
+    * [Ubuntu/WSL2 Setup Guide](ubuntuSetup.md)
 * [Community](community.md)
 * [Frequently Asked Questions](faq.md)
 * [Reading Material](reading.md)
