@@ -1,9 +1,5 @@
 package zingg.common.core.recommender;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +17,8 @@ import zingg.common.core.context.Context;
 import zingg.common.core.context.IContext;
 import zingg.common.core.recommender.model.Records;
 import zingg.common.core.recommender.model.WordByCount;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class TestStopWordsRecommenderBase<S, D, R, C, T> {
 
@@ -43,17 +41,15 @@ public abstract class TestStopWordsRecommenderBase<S, D, R, C, T> {
         this.recommender = getRecommender(context,arguments);
     }
 
-    @Test
-    public void testWithNegativefCuttoff() throws Throwable{
-        try {
-			LOG.info("Test with stopCutoff = -1");
-			stopwordList = getStopWordList(-1.0f);
-            fail("Exception should not have been thrown when stopCutoff is negative");
-        }
-        catch(ZinggClientException e) {
-        }
+	@Test
+	public void testWithNegativeCutoff() {
 
-    }
+		LOG.info("Test with stopCutoff = -1");
+
+		assertThrows(ZinggClientException.class, () -> {
+			getStopWordList(-1.0f);
+		});
+	}
 
 	@Test
 	public void testWithCuttoffOne() throws Throwable {

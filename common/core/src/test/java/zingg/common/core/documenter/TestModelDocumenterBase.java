@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.rmi.NoSuchObjectException;
 import java.util.Collections;
 import java.util.Map;
 
@@ -41,30 +42,21 @@ public abstract class TestModelDocumenterBase<S,D,R,C,T> {
 	}
 	
 	@BeforeEach
-	public void setUp(){
-
-		try {
-			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
-			IArgumentService<Arguments> argsUtil = new ArgumentServiceImpl<>(Arguments.class);
-			docArguments = argsUtil.loadArguments(configPath);
-			String zinggDirPath = getClass().getResource("../../../../"+docArguments.getZinggDir()).getFile();
-			docArguments.setZinggDir(zinggDirPath);
-		} catch (Throwable e) {
-			e.printStackTrace();
-			LOG.info("Unexpected exception received " + e.getMessage());
-			fail(e.getMessage());
-		}
+	public void setUp() throws NoSuchObjectException, ZinggClientException {
+		String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
+		IArgumentService<Arguments> argsUtil = new ArgumentServiceImpl<>(Arguments.class);
+		docArguments = argsUtil.loadArguments(configPath);
+		String zinggDirPath = getClass().getResource("../../../../"+docArguments.getZinggDir()).getFile();
+		docArguments.setZinggDir(zinggDirPath);
 	}
 
     @Test
-	public void testIfModelDocumenterGeneratedDocFile() throws Throwable {
+	public void testIfModelDocumenterGeneratedDocFile() throws IOException, ZinggClientException {
 		
 		ModelDocumenter<S,D,R,C,T> modelDoc = getModelDocumenter(context, docArguments, new ClientOptions());
-		try {
-			Files.deleteIfExists(Paths.get(modelDoc.getModelHelper().getZinggModelDocFile(docArguments)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		Files.deleteIfExists(Paths.get(modelDoc.getModelHelper().getZinggModelDocFile(docArguments)));
+
 		modelDoc.createModelDocument();
 
 		assertTrue(Files.exists(Paths.get(modelDoc.getModelHelper().getZinggModelDocFile(docArguments))), "Model documentation file is not generated");
