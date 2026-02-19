@@ -39,7 +39,6 @@ This class helps supply match arguments to Zingg. There are 3 basic steps in any
 | [`setTrainingSamples`](#zingg.client.Arguments.setTrainingSamples)                           | Method to set existing training samples to be matched.                                                                                                                                                                                                                                                      |
 | [`setZinggDir`](#zingg.client.Arguments.setZinggDir)                                         | Method to set the location for Zingg to save its internal computations and models.                                                                                                                                                                                                                          |
 | [`writeArgumentsToJSON`](#zingg.client.Arguments.writeArgumentsToJSON)                       | Method to write JSON file from the object of this class                                                                                                                                                                                                                                                     |
-| [`writeArgumentsToJSONString`](#zingg.client.Arguments.writeArgumentsToJSONString)           | Method to create an object of this class from the JSON file and phase parameter value.                                                                                                                                                                                                                      |
 
 #### \_\_init_\_()
 
@@ -166,15 +165,3 @@ Method to write JSON file from the object of this class
 
 * **Parameters:**
   **fileName** (*String*) – The CONF parameter value of ClientOption object or file address of json file
-
-#### writeArgumentsToJSONString()
-
-Method to create an object of this class from the JSON file and phase parameter value.
-
-* **Parameters:**
-  * **fileName** (*String*) – The CONF parameter value of ClientOption object
-  * **phase** (*String*) – The PHASE parameter value of ClientOption object
-* **Returns:**
-  The pointer containing address of the this class object
-* **Return type:**
-  pointer([Arguments](#zingg.client.Arguments))
