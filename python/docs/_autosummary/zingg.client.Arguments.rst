@@ -1,4 +1,4 @@
-﻿zingg.client.Arguments
+﻿﻿zingg.client.Arguments
 ======================
 
 .. currentmodule:: zingg.client
@@ -39,10 +39,4 @@
       ~Arguments.setTrainingSamples
       ~Arguments.setZinggDir
       ~Arguments.writeArgumentsToJSON
-      ~Arguments.writeArgumentsToJSONString
-   
-   
 
-   
-   
-   

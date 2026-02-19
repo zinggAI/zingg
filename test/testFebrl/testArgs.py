@@ -492,19 +492,6 @@ class ArgumentsTest(TestCase):
         self.assertTrue(os.path.exists(json_file_name))
         os.remove(json_file_name)
     
-    def test_writeArgumentsToJSONString(self):
-        # print("new args: ", args1)
-        # print("old args: ", args)
-        json_string = args1.writeArgumentsToJSONString()
-        # json_string1 = args.writeArgumentsToJSONString()
-        print("json_string: ",json_string)
-        # print("oldjson_string: ", json_string1)
-        data = json.loads(json_string)
-        print("data: ", data)
-        
-        self.assertEqual(data['modelId'], "100")
-        self.assertEqual(data['zinggDir'], "models")
-
     def test_createArgumentsFromJSONString(self):
         sample_json = '''
         {
@@ -809,3 +796,4 @@ class TestSnowflakePipe(TestCase):
         db_table = "my_table"
         pipe.setDbTable(db_table)
         self.assertEqual(pipe.pipe.getProps()["dbtable"], db_table)
+
