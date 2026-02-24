@@ -1,6 +1,7 @@
 name: performance-test-febrl120K
 
 on:
+  workflow-dispatch:
   schedule:
     - cron: "0 0 */3 * *" # runs every 3 days at 00 AM UTC
 jobs:
