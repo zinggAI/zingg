@@ -2,8 +2,8 @@ package zingg.common.core.documenter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
+import java.rmi.NoSuchObjectException;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -38,16 +38,10 @@ public abstract class TestDataDocumenterBase<S,D,R,C,T> {
     protected abstract DataDocumenter<S,D,R,C,T> getDataDocumenter(IContext<S,D,R,C,T> context, IArguments args, ClientOptions options);
 
     @BeforeEach
-	public void setUp(){
-		try {
-			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
-			IArgumentService<Arguments> argsUtil = new ArgumentServiceImpl<>(Arguments.class);
-			docArguments = argsUtil.loadArguments(configPath);
-		} catch (Throwable e) {
-			e.printStackTrace();
-			LOG.info("Unexpected exception received " + e.getMessage());
-			fail(e.getMessage());
-		}
+	public void setUp() throws NoSuchObjectException, ZinggClientException {
+		String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
+		IArgumentService<Arguments> argsUtil = new ArgumentServiceImpl<>(Arguments.class);
+		docArguments = argsUtil.loadArguments(configPath);
 	}
 
 	@Test

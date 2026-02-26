@@ -1,8 +1,5 @@
 package zingg.common.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -21,6 +18,8 @@ import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.arguments.loader.template.EnvironmentVariableSubstitutor;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class TestArguments {
 
@@ -37,238 +36,203 @@ public class TestArguments {
 	}
 	
 	@Test
-	public void testSubstituteVariablesWithAllEnvVarSet() {
-		try {
-			Map<String, String> env = new HashMap<String, String>();
-			env.put(KEY_HEADER, "true");
-			env.put(KEY_FORMAT, "csv");
-			env.put(KEY_MODEL_ID, "400");
-	
-			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
-			String template = new String(encoded, StandardCharsets.UTF_8);
-			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
-			IArguments arguments = argumentService.loadArguments(substitutedJsonString);
-			assertEquals(arguments.getData()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
-			assertEquals(arguments.getData()[0].getFormat(), env.get(KEY_FORMAT));
-			assertEquals(arguments.getModelId(), env.get(KEY_MODEL_ID));
-		} catch (IOException | ZinggClientException e) {
-			fail("Unexpected exception " + e.getMessage());
-		}
+	public void testSubstituteVariablesWithAllEnvVarSet() throws IOException, ZinggClientException {
+		Map<String, String> env = new HashMap<>();
+		env.put(KEY_HEADER, "true");
+		env.put(KEY_FORMAT, "csv");
+		env.put(KEY_MODEL_ID, "400");
+
+		byte[] encoded = Files
+				.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
+		String template = new String(encoded, StandardCharsets.UTF_8);
+		String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
+		IArguments arguments = argumentService.loadArguments(substitutedJsonString);
+		assertEquals(arguments.getData()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
+		assertEquals(arguments.getData()[0].getFormat(), env.get(KEY_FORMAT));
+		assertEquals(arguments.getModelId(), env.get(KEY_MODEL_ID));
     }
 
 	@Test
-	public void testSubstituteVariablesWithMissingEnvVar() {
-		try {
-			Map<String, String> env = new HashMap<String, String>();
-			env.put(KEY_HEADER, "true");
-			env.put(KEY_MODEL_ID, "400");
+	public void testSubstituteVariablesWithMissingEnvVar() throws IOException {
 
-			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
+		Map<String, String> env = new HashMap<>();
+		env.put(KEY_HEADER, "true");
+		env.put(KEY_MODEL_ID, "400");
 
-			String template = new String(encoded, StandardCharsets.UTF_8);
-			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
-			IArguments args = argumentService.loadArguments(substitutedJsonString);
-			fail("Exception was expected due to missing environment variable");
- 		} catch (IOException | ZinggClientException e) {
-			LOG.warn("Expected exception received due to missing environment variable");
- 		}
+		byte[] encoded = Files.readAllBytes(
+				Paths.get(getClass()
+						.getResource("../../../testArguments/testConfigTemplate.json.env")
+						.getFile())
+		);
+
+		String template = new String(encoded, StandardCharsets.UTF_8);
+
+		assertThrows(ZinggClientException.class, () -> {
+			String substitutedJsonString =
+					environmentVariableSubstitutor.substitute(template, env);
+
+			argumentService.loadArguments(substitutedJsonString);
+		});
+	}
+
+
+	@Test
+	public void testSubstituteVariablesWithBlankEnvVar() throws IOException {
+		Map<String, String> env = new HashMap<>();
+		env.put(KEY_HEADER, "true");
+		env.put(KEY_FORMAT, "");
+		env.put(KEY_MODEL_ID, "400");
+
+		byte[] encoded = Files.readAllBytes(
+				Paths.get(getClass()
+						.getResource("../../../testArguments/testConfigTemplate.json.env")
+						.getFile()));
+
+		String template = new String(encoded, StandardCharsets.UTF_8);
+
+		assertThrows(ZinggClientException.class, () -> {
+			String substitutedJsonString =
+					environmentVariableSubstitutor.substitute(template, env);
+
+			argumentService.loadArguments(substitutedJsonString);
+		});
 	}
 
 	@Test
-	public void testSubstituteVariablesWithBlankEnvVar() {
-		try {
-			Map<String, String> env = new HashMap<String, String>();
-			env.put(KEY_HEADER, "true");
-			env.put(KEY_FORMAT, "");
-			env.put(KEY_MODEL_ID, "400");
+	public void testInvalidEnvVarBooleanType() throws IOException {
+//		try {
 
-			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
+		Map<String, String> env = new HashMap<>();
+		env.put(KEY_HEADER, "someValue");
+		env.put(KEY_FORMAT, "csv");
+		env.put(KEY_MODEL_ID, "400");
 
-			String template = new String(encoded, StandardCharsets.UTF_8);
-			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
-			IArguments args = argumentService.loadArguments(substitutedJsonString);
+		byte[] encoded = Files.readAllBytes(
+				Paths.get(getClass()
+						.getResource("../../../testArguments/testConfigTemplate.json.env")
+						.getFile()));
 
-			fail("Exception was expected for blank value for an environment variable");
- 		} catch (IOException | ZinggClientException e) {
- 			LOG.warn("Expected exception received due to blank value for an environment variable");
-		}
+		String template = new String(encoded, StandardCharsets.UTF_8);
+		assertThrows(ZinggClientException.class, () -> {
+			String substitutedJsonString =
+					environmentVariableSubstitutor.substitute(template, env);
+
+			argumentService.loadArguments(substitutedJsonString);
+		});
 	}
 
 	@Test
-	public void testInvalidEnvVarBooleanType() {
-		try {
+	public void testBooleanType() throws IOException, ZinggClientException {
+		Map<String, String> env = new HashMap<>();
+		env.put(KEY_HEADER, "true");
+		env.put(KEY_FORMAT, "csv");
+		env.put(KEY_MODEL_ID, "400");
 
-			Map<String, String> env = new HashMap<String, String>();
-			env.put(KEY_HEADER, "someValue");
-			env.put(KEY_FORMAT, "csv");
-			env.put(KEY_MODEL_ID, "400");
+		byte[] encoded = Files
+				.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
 
-			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
+		String template = new String(encoded, StandardCharsets.UTF_8);
+		String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
+		IArguments args = argumentService.loadArguments(substitutedJsonString);
 
-			String template = new String(encoded, StandardCharsets.UTF_8);
-			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
-			IArguments args = argumentService.loadArguments(substitutedJsonString);
- 
-			fail("Exception was expected for invalid value for a Boolean variable");
- 		} catch (IOException | ZinggClientException e) {
-			LOG.warn("Expected exception received due to invalid value for a Boolean variable");
- 		}
+		assertEquals(args.getOutput()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
 	}
 
 	@Test
-	public void testBooleanType() {
-		try {
-			Map<String, String> env = new HashMap<String, String>();
-			env.put(KEY_HEADER, "true");
-			env.put(KEY_FORMAT, "csv");
-			env.put(KEY_MODEL_ID, "400");
+	public void testInvalidEnvVarNumericType() throws IOException {
+		Map<String, String> env = new HashMap<>();
+		env.put(KEY_HEADER, "true");
+		env.put(KEY_FORMAT, "csv");
+		env.put(KEY_MODEL_ID, "ONEHUNDRED");
 
-			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
+		byte[] encoded = Files.readAllBytes(
+				Paths.get(getClass()
+						.getResource("../../../testArguments/testConfigTemplate.json.env")
+						.getFile()));
 
-			String template = new String(encoded, StandardCharsets.UTF_8);
-			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
-			IArguments args = argumentService.loadArguments(substitutedJsonString);
- 
-			assertEquals(args.getOutput()[0].getProps().get(KEY_HEADER), env.get(KEY_HEADER));
-		} catch (IOException | ZinggClientException e) {
-			fail("Exception was not expected for valid value for a Boolean variable within quotes");
+		String template = new String(encoded, StandardCharsets.UTF_8);
+		assertThrows(ZinggClientException.class, () -> {
+			String substitutedJsonString =
+					environmentVariableSubstitutor.substitute(template, env);
 
-		}
+			argumentService.loadArguments(substitutedJsonString);
+		});
 	}
 
 	@Test
-	public void testInvalidEnvVarNumericType() {
-		try {
-			Map<String, String> env = new HashMap<String, String>();
-			env.put(KEY_HEADER, "true");
-			env.put(KEY_FORMAT, "csv");
-			env.put(KEY_MODEL_ID, "ONEHUNDRED");
+	public void testNumericWithinQuotes() throws IOException, ZinggClientException {
+		Map<String, String> env = new HashMap<>();
+		env.put(KEY_HEADER, "true");
+		env.put(KEY_FORMAT, "csv");
+		env.put(KEY_MODEL_ID, "500");
 
-			byte[] encoded = Files
-					.readAllBytes(Paths.get(getClass().getResource("../../../testArguments/testConfigTemplate.json.env").getFile()));
+		byte[] encoded = Files.readAllBytes(
+				Paths.get(getClass().getResource("../../../testArguments/testNumericWithinQuotesTemplate.json.env").getFile()));
 
-			String template = new String(encoded, StandardCharsets.UTF_8);
-			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
-			IArguments args = argumentService.loadArguments(substitutedJsonString);
-
-			fail("Exception was expected for invalid value for a Numeric variable");
-		} catch (IOException | ZinggClientException e) {
-			LOG.warn("Expected exception received due to invalid value for a Numeric variable");
-		}
+		String template = new String(encoded, StandardCharsets.UTF_8);
+		String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
+		IArguments args = argumentService.loadArguments(substitutedJsonString);
+		//Numeric within quotes are allowed
+		assertEquals(args.getModelId(), env.get(KEY_MODEL_ID));
 	}
 
 	@Test
-	public void testNumericWithinQuotes() {
-		try {
-			
-			Map<String, String> env = new HashMap<String, String>();
-			env.put(KEY_HEADER, "true");
-			env.put(KEY_FORMAT, "csv");
-			env.put(KEY_MODEL_ID, "500");
+	public void testMalformedVariable() throws IOException {
+		Map<String, String> env = new HashMap<>();
+		env.put(KEY_HEADER, "true");
+		env.put(KEY_FORMAT, "csv");
+		env.put(KEY_MODEL_ID, "500");
 
-			byte[] encoded = Files.readAllBytes(
-					Paths.get(getClass().getResource("../../../testArguments/testNumericWithinQuotesTemplate.json.env").getFile()));
+		byte[] encoded = Files.readAllBytes(
+				Paths.get(getClass().getResource("../../../testArguments/testMalformedConfigTemplate.json.env").getFile()));
 
-			String template = new String(encoded, StandardCharsets.UTF_8);
-			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
-			IArguments args = argumentService.loadArguments(substitutedJsonString);
-			//Numeric within quotes are allowed
-			assertEquals(args.getModelId(), env.get(KEY_MODEL_ID));
-		} catch (IOException | ZinggClientException e) {
-			fail("Unexpected exception in testNumericWithinQuotes()" + e.getMessage());
-		}
-	}
+		String template = new String(encoded, StandardCharsets.UTF_8);
+		assertThrows(ZinggClientException.class, () -> {
+			String substitutedJsonString =
+					environmentVariableSubstitutor.substitute(template, env);
 
-	@Test
-	public void testMalformedVariable() {
-		try {
-			
-			Map<String, String> env = new HashMap<String, String>();
-			env.put(KEY_HEADER, "true");
-			env.put(KEY_FORMAT, "csv");
-			env.put(KEY_MODEL_ID, "500");
-
-			byte[] encoded = Files.readAllBytes(
-					Paths.get(getClass().getResource("../../../testArguments/testMalformedConfigTemplate.json.env").getFile()));
-
-			String template = new String(encoded, StandardCharsets.UTF_8);
-			String substitutedJsonString = environmentVariableSubstitutor.substitute(template, env);
-			IArguments args = argumentService.loadArguments(substitutedJsonString);
-
-			fail("Exception was expected for malformed variable in json");
-		} catch (IOException | ZinggClientException e) {
-			LOG.warn("Expected exception received due to malformed variable in json");
-		}
+			argumentService.loadArguments(substitutedJsonString);
+		});
 	}
 
 	@Test
 	public void testInvalidFilePath() {
 		String filePath = "../dummyFilename";
-		try {
+
+		assertThrows(ZinggClientException.class, () -> {
 			argumentService.loadArguments(filePath);
-			fail("Exception was expected for invalid filepath or name");
-		} catch (ZinggClientException e) {
-			LOG.warn("Expected exception received: NoSuchFileException");
-		} catch (NoSuchObjectException e) {
-            throw new RuntimeException(e);
-        }
-    }
+		});
+	}
+
 
 	@Test
-	public void testMatchTypeMultiple() {
-			IArguments args;
-            try {
-				args = argumentService.loadArguments(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile());
-				List<? extends IMatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
-				assertEquals(2, fNameMatchType.size());
-				assertEquals(MatchTypes.FUZZY, fNameMatchType.get(0));
-				assertEquals(MatchTypes.NULL_OR_BLANK, fNameMatchType.get(1));
-
-				
-            } catch (Exception | ZinggClientException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-				fail("Could not read config");
-            }
-		
+	public void testMatchTypeMultiple() throws ZinggClientException, NoSuchObjectException {
+		IArguments args = argumentService.loadArguments(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile());
+		List<? extends IMatchType> fNameMatchType = args.getFieldDefinition().get(0).getMatchType();
+		assertEquals(2, fNameMatchType.size());
+		assertEquals(MatchTypes.FUZZY, fNameMatchType.get(0));
+		assertEquals(MatchTypes.NULL_OR_BLANK, fNameMatchType.get(1));
 	}
 
 	@Test
-	public void testMatchTypeWrong() {
-			IArguments args;
-            try {
-				args = argumentService.loadArguments(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile());
-            } catch (Exception | ZinggClientException e) {
-				LOG.info("config had error, should have flagged");
-            }
+	public void testMatchTypeWrong() throws NoSuchObjectException, ZinggClientException {
+			IArguments args = argumentService.loadArguments(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile());
 	}
 
 	@Test
-	public void testJsonStringify(){
-		IArguments argsFromJsonFile;  
-		try{
-			argsFromJsonFile = argumentService.loadArguments(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile());
-			String strFromJsonFile = argsFromJsonFile.toString();
+	public void testJsonStringify() throws NoSuchObjectException, ZinggClientException {
+		IArguments argsFromJsonFile = argumentService.loadArguments(getClass().getResource("../../../testArguments/configWithMultipleMatchTypes.json").getFile());
+		String strFromJsonFile = argsFromJsonFile.toString();
 
-			IArguments argsFullCycle = argumentService.loadArguments(strFromJsonFile);
+		IArguments argsFullCycle = argumentService.loadArguments(strFromJsonFile);
 
-			assertEquals(argsFullCycle.getFieldDefinition().get(0).getName(), argsFromJsonFile.getFieldDefinition().get(0).getName());
-			assertEquals(argsFullCycle.getFieldDefinition().get(2).getName(), argsFromJsonFile.getFieldDefinition().get(2).getName());
-			assertEquals(argsFullCycle.getModelId(), argsFromJsonFile.getModelId());
-			assertEquals(argsFullCycle.getNumPartitions(), argsFromJsonFile.getNumPartitions());
-			assertEquals(argsFullCycle.getLabelDataSampleSize() ,argsFromJsonFile.getLabelDataSampleSize());
-			assertEquals(argsFullCycle.getZinggDir(),argsFromJsonFile.getZinggDir());
-			assertEquals(argsFullCycle.getJobId(),argsFromJsonFile.getJobId());
-
-		} catch (Exception | ZinggClientException e) {
-			LOG.error("Error occurred while running tests " + e.getMessage());
-		}
-
+		assertEquals(argsFullCycle.getFieldDefinition().get(0).getName(), argsFromJsonFile.getFieldDefinition().get(0).getName());
+		assertEquals(argsFullCycle.getFieldDefinition().get(2).getName(), argsFromJsonFile.getFieldDefinition().get(2).getName());
+		assertEquals(argsFullCycle.getModelId(), argsFromJsonFile.getModelId());
+		assertEquals(argsFullCycle.getNumPartitions(), argsFromJsonFile.getNumPartitions());
+		assertEquals(argsFullCycle.getLabelDataSampleSize() ,argsFromJsonFile.getLabelDataSampleSize());
+		assertEquals(argsFullCycle.getZinggDir(),argsFromJsonFile.getZinggDir());
+		assertEquals(argsFullCycle.getJobId(),argsFromJsonFile.getJobId());
 	}		
 	
 }

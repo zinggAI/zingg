@@ -1,11 +1,8 @@
 package zingg.common.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestClientOption {
 
@@ -27,34 +24,28 @@ public class TestClientOption {
 	
 	@Test
 	public void testParseUnsupportedArgumentsConf() {
-		try {
-			String[] args = {"--phase", "train", 
-					"--conf1", "conf.json", 
-					"--zinggDir", "/tmp/z_main", 
-					"--email", "zingg@zingg.ai", 
-					"--license", "zinggLicense.txt"};
-			
-			ClientOptions co = new ClientOptions(args);
-			fail("exception should have been raised due to invalid conf option");
-		} catch (Exception e) {
-			assertTrue(true);
-		}
+		String[] args = {"--phase", "train",
+				"--conf1", "conf.json",
+				"--zinggDir", "/tmp/z_main",
+				"--email", "zingg@zingg.ai",
+				"--license", "zinggLicense.txt"};
+
+		assertThrows(UnsupportedOperationException.class, () -> {
+			new ClientOptions(args);
+		});
 	}
 	
 	@Test
 	public void testParseUnsupportedArgumentsPhase() {
-		try {
-			String[] args = {"--phase1", "train", 
-					"--conf1", "conf.json", 
-					"--zinggDir", "/tmp/z_main", 
-					"--email", "zingg@zingg.ai", 
-					"--license", "zinggLicense.txt"};
-			
-			ClientOptions co = new ClientOptions(args);
-			fail("exception should have been raised due to invalid phase option");
-		} catch (Exception e) {
-			assertTrue(true);
-		}
+		String[] args = {"--phase1", "train",
+				"--conf1", "conf.json",
+				"--zinggDir", "/tmp/z_main",
+				"--email", "zingg@zingg.ai",
+				"--license", "zinggLicense.txt"};
+
+		assertThrows(UnsupportedOperationException.class, () -> {
+			new ClientOptions(args);
+		});
 	}
 	
 	

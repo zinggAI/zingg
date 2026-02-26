@@ -38,18 +38,13 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 	//public abstract void tearDown();	
 
 	 @Test
-	public void testExecutors() throws ZinggClientException {
-		 try {
-			 List<ExecutorTester<S, D, R, C, T>> executorTesterList = getExecutors();
-			 for (ExecutorTester<S, D, R, C, T> executorTester : executorTesterList) {
-				 executorTester.setupArgs();
-				 executorTester.initAndExecute(session);
-				 executorTester.validateResults();
-			 }
-		 } catch (Exception e) {
-			throw new ZinggClientException("Exception occurred while running one or more test executors, ", e);
+	public void testExecutors() throws ZinggClientException, IOException, NoSuchMethodException {
+		 List<ExecutorTester<S, D, R, C, T>> executorTesterList = getExecutors();
+		 for (ExecutorTester<S, D, R, C, T> executorTester : executorTesterList) {
+			 executorTester.setupArgs();
+			 executorTester.initAndExecute(session);
+			 executorTester.validateResults();
 		 }
-
 	}
 
 	//model id getter
