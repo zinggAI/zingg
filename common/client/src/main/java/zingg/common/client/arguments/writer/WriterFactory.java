@@ -10,8 +10,6 @@ public class WriterFactory<A extends IZArgs> {
         switch (writerType) {
             case FILE:
                 return new FileArgumentsWriter<A>();
-            case JSON:
-                return new JsonStringArgumentsWriter<A>();
             default:
                 throw new NoSuchObjectException("No such writer exists: " + writerType.name());
         }

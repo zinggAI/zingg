@@ -708,21 +708,9 @@ class Arguments:
         :rtype: pointer(Arguments)
         """
         obj = Arguments()
-        obj.args = getJVM().zingg.common.client.argumentst.ArgumentServiceImpl().loadArguments(fileName)
+        obj.args = getJVM().zingg.common.client.arguments.ArgumentServiceImpl().loadArguments(fileName)
         return obj
 
-    def writeArgumentsToJSONString(self):
-        """Method to create an object of this class from the JSON file and phase parameter value.
-
-        :param fileName: The CONF parameter value of ClientOption object
-        :type fileName: String
-        :param phase: The PHASE parameter value of ClientOption object
-        :type phase: String
-        :return: The pointer containing address of the this class object
-        :rtype: pointer(Arguments)
-        """
-        jsonString = getJVM().java.lang.String()
-        return getJVM().zingg.common.client.arguments.ArgumentServiceImpl().writeArguments(jsonString, self.args)
 
     @staticmethod
     def createArgumentsFromJSONString(jsonArgs, phase):
@@ -731,8 +719,14 @@ class Arguments:
         return obj
 
     def copyArgs(self, phase):
-        argsString = self.writeArgumentsToJSONString()
-        return self.createArgumentsFromJSONString(argsString, phase)
+        import tempfile
+        import os
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+            temp_file = f.name
+        self.writeArgumentsToJSON(temp_file)
+        copied = self.createArgumentsFromJSON(temp_file, phase)
+        os.unlink(temp_file)
+        return copied
 
 
 class ClientOptions:
