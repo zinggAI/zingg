@@ -40,15 +40,17 @@ The reassign phase **maximizes the assignment of original ZINGG IDs** by:
 
 ```bash
 ./scripts/zingg.sh --phase reassignZinggId \
-  --conf examples/febrl/configReassignUpdated.json \
+  --conf examples/febrl/sparkIncremental/configReassign5M.json \
   --originalZinggId examples/febrl5M/config.json \
   --properties-file config/zingg.conf
 ```
 
 **Key Parameters:**
-- `--conf`: Points to your **new/updated configuration** (with model changes, new infrastructure, or schema updates)
+- `--conf`: Points to a **wrapper configuration** that references your new/updated model config and specifies the output location for reassigned results
 - `--originalZinggId`: Points to your **original production configuration**
 - `--properties-file`: Zingg properties file (optional)
+
+**Note:** The `--conf` parameter requires a wrapper configuration (see [Configuration Wrapper](#configuration-wrapper) section below) that includes a `transformedOutputPath` to specify where the reassigned output should be written. This is different from a plain model configuration file.
 
 ### Python API
 
@@ -151,7 +153,7 @@ This wrapper configuration points to your new configuration and specifies where 
 {
     "config": "$ZINGG_ENT_REPO$/spark/examples/febrl5M/configUpdated.json",
     "transformedOutputPath": {
-        "name": "newOutput",
+        "name": "reassignedOutput",
         "format": "csv",
         "props": {
             "location": "/tmp/zinggTransformedOutputReassigned5M",
@@ -162,7 +164,9 @@ This wrapper configuration points to your new configuration and specifies where 
 }
 ```
 
-**Note**: This wrapper only points to the new configuration. The original configuration is specified via the `--originalZinggId` command-line parameter.
+**Note**: 
+- This wrapper only points to the new configuration. The original configuration is specified via the `--originalZinggId` command-line parameter.
+- The `name` field in `transformedOutputPath` can be any arbitrary identifier for the output pipe - it's used internally by Zingg to identify this output destination.
 
 ### New Configuration (`examples/febrl5M/configUpdated.json`)
 

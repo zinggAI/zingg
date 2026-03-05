@@ -158,7 +158,7 @@ This wrapper configuration points to your new configuration and specifies where 
 {
     "config": "$ZINGG_ENT_REPO$/spark/examples/febrl/configdiffUpdated.json",
     "transformedOutputPath": {
-        "name": "newOutput",
+        "name": "diffOutput",
         "format": "csv",
         "props": {
             "location": "/tmp/zinggTransformedOutputDiff",
@@ -169,7 +169,9 @@ This wrapper configuration points to your new configuration and specifies where 
 }
 ```
 
-**Note**: This wrapper only points to the new configuration. The original/baseline configuration is specified via the `--compareTo` command-line parameter.
+**Note**: 
+- This wrapper only points to the new configuration. The original/baseline configuration is specified via the `--compareTo` command-line parameter.
+- The `name` field in `transformedOutputPath` can be any arbitrary identifier for the output pipe - it's used internally by Zingg to identify this output destination. Here we use `diffOutput` to clearly distinguish it from the new model's match output.
 
 ### New Configuration (`examples/febrl/configdiffUpdated.json`)
 
@@ -253,6 +255,20 @@ Your updated model configuration with changes—for example, switching some fiel
     },
     "schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn string"
   }],
+  "deterministicMatching": [
+    {
+      "matchCondition": [
+        {"fieldName": "fname"},
+        {"fieldName": "stNo"},
+        {"fieldName": "add1"}
+      ]
+    },
+    {
+      "matchCondition": [
+        {"fieldName": "ssn"}
+      ]
+    }
+  ],
   "outputStats": {
     "name": "stats",
     "format": "csv",
@@ -363,20 +379,6 @@ Your baseline model configuration (the one you're comparing against):
     },
     "schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn string"
   }],
-  "deterministicMatching": [
-    {
-      "matchCondition": [
-        {"fieldName": "fname"},
-        {"fieldName": "stNo"},
-        {"fieldName": "add1"}
-      ]
-    },
-    {
-      "matchCondition": [
-        {"fieldName": "ssn"}
-      ]
-    }
-  ],
   "outputStats": {
     "name": "stats",
     "format": "csv",
@@ -401,8 +403,8 @@ The diff output contains **only the records that were impacted** by the model ch
 
 The diff output includes:
 - **Primary Keys of records** from both configurations
-- **ZINGG_ID_UPDATED**: ZINGG ID from the new model
-- **ZINGG_ID_ORIGINAL**: Cluster ID from the new model
+- **ZINGG_ID_UPDATED**: ZINGG ID from the new/updated model
+- **ZINGG_ID_ORIGINAL**: ZINGG ID from the original/baseline model
 
 
 This allows you to see side-by-side how each record's cluster assignment changed between the two models.
