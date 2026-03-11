@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Standardise Postprocessor standardizes field values in matched output using predefined mappings. It addresses inconsistent values that commonly appear across systems (for example, job titles such as "VP of Ops", "Vice President Operations", or "V.P. Operations").
+The Standardise Postprocessor standardises field values in matched output using predefined mappings. It addresses inconsistent values that commonly appear across systems (for example, job titles such as "VP of Ops", "Vice President Operations", or "V.P. Operations").
 
 Key points:
 - The postprocessor runs after matching and before writing output.
@@ -11,7 +11,7 @@ Key points:
 - Primary key fields are never postprocessed.
 
 Industry usage and benefits:
-- Human resources: standardize job titles and roles across multiple systems to improve headcount and reporting accuracy.
+- Human resources: standardise job titles and roles across multiple systems to improve headcount and reporting accuracy.
 - Sales and CRM: normalize company names for consistent account consolidation and analytics.
 - Product and catalog management: unify legacy and new product codes for inventory and billing reconciliation.
 - Compliance and reporting: enforce canonical values to simplify regulatory reporting and downstream processing.
@@ -82,7 +82,7 @@ args.setFieldDefinition(fieldDefs)
 
 ## JSON configuration example
 
-Use `STANDARDISE_<basename>` to reference a mapping file named `<basename>.json` on the classpath.
+Use `STANDARDISE_<basename>` to reference a mapping file named `<basename>.json`.
 
 ```json
 {
