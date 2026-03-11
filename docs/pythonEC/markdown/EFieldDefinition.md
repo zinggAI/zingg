@@ -13,7 +13,7 @@ This class defines each field that we use in matching. We can use this to config
 * **Parameters:**
   * **name** (*String*) – name of the field
   * **dataType** (*String*) – type of the data e.g. string, float, etc.
-  * **matchType** (*MatchType*) – match type of this field e.g. FUSSY, EXACT, etc. including user-defined mapping match types
+  * **matchType** (*MatchType*) – match type of this field e.g. FUZZY, EXACT, etc. including user-defined mapping match types
 
 #### getMatchTypeArray(matchType)
 
