@@ -1,11 +1,11 @@
 ---
-title: Persistent ZINGG ID
+title: Reassign ZINGG ID
 parent: Step By Step Guide
 nav_order: 16
 description: Reassign the ZINGG IDs for clusters from the original production model
 ---
 
-# Persistent ZINGG ID
+# Reassign ZINGG ID
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
