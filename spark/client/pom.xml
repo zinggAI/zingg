@@ -8,7 +8,7 @@
 	<artifactId>zingg-spark-client</artifactId>
 	<packaging>jar</packaging>
 	<properties>
-		<fasterxml.jackson.version>2.15.2</fasterxml.jackson.version>
+		<fasterxml.jackson.version>2.18.6</fasterxml.jackson.version>
 		<fasterxml.jackson.databind.version>2.15.2</fasterxml.jackson.databind.version>
 	</properties>
 	<dependencies>
