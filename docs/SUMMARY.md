@@ -52,7 +52,7 @@
   * [Linking Across Datasets](setup/link.md)
   * [Lookup Data](lookup.md)
   * [Approval of Clusters](approval.md)
-  * [Persistent ZINGG ID](persistentZinggId.md)
+  * [Reassign ZINGG ID](reassignZinggId.md)
 * [Data Sources and Sinks](dataSourcesAndSinks/connectors.md)
   * [Zingg Pipes](dataSourcesAndSinks/pipes.md)
   * [Databricks](dataSourcesAndSinks/databricks.md)
