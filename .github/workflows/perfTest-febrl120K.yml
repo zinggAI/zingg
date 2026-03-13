@@ -48,6 +48,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'zinggAI/zingg_community_performance_reports' # The target repository (e.g., MyOrg/MyOtherRepo)
+          env:
           token: ${{ secrets.GH_PERF_COMMUNITY_ACTION }} # U
       - name: download and execute py script
         run: |
