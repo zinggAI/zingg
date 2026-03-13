@@ -12,7 +12,7 @@ jobs:
       SPARK_MASTER: local[*]
       ZINGG_HOME: assembly/target
       ZINGG_USER: zingg_user
-      INPUT: "zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
+      INPUT: "zingg_community_performance_reports/zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content to github runner.
@@ -38,10 +38,6 @@ jobs:
           spark-version: ${{ steps.cfg.outputs.spark_version }}
           hadoop-version: ${{ steps.cfg.outputs.hadoop_version }}
           spark-url: ${{ steps.cfg.outputs.spark_url }}
-      - name: check spark
-        run: spark-submit --version
-      - name: mvn clean
-        run: mvn clean
       - name: Build with Maven
         run: mvn clean compile package -DskipTests=true
       - name: Clone performance reports repo
