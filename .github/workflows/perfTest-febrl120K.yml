@@ -14,6 +14,11 @@ jobs:
       ZINGG_USER: zingg_user
       INPUT: "zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
     steps:
+      - name: Clone performance reports repo
+        uses: actions/checkout@v4
+        with:
+          repository: 'zinggAI/zingg_community_performance_reports' # The target repository (e.g., MyOrg/MyOtherRepo)
+      
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content to github runner.
       - name: Load Spark config
@@ -42,10 +47,6 @@ jobs:
         run: mvn clean compile package -DskipTests=true
       - name: go to root
         run: cd
-      - name: Clone performance reports repo
-        uses: actions/checkout@v4
-        with:
-          repository: 'zinggAI/zingg_community_performance_reports' # The target repository (e.g., MyOrg/MyOtherRepo)
       - name: download and execute py script
         run: |
           cd zingg
