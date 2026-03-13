@@ -45,12 +45,10 @@ jobs:
       - name: Build with Maven
         run: mvn clean compile package -DskipTests=true
       - name: Clone performance reports repo
-        run: |
-          set -e #Exit immediately if a command exits with a non-zero status.
-          echo "Cloning performance reports repo..."
-          git clone https://x-access-token:${{ secrets.GH_PERF_COMMUNITY_ACTION }}@github.com/zinggAI/zingg_community_performance_reports.git
-          echo "Listing inside cloned repo:"
-          ls -al zingg_community_performance_reports || true
+        uses: actions/checkout@v4
+        with:
+          repository: 'zinggAI/zingg_community_performance_reports' # The target repository (e.g., MyOrg/MyOtherRepo)
+          token: ${{ secrets.GH_PERF_COMMUNITY_ACTION }} # U
       - name: download and execute py script
         run: |
           wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
