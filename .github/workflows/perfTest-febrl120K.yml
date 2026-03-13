@@ -44,13 +44,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'zinggAI/zingg_community_performance_reports' # The target repository (e.g., MyOrg/MyOtherRepo)
-          run:
-            echo "pwd"
-            pwd
-            echo "ls"
-            ls -al
       - name: download and execute py script
         run: |
+          echo "0 pwd"
+          pwd
+          echo "0 ls"
+          ls -al
           wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
           echo "pwd"
           pwd
