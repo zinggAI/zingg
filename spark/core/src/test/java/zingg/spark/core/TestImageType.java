@@ -1,12 +1,12 @@
 package zingg.spark.core;
 
 import static org.apache.spark.sql.functions.callUDF;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 
+import org.apache.spark.SparkException;
+import org.apache.spark.SparkException$;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
@@ -89,85 +89,59 @@ public class TestImageType {
 	
 	@Test
 	public void testUDFArray() {
-		
-		try {
-			// create a DF with double array as a column
-			Dataset<Row> df = createSampleDataset();
-			df.show();
-			// check the schema of DF
-			df.printSchema();
-			// register ArrayDoubleSimilarityFunction as a UDF
-			TestUDFDoubleArr testUDFDoubleArr = new TestUDFDoubleArr();
-			SparkFnRegistrar.registerUDF2(sparkSession, "testUDFDoubleArr", testUDFDoubleArr, DataTypes.DoubleType);
-			// call the UDF from select clause of DF
-			df = df.withColumn("cosine",
-					callUDF("testUDFDoubleArr", df.col("image_embedding"), df.col("image_embedding")));
-			// see if error is reproduced
-			df.show();
-			fail("exception expected");
-		} catch (Exception e) {
-			//e.printStackTrace();
-		}
-		
-		
+		// create a DF with double array as a column
+		Dataset<Row> df = createSampleDataset();
+		df.show();
+		// check the schema of DF
+		df.printSchema();
+		// register ArrayDoubleSimilarityFunction as a UDF
+		TestUDFDoubleArr testUDFDoubleArr = new TestUDFDoubleArr();
+		SparkFnRegistrar.registerUDF2(sparkSession, "testUDFDoubleArr", testUDFDoubleArr, DataTypes.DoubleType);
+		// call the UDF from select clause of DF
+		df = df.withColumn("cosine",
+				callUDF("testUDFDoubleArr", df.col("image_embedding"), df.col("image_embedding")));
+		// see if error is reproduced
+		assertThrows(SparkException.class, df::show);
 	}
 
 	@Test
 	public void testUDFList() {
-		
-		try {
-			// create a DF with double array as a column
-			Dataset<Row> df = createSampleDataset();
-			df.show();
-			// check the schema of DF
-			df.printSchema();
-			
-			// register ArrayDoubleSimilarityFunction as a UDF
-			TestUDFDoubleList testUDFDoubleList = new TestUDFDoubleList();
-			SparkFnRegistrar.registerUDF2(sparkSession, "testUDFDoubleList", testUDFDoubleList, DataTypes.DoubleType);
+		// create a DF with double array as a column
+		Dataset<Row> df = createSampleDataset();
+		df.show();
+		// check the schema of DF
+		df.printSchema();
 
-			// call the UDF from select clause of DF
-			df = df.withColumn("cosine", callUDF("testUDFDoubleList",df.col("image_embedding"),df.col("image_embedding")));
-			// see if error is reproduced
-			df.show();
-			fail("exception expected");
-		} catch (Exception e) {
-			//e.printStackTrace();
-		}
-		
-		
+		// register ArrayDoubleSimilarityFunction as a UDF
+		TestUDFDoubleList testUDFDoubleList = new TestUDFDoubleList();
+		SparkFnRegistrar.registerUDF2(sparkSession, "testUDFDoubleList", testUDFDoubleList, DataTypes.DoubleType);
+
+		// call the UDF from select clause of DF
+		df = df.withColumn("cosine", callUDF("testUDFDoubleList",df.col("image_embedding"),df.col("image_embedding")));
+		// see if error is reproduced
+		assertThrows(SparkException.class, df::show);
 	}
 
 	@Test
 	public void testUDFSeq() {
-		
-		try {
-			// create a DF with double array as a column
-			Dataset<Row> df = createSampleDataset();
-			df.show();
-			// check the schema of DF
-			df.printSchema();
-			
-			// register ArrayDoubleSimilarityFunction as a UDF
-			TestUDFDoubleSeq testUDFDoubleSeq = new TestUDFDoubleSeq();
-			SparkFnRegistrar.registerUDF2(sparkSession, "testUDFDoubleSeq", testUDFDoubleSeq, DataTypes.DoubleType);
+		// create a DF with double array as a column
+		Dataset<Row> df = createSampleDataset();
+		df.show();
+		// check the schema of DF
+		df.printSchema();
 
-			// call the UDF from select clause of DF
-			df = df.withColumn("cosine", callUDF("testUDFDoubleSeq",df.col("image_embedding"),df.col("image_embedding")));
-			// see if error is reproduced
-			df.show();
-			fail("exception expected");
-		} catch (Exception e) {
-			//e.printStackTrace();
-		}
-		
-		
-		
+		// register ArrayDoubleSimilarityFunction as a UDF
+		TestUDFDoubleSeq testUDFDoubleSeq = new TestUDFDoubleSeq();
+		SparkFnRegistrar.registerUDF2(sparkSession, "testUDFDoubleSeq", testUDFDoubleSeq, DataTypes.DoubleType);
+
+		// call the UDF from select clause of DF
+		df = df.withColumn("cosine", callUDF("testUDFDoubleSeq",df.col("image_embedding"),df.col("image_embedding")));
+		// see if error is reproduced
+		assertThrows(SparkException.class, df::show);
 	}
 
 	@Test
 	public void testUDFWrappedArr() {
-		
 		// create a DF with double array as a column
 		Dataset<Row> df = createSampleDataset();
 		df.show();
@@ -190,13 +164,10 @@ public class TestImageType {
 		System.out.println("cos diff "+diff+ " "+cos.getClass());
 		
 		assertTrue(Math.abs(diff) <SMALL_DELTA);
-		
-		
 	}
 	
 	@Test
 	public void testUDFObj() {
-		
 		// create a DF with double array as a column
 		Dataset<Row> df = createSampleDataset();
 		df.show();
@@ -217,8 +188,6 @@ public class TestImageType {
 		Double cos = (Double)r.getAs("cosine");
 		assertEquals(0.3, cos);
 		System.out.println(""+cos+ " "+cos.getClass());
-
-		
 	}
 	
 	

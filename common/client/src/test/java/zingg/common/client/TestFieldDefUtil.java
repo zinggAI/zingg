@@ -3,6 +3,7 @@ package zingg.common.client;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.rmi.NoSuchObjectException;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -27,23 +28,13 @@ public class TestFieldDefUtil {
 
 
 	@Test
-	public void testMatchTypeFilter() {
-			IArguments args;
-            try {
-                args = argumentService.loadArguments(getClass().getResource("../../../testArguments/configTestDontUse.json").getFile());
-                List<? extends FieldDefinition> dontUseList = fieldDefUtil.getFieldDefinitionDontUse(args.getFieldDefinition()); 
-                assertEquals(dontUseList.size(), 3);
-                
-                List<? extends FieldDefinition> matchList = fieldDefUtil.getFieldDefinitionToUse(args.getFieldDefinition());
-                assertEquals(matchList.size(), 4);
-                
-            } catch (Exception | ZinggClientException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-				fail("Could not read config");
-            }
-		
+	public void testMatchTypeFilter() throws NoSuchObjectException, ZinggClientException {
+        IArguments args = argumentService.loadArguments(getClass().getResource("../../../testArguments/configTestDontUse.json").getFile());
+        List<? extends FieldDefinition> dontUseList = fieldDefUtil.getFieldDefinitionDontUse(args.getFieldDefinition());
+        assertEquals(dontUseList.size(), 3);
+
+        List<? extends FieldDefinition> matchList = fieldDefUtil.getFieldDefinitionToUse(args.getFieldDefinition());
+        assertEquals(matchList.size(), 4);
 	}
-	
-	
+
 }
