@@ -48,8 +48,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'zinggAI/zingg_community_performance_reports' # The target repository (e.g., MyOrg/MyOtherRepo)
-          env:
-          token: ${{ secrets.GH_PERF_COMMUNITY_ACTION }} # U
       - name: download and execute py script
         run: |
           wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
@@ -59,7 +57,7 @@ jobs:
         if: always()
         run: |
           cd zingg_community_performance_reports
-          git remote set-url origin https://x-access-token:${{ secrets.GH_PERF_COMMUNITY_ACTION }}@github.com/zinggAI/zingg_community_performance_reports.git
+          git remote set-url origin https://${{ secrets.GH_PERF_COMMUNITY_ACTION }}@github.com/zinggAI/zingg_community_performance_reports.git
           git config user.name sonalgoyal
           git config user.email sonalgoyal4@gmail.com
           git add perf_test/perf_test_report/*.json
