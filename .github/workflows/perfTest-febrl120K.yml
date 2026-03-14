@@ -26,9 +26,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'zinggAI/zingg_community_performance_reports' # The target repository (e.g., MyOrg/MyOtherRepo)
-          path: zingg_community_performance_reports
+          path: repos/zingg_community_performance_reports
       - name: checkout repo content
         uses: actions/checkout@v4
+        path: repos/zingg
         # checkout the repository content to github runner.
       - name: Load Spark config
         id: cfg
@@ -64,8 +65,8 @@ jobs:
           wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
           echo "ls ~/work/zingg/"
           ls -al ~/work/zingg/
-          echo "ls ~/work/"
-          ls -al ~/work/
+          echo "ls ~/work/zingg/zingg"
+          ls -al ~/work/zingg/zingg
           echo "ls ~"
           ls -al ~/
           echo "Running script..."
