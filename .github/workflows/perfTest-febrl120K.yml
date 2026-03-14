@@ -12,7 +12,7 @@ jobs:
       SPARK_MASTER: local[*]
       ZINGG_HOME: assembly/target
       ZINGG_USER: zingg_user
-      INPUT: "~/zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
+      INPUT: "~/work/zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
     steps:
       - name: Clone performance reports repo
         uses: actions/checkout@v4
@@ -53,8 +53,8 @@ jobs:
           echo "0 ls"
           ls -al
           wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
-          echo "ls ~/"
-          ls -al ~/
+          echo "ls ~/work/"
+          ls -al ~/work/
           echo "Running script..."
           python perfTestRunner.py
       - name: Commit test results
