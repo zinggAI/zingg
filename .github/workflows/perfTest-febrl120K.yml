@@ -14,13 +14,21 @@ jobs:
       ZINGG_USER: zingg_user
       INPUT: "~/work/zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
     steps:
+      - name: Echo the absolute path
+        run: |
+          # Using the environment variable
+          echo "GITHUB_WORKSPACE env var: $GITHUB_WORKSPACE"
+          # Using the github context
+          echo "github.workspace context: ${{ github.workspace }}"
+          # Echoing the full path to the checked-out directory
+          echo "Full path to checked-out repo: $GITHUB_WORKSPACE/my-repo-dir"
       - name: Clone performance reports repo
         uses: actions/checkout@v4
         with:
           repository: 'zinggAI/zingg_community_performance_reports' # The target repository (e.g., MyOrg/MyOtherRepo)
           path: zingg_community_performance_reports
       - name: checkout repo content
-        uses: actions/checkout@v3 
+        uses: actions/checkout@v4
         # checkout the repository content to github runner.
       - name: Load Spark config
         id: cfg
