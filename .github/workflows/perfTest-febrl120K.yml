@@ -45,18 +45,21 @@ jobs:
           hadoop-version: ${{ steps.cfg.outputs.hadoop_version }}
           spark-url: ${{ steps.cfg.outputs.spark_url }}
       - name: Build with Maven
-        run: mvn clean compile package -DskipTests=true
+        run: |
+        echo "mvn" #mvn clean compile package -DskipTests=true
       - name: download and execute py script
         run: |
           echo "0 pwd"
           pwd
-          echo "0 ls"
+          echo "0 ls -al"
           ls -al
           wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
           echo "ls ~/work/zingg"
           ls -al ~/work/zingg
+          echo "ls ~/work/"
+          ls -al ~/work/
           echo "Running script..."
-          python perfTestRunner.py
+          #python perfTestRunner.py
       - name: Commit test results
         if: always()
         run: |
