@@ -12,25 +12,10 @@ jobs:
       SPARK_MASTER: local[*]
       ZINGG_HOME: assembly/target
       ZINGG_USER: zingg_user
-      INPUT: "~/work/zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
+      INPUT: "zingg_community_performance_reports/perf_test/perfTestInput_ncVoters5M.json"
     steps:
-      - name: Echo the absolute path
-        run: |
-          # Using the environment variable
-          echo "GITHUB_WORKSPACE env var: $GITHUB_WORKSPACE"
-          # Using the github context
-          echo "github.workspace context: ${{ github.workspace }}"
-          # Echoing the full path to the checked-out directory
-          echo "Full path to checked-out repo: $GITHUB_WORKSPACE/my-repo-dir"
-      - name: Clone performance reports repo
-        uses: actions/checkout@v4
-        with:
-          repository: 'zinggAI/zingg_community_performance_reports' # The target repository (e.g., MyOrg/MyOtherRepo)
-          path: repos/zingg_community_performance_reports
       - name: checkout repo content
-        uses: actions/checkout@v4
-        path: repos/zingg
-        # checkout the repository content to github runner.
+        uses: actions/checkout@v3 # checkout the repository content to github runner.
       - name: Load Spark config
         id: cfg
         run: |
@@ -53,29 +38,29 @@ jobs:
           spark-version: ${{ steps.cfg.outputs.spark_version }}
           hadoop-version: ${{ steps.cfg.outputs.hadoop_version }}
           spark-url: ${{ steps.cfg.outputs.spark_url }}
+      - name: check spark
+        run: spark-submit --version
+      - name: mvn clean
+        run: mvn clean
       - name: Build with Maven
+        run: mvn clean compile package -DskipTests=true
+      - name: Clone performance reports repo
         run: |
-          echo "mvn" #mvn clean compile package -DskipTests=true
+          set -e #Exit immediately if a command exits with a non-zero status.
+          echo "Cloning performance reports repo..."
+          git clone https://x-access-token:${{ secrets.GH_PERF_COMMUNITY_ACTION }}@github.com/zinggAI/zingg_community_performance_reports.git
+          echo "Listing inside cloned repo:"
+          ls -al zingg_community_performance_reports || true
       - name: download and execute py script
         run: |
-          echo "0 pwd"
-          pwd
-          echo "0 ls -al"
-          ls -al
           wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
-          echo "ls ~/work/zingg/"
-          ls -al ~/work/zingg/
-          echo "ls ~/work/zingg/zingg"
-          ls -al ~/work/zingg/zingg
-          echo "ls ~"
-          ls -al ~/
           echo "Running script..."
-          #python perfTestRunner.py
+          python perfTestRunner.py
       - name: Commit test results
         if: always()
         run: |
           cd zingg_community_performance_reports
-          git remote set-url origin https://${{ secrets.GH_PERF_COMMUNITY_ACTION }}@github.com/zinggAI/zingg_community_performance_reports.git
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PERF_COMMUNITY_ACTION }}@github.com/zinggAI/zingg_community_performance_reports.git
           git config user.name sonalgoyal
           git config user.email sonalgoyal4@gmail.com
           git add perf_test/perf_test_report/*.json
