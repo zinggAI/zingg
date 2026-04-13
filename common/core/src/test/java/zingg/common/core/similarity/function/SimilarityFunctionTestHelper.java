@@ -13,7 +13,7 @@ public class SimilarityFunctionTestHelper {
     }
 
     /**
-     * Test null and empty handling - used by ALL similarity functions.
+     * Test null and empty handling.
      */
     public static void testNullAndEmptyHandling(SimilarityFunction function) {
         assertEquals(1d, function.call(null, null), "Both null should return 1.0");
@@ -25,7 +25,7 @@ public class SimilarityFunctionTestHelper {
     }
 
     /**
-     * Test exact matches - used by ALL similarity functions.
+     * Test exact matches.
      */
     public static void testExactMatches(SimilarityFunction function) {
         assertEquals(1d, function.call("test", "test"), "Exact match should return 1.0");
