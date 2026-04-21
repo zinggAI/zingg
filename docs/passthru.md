@@ -16,4 +16,12 @@ Pass Through Configuration allows such records to appear in the Zingg output but
      "passthroughExpr": "is_deceased = true"
 ```
 
+Note: Zingg internally applies the **negation** of the `passthroughExpr` to filter matching records. If the passthrough condition is being applied on nullable fields, please ensure that the negative of the passthrough expression yields the records which are NOT passthrough. For example:
+
+```json
+     "passthroughExpr": "is_deceased = true AND is_deceased is NOT NULL"
+```
+
+
+
 [^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.
