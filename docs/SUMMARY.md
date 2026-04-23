@@ -56,6 +56,7 @@
 * [Data Sources and Sinks](dataSourcesAndSinks/connectors.md)
   * [Zingg Pipes](dataSourcesAndSinks/pipes.md)
   * [Databricks](dataSourcesAndSinks/databricks.md)
+  * [Microsoft Fabric](dataSourcesAndSinks/fabric.md)
   * [Snowflake](dataSourcesAndSinks/snowflake.md)
   * [JDBC](dataSourcesAndSinks/jdbc.md)
     * [Postgres](connectors/jdbc/postgres.md)
