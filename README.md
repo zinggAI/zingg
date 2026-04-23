@@ -19,7 +19,7 @@ With a modern data stack and DataOps, we have established patterns for E and L i
 
 With Zingg, the analytics engineer and the data scientist can quickly integrate data silos and build unified views at scale!
 
-![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
+![# Zingg - Master Data At Scale with ML](/assets/dataMastering.png)
 
 Besides probabilistic matching, also known as fuzzy matching, Zingg also does deterministic matching, which is useful in identity resolution and householding applications.
 
@@ -27,7 +27,7 @@ Besides probabilistic matching, also known as fuzzy matching, Zingg also does de
 
 ## Why Zingg
 
-Zingg is an ML based tool for entity resolution. The following features set Zingg apart from other tools and libraries: 
+Zingg is an ML based tool for master data management and entity resolution. The following features set Zingg apart from other tools and libraries: 
 - Ability to handle any entity like customer, patient, supplier, product etc 
 - Ability to connect to [disparate data sources](https://docs.zingg.ai/zingg/connectors). Local and cloud file systems in any format, enterprise applications and relational, NoSQL and cloud databases and warehouses
 - Ability to scale to large volumes of data. [See why this is important](https://docs.zingg.ai/zingg/zmodels/) and [Zingg performance numbers](https://docs.zingg.ai/zingg/stepbystep/hardwaresizing)
@@ -37,7 +37,7 @@ Zingg is an ML based tool for entity resolution. The following features set Zing
 - Out of the box support for English as well as Chinese, Thai, Japanese, Hindi and other languages
 
 Zingg is useful for
-- Building unified and trusted views of customers and suppliers across multiple systems
+- Building unified and trusted views of customers and suppliers across multiple systems (Master Data Management) 
 - Large Scale Entity Resolution for AML, KYC and other fraud and compliance scenarios
 - [Deduplication](docs/patient.md) and data quality
 - Identity Resolution 
@@ -89,7 +89,7 @@ Zingg learns 2 models on the data:
 
 1. Blocking Model
 
-One fundamental problem with scaling data mastering is that the number of comparisons increase quadratically as the number of input record increases.
+One fundamental problem with scaling master data management is that the number of comparisons increase quadratically as the number of input record increases.
 ![Data Mastering At Scale](/assets/fuzzymatchingcomparisons.jpg)
 
 
