@@ -12,6 +12,7 @@ import zingg.common.client.pipe.Pipe;
 import zingg.common.client.util.writer.IDFWriter;
 import zingg.common.client.util.writer.WriterStrategy;
 import zingg.common.client.util.writer.WriterStrategyFactory;
+import zingg.spark.client.util.writer.SparkWriterStrategyFactory;
 
 public class SparkDFWriter implements IDFWriter<Dataset<Row>, Row, Column> {
     protected final DataFrameWriter<Row> writer;
@@ -67,7 +68,11 @@ public class SparkDFWriter implements IDFWriter<Dataset<Row>, Row, Column> {
     }
 
     protected WriterStrategyFactory<Dataset<Row>, Row, Column> getWriteStrategyFactory() {
-        return new WriterStrategyFactory<>(this);
+        return new SparkWriterStrategyFactory(this);
+    }
+
+    public DataFrameWriter<Row> getDataFrameWriter() {
+        return writer;
     }
     
 }

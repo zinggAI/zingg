@@ -15,6 +15,7 @@ import zingg.common.client.util.reader.ReadStrategy;
 import zingg.common.client.util.reader.ReadStrategyFactory;
 import zingg.spark.client.SparkFrame;
 import org.apache.spark.sql.SparkSession;
+import zingg.spark.client.util.reader.SparkReadStrategyFactory;
 
 import java.util.Map;
 
@@ -62,7 +63,7 @@ public class SparkDFReader implements IDFReader<Dataset<Row>, Row, Column> {
     }
 
     protected ReadStrategy<Dataset<Row>, Row, Column> getReadStrategy(Pipe<Dataset<Row>, Row, Column> pipe) {
-        return new ReadStrategyFactory<Dataset<Row>, Row, Column>().getStrategy(pipe);
+        return new SparkReadStrategyFactory().getStrategy(pipe);
     }
 
     protected void initializeReaderForPipe(Pipe<Dataset<Row>, Row, Column> pipe) {
@@ -80,5 +81,7 @@ public class SparkDFReader implements IDFReader<Dataset<Row>, Row, Column> {
         }
         this.option("mode", "PERMISSIVE");
     }
-
+    public DataFrameReader getDataFrameReader() {
+        return reader;
+    }
 }
