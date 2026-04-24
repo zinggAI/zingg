@@ -33,6 +33,7 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	public static final String FORMAT_ELASTIC = "org.elasticsearch.spark.sql";
 	public static final String FORMAT_EXASOL = "com.exasol.spark";
 	public static final String FORMAT_BIGQUERY = "bigquery";
+	public static final String FORMAT_UNITYCATALOG = "delta";
 
 	String name;
 	String format;

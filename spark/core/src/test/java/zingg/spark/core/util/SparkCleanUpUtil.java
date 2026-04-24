@@ -1,6 +1,12 @@
 package zingg.spark.core.util;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Comparator;
+import java.util.stream.Stream;
 
 import org.apache.spark.sql.SparkSession;
 
@@ -21,12 +27,26 @@ public class SparkCleanUpUtil implements ICleanUpUtil<SparkSession> {
     public boolean performCleanup(SparkSession session, TestType testType, String modelId) {
         try {
             String suffix = TestType.SINGLE.equals(testType) ? SINGLE_TEST_DIR : COMPOUND_TEST_DIR;
-            File dir = new File(JUNIT_DIR + "/" + suffix);
-            /* force delete since we want to make sure
-            * dir gets deleted even if it is non-empty*/
-            dir.delete();
+            Path path = Paths.get(JUNIT_DIR, suffix);
+
+            if (!Files.exists(path)) {
+                return true;
+            }
+
+            try (Stream<Path> walk = Files.walk(path)) {
+                walk.sorted(Comparator.reverseOrder())
+                        .forEach(p -> {
+                            try {
+                                Files.delete(p);
+                            } catch (IOException e) {
+                                throw new UncheckedIOException(e);
+                            }
+                        });
+            }
+
             return true;
-        } catch (Exception exception) {
+
+        } catch (IOException | UncheckedIOException e) {
             return false;
         }
     }
