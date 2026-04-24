@@ -1,7 +1,6 @@
 package zingg.common.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.rmi.NoSuchObjectException;
 import java.util.List;
