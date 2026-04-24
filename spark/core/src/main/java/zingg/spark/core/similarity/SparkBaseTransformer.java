@@ -60,7 +60,7 @@ public abstract class SparkBaseTransformer extends Transformer implements HasInp
 	@Override	
 	public Dataset<Row> transform(Dataset<?> ds){
 		//LOG.debug("transforming dataset for " + uid);
-		transformSchema(ds.schema());
+		//transformSchema(ds.schema());
 		return ds.withColumn(getOutputCol(), 
 				functions.callUDF(this.uid, ds.col(getInputCol()), 
 						ds.col(ColName.COL_PREFIX + getInputCol())));

@@ -80,6 +80,11 @@
 		<exclude>com.fasterxml.jackson.core:jackson-core:jar:2.12.0</exclude>
 		<exclude>com.fasterxml.jackson*:*</exclude>
 		<exclude>org.codehaus.jackson:*</exclude>
+		<exclude>org.apache.httpcomponents:*</exclude>
+		<exclude>org.apache.commons:*</exclude>
+		<exclude>commons-beanutils:*</exclude>
+		<exclude>commons-codec:*</exclude>
+		<exclude>com.thoughtworks.paranamer:*</exclude>
 		<exclude>org.scala-lang:*</exclude>
 		<exclude>sonal</exclude>
 		<exclude>*:jar:*</exclude>

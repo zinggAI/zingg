@@ -29,8 +29,7 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 			processRecordsCli(markedRecords);
 			LOG.info("Finished updataLabelling phase");
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ZinggClientException(e.getMessage());
+			throw new ZinggClientException("Error while updating labels: ", e);
 		}
 	}
 
@@ -49,9 +48,6 @@ public abstract class LabelUpdater<S,D,R,C,T> extends Labeller<S,D,R,C,T> {
 			try {
 				return update(lines);
 			} catch (Exception e) {
-				if (LOG.isDebugEnabled()) {
-					e.printStackTrace();
-				}
 				LOG.warn("An error has occured while Updating Label. " + e.getMessage());
 				throw new ZinggClientException("An error while updating label", e);
 			}

@@ -1,0 +1,46 @@
+26/01/27 20:21:19 INFO ClientOptions: --phase
+26/01/27 20:21:19 INFO ClientOptions: match
+26/01/27 20:21:19 INFO ClientOptions: --conf
+26/01/27 20:21:19 INFO ClientOptions: examples/febrl/config.json
+26/01/27 20:21:19 INFO ClientOptions: --email
+26/01/27 20:21:19 INFO ClientOptions: zingg@zingg.ai
+26/01/27 20:21:19 INFO ClientOptions: --license
+26/01/27 20:21:19 INFO ClientOptions: zinggLicense.txt
+26/01/27 20:21:19 INFO Client: 
+26/01/27 20:21:19 INFO Client: **************************************************************************
+26/01/27 20:21:19 INFO Client: *                                                                        *
+26/01/27 20:21:19 INFO Client: *                                Zingg AI                                *
+26/01/27 20:21:19 INFO Client: *                        (C) 2021 Zingg Labs, Inc.                       *
+26/01/27 20:21:19 INFO Client: *                                                                        *
+26/01/27 20:21:19 INFO Client: *                          https://www.zingg.ai/                         *
+26/01/27 20:21:19 INFO Client: *                                                                        *
+26/01/27 20:21:19 INFO Client: *                        using: Zingg v0.6.0                             *
+26/01/27 20:21:19 INFO Client: *                                                                        *
+26/01/27 20:21:19 INFO Client: *            ** Note about analytics collection by Zingg AI **           *
+26/01/27 20:21:19 INFO Client: *                                                                        *
+26/01/27 20:21:19 INFO Client: *  Please note that Zingg captures a few metrics about application's     *
+26/01/27 20:21:19 INFO Client: *  runtime parameters. However, no personal data or application data     *
+26/01/27 20:21:19 INFO Client: *  is captured. If you want to switch off this feature, please set the   *
+26/01/27 20:21:19 INFO Client: *  flag collectMetrics to false in config. For details, please refer to  *
+26/01/27 20:21:19 INFO Client: *  the Zingg docs (https://docs.zingg.ai/zingg/security).                *
+26/01/27 20:21:19 INFO Client: *                                                                        *
+26/01/27 20:21:19 INFO Client: **************************************************************************
+26/01/27 20:21:19 INFO Client: 
+26/01/27 20:21:20 WARN PipeUtilReader: Reading Pipe [name=test, format=csv, preprocessors=null, props={path=examples/febrl/test.csv, header=false, delimiter=,}]
+26/01/27 20:21:26 INFO Matcher: Read 65
+26/01/27 20:21:26 WARN Blocker: Blocking model location is Pipe [name=null, format=parquet, preprocessors=null, props={path=models/100/model/block/zingg.block}]
+26/01/27 20:21:26 WARN PipeUtilReader: Reading Pipe [name=null, format=parquet, preprocessors=null, props={path=models/100/model/block/zingg.block}]
+26/01/27 20:21:27 INFO Matcher: Blocked 
+26/01/27 20:21:27 INFO ModelUtil: Start reading internal configurations and functions
+26/01/27 20:21:27 INFO ModelUtil: Finished reading internal configurations and functions
+26/01/27 20:21:29 INFO SparkModel: threshold while predicting is 0.5
+26/01/27 20:21:30 WARN CacheManager: Asked to cache already cached data.
+26/01/27 20:21:32 WARN InstanceBuilder: Failed to load implementation from:dev.ludovic.netlib.blas.JNIBLAS
+26/01/27 20:21:37 WARN CacheManager: Asked to cache already cached data.
+26/01/27 20:21:37 WARN GraphMatchOutputBuilder: Dupes with ids 
+26/01/27 20:21:37 WARN GraphMatchOutputBuilder: graph pairs 
+26/01/27 20:21:38 WARN GraphMatchOutputBuilder: graph pairs extra
+26/01/27 20:21:41 WARN PipeUtilWriter: Writing output Pipe [name=output, format=csv, preprocessors=null, props={path=/tmp/zinggOutput, header=true, delimiter=,}]
+26/01/27 20:21:41 WARN BlockManager: Block rdd_284_2 already exists on this machine; not re-adding it
+26/01/27 20:21:43 WARN Client: Zingg processing has completed
+

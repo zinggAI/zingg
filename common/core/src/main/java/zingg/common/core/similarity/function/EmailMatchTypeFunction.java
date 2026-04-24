@@ -45,7 +45,9 @@ public class EmailMatchTypeFunction extends StringSimilarityDistanceFunction {
 			
 			
 		}  catch (Exception e) {
-			e.printStackTrace();
+			if(LOG.isDebugEnabled()) {
+				e.printStackTrace();
+			}
 			LOG.warn("Error processing differences for " + first + "," + second);
 		} finally {
 			if (Double.isNaN(score)) {

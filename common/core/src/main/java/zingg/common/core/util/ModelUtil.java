@@ -45,11 +45,9 @@ public abstract class ModelUtil<S,D,R,C,T> {
 			LOG.info("Finished reading internal configurations and functions");
 			}
 		}
-		catch(Throwable t) {
+		catch(Exception e) {
 			LOG.warn("Unable to initialize internal configurations and functions");
-            t.printStackTrace();
-			if (LOG.isDebugEnabled()) t.printStackTrace();
-			throw new ZinggClientException("Unable to initialize internal configurations and functions");
+			throw new ZinggClientException("Unable to initialize internal configurations and functions", e);
 		}
 	}
 

@@ -46,8 +46,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 			}
 			LOG.info("Finished labelling phase");
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ZinggClientException(e.getMessage());
+			throw new ZinggClientException("Error in labelling phase ", e);
 		}
 	}
 
@@ -133,9 +132,6 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 				LOG.warn("Processing finished.");
 				return updatedRecords;
 			} catch (Exception e) {
-				if (LOG.isDebugEnabled()) {
-					e.printStackTrace();
-				}
 				LOG.warn("Labelling error has occured " + e.getMessage());
 				throw new ZinggClientException("An error has occured while Labelling.", e);
 			}

@@ -21,7 +21,7 @@ public class InputDataGetter<S,D,R,C> implements IDataGetter<S,D,R,C>{
     }
 
     public ZFrame<D,R,C>  getTestData(IArguments args) throws ZinggClientException{
-		 ZFrame<D,R,C>  data = pipeUtil.read(true, true, args.getNumPartitions(), true, args.getData());
+		ZFrame<D,R,C>  data = pipeUtil.read(true, true, args.getNumPartitions(), true, args.getData());
 		return data;
 	}
 

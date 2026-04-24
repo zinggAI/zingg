@@ -18,7 +18,7 @@ import zingg.common.core.context.IContext;
 public abstract class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T> {
 	protected static String name = "zingg.DataDocumenter";
 	public static String TEMPLATE_TITLE = "Data Documentation";
-	private final String DATA_DOC_TEMPLATE = "dataDocTemplate.ftlh";
+	protected final String DATA_DOC_TEMPLATE = "dataDocTemplate.ftlh";
 
 	public static final Log LOG = LogFactory.getLog(DataDocumenter.class);
 	protected  ZFrame<D,R,C>  data;
@@ -46,8 +46,7 @@ public abstract class DataDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,T
 			}
 			LOG.info("Data document generation finishes");
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ZinggClientException(e.getMessage());
+			throw new ZinggClientException("Error while documenting data ", e);
 		}
 	}
 

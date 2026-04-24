@@ -15,11 +15,11 @@ This is the latest documentation for Zingg. Release wise documentation can be ac
 
 Data silos hurt all business functions - customer analytics, supplier consolidation, risk and compliance, and sales and marketing.
 
-![Data Silos](../assets/dataSilos.png)
+![Data Silos](.gitbook/assets/dataSilos.png)
 
 Zingg is a quick and scalable way to build a single source of truth for core business entities. With Zingg, the analytics engineer and the data scientist can quickly integrate data silos and build unified views at scale!
 
-![# Zingg - Data Mastering At Scale with ML](../assets/dataMastering.png)
+![# Zingg - Data Mastering At Scale with ML](.gitbook/assets/dataMastering.png)
 
 <figure><img src="https://static.scarf.sh/a.png?x-pxid=b96858f2-6fe2-4fdf-a68b-946527ca3daf" alt=""><figcaption></figcaption></figure>
 

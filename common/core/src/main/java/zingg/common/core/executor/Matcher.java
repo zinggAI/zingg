@@ -2,12 +2,11 @@ package zingg.common.core.executor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import zingg.common.client.ClientOptions;
-import zingg.common.client.arguments.model.IArguments;
-import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.arguments.model.IArguments;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.cols.ISelectedCols;
 import zingg.common.client.cols.PredictionColsSelector;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
@@ -148,7 +147,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		return dupes;
 	}
 
-	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
+	public ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
 		return getActualDupes(blocked, testData, getPredictionFilter(), getIPairBuilder(), getPredictionColsSelector());
 	}
 
@@ -179,7 +178,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			// read input, filter, remove self joins
 			ZFrame<D,R,C>  testDataOriginal = getTestData();
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
-			ZFrame<D,R,C>  testData = preprocess(testDataOriginal);
+			ZFrame<D,R,C>  testData = preprocess(testDataOriginal).cache();
 			//testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
 			long count = testData.count();
@@ -201,9 +200,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			writeOutput(getOutput(testDataOriginal, dupesActual));		
 			
 		} catch (Exception e) {
-			if (LOG.isDebugEnabled()) e.printStackTrace();
-			e.printStackTrace();
-			throw new ZinggClientException(e.getMessage());
+			throw new ZinggClientException("Error in matching phase ", e);
 		}
     }
 
@@ -234,8 +231,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		}
 		}
 		catch(Exception e) {
-			e.printStackTrace();
-            throw new ZinggClientException("Exception occurred while getting output, " + e.getMessage());
+            throw new ZinggClientException("Exception occurred while getting output, ", e);
 		}
 		
 	}

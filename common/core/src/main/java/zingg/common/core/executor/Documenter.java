@@ -31,8 +31,7 @@ public abstract class Documenter<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> {
 
 			LOG.info("Documenter finishes");
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ZinggClientException(e.getMessage());
+			throw new ZinggClientException("Error in documenting phase ", e);
 		}
 	}
 	
