@@ -51,7 +51,7 @@ The `MAPPING` match type can also be used to transform and normalise categorical
 ]  
 </code></pre>
 
-When we use it for the gender field like below, Zingg would automatically handle the transfomration so that you dont have to.&#x20;
+When we use it for the gender field like below, Zingg would automatically handle the transformation so that you don't have to.&#x20;
 
 ```
 "fieldDefinition":[
