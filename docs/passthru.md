@@ -16,24 +16,12 @@ Pass Through Configuration allows such records to appear in the Zingg output but
      "passthroughExpr": "is_deceased = true"
 ```
 
-### For Nullable Columns
-
-In many datasets, certain records may have missing or empty values in key fields such as `fName`. These records are not suitable for matching but should still be preserved in the final output for completeness and governance purposes.
-
-**Important**: Zingg internally applies the **negation** of the `passthroughExpr` to filter matching records. Therefore, you should specify the condition for records you want to **KEEP for matching**, not the ones you want to skip.
-
-#### Example:
-
-To **skip** the records where `fName = 'madison'` for matching:
+Note: Zingg internally applies the **negation** of the `passthroughExpr` to filter matching records. If the passthrough condition is being applied on nullable fields, please ensure that the negative of the passthrough expression yields the records which are NOT passthrough. For example:
 
 ```json
-"passthroughExpr": "fName = 'madison' And fName IS NOT NULL"
+     "passthroughExpr": "is_deceased = true AND is_deceased is NOT NULL"
 ```
-**How it works:**
-- Zingg applies the negation: `NOT (fName = 'madison' AND fName IS NOT NULL)`
-- Which simplifies to: `fName != 'madison' OR fName IS NULL`
-- Records where `fName != 'madison'` and not null → **Included in matching**
-- All other records → **Pass through only** (excluded from matching)
 
-[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.**
 
+
+[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.
