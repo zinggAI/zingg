@@ -1,27 +1,26 @@
 package zingg.spark.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.jupiter.api.Test;
+import zingg.common.client.FieldDefinition;
+import zingg.common.client.IMatchType;
+import zingg.common.client.MatchTypes;
+import zingg.common.client.ZinggClientException;
+import zingg.common.client.arguments.ArgumentServiceImpl;
+import zingg.common.client.arguments.IArgumentService;
+import zingg.common.client.arguments.loader.LoaderFactory;
+import zingg.common.client.arguments.model.Arguments;
+import zingg.common.client.arguments.model.IArguments;
+import zingg.common.client.arguments.writer.WriterFactory;
+import zingg.common.client.pipe.Pipe;
+import zingg.spark.client.pipe.SparkPipe;
 
 import java.rmi.NoSuchObjectException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.junit.jupiter.api.Test;
-
-import zingg.common.client.arguments.ArgumentServiceImpl;
-import zingg.common.client.arguments.IArgumentService;
-import zingg.common.client.arguments.loader.LoaderFactory;
-import zingg.common.client.arguments.model.Arguments;
-import zingg.common.client.FieldDefinition;
-import zingg.common.client.arguments.model.IArguments;
-import zingg.common.client.IMatchType;
-import zingg.common.client.MatchTypes;
-import zingg.common.client.ZinggClientException;
-import zingg.common.client.arguments.writer.WriterFactory;
-import zingg.common.client.pipe.Pipe;
-import zingg.spark.client.pipe.SparkPipe;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestArguments {
 
@@ -62,7 +61,7 @@ public class TestArguments {
 			args.setBlockSize(400L);
 			args.setCollectMetrics(true);
 			args.setModelId("500");
-			argumentService.loadArguments("/tmp/configFromArgObject.json");
+			argumentService.writeArguments("/tmp/configFromArgObject.json", args);
 
 			//reload the same config file to check if deserialization is successful
 			IArguments newArgs = argumentService.loadArguments("/tmp/configFromArgObject.json");
