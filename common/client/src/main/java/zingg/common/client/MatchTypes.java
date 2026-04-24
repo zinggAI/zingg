@@ -48,7 +48,7 @@ public class MatchTypes {
                 return zo; 
             }
         } 
-        return null; 
+        throw new Exception("Invalid match type: " + name); 
     } 
     
 }
