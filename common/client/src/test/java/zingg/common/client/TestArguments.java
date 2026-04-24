@@ -100,7 +100,6 @@ public class TestArguments {
 
 	@Test
 	public void testInvalidEnvVarBooleanType() throws IOException {
-//		try {
 
 		Map<String, String> env = new HashMap<>();
 		env.put(KEY_HEADER, "someValue");
@@ -215,8 +214,11 @@ public class TestArguments {
 	}
 
 	@Test
-	public void testMatchTypeWrong() throws NoSuchObjectException, ZinggClientException {
-			IArguments args = argumentService.loadArguments(getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile());
+	public void testMatchTypeWrong() {
+		assertThrows(ZinggClientException.class, () -> {
+			argumentService.loadArguments(
+					getClass().getResource("../../../testArguments/configWithMultipleMatchTypesUnsupported.json").getFile());
+		});
 	}
 
 	@Test
