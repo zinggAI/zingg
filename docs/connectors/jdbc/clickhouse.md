@@ -49,8 +49,5 @@ Download the `clickhouse-jdbc-0.9.8-all.jar` and add its path to `config/zingg.c
 spark.jars=/path/to/clickhouse-jdbc-0.9.8-all.jar
 ```
 
-### Align Schema Names
-Ensure that the `fieldName` in your Zingg `fieldDefinition` matches the Column Names in your ClickHouse table exactly (e.g., if the column is `fname`, the Zingg field must be `fname`).
-
 ### Port
 Use port `8443` for ClickHouse Cloud (HTTPS) or `8123` for local HTTP instances.
