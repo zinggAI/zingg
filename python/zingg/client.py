@@ -700,7 +700,7 @@ class Arguments:
         :rtype: pointer(Arguments)
         """
         obj = Arguments()
-        obj.args = getJVM().zingg.common.client.argumentst.ArgumentServiceImpl().loadArguments(fileName)
+        obj.args = getJVM().zingg.common.client.arguments.ArgumentServiceImpl().loadArguments(fileName)
         return obj
 
 
