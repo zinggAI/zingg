@@ -45,7 +45,7 @@ public class ArgumentServiceImpl<A extends IZArgs> implements IArgumentService<A
 
     @Override
     public void writeArguments(String path, IZArgs args) throws ZinggClientException, NoSuchObjectException {
-        ArgumentsWriter<A> argumentsWriter = writerFactory.getArgumentsWriter(WriterType.JSON);
+        ArgumentsWriter<A> argumentsWriter = writerFactory.getArgumentsWriter(WriterType.FILE);
         argumentsWriter.write(path, args);
     }
 

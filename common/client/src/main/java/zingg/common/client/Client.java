@@ -59,7 +59,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
     	setOptions(options);
 		try {
 			buildAndSetArguments(args, options);
-			setZingg(args, options);					
+			setZingg(options);
 		}
 		catch (Exception e) {
 			throw new ZinggClientException("An error has occured while setting up the client", e);
@@ -91,14 +91,14 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	
 
 
-	public void setZingg(IZArgs args, ClientOptions options) throws Exception{
+	public void setZingg(ClientOptions options) throws Exception{
 		IZinggFactory zf = getZinggFactory();
 		try{
 			setZingg(zf.get(ZinggOptions.getByValue(options.get(ClientOptions.PHASE).value.trim())));
 		}
 		catch(Exception e) {
-			//set default
-			setZingg(zf.get(ZinggOptions.getByValue(ZinggOptions.PEEK_MODEL.getName())));
+			LOG.error("Error creating zingg instance for phase " + options.get(ClientOptions.PHASE).value.trim(), e);
+			throw e;
 		}
 	}
 	

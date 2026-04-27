@@ -43,7 +43,6 @@
     * [Using Pre-existing Training Data](setup/training/addOwnTrainingData.md)
     * [Updating Labeled Pairs](updatingLabels.md)
     * [Documenting The Training Data](stepbystep/createtrainingdata/generatingdocumentation.md)
-    * [Exporting Labeled Data](setup/training/exportLabeledData.md)
     * [Model Difference](stepbystep/createtrainingdata/modeldiff.md)
   * [Ensuring Scalability](verifyBlocking.md)
   * [Building And Saving The Model](setup/train.md)
