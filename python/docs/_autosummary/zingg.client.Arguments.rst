@@ -17,9 +17,6 @@
       :nosignatures:
    
       ~Arguments.__init__
-      ~Arguments.copyArgs
-      ~Arguments.createArgumentsFromJSON
-      ~Arguments.createArgumentsFromJSONString
       ~Arguments.getArgs
       ~Arguments.getModelId
       ~Arguments.getZinggBaseModelDir
@@ -38,8 +35,6 @@
       ~Arguments.setStopWordsCutoff
       ~Arguments.setTrainingSamples
       ~Arguments.setZinggDir
-      ~Arguments.writeArgumentsToJSON
-      ~Arguments.writeArgumentsToJSONString
    
    
 

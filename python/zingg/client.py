@@ -688,22 +688,6 @@ class Arguments:
         """
         self.args.setColumn(column)
 
-    @staticmethod
-    def createArgumentsFromJSON(fileName, phase):
-        """Method to create an object of this class from the JSON file and phase parameter value.
-
-        :param fileName: The CONF parameter value of ClientOption object
-        :type fileName: String
-        :param phase: The PHASE parameter value of ClientOption object
-        :type phase: String
-        :return: The pointer containing address of the this class object
-        :rtype: pointer(Arguments)
-        """
-        obj = Arguments()
-        obj.args = getJVM().zingg.common.client.arguments.ArgumentServiceImpl().loadArguments(fileName)
-        return obj
-
-
 class ClientOptions:
     """Class that contains Client options for Zingg object
     :param phase: trainMatch, train, match, link, findAndLabel, findTrainingData, recommend etc

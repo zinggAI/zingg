@@ -473,16 +473,6 @@ class ArgumentsTest(TestCase):
         actual_stopWordsCutoff = java_args.getStopWordsCutoff()
         
         self.assertEqual(actual_stopWordsCutoff, stopWordsCutoff)
-    
-    def test_createArgumentsFromJSON(self):
-        fileName = "examples/febrl/config.json"
-        phase = "label"
-
-        obj = args.createArgumentsFromJSON(fileName, phase)
-        print("JSON file content:", obj)
-        print("Phase:", phase)
-
-        self.assertIsInstance(obj, Arguments)
 
 class TestClientOptions(TestCase):
 
