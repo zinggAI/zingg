@@ -17,9 +17,6 @@ This class helps supply match arguments to Zingg. There are 3 basic steps in any
 
 | [`__init__`](#zingg.client.Arguments.__init__)                                               |                                                                                                                                                                                                                                                                                                             |
 |----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `copyArgs`                                                                                   |                                                                                                                                                                                                                                                                                                             |
-| [`createArgumentsFromJSON`](#zingg.client.Arguments.createArgumentsFromJSON)                 | Method to create an object of this class from the JSON file and phase parameter value.                                                                                                                                                                                                                      |
-| `createArgumentsFromJSONString`                                                              |                                                                                                                                                                                                                                                                                                             |
 | [`getArgs`](#zingg.client.Arguments.getArgs)                                                 | Method to get pointer address of this class                                                                                                                                                                                                                                                                 |
 | `getModelId`                                                                                 |                                                                                                                                                                                                                                                                                                             |
 | `getZinggBaseModelDir`                                                                       |                                                                                                                                                                                                                                                                                                             |
@@ -38,22 +35,8 @@ This class helps supply match arguments to Zingg. There are 3 basic steps in any
 | [`setStopWordsCutoff`](#zingg.client.Arguments.setStopWordsCutoff)                           | Method to set stopWordsCutoff parameter value By default, Zingg extracts 10% of the high frequency unique words from a dataset.                                                                                                                                                                             |
 | [`setTrainingSamples`](#zingg.client.Arguments.setTrainingSamples)                           | Method to set existing training samples to be matched.                                                                                                                                                                                                                                                      |
 | [`setZinggDir`](#zingg.client.Arguments.setZinggDir)                                         | Method to set the location for Zingg to save its internal computations and models.                                                                                                                                                                                                                          |
-| [`writeArgumentsToJSON`](#zingg.client.Arguments.writeArgumentsToJSON)                       | Method to write JSON file from the object of this class                                                                                                                                                                                                                                                     |
-| [`writeArgumentsToJSONString`](#zingg.client.Arguments.writeArgumentsToJSONString)           | Method to create an object of this class from the JSON file and phase parameter value.                                                                                                                                                                                                                      |
-
 #### \_\_init_\_()
 
-#### *static* createArgumentsFromJSON(fileName, phase)
-
-Method to create an object of this class from the JSON file and phase parameter value.
-
-* **Parameters:**
-  * **fileName** (*String*) – The CONF parameter value of ClientOption object
-  * **phase** (*String*) – The PHASE parameter value of ClientOption object
-* **Returns:**
-  The pointer containing address of the this class object
-* **Return type:**
-  pointer([Arguments](#zingg.client.Arguments))
 
 #### getArgs()
 
@@ -159,22 +142,3 @@ Method to set the location for Zingg to save its internal computations and model
 
 * **Parameters:**
   **f** (*String*) – Zingg directory name of the models
-
-#### writeArgumentsToJSON(fileName)
-
-Method to write JSON file from the object of this class
-
-* **Parameters:**
-  **fileName** (*String*) – The CONF parameter value of ClientOption object or file address of json file
-
-#### writeArgumentsToJSONString()
-
-Method to create an object of this class from the JSON file and phase parameter value.
-
-* **Parameters:**
-  * **fileName** (*String*) – The CONF parameter value of ClientOption object
-  * **phase** (*String*) – The PHASE parameter value of ClientOption object
-* **Returns:**
-  The pointer containing address of the this class object
-* **Return type:**
-  pointer([Arguments](#zingg.client.Arguments))
