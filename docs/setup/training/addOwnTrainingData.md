@@ -17,6 +17,4 @@ Here, the first column specifies the z_cluster, the second column specifies the 
 
 The above training data can be specified using [trainingSamples attribute in the configuration.](../../../examples/febrl/configWithTrainingSamples.json)
 
-In addition, labeled data of one model can also be exported and used as training data for another model. For details, check out [exporting labeled data](exportLabeledData.md).
-
 **Note**: It is advisable to still run [findTrainingData](findTrainingData.md) and [label](label.md) a few rounds to tune Zingg with the supplied training data as well as patterns it needs to learn independently.
