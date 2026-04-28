@@ -35,8 +35,8 @@ This class helps supply match arguments to Zingg. There are 3 basic steps in any
 | [`setStopWordsCutoff`](#zingg.client.Arguments.setStopWordsCutoff)                           | Method to set stopWordsCutoff parameter value By default, Zingg extracts 10% of the high frequency unique words from a dataset.                                                                                                                                                                             |
 | [`setTrainingSamples`](#zingg.client.Arguments.setTrainingSamples)                           | Method to set existing training samples to be matched.                                                                                                                                                                                                                                                      |
 | [`setZinggDir`](#zingg.client.Arguments.setZinggDir)                                         | Method to set the location for Zingg to save its internal computations and models.                                                                                                                                                                                                                          |
-#### \_\_init_\_()
 
+#### \_\_init_\_()
 
 #### getArgs()
 
