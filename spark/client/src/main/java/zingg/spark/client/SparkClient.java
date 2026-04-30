@@ -30,21 +30,34 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 	private JavaSparkContext javaSparkContext;
 
 	public SparkClient(IZArgs args, ClientOptions options) throws ZinggClientException {
-		super(args, options, zFactoryClassName);
-		
+		this(args, options, zFactoryClassName);
 	}
 	
 
 	public SparkClient(IZArgs args, ClientOptions options, SparkSession s) throws ZinggClientException {
-		super(args, options, s, zFactoryClassName);
-		Analytics.track(Metric.IS_PYTHON, "true", args.getCollectMetrics());
+		this(args, options, s, zFactoryClassName);
 	}
 
 	
 	public SparkClient() {
-		super(zFactoryClassName);
+		this(zFactoryClassName);
 	}
 
+	public SparkClient(IZArgs args, ClientOptions options, String zFactoryClassName) throws ZinggClientException {
+		super(args, options, zFactoryClassName);
+
+	}
+
+
+	public SparkClient(IZArgs args, ClientOptions options, SparkSession s, String zFactoryClassName) throws ZinggClientException {
+		super(args, options, s, zFactoryClassName);
+		Analytics.track(Metric.IS_PYTHON, "true", args.getCollectMetrics());
+	}
+
+
+	public SparkClient(String zFactoryClassName) {
+		super(zFactoryClassName);
+	}
 
 	@Override
 	public Client<SparkSession, Dataset<Row>, Row, Column, DataType> getClient(IZArgs args, 
