@@ -4,7 +4,7 @@ package zingg.common.client;
 public interface IZinggModelInfo<S,D,R,C> {
     ZFrame<D,R,C>  getMarkedRecords();
 
-    ZFrame<D,R,C>  getUnmarkedRecords();
+    ZFrame<D,R,C>  getUnmarkedRecords() throws ZinggClientException;
 
     Long getMarkedRecordsStat(ZFrame<D, R, C> markedRecords, long value);
 

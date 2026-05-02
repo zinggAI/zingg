@@ -100,7 +100,7 @@ public abstract class ZinggBase<S,D, R, C, T> extends ZinggBaseCommon<S, D, R, C
         }
 	}
 
-	public ZFrame<D,R,C> getUnmarkedRecords(){
+	public ZFrame<D,R,C> getUnmarkedRecords() throws ZinggClientException {
         try{
             ZFrame<D,R,C> unmarkedRecords = null;
             ZFrame<D,R,C> markedRecords = null;

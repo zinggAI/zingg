@@ -1,7 +1,6 @@
 package zingg.common.core.executor;
 
 import java.util.List;
-import java.util.Scanner;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +14,7 @@ import zingg.common.client.options.ZinggOptions;
 import zingg.common.client.util.ColName;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.preprocess.IPreprocessors;
+import zingg.common.core.util.CLIReader;
 import zingg.common.core.util.LabellerUtil;
 
 public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements IPreprocessors<S,D,R,C,T> {
@@ -26,14 +26,18 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 	public static final Log LOG = LogFactory.getLog(Labeller.class);
 	protected ITrainingDataModel<S, D, R, C> trainingDataModel;
 	protected ILabelDataViewHelper<S, D, R, C> labelDataViewHelper;
+	protected LabellerUtil<D, R, C> labellerUtil;
 	
 	public Labeller() {
 		setZinggOption(ZinggOptions.LABEL);
+		this.trainingDataModel = new TrainingDataModel<S, D, R, C, T>(getContext(), getClientOptions());
+		this.labelDataViewHelper = new LabelDataViewHelper<S,D,R,C,T>(getContext(), getClientOptions());
+		this.labelDataViewHelper.initVerticalDisplayUtility(getDfObjectUtil());
+		this.labellerUtil = new LabellerUtil<D, R, C>();
 	}
 
 	public void execute() throws ZinggClientException {
 		try {
-			LabellerUtil<D, R, C> labellerUtil = new LabellerUtil<D, R, C>();
 			LOG.info("Reading inputs for labelling phase ...");
 			getTrainingDataModel().setMarkedRecordsStat(getMarkedRecords());
 			ZFrame<D,R,C>  unmarkedRecords = getUnmarkedRecords();
@@ -50,29 +54,25 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 		}
 	}
 
-	
-	public ZFrame<D,R,C> getUnmarkedRecords() {
+
+	public ZFrame<D,R,C> getUnmarkedRecords() throws ZinggClientException {
 		ZFrame<D,R,C> unmarkedRecords = null;
 		ZFrame<D,R,C> markedRecords = null;
 		try {
 			unmarkedRecords = getPipeUtil().read(false, false, getModelHelper().getTrainingDataUnmarkedPipe(args));
 			try {
 				markedRecords = getPipeUtil().read(false, false, getModelHelper().getTrainingDataMarkedPipe(args));
-			} catch (Exception e) {
+			} catch (Exception | ZinggClientException e) {
 				LOG.warn("No record has been marked yet");
-			} catch (ZinggClientException zce) {
-					LOG.warn("No record has been marked yet");
-			}			
-			if (markedRecords != null ) {
+			}
+            if (markedRecords != null ) {
 				unmarkedRecords = unmarkedRecords.join(markedRecords,ColName.CLUSTER_COLUMN, false,
 						"left_anti");
 				getTrainingDataModel().setMarkedRecordsStat(markedRecords);
-			} 
-		} catch (Exception e) {
+			}
+		} catch (Exception | ZinggClientException e) {
 			LOG.warn("No unmarked record for labelling");
-		} catch (ZinggClientException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			throw new ZinggClientException(e);
 		}
 		return unmarkedRecords;
 	}
@@ -144,30 +144,11 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 	
 	protected int displayRecordsAndGetUserInput(ZFrame<D,R,C> records, String preMessage, String postMessage) throws ZinggClientException {
 		getLabelDataViewHelper().displayRecords(records, preMessage, postMessage);
-		int selection = readCliInput();
-		return selection;
-	}
-
-
-	int readCliInput() {
-		Scanner sc = new Scanner(System.in);
-
-		while (!sc.hasNext("[0129]")) {
-			sc.next();
-			System.out.println("Nope, please enter one of the allowed options!");
-		}
-		String word = sc.next();
-		int selection = Integer.parseInt(word);
-		// sc.close();
-
-		return selection;
+        return CLIReader.readCliInput();
 	}
 
 	@Override
-	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() {	
-		if (trainingDataModel==null) {
-			this.trainingDataModel = new TrainingDataModel<S, D, R, C, T>(getContext(), getClientOptions());
-		}
+	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() {
 		return trainingDataModel;
     }
 
@@ -177,10 +158,6 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 
 	
 	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() {
-		if(labelDataViewHelper==null) {
-			labelDataViewHelper = new LabelDataViewHelper<S,D,R,C,T>(getContext(), getClientOptions());
-			labelDataViewHelper.initVerticalDisplayUtility(getDfObjectUtil());
-		}
     	return labelDataViewHelper;
     }
 
