@@ -2,20 +2,25 @@ package zingg.common.core.util;
 
 import java.util.Scanner;
 
+/*
+* Generic Class CLIReader for reading user inputs.
+* Independent of labelling logic
+* */
+
 public class CLIReader {
-    private static final String userInputRegex = "[0129]";
+    private Scanner scanner;
 
-    public static int readCliInput() {
-        Scanner sc = new Scanner(System.in);
+    public CLIReader() {
+        this.scanner = new Scanner(System.in);
+    }
 
-        while (!sc.hasNext(userInputRegex)) {
-            sc.next();
+    public int readCliInput(String userInputRegex) {
+        while (!scanner.hasNext(userInputRegex)) {
+            scanner.next();
             System.out.println("Nope, please enter one of the allowed options!");
         }
-        String word = sc.next();
-        int selection = Integer.parseInt(word);
-        // sc.close();
+        String word = scanner.next();
 
-        return selection;
+        return Integer.parseInt(word);
     }
 }

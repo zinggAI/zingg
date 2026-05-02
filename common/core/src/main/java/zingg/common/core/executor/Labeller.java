@@ -27,13 +27,16 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 	protected ITrainingDataModel<S, D, R, C> trainingDataModel;
 	protected ILabelDataViewHelper<S, D, R, C> labelDataViewHelper;
 	protected LabellerUtil<D, R, C> labellerUtil;
-	
+	protected CLIReader cliReader;
+
+	// Initializing dependency classes in constructor
 	public Labeller() {
 		setZinggOption(ZinggOptions.LABEL);
 		this.trainingDataModel = new TrainingDataModel<S, D, R, C, T>(getContext(), getClientOptions());
 		this.labelDataViewHelper = new LabelDataViewHelper<S,D,R,C,T>(getContext(), getClientOptions());
 		this.labelDataViewHelper.initVerticalDisplayUtility(getDfObjectUtil());
 		this.labellerUtil = new LabellerUtil<D, R, C>();
+		this.cliReader = new CLIReader();
 	}
 
 	public void execute() throws ZinggClientException {
@@ -53,7 +56,6 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 			throw new ZinggClientException("Error in labelling phase ", e);
 		}
 	}
-
 
 	public ZFrame<D,R,C> getUnmarkedRecords() throws ZinggClientException {
 		ZFrame<D,R,C> unmarkedRecords = null;
@@ -88,63 +90,70 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 					);
 
 			lines = lines.cache();
-//			List<C> displayCols = getLabelDataViewHelper().getDisplayColumns(lines, args);
-			ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition(), false, args.getShowConcise());
+			//List<C> displayCols = getLabelDataViewHelper().getDisplayColumns(lines, args);
+
 			//have to introduce as snowframe can not handle row.getAs with column
 			//name and row and lines are out of order for the code to work properly
 			//snow getAsString expects row to have same struc as dataframe which is 
 			//not happening
-			ZFrame<D,R,C> clusterIdZFrame = getLabelDataViewHelper().getClusterIdsFrame(lines);
-			List<R>  clusterIDs = getLabelDataViewHelper().getClusterIds(clusterIdZFrame);
-			try {
-				double score;
-				double prediction;
-				ZFrame<D,R,C>  updatedRecords = null;
-				int selectedOption = -1;
-				String msg1, msg2;
-				int totalPairs = clusterIDs.size();
 
-				for (int index = 0; index < totalPairs; index++) {
-					ZFrame<D,R,C>  currentPair = getLabelDataViewHelper().getCurrentPair(lines, index, clusterIDs, clusterIdZFrame);
-
-					score = getLabelDataViewHelper().getScore(currentPair);
-					prediction = getLabelDataViewHelper().getPrediction(currentPair);
-
-					msg1 = getLabelDataViewHelper().getMsg1(index, totalPairs);
-					msg2 = getLabelDataViewHelper().getMsg2(prediction, score);
-					//String msgHeader = msg1 + msg2;
-
-//					selectedOption = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), msg1, msg2);
-					selectedOption = displayRecordsAndGetUserInput(currentPair.select(zidAndFieldDefSelector.getCols()), msg1, msg2);
-					getTrainingDataModel().updateLabellerStat(selectedOption, INCREMENT);
-					getLabelDataViewHelper().printMarkedRecordsStat(
-							getTrainingDataModel().getPositivePairsCount(),
-							getTrainingDataModel().getNegativePairsCount(),
-							getTrainingDataModel().getNotSurePairsCount(),
-							getTrainingDataModel().getTotalCount()
-							);
-					if (selectedOption == QUIT_LABELING) {
-						LOG.info("User has quit in the middle. Updating the records.");
-						break;
-					}
-					updatedRecords = getTrainingDataModel().updateRecords(selectedOption, currentPair, updatedRecords);
-				}
-				LOG.warn("Processing finished.");
-				return updatedRecords;
-			} catch (Exception e) {
-				LOG.warn("Labelling error has occured " + e.getMessage());
-				throw new ZinggClientException("An error has occured while Labelling.", e);
-			}
+			// Breaking down a bigger implementation into smaller understandable segments
+            return getUpdatedRecords(lines);
 		} else {
 			LOG.info("It seems there are no unmarked records at this moment. Please run findTrainingData job to build some pairs to be labelled and then run this labeler.");
 			return null;
 		}
 	}
 
+	private ZFrame<D,R,C> getUpdatedRecords(ZFrame<D,R,C>  lines) throws ZinggClientException {
+		ZFrame<D,R,C> clusterIdZFrame = getLabelDataViewHelper().getClusterIdsFrame(lines);
+		List<R>  clusterIDs = getLabelDataViewHelper().getClusterIds(clusterIdZFrame);
+		ZidAndFieldDefSelector zidAndFieldDefSelector = new ZidAndFieldDefSelector(args.getFieldDefinition(), false, args.getShowConcise());
+		try {
+			double score;
+			double prediction;
+			ZFrame<D,R,C>  updatedRecords = null;
+			int selectedOption = -1;
+			String msg1, msg2;
+			int totalPairs = clusterIDs.size();
+
+			for (int index = 0; index < totalPairs; index++) {
+				ZFrame<D,R,C>  currentPair = getLabelDataViewHelper().getCurrentPair(lines, index, clusterIDs, clusterIdZFrame);
+
+				score = getLabelDataViewHelper().getScore(currentPair);
+				prediction = getLabelDataViewHelper().getPrediction(currentPair);
+
+				msg1 = getLabelDataViewHelper().getMsg1(index, totalPairs);
+				msg2 = getLabelDataViewHelper().getMsg2(prediction, score);
+				// String msgHeader = msg1 + msg2;
+
+				// selectedOption = displayRecordsAndGetUserInput(getDSUtil().select(currentPair, displayCols), msg1, msg2);
+				selectedOption = displayRecordsAndGetUserInput(currentPair.select(zidAndFieldDefSelector.getCols()), msg1, msg2);
+				getTrainingDataModel().updateLabellerStat(selectedOption, INCREMENT);
+				getLabelDataViewHelper().printMarkedRecordsStat(
+						trainingDataModel.getPositivePairsCount(),
+						trainingDataModel.getNegativePairsCount(),
+						trainingDataModel.getNotSurePairsCount(),
+						trainingDataModel.getTotalCount()
+				);
+				if (selectedOption == QUIT_LABELING) {
+					LOG.info("User has quit in the middle. Updating the records.");
+					break;
+				}
+				updatedRecords = getTrainingDataModel().updateRecords(selectedOption, currentPair, updatedRecords);
+			}
+			LOG.warn("Processing finished.");
+			return updatedRecords;
+		} catch (Exception | ZinggClientException e) {
+			LOG.warn("Labelling error has occured " + e.getMessage());
+			throw new ZinggClientException("An error has occured while Labelling.", e);
+		}
+    }
+
 	
 	protected int displayRecordsAndGetUserInput(ZFrame<D,R,C> records, String preMessage, String postMessage) throws ZinggClientException {
 		getLabelDataViewHelper().displayRecords(records, preMessage, postMessage);
-        return CLIReader.readCliInput();
+        return cliReader.readCliInput("[0129]");
 	}
 
 	@Override
