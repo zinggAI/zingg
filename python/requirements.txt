@@ -1,8 +1,7 @@
-pandas
-seaborn
-matplotlib
-sphinx
-sphinx_rtd_theme
-pyspark
-numpy
-
+pyspark==3.5.5
+numpy==1.24.4
+pandas==2.0.3
+matplotlib==3.7.5
+seaborn==0.13.2
+sphinx==7.1.2
+sphinx_rtd_theme==2.0.0

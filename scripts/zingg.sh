@@ -64,5 +64,20 @@ if [[ $RUN_PYTHON_DB_CONNECT_PHASE -eq 1 ]]; then
 	python $EXECUTABLE
 else
 	# All the additional options must be added here
-	$SPARK_HOME/bin/spark-submit --master $SPARK_MASTER $PROPERTIES --files "./log4j2.properties" --conf spark.executor.extraJavaOptions="$log4j_setting -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+HeapDumpOnOutOfMemoryError -Xloggc:/tmp/memLog.txt -XX:+UseCompressedOops" --conf spark.driver.extraJavaOptions="$log4j_setting" $LOGGING --driver-class-path $ZINGG_JARS $EXECUTABLE $@ --email $EMAIL --license $LICENSE
+	GC_LOG_DIR="${GC_LOG_DIR:-/tmp}"
+	GC_LOG_OPTS="-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${GC_LOG_DIR}/heapdump-%p.hprof -Xlog:gc*:file=${GC_LOG_DIR}/memLog.txt:time,uptime,level,tags"
+	export SPARK_SUBMIT_OPTS="${SPARK_SUBMIT_OPTS:-} $log4j_setting $GC_LOG_OPTS"
+  export SPARK_DRIVER_MEMORY="${SPARK_DRIVER_MEMORY:-4g}"
+	$SPARK_HOME/bin/spark-submit \
+	  --master "$SPARK_MASTER" \
+	  $PROPERTIES \
+	  --files "./log4j2.properties" \
+	  --driver-java-options "$SPARK_JAVA_OPTS" \
+	  --conf "spark.executor.extraJavaOptions=$SPARK_JAVA_OPTS" \
+    $LOGGING \
+    --driver-class-path "$ZINGG_JARS" \
+    "$EXECUTABLE" \
+    "$@" \
+    --email "$EMAIL" \
+    --license "$LICENSE"
 fi
