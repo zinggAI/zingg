@@ -4,7 +4,6 @@ USER 0
 RUN apt-get update && \
 	apt install -y curl vim 
 ENV SPARK_MASTER=local[*]
-ENV SPARK_DRIVER_MEMORY=2g
 ENV ZINGG_HOME=/zingg-0.6.0
 ENV PATH=$ZINGG_HOME/scripts:$PATH
 ENV LANG=C.UTF-8
