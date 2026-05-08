@@ -5,7 +5,16 @@
 
 version: 2
 updates:
-  - package-ecosystem: "*" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "maven"
+    directory: "/"
     schedule:
       interval: "weekly"
+    allow:
+      - dependency-type: "direct"
+    ignore:
+      - dependency-name: "io.netty:*"
+      - dependency-name: "com.fasterxml.jackson.*:*"
+      - dependency-name: "org.lz4:lz4-java"
+      - dependency-name: "org.apache.spark:*"
+      - dependency-name: "org.eclipse.jetty:*"
+      - dependency-name: "org.apache.logging.log4j:*"
