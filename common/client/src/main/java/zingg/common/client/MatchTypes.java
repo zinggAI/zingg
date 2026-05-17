@@ -42,7 +42,7 @@ public class MatchTypes {
         return s; 
     } 
 
-    public static IMatchType getByName(String name) throws IllegalArgumentException{
+    public static IMatchType getByName(String name) throws Exception{
         for (IMatchType zo: MatchTypes.allMatchTypes.values()) { 
             if (zo.getName().equalsIgnoreCase(name)) {
                 return zo; 
