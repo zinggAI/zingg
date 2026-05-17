@@ -347,7 +347,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public String getProductVersion(){
-		return "0.6.0";
+		return "0.7.0";
 	}
 
 	public Long getMarkedRecordsStat(ZFrame<D,R,C>  markedRecords, long value) {
