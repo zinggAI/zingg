@@ -35,20 +35,12 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		this.hashFunctionUtility = HashFunctionUtilityFactory.getHashFunctionUtility(HashUtility.CACHED);
 	}
 
-	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes) {
+	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes,
+		ListMap<T, HashFunction<D, R, C, T>> functionsMap, long maxSize, FieldDefinitionStrategy<R> fieldDefinitionStrategy) {
 		this();
 		this.training = training;
 		this.dupes = dupes;
 		childless =  new ListMap<HashFunction<D,R,C,T>, String>();
-		// types = getSampleTypes();
-		/*
-		 * for (Class type : types) { LOG.info("Type is " + type); }
-		 */
-	}
-
-	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes,
-		ListMap<T, HashFunction<D, R, C, T>> functionsMap, long maxSize, FieldDefinitionStrategy<R> fieldDefinitionStrategy) {
-		this(training, dupes);
 		this.functionsMap = functionsMap;
 		// functionsMap.prettyPrint();
 		this.maxSize = maxSize;
