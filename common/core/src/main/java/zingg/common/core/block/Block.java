@@ -23,18 +23,18 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final Log LOG = LogFactory.getLog(Block.class);
-	private final IHashFunctionUtility<D, R, C, T> hashFunctionUtility;
+	protected final IHashFunctionUtility<D, R, C, T> hashFunctionUtility;
 	//private FieldDefinitionStrategy<R> fieldDefinitionStrategy;
 
 	protected ZFrame<D,R,C> dupes;
 	// Class[] types;
-	ListMap<T, HashFunction<D,R,C,T>> functionsMap;
-	long maxSize;
-	ZFrame<D,R,C> training;
+	protected ListMap<T, HashFunction<D,R,C,T>> functionsMap;
+	protected long maxSize;
+	protected ZFrame<D,R,C> training;
 	protected ListMap<HashFunction<D,R,C,T>, String> childless;
-	List<? extends FieldDefinition> fieldDefinitions;
-	IArguments args;
-	private FieldDefinitionStrategy<R> fieldDefinitionStrategy;
+	protected List<? extends FieldDefinition> fieldDefinitions;
+	protected IArguments args;
+	protected FieldDefinitionStrategy<R> fieldDefinitionStrategy;
 
 	public Block() {
 		this.hashFunctionUtility = HashFunctionUtilityFactory.getHashFunctionUtility(HashUtility.CACHED);
