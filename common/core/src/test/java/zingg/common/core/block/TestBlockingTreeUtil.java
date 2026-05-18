@@ -101,7 +101,7 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
             block = getDefaultBlock(zFrameTest, zFramePositives, hashUtil, args);
         }
         Canopy<R> root = getCanopy(zFrameTest, zFramePositives, 1);
-        Tree<Canopy<R>> blockingTree = block.getBlockingTree(null, null, root, getFieldDefinitions(args));
+        Tree<Canopy<R>> blockingTree = block.getBlockingTree(null, null, root);
         System.out.println("************ time taken to create " + blockingTreeType + " blocking tree ************, " + (System.currentTimeMillis() - ts));
         return blockingTree;
     }

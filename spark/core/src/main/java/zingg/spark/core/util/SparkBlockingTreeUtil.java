@@ -53,8 +53,6 @@ public class SparkBlockingTreeUtil extends BlockingTreeUtil<SparkSession, Datase
 }
 
 
-
-
 @Override 
 public ZFrame<Dataset<Row>, Row, Column> getTreeDF(byte[] blockingTree){
         StructType schema = DataTypes.createStructType(new StructField[] { DataTypes.createStructField("BlockingTree", DataTypes.BinaryType, false) });
@@ -86,6 +84,6 @@ public Block<Dataset<Row>, Row, Column, DataType> getBlock(ZFrame<Dataset<Row>, 
                                                            ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions,
                                                            long blockSize, IArguments arguments) {
         // TODO Auto-generated method stub
-        return new SparkBlock(sample, positives, hashFunctions, blockSize, new DefaultFieldDefinitionStrategy<Row>());
+        return new SparkBlock(sample, positives, hashFunctions, blockSize, arguments);
 }
 }

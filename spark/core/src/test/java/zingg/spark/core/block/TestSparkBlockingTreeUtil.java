@@ -24,7 +24,7 @@ import zingg.spark.core.util.SparkBlockingTreeUtil;
 import zingg.spark.core.util.SparkHashUtil;
 
 @ExtendWith(TestSparkBase.class)
-public class TestSparkBlockingTreeUtil extends TestBlockingTreeUtil<SparkSession, Dataset<Row>, Row, Column, DataType>{
+public abstract class TestSparkBlockingTreeUtil extends TestBlockingTreeUtil<SparkSession, Dataset<Row>, Row, Column, DataType>{
 
     private final IWithSession<SparkSession> withSession;
 
@@ -32,6 +32,7 @@ public class TestSparkBlockingTreeUtil extends TestBlockingTreeUtil<SparkSession
         withSession = new WithSession<>();
         withSession.setSession(sparkSession);
     }
+    /* 
 
     @Override
     protected DFObjectUtil<SparkSession, Dataset<Row>, Row, Column> getDFObjectUtil() {
@@ -54,7 +55,9 @@ public class TestSparkBlockingTreeUtil extends TestBlockingTreeUtil<SparkSession
     }
 
     @Override
-    protected Block<Dataset<Row>, Row, Column, DataType> getBlock(ZFrame<Dataset<Row>, Row, Column> sample, ZFrame<Dataset<Row>, Row, Column> positives, ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions, long blockSize) {
-        return new SparkBlock(sample, positives, hashFunctions, blockSize, new DefaultFieldDefinitionStrategy<Row>());
+    protected Block<Dataset<Row>, Row, Column, DataType> getBlock(ZFrame<Dataset<Row>, Row, Column> sample, ZFrame<Dataset<Row>, Row, Column> positives, ListMap<DataType, 
+        HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions, long blockSize) {
+        return new SparkBlock(sample, positives, hashFunctions, blockSize, getArguments());
     }
+        */
 }

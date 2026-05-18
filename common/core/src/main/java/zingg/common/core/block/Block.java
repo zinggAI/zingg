@@ -9,9 +9,11 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.FieldDefUtil;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.util.ListMap;
 import zingg.common.core.feature.FeatureFactory;
 import zingg.common.core.hash.HashFunction;
@@ -22,7 +24,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 
 	public static final Log LOG = LogFactory.getLog(Block.class);
 	private final IHashFunctionUtility<D, R, C, T> hashFunctionUtility;
-	private FieldDefinitionStrategy<R> fieldDefinitionStrategy;
+	//private FieldDefinitionStrategy<R> fieldDefinitionStrategy;
 
 	protected ZFrame<D,R,C> dupes;
 	// Class[] types;
@@ -30,13 +32,17 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	long maxSize;
 	ZFrame<D,R,C> training;
 	protected ListMap<HashFunction<D,R,C,T>, String> childless;
+	List<? extends FieldDefinition> fieldDefinitions;
+	IArguments args;
+	private FieldDefinitionStrategy<R> fieldDefinitionStrategy;
 
 	public Block() {
 		this.hashFunctionUtility = HashFunctionUtilityFactory.getHashFunctionUtility(HashUtility.CACHED);
+		fieldDefinitionStrategy = new DefaultFieldDefinitionStrategy<R>();
 	}
 
 	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes,
-		ListMap<T, HashFunction<D, R, C, T>> functionsMap, long maxSize, FieldDefinitionStrategy<R> fieldDefinitionStrategy) {
+		ListMap<T, HashFunction<D, R, C, T>> functionsMap, long maxSize, IArguments args) {
 		this();
 		this.training = training;
 		this.dupes = dupes;
@@ -44,8 +50,9 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		this.functionsMap = functionsMap;
 		// functionsMap.prettyPrint();
 		this.maxSize = maxSize;
-		this.fieldDefinitionStrategy = fieldDefinitionStrategy;
-	}
+		this.args = args;
+		fieldDefinitions = new FieldDefUtil().getFieldDefinitionNotDontUse(args.getFieldDefinition());
+	}	
 
 	/**
 	 * @return the dupes
@@ -116,12 +123,11 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		c.estimateElimCount();
 	}
 
-	public Canopy<R>getBestNode(Tree<Canopy<R>> tree, Canopy<R>parent, Canopy<R>node,
-			List<FieldDefinition> fieldsOfInterest) throws Exception {
+	public Canopy<R>getBestNode(Tree<Canopy<R>> tree, Canopy<R>parent, Canopy<R>node) throws Exception {
 		long least = Long.MAX_VALUE;
 		int maxElimination = 0;
 		Canopy<R>best = null;
-		List<FieldDefinition> adjustedFieldOfInterestList = getFieldOfInterestList(fieldsOfInterest, node);
+		List<? extends FieldDefinition> adjustedFieldOfInterestList = getFieldOfInterestList(fieldDefinitions, node);
 		for (FieldDefinition field : adjustedFieldOfInterestList) {
 			if (LOG.isDebugEnabled()){
 				LOG.debug("Trying for " + field + " with data type " + field.getDataType() + " and real dt " 
@@ -214,7 +220,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	 * @throws ZinggClientException 
 	 */
 	public Tree<Canopy<R>> getBlockingTree(Tree<Canopy<R>> tree, Canopy<R>parent,
-			Canopy<R>node, List<FieldDefinition> fieldsOfInterest) throws Exception, ZinggClientException {
+			Canopy<R>node) throws Exception, ZinggClientException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Tree so far ");
 			LOG.debug(tree);
@@ -225,7 +231,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		}
 		if (size > maxSize && node.getDupeN() != null && node.getDupeN().size() > 0) {
 			LOG.debug("Size is bigger ");
-			Canopy<R>best = getBestNode(tree, parent, node, fieldsOfInterest);
+			Canopy<R>best = getBestNode(tree, parent, node);
 			if (best != null) {
 				//add function, context info for this best node in set
 				hashFunctionUtility.addHashFunctionIfRequired(best);
@@ -254,7 +260,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 						LOG.debug(" Finding for " + n);
 					}
 				
-					getBlockingTree(tree, node, n, fieldsOfInterest);
+					getBlockingTree(tree, node, n);
 				}
 				//remove function, context info for this best node as we are returning from best node
 				hashFunctionUtility.removeHashFunctionIfRequired(best);
@@ -367,7 +373,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		}			
 	}
 
-	public List<FieldDefinition> getFieldOfInterestList(List<FieldDefinition> fieldDefinitions, Canopy<R> node) {
+	public List<? extends FieldDefinition> getFieldOfInterestList(List<? extends FieldDefinition> fieldDefinitions, Canopy<R> node) {
 		return fieldDefinitionStrategy.getAdjustedFieldDefinitions(fieldDefinitions, node);
 	}
 

@@ -113,7 +113,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 		List<? extends FieldDefinition> fieldList = args.getFieldDefinition();
 		//drop columns which are don't use if show concise is true
 		if (args.getShowConcise()) {
-			fieldList = fieldDefUtil.getFieldDefinitionToUse(args.getFieldDefinition());
+			fieldList = fieldDefUtil.getFieldDefinitionNotDontUse(args.getFieldDefinition());
 		}	
 		return getFieldNames(fieldList);
 	}

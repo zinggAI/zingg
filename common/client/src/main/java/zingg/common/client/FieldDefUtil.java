@@ -15,13 +15,13 @@ public class FieldDefUtil implements Serializable{
 	
 	public List<? extends FieldDefinition> getFieldDefinitionDontUse(List<? extends FieldDefinition> fieldDefinition) {
 		return fieldDefinition.stream()
-			    .filter(x->x.matchType.contains(MatchTypes.DONT_USE))
+			    .filter(x->x.isDontUse())
 			    .collect(Collectors.toList());
 	}
 	
-	public List<? extends FieldDefinition> getFieldDefinitionToUse(List<? extends FieldDefinition> fieldDefinition) {
+	public List<? extends FieldDefinition> getFieldDefinitionNotDontUse(List<? extends FieldDefinition> fieldDefinition) {
 		return fieldDefinition.stream()
-			    .filter(x->!x.matchType.contains(MatchTypes.DONT_USE))
+			    .filter(x->!x.isDontUse())
 			    .collect(Collectors.toList());
 	}
 	

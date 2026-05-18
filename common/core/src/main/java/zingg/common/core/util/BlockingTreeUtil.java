@@ -58,6 +58,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 		Block<D,R,C,T> cblock = getBlock(sample, positives, hashFunctions, blockSize, args);
 		Canopy<R> root = new Canopy<R>(sample.collectAsList(), positives.collectAsList());
 
+		/* 
 		List<FieldDefinition> fd = new ArrayList<FieldDefinition> ();
 
 		for (FieldDefinition def : args.getFieldDefinition()) {
@@ -65,7 +66,8 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 				fd.add(def);	
 			}
 		}
-		Tree<Canopy<R>> blockingTree =  cblock.getBlockingTree(null, null, root, fd);
+		*/
+		Tree<Canopy<R>> blockingTree =  cblock.getBlockingTree(null, null, root);
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("The blocking tree is ");
 			blockingTree.print(2);

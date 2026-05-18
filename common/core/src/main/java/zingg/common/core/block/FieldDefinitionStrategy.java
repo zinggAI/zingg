@@ -5,5 +5,5 @@ import zingg.common.client.FieldDefinition;
 import java.util.List;
 
 public interface FieldDefinitionStrategy<R> {
-    List<FieldDefinition> getAdjustedFieldDefinitions(List<FieldDefinition> fieldDefinitions, Canopy<R> node);
+    List<? extends FieldDefinition> getAdjustedFieldDefinitions(List<? extends FieldDefinition> fieldDefinitions, Canopy<R> node);
 }

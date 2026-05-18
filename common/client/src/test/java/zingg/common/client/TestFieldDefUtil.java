@@ -32,7 +32,7 @@ public class TestFieldDefUtil {
         List<? extends FieldDefinition> dontUseList = fieldDefUtil.getFieldDefinitionDontUse(args.getFieldDefinition());
         assertEquals(dontUseList.size(), 3);
 
-        List<? extends FieldDefinition> matchList = fieldDefUtil.getFieldDefinitionToUse(args.getFieldDefinition());
+        List<? extends FieldDefinition> matchList = fieldDefUtil.getFieldDefinitionNotDontUse(args.getFieldDefinition());
         assertEquals(matchList.size(), 4);
 	}
 
