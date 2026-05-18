@@ -9,7 +9,7 @@ import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ListMap;
 import zingg.common.core.block.Block;
-import zingg.common.core.block.FieldDefinitionStrategy;
+import zingg.common.core.block.strategy.field.FieldDefinitionStrategy;
 import zingg.common.core.feature.FeatureFactory;
 import zingg.common.core.hash.HashFunction;
 import zingg.spark.core.feature.SparkFeatureFactory;

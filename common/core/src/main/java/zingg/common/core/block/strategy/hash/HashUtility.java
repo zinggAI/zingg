@@ -1,4 +1,4 @@
-package zingg.common.core.block;
+package zingg.common.core.block.strategy.hash;
 
 public enum HashUtility {
     DEFAULT,

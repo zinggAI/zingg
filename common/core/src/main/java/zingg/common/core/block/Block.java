@@ -15,6 +15,11 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.util.ListMap;
+import zingg.common.core.block.strategy.field.DefaultFieldDefinitionStrategy;
+import zingg.common.core.block.strategy.field.FieldDefinitionStrategy;
+import zingg.common.core.block.strategy.hash.HashFunctionUtilityFactory;
+import zingg.common.core.block.strategy.hash.HashUtility;
+import zingg.common.core.block.strategy.hash.IHashFunctionUtility;
 import zingg.common.core.feature.FeatureFactory;
 import zingg.common.core.hash.HashFunction;
 

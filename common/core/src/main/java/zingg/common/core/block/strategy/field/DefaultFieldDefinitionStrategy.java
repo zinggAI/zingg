@@ -1,6 +1,7 @@
-package zingg.common.core.block;
+package zingg.common.core.block.strategy.field;
 
 import zingg.common.client.FieldDefinition;
+import zingg.common.core.block.Canopy;
 
 import java.util.List;
 

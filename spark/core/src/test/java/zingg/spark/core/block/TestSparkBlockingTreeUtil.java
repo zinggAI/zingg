@@ -12,7 +12,7 @@ import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.ListMap;
 import zingg.common.client.util.WithSession;
 import zingg.common.core.block.Block;
-import zingg.common.core.block.DefaultFieldDefinitionStrategy;
+import zingg.common.core.block.strategy.field.DefaultFieldDefinitionStrategy;
 import zingg.common.core.block.TestBlockingTreeUtil;
 import zingg.common.core.hash.HashFunction;
 import zingg.common.core.util.BlockingTreeUtil;
@@ -32,7 +32,7 @@ public abstract class TestSparkBlockingTreeUtil extends TestBlockingTreeUtil<Spa
         withSession = new WithSession<>();
         withSession.setSession(sparkSession);
     }
-    /* 
+    /* ===
 
     @Override
     protected DFObjectUtil<SparkSession, Dataset<Row>, Row, Column> getDFObjectUtil() {

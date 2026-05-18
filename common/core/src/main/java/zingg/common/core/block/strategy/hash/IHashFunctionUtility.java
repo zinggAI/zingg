@@ -1,6 +1,8 @@
-package zingg.common.core.block;
+package zingg.common.core.block.strategy.hash;
 
 import zingg.common.client.FieldDefinition;
+import zingg.common.core.block.Canopy;
+import zingg.common.core.block.Tree;
 import zingg.common.core.hash.HashFunction;
 
 public interface IHashFunctionUtility<D, R, C, T> {

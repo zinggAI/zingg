@@ -1,6 +1,8 @@
-package zingg.common.core.block;
+package zingg.common.core.block.strategy.hash;
 
 import zingg.common.client.FieldDefinition;
+import zingg.common.core.block.Canopy;
+import zingg.common.core.block.Tree;
 import zingg.common.core.hash.HashFunction;
 
 public class DefaultHashFunctionUtility<D, R, C, T> implements IHashFunctionUtility<D, R, C, T>{
@@ -50,6 +52,6 @@ public class DefaultHashFunctionUtility<D, R, C, T> implements IHashFunctionUtil
     private boolean checkFunctionInNode(Canopy<R>node, String name,
                                        HashFunction<D, R, C, T> function) {
         return node.getFunction() != null && node.getFunction().equals(function)
-                && node.context.fieldName.equals(name);
+                && node.getContext().getFieldName().equals(name);
     }
 }
