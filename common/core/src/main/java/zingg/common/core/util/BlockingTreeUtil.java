@@ -36,8 +36,7 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 	}
 
 
-	public abstract Block<D,R,C,T> getBlock(ZFrame<D,R,C> sample, ZFrame<D,R,C> positives, 
-		ListMap<T, HashFunction<D,R,C,T>>hashFunctions, long blockSize, IArguments arguments);
+	public abstract Block<D,R,C,T> getBlock(ListMap<T, HashFunction<D,R,C,T>>hashFunctions, long blockSize, IArguments arguments);
 
 
 	public Tree<Canopy<R>> createBlockingTree(ZFrame<D,R,C> testData,
@@ -55,8 +54,9 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 		LOG.info("Learning indexing rules for block size " + blockSize);
        
 		positives = positives.coalesce(1); 
-		Block<D,R,C,T> cblock = getBlock(sample, positives, hashFunctions, blockSize, args);
-		Canopy<R> root = new Canopy<R>(sample.collectAsList(), positives.collectAsList());
+		Block<D,R,C,T> cblock = getBlock(
+			hashFunctions, blockSize, args);
+		Canopy<R> root = getCanopy(sample, positives);
 
 		/* 
 		List<FieldDefinition> fd = new ArrayList<FieldDefinition> ();
@@ -117,5 +117,9 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 
 	public abstract ZFrame<D,R,C> getBlockHashes(ZFrame<D,R,C> testData, Tree<Canopy<R>> tree);
 	//.map(new Block<D,R,C,T>().BlockFunction(tree), RowEncoder.apply(Block<D,R,C,T>.appendHashCol(sample.schema())));
+
+	public Canopy<R> getCanopy(ZFrame<D,R,C> sample, ZFrame<D,R,C> positives) {
+		return new Canopy<R>(sample.collectAsList(), positives.collectAsList());
+	}
 	
 }

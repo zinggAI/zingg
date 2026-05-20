@@ -207,7 +207,7 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
         long totalCount = sample.count();
         if (blockSize == -1) blockSize = Heuristics.getMaxBlockSize(totalCount, args.getBlockSize());
         positives = positives.coalesce(1);
-        Block<D,R,C,T> cblock = getBlock(sample, positives, hashFunctions, blockSize);
+        Block<D,R,C,T> cblock = getBlock(hashFunctions, blockSize, new Arguments());
         return cblock;
     }
 
@@ -231,6 +231,5 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
     protected abstract BlockingTreeUtil<S, D, R, C, T> getBlockingTreeUtil();
     protected abstract HashUtil<S, D, R, C, T> getHashUtil();
     protected abstract void setTestDataBaseLocation();
-    protected abstract Block<D, R, C, T> getBlock(ZFrame<D,R,C> sample, ZFrame<D,R,C> positives,
-                                                  ListMap<T, HashFunction<D,R,C,T>>hashFunctions, long blockSize);
+    protected abstract Block<D, R, C, T> getBlock(ListMap<T, HashFunction<D,R,C,T>> hashFunctions, long blockSize, IArguments args);
 }

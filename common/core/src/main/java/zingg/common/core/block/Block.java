@@ -31,11 +31,9 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	protected final IHashFunctionUtility<D, R, C, T> hashFunctionUtility;
 	//private FieldDefinitionStrategy<R> fieldDefinitionStrategy;
 
-	protected ZFrame<D,R,C> dupes;
 	// Class[] types;
 	protected ListMap<T, HashFunction<D,R,C,T>> functionsMap;
 	protected long maxSize;
-	protected ZFrame<D,R,C> training;
 	protected ListMap<HashFunction<D,R,C,T>, String> childless;
 	protected List<? extends FieldDefinition> fieldDefinitions;
 	protected IArguments args;
@@ -46,11 +44,8 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		fieldDefinitionStrategy = new DefaultFieldDefinitionStrategy<R>();
 	}
 
-	public Block(ZFrame<D,R,C> training, ZFrame<D,R,C> dupes,
-		ListMap<T, HashFunction<D, R, C, T>> functionsMap, long maxSize, IArguments args) {
+	public Block(ListMap<T, HashFunction<D, R, C, T>> functionsMap, long maxSize, IArguments args) {
 		this();
-		this.training = training;
-		this.dupes = dupes;
 		childless =  new ListMap<HashFunction<D,R,C,T>, String>();
 		this.functionsMap = functionsMap;
 		// functionsMap.prettyPrint();
@@ -59,20 +54,6 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		fieldDefinitions = new FieldDefUtil().getFieldDefinitionNotDontUse(args.getFieldDefinition());
 	}	
 
-	/**
-	 * @return the dupes
-	 */
-	public ZFrame<D,R,C> getDupes() {
-		return dupes;
-	}
-
-	/**
-	 * @param dupes
-	 *            the dupes to set
-	 */
-	public void setDupes(ZFrame<D,R,C> dupes) {
-		this.dupes = dupes;
-	}
 
 	/**
 	 * @return the types
@@ -110,23 +91,6 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		this.functionsMap = m;
 	}
 
-	protected Canopy<R> getCanopy(){
-		return new Canopy<R>();
-	}
-	
-	public Canopy<R>getNodeFromCurrent(Canopy<R>node, HashFunction<D,R,C,T> function,
-			FieldDefinition context) {
-		Canopy<R>trial = getCanopy();
-		trial = node.copyTo(trial);
-		// node.training, node.dupeN, function, context);
-		trial.function = function;
-		trial.context = context;
-		return trial;
-	}
-
-	public void estimateElimCount(Canopy<R> c, long elimCount) {
-		c.estimateElimCount();
-	}
 
 	public Canopy<R>getBestNode(Tree<Canopy<R>> tree, Canopy<R>parent, Canopy<R>node) throws Exception {
 		long least = Long.MAX_VALUE;
@@ -160,11 +124,10 @@ public abstract class Block<D,R,C,T> implements Serializable {
 							LOG.debug("Evaluating field " + field.fieldName
 								+ " and function " + function + " for " + field.dataType);
 						}
-						Canopy<R>trial = getNodeFromCurrent(node, function,
+						Canopy<R> trial = node.getNodeFromCurrent(function,
 								context);
-						estimateElimCount(trial, least);
-						long elimCount = trial.getElimCount();
-
+						
+						long elimCount = trial.getEstimatedElimCount(least);
 						
 						//int trSize = (int) Math.ceil(0.02d * node.dupeN.count());
 						//boolean isNotEliminatingMoreThan1Percent = elimCount <= trSize ? true

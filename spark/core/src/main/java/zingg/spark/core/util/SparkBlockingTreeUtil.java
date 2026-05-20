@@ -79,11 +79,9 @@ public Tree<Canopy<Row>> readBlockingTree(Arguments args) throws Exception, Zing
 */
 
 @Override
-public Block<Dataset<Row>, Row, Column, DataType> getBlock(ZFrame<Dataset<Row>, Row, Column> sample,
-                                                           ZFrame<Dataset<Row>, Row, Column> positives,
-                                                           ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions,
+public Block<Dataset<Row>, Row, Column, DataType> getBlock(ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions,
                                                            long blockSize, IArguments arguments) {
         // TODO Auto-generated method stub
-        return new SparkBlock(sample, positives, hashFunctions, blockSize, arguments);
+        return new SparkBlock(hashFunctions, blockSize, arguments);
 }
 }

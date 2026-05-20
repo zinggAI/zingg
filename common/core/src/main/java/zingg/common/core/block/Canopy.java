@@ -232,9 +232,22 @@ public class Canopy<R> implements Serializable {
 		return str;
 	}
 
+	protected Canopy<R> getCanopy(){
+		return new Canopy<R>();
+	}
 	
+	public Canopy<R> getNodeFromCurrent(HashFunction function,
+			FieldDefinition context) {
+		Canopy<R>trial = getCanopy();
+		trial = copyTo(trial);
+		// node.training, node.dupeN, function, context);
+		trial.function = function;
+		trial.context = context;
+		return trial;
+	}
 
-	public void estimateElimCount() {
+
+	public long getEstimatedElimCount(long elimCount) {
 		//long ts = System.currentTimeMillis();																																																																				
 		//the function is applied to both columns
 		//if hash is equal, they are not going to be eliminated
@@ -258,6 +271,7 @@ public class Canopy<R> implements Serializable {
 			}
 		}			
 		elimCount = dupeN.size() - dupeRemaining.size();
+		return elimCount;
 		//LOG.debug("estimateElimCount" + (System.currentTimeMillis() - ts));
 	}
 	
@@ -285,7 +299,7 @@ public class Canopy<R> implements Serializable {
 		return returnMap;
 	}*/
 
-	public Canopy copyTo(Canopy copyTo) {
+	public Canopy<R> copyTo(Canopy<R> copyTo) {
 		copyTo.function = function;
 		copyTo.context = context;
 		// list of duplicates passed from parent

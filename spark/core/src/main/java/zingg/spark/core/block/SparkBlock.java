@@ -25,9 +25,8 @@ public class SparkBlock extends Block<Dataset<Row>, Row, Column, DataType> {
     }
     
 
-    public SparkBlock(ZFrame<Dataset<Row>, Row, Column> training, ZFrame<Dataset<Row>, Row, Column> dupes,
-                      ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> functionsMap, long maxSize, IArguments args) {
-		super(training, dupes, functionsMap, maxSize, args);
+    public SparkBlock(ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> functionsMap, long maxSize, IArguments args) {
+		super(functionsMap, maxSize, args);
 	}
     
     @Override
