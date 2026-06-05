@@ -74,7 +74,7 @@ docker run -it zingg/zingg:0.5.0 bash
 ./scripts/zingg.sh --phase match --conf examples/febrl/config.json
 ``` 
 
-Check the [step by step guide](https://docs.zingg.ai/zingg/stepbystep) for more details.
+Check the [step by step guide](https://docs.zingg.ai/latest/stepbystep) for more details.
 
 ## Connectors
 
