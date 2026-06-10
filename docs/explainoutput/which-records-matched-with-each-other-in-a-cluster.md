@@ -21,17 +21,15 @@ The `explain` configuration references the original matching config and defines 
 ```json
 {
   "config": "path_to_original_matching_config/config.json",
-  "explainOutput": [
-    {
-      "name": "outputExplain",
-      "format": "csv",
-      "props": {
-        "location": "/tmp/zinggOutput_explain",
-        "delimiter": ",",
-        "header": true
-      }
+  "explainOutput": {
+    "name": "outputExplain",
+    "format": "csv",
+    "props": {
+      "location": "/tmp/zinggOutput_explain",
+      "delimiter": ",",
+      "header": true
     }
-  ]
+  }
 }  
 ```
 
