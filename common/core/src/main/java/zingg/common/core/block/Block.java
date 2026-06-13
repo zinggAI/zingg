@@ -238,26 +238,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		return result;
 	}
 
-	public void printTree(Tree<Canopy<R>> tree,
-			Canopy<R>root) {
-		if (root.dupeN != null) {
-			LOG.info(" dupeN not null " + root);
-			LOG.info(root.dupeN.size());
-		}
-		
-		if (root.dupeRemaining != null) {
-			LOG.info(" dupeRemaining not null " + root);
-			LOG.info(root.dupeRemaining.size());
-		}
-		
-		if (root.training != null) {
-			LOG.info(" training not null " + root);
-			LOG.info(root.training.size());
-		}
-		for (Canopy<R>c : tree.getSuccessors(root)) {
-			printTree(tree, c);
-		}			
-	}
+
 
 
 
