@@ -59,6 +59,12 @@ public class TestSparkBlockingTreeUtil extends TestBlockingTreeUtil<SparkSession
     @Override
     protected Block<Dataset<Row>, Row, Column, DataType> getBlock(ListMap<DataType, 
         HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions, long blockSize, IArguments args) {
+        try{
+            new SparkBlock(hashFunctions, blockSize, args);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         return new SparkBlock(hashFunctions, blockSize, args);
     }
         

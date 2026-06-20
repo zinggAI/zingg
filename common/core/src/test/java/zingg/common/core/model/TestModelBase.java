@@ -18,6 +18,7 @@ import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.context.Context;
 import zingg.common.core.model.data.ModelDFData;
 import zingg.common.core.model.model.ModelDF;
+import zingg.common.core.util.ArgsSupplier;
 import zingg.common.core.util.ModelUtil;
 
 public abstract class TestModelBase<S,D,R,C,T> {
@@ -38,7 +39,7 @@ public abstract class TestModelBase<S,D,R,C,T> {
     @Test
     public void testPredict() throws ZinggClientException, Exception {  
         ModelUtil<S,D,R,C,T> modelUtil = getModelUtil();
-        Model<S,D,R,C,T> model = modelUtil.getModel(false, getArgs());
+        Model<S,D,R,C,T> model = modelUtil.getModel(false, ArgsSupplier.getArgs());
         model.register();
 
         ZFrame<D, R, C> posDF = dfObjectUtil.getDFFromObjectList(ModelDFData.getPosDF(), ModelDF.class);
@@ -88,58 +89,7 @@ public abstract class TestModelBase<S,D,R,C,T> {
         return predictDF;
     }
 
-    protected Arguments getArgs() throws ZinggClientException {
-        
-        Arguments args = new Arguments();
-        args.setModelId("junit");
-        
-        List<FieldDefinition> fdList = new ArrayList<FieldDefinition>(4);
-
-        ArrayList<IMatchType> matchTypelistId = new ArrayList<IMatchType>();
-        matchTypelistId.add(MatchTypes.DONT_USE);
-        ArrayList<IMatchType> matchTypelistFuzzy = new ArrayList<IMatchType>();
-        matchTypelistFuzzy.add(MatchTypes.FUZZY);
-
-        FieldDefinition idFD = new FieldDefinition();
-        idFD.setDataType("int");
-        idFD.setFieldName("id");
-        idFD.setMatchType(matchTypelistId);
-        fdList.add(idFD);
-        
-        FieldDefinition yearFD = new FieldDefinition();
-        yearFD.setDataType("int");
-        yearFD.setFieldName("year");
-        yearFD.setMatchType(matchTypelistFuzzy);
-        fdList.add(yearFD);
-        
-        FieldDefinition nameFD = new FieldDefinition();
-        nameFD.setDataType("string");
-        nameFD.setFieldName("name");
-        nameFD.setMatchType(matchTypelistFuzzy);
-        fdList.add(nameFD);
-        
-        FieldDefinition eventFD = new FieldDefinition();
-        eventFD.setDataType("string");
-        eventFD.setFieldName("event");
-        eventFD.setMatchType(matchTypelistFuzzy);
-        fdList.add(eventFD);
-
-        FieldDefinition dobFD = new FieldDefinition();
-        dobFD.setDataType("date");
-        dobFD.setFieldName("dob");
-        dobFD.setMatchType(matchTypelistFuzzy);
-        fdList.add(dobFD);
-        
-        FieldDefinition commentFD = new FieldDefinition();
-        commentFD.setDataType("string");
-        commentFD.setFieldName("comment");
-        commentFD.setMatchType(matchTypelistFuzzy);
-        fdList.add(commentFD);
-
-        args.setFieldDefinition(fdList);
-
-        return args;
-    }
+    
     
 }
 

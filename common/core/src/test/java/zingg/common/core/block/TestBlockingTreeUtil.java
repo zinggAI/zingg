@@ -21,6 +21,7 @@ import zingg.common.core.block.strategy.hash.DefaultHashFunctionUtility;
 import zingg.common.core.block.strategy.hash.HashFunctionUtilityFactory;
 import zingg.common.core.block.strategy.hash.HashUtility;
 import zingg.common.core.hash.HashFunction;
+import zingg.common.core.util.ArgsSupplier;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.CsvReader;
 import zingg.common.core.util.HashUtil;
@@ -112,7 +113,7 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
 
     //Override with new CacheBasedHashFunctionUtility<D, R, C, T>()
     private Block<D, R, C, T> getCachedBasedBlock(ZFrame<D, R, C> zFrameTest, ZFrame<D, R, C> zFramePositives,
-                                                  HashUtil<S, D, R, C, T> hashUtil, IArguments arguments) throws Exception {
+                                                  HashUtil<S, D, R, C, T> hashUtil, IArguments arguments) throws Exception, ZinggClientException {
         try (MockedStatic<HashFunctionUtilityFactory> hashFunctionUtilityFactoryMock = Mockito.mockStatic(HashFunctionUtilityFactory.class)) {
             hashFunctionUtilityFactoryMock.when(() -> HashFunctionUtilityFactory.getHashFunctionUtility(Mockito.any(HashUtility.class)))
                     .thenReturn(new CacheBasedHashFunctionUtility<D, R, C, T>());
@@ -123,7 +124,7 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
 
     //Override with new DefaultHashFunctionUtility<>()
     private Block<D, R, C, T> getDefaultBlock(ZFrame<D, R, C> zFrameTest, ZFrame<D, R, C> zFramePositives,
-                                                  HashUtil<S, D, R, C, T> hashUtil, IArguments arguments) throws Exception {
+                                                  HashUtil<S, D, R, C, T> hashUtil, IArguments arguments) throws Exception, ZinggClientException {
         try (MockedStatic<HashFunctionUtilityFactory> hashFunctionUtilityFactoryMock = Mockito.mockStatic(HashFunctionUtilityFactory.class)) {
             hashFunctionUtilityFactoryMock.when(() -> HashFunctionUtilityFactory.getHashFunctionUtility(Mockito.any(HashUtility.class)))
                     .thenReturn(new DefaultHashFunctionUtility<D, R, C, T>());
@@ -202,12 +203,12 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
     }
 
     private Block<D, R, C, T> getBlock(ZFrame<D, R, C> testData, double sampleFraction, ZFrame<D,R,C> positives,
-                                       long blockSize, ListMap<T, HashFunction<D,R,C,T>> hashFunctions, IArguments args) {
+                                       long blockSize, ListMap<T, HashFunction<D,R,C,T>> hashFunctions, IArguments args) throws ZinggClientException{
         ZFrame<D,R,C> sample = testData.sample(false, sampleFraction);
         long totalCount = sample.count();
         if (blockSize == -1) blockSize = Heuristics.getMaxBlockSize(totalCount, args.getBlockSize());
         positives = positives.coalesce(1);
-        Block<D,R,C,T> cblock = getBlock(hashFunctions, blockSize, new Arguments());
+        Block<D,R,C,T> cblock = getBlock(hashFunctions, blockSize, args);
         return cblock;
     }
 
@@ -216,16 +217,6 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
         return new Canopy<R>(sample.collectAsList(), positives.collectAsList());
     }
 
-    private List<FieldDefinition> getFieldDefinitions(IArguments arguments) {
-        List<FieldDefinition> fieldDefinitions = new ArrayList<FieldDefinition>();
-
-        for (FieldDefinition def : arguments.getFieldDefinition()) {
-            if (! (def.getMatchType() == null || def.getMatchType().contains(MatchTypes.DONT_USE))) {
-                fieldDefinitions.add(def);
-            }
-        }
-        return fieldDefinitions;
-    }
 
     protected abstract DFObjectUtil<S, D, R, C> getDFObjectUtil();
     protected abstract BlockingTreeUtil<S, D, R, C, T> getBlockingTreeUtil();

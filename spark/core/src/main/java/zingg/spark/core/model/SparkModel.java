@@ -29,6 +29,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
 import zingg.common.core.feature.Feature;
 import zingg.common.core.model.Model;
+import zingg.common.core.model.ModelGrid;
 import zingg.common.core.similarity.function.SimFunction;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.core.similarity.SparkSimFunction;
@@ -108,8 +109,8 @@ public class SparkModel extends Model<SparkSession, Dataset<Row>, Row, Column, D
 		LOG.debug("Pipeline is " + pipeline);
 		//create lr params
 		ParamMap[] paramGrid = new ParamGridBuilder()
-		  .addGrid(lr.regParam(), getGrid(0.0001, 1, 10, true))
-		  .addGrid(lr.threshold(), getGrid(0.40, 0.55, 0.05, false))
+		  .addGrid(lr.regParam(), ModelGrid.getGrid(0.0001, 1, 10, true))
+		  .addGrid(lr.threshold(), ModelGrid.getGrid(0.40, 0.55, 0.05, false))
 		  .build();
 		
 		binaryClassificationEvaluator = new BinaryClassificationEvaluator();

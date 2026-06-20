@@ -49,25 +49,7 @@ public abstract class Model<S,D,R,C,T> implements Serializable {
 		this.columnsAdded = columnsAdded;
 	}
 
-	public static double[] getGrid(double begin, double end, double jump, boolean isMultiple) {
-		List<Double> alphaList = new ArrayList<Double>();
-		if (isMultiple) {
-			for (double alpha =begin; alpha <= end; alpha *= jump) {
-				alphaList.add(alpha);
-			}
-
-		}
-		else {
-			for (double alpha =begin; alpha <= end; alpha += jump) {
-				alphaList.add(alpha);
-			}
-		}
-		double[] retArr = new double[alphaList.size()];
-		for (int i=0; i < alphaList.size(); ++i) {
-			retArr[i] = alphaList.get(i);
-		}
-		return retArr;
-	}
+	
 	
 	public abstract void fit(ZFrame<D,R,C> pos, ZFrame<D,R,C> neg) throws ZinggClientException;
 	
