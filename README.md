@@ -23,14 +23,15 @@ With Zingg, the analytics engineer and the data scientist can quickly integrate 
 
 ## Why Zingg
 
-Zingg is an ML based tool for master data management and entity resolution. The following features set Zingg apart from other tools and libraries: 
-- [Interactive training data builder](https://docs.zingg.ai/latest/stepbystep/createtrainingdata/label) using active learning that builds models on frugally small training samples to high accuracy. This overcomes the challenges in techniques like [Fellegi Sunter](https://www.zingg.ai/post/fellegi-sunter-model-limitations-modern-entity-resolution) and [Entity Centric Matching](https://www.zingg.ai/post/limits-of-entity-centric-matching)
+Zingg is an ML based tool for master data management and entity resolution. Zingg's ML is purpose built for entity resolution to overcome the challenges of [Fellegi Sunter](https://www.zingg.ai/post/fellegi-sunter-model-limitations-modern-entity-resolution) and [Entity Centric Matching](https://www.zingg.ai/post/limits-of-entity-centric-matching). The following features set Zingg apart from other tools and libraries: 
+
+- [Interactive training data builder](https://docs.zingg.ai/latest/stepbystep/createtrainingdata/label) using active learning that builds models on frugally small training samples to high accuracy. 
 
 ![Shows records and asks user to mark yes, no, cant say on the cli.](/assets/labelvertical.gif) 
 
+- Auto learning blocking model to scale entity resolution to millions of records. [See why this is important](https://docs.zingg.ai/latest/zmodels/) and [Zingg performance numbers](https://docs.zingg.ai/zingg/stepbystep/hardwaresizing)
 - Ability to handle any entity like customer, patient, supplier, product etc 
 - Ability to connect to [disparate data sources](https://docs.zingg.ai/latest/connectors). Local and cloud file systems in any format, enterprise applications and relational, NoSQL and cloud databases and warehouses
-- Ability to scale to large volumes of data. [See why this is important](https://docs.zingg.ai/latest/zmodels/) and [Zingg performance numbers](https://docs.zingg.ai/zingg/stepbystep/hardwaresizing)
 - Ability to define domain specific functions to improve matching  
 - Out of the box support for English as well as Chinese, Thai, Japanese, Hindi and other languages
 
