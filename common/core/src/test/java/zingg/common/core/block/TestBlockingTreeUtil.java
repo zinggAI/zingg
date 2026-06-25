@@ -84,9 +84,9 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
                 configFile);
         args.setBlockSize(8);
 
-        Tree<Canopy<R>> blockingTreeOptimized = getBlockingTree(zFrameTest, zFramePositives, hashUtil, args, "cached");
         Tree<Canopy<R>> blockingTreeDefault = getBlockingTree(zFrameTest, zFramePositives, hashUtil, args, "default");
-
+        Tree<Canopy<R>> blockingTreeOptimized = getBlockingTree(zFrameTest, zFramePositives, hashUtil, args, "cached");
+        
         int depth = 1;
         //assert both the trees are equal
         Assertions.assertTrue(dfsSameTreeValidation(blockingTreeDefault, blockingTreeOptimized, depth));
@@ -98,8 +98,13 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
 
     private Tree<Canopy<R>> getBlockingTree(ZFrame<D, R, C> zFrameTest, ZFrame<D, R, C> zFramePositives, HashUtil<S, D, R, C, T> hashUtil,
                                          IArguments args, String blockingTreeType) throws Exception, ZinggClientException {
-        long ts = System.currentTimeMillis();
+        
         Block<D, R, C, T> block;
+        System.out.println("Count of zFrameTest: " + zFrameTest.count());
+        System.out.println("Count of zFramePositives: " + zFramePositives.count());
+
+        long ts = System.currentTimeMillis();
+
         if ("cached".equals(blockingTreeType)) {
             block = getCachedBasedBlock(zFrameTest, zFramePositives, hashUtil, args);
         } else {
@@ -204,11 +209,12 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
 
     private Block<D, R, C, T> getBlock(ZFrame<D, R, C> testData, double sampleFraction, ZFrame<D,R,C> positives,
                                        long blockSize, ListMap<T, HashFunction<D,R,C,T>> hashFunctions, IArguments args) throws ZinggClientException{
-        ZFrame<D,R,C> sample = testData.sample(false, sampleFraction);
+        long ts = System.currentTimeMillis();ZFrame<D,R,C> sample = testData.sample(false, sampleFraction);
         long totalCount = sample.count();
         if (blockSize == -1) blockSize = Heuristics.getMaxBlockSize(totalCount, args.getBlockSize());
-        positives = positives.coalesce(1);
+        positives = positives.coalesce(1); 
         Block<D,R,C,T> cblock = getBlock(hashFunctions, blockSize, args);
+        System.out.println("Time taken to create block: " + (System.currentTimeMillis() - ts));
         return cblock;
     }
 
