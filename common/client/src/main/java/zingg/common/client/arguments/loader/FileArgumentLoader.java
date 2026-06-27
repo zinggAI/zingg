@@ -16,7 +16,7 @@ public class FileArgumentLoader<A extends IZArgs> extends ArgumentsLoader<A> {
         try {
             return objectMapper.readValue(new File(filePath), argsClass);
         } catch (Exception exception) {
-            throw new ZinggClientException("Error reading config from file: " + filePath);
+            throw new ZinggClientException("Error reading config from file: " + filePath, exception);
         }
     }
 }
