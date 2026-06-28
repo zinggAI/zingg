@@ -16,7 +16,6 @@ import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
 import zingg.common.core.feature.Feature;
 import zingg.common.core.model.Model;
-import zingg.spark.core.similarity.SparkTransformer;
 
 public class SparkModel extends Model<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
@@ -29,14 +28,12 @@ public class SparkModel extends Model<SparkSession, Dataset<Row>, Row, Column, D
 	}
 
 	@Override
-	public void fit(ZFrame<Dataset<Row>, Row, Column> pos, ZFrame<Dataset<Row>, Row, Column> neg) {
-		fitCore(pos, neg);
+	public ZFrame<Dataset<Row>, Row, Column> fit(ZFrame<Dataset<Row>, Row, Column> pos, ZFrame<Dataset<Row>, Row, Column> neg) {
+		ZFrame<Dataset<Row>, Row, Column> training = pos.union(neg).coalesce(1).cache();
+		return pipeline.fit(training);
 	}
 
-	@Override
-	protected ZFrame<Dataset<Row>, Row, Column> fitCore(ZFrame<Dataset<Row>, Row, Column> pos, ZFrame<Dataset<Row>, Row, Column> neg) {
-		return pipeline.applyFitPipeline(transform(pipeline.transformTrainingData(pos, neg)));
-	}
+	
 
 	@Override
 	public void load(String path) {
@@ -50,26 +47,14 @@ public class SparkModel extends Model<SparkSession, Dataset<Row>, Row, Column, D
 
 	@Override
 	public ZFrame<Dataset<Row>, Row, Column> predict(ZFrame<Dataset<Row>, Row, Column> data, boolean isDrop) {
-		return dropFeatureCols(predictCore(data), isDrop);
+		ZFrame<Dataset<Row>, Row, Column> transformedData = pipeline.predict(data);
+		return dropFeatureCols(transformedData, isDrop);
 	}
 
-	@Override
-	public ZFrame<Dataset<Row>, Row, Column> predictCore(ZFrame<Dataset<Row>, Row, Column> data) {
-		return pipeline.transformAndPredict(transform(data));
-	}
 
 	@Override
 	public void save(String path) throws IOException {
 		pipeline.save(path);
-	}
-
-	public ZFrame<Dataset<Row>, Row, Column> transform(Dataset<Row> input) {
-		return pipeline.transform(input);
-	}
-
-	@Override
-	public ZFrame<Dataset<Row>, Row, Column> transform(ZFrame<Dataset<Row>, Row, Column> i) {
-		return transform(i.df());
 	}
 
 	@Override
@@ -77,7 +62,4 @@ public class SparkModel extends Model<SparkSession, Dataset<Row>, Row, Column, D
 		pipeline.register(session);
 	}
 
-	public List<SparkTransformer> getFeatureCreators() {
-		return pipeline.getFeatureCreators();
-	}
 }

@@ -14,11 +14,19 @@ public class SparkTransformer extends SparkBaseTransformer {
 	protected SparkSimFunction function;
 	
 	public static final Log LOG = LogFactory.getLog(SparkTransformer.class);
+
+    public SparkTransformer(){
+        
+    }
+
+    public SparkTransformer(String uid) {
+        super(uid);
+    }
 	
 	
 
     public SparkTransformer(String inputCol, SparkSimFunction function, String outputCol) {
-        super(inputCol, outputCol, function.getName());
+        super(inputCol, outputCol, function.getName() + "_" + inputCol);
         this.function = function;
     }
 

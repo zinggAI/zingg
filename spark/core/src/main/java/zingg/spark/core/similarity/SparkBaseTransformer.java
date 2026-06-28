@@ -1,5 +1,7 @@
 package zingg.spark.core.similarity;
 
+import java.io.Serializable;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.spark.ml.Transformer;
@@ -7,6 +9,9 @@ import org.apache.spark.ml.param.Param;
 import org.apache.spark.ml.param.ParamMap;
 import org.apache.spark.ml.param.shared.HasInputCol;
 import org.apache.spark.ml.param.shared.HasOutputCol;
+import org.apache.spark.ml.util.DefaultParamsReader;
+import org.apache.spark.ml.util.DefaultParamsWritable;
+import org.apache.spark.ml.util.MLReader;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.functions;
@@ -17,7 +22,7 @@ import zingg.common.client.util.ColName;
 import org.apache.spark.sql.SparkSession;
 
 
-public abstract class SparkBaseTransformer extends Transformer implements HasInputCol, HasOutputCol {
+public abstract class SparkBaseTransformer extends Transformer implements HasInputCol, HasOutputCol, Serializable, DefaultParamsWritable {
 	
 	private static final long serialVersionUID = 1L;
 	Param<String> inputcol; //= new Param<String>(this, "inputCol", "input column name");
@@ -25,12 +30,21 @@ public abstract class SparkBaseTransformer extends Transformer implements HasInp
 	protected String uid;
 	
 	public static final Log LOG = LogFactory.getLog(SparkTransformer.class);
+
+	public SparkBaseTransformer() {
+		
+	}
+
+	public SparkBaseTransformer(String uid) {
+		this.uid = uid;
+		inputcol = new Param<String>(this, "inputCol", "input column name");
+		outputcol = new Param<String>(this, "outputCol", "output column name");	
+	}
 	
 
     public SparkBaseTransformer(String inputCol, String outputCol, String uid) {
-        this.uid = uid;
-        inputcol = new Param<String>(this, "inputCol", "input column name");
-        outputcol = new Param<String>(this, "outputCol", "output column name");	
+        this(uid);
+       
         setInputCol(inputCol);
         setOutputCol(outputCol);
     }
@@ -114,5 +128,9 @@ public abstract class SparkBaseTransformer extends Transformer implements HasInp
      
 	 
     public abstract void register(SparkSession spark);
+
+	public static MLReader<SparkBaseTransformer> read() {
+		return new DefaultParamsReader<>();
+	}
 }
 

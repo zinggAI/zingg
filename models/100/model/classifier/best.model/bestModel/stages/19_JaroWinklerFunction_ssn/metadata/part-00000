@@ -1,0 +1,1 @@
+{"class":"zingg.spark.core.similarity.SparkTransformer","timestamp":1782633542438,"sparkVersion":"3.5.5","uid":"JaroWinklerFunction_ssn","paramMap":{"inputCol":"ssn","outputCol":"z_sim19"},"defaultParamMap":{}}

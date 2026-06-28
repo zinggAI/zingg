@@ -226,7 +226,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			}
 			LOG.warn("Apologies for this message. Zingg has encountered an error. "
 					+ throwable.getMessage());
-			if (LOG.isDebugEnabled()) throwable.printStackTrace();
+			throwable.printStackTrace();
 		}
 		finally {
 			cleanupAndExit(success, client);

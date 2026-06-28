@@ -1,0 +1,1 @@
+{"class":"zingg.spark.core.similarity.SparkTransformer","timestamp":1782633541424,"sparkVersion":"3.5.5","uid":"AffineGapSimilarityFunction_lname","paramMap":{"inputCol":"lname","outputCol":"z_sim2"},"defaultParamMap":{}}

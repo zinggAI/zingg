@@ -1,0 +1,1 @@
+{"class":"zingg.spark.core.similarity.SparkTransformer","timestamp":1782633541937,"sparkVersion":"3.5.5","uid":"JaroWinklerFunction_city","paramMap":{"outputCol":"z_sim11","inputCol":"city"},"defaultParamMap":{}}
