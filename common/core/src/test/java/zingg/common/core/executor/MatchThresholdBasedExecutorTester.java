@@ -37,7 +37,7 @@ public abstract class MatchThresholdBasedExecutorTester<S, D, R, C, T> extends E
             LOG.info("total number of matches discovered, " + matchCount);
             LOG.info("total number of non-matches discovered, " + notAMatchCount);
         } catch (Exception | ZinggClientException exception) {
-            throw new ZinggException("Exception occurred while running threshold based runner, " + exception.getMessage());
+            throw new ZinggException("Exception occurred while running threshold based runner, " + exception.getMessage(), exception);
         }
     }
 

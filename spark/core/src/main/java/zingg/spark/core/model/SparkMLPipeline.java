@@ -57,17 +57,24 @@ public class SparkMLPipeline implements Serializable {
 	public void buildPipeline(Map<FieldDefinition, Feature<DataType>> featurers, ModelColumnHelper columnHelper) {
 		pipelineStage = new ArrayList<>();
 
-		featureCreators = new SparkFeatureCreators(featurers, columnHelper);
+		featureCreators = getFeatureCreators(featurers);
 		pipelineStage.addAll(featureCreators.getTransformers());
 
 		pipelineStage.add(getAssembler());
 		pipelineStage.add(getPolyExpansion());
 		pipelineStage.add(getLR());
 
-		vve = new VectorValueExtractor(ColName.PROBABILITY_COL, ColName.SCORE_COL);
-		columnHelper.getColumnsAdded().add(ColName.PROBABILITY_COL);
-		columnHelper.getColumnsAdded().add(ColName.RAW_PREDICTION);
+		//vve is not used in all cases, but since we dont have a different flow for prediction
+		//creating it here so it gets registered
+		vve = getVVE();
+
+		
 	}
+
+	protected SparkFeatureCreators getFeatureCreators(Map<FieldDefinition, Feature<DataType>> featurers){
+		featureCreators = new SparkFeatureCreators(featurers, columnHelper);
+		return featureCreators;
+	} 
 
 	protected VectorAssembler getAssembler() {
 		VectorAssembler assembler = new VectorAssembler();
@@ -123,9 +130,16 @@ public class SparkMLPipeline implements Serializable {
 	public ZFrame<Dataset<Row>, Row, Column> predict(ZFrame<Dataset<Row>, Row, Column> data) {
 		LOG.info("threshold while predicting is " + lr.getThreshold());
 		Dataset<Row> predictWithFeatures = transformer.transform(data.df());
-		predictWithFeatures = vve.transform(predictWithFeatures);
+		predictWithFeatures = getVVE().transform(predictWithFeatures);
 		LOG.debug("Return schema is " + predictWithFeatures.schema());
 		return new SparkFrame(predictWithFeatures);
+	}
+
+	public VectorValueExtractor getVVE() {
+		vve = new VectorValueExtractor(ColName.PROBABILITY_COL, ColName.SCORE_COL);
+		columnHelper.getColumnsAdded().add(ColName.PROBABILITY_COL);
+		columnHelper.getColumnsAdded().add(ColName.RAW_PREDICTION);
+		return vve;
 	}
 
 	public void register(SparkSession session) {
@@ -141,7 +155,5 @@ public class SparkMLPipeline implements Serializable {
 		((CrossValidatorModel) transformer).write().overwrite().save(path);
 	}
 
-	public List<SparkTransformer> getFeatureCreators() {
-		return featureCreators.getTransformers();
-	}
+	
 }
