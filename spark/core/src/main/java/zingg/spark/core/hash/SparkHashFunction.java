@@ -15,10 +15,10 @@ import zingg.common.core.hash.HashFunction;
 
 
 public abstract class SparkHashFunction<T1, R> extends HashFunction<Dataset<Row>,Row,Column,DataType> implements UDF1<T1, R>{
-	
-	public static final Log LOG = LogFactory.getLog(SparkHashFunction.class);
-	
-	private BaseHash<T1, R> baseHash;
+
+    public static final Log LOG = LogFactory.getLog(SparkHashFunction.class);
+
+    private BaseHash<T1, R> baseHash;
 
     public BaseHash<T1, R> getBaseHash() {
         return baseHash;
@@ -28,16 +28,16 @@ public abstract class SparkHashFunction<T1, R> extends HashFunction<Dataset<Row>
         this.baseHash = baseHash;
         this.setName(baseHash.getName());
     }
-	
-	@Override
-	public R call(T1 t1) {
-	    return getBaseHash().call(t1);
-	}
-	
+
+    @Override
+    public R call(T1 t1) {
+        return getBaseHash().call(t1);
+    }
+
 
     @Override
     public ZFrame<Dataset<Row>, Row, Column> apply(ZFrame<Dataset<Row>, Row, Column> ds, String column,
-            String newColumn) {
+                                                   String newColumn) {
         return ds.withColumn(newColumn, functions.callUDF(this.name, ds.col(column)));
     }
 
@@ -55,7 +55,13 @@ public abstract class SparkHashFunction<T1, R> extends HashFunction<Dataset<Row>
     @Override
     public Object apply(Row r, String column) {
         return call((T1)getAs(r, column));
-   }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Object applyToValue(Object value) {
+        return call((T1) value);
+    }
 
 
     @Override
@@ -77,6 +83,6 @@ public abstract class SparkHashFunction<T1, R> extends HashFunction<Dataset<Row>
         setDataType((DataType)ois.readObject());
         setReturnType((DataType)ois.readObject());
     }*/
-		
+
 
 }

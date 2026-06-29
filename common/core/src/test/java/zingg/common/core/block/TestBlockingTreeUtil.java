@@ -2,8 +2,6 @@ package zingg.common.core.block;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import zingg.common.client.arguments.ArgumentServiceImpl;
 import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.FieldDefinition;
@@ -22,13 +20,11 @@ import zingg.common.core.util.CsvReader;
 import zingg.common.core.util.HashUtil;
 import zingg.common.core.util.Heuristics;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-
-import static java.lang.Math.max;
-
 
 public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
 
@@ -36,7 +32,9 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
     private int maxDepth = 1;
     private int totalNodes = 0;
     private static String TEST_FILE = "test.csv";
+    private static String LARGE_TEST_FILE = "test_large.csv";
     private static String CONFIG_FILE = "config.json";
+    private static String LARGE_CONFIG_FILE = "config_large.json";
     private final DataUtility dataUtility;
 
     public TestBlockingTreeUtil() {
@@ -71,10 +69,57 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
     }
 
 
+    @Test
+    public void testOriginalAndOptimizedProduceSameTree() throws Exception, ZinggClientException {
+        setTestDataBaseLocation();
+        List<Customer> testCustomers = dataUtility.getCustomers(TEST_DATA_BASE_LOCATION + "/" + LARGE_TEST_FILE);
+        List<CustomerDupe> testCustomerDupes = dataUtility.getCustomerDupes(TEST_DATA_BASE_LOCATION + "/" + LARGE_TEST_FILE, false);
+        DFObjectUtil<S, D, R, C> dfObjectUtil = getDFObjectUtil();
+
+        ZFrame<D, R, C> zFrameTest = dfObjectUtil.getDFFromObjectList(testCustomers, Customer.class);
+        ZFrame<D, R, C> zFramePositives = dfObjectUtil.getDFFromObjectList(testCustomerDupes, CustomerDupe.class);
+
+        HashUtil<S, D, R, C, T> hashUtil = getHashUtil();
+        String configFile = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource(TEST_DATA_BASE_LOCATION + "/" + LARGE_CONFIG_FILE)).toURI()).toString();
+        IArguments args = new ArgumentServiceImpl<Arguments>(Arguments.class).loadArguments(configFile);
+
+        Tree<Canopy<R>> originalTree  = getBlockingTree(zFrameTest, zFramePositives, hashUtil, args, "original");
+        Tree<Canopy<R>> optimizedTree = getBlockingTree(zFrameTest, zFramePositives, hashUtil, args, "cached");
+        Assertions.assertTrue(dfsSameTreeValidation(originalTree, optimizedTree, 1),
+                "Original and optimized getBestNode must produce identical blocking trees");
+    }
+
+    @Test
+    public void testLargeDeepBlockingTree() throws Exception, ZinggClientException {
+        setTestDataBaseLocation();
+        List<Customer> testCustomers = dataUtility.getCustomers(TEST_DATA_BASE_LOCATION + "/" + LARGE_TEST_FILE);
+        List<CustomerDupe> testCustomerDupes = dataUtility.getCustomerDupes(TEST_DATA_BASE_LOCATION + "/" + LARGE_TEST_FILE, false);
+        DFObjectUtil<S, D, R, C> dfObjectUtil = getDFObjectUtil();
+
+        ZFrame<D, R, C> zFrameTest = dfObjectUtil.getDFFromObjectList(testCustomers, Customer.class);
+        ZFrame<D, R, C> zFramePositives = dfObjectUtil.getDFFromObjectList(testCustomerDupes, CustomerDupe.class);
+
+        HashUtil<S, D, R, C, T> hashUtil = getHashUtil();
+        String configFile = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource(TEST_DATA_BASE_LOCATION + "/" + LARGE_CONFIG_FILE)).toURI()).toString();
+        IArguments args = new ArgumentServiceImpl<Arguments>(Arguments.class).loadArguments(configFile);
+
+        System.out.println("=== STARTING LARGE DEEP BLOCKING TREE TEST ===");
+        Tree<Canopy<R>> blockingTreeDefault = getBlockingTree(zFrameTest, zFramePositives, hashUtil, args, "default");
+        Tree<Canopy<R>> blockingTreeCached = getBlockingTree(zFrameTest, zFramePositives, hashUtil, args, "cached");
+        Assertions.assertTrue(dfsSameTreeValidation(blockingTreeDefault, blockingTreeCached, 1));
+        System.out.println("-------- max depth of trees -------- " + maxDepth);
+        System.out.println("-------- total nodes in a trees ---- " + totalNodes);
+
+        maxDepth = 1; totalNodes = 0;
+        Tree<Canopy<R>> blockingTreeDefault2 = getBlockingTree(zFrameTest, zFramePositives, hashUtil, args, "default");
+        Tree<Canopy<R>> blockingTreeCached2 = getBlockingTree(zFrameTest, zFramePositives, hashUtil, args, "cached");
+        Assertions.assertTrue(dfsSameTreeValidation(blockingTreeDefault2, blockingTreeCached2, 1));
+    }
+
     public void testSameBlockingTree(ZFrame<D, R, C> zFrameTest, ZFrame<D, R, C> zFramePositives) throws Exception, ZinggClientException {
         setTestDataBaseLocation();
         HashUtil<S, D, R, C, T> hashUtil = getHashUtil();
-        String configFile = Objects.requireNonNull(getClass().getClassLoader().getResource(TEST_DATA_BASE_LOCATION + "/" + CONFIG_FILE)).getFile();
+        String configFile = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource(TEST_DATA_BASE_LOCATION + "/" + CONFIG_FILE)).toURI()).toString();
         IArguments args = new ArgumentServiceImpl<Arguments>(Arguments.class).loadArguments(
                 configFile);
         args.setBlockSize(8);
@@ -92,46 +137,42 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
 
 
     private Tree<Canopy<R>> getBlockingTree(ZFrame<D, R, C> zFrameTest, ZFrame<D, R, C> zFramePositives, HashUtil<S, D, R, C, T> hashUtil,
-                                         IArguments args, String blockingTreeType) throws Exception, ZinggClientException {
-        long ts = System.currentTimeMillis();
+                                            IArguments args, String blockingTreeType) throws Exception, ZinggClientException {
         Block<D, R, C, T> block;
         if ("cached".equals(blockingTreeType)) {
             block = getCachedBasedBlock(zFrameTest, zFramePositives, hashUtil, args);
+        } else if ("original".equals(blockingTreeType)) {
+            block = getOriginalAlgoBlock(zFrameTest, zFramePositives, hashUtil, args);
         } else {
             block = getDefaultBlock(zFrameTest, zFramePositives, hashUtil, args);
         }
         Canopy<R> root = getCanopy(zFrameTest, zFramePositives, 1);
-        Tree<Canopy<R>> blockingTree = block.getBlockingTree(null, null, root, getFieldDefinitions(args));
-        System.out.println("************ time taken to create " + blockingTreeType + " blocking tree ************, " + (System.currentTimeMillis() - ts));
-        return blockingTree;
+        return block.getBlockingTree(null, null, root, getFieldDefinitions(args));
     }
 
-    //Override with new CacheBasedHashFunctionUtility<D, R, C, T>()
     private Block<D, R, C, T> getCachedBasedBlock(ZFrame<D, R, C> zFrameTest, ZFrame<D, R, C> zFramePositives,
                                                   HashUtil<S, D, R, C, T> hashUtil, IArguments arguments) throws Exception {
-        try (MockedStatic<HashFunctionUtilityFactory> hashFunctionUtilityFactoryMock = Mockito.mockStatic(HashFunctionUtilityFactory.class)) {
-            hashFunctionUtilityFactoryMock.when(() -> HashFunctionUtilityFactory.getHashFunctionUtility(Mockito.any(HashUtility.class)))
-                    .thenReturn(new CacheBasedHashFunctionUtility<D, R, C, T>());
-            return getBlock(zFrameTest, 1, zFramePositives, -1,
-                    hashUtil.getHashFunctionList(), arguments);
-        }
+        return getBlock(zFrameTest, 1, zFramePositives, -1, hashUtil.getHashFunctionList(), arguments, HashUtility.CACHED);
     }
 
-    //Override with new DefaultHashFunctionUtility<>()
+    private Block<D, R, C, T> getOriginalAlgoBlock(ZFrame<D, R, C> zFrameTest, ZFrame<D, R, C> zFramePositives,
+                                                   HashUtil<S, D, R, C, T> hashUtil, IArguments arguments) throws Exception {
+        ZFrame<D, R, C> sample = zFrameTest.sample(false, 1);
+        long totalCount = sample.count();
+        long blockSize = Heuristics.getMaxBlockSize(totalCount, arguments.getBlockSize());
+        ZFrame<D, R, C> positives = zFramePositives.coalesce(1);
+        return getOriginalAlgoBlock(sample, positives, hashUtil.getHashFunctionList(), blockSize);
+    }
+
     private Block<D, R, C, T> getDefaultBlock(ZFrame<D, R, C> zFrameTest, ZFrame<D, R, C> zFramePositives,
-                                                  HashUtil<S, D, R, C, T> hashUtil, IArguments arguments) throws Exception {
-        try (MockedStatic<HashFunctionUtilityFactory> hashFunctionUtilityFactoryMock = Mockito.mockStatic(HashFunctionUtilityFactory.class)) {
-            hashFunctionUtilityFactoryMock.when(() -> HashFunctionUtilityFactory.getHashFunctionUtility(Mockito.any(HashUtility.class)))
-                    .thenReturn(new DefaultHashFunctionUtility<D, R, C, T>());
-            return getBlock(zFrameTest, 1, zFramePositives, -1,
-                    hashUtil.getHashFunctionList(), arguments);
-        }
+                                              HashUtil<S, D, R, C, T> hashUtil, IArguments arguments) throws Exception {
+        return getBlock(zFrameTest, 1, zFramePositives, -1, hashUtil.getHashFunctionList(), arguments, HashUtility.DEFAULT);
     }
 
 
     private boolean dfsSameTreeValidation(Tree<Canopy<R>> node1, Tree<Canopy<R>> node2, int depth) {
         totalNodes++;
-        maxDepth = max(maxDepth, depth);
+        maxDepth = Math.max(maxDepth, depth);
 
         //if both the node1 and node2 are null, return true
         if(node1 == null && node2 == null){
@@ -198,13 +239,13 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
     }
 
     private Block<D, R, C, T> getBlock(ZFrame<D, R, C> testData, double sampleFraction, ZFrame<D,R,C> positives,
-                                       long blockSize, ListMap<T, HashFunction<D,R,C,T>> hashFunctions, IArguments args) {
+                                       long blockSize, ListMap<T, HashFunction<D,R,C,T>> hashFunctions, IArguments args,
+                                       HashUtility hashUtility) {
         ZFrame<D,R,C> sample = testData.sample(false, sampleFraction);
         long totalCount = sample.count();
         if (blockSize == -1) blockSize = Heuristics.getMaxBlockSize(totalCount, args.getBlockSize());
         positives = positives.coalesce(1);
-        Block<D,R,C,T> cblock = getBlock(sample, positives, hashFunctions, blockSize);
-        return cblock;
+        return getBlock(sample, positives, hashFunctions, blockSize, hashUtility);
     }
 
     private Canopy<R> getCanopy(ZFrame<D,R,C> testData, ZFrame<D,R,C> positives, double sampleFraction) {
@@ -229,4 +270,9 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
     protected abstract void setTestDataBaseLocation();
     protected abstract Block<D, R, C, T> getBlock(ZFrame<D,R,C> sample, ZFrame<D,R,C> positives,
                                                   ListMap<T, HashFunction<D,R,C,T>>hashFunctions, long blockSize);
+    protected abstract Block<D, R, C, T> getBlock(ZFrame<D,R,C> sample, ZFrame<D,R,C> positives,
+                                                  ListMap<T, HashFunction<D,R,C,T>>hashFunctions, long blockSize,
+                                                  HashUtility hashUtility);
+    protected abstract Block<D, R, C, T> getOriginalAlgoBlock(ZFrame<D,R,C> sample, ZFrame<D,R,C> positives,
+                                                              ListMap<T, HashFunction<D,R,C,T>>hashFunctions, long blockSize);
 }
