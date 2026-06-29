@@ -15,7 +15,7 @@ jobs:
       INPUT: "zingg_community_performance_reports/perf_test/perfTestInput_ncVoters5M.json"
     steps:
       - name: checkout repo content
-        uses: actions/checkout@v3 # checkout the repository content to github runner.
+        uses: actions/checkout@v4 # checkout the repository content to github runner.
       - name: Load Spark config
         id: cfg
         run: |
@@ -25,7 +25,7 @@ jobs:
           echo "hadoop_version=$HADOOP_VERSION" >> "$GITHUB_OUTPUT"
           echo "spark_url=$SPARK_URL" >> "$GITHUB_OUTPUT"
       - name: setup python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: 3.12.7 #install the python needed
       - uses: actions/setup-java@v4
@@ -51,11 +51,17 @@ jobs:
           git clone https://x-access-token:${{ secrets.GH_PERF_COMMUNITY_ACTION }}@github.com/zinggAI/zingg_community_performance_reports.git
           echo "Listing inside cloned repo:"
           ls -al zingg_community_performance_reports || true
+      - name: Install plotting dependencies
+        run: |
+          pip install pandas matplotlib
       - name: download and execute py script
         run: |
           wget -O perfTestRunner.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/perfTestRunner.py
+          wget -O plot_result.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/plot_result.py
           echo "Running script..."
           python perfTestRunner.py
+          echo "Plotting results..."
+          python plot_result.py
       - name: Commit test results
         if: always()
         run: |
@@ -63,7 +69,7 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GH_PERF_COMMUNITY_ACTION }}@github.com/zinggAI/zingg_community_performance_reports.git
           git config user.name sonalgoyal
           git config user.email sonalgoyal4@gmail.com
-          git add perf_test/perf_test_report/*.json
+          git add perf_test/perf_test_report/
           if git diff --cached --quiet; then
             echo "No changes to commit for perfTest-febrl120K."
           else
