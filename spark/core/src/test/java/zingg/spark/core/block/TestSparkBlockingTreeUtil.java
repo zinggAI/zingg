@@ -6,14 +6,21 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.extension.ExtendWith;
+import zingg.common.client.FieldDefinition;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.ListMap;
 import zingg.common.client.util.WithSession;
 import zingg.common.core.block.Block;
+import zingg.common.core.block.Canopy;
 import zingg.common.core.block.DefaultFieldDefinitionStrategy;
+import zingg.common.core.block.GetBestNode;
+import zingg.common.core.block.HashUtility;
 import zingg.common.core.block.TestBlockingTreeUtil;
+import zingg.common.core.block.Tree;
+
+import java.util.List;
 import zingg.common.core.hash.HashFunction;
 import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.HashUtil;
@@ -56,5 +63,25 @@ public class TestSparkBlockingTreeUtil extends TestBlockingTreeUtil<SparkSession
     @Override
     protected Block<Dataset<Row>, Row, Column, DataType> getBlock(ZFrame<Dataset<Row>, Row, Column> sample, ZFrame<Dataset<Row>, Row, Column> positives, ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions, long blockSize) {
         return new SparkBlock(sample, positives, hashFunctions, blockSize, new DefaultFieldDefinitionStrategy<Row>());
+    }
+
+    @Override
+    protected Block<Dataset<Row>, Row, Column, DataType> getBlock(ZFrame<Dataset<Row>, Row, Column> sample, ZFrame<Dataset<Row>, Row, Column> positives, ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions, long blockSize, HashUtility hashUtility) {
+        return new SparkBlock(sample, positives, hashFunctions, blockSize, new DefaultFieldDefinitionStrategy<Row>(), hashUtility);
+    }
+
+    @Override
+    protected Block<Dataset<Row>, Row, Column, DataType> getOriginalAlgoBlock(ZFrame<Dataset<Row>, Row, Column> sample, ZFrame<Dataset<Row>, Row, Column> positives, ListMap<DataType, HashFunction<Dataset<Row>, Row, Column, DataType>> hashFunctions, long blockSize) {
+        SparkBlock block = new SparkBlock(sample, positives, hashFunctions, blockSize,
+                new DefaultFieldDefinitionStrategy<Row>(), HashUtility.CACHED);
+        block.setGetBestNodeStrategy(new GetBestNode<Dataset<Row>, Row, Column, DataType>() {
+            @Override
+            public Canopy<Row> getBestNode(Block<Dataset<Row>, Row, Column, DataType> b,
+                    Tree<Canopy<Row>> tree, Canopy<Row> parent, Canopy<Row> node,
+                    List<FieldDefinition> fields) throws Exception {
+                return original(b, tree, parent, node, fields);
+            }
+        });
+        return block;
     }
 }
