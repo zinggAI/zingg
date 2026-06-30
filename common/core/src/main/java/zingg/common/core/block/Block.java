@@ -23,6 +23,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 	public static final Log LOG = LogFactory.getLog(Block.class);
 	private final IHashFunctionUtility<D, R, C, T> hashFunctionUtility;
 	private FieldDefinitionStrategy<R> fieldDefinitionStrategy;
+	private GetBestNode<D, R, C, T> getBestNodeStrategy = new GetBestNode<>();
 
 	protected ZFrame<D,R,C> dupes;
 	// Class[] types;
@@ -54,6 +55,20 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		this.maxSize = maxSize;
 		this.fieldDefinitionStrategy = fieldDefinitionStrategy;
 	}
+
+	@SuppressWarnings("unchecked")
+	public Block(ZFrame<D, R, C> training, ZFrame<D, R, C> dupes,
+				 ListMap<T, HashFunction<D, R, C, T>> functionsMap, long maxSize,
+				 FieldDefinitionStrategy<R> fieldDefinitionStrategy, HashUtility hashUtility) {
+		this.hashFunctionUtility = HashFunctionUtilityFactory.getHashFunctionUtility(hashUtility);
+		this.training = training;
+		this.dupes = dupes;
+		this.childless = new ListMap<HashFunction<D, R, C, T>, String>();
+		this.functionsMap = functionsMap;
+		this.maxSize = maxSize;
+		this.fieldDefinitionStrategy = fieldDefinitionStrategy;
+	}
+
 
 	/**
 	 * @return the dupes
@@ -124,92 +139,19 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		c.estimateElimCount();
 	}
 
-	public Canopy<R>getBestNode(Tree<Canopy<R>> tree, Canopy<R>parent, Canopy<R>node,
-			List<FieldDefinition> fieldsOfInterest) throws Exception {
-		long least = Long.MAX_VALUE;
-		int maxElimination = 0;
-		Canopy<R>best = null;
-		List<FieldDefinition> adjustedFieldOfInterestList = getFieldOfInterestList(fieldsOfInterest, node);
-		for (FieldDefinition field : adjustedFieldOfInterestList) {
-			if (LOG.isDebugEnabled()){
-				LOG.debug("Trying for " + field + " with data type " + field.getDataType() + " and real dt " 
-					+ getFeatureFactory().getDataTypeFromString(field.getDataType()));
-			}
-			//Class type = FieldClass.getFieldClassClass(field.getFieldClass());
-			FieldDefinition context = field;
-			if (least ==0) break;//how much better can it get?
-			// applicable functions
-			List<HashFunction<D,R,C,T>> functions = functionsMap.get(getFeatureFactory().getDataTypeFromString(field.getDataType()));
-			if (LOG.isDebugEnabled()){
-				LOG.debug("functions are " + functions);
-			}
-			
-			if (functions != null) {
-				
-				for (HashFunction function : functions) {
-					// /if (!used.contains(field.getIndex(), function) &&
-					if (least ==0) break;//how much better can it get?
-					if (!hashFunctionUtility.isHashFunctionUsed(field, function, tree, node) //&&
-							//!childless.contains(function, field.fieldName)
-							) 
-							{
-						if (LOG.isDebugEnabled()){
-							LOG.debug("Evaluating field " + field.fieldName
-								+ " and function " + function + " for " + field.dataType);
-						}
-						Canopy<R>trial = getNodeFromCurrent(node, function,
-								context);
-						estimateElimCount(trial, least);
-						long elimCount = trial.getElimCount();
-
-						
-						//int trSize = (int) Math.ceil(0.02d * node.dupeN.count());
-						//boolean isNotEliminatingMoreThan1Percent = elimCount <= trSize ? true
-						//		: false;
-
-						if (LOG.isDebugEnabled()) {
-							LOG.debug("Elim Count is " + elimCount
-						
-								+ " ,least is "
-								+ least
-								//+ " , training is "
-								//+ node.training
-								+ ", dupe count " + node.dupeN.size());
-						}
-						if (least > elimCount) {
-							long childrenSize = trial.estimateCanopies();
-							if (childrenSize > 1) {
-						
-								// && isNotEliminatingMoreThan1Percent) {
-								if (LOG.isDebugEnabled()) {
-									LOG.debug("Yes, this fn has potential " + function);
-								}
-								least = elimCount;
-								best = trial;
-								best.elimCount = least;
-								/*if (elimCount == 0) {
-									LOG.debug("Out of this tyranny " + function);
-									break;
-								}*/
-							}
-							else {
-								if (LOG.isDebugEnabled()){
-									LOG.debug("No child " + function);
-								}
-								//childless.add(function, field.fieldName);
-							}
-							
-						}
-					}
-				}
-			}
-			else {
-				LOG.debug("functions are null??????");
-			}
-		}
-		return best;
-
+	public Canopy<R> getBestNode(Tree<Canopy<R>> tree, Canopy<R> parent, Canopy<R> node,
+								 List<FieldDefinition> fieldsOfInterest) throws Exception {
+		return getBestNodeStrategy.getBestNode(this, tree, parent, node, fieldsOfInterest);
 	}
+
+	public void setGetBestNodeStrategy(GetBestNode<D, R, C, T> strategy) {
+		this.getBestNodeStrategy = strategy;
+	}
+
+	public GetBestNode<D, R, C, T> getGetBestNodeStrategy() {
+		return getBestNodeStrategy;
+	}
+
 
 	/**
 	 * Holy Grail of Standalone
@@ -287,9 +229,10 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		return tree;
 	}
 
-//	public boolean isFunctionUsed(FieldDefinition fieldDefinition, HashFunction<D, R, C, T> function) {
-//		return hashFunctionsInCurrentNodePath.contains(getKey(fieldDefinition, function));
-//	}
+	boolean isHashFunctionUsed(FieldDefinition field, HashFunction<D, R, C, T> function,
+							   Tree<Canopy<R>> tree, Canopy<R> node) {
+		return hashFunctionUtility.isHashFunctionUsed(field, function, tree, node);
+	}
 
 	public List<Canopy<R>> getHashSuccessors(Collection<Canopy<R>> successors, Object hash) {
 		List<Canopy<R>> retCanopy = new ArrayList<Canopy<R>>();

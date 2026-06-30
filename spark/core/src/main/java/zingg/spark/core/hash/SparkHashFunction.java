@@ -57,6 +57,12 @@ public abstract class SparkHashFunction<T1, R> extends HashFunction<Dataset<Row>
         return call((T1)getAs(r, column));
    }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public Object applyToValue(Object value) {
+        return call((T1) value);
+    }
+
 
     @Override
     public Object apply(Dataset<Row> df, Row r, String column) {

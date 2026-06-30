@@ -313,4 +313,45 @@ public class Canopy<R> implements Serializable {
 		this.dupeRemaining = null;
 	}
 
+	public void buildDupeRemaining() {
+		dupeRemaining = new ArrayList<>(dupeN.size());
+		for (R r : dupeN) {
+			Object hash1 = function.apply(r, context.fieldName);
+			Object hash2 = function.apply(r, ColName.COL_PREFIX + context.fieldName);
+			if ((hash1 == null && hash2 == null) ||
+					(hash1 != null && hash2 != null && hash1.equals(hash2))) {
+				dupeRemaining.add(r);
+			}
+		}
+		elimCount = dupeN.size() - dupeRemaining.size();
+	}
+
+	public long countEliminationsWithValues(Object[] preVals1, Object[] preVals2, long earlyExitThreshold) {
+		long count = 0;
+		for (int i = 0; i < dupeN.size(); i++) {
+			Object hash1 = function.applyToValue(preVals1[i]);
+			Object hash2 = function.applyToValue(preVals2[i]);
+			boolean survives = (hash1 == null && hash2 == null) ||
+					(hash1 != null && hash2 != null && hash1.equals(hash2));
+			if (!survives) {
+				count++;
+				if (count >= earlyExitThreshold) return count;
+			}
+		}
+		return count;
+	}
+
+	public void buildDupeRemainingWithValues(Object[] preVals1, Object[] preVals2) {
+		dupeRemaining = new ArrayList<>(dupeN.size());
+		for (int i = 0; i < dupeN.size(); i++) {
+			Object hash1 = function.applyToValue(preVals1[i]);
+			Object hash2 = function.applyToValue(preVals2[i]);
+			if ((hash1 == null && hash2 == null) ||
+					(hash1 != null && hash2 != null && hash1.equals(hash2))) {
+				dupeRemaining.add(dupeN.get(i));
+			}
+		}
+		elimCount = dupeN.size() - dupeRemaining.size();
+	}
+
 }

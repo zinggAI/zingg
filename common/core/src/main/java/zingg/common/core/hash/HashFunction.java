@@ -77,7 +77,13 @@ public abstract class HashFunction<D,R,C,T> implements Serializable{
 
 		public abstract Object apply(D df, R r, String column); // added for SnowFrame getAsString method
 
-		/* 
+		// Apply the hash transformation to an already-extracted field value.
+		// Separates extraction (getAs) from hashing so callers can precompute
+		// field values once per row and reuse them across multiple functions.
+		public abstract Object applyToValue(Object value);
+
+
+		/*
 		public abstract void writeCustomObject(ObjectOutputStream out) throws IOException;
 		public abstract void readCustomObject(ObjectInputStream ois) throws ClassNotFoundException, IOException;
 		
