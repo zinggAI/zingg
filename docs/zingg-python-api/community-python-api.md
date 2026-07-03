@@ -6,7 +6,7 @@ description: >-
 
 # Community Python API
 
-The Community Zingg Python API is the open-source way to run Zingg from Python. It provides classes for arguments, field definitions, client options, pipes, and the Zingg execution client.
+The Community Zingg Python API is the open source way to run Zingg from Python. It provides classes for arguments, field definitions, client options, pipes, and the Zingg execution client.
 
 Use this package when you want a free, open-source Zingg installation running on Spark. For Enterprise features like deterministic matching, blocking strategy, primary keys, pass-through, mapping match types, and incremental matching, see [Enterprise ZinggEC Python API](enterprise-zinggec-python-api.md).
 
@@ -95,13 +95,13 @@ schema =
                 args.setOutput(outputPipe)
 ```
 
-#### For BigQuery&#x20;
+#### For BigQuery
 
 ```python
 bqPipe = BigQueryPipe("bqInput", "your-project.your-dataset.your-table")
 ```
 
-#### For Snowflake&#x20;
+#### For Snowflake
 
 ```python
 snowPipe = SnowflakePipe("snowInput", "your-snowflake-table")
@@ -141,7 +141,7 @@ options = ClientOptions([ ClientOptions.PHASE, "label" ]) zingg =
     Zingg(args, options) zingg.initAndExecute()
 ```
 
-#### **Run `findAndLabel`**&#x20;
+#### **Run `findAndLabel`**
 
 Combines `findTrainingData` and `label` into one call — use for smaller datasets where `findTrainingData` runs quickly.
 
@@ -150,7 +150,7 @@ options = ClientOptions([ ClientOptions.PHASE, "findAndLabel" ]) zingg =
     Zingg(args, options) zingg.initAndExecute()
 ```
 
-#### **Run `updateLabel`**&#x20;
+#### **Run `updateLabel`**
 
 Revisit and correct previously marked pairs — run `generateDocs` first to identify pairs to update
 
