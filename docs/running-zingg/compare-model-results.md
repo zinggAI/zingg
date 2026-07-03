@@ -4,6 +4,7 @@ description: >-
   production.
 tags:
   - ent
+  - enterprise-only
 ---
 
 # Compare Model Results
@@ -31,7 +32,7 @@ Retrained an existing model with more labeled data and want to confirm the updat
 **Read more:**
 
 * Model workflow context - [Run the match phase](run-the-match-phase.md)
-* Reassign Zingg ID when promoting a new model - [Reassign Zingg ID](reassign-zingg-id.md)&#x20;
+* Reassign Zingg ID when promoting a new model - [Reassign Zingg ID](reassign-zingg-id.md)
 {% endhint %}
 
 #### How Compare Model Results works
@@ -54,12 +55,13 @@ The `diff` phase then identifies:
 ### Python
 
 ```python
-from zingg.client import* from zingg.pipes import* from
-    zinggEC.enterprise.common.EArguments import* from zinggEC.enterprise.common
-        .EFieldDefinition import EFieldDefinition from
-            zinggES.enterprise.spark.ESparkClient import* from zinggEC
-        .enterprise.common.TransformedOutputArguments import* from
-            zinggEC.enterprise.common.EClientOptions import*
+from zingg.client import*
+from zingg.pipes import*
+from zinggEC.enterprise.common.EArguments import*
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zinggES.enterprise.spark.ESparkClient import*
+from zinggEC.enterprise.common.TransformedOutputArguments import*
+from zinggEC.enterprise.common.EClientOptions import*
 ```
 
 #### Step 1: Define ORIGINAL baseline config
@@ -67,8 +69,8 @@ from zingg.client import* from zingg.pipes import* from
 ```python
 originalArgs = EArguments()
 #... your original field definitions...
-                   originalArgs.setModelId("100")
-                       originalArgs.setZinggDir("./models")
+originalArgs.setModelId("100")
+originalArgs.setZinggDir("./models")
 ```
 
 #### Step 2: Define NEW/UPDATED Config
@@ -76,35 +78,41 @@ originalArgs = EArguments()
 ```python
 newArgs = EArguments()
 #... your updated field definitions...
-              newArgs.setModelId("200") newArgs.setZinggDir("./models")
+newArgs.setModelId("200")
+newArgs.setZinggDir("./models")
 ```
 
 #### Step 3: Create TransformedOutputArguments
 
 ```python
-diffArgs = TransformedOutputArguments() diffArgs.setParentArgs(newArgs)
-               diffArgs.setOriginalArgs(originalArgs)
+diffArgs = TransformedOutputArguments()
+diffArgs.setParentArgs(newArgs)
+diffArgs.setOriginalArgs(originalArgs)
 
-                   diffOutputPipe =
-    ECsvPipe("diffOutput", "/tmp/zinggDiff")
-        diffOutputPipe.setHeader("true")
-            diffArgs.setTransformedOutputPath(diffOutputPipe)
+diffOutputPipe = ECsvPipe("diffOutput", "/tmp/zinggDiff")
+diffOutputPipe.setHeader("true")
+diffArgs.setTransformedOutputPath(diffOutputPipe)
 ```
 
 #### Step 4: Execute diff
 
 ```python
-diffOptions = EClientOptions([ EClientOptions.PHASE, "diff" ]) zinggDiff =
-    EZingg(diffArgs, diffOptions) zinggDiff.initAndExecute()
+diffOptions = EClientOptions([
+    EClientOptions.PHASE,
+    "diff"
+])
+zinggDiff = EZingg(diffArgs, diffOptions)
+zinggDiff.initAndExecute()
 ```
 
 ### CLI
 
 ```bash
-./ scripts / zingg.sh-- phase diff-- conf examples / febrl / sparkIncremental /
-        configdiff.json-- compareTo examples / febrl /
-        configBaseline.json-- properties -
-    file config / zingg.conf
+./scripts/zingg.sh \
+  --phase diff \
+  --conf examples/febrl/sparkIncremental/configdiff.json \
+  --compareTo examples/febrl/configBaseline.json \
+  --properties-file config/zingg.conf
 ```
 {% endtab %}
 

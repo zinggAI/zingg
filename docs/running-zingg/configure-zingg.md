@@ -22,11 +22,12 @@ Full parameter reference with all config options and schema → [Configuration S
 {% endhint %}
 
 {% tabs %}
-{% tab title="Community (OS)" %}
+{% tab title="Community" %}
 ### Step 1: Verify installation
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 ```
 
 Verify in your notebook
@@ -40,14 +41,17 @@ Verify in your notebook
 #### Python
 
 ```python
-args = Arguments() args.setModelId("100") args.setZinggDir("models")
-           args.setNumPartitions(4) args.setLabelDataSampleSize(0.5)
+args = Arguments()
+args.setModelId("100")
+args.setZinggDir("models")
+args.setNumPartitions(4)
+args.setLabelDataSampleSize(0.5)
 ```
 
 {% hint style="info" icon="right-long" %}
-`setModelId` - unique name for this model.&#x20;
+`setModelId` - unique name for this model.
 
-`setZinggDir` - where Zingg writes model files and training data.&#x20;
+`setZinggDir` - where Zingg writes model files and training data.
 
 Use the same `modelId` in all subsequent phases for this run.
 {% endhint %}
@@ -57,9 +61,9 @@ Use the same `modelId` in all subsequent phases for this run.
 ```
 {
   "modelId" : "100",
-              "zinggDir" : "models",
-                           "numPartitions" : 4,
-                           "labelDataSampleSize" : 0.5
+  "zinggDir" : "models",
+  "numPartitions" : 4,
+  "labelDataSampleSize" : 0.5
 }
 ```
 
@@ -74,23 +78,22 @@ Use the same `modelId` in all subsequent phases for this run.
 #### Python
 
 ```python
-fname = FieldDefinition("fname", "string", MatchType.FUZZY) lname =
-    FieldDefinition("lname", "string", MatchType.FUZZY) stNo = FieldDefinition(
-        "stNo", "string",
-        MatchType.FUZZY) add1 = FieldDefinition("add1", "string",
-                                                MatchType.FUZZY) add2 =
-        FieldDefinition("add2", "string", MatchType.FUZZY) city =
-            FieldDefinition("city", "string", MatchType.FUZZY) areacode =
-                FieldDefinition("areacode", "string", MatchType.FUZZY) state =
-                    FieldDefinition("state", "string", MatchType.FUZZY) dob =
-                        FieldDefinition("dob", "string", MatchType.FUZZY) ssn =
-                            FieldDefinition("ssn", "string", MatchType.FUZZY)
+fname = FieldDefinition("fname", "string", MatchType.FUZZY)
+lname = FieldDefinition("lname", "string", MatchType.FUZZY)
+stNo = FieldDefinition("stNo", "string", MatchType.FUZZY)
+add1 = FieldDefinition("add1", "string", MatchType.FUZZY)
+add2 = FieldDefinition("add2", "string", MatchType.FUZZY)
+city = FieldDefinition("city", "string", MatchType.FUZZY)
+areacode = FieldDefinition("areacode", "string", MatchType.FUZZY)
+state = FieldDefinition("state", "string", MatchType.FUZZY)
+dob = FieldDefinition("dob", "string", MatchType.FUZZY)
+ssn = FieldDefinition("ssn", "string", MatchType.FUZZY)
 
-                                fieldDefs = [
-                                  fname, lname, stNo, add1, add2, city,
-                                  areacode, state, dob,
-                                  ssn
-                                ] args.setFieldDefinition(fieldDefs)
+fieldDefs = [
+  fname, lname, stNo, add1, add2, city,
+  areacode, state, dob, ssn
+]
+args.setFieldDefinition(fieldDefs)
 ```
 
 #### JSON
@@ -163,7 +166,7 @@ fname = FieldDefinition("fname", "string", MatchType.FUZZY) lname =
 ```
 
 {% hint style="success" icon="right-long" %}
-**Read more**: Match types reference - [Match types](../zingg-concepts/how-zingg-learns/match-types/) | C[onfiguration schema](../reference/configuration-schema.md)&#x20;
+**Read more**: Match types reference - [Match types](../zingg-concepts/how-zingg-learns/match-types/) | C[onfiguration schema](../reference/configuration-schema.md)
 {% endhint %}
 
 ### Step 4: Configure input and output pipes
@@ -171,22 +174,21 @@ fname = FieldDefinition("fname", "string", MatchType.FUZZY) lname =
 #### Python
 
 ```python
-schema =
-    "id string, fname string, \
+schema = "id string, fname string, \
 lname string, stNo string, add1 string, \
 add2 string, city string, areacode string,\
  state string, dob string, ssn string"
 
-    inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
-                    args.setData(inputPipe)
+inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
+args.setData(inputPipe)
 
-                        outputPipe =
-        CsvPipe("resultFebrl", "/tmp/febrlOutput") args.setOutput(outputPipe)
+outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
+args.setOutput(outputPipe)
 ```
 
 #### JSON
 
-```
+```json
 {
   "data" : [ {
     "name" : "testFebrl",
@@ -200,13 +202,12 @@ add2 string, city string, areacode string,\
                "string, add2 string, city string, areacode string, state "
                "string, dob string, ssn string"
   } ],
-           "output"
-      : [ {
-        "name" : "resultFebrl",
-        "format" : "csv",
-        "props" :
-            {"path" : "/tmp/febrlOutput", "delimiter" : ",", "header" : "true"}
-      } ]
+  "output" : [ {
+    "name" : "resultFebrl",
+    "format" : "csv",
+    "props" :
+      {"path" : "/tmp/febrlOutput", "delimiter" : ",", "header" : "true"}
+  } ]
 }
 ```
 
@@ -224,11 +225,11 @@ If you do not want to pass sensitive values such as passwords through the config
     "format" : "net.snowflake.spark.snowflake",
     "props" : {"path" : "$location$", "password" : "$passwd$"}
   } ],
-             "labelDataSampleSize" : 0.5,
-             "numPartitions" : 4,
-             "modelId" : "$modelId$",
-                         "zinggDir" : "models",
-                                      "collectMetrics" : "$collectMetrics$"
+  "labelDataSampleSize" : 0.5,
+  "numPartitions" : 4,
+  "modelId" : "$modelId$",
+  "zinggDir" : "models",
+  "collectMetrics" : "$collectMetrics$"
 }
 ```
 
@@ -243,12 +244,9 @@ If you do not want to pass sensitive values such as passwords through the config
 ```python
 from zingg.client import *
 from zingg.pipes import *
-from zinggEC.enterprise.common.epipes \
-    import *
-from zinggEC.enterprise.common.EArguments \
-    import *
-from zinggEC.enterprise.common.EFieldDefinition \
-    import EFieldDefinition
+from zinggEC.enterprise.common.epipes import *
+from zinggEC.enterprise.common.EArguments import *
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 ```
 
 Verify the `zinggEC` package is installed by running `!pip show zinggEC` in a separate cell.
@@ -287,34 +285,77 @@ args.setBlockingModel("DEFAULT")
 #### Python
 
 ```python
-recId    = EFieldDefinition("recId",
-    "string", MatchType.DONT_USE)
+recId = EFieldDefinition(
+    "recId",
+    "string",
+    MatchType.DONT_USE
+)
 recId.setPrimaryKey(True)
 
-fname    = EFieldDefinition("fname",
-    "string", MatchType.FUZZY)
-lname    = EFieldDefinition("lname",
-    "string", MatchType.FUZZY)
-stNo     = EFieldDefinition("stNo",
-    "string", MatchType.FUZZY)
-add1     = EFieldDefinition("add1",
-    "string", MatchType.FUZZY)
-add2     = EFieldDefinition("add2",
-    "string", MatchType.FUZZY)
-city     = EFieldDefinition("city",
-    "string", MatchType.FUZZY)
-areacode = EFieldDefinition("areacode",
-    "string", MatchType.FUZZY)
-state    = EFieldDefinition("state",
-    "string", MatchType.FUZZY)
-dob      = EFieldDefinition("dob",
-    "string", MatchType.FUZZY)
-ssn      = EFieldDefinition("ssn",
-    "string", MatchType.FUZZY)
+fname = EFieldDefinition(
+    "fname",
+    "string",
+    MatchType.FUZZY
+)
+lname = EFieldDefinition(
+    "lname",
+    "string",
+    MatchType.FUZZY
+)
+stNo = EFieldDefinition(
+    "stNo",
+    "string",
+    MatchType.FUZZY
+)
+add1 = EFieldDefinition(
+    "add1",
+    "string",
+    MatchType.FUZZY
+)
+add2 = EFieldDefinition(
+    "add2",
+    "string",
+    MatchType.FUZZY
+)
+city = EFieldDefinition(
+    "city",
+    "string",
+    MatchType.FUZZY
+)
+areacode = EFieldDefinition(
+    "areacode",
+    "string",
+    MatchType.FUZZY
+)
+state = EFieldDefinition(
+    "state",
+    "string",
+    MatchType.FUZZY
+)
+dob = EFieldDefinition(
+    "dob",
+    "string",
+    MatchType.FUZZY
+)
+ssn = EFieldDefinition(
+    "ssn",
+    "string",
+    MatchType.FUZZY
+)
 
-fieldDefs = [recId, fname, lname, stNo,
-    add1, add2, city, areacode, state,
-    dob, ssn]
+fieldDefs = [
+    recId,
+    fname,
+    lname,
+    stNo,
+    add1,
+    add2,
+    city,
+    areacode,
+    state,
+    dob,
+    ssn
+]
 args.setFieldDefinition(fieldDefs)
 ```
 
@@ -328,18 +369,23 @@ Enterprise requires a primary key field for `runIncremental`. Mark the primary k
 
 ```python
 schema = ("recId string, fname string, "
-    "lname string, stNo string, "
-    "add1 string, add2 string, "
-    "city string, areacode string, "
-    "state string, dob string, "
-    "ssn string")
+          "lname string, stNo string, "
+          "add1 string, add2 string, "
+          "city string, areacode string, "
+          "state string, dob string, "
+          "ssn string")
 
-inputPipe = ECsvPipe("testFebrl",
-    "examples/febrl/test.csv", schema)
+inputPipe = ECsvPipe(
+    "testFebrl",
+    "examples/febrl/test.csv",
+    schema
+)
 args.setData(inputPipe)
 
-outputPipe = ECsvPipe("resultFebrl",
-    "/tmp/febrlOutput")
+outputPipe = ECsvPipe(
+    "resultFebrl",
+    "/tmp/febrlOutput"
+)
 outputPipe.setHeader("true")
 args.setOutput(outputPipe)
 ```
@@ -347,7 +393,7 @@ args.setOutput(outputPipe)
 ### Step 5: Deterministic matching (optional)
 
 {% hint style="info" icon="right-long" %}
-Deterministic matching - **Enterprise** only.&#x20;
+Deterministic matching - **Enterprise** only.
 
 Skip this step if you only need probabilistic matching.
 {% endhint %}
@@ -356,15 +402,24 @@ Skip this step if you only need probabilistic matching.
 
 ```python
 detMatchNameAdd = DeterministicMatching(
-    'fname', 'stNo', 'add1')
+    'fname',
+    'stNo',
+    'add1'
+)
 detMatchNameDobSsn = DeterministicMatching(
-    'fname', 'dob', 'ssn')
+    'fname',
+    'dob',
+    'ssn'
+)
 detMatchNameEmail = DeterministicMatching(
-    'fname', 'email')
+    'fname',
+    'email'
+)
 args.setDeterministicMatchingCondition(
     detMatchNameAdd,
     detMatchNameDobSsn,
-    detMatchNameEmail)
+    detMatchNameEmail
+)
 ```
 
 #### JSON
@@ -393,7 +448,7 @@ args.setDeterministicMatchingCondition(
 ### Step 6: Pass Through (optional)
 
 {% hint style="info" icon="right-long" %}
-Pass Through - **Enterprise** only.&#x20;
+Pass Through - **Enterprise** only.
 
 Excludes specific records from matching while still including them in output with their own `Zingg ID`.
 {% endhint %}

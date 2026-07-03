@@ -14,30 +14,30 @@ On Microsoft Fabric, data lives in OneLake. Use the `abfss://` path format to co
 
 On Microsoft Fabric, data lives in OneLake. Use the `abfss://` path format to connect Zingg to your Lakehouse. The path follows the pattern `abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/<lakehouse-id>/Files/<filename>` for files, and `.../Tables/<tablename>` for Lakehouse tables. All formats — CSV, Parquet, Avro, JSON, Delta — are available in both Community and Enterprise. For the full Zingg installation, workspace setup, and any additional dependency configuration required on Fabric Spark pools, follow the [Microsoft Fabric Platform Guide](../../platform-guides/platform-guide-for-microsoft-fabric.md).
 
-### Python API&#x20;
+### Python API
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    schema =
-    "rec_id string, fname string, \
+schema = "rec_id string, fname string, \
 lname string, stNo string, add1 string, \
 add2 string, city string, \
 areacode string, state string, \
 dob string, ssn string"
 
-    workspace_id = "<workspace-id>" lakehouse_id = "<lakehouse-id>" base_path =
-        (f
-         "abfss://{workspace_id}@onelake"
-         ".dfs.fabric.microsoft.com/" f "{lakehouse_id}/Files")
+workspace_id = "<workspace-id>"
+lakehouse_id = "<lakehouse-id>"
+base_path = (
+    f "abfss://{workspace_id}@onelake"
+    ".dfs.fabric.microsoft.com/" f "{lakehouse_id}/Files"
+)
 
-            inputPipe =
-                CsvPipe("inputpipe", f "{base_path}/yourdata.csv", schema)
-                    args.setData(inputPipe)
+inputPipe = CsvPipe("inputpipe", f "{base_path}/yourdata.csv", schema)
+args.setData(inputPipe)
 
-                        outputPipe =
-                    CsvPipe("resultOutput", f "{base_path}/Output")
-                        args.setOutput(outputPipe)
+outputPipe = CsvPipe("resultOutput", f "{base_path}/Output")
+args.setOutput(outputPipe)
 ```
 
 ### JSON Config
@@ -62,15 +62,15 @@ dob string, ssn string"
     dob string,
     ssn string "
   } ],
-           "output" : [ {
-             "name" : "resultOutput",
-             "format" : "csv",
-             "props" : {
-               "location" :
-                   "abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/"
-                   "<lakehouse-id>/Files/Output"
-             }
-           } ]
+  "output" : [ {
+    "name" : "resultOutput",
+    "format" : "csv",
+    "props" : {
+      "location" :
+        "abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/"
+        "<lakehouse-id>/Files/Output"
+    }
+  } ]
 }
 ```
 

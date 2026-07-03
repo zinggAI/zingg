@@ -4,6 +4,7 @@ description: >-
   infrastructure without disrupting downstream systems.
 tags:
   - ent
+  - enterprise-only
 ---
 
 # Reassign Zingg ID
@@ -88,40 +89,44 @@ Downstream systems that reference `ZID-7f3a` continue to work without any change
 Set up `EArguments` matching your existing production model. This is the model whose Zingg IDs you want to preserve.
 
 ```python
-from zingg.client import* from zingg.pipes import* from
-    zinggEC.enterprise.common.EArguments import* from zinggEC.enterprise.common
-        .EFieldDefinition import EFieldDefinition from
-            zinggES.enterprise.spark.ESparkClient import* from zinggEC
-        .enterprise.common.TransformedOutputArguments import* from
-            zinggEC.enterprise.common.EClientOptions import*
+from zingg.client import*
+from zingg.pipes import*
+from zinggEC.enterprise.common.EArguments import*
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zinggES.enterprise.spark.ESparkClient import*
+from zinggEC.enterprise.common.TransformedOutputArguments import*
+from zinggEC.enterprise.common.EClientOptions import*
 
-                originalArgs = EArguments()
+originalArgs = EArguments()
 
-    id = EFieldDefinition("id", "string", MatchType.DONT_USE)
-             id.setPrimaryKey(True) fname = EFieldDefinition(
-        "fname", "string", MatchType.FUZZY) lname =
-        EFieldDefinition("lname", "string", MatchType.FUZZY)
+id = EFieldDefinition("id", "string", MatchType.DONT_USE)
+id.setPrimaryKey(True)
+fname = EFieldDefinition("fname", "string", MatchType.FUZZY)
+lname = EFieldDefinition("lname", "string", MatchType.FUZZY)
 
-            originalArgs.setFieldDefinition([ id, fname, lname ])
-                originalArgs.setModelId("107")
-                    originalArgs.setZinggDir("./models")
-                        originalArgs.setNumPartitions(4)
+originalArgs.setFieldDefinition([id, fname, lname])
+originalArgs.setModelId("107")
+originalArgs.setZinggDir("./models")
+originalArgs.setNumPartitions(4)
 
-                            schema =
-            ("id string, fname string, "
-             "lname string, stNo string, "
-             "add1 string, city string, "
-             "areacode string, state string, "
-             "dob string, ssn string")
+schema = (
+    "id string, fname string, "
+    "lname string, stNo string, "
+    "add1 string, city string, "
+    "areacode string, state string, "
+    "dob string, ssn string"
+)
 
-                originalInputPipe =
-                    ECsvPipe("originalData", "examples/febrl5M/febrl_data.csv",
-                             schema) originalArgs.setData(originalInputPipe)
+originalInputPipe = ECsvPipe(
+    "originalData",
+    "examples/febrl5M/febrl_data.csv",
+    schema
+)
+originalArgs.setData(originalInputPipe)
 
-                        originalOutputPipe =
-                        ECsvPipe("originalOutput", "/tmp/zinggOutputOriginal")
-                            originalOutputPipe.setHeader("true")
-                                originalArgs.setOutput(originalOutputPipe)
+originalOutputPipe = ECsvPipe("originalOutput", "/tmp/zinggOutputOriginal")
+originalOutputPipe.setHeader("true")
+originalArgs.setOutput(originalOutputPipe)
 ```
 
 Add all field definitions from your original production config - only a few are shown above as a pattern.
@@ -131,7 +136,9 @@ Add all field definitions from your original production config - only a few are 
 Set up `EArguments` for your new model. This is the model that produced the new cluster assignments which need Zingg IDs reassigned.
 
 ```python
-newArgs = EArguments() newArgs.setModelId("999") newArgs.setZinggDir("./models")
+newArgs = EArguments()
+newArgs.setModelId("999")
+newArgs.setZinggDir("./models")
 ```
 
 Add all field definitions from your new model config - only the structure is shown above.
@@ -141,8 +148,12 @@ Add all field definitions from your new model config - only the structure is sho
 The new model must produce its own match output before reassign can compare clusters.
 
 ```python
-options = EClientOptions([ EClientOptions.PHASE, "trainMatch" ]) zinggNew =
-    EZingg(newArgs, options) zinggNew.initAndExecute()
+options = EClientOptions([
+    EClientOptions.PHASE,
+    "trainMatch"
+])
+zinggNew = EZingg(newArgs, options)
+zinggNew.initAndExecute()
 ```
 
 ### **Step 4: Create `TransformedOutputArguments`**
@@ -151,21 +162,23 @@ options = EClientOptions([ EClientOptions.PHASE, "trainMatch" ]) zinggNew =
 
 ```python
 reassignArgs = TransformedOutputArguments()
-                   reassignArgs.setParentArgs(newArgs)
-                       reassignArgs.setOriginalArgs(originalArgs)
+reassignArgs.setParentArgs(newArgs)
+reassignArgs.setOriginalArgs(originalArgs)
 
-                           reassignOutputPipe =
-    ECsvPipe("reassignedOutput", "/tmp/zinggReassigned")
-        reassignOutputPipe.setHeader("true")
-            reassignArgs.setTransformedOutputPath(reassignOutputPipe)
+reassignOutputPipe = ECsvPipe("reassignedOutput", "/tmp/zinggReassigned")
+reassignOutputPipe.setHeader("true")
+reassignArgs.setTransformedOutputPath(reassignOutputPipe)
 ```
 
 ### Step 5: Execute `reassignZinggId`
 
 ```python
-reassignOptions =
-    EClientOptions([ EClientOptions.PHASE, "reassignZinggId" ]) zinggReassign =
-        EZingg(reassignArgs, reassignOptions) zinggReassign.initAndExecute()
+reassignOptions = EClientOptions([
+    EClientOptions.PHASE,
+    "reassignZinggId"
+])
+zinggReassign = EZingg(reassignArgs, reassignOptions)
+zinggReassign.initAndExecute()
 ```
 {% endtab %}
 

@@ -11,21 +11,25 @@ The training phase builds up the Zingg models using the training data from your 
 Once saved, reuse the same `modelId` in all subsequent phases - `match`, `link`, and `runIncremental` to apply this trained model to your data.
 
 {% hint style="success" icon="right-long" %}
-Model saved to: `zinggDir/modelId`&#x20;
+Model saved to: `zinggDir/modelId`
 
 Use the same `modelId` when running `match`, `link`, or `runIncremental` to apply this trained model.
 {% endhint %}
 
 {% tabs %}
-{% tab title="Community (OS) Python" %}
-### Python&#x20;
+{% tab title="Community Python" %}
+### Python
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "train" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([
+    ClientOptions.PHASE,
+    "train"
+])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
-### CLI&#x20;
+### CLI
 
 ```bash
 ./ zingg.sh-- phase train-- conf config.json
@@ -33,11 +37,15 @@ options = ClientOptions([ ClientOptions.PHASE, "train" ]) zingg =
 {% endtab %}
 
 {% tab title="Enterprise Python" %}
-### Python&#x20;
+### Python
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "train" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([
+    ClientOptions.PHASE,
+    "train"
+])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
 ### CLI
@@ -62,4 +70,3 @@ Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark c
 _**CHECK WITH SONAL ABOUT THE ENTIRE SNOWFLAKE RELATED CONTENT**_
 {% endtab %}
 {% endtabs %}
-

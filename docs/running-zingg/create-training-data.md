@@ -15,7 +15,7 @@ Zingg selects the most informative pairs from your data not random samples. Labe
 {% endhint %}
 
 {% tabs %}
-{% tab title="Community (OS)" %}
+{% tab title="Community" %}
 ### Set label data sample size
 
 ```python
@@ -31,8 +31,12 @@ args.setLabelDataSampleSize(0.5)
 #### Using Python API
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([
+    ClientOptions.PHASE,
+    "findTrainingData"
+])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### Using pre-existing training data
@@ -48,15 +52,17 @@ Your training data must include:
 
 ```json
 {
-  "trainingSamples": [{
-    "name": "existingTraining",
-    "format": "csv",
-    "props": {
-      "path": "/path/to/training.csv",
-      "delimiter": ",",
-      "header": "true"
+  "trainingSamples": [
+    {
+      "name": "existingTraining",
+      "format": "csv",
+      "props": {
+        "path": "/path/to/training.csv",
+        "delimiter": ",",
+        "header": "true"
+      }
     }
-  }]
+  ]
 }
 ```
 
@@ -72,11 +78,15 @@ Even when supplying pre-existing training data, it is advisable to run `findTrai
 args.setLabelDataSampleSize(0.5)
 ```
 
-#### Python&#x20;
+#### Python
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([
+    ClientOptions.PHASE,
+    "findTrainingData"
+])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### CLI
@@ -96,14 +106,3 @@ Candidate pairs are written to `zinggDir/modelId`. Run the label phase next to r
 **CHECK WITH SONAL ABOUT THIS TOPIC - NEEDS ENTIRELY DIFFERENT SET OF CONTENT TO BE DISCUSSED LATER.**
 {% endtab %}
 {% endtabs %}
-
-
-
-
-
-
-
-
-
-
-

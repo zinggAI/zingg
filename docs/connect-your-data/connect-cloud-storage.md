@@ -25,8 +25,8 @@ Before connecting, complete these steps:
 2. Export credentials.
 
 ```bash
-export AWS_ACCESS_KEY_ID = <access key id> export AWS_SECRET_ACCESS_KEY =
-    <access key>
+export AWS_ACCESS_KEY_ID = <access key id>
+export AWS_SECRET_ACCESS_KEY = <access key>
 ```
 
 If MFA enabled:
@@ -40,20 +40,19 @@ export AWS_SESSION_TOKEN = <session token>
 `spark.jars=//hadoop-aws-3.1.0.jar,`\
 `//aws-java-sdk-bundle-1.11.271.jar`
 
-### Python API - Community (OS)
+### Python API - Community
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    schema = "field1 string, field2 string"
+schema = "field1 string, field2 string"
 
-    inputPipe =
-        CsvPipe("s3Input", "s3a://your-bucket/path/to/input.csv", schema)
-            args.setData(inputPipe)
+inputPipe = CsvPipe("s3Input", "s3a://your-bucket/path/to/input.csv", schema)
+args.setData(inputPipe)
 
-                outputPipe =
-            CsvPipe("s3Output", "s3a://your-bucket/path/to/output")
-                args.setOutput(outputPipe)
+outputPipe = CsvPipe("s3Output", "s3a://your-bucket/path/to/output")
+args.setOutput(outputPipe)
 ```
 
 ### Python API - Enterprise
@@ -63,18 +62,17 @@ Enterprise uses `ECsvPipe`. Replace import and class name only - the `s3a://` pa
 {% endhint %}
 
 ```python
-from zinggEC.enterprise.common.epipes import* from
-    zinggEC.enterprise.common.EArguments import*
+from zinggEC.enterprise.common.epipes import*
+from zinggEC.enterprise.common.EArguments import*
 
-        schema = "field1 string, field2 string"
+schema = "field1 string, field2 string"
 
-    inputPipe =
-        ECsvPipe("s3Input", "s3a://your-bucket/path/to/input.csv", schema)
-            args.setData(inputPipe)
+inputPipe = ECsvPipe("s3Input", "s3a://your-bucket/path/to/input.csv", schema)
+args.setData(inputPipe)
 
-                outputPipe =
-            ECsvPipe("s3Output", "s3a://your-bucket/path/to/output")
-                outputPipe.setHeader("true") args.setOutput(outputPipe)
+outputPipe = ECsvPipe("s3Output", "s3a://your-bucket/path/to/output")
+outputPipe.setHeader("true")
+args.setOutput(outputPipe)
 ```
 
 ### JSON Config
@@ -90,11 +88,11 @@ from zinggEC.enterprise.common.epipes import* from
       "header" : "true"
     }
   } ],
-           "output" : [ {
-             "name" : "s3Output",
-             "format" : "csv",
-             "props" : {"location" : "s3a://your-bucket/path/to/output"}
-           } ]
+  "output" : [ {
+    "name" : "s3Output",
+    "format" : "csv",
+    "props" : {"location" : "s3a://your-bucket/path/to/output"}
+  } ]
 }
 ```
 
@@ -107,7 +105,9 @@ from zinggEC.enterprise.common.epipes import* from
   "data" : [ {
     "name" : "parquetInput",
     "format" : "parquet",
-    "props" : {"path" : "s3a://your-bucket/path/to/input.parquet"}
+    "props" : {
+      "path" : "s3a://your-bucket/path/to/input.parquet"
+    }
   } ]
 }
 ```
@@ -119,7 +119,9 @@ from zinggEC.enterprise.common.epipes import* from
   "data" : [ {
     "name" : "avroInput",
     "format" : "avro",
-    "props" : {"path" : "s3a://your-bucket/path/to/input.avro"}
+    "props" : {
+      "path" : "s3a://your-bucket/path/to/input.avro"
+    }
   } ]
 }
 ```
@@ -131,7 +133,9 @@ from zinggEC.enterprise.common.epipes import* from
   "data" : [ {
     "name" : "jsonInput",
     "format" : "json",
-    "props" : {"path" : "s3a://your-bucket/path/to/input.json"}
+    "props" : {
+      "path" : "s3a://your-bucket/path/to/input.json"
+    }
   } ]
 }
 ```
@@ -139,15 +143,12 @@ from zinggEC.enterprise.common.epipes import* from
 #### CLI commands
 
 ```bash
-./ scripts / zingg.sh-- phase findTrainingData-- properties -
-    file config / zingg.conf-- conf examples / febrl /
-        config
-            .json-- zinggDir s3a :  // zingg28032023/zingg
+./ scripts / zingg.sh-- phase findTrainingData-- properties - file config / \
+zingg.conf-- conf examples / febrl / config .json-- zinggDir s3a :  // \
+zingg28032023/zingg
 
-            ./
-        scripts / zingg.sh-- phase match-- properties -
-    file config / zingg.conf-- conf examples / febrl /
-        config.json-- zinggDir s3a:  // zingg28032023/zingg
+./ scripts / zingg.sh-- phase match-- properties - file config / zingg.conf-- \
+conf examples / febrl / config.json-- zinggDir s3a:  // zingg28032023/zingg
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -166,47 +167,49 @@ On Google Cloud Storage, data lives in GCS buckets accessed via the `gs://` path
 **Read more**: For the full Zingg installation, Dataproc cluster setup, and any additional dependency configuration required when running Zingg on Google Cloud, follow the [GCP Dataproc Platform Guide](../platform-guides/platform-guide-for-gcp-dataproc.md).
 {% endhint %}
 
-### **Python API - Community (OS)**
+### **Python API - Community**
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    schema =
-    ("id string, fname string, "
-     "lname string, stNo string, "
-     "add1 string, add2 string, "
-     "city string, state string, "
-     "areacode string, dob string, "
-     "ssn string")
+schema = (
+    "id string, fname string, "
+    "lname string, stNo string, "
+    "add1 string, add2 string, "
+    "city string, state string, "
+    "areacode string, dob string, "
+    "ssn string"
+)
 
-        inputPipe = CsvPipe("testFebrl", "gs://your-bucket/test.csv", schema)
-                        args.setData(inputPipe)
+inputPipe = CsvPipe("testFebrl", "gs://your-bucket/test.csv", schema)
+args.setData(inputPipe)
 
-                            outputPipe =
-            CsvPipe("resultFebrl", "gs://your-bucket/Output")
-                args.setOutput(outputPipe)
+outputPipe = CsvPipe("resultFebrl", "gs://your-bucket/Output")
+args.setOutput(outputPipe)
 ```
 
 ### **Python API - Enterprise**
 
 ```python
-from zinggEC.enterprise.common.epipes import* from
-    zinggEC.enterprise.common.EArguments import*
+from zinggEC.enterprise.common.epipes import*
+from zinggEC.enterprise.common.EArguments import*
 
-        schema =
-    ("id string, fname string, "
-     "lname string, stNo string, "
-     "add1 string, add2 string, "
-     "city string, state string, "
-     "areacode string, dob string, "
-     "ssn string")
+schema = (
+    "id string, fname string, "
+    "lname string, stNo string, "
+    "add1 string, add2 string, "
+    "city string, state string, "
+    "areacode string, dob string, "
+    "ssn string"
+)
 
-        inputPipe = ECsvPipe("testFebrl", "gs://your-bucket/test.csv", schema)
-                        args.setData(inputPipe)
+inputPipe = ECsvPipe("testFebrl", "gs://your-bucket/test.csv", schema)
+args.setData(inputPipe)
 
-                            outputPipe =
-            ECsvPipe("resultFebrl", "gs://your-bucket/Output")
-                outputPipe.setHeader("true") args.setOutput(outputPipe)
+outputPipe = ECsvPipe("resultFebrl", "gs://your-bucket/Output")
+outputPipe.setHeader("true")
+args.setOutput(outputPipe)
 ```
 
 ### **JSON Config**
@@ -225,15 +228,15 @@ from zinggEC.enterprise.common.epipes import* from
                "string, add2 string, city string, state string, areacode "
                "string, dob string, ssn string"
   } ],
-           "output" : [ {
-             "name" : "resultFebrl",
-             "format" : "csv",
-             "props" : {
-               "location" : "gs://your-bucket/Output",
-               "delimiter" : ",",
-               "header" : "true"
-             }
-           } ]
+  "output" : [ {
+    "name" : "resultFebrl",
+    "format" : "csv",
+    "props" : {
+      "location" : "gs://your-bucket/Output",
+      "delimiter" : ",",
+      "header" : "true"
+    }
+  } ]
 }
 ```
 
@@ -242,9 +245,8 @@ from zinggEC.enterprise.common.epipes import* from
 For long-running Zingg jobs on Spark (especially on Dataproc), set a Spark checkpoint directory in GCS so Spark can recover state and manage memory during the entity resolution process:
 
 ```python
-checkpoint_path =
-    "gs://your-bucket/zingg_checkpoint" spark.sparkContext.setCheckpointDir(
-        checkpoint_path)
+checkpoint_path = "gs://your-bucket/zingg_checkpoint"
+spark.sparkContext.setCheckpointDir(checkpoint_path)
 ```
 
 The checkpoint directory is a Spark feature, not a Zingg-specific configuration. It provides Spark with persistent storage for intermediate computation metadata during multi-stage jobs. Recommended for any large-dataset Zingg run on Dataproc.
@@ -260,7 +262,9 @@ GCS supports all standard Spark formats. Replace `format` and the path suffix in
   "data" : [ {
     "name" : "parquetInput",
     "format" : "parquet",
-    "props" : {"path" : "gs://your-bucket/input.parquet"}
+    "props" : {
+      "path" : "gs://your-bucket/input.parquet"
+    }
   } ]
 }
 ```
@@ -272,7 +276,9 @@ GCS supports all standard Spark formats. Replace `format` and the path suffix in
   "data" : [ {
     "name" : "jsonInput",
     "format" : "json",
-    "props" : {"path" : "gs://your-bucket/input.json"}
+    "props" : {
+      "path" : "gs://your-bucket/input.json"
+    }
   } ]
 }
 ```
@@ -284,7 +290,9 @@ GCS supports all standard Spark formats. Replace `format` and the path suffix in
   "data" : [ {
     "name" : "avroInput",
     "format" : "avro",
-    "props" : {"path" : "gs://your-bucket/input.avro"}
+    "props" : {
+      "path" : "gs://your-bucket/input.avro"
+    }
   } ]
 }
 ```

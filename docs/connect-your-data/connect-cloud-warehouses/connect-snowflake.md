@@ -17,11 +17,11 @@ Snowflake as a COMPUTE ENGINE (native Snowflake run without Spark) is Enterprise
 
 ### Prerequisites
 
-Snowflake as a data source requires two dependency JARs on the Spark classpath. Download from `Maven` and add to `zingg.conf.`&#x20;
+Snowflake as a data source requires two dependency JARs on the Spark classpath. Download from `Maven` and add to `zingg.conf.`
 
 ```bash
-spark.jars = snowflake - jdbc - 3.13.19.jar,
-    spark - snowflake_2 .12 - 2.10.0 - spark_3 .1.jar
+spark.jars = snowflake - jdbc - 3.13.19.jar, \
+spark - snowflake_2 .12 - 2.10.0 - spark_3 .1.jar
 ```
 
 For the full Zingg installation, cluster setup, and any additional dependency configuration required when connecting Spark to Snowflake, follow the [Snowflake Platform Guide](../../platform-guides/platform-guide-for-snowflake.md).
@@ -29,19 +29,19 @@ For the full Zingg installation, cluster setup, and any additional dependency co
 ### Python API
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    snowflakePipe =
-    SnowflakePipe("snowflakeInput") snowflakePipe
-        .addProperty("sfUrl", "rfa59271.snowflakecomputing.com")
-            snowflakePipe.addProperty("sfUser", "sonalgoyal")
-                snowflakePipe.addProperty("sfPassword", "ZZ") snowflakePipe
-        .addProperty("sfDatabase", "TEST")
-            snowflakePipe.addProperty("sfSchema", "PUBLIC") snowflakePipe
-        .addProperty("sfWarehouse", "COMPUTE_WH")
-            snowflakePipe.addProperty("dbtable", "FEBRL")
-                snowflakePipe.addProperty("application", "zingg_zingg")
-                    args.setData(snowflakePipe)
+snowflakePipe = SnowflakePipe("snowflakeInput")
+snowflakePipe.addProperty("sfUrl", "rfa59271.snowflakecomputing.com")
+snowflakePipe.addProperty("sfUser", "sonalgoyal")
+snowflakePipe.addProperty("sfPassword", "ZZ")
+snowflakePipe.addProperty("sfDatabase", "TEST")
+snowflakePipe.addProperty("sfSchema", "PUBLIC")
+snowflakePipe.addProperty("sfWarehouse", "COMPUTE_WH")
+snowflakePipe.addProperty("dbtable", "FEBRL")
+snowflakePipe.addProperty("application", "zingg_zingg")
+args.setData(snowflakePipe)
 ```
 
 ### JSON Config

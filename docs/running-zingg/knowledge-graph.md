@@ -4,6 +4,7 @@ description: >-
   relationships across your data.
 tags:
   - ent
+  - enterprise-only
 ---
 
 # Knowledge Graph
@@ -40,6 +41,5 @@ _**Full content and code example will be added once the above is confirmed**_
 {% hint style="success" icon="right-long" %}
 **Read more:**
 
-* Entity resolution and graph analysis with Neo4j - Connect [graph databases](../connect-your-data/connect-graph-databases-neo4j.md)&#x20;
+* Entity resolution and graph analysis with Neo4j - Connect [graph databases](../connect-your-data/connect-graph-databases-neo4j.md)
 {% endhint %}
-

@@ -20,12 +20,16 @@ Run `verifyBlocking` in two situations:
 ### Run the `verifyBlocking` phase
 
 {% tabs %}
-{% tab title="Community (OS)" %}
+{% tab title="Community" %}
 ### Python
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "verifyBlocking" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([
+    ClientOptions.PHASE,
+    "verifyBlocking"
+])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 ### CLI
@@ -36,11 +40,15 @@ options = ClientOptions([ ClientOptions.PHASE, "verifyBlocking" ]) zingg =
 {% endtab %}
 
 {% tab title="Enterprise" %}
-### Python&#x20;
+### Python
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "verifyBlocking" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([
+    ClientOptions.PHASE,
+    "verifyBlocking"
+])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
 ### CLI
@@ -65,9 +73,10 @@ options = ClientOptions([ ClientOptions.PHASE, "verifyBlocking" ]) zingg =
 Read the output to inspect block coverage:
 
 ```python
-verify_output =
-    spark.read.parquet(f "{zinggDir}/{modelId}/verifyBlocking")
-        verify_output.show()
+verify_output = spark.read.parquet(
+    f "{zinggDir}/{modelId}/verifyBlocking"
+)
+verify_output.show()
 ```
 
 ### **What to do if coverage is low**
@@ -85,6 +94,3 @@ If `verifyBlocking` shows that many known matching pairs are not being blocked t
 * Blocking model concept and how it fits in the pipeline → [Blocking Model](../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
 * Custom blocking functions for advanced tuning → [Custom Blocking and Similarity](../tuning/custom-blocking-and-similarity.md)
 {% endhint %}
-
-
-

@@ -24,7 +24,7 @@ You can configure pipes in two ways. Both work in Community and Enterprise. Use 
 {% tab title="Python API" %}
 Create pipe objects and attach them to your arguments object.
 
-### **Community (OS)**
+### **Community**
 
 ```python
 from zingg.client import *
@@ -53,30 +53,30 @@ args.setOutput(outputPipe)
 ### **Enterprise**
 
 ```python
-from zinggEC.enterprise.common.epipes import* from
-    zinggEC.enterprise.common.EArguments import*
+from zinggEC.enterprise.common.epipes import*
+from zinggEC.enterprise.common.EArguments import*
 ```
 
 #### **Input Pipe**
 
 ```python
 inputPipe = ECsvPipe("testFebrl", "examples/febrl/test.csv", schema)
-                args.setData(inputPipe)
+args.setData(inputPipe)
 ```
 
 #### **Output Pipe**
 
 ```python
 outputPipe = ECsvPipe("resultFebrl", "/tmp/febrlOutput")
-                 outputPipe.addProperty("header", "true")
-                     args.setOutput(outputPipe)
+outputPipe.addProperty("header", "true")
+args.setOutput(outputPipe)
 ```
 {% endtab %}
 
 {% tab title="JSON config" %}
 Define pipes in the data and output sections of your JSON config file.
 
-### **Community (OS)**
+### **Community**
 
 ```json
 {
@@ -89,15 +89,15 @@ Define pipes in the data and output sections of your JSON config file.
       "header" : "false"
     }
   } ],
-           "output" : [ {
-             "name" : "resultFebrl",
-             "format" : "csv",
-             "props" : {
-               "location" : "/tmp/febrlOutput",
-               "delimiter" : ",",
-               "header" : "true"
-             }
-           } ]
+  "output" : [ {
+    "name" : "resultFebrl",
+    "format" : "csv",
+    "props" : {
+      "location" : "/tmp/febrlOutput",
+      "delimiter" : ",",
+      "header" : "true"
+    }
+  } ]
 }
 ```
 
@@ -117,20 +117,20 @@ Define pipes in the data and output sections of your JSON config file.
                "string, add2 string, city string, state string, areacode "
                "string, dob string, ssn string"
   } ],
-           "output" : [ {
-             "name" : "OUTPUT_FEBRL",
-             "format" : "csv",
-             "props" : {
-               "location" : "/tmp/zinggOutputNew/",
-               "delimiter" : ",",
-               "header" : true
-             }
-           } ],
-                      "outputStats" : {
+  "output" : [ {
+    "name" : "OUTPUT_FEBRL",
+    "format" : "csv",
+    "props" : {
+      "location" : "/tmp/zinggOutputNew/",
+      "delimiter" : ",",
+      "header" : true
+    }
+  } ],
+  "outputStats" : {
     "name" : "stats", "format" : "csv", "props" : {
       "location" : "/tmp/zinggStats_$ZINGG_DYNAMIC_STAT_NAME",
-                   "delimiter" : ",",
-                                 "header" : true
+      "delimiter" : ",",
+      "header" : true
     }
   }
 }
@@ -155,5 +155,5 @@ Zingg connects to any datastore that has a Spark connector, plus Snowflake nativ
 
 * For the full connection config including required JARs, props, and code examples for each datastore - [Connect Data](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data)
 * To configure your pipes step by step as part of your Zingg setup - [Configure Zingg](../running-zingg/configure-zingg.md)
-* To understand what Zingg adds to your output alongside your input fields (`Z_CLUSTER`, `Z_MINSCORE`, `Zingg ID` and others) - [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)&#x20;
+* To understand what Zingg adds to your output alongside your input fields (`Z_CLUSTER`, `Z_MINSCORE`, `Zingg ID` and others) - [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)
 {% endhint %}

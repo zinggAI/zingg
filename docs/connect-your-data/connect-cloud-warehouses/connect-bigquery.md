@@ -11,8 +11,8 @@ description: >-
 1. BigQuery requires two dependency JARs. Download and add to `zingg.conf.`
 
 ```bash
-spark.jars =./ spark - bigquery - with - dependencies_2 .12 - 0.24.2.jar,
-    ./ gcs - connector - hadoop2 - latest.jar
+spark.jars = ./ spark - bigquery - with - dependencies_2 .12 - 0.24.2.jar, \
+./ gcs - connector - hadoop2 - latest.jar
 ```
 
 2. Set the Spark Hadoop property.
@@ -24,8 +24,7 @@ spark.hadoop.fs.gs.impl = com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem
 3. If running outside Google Cloud, set credentials.
 
 ```bash
-export GOOGLE_APPLICATION_CREDENTIALS =
-    / path / to / service - account - key.json
+export GOOGLE_APPLICATION_CREDENTIALS = / path / to / service - account - key.json
 ```
 
 For the full Zingg installation, cluster setup, and any additional dependency configuration required when connecting Spark to BigQuery, follow the [GCP Dataproc Platform Guide](../../platform-guides/platform-guide-for-gcp-dataproc.md).
@@ -33,21 +32,20 @@ For the full Zingg installation, cluster setup, and any additional dependency co
 ### Python API
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    bqInput =
-    BigQueryPipe("bqInput")
-        bqInput.addProperty("credentialsFile", "/path/to/key.json")
-            bqInput.addProperty("table", "project-id.dataset.tablename")
-                bqInput.addProperty("viewsEnabled", "true")
-                    args.setData(bqInput)
+bqInput = BigQueryPipe("bqInput")
+bqInput.addProperty("credentialsFile", "/path/to/key.json")
+bqInput.addProperty("table", "project-id.dataset.tablename")
+bqInput.addProperty("viewsEnabled", "true")
+args.setData(bqInput)
 
-                        bqOutput =
-        BigQueryPipe("bqOutput") bqOutput
-            .addProperty("credentialsFile", "/path/to/key.json") bqOutput
-            .addProperty("table", "project-id.dataset.outputtable") bqOutput
-            .addProperty("temporaryGcsBucket", "your-gcs-bucket")
-                args.setOutput(bqOutput)
+bqOutput = BigQueryPipe("bqOutput")
+bqOutput.addProperty("credentialsFile", "/path/to/key.json")
+bqOutput.addProperty("table", "project-id.dataset.outputtable")
+bqOutput.addProperty("temporaryGcsBucket", "your-gcs-bucket")
+args.setOutput(bqOutput)
 ```
 
 ### JSON Config
@@ -63,15 +61,15 @@ from zingg.client import* from zingg.pipes import*
       "viewsEnabled" : true
     }
   } ],
-           "output" : [ {
-             "name" : "output",
-             "format" : "bigquery",
-             "props" : {
-               "credentialsFile" : "/path/to/key.json",
-               "table" : "project-id.dataset.output",
-               "temporaryGcsBucket" : "your-gcs-bucket"
-             }
-           } ]
+  "output" : [ {
+    "name" : "output",
+    "format" : "bigquery",
+    "props" : {
+      "credentialsFile" : "/path/to/key.json",
+      "table" : "project-id.dataset.output",
+      "temporaryGcsBucket" : "your-gcs-bucket"
+    }
+  } ]
 }
 ```
 
@@ -82,4 +80,3 @@ from zingg.client import* from zingg.pipes import*
   cloud/spark/spark-bigquery-with-dependencies\_2.12/0.24.2/
 * **gcs-connector-hadoop2:** storage.googleapis.com/hadoop-lib/ gcs/gcs-connector-hadoop2-latest.jar
 {% endhint %}
-

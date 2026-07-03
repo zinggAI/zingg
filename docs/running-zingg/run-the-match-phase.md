@@ -16,26 +16,30 @@ Every record in the match output contains your original input fields plus three 
 
 * `Z_CLUSTER` - unique identifier shared by all records in the same cluster. Records with the same `Z_CLUSTER` represent the same real-world entity. In Enterprise, this is the persistent\
   Zingg ID.
-* `Z_MINSCORE` - the lowest similarity score between any two records in that cluster. Indicates the confidence of the weakest link in the cluster.&#x20;
+* `Z_MINSCORE` - the lowest similarity score between any two records in that cluster. Indicates the confidence of the weakest link in the cluster.
 * `Z_MAXSCORE` - the highest similarity score between any two records in that cluster. Indicates the strongest match within the cluster.
 
 {% hint style="success" icon="right-long" %}
 **Read more:**
 
 * Scores are explained in detail - [Interpreting output scores](../interpreting-results/interpret-output-scores.md)
-* For the link phase (across two datasets) - [Link across datasets](link-across-datasets.md)&#x20;
+* For the link phase (across two datasets) - [Link across datasets](link-across-datasets.md)
 {% endhint %}
 
 {% tabs %}
-{% tab title="Community (OS) Python" %}
-### Python&#x20;
+{% tab title="Community Python" %}
+### Python
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "match" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([
+    ClientOptions.PHASE,
+    "match"
+])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
-### CLI&#x20;
+### CLI
 
 ```bash
 ./ zingg.sh-- phase match-- conf config.json
@@ -44,22 +48,28 @@ options = ClientOptions([ ClientOptions.PHASE, "match" ]) zingg =
 ### Read and View Output
 
 ```python
-output = spark.read.csv("/tmp/febrlOutput", header = True) display(output)
+output = spark.read.csv(
+    "/tmp/febrlOutput",
+    header = True
+)
+display(output)
 ```
 
 {% hint style="info" icon="right-long" %}
-Matching records share the same `Z_CLUSTER` value.&#x20;
+Matching records share the same `Z_CLUSTER` value.
 
 `Z_MINSCORE` and `Z_MAXSCORE` show match confidence within the cluster.
 {% endhint %}
 {% endtab %}
 
 {% tab title="Enterprise Python" %}
-### Python&#x20;
+### Python
 
 ```python
 options = ClientOptions([
-    ClientOptions.PHASE, "match"])
+    ClientOptions.PHASE,
+    "match"
+])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -76,7 +86,8 @@ zingg.initAndExecute()
 # Read match output
 output = spark.read.csv(
     "/tmp/febrlOutput",
-    header=True)
+    header=True
+)
 display(output)
 ```
 
@@ -91,8 +102,6 @@ Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark c
 {% endhint %}
 
 _**CHECK WITH SONAL - Enterprise Snowflake content for this topic to be provivded by Sonal**_
-
-
 {% endtab %}
 {% endtabs %}
 
@@ -108,4 +117,3 @@ _**CHECK WITH SONAL - Enterprise Snowflake content for this topic to be provivde
 **Recommended approach**: Keep clusters whose value `Z_MINSCORE` is 0 for manual inspection. Keep the cluster size above 4 or 5 for closer review. The exact threshold depends on how accurate you determine your results and how much manual control you want.
 
 </details>
-

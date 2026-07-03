@@ -20,7 +20,7 @@ For files stored in cloud platforms, use the format sections within each platfor
 {% hint style="success" icon="right-long" %}
 All file formats shown here are available in Community and Enterprise.
 
-The only edition difference is the pipe class in the Python API:&#x20;
+The only edition difference is the pipe class in the Python API:
 
 * `CsvPipe` for Community
 * `ECsvPipe` for Enterprise
@@ -31,17 +31,17 @@ The only edition difference is the pipe class in the Python API:&#x20;
 ### Python API - Community
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    schema =
-    "field1 string, \
+schema = "field1 string, \
 field2 string, field3 string"
 
-    inputPipe = CsvPipe("csvInput", "/path/to/input.csv", schema)
-                    args.setData(inputPipe)
+inputPipe = CsvPipe("csvInput", "/path/to/input.csv", schema)
+args.setData(inputPipe)
 
-                        outputPipe =
-        CsvPipe("csvOutput", "/path/to/output") args.setOutput(outputPipe)
+outputPipe = CsvPipe("csvOutput", "/path/to/output")
+args.setOutput(outputPipe)
 ```
 
 ### Python API - Enterprise
@@ -51,19 +51,18 @@ Enterprise uses ECsvPipe. The pipe setup is identical - only the class `name` an
 {% endhint %}
 
 ```python
-from zinggEC.enterprise.common.epipes import* from
-    zinggEC.enterprise.common.EArguments import*
+from zinggEC.enterprise.common.epipes import*
+from zinggEC.enterprise.common.EArguments import*
 
-        schema =
-    "field1 string, \
+schema = "field1 string, \
 field2 string, field3 string"
 
-    inputPipe = ECsvPipe("csvInput", "/path/to/input.csv", schema)
-                    args.setData(inputPipe)
+inputPipe = ECsvPipe("csvInput", "/path/to/input.csv", schema)
+args.setData(inputPipe)
 
-                        outputPipe =
-        ECsvPipe("csvOutput", "/path/to/output")
-            outputPipe.setHeader("true") args.setOutput(outputPipe)
+outputPipe = ECsvPipe("csvOutput", "/path/to/output")
+outputPipe.setHeader("true")
+args.setOutput(outputPipe)
 ```
 
 ### JSON Config
@@ -82,16 +81,16 @@ field2 string, field3 string"
     field2 string,
     field3 string "
   } ],
-           "output" : [ {
-             "name" : "csvOutput",
-             "format" : "csv",
-             "props" : {"location" : "/path/to/output", "header" : "true"}
-           } ]
+  "output" : [ {
+    "name" : "csvOutput",
+    "format" : "csv",
+    "props" : {"location" : "/path/to/output", "header" : "true"}
+  } ]
 }
 ```
 
 {% hint style="success" icon="right-long" %}
-If your CSV has no header row, set `header`: `false` and define the schema field explicitly.&#x20;
+If your CSV has no header row, set `header`: `false` and define the schema field explicitly.
 
 Schema uses Spark SQL types: string, integer, double, date, timestamp.
 {% endhint %}
@@ -101,11 +100,12 @@ Schema uses Spark SQL types: string, integer, double, date, timestamp.
 ### Python API
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    parquetPipe = Pipe("parquetFiles", "parquet")
-                      parquetPipe.addProperty("path", "/home/zingg")
-                          args.setData(parquetPipe)
+parquetPipe = Pipe("parquetFiles", "parquet")
+parquetPipe.addProperty("path", "/home/zingg")
+args.setData(parquetPipe)
 ```
 
 ### **JSON Config**
@@ -119,7 +119,9 @@ Parquet uses `path` as the property key, not `location` as CSV uses.
   "data" : [ {
     "name" : "parquetFiles",
     "format" : "parquet",
-    "props" : {"path" : "/home/zingg"}
+    "props" : {
+      "path" : "/home/zingg"
+    }
   } ]
 }
 ```
@@ -129,11 +131,12 @@ Parquet uses `path` as the property key, not `location` as CSV uses.
 ### Python API
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    avroPipe = Pipe("avroInput", "avro")
-                   avroPipe.addProperty("path", "/path/to/input.avro")
-                       args.setData(avroPipe)
+avroPipe = Pipe("avroInput", "avro")
+avroPipe.addProperty("path", "/path/to/input.avro")
+args.setData(avroPipe)
 ```
 
 ### JSON Config
@@ -143,23 +146,24 @@ from zingg.client import* from zingg.pipes import*
   "data" : [ {
     "name" : "avroInput",
     "format" : "avro",
-    "props" : {"path" : "/path/to/input.avro"}
+    "props" : {
+      "path" : "/path/to/input.avro"
+    }
   } ]
 }
 ```
-
-
 {% endtab %}
 
 {% tab title="JSON" %}
 ### Python API
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    jsonPipe = Pipe("jsonInput", "json")
-                   jsonPipe.addProperty("path", "/path/to/input.json")
-                       args.setData(jsonPipe)
+jsonPipe = Pipe("jsonInput", "json")
+jsonPipe.addProperty("path", "/path/to/input.json")
+args.setData(jsonPipe)
 ```
 
 ### JSON Config
@@ -169,21 +173,21 @@ from zingg.client import* from zingg.pipes import*
   "data" : [ {
     "name" : "jsonInput",
     "format" : "json",
-    "props" : {"path" : "/path/to/input.json"}
+    "props" : {
+      "path" : "/path/to/input.json"
+    }
   } ]
 }
 ```
 
 {% hint style="info" icon="right-long" %}
-* For multiline JSON files, add `multiLine`: `true` to props.&#x20;
+* For multiline JSON files, add `multiLine`: `true` to props.
 * For JSON Lines (one object per line), no additional props needed.
 {% endhint %}
 {% endtab %}
 
 {% tab title="XML" %}
 _**XML connector documentation is being confirmed. This section will be updated with the JSON config and Python API once verified**_
-
-
 {% endtab %}
 {% endtabs %}
 
@@ -197,15 +201,17 @@ TSV uses the same CSV connector with a tab delimiter.
 
 ```json
 {
-  "data": [{
-    "name": "tsvInput",
-    "format": "csv",
-    "props": {
-      "location": "/path/to/input.tsv",
-      "delimiter": "\t",
-      "header": "true"
+  "data": [
+    {
+      "name": "tsvInput",
+      "format": "csv",
+      "props": {
+        "location": "/path/to/input.tsv",
+        "delimiter": "\t",
+        "header": "true"
+      }
     }
-  }]
+  ]
 }
 ```
 
@@ -215,8 +221,11 @@ TSV uses the same CSV connector with a tab delimiter.
 from zingg.client import *
 from zingg.pipes import *
 
-tsvPipe = CsvPipe("tsvInput",
-    "/path/to/input.tsv", schema)
+tsvPipe = CsvPipe(
+    "tsvInput",
+    "/path/to/input.tsv",
+    schema
+)
 tsvPipe.addProperty("sep", "\t")
 args.setData(tsvPipe)
 ```
@@ -226,12 +235,10 @@ args.setData(tsvPipe)
 _**CHECK WITH SONAL - XLSX is listed as supported on zingg.ai but the connector format string and Python class are not confirmed on any live docs page. Please confirm the XLSX config and whether it is all editions or ENT only.**_
 
 {% hint style="info" icon="right-long" %}
-For files on cloud platforms:&#x20;
+For files on cloud platforms:
 
-* Databricks and Fabric - [Connect Cloud Warehouses ](connect-cloud-warehouses/)
+* Databricks and Fabric - [Connect Cloud Warehouses](connect-cloud-warehouses/)
 * S3 - [Connect Cloud Storage](connect-cloud-storage.md)
 {% endhint %}
-
-
 
 </details>

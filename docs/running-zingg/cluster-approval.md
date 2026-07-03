@@ -4,6 +4,7 @@ description: >-
   to the identity graph.
 tags:
   - ent
+  - enterprise-only
 ---
 
 # Cluster Approval

@@ -27,12 +27,16 @@ Link output contains all input fields plus four Zingg-generated columns:
 * `Z_SOURCE` - the source dataset each record came from. Use this to trace each resolved record back to its origin system.
 
 {% tabs %}
-{% tab title="Community (OS) Python" %}
-### Python&#x20;
+{% tab title="Community Python" %}
+### Python
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "link" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([
+    ClientOptions.PHASE,
+    "link"
+])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 ### CLI
@@ -49,7 +53,11 @@ The link config file needs two data sources defined. Sample config for link avai
 ### Read and View Output
 
 ```python
-output = spark.read.csv("/tmp/febrlLinkOutput", header = True) display(output)
+output = spark.read.csv(
+    "/tmp/febrlLinkOutput",
+    header = True
+)
+display(output)
 ```
 {% endtab %}
 
@@ -58,7 +66,9 @@ output = spark.read.csv("/tmp/febrlLinkOutput", header = True) display(output)
 
 ```python
 options = ClientOptions([
-    ClientOptions.PHASE, "link"])
+    ClientOptions.PHASE,
+    "link"
+])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -75,7 +85,8 @@ zingg.initAndExecute()
 # Read link output
 output = spark.read.csv(
     "/tmp/febrlLinkOutput",
-    header=True)
+    header=True
+)
 display(output)
 ```
 

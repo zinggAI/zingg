@@ -33,17 +33,21 @@ Run `findTrainingData` again to obtain a fresh set of candidate pairs. Label tho
 {% endstepper %}
 
 {% tabs %}
-{% tab title="Community (OS)" %}
+{% tab title="Community" %}
 In Community, pairs are presented serially in the terminal. Review each pair and enter your decision.
 
-### **Python**&#x20;
+### **Python**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "label" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([
+    ClientOptions.PHASE,
+    "label"
+])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
-### **CLI**&#x20;
+### **CLI**
 
 ```bash
 ./ zingg.sh-- phase label-- conf config.json-- showConcise = true
@@ -60,8 +64,12 @@ As your understanding of your data evolves, you may need to revisit and correct 
 #### Python
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "updateLabel" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([
+    ClientOptions.PHASE,
+    "updateLabel"
+])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### CLI
@@ -76,11 +84,13 @@ This opens the console labeler, which accepts the cluster ID of the pairs you wa
 {% tab title="Enterprise" %}
 The `showConcise` flag only shows fields which are `NOT DONT_USE`. This makes the labelling session cleaner when you have many fields.
 
-#### Python&#x20;
+#### Python
 
 ```python
 options = ClientOptions([
-    ClientOptions.PHASE, "label"])
+    ClientOptions.PHASE,
+    "label"
+])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -89,17 +99,10 @@ zingg.initAndExecute()
 Enterprise provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons. Download the diagnostics view to share match quality with stakeholders before committing to training.
 {% endhint %}
 
-_**CHECK WITH SONAL  - Please confirm the exact Python code for the interactive label widget and saveMarkedRecords() call so this tab can be completed.**_
-
-
+_**CHECK WITH SONAL - Please confirm the exact Python code for the interactive label widget and saveMarkedRecords() call so this tab can be completed.**_
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
 **CHECK WITH SONAL ABOUT THIS TOPIC - NEEDS ENTIRELY DIFFERENT SET OF CONTENT TO BE DISCUSSED LATER.**
 {% endtab %}
 {% endtabs %}
-
-
-
-
-

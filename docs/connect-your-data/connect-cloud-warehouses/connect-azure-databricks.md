@@ -15,28 +15,27 @@ All standard Spark formats (CSV, Parquet, JSON, Avro) are available in Community
 
 On Azure Databricks, data sits in cloud storage (Azure Data Lake Storage Gen2) or in Unity Catalog tables. Use the `abfss://` path format to connect Zingg to cloud storage paths, or use `UCPipe` (Enterprise only) for governed Unity Catalog tables. All standard Spark formats — CSV, Parquet, JSON, Avro — are available in both Community and Enterprise; Delta format and Unity Catalog are Enterprise-only. For the full Zingg installation, cluster setup, and any additional dependency configuration required on Databricks clusters, follow the [Azure Databricks Platform Guide](../../platform-guides/platform-guide-for-azure-databricks.md).
 
-### **Python API - Community (OS)**
+### **Python API - Community**
 
 {% hint style="info" icon="right-long" %}
 `dbfs:/` paths are deprecated in Databricks. Use Unity Catalog paths for tables or cloud storage paths (`s3a://`, `abfss://)` for files. For Unity Catalog table access, Enterprise uses UCPipe—see below.
 {% endhint %}
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    schema =
-    "id string, fname string, \
+schema = "id string, fname string, \
 lname string, stNo string, add1 string, \
 add2 string, city string, \
 areacode string, state string, \
 dob string, ssn string"
 
-    inputPipe = CsvPipe("databricksInput", "dbfs:/FileStore/input.csv", schema)
-                    args.setData(inputPipe)
+inputPipe = CsvPipe("databricksInput", "dbfs:/FileStore/input.csv", schema)
+args.setData(inputPipe)
 
-                        outputPipe =
-        CsvPipe("databricksOutput", "dbfs:/tmp/zinggOutput")
-            args.setOutput(outputPipe)
+outputPipe = CsvPipe("databricksOutput", "dbfs:/tmp/zinggOutput")
+args.setOutput(outputPipe)
 ```
 
 ### Python API - Enterprise
@@ -46,33 +45,32 @@ dob string, ssn string"
 {% endhint %}
 
 ```python
-from zinggEC.enterprise.common.epipes import* from
-    zinggEC.enterprise.common.EArguments import*
+from zinggEC.enterprise.common.epipes import*
+from zinggEC.enterprise.common.EArguments import*
 ```
 
-For CSV or Parquet fiels in cloud storage
+For CSV or Parquet fields in cloud storage
 
 ```python
-schema =
-    "rec_id string, fname string, \
+schema = "rec_id string, fname string, \
 lname string, stNo string, add1 string, \
 add2 string, city string, \
 areacode string, state string, \
 dob string, ssn string"
 
-    inputPipe = ECsvPipe("databricksInput", "abfss://path/to/input.csv", schema)
-                    args.setData(inputPipe)
+inputPipe = ECsvPipe("databricksInput", "abfss://path/to/input.csv", schema)
+args.setData(inputPipe)
 
-                        outputPipe =
-        ECsvPipe("databricksOutput", "abfss://path/to/output")
-            outputPipe.setHeader("true") args.setOutput(outputPipe)
+outputPipe = ECsvPipe("databricksOutput", "abfss://path/to/output")
+outputPipe.setHeader("true")
+args.setOutput(outputPipe)
 ```
 
 For Unity Catalog tables
 
 ```python
 inputPipe = UCPipe("databricksInput", "catalog.schema.tablename")
-                args.setData(inputPipe)
+args.setData(inputPipe)
 ```
 
 {% hint style="info" icon="right-long" %}
@@ -88,7 +86,9 @@ Enterprise supports Unity Catalog via UCPipe. Replace catalog, schema, and table
   "data" : [ {
     "name" : "parquetInput",
     "format" : "parquet",
-    "props" : {"path" : "/path/to/input.parquet"}
+    "props" : {
+      "path" : "/path/to/input.parquet"
+    }
   } ]
 }
 ```
@@ -100,7 +100,9 @@ Enterprise supports Unity Catalog via UCPipe. Replace catalog, schema, and table
   "data" : [ {
     "name" : "deltaInput",
     "format" : "delta",
-    "props" : {"location" : "/path/to/delta/table"}
+    "props" : {
+      "location" : "/path/to/delta/table"
+    }
   } ]
 }
 ```
@@ -112,8 +114,9 @@ Enterprise supports Unity Catalog via UCPipe. Replace catalog, schema, and table
   "data" : [ {
     "name" : "avroInput",
     "format" : "avro",
-    "props" : {"path" : "dbfs:/FileStore/input.avro"}
+    "props" : {
+      "path" : "dbfs:/FileStore/input.avro"
+    }
   } ]
 }
 ```
-

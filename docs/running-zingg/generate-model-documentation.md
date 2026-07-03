@@ -18,19 +18,22 @@ The documentation is written to the `zinggDir/modelId` folder and can be viewed 
 
 {% tabs %}
 {% tab title="Community" %}
-### **Python**&#x20;
+### **Python**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "generateDocs" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([
+    ClientOptions.PHASE,
+    "generateDocs"
+])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
-### **CLI**&#x20;
+### **CLI**
 
 ```bash
-./ scripts /
-    zingg.sh-- phase generateDocs-- conf<location to conf.json> --showConcise =
-    true
+./ scripts / zingg.sh-- phase generateDocs-- conf<location to conf.json> \
+--showConcise = true
 ```
 {% endtab %}
 
@@ -42,16 +45,19 @@ Enterprise uses `EZingg` instead of `Zingg`.
 {% endhint %}
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "generateDocs" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([
+    ClientOptions.PHASE,
+    "generateDocs"
+])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
 ### CLI
 
 ```bash
-./ scripts /
-    zingg.sh-- phase generateDocs-- conf<location to conf.json> --showConcise =
-    true
+./ scripts / zingg.sh-- phase generateDocs-- conf<location to conf.json> \
+--showConcise = true
 ```
 {% endtab %}
 
@@ -65,4 +71,3 @@ The generated documentation is viewable in a browser. It shows all pairs you lab
 
 [Build and Save the Model ](build-and-save-the-model.md)→ run `train` once you are satisfied with the training data quality.
 {% endhint %}
-
