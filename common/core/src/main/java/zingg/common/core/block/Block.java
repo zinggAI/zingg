@@ -91,7 +91,12 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		this.functionsMap = m;
 	}
 
-
+	public BestNodeSelector<D, R, C, T> getBestNodeSelector(IHashFunctionUtility<D, R, C, T> hashFunctionUtility, ListMap<T, HashFunction<D,R,C,T>> functionsMap, 
+		List<? extends FieldDefinition> fieldDefinitions, FieldDefinitionStrategy<R> fieldDefinitionStrategy){
+		return new BestNodeSelector<>(hashFunctionUtility, 
+			functionsMap, fieldDefinitions, 
+			fieldDefinitionStrategy, getFeatureFactory());
+		}
 
 
 	/**
@@ -116,7 +121,7 @@ public abstract class Block<D,R,C,T> implements Serializable {
 		}
 		if (size > maxSize && node.getDupeN() != null && node.getDupeN().size() > 0) {
 			LOG.debug("Size is bigger ");
-			BestNodeSelector<D, R, C, T> selector = new BestNodeSelector<>(hashFunctionUtility, functionsMap, fieldDefinitions, fieldDefinitionStrategy, getFeatureFactory());
+			BestNodeSelector<D, R, C, T> selector = getBestNodeSelector(hashFunctionUtility, functionsMap, fieldDefinitions, fieldDefinitionStrategy);
 			Canopy<R>best = selector.getBestNode(tree, parent, node);
 			if (best != null) {
 				//add function, context info for this best node in set

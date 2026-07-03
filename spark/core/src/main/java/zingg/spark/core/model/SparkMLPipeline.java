@@ -46,6 +46,7 @@ public class SparkMLPipeline implements Serializable {
 	private VectorValueExtractor vve;
 	private ModelColumnHelper columnHelper;
 
+
 	public SparkMLPipeline() {
 	}
 
