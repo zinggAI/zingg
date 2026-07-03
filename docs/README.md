@@ -1,30 +1,25 @@
 ---
-description: Hope you find us useful :-)
+description: >-
+  ML-powered entity resolution and record matching - built for your warehouse,
+  at any scale.
 ---
 
-# Welcome To Zingg
+# What is Zingg
 
-This is the latest documentation for Zingg. Release wise documentation can be accessed through:
+Most teams don't have a duplication problem; they have an entity resolution problem. The same entity lives in five systems under three different names. Every downstream decision built on that data becomes unreliable: analytics produce conflicting numbers, compliance checks miss connections, and operational teams work from different versions of the same record. When AI agents are in the loop, the problem compounds; an agent doesn't know a record is a duplicate, so it acts on each one independently, multiplying errors at the speed of automation.
 
-* [v0.6.0](https://docs.zingg.ai/0.6.0/)
-* [v0.5.0](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/LzEhax5IUbfFVRkRns9Q/)
-* [v0.4.0](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/a7sgpR3odgfck5L8KMcN/)
-* [v0.3.4](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/ngqsuC2LVWwrOiyPZbU2/)
-* [v0.3.3](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/1ZRr4ik7PJ2qmCP10In9/)
+Solving this at scale is harder than it looks. The number of comparisons grows quadratically with record count, and rule-based approaches break down on real-world data variation.
 
-## Why?
+Zingg solves this with ML-powered entity resolution that runs directly on your infrastructure on Spark or Snowflake, so your data never leaves your premises. You label a small set of example pairs to teach Zingg what a match looks like for your data. Zingg learns from those labels, adapts as it sees more variation, and scales that judgment across millions of records, giving your pipelines and agents a resolved, trustworthy view of every entity to act on.
 
-Data silos hurt all business functions - customer analytics, supplier consolidation, risk and compliance, and sales and marketing.
 
-![Data Silos](.gitbook/assets/dataSilos.png)
 
-Zingg is a quick and scalable way to build a single source of truth for core business entities. With Zingg, the analytics engineer and the data scientist can quickly integrate data silos and build unified views at scale!
+<figure><img src=".gitbook/assets/image (36).png" alt=""><figcaption></figcaption></figure>
 
-![# Zingg - Data Mastering At Scale with ML](.gitbook/assets/dataMastering.png)
+Whether you're resolving customers, patients, suppliers, citizens, or product issues—Zingg works on any entity type.
 
-<figure><img src="https://static.scarf.sh/a.png?x-pxid=b96858f2-6fe2-4fdf-a68b-946527ca3daf" alt=""><figcaption></figcaption></figure>
+### What do you want to do today?
 
-## Ask For Help
+<table data-view="cards"><thead><tr><th></th><th data-type="content-ref"></th><th><select></select></th><th></th></tr></thead><tbody><tr><td><mark style="color:violet;background-color:violet;"><strong>What is entity resolution</strong></mark></td><td><a href="zingg-concepts/entity-resolution/">entity-resolution</a></td><td></td><td>Understand the problem Zingg solves, why fragmented entity data breaks downstream systems, and why rule-based approaches fail at scale.</td></tr><tr><td><mark style="color:violet;background-color:violet;"><strong>Run Zingg for the first time</strong></mark></td><td><a href="https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/running-zingg">Running Zingg</a></td><td></td><td>Get Zingg running on your platform and see your first match result in under 30 minutes.</td></tr><tr><td><mark style="color:violet;background-color:violet;"><strong>Connect your data</strong></mark></td><td><a href="https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data">Connect Your Data</a></td><td></td><td>Configure Zingg pipes for your data source - cloud warehouses, cloud storage, databases, and file formats.</td></tr><tr><td><mark style="color:violet;background-color:violet;"><strong>Build and train a model</strong></mark></td><td><a href="/broken/pages/kmbn0lMNm0Gkg9cfafx5">Broken link</a></td><td></td><td>Configure your data, label training pairs, and build a model for your dataset.</td></tr><tr><td><mark style="color:violet;background-color:violet;"><strong>Interpret and tune results</strong></mark></td><td><a href="https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/tuning">Tuning</a></td><td></td><td>Understand your match output, set thresholds, and improve accuracy.</td></tr><tr><td><mark style="color:violet;background-color:violet;"><strong>References</strong></mark></td><td><a href="https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/reference">Reference</a></td><td></td><td>Configuration schema, CLI commands, runtime properties, and FAQ.</td></tr></tbody></table>
 
-If you want to understand if Zingg is a fit for your use case or have other questions or suggestions, join our [Slack.](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA)
-
+{% embed url="https://www.zingg.ai/company/contact/contact" %}
