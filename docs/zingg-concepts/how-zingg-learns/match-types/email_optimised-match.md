@@ -4,6 +4,8 @@ description: >-
   production-scale choice for email address matching in Enterprise.
 tags:
   - ent
+  - tag: enterprise-only
+    primary: true
 ---
 
 # EMAIL\_OPTIMISED Match
@@ -14,7 +16,7 @@ tags:
 
 ### What it `EMAIL_OPTIMISED` does
 
-`EMAIL_OPTIMISED` matches email addresses using the same local-part comparison as `EMAIL` it ignores the domain and matches on the portion before `@`.&#x20;
+`EMAIL_OPTIMISED` matches email addresses using the same local-part comparison as `EMAIL` it ignores the domain and matches on the portion before `@`.
 
 The difference is performance: `EMAIL_OPTIMISED` is substantially faster when comparing large numbers of email addresses.
 
@@ -27,12 +29,10 @@ _**COMMENT FOR TEAM — Same algorithm question as EMAIL applies here.**_
 ### What `EMAIL_OPTIMISED` matches and what it does not
 
 {% hint style="info" icon="right-long" %}
-`EMAIL_OPTIMISED` produces the same matching results as `EMAIL`.&#x20;
+`EMAIL_OPTIMISED` produces the same matching results as `EMAIL`.
 
 The behaviour table is identical—only performance differs.
 {% endhint %}
-
-{% include "../../../.gitbook/includes/exact-match-behavior-table.md" %}
 
 ### When to use `EMAIL_OPTIMISED`
 
@@ -90,4 +90,3 @@ The JSON `fieldDefinition` block below uses Enterprise-only match type `EMAIL_OP
 
 **Read more**: [Match types](./)
 {% endhint %}
-

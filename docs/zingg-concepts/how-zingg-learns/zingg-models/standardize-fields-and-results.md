@@ -4,6 +4,8 @@ description: >-
   consistent golden records.
 tags:
   - ent
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Standardize Fields and Results
@@ -56,7 +58,7 @@ Enforce canonical values on classification fields like industry codes, status la
 </details>
 
 {% hint style="success" icon="right-long" %}
-**Read more**:&#x20;
+**Read more**:
 
 * To create a mapping file and configure the postprocessor on a field → [Configure Field Standardization](../../../tuning/configure-field-standardization.md)
 * For the full field definition configuration including all `EFieldDefinition` methods - [Configure Zingg](../../../running-zingg/configure-zingg.md)

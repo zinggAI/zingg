@@ -4,6 +4,8 @@ description: >-
   record; using the Zingg stats output pipe.
 tags:
   - ent
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Output Statistics
@@ -29,7 +31,7 @@ If the number of clusters changes disproportionately to the number of records up
 
 The stats pipe is configured in Configure Zingg alongside your input and output pipes. The `$ZINGG_DYNAMIC_STAT_NAME` placeholder is replaced at runtime with `SUMMARY`, `CLUSTER`, or `RECORD` for the three statistics files.
 
-### Python
+#### Python
 
 ```python
 statsOutputPipe = ECsvPipe("stats", "/tmp/febrlStats_$ZINGG_DYNAMIC_STAT_NAME")
@@ -37,7 +39,7 @@ statsOutputPipe.setHeader("true")
 args.setOutputStats(statsOutputPipe)
 ```
 
-### JSON
+#### JSON
 
 ```json
 {

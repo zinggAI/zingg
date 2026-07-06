@@ -3,6 +3,9 @@ description: >-
   Connect Zingg to Azure Databricks using CsvPipe (Community) or ECsvPipe and
   UCPipe (Enterprise). Supports CSV, Parquet, Avro, JSON, Delta, and Unity
   Catalog
+tags:
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Connect Azure Databricks
@@ -40,7 +43,7 @@ args.setOutput(outputPipe)
 
 ### Python API - Enterprise
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="danger" icon="right-long" %}
 **Enterprise** uses `ECsvPipe`. Supports all formats including Delta and Unity Catalog.
 {% endhint %}
 

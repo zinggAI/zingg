@@ -51,7 +51,6 @@ Use `ONLY_ALPHABETS_FUZZY` instead when the alphabetic component also has spelli
 
 ```python
 from zingg.client import *
-
     street = FieldDefinition("street", "string", MatchType.ONLY_ALPHABETS_EXACT)
 ```
 
@@ -59,7 +58,6 @@ from zingg.client import *
 
 ```python
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-
     street = EFieldDefinition("street", "string", MatchType.ONLY_ALPHABETS_EXACT)
 ```
 {% endtab %}
@@ -92,7 +90,7 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 **Related types**:
 
 * `ONLY_ALPHABETS_FUZZY` - use when alphabetic parts also have variation
-* `NUMERIC` - combine to also match the number component&#x20;
+* `NUMERIC` - combine to also match the number component
 
 **Read more**: [Match types](./)
 {% endhint %}

@@ -4,7 +4,8 @@ description: >-
   re-running the full match on your entire dataset.
 tags:
   - ent
-  - enterprise-only
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Run Incremental Matching
@@ -13,7 +14,7 @@ tags:
 **Enterprise only.** Incremental matching updates the identity graph and preserves Zingg IDs across runs. Not available in Community.
 {% endhint %}
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="danger" icon="right-long" %}
 **BEFORE YOU BEGIN:** The initial match phase must have been completed first. Run incremental only after a full match has been run on your base dataset.
 
 Output is written to the same location as your match output. There is no separate output path for\
@@ -176,7 +177,7 @@ output = spark.read.csv(
 display(output)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="right-long" %}
 Output is at the same path as your match output. New records get new Zingg IDs. Records matching existing clusters get the existing Zingg ID. No separate output path is needed.
 {% endhint %}
 {% endtab %}

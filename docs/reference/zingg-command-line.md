@@ -30,7 +30,7 @@ Full command reference with all flags and options - [CLI command reference](cli-
 
 {% tabs %}
 {% tab title="Community" %}
-{% hint style="success" icon="right-long" %}
+{% hint style="danger" icon="right-long" %}
 Replace `config.json` with your actual config file path.
 {% endhint %}
 
@@ -203,7 +203,7 @@ The JSON config file tells Zingg which fields to use, where your data lives, and
 
 * Full configuration schema with all parameters and options - [Configuration schema](configuration-schema.md)
 * Full flag and options reference - [CLI command reference](cli-command-reference.md)
-* Python API alternative - [Python API](/broken/pages/Frf3DstX6KiO5yly5ZeO)
+* Python API alternative - [Python API](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/zingg-python-api)
 {% endhint %}
 
 </details>

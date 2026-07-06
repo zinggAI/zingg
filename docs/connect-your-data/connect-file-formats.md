@@ -110,7 +110,7 @@ args.setData(parquetPipe)
 
 ### **JSON Config**
 
-{% hint style="info" icon="right-long" %}
+{% hint style="danger" icon="right-long" %}
 Parquet uses `path` as the property key, not `location` as CSV uses.
 {% endhint %}
 
@@ -234,7 +234,7 @@ args.setData(tsvPipe)
 
 _**CHECK WITH SONAL - XLSX is listed as supported on zingg.ai but the connector format string and Python class are not confirmed on any live docs page. Please confirm the XLSX config and whether it is all editions or ENT only.**_
 
-{% hint style="info" icon="right-long" %}
+{% hint style="success" icon="right-long" %}
 For files on cloud platforms:
 
 * Databricks and Fabric - [Connect Cloud Warehouses](connect-cloud-warehouses/)

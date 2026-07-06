@@ -97,20 +97,20 @@ mvn --version
 
 ### **Step 6: Compile The Zingg Repository** <a href="#step-6-compile-the-zingg-repository" id="step-6-compile-the-zingg-repository"></a>
 
-1. Make sure you are executing the following commands in the same terminal window where you saved the .zshrc. Run the following to compile the Zingg Repository:
+1. **Make sure you are executing the following commands in the same terminal window where you saved the .zshrc. Run the following to compile the Zingg Repository:**
 
 ```bash
 git branch
 ```
 
-2. Run the following to Compile the Zingg Repository:
+2. **Run the following to Compile the Zingg Repository:**
 
 ```bash
 mvn initialize
 mvn clean compile package -Dspark=sparkVer
 ```
 
-3. Run the following to Compile while skipping tests:
+3. **Run the following to Compile while skipping tests:**
 
 ```bash
 mvn initialize

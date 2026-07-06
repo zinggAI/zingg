@@ -34,7 +34,7 @@ The most important column. All records sharing the same `Z_CLUSTER` value have b
 In the Community version, `Z_CLUSTER` is non-persistent. It is reassigned fresh each time the match job runs. The same records may receive a different `Z_CLUSTER` on\
 the next run.
 
-In the Enterprise version, `Z_CLUSTER` is replaced by the persistent Zingg ID. See Zingg ID in the next section.
+In the Enterprise version, `Z_CLUSTER` is replaced by the persistent `Zingg ID`. See `Zingg ID` in the next section.
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Z Cluster ID and Zingg ID](../zingg-concepts/z-cluster-and-zingg-id.md)

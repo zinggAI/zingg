@@ -4,6 +4,8 @@ description: >-
   which did not, and why.
 tags:
   - ent
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Explain Matches
@@ -26,7 +28,6 @@ If you get empty results, verify that the Zingg ID you are querying exists in yo
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* For the step-by-step explain phase task with code - [Explain a specific cluster](explain-a-specific-cluster.md)&#x20;
+* For the step-by-step explain phase task with code - [Explain a specific cluster](explain-a-specific-cluster.md)
 * For output statistics - [Output statistics](output-statistics.md)
 {% endhint %}
-

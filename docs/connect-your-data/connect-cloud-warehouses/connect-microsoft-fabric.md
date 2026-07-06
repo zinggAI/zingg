@@ -6,7 +6,7 @@ description: >-
 
 # Connect Microsoft Fabric
 
-{% hint style="info" icon="right-long" %}
+{% hint style="success" icon="right-long" %}
 On Microsoft Fabric, data lives in OneLake. Use the `abfss://` path format to connect Zingg to your Lakehouse. Available in all editions.
 {% endhint %}
 

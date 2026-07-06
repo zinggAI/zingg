@@ -169,7 +169,7 @@ args.setNumPartitions(32)
 spark.conf.set("spark.sql.adaptive.enabled", False)
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="danger" icon="right-long" %}
 Set `numPartitions` to approximately 20–30× your worker vCPU count. `labelDataSampleSize` is set in Notebook 02 where the labeling loop runs — see Step 13.
 {% endhint %}
 

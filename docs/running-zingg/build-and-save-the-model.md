@@ -17,7 +17,7 @@ Use the same `modelId` when running `match`, `link`, or `runIncremental` to appl
 {% endhint %}
 
 {% tabs %}
-{% tab title="Community Python" %}
+{% tab title="Community" %}
 ### Python
 
 ```python
@@ -36,7 +36,7 @@ zingg.initAndExecute()
 ```
 {% endtab %}
 
-{% tab title="Enterprise Python" %}
+{% tab title="Enterprise" %}
 ### Python
 
 ```python

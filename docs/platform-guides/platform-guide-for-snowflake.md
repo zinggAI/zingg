@@ -339,7 +339,7 @@ Same as the main guide above; pull the Zingg Docker image, configure Lambda, and
 {% endtab %}
 
 {% tab title="Enterprise" %}
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="right-long" %}
 Enterprise only. Zingg Enterprise runs natively inside Snowflake using Snowpark. No EC2, no Docker, and no Lambda required.
 
 Enterprise requires a Zingg licence and the Enterprise Snowflake package. [Contact Zingg to get access](https://www.zingg.ai/company/contact/contact).

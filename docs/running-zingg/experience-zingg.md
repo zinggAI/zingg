@@ -49,7 +49,7 @@ docker run - v / tmp : / tmp - it zingg / zingg : 0.5.0 bash
 {% hint style="success" icon="right-long" %}
 ### **What just happened**
 
-Zingg read the `FEBRL` sample dataset bundled in the Docker image, applied a pre-trained entity resolution model to it, and wrote the resolved output to the output path configured in `examples/febrl/config.json`.&#x20;
+Zingg read the `FEBRL` sample dataset bundled in the Docker image, applied a pre-trained entity resolution model to it, and wrote the resolved output to the output path configured in `examples/febrl/config.json`.
 
 No training was needed because the model was pre-built for this dataset.
 {% endhint %}
@@ -111,6 +111,5 @@ As long as your input columns and field types are not changing, the same model w
 </details>
 
 {% hint style="warning" icon="right-long" %}
-Enterprise adds persistent identity with Zingg ID, incremental matching, and production-grade notebooks. [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact).
+Enterprise adds persistent identity with Zingg ID, incremental matching, and production-grade notebooks. [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact)
 {% endhint %}
-

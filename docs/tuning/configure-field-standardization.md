@@ -4,6 +4,8 @@ description: >-
   predefined value mappings.
 tags:
   - ent
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Configure Field Standardization
@@ -46,7 +48,7 @@ Create a JSON file where each element is an array of equivalent values. The firs
 
 <table><thead><tr><th width="236.6796875">Rule</th><th>Why it matters</th></tr></thead><tbody><tr><td>First value is canonical</td><td>All variants in the array map to the first value in the output. <code>["Chief Executive Officer", "CEO"]</code> → output will always say "Chief Executive Officer". Order your arrays with the canonical form first.</td></tr><tr><td>Lookup is case-insensitive</td><td>"CEO", "ceo", and "Ceo" all match the same entry. You do not need separate entries for casing variants.</td></tr><tr><td>Rows must be disjoint</td><td>A string must not appear in two different arrays. If "CEO" appears in two separate canonical groups, Zingg's behaviour is undefined. Each value belongs to exactly one canonical group.</td></tr></tbody></table>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="right-long" %}
 Place your mapping JSON file in the directory from which you are executing Zingg. Reference it by base filename (without the `.json` extension) in your configuration. For example, a file named `jobtitles.json` is referenced as `jobtitles`.
 {% endhint %}
 
@@ -104,7 +106,7 @@ Configure input and output pipes, then run `match` or `runIncremental` as usual.
 }
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="right-long" %}
 Use `STANDARDISE_<basename>` to reference a mapping file named `<basename>.json`. The `STANDARDISE` prefix tells Zingg which postprocessor type to use. The `<basename>` (without `.json`) is the filename of your mapping file. For the example above, the file is `jobtitles.json` and the reference is `STANDARDISE_jobtitles`.
 {% endhint %}
 {% endtab %}

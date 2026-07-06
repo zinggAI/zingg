@@ -14,7 +14,7 @@ description: >-
 
 2. Add to `zingg.conf`.
 
-```
+```markdown
 spark.jars = spark - connector_2 .12 - 1.3.0 - spark - 3.3.2 - assembly.jar
 ```
 

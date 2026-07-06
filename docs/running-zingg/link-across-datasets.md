@@ -27,7 +27,7 @@ Link output contains all input fields plus four Zingg-generated columns:
 * `Z_SOURCE` - the source dataset each record came from. Use this to trace each resolved record back to its origin system.
 
 {% tabs %}
-{% tab title="Community Python" %}
+{% tab title="Community" %}
 ### Python
 
 ```python
@@ -45,7 +45,7 @@ zingg.initAndExecute()
 ./ zingg.sh-- phase link-- conf config.json
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="success" icon="right-long" %}
 The link config file needs two data sources defined. Sample config for link available at:\
 `github.com/zinggAI/zingg/blob/main/examples/febrl/configLink.json`
 {% endhint %}
@@ -61,7 +61,7 @@ display(output)
 ```
 {% endtab %}
 
-{% tab title="Enterprise Python" %}
+{% tab title="Enterprise" %}
 ### Python
 
 ```python

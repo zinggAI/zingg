@@ -86,13 +86,12 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" %}
+{% hint style="success" icon="right-long" %}
 **Related types:**
 
 * `EXACT` - use when format is guaranteed consistent
 * `NUMERIC` - for other numeric identifier fields
 * `NULL_OR_BLANK` - combine when postal codes are often missing
 
-**Read more:** [Match Types](./)&#x20;
+**Read more:** [Match Types](./)
 {% endhint %}
-

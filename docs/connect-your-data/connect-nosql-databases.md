@@ -21,7 +21,7 @@ All NoSQL connectors are available in Community and Enterprise.
 
 {% tabs %}
 {% tab title="Cassandra" %}
-{% hint style="info" icon="right-long" %}
+{% hint style="success" icon="right-long" %}
 The config below shows Cassandra as a write destination (output).
 
 To read FROM Cassandra, use the same props under "`data`" with `args.setData()`.
@@ -87,7 +87,7 @@ args.setData(mongoPipe)
 }
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="danger" icon="right-long" %}
 * URI format: `mongodb://host:port/database.collection`
 * Authenticated: `mongodb://user:password@host:port/database.collection`
 {% endhint %}

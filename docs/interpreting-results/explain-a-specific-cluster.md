@@ -4,7 +4,8 @@ description: >-
   cluster was formed.
 tags:
   - ent
-  - enterprise-only
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Explain a Specific Cluster

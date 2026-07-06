@@ -53,7 +53,7 @@ spark.jars=hadoop-aws-3.1.0.jar,aws-java-sdk-bundle-1.11.271.jar
 spark.jars=postgresql-42.3.1.jar
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="danger" icon="right-long" %}
 JAR versions above are illustrative. Check the Zingg GitHub releases page for the verified versions tested with each Zingg release: `github.com/zinggAI/zingg/releases` .
 {% endhint %}
 

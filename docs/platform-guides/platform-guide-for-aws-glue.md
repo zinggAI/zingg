@@ -368,13 +368,13 @@ args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="danger" icon="right-long" %}
 For a 2-worker G.1X cluster (4 vCPUs each), 4–8 partitions is a good starting point. Set `numPartitions` to approximately 2–3× your total worker vCPU count. For 1M+ records, reduce `labelDataSampleSize` to 0.01–0.05 to prevent the sampling phase from exhausting worker memory.
 {% endhint %}
 
 ### Notebook 01 continued: Find training data and label pairs
 
-{% hint style="success" icon="right-long" %}
+{% hint style="danger" icon="right-long" %}
 AWS Glue Interactive Sessions restrict standard Jupyter widgets. Zingg's standard `ipywidgets` labeling interface does not render in Glue notebooks. Instead, this guide exports candidate pairs as a CSV to S3 for offline review. You label each pair by entering 0, 1, or 2 in a spreadsheet, upload the file back to S3, and run a sync cell to feed the labels back into Zingg. The process is covered in Steps 15 and 16.
 {% endhint %}
 
@@ -394,8 +394,7 @@ zingg.initAndExecute()
 Initialise the label phase and pull candidate pairs into a local Pandas DataFrame:
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE, "label"])
+options = ClientOptions([ClientOptions.PHASE, "label"])
 zingg = ZinggWithSpark(args, options)
 zingg.init()
 
@@ -468,7 +467,7 @@ print(f"Review sheet exported for {n_pairs} pairs to: {export_path}")
 
 _**IMAGE TO BE ADDED — S3 console showing the\*\*\*\*****&#x20;****`/review/`****&#x20;****folder with the exported****&#x20;****`pending_labels.csv`****&#x20;****\*\*\*\*part file ready for download. Tanwi to check with team for the screenshot.**_
 
-{% hint style="success" icon="right-long" %}
+{% hint style="danger" icon="right-long" %}
 How to label the review sheet:
 
 1. Go to **S3 → your-bucket → review/** in the AWS Console and download the `part-00000-*.csv` file.
@@ -586,7 +585,7 @@ except Exception as e:
     print(f"Documentation not found at expected S3 path. {e}")
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="danger" icon="right-long" %}
 Unlike other platforms, Glue cannot render HTML inline in the notebook. Download `model.html` from the S3 console and open it in a browser to view the documentation. Navigate to **S3 → your-bucket → models → modelId → docs** to find the file.
 
 `generateDocs` is optional. Skip it if you have 30–40 matches and 30–40 non-matches and are confident in your labeling quality.

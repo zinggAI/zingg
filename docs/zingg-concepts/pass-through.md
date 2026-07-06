@@ -4,6 +4,8 @@ description: >-
   output with their own Zingg ID.
 tags:
   - ent
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Pass Through
@@ -97,6 +99,6 @@ _**CHECK WITH SONAL - Enterprise Snowflake content for this topic to be provivde
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* Pass Through concept in the glossary - [Concepts glossary](concept-glossary.md)&#x20;
-* Configure Zingg where Pass Through is set up - [Configure Zingg](../running-zingg/configure-zingg.md)&#x20;
+* Pass Through concept in the glossary - [Concepts glossary](concept-glossary.md)
+* Configure Zingg where Pass Through is set up - [Configure Zingg](../running-zingg/configure-zingg.md)
 {% endhint %}

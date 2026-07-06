@@ -23,7 +23,7 @@ _**COMMENT FOR TEAM — Algorithm detail for DONT\_USE to be added here.**_
 
 ### What **`DONT_USE`** matches and what it does not
 
-<table><thead><tr><th valign="top">Scenario</th><th valign="top">With DONT_USE</th><th valign="top">Without DONT_USE</th></tr></thead><tbody><tr><td valign="top">customer_id field in output</td><td valign="top">Appears in every output row with original value.<br>Not used in matching.</td><td valign="top">Would need to be in field<br>definitions for output -<br>but would also contribute<br>to match scoring.</td></tr><tr><td valign="top">record_id = "REC-00123"</td><td valign="top">Carried to output as "REC-00123". Not compared against other records.</td><td valign="top">"REC-00123" would be compared fuzzily or exactly against other record IDs - likely producing false positives or false negatives.</td></tr><tr><td valign="top">Shown in labeller</td><td valign="top">Hidden when <code>showConcise=true</code> <br>reduces visual noise for labellers.</td><td valign="top">Would appear in every labeller row, distracting from the fields that actually drive matching.</td></tr></tbody></table>
+<table><thead><tr><th valign="top">Scenario</th><th valign="top">With DONT_USE</th><th valign="top">Without DONT_USE</th></tr></thead><tbody><tr><td valign="top">customer_id field in output</td><td valign="top">Appears in every output row with original value.<br>Not used in matching.</td><td valign="top">Would need to be in field<br>definitions for output -<br>but would also contribute<br>to match scoring.</td></tr><tr><td valign="top">record_id = "REC-00123"</td><td valign="top">Carried to output as "REC-00123". Not compared against other records.</td><td valign="top">"REC-00123" would be compared fuzzily or exactly against other record IDs - likely producing false positives or false negatives.</td></tr><tr><td valign="top">Shown in labeller</td><td valign="top">Hidden when <code>showConcise=true</code><br>reduces visual noise for labellers.</td><td valign="top">Would appear in every labeller row, distracting from the fields that actually drive matching.</td></tr></tbody></table>
 
 ### When to use `DONT_USE`
 
@@ -74,7 +74,6 @@ If a field has information that should influence whether two records represent t
 
 ```python
 from zingg.client import *
-
     rec_id = FieldDefinition("rec_id", "string", MatchType.DONT_USE)
 ```
 
@@ -82,7 +81,6 @@ from zingg.client import *
 
 ```python
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-
     rec_id = EFieldDefinition("rec_id", "string", MatchType.DONT_USE)
 ```
 {% endtab %}
@@ -116,7 +114,7 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 
 * `NULL_OR_BLANK` - for fields that should participate in matching but have frequent nulls
 * `EXACT` - for fields that should contribute an exact match signal
-* `showConcise` flag - hide `DONT_USE` fields from the labeller (CLI command reference)&#x20;
+* `showConcise` flag - hide `DONT_USE` fields from the labeller (CLI command reference)
 
 **Read more**: [Match types](./)
 {% endhint %}

@@ -126,7 +126,7 @@ Two options for running Zingg on AWS EMR.
 
 Use the `spark-submit` option passing the Zingg JAR, phase name, and config file. `config.json` must be available locally on the driver.
 
-{% code expandable="true" %}
+{% code title="spark-submit example" expandable="true" %}
 ```bash
 aws emr create - cluster-- name "Add Spark Step Cluster" --release - label emr - 6.2.0 \
 --applications Name = Zingg-- ec2 - attributes KeyName = myKey-- instance - \
@@ -180,7 +180,7 @@ _**CHECK WITH SONAL - - NEED TEAMS HELP TO CHECK WHAT EXACTLY FROM THE GCS GUIDE
 {% endtab %}
 
 {% tab title="Local Spark" %}
-{% hint style="info" icon="right-long" %}
+{% hint style="success" icon="right-long" %}
 Docker is the fastest way to get started locally. Use installing from release if you need a specific Spark version or want to integrate with an existing Spark installation.
 {% endhint %}
 
@@ -219,7 +219,7 @@ tar - xvf zingg - 0.5.0 - spark_3 .5.tar.gz
 
 Add the following to `~/.bash_aliases` (Linux) or `~/.zshrc` (macOS):
 
-```
+```bash
 export JAVA_HOME = <path to jdk>
 export SPARK_HOME = <path to Apache Spark>
 export SPARK_MASTER = local[*]
@@ -242,7 +242,7 @@ echo $ZINGG_HOME
 
 Then run a sample program to confirm the installation works:
 
-```
+```bash
 cd zingg
 ./ scripts / zingg.sh-- phase trainMatch-- conf examples / febrl / config.json
 ```
@@ -268,26 +268,35 @@ docs.zingg.ai/latest/stepbystep/installation/installing-zingg-enterprise-snowfla
 
 Extract the Enterprise Snowflake tar file and configure environment variables.
 
+{% code title="Decompress archive" overflow="wrap" %}
 ```bash
 gzip -d zingg-enterprise-snowflake-<version>.tar.gz
 ```
+{% endcode %}
 
+{% code title="Extract archive" overflow="wrap" %}
 ```bash
 tar xvf zingg-enterprise-snowflake-<version>.tar
 ```
+{% endcode %}
 
 Set the environment variables:
 
+{% code title="Set environment variables" overflow="wrap" %}
 ```bash
 export ZINGG_SNOW_HOME =
     ~ / zingg - enterprise - snowflake - <version> export ZINGG_SNOW_JAR =
         ~ / zingg - enterprise - snowflake - <version>
 ```
+{% endcode %}
 
 Move your licence file into the install directory:
 
-<pre class="language-bash"><code class="lang-bash"><strong>mv ~/zingg.license .
-</strong></code></pre>
+{% code title="Move licence file" overflow="wrap" %}
+```bash
+mv ~/zingg.license .
+```
+{% endcode %}
 
 {% hint style="info" icon="right-long" %}
 Add `ZINGG_SNOW_JAR` and `ZINGG_SNOW_HOME` to `.bashrc` so they persist across sessions. For the full end-to-end Snowflake guide → [Run on Snowflake](../platform-guides/platform-guide-for-snowflake.md)
@@ -295,28 +304,34 @@ Add `ZINGG_SNOW_JAR` and `ZINGG_SNOW_HOME` to `.bashrc` so they persist across s
 
 ### **Create the Snowflake properties file (`snowEnv.txt`)**
 
+{% code title="Create snowEnv.txt" overflow="wrap" %}
 ```bash
 touch snowEnv.txt
 ```
+{% endcode %}
 
 **Contents of `snowEnv.txt`**
 
+{% code title="snowEnv.txt" overflow="wrap" %}
 ```bash
 URL = {snowflake_url} USER = {snowflake_user_name} PASSWORD =
     {snowflake_password} ROLE = {role} WAREHOUSE = {warehouse} DB =
         {database_name} SCHEMA = {
             schema} CLIENT_SESSION_KEEP_ALIVE_HEARTBEAT_FREQUENCY = 900
 ```
+{% endcode %}
 
 `CLIENT_SESSION_KEEP_ALIVE_HEARTBEAT_FREQUENCY` is the number of seconds between client attempts to update the session token. Valid range: 900 to 3600.
 
 ### **Verify the installation**
 
+{% code title="Verify installation" overflow="wrap" expandable="true" %}
 ```bash
 ./ scripts / zingg.sh-- properties -
     file snowEnv.txt-- phase findTrainingData-- conf examples / febrl /
         configSnow.json
 ```
+{% endcode %}
 
 This will run Zingg models and produce tables named `UNIFIED_CUSTOMERS_MODELID` with matching records sharing the same cluster ID. Congratulations, Zingg Enterprise for Snowflake is installed.
 {% endtab %}

@@ -11,16 +11,17 @@ Zingg works in phases. Each phase performs a specific task and produces an outpu
 The phases below represent the complete workflow from first setup to production matching. This page describes the workflow you follow once Zingg is installed.
 
 {% hint style="success" icon="right-long" %}
-This page describes the workflow you follow once Zingg is installed. For installing Zingg on your platform → [Install Zingg](install-zingg.md).
+This page describes the workflow you follow once Zingg is installed. \
+For installing Zingg on your platform → [Install Zingg](install-zingg.md).
 
 New to entity resolution or want to understand the problem space before diving in? → E[ntity Resolution](../zingg-concepts/entity-resolution/)
 {% endhint %}
 
 {% stepper %}
 {% step %}
-### Connect your data&#x20;
+### Connect your data
 
-Configure input and output pipes to tell Zingg where your source data lives and where to write results. Zingg connects to the data where it lives - it does not move it.&#x20;
+Configure input and output pipes to tell Zingg where your source data lives and where to write results. Zingg connects to the data where it lives - it does not move it.
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Content your Data](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data)
@@ -30,7 +31,7 @@ Configure input and output pipes to tell Zingg where your source data lives and 
 {% step %}
 ### Configure Zingg
 
-Define your field definitions, match types, model ID, partition count, and any optional Enterprise features (deterministic matching, primary key, pass through, standardization). The configuration drives every downstream phase.&#x20;
+Define your field definitions, match types, model ID, partition count, and any optional Enterprise features (deterministic matching, primary key, pass through, standardization). The configuration drives every downstream phase.
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Content your Data](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data)
@@ -55,7 +56,7 @@ Run `findTrainingData` to generate candidate pairs, then label each pair as Matc
 
 Run `verifyBlocking` to check what percentage of your known matching pairs are being blocked together correctly. Run after labelling and before committing to a full training run. If coverage is low, return to labelling.
 
-{% hint style="success" %}
+{% hint style="success" icon="right-long" %}
 **Read more**: [Verify Blocking](verify-blocking.md)
 {% endhint %}
 {% endstep %}
@@ -104,7 +105,7 @@ Apply the trained model to your data:
 Review output scores to understand match quality. Use `Z_MINSCORE` and `Z_MAXSCORE` to set confidence thresholds for automated vs human-reviewed clusters.
 
 {% hint style="success" icon="right-long" %}
-**Read more**: [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)&#x20;
+**Read more**: [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)
 {% endhint %}
 {% endstep %}
 
@@ -114,20 +115,20 @@ Review output scores to understand match quality. Use `Z_MINSCORE` and `Z_MAXSCO
 If match results need improvement, return to find-and-label with focused training data for the patterns being missed, then retrain. Remove stopwords from fields like addresses and company names to improve blocking. Use custom blocking and similarity for specialized data patterns.
 
 {% hint style="success" icon="right-long" %}
-**Read more**: [Improve Accuracy](../tuning/improve-accuracy/)&#x20;
+**Read more**: [Improve Accuracy](../tuning/improve-accuracy/)
 {% endhint %}
 {% endstep %}
 {% endstepper %}
 
 {% hint style="warning" icon="right-long" %}
 Enterprise: 7 production-grade notebooks, one per phase, with step-isolated execution and\
-full Python API support. [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact).&#x20;
+full Python API support. [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact)
 {% endhint %}
 
 {% hint style="success" icon="right-long" %}
-**Read more**:&#x20;
+**Read more**:
 
-* Understanding the concepts behind each phase - [Overview section](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/) | [Concepts glossary](../zingg-concepts/concept-glossary.md)
+* Understanding the concepts behind each phase - [Overview section](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/4FvYw4VaCJcugJzWCiLX/) | [Concepts glossary](../zingg-concepts/concept-glossary.md)
 * [Configure Zingg](configure-zingg.md) - full configuration reference
 * [Interpret Output Scores](../interpreting-results/interpret-output-scores.md) - every output column and how to read scores
 * [Zingg\_ID and Z\_Cluster](../zingg-concepts/z-cluster-and-zingg-id.md) - Community vs Enterprise identifiers in your output

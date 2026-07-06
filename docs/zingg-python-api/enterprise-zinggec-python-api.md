@@ -3,6 +3,9 @@ description: >-
   Adds deterministic matching, blocking strategy, primary keys, pass-through,
   mapping match types, incremental matching, cluster approval, output stats, and
   additional pipe types.
+tags:
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Enterprise ZinggEC Python API
@@ -96,7 +99,7 @@ fieldDefs = [
 args.setFieldDefinition(fieldDefs)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="right-long" %}
 `setPrimaryKey(True)` marks the primary key field, required for `runIncremental` to track records correctly across runs.
 {% endhint %}
 

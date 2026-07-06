@@ -6,11 +6,11 @@ description: >-
 
 # Connect Snowflake
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="success" icon="right-long" %}
 This `config` connects Zingg to Snowflake as a DATA SOURCE using Spark. Available in all editions.
 {% endhint %}
 
-{% hint style="info" icon="right-long" %}
+{% hint style="warning" icon="right-long" %}
 Snowflake as a COMPUTE ENGINE (native Snowflake run without Spark) is Enterprise only.\
 [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact).
 {% endhint %}

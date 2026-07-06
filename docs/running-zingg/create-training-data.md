@@ -97,7 +97,7 @@ zingg.initAndExecute()
 
 Enterprise also provides the `findAndLabel` combined phase, which runs `findTrainingData` and `label` together in a single call. Use this for smaller datasets where `findTrainingData` completes quickly:
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="right-long" %}
 Candidate pairs are written to `zinggDir/modelId`. Run the label phase next to review and label these pairs.
 {% endhint %}
 {% endtab %}

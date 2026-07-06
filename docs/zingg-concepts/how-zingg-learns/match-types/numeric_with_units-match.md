@@ -27,7 +27,7 @@ _**COMMENT FOR TEAM — Algorithm detail for NUMERIC\_WITH\_UNITS to be added he
 
 Any field containing product specifications with units - storage capacity, screen size, processor speed, volume, weight. E-commerce product catalogs, manufacturing BOMs, medical device specifications.
 
-"16GB RAM, 512GB SSD" and "16 GB RAM, 512 GB SSD" represent the same configuration. NUMERIC\_WITH\_UNITS handles this.
+"16GB RAM, 512GB SSD" and "16 GB RAM, 512 GB SSD" represent the same configuration. `NUMERIC_WITH_UNIT` handles this.
 
 </details>
 
@@ -92,4 +92,3 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 
 **Read more**: [Match types](./)
 {% endhint %}
-

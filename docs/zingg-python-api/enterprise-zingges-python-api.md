@@ -2,6 +2,9 @@
 description: >-
   Enterprise Plus Python API - the Spark client (EZingg, EZinggWithSpark) used
   by Enterprise Plus Zingg distributions.
+tags:
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Enterprise ZinggES Python API
@@ -152,6 +155,6 @@ zingg.initAndExecute()
 **Read more**: The full example shown on the [ZinggEC Python API reference](https://docs.zingg.ai/latest/working-with-python/working-with-python-enterprise/index) and the [ZinggES Python API reference](https://docs.zingg.ai/latest/working-with-python/working-with-python-enterprise/index-1) is identical, except for which Spark client package is imported.
 {% endhint %}
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="info" icon="right-long" %}
 Auto-generated API reference for `ESparkClient`, `EZingg`, `EZinggWithSpark`: [Zingg Enterprise Spark Python API on GitHub](https://github.com/zinggAI/zingg/blob/main/docs/pythonES/markdown/ESparkClient.md).
 {% endhint %}

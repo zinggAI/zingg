@@ -4,6 +4,8 @@ description: >-
   they belong to and get their Zingg ID.
 tags:
   - ent
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Lookup Data

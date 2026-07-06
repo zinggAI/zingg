@@ -19,8 +19,6 @@ _**COMMENT FOR TEAM — Algorithm detail for ONLY\_ALPHABETS\_FUZZY to be added 
 
 ### What **`ONLY_ALPHABETS_FUZZY`** matches and what it does not
 
-{% include "../../../.gitbook/includes/only_alphabet_fuzzy_match_table.md" %}
-
 ### When to use **`ONLY_ALPHABETS_FUZZY`**
 
 <details>
@@ -59,7 +57,6 @@ If your address data is structured enough that `FUZZY` on the full string gives 
 
 ```python
 from zingg.client import *
-
     street = FieldDefinition("street", "string", MatchType.ONLY_ALPHABETS_FUZZY)
 ```
 
@@ -67,7 +64,6 @@ from zingg.client import *
 
 ```python
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-
     street = EFieldDefinition("street", "string", MatchType.ONLY_ALPHABETS_FUZZY)
 ```
 {% endtab %}
@@ -104,6 +100,5 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 * `ONLY_ALPHABETS_FUZZY_OPTIMISED` - same match type, faster at scale (ENT)
 * `FUZZY` - simpler alternative for the full string
 
-**Read more**: [Match Types](./)&#x20;
+**Read more**: [Match Types](./)
 {% endhint %}
-

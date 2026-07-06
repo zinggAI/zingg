@@ -70,7 +70,6 @@ If your free-text fields have typos and spelling errors, `FUZZY` handles those b
 
 ```python
 from zingg.client import *
-
     description = FieldDefinition("description", "string", MatchType.TEXT)
 ```
 
@@ -78,7 +77,6 @@ from zingg.client import *
 
 ```python
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-
     description = EFieldDefinition("description", "string", MatchType.TEXT)
 ```
 {% endtab %}
@@ -113,5 +111,5 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 * `FUZZY` - better for short fields and when typos are present
 * `NUMERIC_WITH_UNITS` - combine for product description fields
 
-**Read more**: [Match Types](./)&#x20;
+**Read more**: [Match Types](./)
 {% endhint %}

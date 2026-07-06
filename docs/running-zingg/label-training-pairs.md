@@ -95,7 +95,7 @@ zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="right-long" %}
 Enterprise provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons. Download the diagnostics view to share match quality with stakeholders before committing to training.
 {% endhint %}
 

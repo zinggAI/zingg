@@ -4,7 +4,8 @@ description: >-
   production.
 tags:
   - ent
-  - enterprise-only
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Compare Model Results

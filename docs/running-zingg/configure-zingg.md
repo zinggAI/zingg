@@ -48,7 +48,7 @@ args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="success" icon="right-long" %}
 `setModelId` - unique name for this model.
 
 `setZinggDir` - where Zingg writes model files and training data.

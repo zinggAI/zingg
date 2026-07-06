@@ -10,8 +10,6 @@ tags:
 
 Zingg supports two matching approaches: probabilistic and deterministic. Both are explained on this page. Zingg Enterprise runs them together in a single flow. Probabilistic handles variations and uncertainty; deterministic handles trusted identifiers that should always produce an exact match.
 
-<figure><img src="../../.gitbook/assets/deterministic-vs-probabilistic.png" alt="Zingg Similarity Model"><figcaption><p>Zingg Similarity Model</p></figcaption></figure>
-
 ### Probabilistic matching
 
 Probabilistic matching is Zingg's default and is available in all editions. The model learns field-level similarity weights from your labeled training pairs and assigns a match score to every candidate pair. Pairs above the automatically optimized threshold are grouped into a cluster.
@@ -29,7 +27,7 @@ Zingg Enterprise applies deterministic rules first. Pairs resolved deterministic
 ### Configuring deterministic matching
 
 {% hint style="info" icon="right-long" %}
-Deterministic matching is Enterprise only. Available in Enterprise Lite and above.
+Deterministic matching is Enterprise only. Available in Enterprise Lite and above
 {% endhint %}
 
 To configure deterministic matching, define each rule as a `DeterministicMatching` condition in Python or as a `matchCondition` block in JSON, then pass all conditions to `setDeterministicMatchingCondition()`. Full Python and JSON examples → [Configure Zingg](../../running-zingg/configure-zingg.md)

@@ -27,7 +27,7 @@ Every record in the match output contains your original input fields plus three 
 {% endhint %}
 
 {% tabs %}
-{% tab title="Community Python" %}
+{% tab title="Community" %}
 ### Python
 
 ```python
@@ -62,7 +62,7 @@ Matching records share the same `Z_CLUSTER` value.
 {% endhint %}
 {% endtab %}
 
-{% tab title="Enterprise Python" %}
+{% tab title="Enterprise" %}
 ### Python
 
 ```python
@@ -91,7 +91,7 @@ output = spark.read.csv(
 display(output)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="right-long" %}
 Enterprise output includes `Zingg ID` (persistent across runs) instead of `Z_CLUSTER`, plus deterministic match flag and Match Statistics. `Zingg ID` is stable across all subsequent incremental runs.
 {% endhint %}
 {% endtab %}

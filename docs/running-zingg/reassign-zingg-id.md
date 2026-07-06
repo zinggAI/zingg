@@ -4,7 +4,8 @@ description: >-
   infrastructure without disrupting downstream systems.
 tags:
   - ent
-  - enterprise-only
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Reassign Zingg ID
@@ -17,7 +18,7 @@ When you evolve your Zingg setup - upgrading your model, migrating infrastructur
 
 The `reassignZinggId` phase carries Zingg IDs from your original production model to a new model's output. It maps clusters from the new model back to the original cluster assignments and preserves the original Zingg IDs wherever clusters overlap. New IDs are generated only where no match is found.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="right-long" %}
 For what the Zingg ID is and how it works in Enterprise output → [Zingg ID and Z Cluster](../zingg-concepts/z-cluster-and-zingg-id.md)
 {% endhint %}
 
@@ -216,7 +217,7 @@ The CLI command takes three arguments:
   --properties-file config/zingg.conf
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="right-long" %}
 The `--originalZinggId` flag takes the path to your original production config file. Despite the flag name, you are passing the **configuration file** that defined the original model - Zingg uses that config to locate the original output containing the Zingg IDs to be preserved.
 {% endhint %}
 {% endtab %}

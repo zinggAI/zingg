@@ -164,6 +164,5 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 * `MAPPING_(FILENAME)` - handle completely different strings (nicknames, abbreviations) that `FUZZY` cannot bridge
 * `NULL_OR_BLANK` - combine with FUZZY to treat nulls as non-matches
 
-**Read more**: [Match Types](./) | → [Configure Zingg](../../../running-zingg/configure-zingg.md)  → | [How Zingg Learns](../)
+**Read more**: [Match Types](./) |  [Configure Zingg](../../../running-zingg/configure-zingg.md)  | [How Zingg Learns](../)
 {% endhint %}
-

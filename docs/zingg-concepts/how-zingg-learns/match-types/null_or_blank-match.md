@@ -20,7 +20,7 @@ _**COMMENT FOR TEAM -- Algorithm detail for NULL\_OR\_BLANK to be added here.**_
 
 ### What **`NULL_OR_BLANK`** matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">null</td><td valign="top">John Smith</td><td valign="top"><p>Without <code>NULL_OR_BLANK</code>: treated as matching (default). </p><p>With <code>NULL_OR_BLANK</code>: model learns from labeled examples - likely not a match</p></td></tr><tr><td valign="top">[empty string]</td><td valign="top">John Smith</td><td valign="top">Same as above</td></tr><tr><td valign="top">null</td><td valign="top">null</td><td valign="top">Confirm with team - both null behavior</td></tr><tr><td valign="top">John Smith</td><td valign="top">John Smith</td><td valign="top">No change - <code>NULL_OR_BLANK</code> only affects null/blank values</td></tr><tr><td valign="top">null</td><td valign="top">[empty string</td><td valign="top">Confirm with team - null vs empty string</td></tr></tbody></table>
+<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">null</td><td valign="top">John Smith</td><td valign="top"><p>Without <code>NULL_OR_BLANK</code>: treated as matching (default).</p><p>With <code>NULL_OR_BLANK</code>: model learns from labeled examples - likely not a match</p></td></tr><tr><td valign="top">[empty string]</td><td valign="top">John Smith</td><td valign="top">Same as above</td></tr><tr><td valign="top">null</td><td valign="top">null</td><td valign="top">Confirm with team - both null behavior</td></tr><tr><td valign="top">John Smith</td><td valign="top">John Smith</td><td valign="top">No change - <code>NULL_OR_BLANK</code> only affects null/blank values</td></tr><tr><td valign="top">null</td><td valign="top">[empty string</td><td valign="top">Confirm with team - null vs empty string</td></tr></tbody></table>
 
 ### When to use **`NULL_OR_BLANK`**
 
@@ -70,7 +70,6 @@ If a field is null in almost all records across all source systems, `NULL_OR_BLA
 
 ```python
 from zingg.client import *
-
     company = FieldDefinition("company", "string", "FUZZY,NULL_OR_BLANK")
 ```
 
@@ -78,7 +77,6 @@ from zingg.client import *
 
 ```python
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-
     company = EFieldDefinition("company", "string", "FUZZY,NULL_OR_BLANK")
 ```
 {% endtab %}
@@ -113,7 +111,7 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 * `FUZZY`, `NULL_OR_BLANK` - name and address fields often null
 * `EXACT`, `NULL_OR_BLANK` - identifier fields that may be absent
 * `PINCODE`, `NULL_OR_BLANK` - postal codes missing in some systems
-* `DONT_USE` - if the field should be excluded from matching entirely&#x20;
+* `DONT_USE` - if the field should be excluded from matching entirely
 
 **Read more**: [Match Types](./)
 {% endhint %}

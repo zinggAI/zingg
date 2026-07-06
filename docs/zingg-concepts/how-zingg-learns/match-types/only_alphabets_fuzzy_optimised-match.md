@@ -4,6 +4,8 @@ description: >-
   production-scale address matching. Enterprise only.
 tags:
   - ent
+  - tag: enterprise-only
+    primary: true
 ---
 
 # ONLY\_ALPHABETS\_FUZZY\_OPTIMISED Match
@@ -23,8 +25,6 @@ _**COMMENT FOR TEAM - Same questions as ONLY\_ALPHABETS\_FUZZY apply. Additional
 {% hint style="info" icon="right-long" %}
 `ONLY_ALPHABETS_FUZZY_OPTIMISED` is Enterprise only. The Community (open source) edition does not support this match type. Available in Enterprise Lite and above.
 {% endhint %}
-
-{% include "../../../.gitbook/includes/only_alphabet_fuzzy_match_table.md" %}
 
 {% tabs %}
 {% tab title="Python" %}
@@ -68,5 +68,5 @@ The JSON `fieldDefinition` block below uses Enterprise-only match type `ONLY_ALP
 * `FUZZY_OPTIMISED` - same optimisation pattern for name/text fields
 * `NUMERIC` - always combine with this for address fields
 
-**Read more**: [Match Types](./)&#x20;
+**Read more**: [Match Types](./)
 {% endhint %}
