@@ -11,7 +11,7 @@ New to Zingg pipes? Understand how pipes work before configuring them - [Pipes a
 {% endhint %}
 
 {% hint style="success" icon="right-long" %}
-This page covers NoSQL database connections.&#x20;
+This page covers NoSQL database connections.
 
 * For relational databases see [Connect Relational Databases](connect-relational-databases.md).
 * For cloud warehouses see [Connect Cloud Warehouses](connect-cloud-warehouses/).
@@ -30,15 +30,16 @@ To read FROM Cassandra, use the same props under "`data`" with `args.setData()`.
 ### Python API
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    cassandraPipe =
-    Pipe("sampleTest", "CASSANDRA")
-        cassandraPipe.addProperty("table", "dataschematest")
-            cassandraPipe.addProperty("keyspace", "zingg")
-                cassandraPipe.addProperty("cluster", "zingg") cassandraPipe
-                    .addProperty("spark.cassandra.connection.host",
-                                 "192.168.0.6") args.setOutput(cassandraPipe)
+cassandraPipe =
+Pipe("sampleTest", "CASSANDRA")
+cassandraPipe.addProperty("table", "dataschematest")
+cassandraPipe.addProperty("keyspace", "zingg")
+cassandraPipe.addProperty("cluster", "zingg")
+cassandraPipe.addProperty("spark.cassandra.connection.host", "192.168.0.6")
+args.setOutput(cassandraPipe)
 ```
 
 ### **JSON Config**
@@ -65,12 +66,13 @@ from zingg.client import* from zingg.pipes import*
 ### Python API
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    mongoPipe =
-    Pipe("mongodb", "mongo")
-        mongoPipe.addProperty("uri", "mongodb://127.0.0.1/people.contacts")
-            args.setData(mongoPipe)
+mongoPipe =
+Pipe("mongodb", "mongo")
+mongoPipe.addProperty("uri", "mongodb://127.0.0.1/people.contacts")
+args.setData(mongoPipe)
 ```
 
 ### JSON Config

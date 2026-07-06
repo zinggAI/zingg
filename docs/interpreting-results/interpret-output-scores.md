@@ -16,7 +16,7 @@ This page defines every Zingg output column and shows how to use the scores to d
 
 ### How Zingg computes scores
 
-For each field -  `fname`, `lname`, `email`, and so on, Zingg computes multiple features and feeds them to a classifier. These features are different ways to compare strings: character-level differences, string length differences, positional weighting, and common-typo awareness.
+For each field - `fname`, `lname`, `email`, and so on, Zingg computes multiple features and feeds them to a classifier. These features are different ways to compare strings: character-level differences, string length differences, positional weighting, and common-typo awareness.
 
 No individual feature is perfect, but the classifier finds the best-fit curve across all features and produces a final score. Key behaviors to understand:
 
@@ -37,7 +37,7 @@ the next run.
 In the Enterprise version, `Z_CLUSTER` is replaced by the persistent Zingg ID. See Zingg ID in the next section.
 
 {% hint style="success" icon="right-long" %}
-**Read more**: [Z Cluster ID and Zingg ID](../zingg-concepts/z-cluster-and-zingg-id.md)&#x20;
+**Read more**: [Z Cluster ID and Zingg ID](../zingg-concepts/z-cluster-and-zingg-id.md)
 {% endhint %}
 
 #### `Z_MINSCORE`
@@ -74,50 +74,38 @@ Appears only in the link phase output. Identifies which source dataset each reco
 Reading match output is the same in Community and Enterprise; only the cluster column name differs. Community produces `Z_CLUSTER`. Enterprise produces `ZINGG_ID`. Replace the column name in your code accordingly.
 
 {% tabs %}
-{% tab title="Community (OS)" %}
+{% tab title="Community" %}
 ```python
-from pyspark.sql.functions import \
-    col, count, avg
+from pyspark.sql.functions import col, count, avg
 
-output = spark.read.csv(
-    "/tmp/zinggOutput", header=True)
+output = spark.read.csv("/tmp/zinggOutput", header=True)
 
 output.groupBy("Z_CLUSTER") \
-    .agg(
-        count("*").alias("records"),
-        avg(col("Z_MINSCORE")
-            .cast("double"))
-            .alias("avg_min"),
-        avg(col("Z_MAXSCORE")
-            .cast("double"))
-            .alias("avg_max")) \
-    .orderBy("avg_min") \
-    .show()
+  .agg(
+    count("*").alias("records"),
+    avg(col("Z_MINSCORE").cast("double")).alias("avg_min"),
+    avg(col("Z_MAXSCORE").cast("double")).alias("avg_max")
+  ) \
+  .orderBy("avg_min") \
+  .show()
 ```
 {% endtab %}
 
 {% tab title="Enterprise" %}
 ```python
-from pyspark.sql.functions import \
-    col, count, avg
+from pyspark.sql.functions import col, count, avg
 
-output = spark.read.csv(
-    "/tmp/zinggOutput", header=True)
+output = spark.read.csv("/tmp/zinggOutput", header=True)
 
 output.groupBy("ZINGG_ID") \
-    .agg(
-        count("*").alias("records"),
-        avg(col("Z_MINSCORE")
-            .cast("double"))
-            .alias("avg_min"),
-        avg(col("Z_MAXSCORE")
-            .cast("double"))
-            .alias("avg_max")) \
-    .orderBy("avg_min") \
-    .show()
+  .agg(
+    count("*").alias("records"),
+    avg(col("Z_MINSCORE").cast("double")).alias("avg_min"),
+    avg(col("Z_MAXSCORE").cast("double")).alias("avg_max")
+  ) \
+  .orderBy("avg_min") \
+  .show()
 ```
-
-
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
@@ -175,8 +163,7 @@ Review clusters with `Z_MINSCORE` of `0` manually to confirm the full cluster is
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* Z Cluster and Zingg ID - [Z Cluster ID and Zingg ID](../zingg-concepts/z-cluster-and-zingg-id.md)&#x20;
-* Explaining how a cluster formed - [Explain matches](explain-matches.md)&#x20;
-* Improving accuracy when results are wrong - [Improve accuracy](../tuning/improve-accuracy/)&#x20;
+* Z Cluster and Zingg ID - [Z Cluster ID and Zingg ID](../zingg-concepts/z-cluster-and-zingg-id.md)
+* Explaining how a cluster formed - [Explain matches](explain-matches.md)
+* Improving accuracy when results are wrong - [Improve accuracy](../tuning/improve-accuracy/)
 {% endhint %}
-

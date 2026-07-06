@@ -55,18 +55,28 @@ The combination is defined in a JSON config file with two top-level arrays: `ver
     {
       "name": "spouse",
       "vertexType": "zingg_pipe",
-      "data": [{
-        "name": "spouse",
-        "format": "snowflake",
-        "props": {
-          "query": "select a.id as id, a.FNAME, a.LNAME, a.STNO, a.ADD1, a.CITY, a.STATE, a.ZINGG_ID_PERSON, b.id as z_id, b.fname as Z_FNAME, b.lname as Z_LNAME, b.stno as Z_STNO, b.add1 as Z_ADD1, b.city as Z_CITY, b.state as Z_STATE, b.ZINGG_ID_PERSON as Z_ZINGG_ID_PERSON from CUSTOMER_RELATE_PARTIAL a, CUSTOMER_RELATE_PARTIAL b where a.familyId = b.familyId"
+      "data": [
+        {
+          "name": "spouse",
+          "format": "snowflake",
+          "props": {
+            "query": "select a.id as id, a.FNAME, a.LNAME, a.STNO, a.ADD1, a.CITY, a.STATE, a.ZINGG_ID_PERSON, b.id as z_id, b.fname as Z_FNAME, b.lname as Z_LNAME, b.stno as Z_STNO, b.add1 as Z_ADD1, b.city as Z_CITY, b.state as Z_STATE, b.ZINGG_ID_PERSON as Z_ZINGG_ID_PERSON from CUSTOMER_RELATE_PARTIAL a, CUSTOMER_RELATE_PARTIAL b where a.familyId = b.familyId"
+          }
         }
-      }],
+      ],
       "edges": {
         "edgeType": "same_edge",
         "edges": [
-          {"dataColumn": "zingg_personId", "column": "zingg_personId", "name": "zingg_personId1"},
-          {"dataColumn": "zingg_personId", "column": "z_zingg_personId", "name": "zingg_personId2"}
+          {
+            "dataColumn": "zingg_personId",
+            "column": "zingg_personId",
+            "name": "zingg_personId1"
+          },
+          {
+            "dataColumn": "zingg_personId",
+            "column": "z_zingg_personId",
+            "name": "zingg_personId2"
+          }
         ]
       }
     },
@@ -84,17 +94,29 @@ The combination is defined in a JSON config file with two top-level arrays: `ver
       "edges": {
         "edgeType": "same_edge",
         "edges": [
-          {"dataColumn": "zingg_personId", "column": "zingg_personId", "name": "zingg_personId1"},
-          {"dataColumn": "zingg_personId", "column": "z_zingg_personId", "name": "zingg_personId2"}
+          {
+            "dataColumn": "zingg_personId",
+            "column": "zingg_personId",
+            "name": "zingg_personId1"
+          },
+          {
+            "dataColumn": "zingg_personId",
+            "column": "z_zingg_personId",
+            "name": "zingg_personId2"
+          }
         ]
       }
     }
   ],
-  "output": [{
-    "name": "relatedCustomers",
-    "format": "snowflake",
-    "props": {"table": "RELATED_CUSTOMERS_PARTIAL"}
-  }],
+  "output": [
+    {
+      "name": "relatedCustomers",
+      "format": "snowflake",
+      "props": {
+        "table": "RELATED_CUSTOMERS_PARTIAL"
+      }
+    }
+  ],
   "strategy": "pairs_and_vertices"
 }
 ```

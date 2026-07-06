@@ -15,7 +15,7 @@ Microsoft Fabric paired with Zingg gives you entity resolution with built-in dat
 {% endhint %}
 
 {% tabs %}
-{% tab title="Community (OS)" %}
+{% tab title="Community" %}
 Uses `Arguments`, `FieldDefinition`, `CsvPipe`, and `ZinggWithSpark`. The workflow runs across four notebooks.
 
 ### Fabric workspace setup
@@ -30,10 +30,6 @@ If you are new to Fabric, sign up for a free trial at `microsoft.com/fabric`.
 2. Name it something like `Zingg-Fabric`.
 3. When prompted for a session cluster, choose **New Standard Session**.
 
-<figure><img src="../.gitbook/assets/image (23).png" alt="Creating a session on Fabric"><figcaption><p>Creating a session on Fabric</p></figcaption></figure>
-
-
-
 #### **Step 2: Create a Zingg Environment**
 
 Fabric Environments let you install JARs that persist across notebook sessions. Zingg requires its JAR to be installed in an Environment before any notebook runs.
@@ -41,26 +37,14 @@ Fabric Environments let you install JARs that persist across notebook sessions. 
 1. Inside your workspace, go to the **Environment** tab and click **New Environment**.
 2. Name it `Zingg Environment`.
 
-<figure><img src="../.gitbook/assets/image (24).png" alt="Creating the Zingg Environment in Fabric"><figcaption><p>Creating the Zingg Environment in Fabric</p></figcaption></figure>
-
-
-
 #### **Step 3: Install the Zingg JAR in the Environment**
 
 The Zingg JAR must be installed as a Custom Library in your Environment so Fabric's Spark runtime can find it.
 
 1. Go to `github.com/zinggAI/zingg/releases` and download the latest release `tar` file.
-
-<figure><img src="../.gitbook/assets/image (25).png" alt="Downloading the Zingg release tar file"><figcaption><p>Downloading the Zingg release tar file</p></figcaption></figure>
-
 2. Extract the `tar` file and locate the JAR file inside it.
-
-<figure><img src="../.gitbook/assets/image (26).png" alt="Extracting the JAR file from the tar"><figcaption><p>Extracting the JAR file from the tar</p></figcaption></figure>
-
-2. Open your `Zingg Environment`, go to **Custom Library**, and upload the JAR file.
-3. Click **Save** and then **Publish** the Environment.
-
-<figure><img src="../.gitbook/assets/image (27).png" alt="Uploading the Zingg JAR to the Fabric Environment Custom Library"><figcaption><p>Uploading the Zingg JAR to the Fabric Environment Custom Library</p></figcaption></figure>
+3. Open your `Zingg Environment`, go to **Custom Library**, and upload the JAR file.
+4. Click **Save** and then **Publish** the Environment.
 
 #### **Step 4: Create a Lakehouse and upload your data**
 
@@ -68,17 +52,12 @@ Zingg reads from and writes to OneLake. Create a Lakehouse to give Zingg a stora
 
 1. Inside your workspace, click **New Item** → **Lakehouse**.
 2. Give the Lakehouse a name (for example `ZinggLakehouse`).
-
-<figure><img src="../.gitbook/assets/image (28).png" alt="Creating a Lakehouse inside the Zingg-Fabric workspace"><figcaption><p>Creating a Lakehouse inside the Zingg-Fabric workspace</p></figcaption></figure>
-
 3. Go inside the Lakehouse, click **Get Data**, and upload your CSV file.
-
-<figure><img src="../.gitbook/assets/image (29).png" alt="Uploading data to the Fabric Lakehouse"><figcaption><p>Uploading data to the Fabric Lakehouse</p></figcaption></figure>
 
 {% hint style="success" icon="right-long" %}
 Sample data for testing: `github.com/zinggAI/zingg/blob/main/examples/febrl/test.csv`
 
-Zingg also supports Delta Lake tables, Parquet, and JSON - change the format in the input pipe configuration.&#x20;
+Zingg also supports Delta Lake tables, Parquet, and JSON - change the format in the input pipe configuration.
 
 For all connector formats → [Connect Microsoft Fabric](../connect-your-data/connect-cloud-warehouses/connect-microsoft-fabric.md)
 {% endhint %}
@@ -115,10 +94,6 @@ Verify the installation:
 !pip show zingg
 ```
 
-<figure><img src="../.gitbook/assets/image (30).png" alt="Installing the Zingg Python package on Fabric"><figcaption><p>Installing the Zingg Python package on Fabric</p></figcaption></figure>
-
-<figure><img src="../.gitbook/assets/image (31).png" alt="Verifying the Zingg installation"><figcaption><p>Verifying the Zingg installation</p></figcaption></figure>
-
 #### **Step 7: Set the model ID and storage paths**
 
 `zinggDir` is the root path for all Zingg model files, training data, and output. `modelId` is the unique name for this model run. Use the same values across all four notebooks.
@@ -126,39 +101,53 @@ Verify the installation:
 Replace `<workspace-id>` and `<lakehouse-id>` with the actual IDs from your Fabric workspace and Lakehouse. You can find them in the browser address bar when viewing your Lakehouse.
 
 ```python
-zinggDir =
-    ("abfss://<workspace-id>@onelake"
-     ".dfs.fabric.microsoft.com/"
-     "<lakehouse-id>/Files/models")modelId = "oss_model"
+zinggDir = (
+    "abfss://<workspace-id>@onelake"
+    ".dfs.fabric.microsoft.com/"
+    "<lakehouse-id>/Files/models"
+)
+modelId = "oss_model"
 ```
 
 `MARKED_DIR` and `UNMARKED_DIR` are derived automatically. Zingg writes labeled training pairs to `MARKED_DIR` during the `label` phase and reads them back during `train`.
 
 ```python
-MARKED_DIR = zinggDir + "/" + modelId + "/trainingData/marked/" UNMARKED_DIR =
-                 zinggDir + "/" + modelId + "/trainingData/unmarked/"
+MARKED_DIR = zinggDir + "/" + modelId + "/trainingData/marked/"
+UNMARKED_DIR = zinggDir + "/" + modelId + "/trainingData/unmarked/"
 ```
-
-<figure><img src="../.gitbook/assets/image (32).png" alt="Setting the OneLake storage paths for Zingg"><figcaption><p>Setting the OneLake storage paths for Zingg</p></figcaption></figure>
 
 #### Step 8: Import libraries and set up helper functions
 
 ```python
-import pandas as pd import numpy as np from ipywidgets import widgets, interact, GridspecLayout import base64 import pyspark.sql.functions as fn
+import pandas as pd
+import numpy as np
+from ipywidgets import widgets, interact, GridspecLayout
+import base64
+import pyspark.sql.functions as fn
 
-                                                                                 from zingg.client import * from zingg.pipes import *
+from zingg.client import *
+from zingg.pipes import *
 
-                                                                                 def count_labeled_pairs(marked_pd) : ""
-                                                                                                                      "Returns positive, negative, uncertain,
-                                                                                                         and total labeled pair counts.""
-                                                                                                                                       "
-                                                                                                         n_total = len(np.unique(marked_pd['z_cluster'])) n_positive = len(np.unique(marked_pd[marked_pd['z_isMatch'] == 1]['z_cluster'])) n_negative = len(np.unique(marked_pd[marked_pd['z_isMatch'] == 0]['z_cluster'])) n_uncertain = len(np.unique(marked_pd[marked_pd['z_isMatch'] == 2]['z_cluster'])) return n_positive, n_negative, n_uncertain, n_total
+def count_labeled_pairs(marked_pd):
+    """
+    Returns positive, negative, uncertain,
+    and total labeled pair counts.
+    """
+    n_total = len(np.unique(marked_pd['z_cluster']))
+    n_positive = len(np.unique(marked_pd[marked_pd['z_isMatch'] == 1]['z_cluster']))
+    n_negative = len(np.unique(marked_pd[marked_pd['z_isMatch'] == 0]['z_cluster']))
+    n_uncertain = len(np.unique(marked_pd[marked_pd['z_isMatch'] == 2]['z_cluster']))
+    return n_positive, n_negative, n_uncertain, n_total
 
-                                                                                                                                                                                                                                                                                                                                              def fix_void_columns(df) : ""
-                                                                                                                                                                                                                                                                                                                                                                         "Handles columns where all values are None
-                                                                                                                                                                                                                                                                                                                                                                   to prevent save errors.""
-                                                                                                                                                                                                                                                                                                                                                                                          "
-                                                                                                                                                                                                                                                                                                                                                                   for col in df.columns: if df[col].apply(lambda x:x is None).all() :df[col] = df[col].astype(str) return df
+def fix_void_columns(df):
+    """
+    Handles columns where all values are None
+    to prevent save errors.
+    """
+    for col in df.columns:
+        if df[col].apply(lambda x: x is None).all():
+            df[col] = df[col].astype(str)
+    return df
 ```
 
 #### **Step 9: Build the arguments object**
@@ -166,7 +155,9 @@ import pandas as pd import numpy as np from ipywidgets import widgets, interact,
 `Arguments` is the central configuration object. Every phase in this workflow reads from the same `args` instance.
 
 ```python
-args = Arguments() args.setModelId(modelId) args.setZinggDir(zinggDir)
+args = Arguments()
+args.setModelId(modelId)
+args.setZinggDir(zinggDir)
 ```
 
 #### **Step 10: Configure performance settings**
@@ -174,7 +165,8 @@ args = Arguments() args.setModelId(modelId) args.setZinggDir(zinggDir)
 `numPartitions` controls how data is distributed across Spark workers. Disabling Adaptive Query Execution gives Zingg more predictable Spark behavior.
 
 ```python
-args.setNumPartitions(32) spark.conf.set("spark.sql.adaptive.enabled", False)
+args.setNumPartitions(32)
+spark.conf.set("spark.sql.adaptive.enabled", False)
 ```
 
 {% hint style="info" icon="right-long" %}
@@ -188,40 +180,51 @@ Read your CSV from OneLake and preview it before configuring the Zingg pipes. Th
 ```python
 import pandas as pd
 
-    schema =["rec_id", "fname", "lname", "stNo", "add1", "add2", "city", "areacode", "state", "dob", "ssn"]
+schema = ["rec_id", "fname", "lname", "stNo", "add1", "add2", "city", "areacode", "state", "dob", "ssn"]
 
-             data = pd.read_csv("abfss://<workspace-id>@onelake"
-                                ".dfs.fabric.microsoft.com/"
-                                "<lakehouse-id>/Files/test.csv", header = None) data.columns = schema data.head()
+data = pd.read_csv(
+    "abfss://<workspace-id>@onelake"
+    ".dfs.fabric.microsoft.com/"
+    "<lakehouse-id>/Files/test.csv",
+    header=None
+)
+data.columns = schema
+data.head()
 ```
 
-_**IMAGE TO BE ADDED — Fabric notebook cell showing the data preview output table with sample FEBRL records — the same entity appearing multiple times with field variations across rows. Tanwi to check with team for screenshot from a live Fabric notebook run.**_&#x20;
+_**IMAGE TO BE ADDED — Fabric notebook cell showing the data preview output table with sample FEBRL records — the same entity appearing multiple times with field variations across rows. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
 
 #### **Step 12: Configure input and output pipes**
 
 `CsvPipe` connects Zingg to your OneLake data. The schema string must match your dataset column names exactly.
 
 ```python
-schema =
-    ("rec_id string, fname string, "
-     "lname string, stNo string, "
-     "add1 string, add2 string, "
-     "city string, areacode string, "
-     "state string, dob string, "
-     "ssn string")
+schema = (
+    "rec_id string, fname string, "
+    "lname string, stNo string, "
+    "add1 string, add2 string, "
+    "city string, areacode string, "
+    "state string, dob string, "
+    "ssn string"
+)
 
-        inputPipe = CsvPipe("inputpipe",
-                            "abfss://<workspace-id>@onelake"
-                            ".dfs.fabric.microsoft.com/"
-                            "<lakehouse-id>/Files/test.csv",
-                            schema) args.setData(inputPipe)
+inputPipe = CsvPipe(
+    "inputpipe",
+    "abfss://<workspace-id>@onelake"
+    ".dfs.fabric.microsoft.com/"
+    "<lakehouse-id>/Files/test.csv",
+    schema
+)
+args.setData(inputPipe)
 
-                        output_path =
-            ("abfss://<workspace-id>@onelake"
-             ".dfs.fabric.microsoft.com/"
-             "<lakehouse-id>/Files/Output" +
-             modelId) outputPipe =
-                CsvPipe("resultOutput", output_path) args.setOutput(outputPipe)
+output_path = (
+    "abfss://<workspace-id>@onelake"
+    ".dfs.fabric.microsoft.com/"
+    "<lakehouse-id>/Files/Output" +
+    modelId
+)
+outputPipe = CsvPipe("resultOutput", output_path)
+args.setOutput(outputPipe)
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -233,26 +236,24 @@ schema =
 Every field in your input schema must appear in `fieldDefinition`. List the most important fields first as field order affects blocking quality.
 
 ```python
-rec_id = FieldDefinition("rec_id", "string", MatchType.DONT_USE) fname =
-    FieldDefinition("fname", "string", MatchType.FUZZY) lname = FieldDefinition(
-        "lname", "string", MatchType.FUZZY) stNo =
-        FieldDefinition("stNo", "string", MatchType.FUZZY) add1 =
-            FieldDefinition("add1", "string", MatchType.FUZZY) add2 =
-                FieldDefinition("add2", "string", MatchType.FUZZY) city =
-                    FieldDefinition("city", "string", MatchType.FUZZY)
-                        areacode = FieldDefinition("areacode", "string",
-                                                   MatchType.FUZZY) state =
-                            FieldDefinition("state", "string", MatchType.FUZZY)
-                                dob = FieldDefinition("dob", "string",
-                                                      MatchType.EXACT) ssn =
-                                    FieldDefinition("ssn", "string",
-                                                    MatchType.EXACT)
+rec_id = FieldDefinition("rec_id", "string", MatchType.DONT_USE)
+fname = FieldDefinition("fname", "string", MatchType.FUZZY)
+lname = FieldDefinition("lname", "string", MatchType.FUZZY)
+stNo = FieldDefinition("stNo", "string", MatchType.FUZZY)
+add1 = FieldDefinition("add1", "string", MatchType.FUZZY)
+add2 = FieldDefinition("add2", "string", MatchType.FUZZY)
+city = FieldDefinition("city", "string", MatchType.FUZZY)
+areacode = FieldDefinition("areacode", "string", MatchType.FUZZY)
+state = FieldDefinition("state", "string", MatchType.FUZZY)
+dob = FieldDefinition("dob", "string", MatchType.EXACT)
+ssn = FieldDefinition("ssn", "string", MatchType.EXACT)
 
-                                        fieldDefs = [
-                                          rec_id, fname, lname, stNo, add1,
-                                          add2, city, areacode, state, dob,
-                                          ssn
-                                        ] args.setFieldDefinition(fieldDefs)
+fieldDefs = [
+    rec_id, fname, lname, stNo, add1,
+    add2, city, areacode, state, dob,
+    ssn
+]
+args.setFieldDefinition(fieldDefs)
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -268,7 +269,8 @@ This notebook runs `findTrainingData` and `label`. It calls `%run 01-setting_up_
 `labelDataSampleSize` controls how much of your dataset is scanned when finding candidate pairs.
 
 ```python
-args.setNumPartitions(4) args.setLabelDataSampleSize(0.4)
+args.setNumPartitions(4)
+args.setLabelDataSampleSize(0.4)
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -280,23 +282,25 @@ For 100k records use `labelDataSampleSize` between 0.1 and 0.5. For 1M+ records 
 Zingg scans your dataset using the field rules defined in Step 13 and selects the most informative pairs for labeling — edge cases where the model has the most to learn. Candidate pairs are saved to `UNMARKED_DIR` in your OneLake Lakehouse.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ]) zingg =
-    ZinggWithSpark(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ])
+zingg = ZinggWithSpark(args, options)
+zingg.initAndExecute()
 ```
 
 #### Step 16: Load pairs for labeling
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "label" ]) zingg =
-    ZinggWithSpark(args, options) zingg.init()
+options = ClientOptions([ ClientOptions.PHASE, "label" ])
+zingg = ZinggWithSpark(args, options)
+zingg.init()
 
-        candidate_pairs_pd =
-        getPandasDfFromDs(zingg.getUnmarkedRecords())
+candidate_pairs_pd = getPandasDfFromDs(zingg.getUnmarkedRecords())
 
-            if candidate_pairs_pd.shape[0] == 0
-    : print("No pairs found. Run findTrainingData first.") else : z_clusters =
-            list(np.unique(candidate_pairs_pd['z_cluster']))
-                print(f "{len(z_clusters)} candidate pairs found for labeling")
+if candidate_pairs_pd.shape[0] == 0:
+    print("No pairs found. Run findTrainingData first.")
+else:
+    z_clusters = list(np.unique(candidate_pairs_pd['z_cluster']))
+    print(f"{len(z_clusters)} candidate pairs found for labeling")
 ```
 
 #### **Step 17: Label pairs in the widget**
@@ -346,7 +350,7 @@ display(widgets.VBox(children=vContainers))
 ready_for_save = True
 ```
 
-_**IMAGE TO BE ADDED — Zingg labeling widget running inside a Fabric notebook showing two candidate records side by side with Match / No Match / Uncertain toggle buttons. Tanwi to check with team for screenshot from a live Fabric notebook run.**_&#x20;
+_**IMAGE TO BE ADDED — Zingg labeling widget running inside a Fabric notebook showing two candidate records side by side with Match / No Match / Uncertain toggle buttons. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
 
 {% hint style="success" icon="right-long" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 15–18 in a loop until you reach this target. Label until all field types and data variation patterns in your schema are covered. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
@@ -400,17 +404,17 @@ This notebook runs `generateDocs`. It calls `%run 01-setting_up_zingg` at the to
 Run `generateDocs` to produce readable HTML reports of your labeled training data — both matched and non-matched pairs. Use this to verify label consistency and share with subject matter experts before committing to training.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "generateDocs" ]) zingg =
-    ZinggWithSpark(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "generateDocs" ])
+zingg = ZinggWithSpark(args, options)
+zingg.initAndExecute()
 
-        DOCS_DIR = zinggDir + "/" + modelId +
-                   "/docs/"
+DOCS_DIR = zinggDir + "/" + modelId + "/docs/"
 
-                   displayHTML(open(DOCS_DIR + "model.html", 'r').read())
-                       displayHTML(open(DOCS_DIR + "data.html", 'r').read())
+displayHTML(open(DOCS_DIR + "model.html", 'r').read())
+displayHTML(open(DOCS_DIR + "data.html", 'r').read())
 ```
 
-_**IMAGE TO BE ADDED — `generateDocs` HTML output rendered inside a Fabric notebook showing labeled pair examples in a table. Tanwi to check with team for screenshot from a live Fabric notebook run.**_&#x20;
+_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****\*\*\*\* \*\*\*\*HTML output rendered inside a Fabric notebook showing labeled pair examples in a table. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
 
 ### Notebook 04: Train and match
 
@@ -421,18 +425,21 @@ This notebook runs `trainMatch` and displays the output. It calls `%run 01-setti
 `trainMatch` combines `train` and `match` into a single phase. Zingg builds a model from your labeled pairs and immediately applies it to the full dataset. This is the most compute-intensive step; Spark distributes the workload across all Fabric Spark nodes.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "trainMatch" ]) zingg =
-    ZinggWithSpark(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "trainMatch" ])
+zingg = ZinggWithSpark(args, options)
+zingg.initAndExecute()
 ```
 
 You can also run `train` and `match` as separate phases if you want to inspect the trained model before running the full dataset:
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "train" ]) zingg =
-    ZinggWithSpark(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "train" ])
+zingg = ZinggWithSpark(args, options)
+zingg.initAndExecute()
 
-        options = ClientOptions([ ClientOptions.PHASE, "match" ]) zingg =
-        ZinggWithSpark(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "match" ])
+zingg = ZinggWithSpark(args, options)
+zingg.initAndExecute()
 ```
 
 #### Step 21: View output
@@ -440,17 +447,18 @@ options = ClientOptions([ ClientOptions.PHASE, "train" ]) zingg =
 Match output is written to `output_path` in your OneLake Lakehouse. Read it back into a Spark DataFrame to inspect the resolved clusters.
 
 ```python
-colNames =
-    [
-      "z_minScore", "z_maxScore", "z_cluster", "rec_id", "fname", "lname",
-      "stNo", "add1", "add2", "city", "areacode", "state", "dob", "ssn"
-    ]
+colNames = [
+    "z_minScore", "z_maxScore", "z_cluster", "rec_id", "fname", "lname",
+    "stNo", "add1", "add2", "city", "areacode", "state", "dob", "ssn"
+]
 
-    outputDF = spark.read.csv(output_path) outputDF =
-        outputDF.toDF(*colNames) display(outputDF) print(outputDF.count())
+outputDF = spark.read.csv(output_path)
+outputDF = outputDF.toDF(*colNames)
+display(outputDF)
+print(outputDF.count())
 ```
 
-_**IMAGE TO BE ADDED— Match output table in a Fabric notebook showing resolved records with `z_cluster` column visible — two rows sharing the same cluster value highlighted to illustrate entity resolution. Tanwi to check with team for screenshot from a live Fabric notebook run.**_&#x20;
+_**IMAGE TO BE ADDED— Match output table in a Fabric notebook showing resolved records with\*\*\*\*****&#x20;****`z_cluster`****&#x20;****\*\*\*\*column visible — two rows sharing the same cluster value highlighted to illustrate entity resolution. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
 {% endtab %}
 
 {% tab title="Enterprise" %}
@@ -471,4 +479,3 @@ Download the notebooks used in this guide:
 * Community notebooks (NB01–04): `github.com/zinggAI/zingg/tree/main/examples/fabric`
 * Enterprise notebooks (NB01–07): included in your Zingg Enterprise package
 {% endhint %}
-

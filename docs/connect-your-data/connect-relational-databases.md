@@ -23,16 +23,17 @@ spark.jars=<location of jdbc driver jar>
 ### Python API
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    jdbcPipe =
-    Pipe("pgInput", "jdbc") jdbcPipe
-        .addProperty("url", "jdbc:postgresql://localhost:5432/dbname")
-            jdbcPipe.addProperty("dbtable", "your_table")
-                jdbcPipe.addProperty("driver", "org.postgresql.Driver")
-                    jdbcPipe.addProperty("user", "postgres")
-                        jdbcPipe.addProperty("password", "your_password")
-                            args.setData(jdbcPipe)
+jdbcPipe =
+Pipe("pgInput", "jdbc")
+jdbcPipe.addProperty("url", "jdbc:postgresql://localhost:5432/dbname")
+jdbcPipe.addProperty("dbtable", "your_table")
+jdbcPipe.addProperty("driver", "org.postgresql.Driver")
+jdbcPipe.addProperty("user", "postgres")
+jdbcPipe.addProperty("password", "your_password")
+args.setData(jdbcPipe)
 ```
 
 ### JSON Config
@@ -58,15 +59,16 @@ from zingg.client import* from zingg.pipes import*
 ### Python API
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    jdbcPipe = Pipe("mysqlInput", "jdbc") jdbcPipe
-                   .addProperty("url", "jdbc:mysql://localhost:3306/<db_name>")
-                       jdbcPipe.addProperty("dbtable", "testData") jdbcPipe
-                   .addProperty("driver", "com.mysql.cj.jdbc.Driver")
-                       jdbcPipe.addProperty("user", "root")
-                           jdbcPipe.addProperty("password", "password")
-                               args.setData(jdbcPipe)
+jdbcPipe = Pipe("mysqlInput", "jdbc")
+jdbcPipe.addProperty("url", "jdbc:mysql://localhost:3306/<db_name>")
+jdbcPipe.addProperty("dbtable", "testData")
+jdbcPipe.addProperty("driver", "com.mysql.cj.jdbc.Driver")
+jdbcPipe.addProperty("user", "root")
+jdbcPipe.addProperty("password", "password")
+args.setData(jdbcPipe)
 ```
 
 ### JSON Config
@@ -118,8 +120,6 @@ For any JDBC-compatible database, use the same pattern as PostgreSQL. Change two
 
 Download the JDBC driver JAR from the database vendor and add it to `spark.jars`\
 in `zingg.conf` before running.
-
-
 
 </details>
 

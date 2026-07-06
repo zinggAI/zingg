@@ -14,7 +14,7 @@ Run Zingg with Snowflake as your data source using the Snowflake Spark connector
 {% endhint %}
 
 {% tabs %}
-{% tab title="Community (OS)" %}
+{% tab title="Community" %}
 {% hint style="success" icon="right-long" %}
 For the Snowflake connector JSON config → [Connect Snowflake](../connect-your-data/connect-cloud-warehouses/connect-snowflake.md) Sample Snowflake config file: `github.com/zinggAI/zingg/blob/main/examples/febrl/configSnow.json`
 {% endhint %}
@@ -29,27 +29,26 @@ Create or use an existing EC2 instance. Connect to it using VS Code Remote SSH:
 2. Add your EC2 host to the SSH config file:
 
 ```bash
-Host<IP address of EC2 instance> HostName<hostname of EC2 instance> User ec2 -
-    user IdentityFile<path to.pem key file> PreferredAuthentications publickey
+Host <IP address of EC2 instance>
+  HostName <hostname of EC2 instance>
+  User ec2-user
+  IdentityFile <path to.pem key file>
+  PreferredAuthentications publickey
 ```
 
 3. Click **Open a Remote Window** in VS Code, select your EC2 host, and connect. 4. Pull the Zingg Docker image and start a bash session inside the container:
 
 ```bash
-docker pull zingg / zingg : 0.6.0 docker run - it zingg / zingg : 0.6.0 bash
+docker pull zingg/zingg:0.6.0
+docker run -it zingg/zingg:0.6.0 bash
 ```
 
-<figure><img src="../.gitbook/assets/image (33).png" alt="VS Code connected to EC2 via Remote SSH"><figcaption><p>VS Code connected to EC2 via Remote SSH</p></figcaption></figure>
-
 Inside the container, your container ID is the alphanumeric string between `@` and `:` in the terminal prompt. For example in `root@fab997383957:/zingg#`, the container ID is `fab997383957`. Note this value—you will need it in Step 3.
-
-<figure><img src="../.gitbook/assets/image (34).png" alt="The container ID is the value between @ and : in the Docker terminal prompt."><figcaption><p>The container ID is the value between @ and : in the Docker terminal prompt.</p></figcaption></figure>
 
 Before connecting to Snowflake, download the Snowflake Spark connector JAR and the Snowflake JDBC driver and add them to `zingg.conf` inside the container:
 
 ```bash
-spark.jars = snowflake - jdbc - 3.13.19.jar,
-    spark - snowflake_2 .12 - 2.10.0 - spark_3 .1.jar
+spark.jars=snowflake-jdbc-3.13.19.jar,spark-snowflake_2.12-2.10.0-spark_3.1.jar
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -59,8 +58,6 @@ spark.jars = snowflake - jdbc - 3.13.19.jar,
 ### **Step 2: Connect Zingg to Snowflake**
 
 Configure your `config.json` with your Snowflake connection details, field definitions, and performance settings. Use `examples/febrl/configSnow.json` as a starting point.
-
-<figure><img src="../.gitbook/assets/image (35).png" alt="The same customer appearing multiple times in Snowflake with inconsistent field values — the problem Zingg solves"><figcaption><p>The same customer appearing multiple times in Snowflake with inconsistent field values — the problem Zingg solves</p></figcaption></figure>
 
 ```json
 {
@@ -78,38 +75,38 @@ Configure your `config.json` with your Snowflake connection details, field defin
       "application" : "zingg_zingg"
     }
   } ],
-           "output" : [ {
-             "name" : "unifiedCustomers",
-             "format" : "net.snowflake.spark.snowflake",
-             "props" : {
-               "sfUrl" : "your-account.snowflakecomputing.com",
-               "sfUser" : "your-username",
-               "sfPassword" : "your-password",
-               "sfDatabase" : "your-database",
-               "sfSchema" : "MYSCHEMA",
-               "sfWarehouse" : "COMPUTE_WH",
-               "dbtable" : "your-output-table",
-               "application" : "zingg_zingg"
-             }
-           } ],
-                      "modelId" : "100",
-                                  "zinggDir" : "models",
-                                               "numPartitions" : 4,
-                                               "labelDataSampleSize" : 0.5,
-                                               "fieldDefinition" : [
-                                                 {
-                                                   "fieldName" : "fname",
-                                                   "matchType" : "FUZZY",
-                                                   "fields" : "fname",
-                                                   "dataType" : "string"
-                                                 },
-                                                 {
-                                                   "fieldName" : "lname",
-                                                   "matchType" : "FUZZY",
-                                                   "fields" : "lname",
-                                                   "dataType" : "string"
-                                                 }
-                                               ]
+  "output" : [ {
+    "name" : "unifiedCustomers",
+    "format" : "net.snowflake.spark.snowflake",
+    "props" : {
+      "sfUrl" : "your-account.snowflakecomputing.com",
+      "sfUser" : "your-username",
+      "sfPassword" : "your-password",
+      "sfDatabase" : "your-database",
+      "sfSchema" : "MYSCHEMA",
+      "sfWarehouse" : "COMPUTE_WH",
+      "dbtable" : "your-output-table",
+      "application" : "zingg_zingg"
+    }
+  } ],
+  "modelId" : "100",
+  "zinggDir" : "models",
+  "numPartitions" : 4,
+  "labelDataSampleSize" : 0.5,
+  "fieldDefinition" : [
+    {
+      "fieldName" : "fname",
+      "matchType" : "FUZZY",
+      "fields" : "fname",
+      "dataType" : "string"
+    },
+    {
+      "fieldName" : "lname",
+      "matchType" : "FUZZY",
+      "fields" : "lname",
+      "dataType" : "string"
+    }
+  ]
 }
 ```
 
@@ -126,26 +123,54 @@ The Lambda function receives a Zingg phase name, SSHes into EC2, and executes th
 Create a file called `lambda_function.py` with the following code. Replace all placeholder values before deploying:
 
 ```python
-import json import paramiko
+import json
+import paramiko
 
-    def lambda_handler(event, context) :status_code = 200 try :event_body = event["body"] payload = json.loads(event_body) row = payload["data"] row_number = row[0][0] phase = row[0][1]
+def lambda_handler(event, context):
+    status_code = 200
+    try:
+        event_body = event["body"]
+        payload = json.loads(event_body)
+        row = payload["data"]
+        row_number = row[0][0]
+        phase = row[0][1]
 
-                                                                                  if phase not in['findTrainingData', 'match', 'train', 'checklog'] :raise ValueError
+        if phase not in ['findTrainingData', 'match', 'train', 'checklog']:
+            raise ValueError
 
-                                                                                                  ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect('<Your EC2 IP>', username = 'ec2-user', key_filename =('/var/task/your-key.pem'))
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(
+            '<Your EC2 IP>',
+            username='ec2-user',
+            key_filename=('/var/task/your-key.pem')
+        )
 
-                                                                                                                                                                                                       if phase != 'checklog' :command =("docker exec "
-                                                                                                                                                                                                                                         "<your container ID> "
-                                                                                                                                                                                                                                         "bash -c 'zingg.sh "
-                                                                                                                                                                                                                                         "--properties-file "
-                                                                                                                                                                                                                                         "config/zingg.conf "
-                                                                                                                                                                                                                                         "--phase " + phase + " --conf examples/febrl/"
-                                                                                                                                                                                                                                                              "configSnow.json'"
-                                                                                                                                                                                                                                                              " > logfile.txt") stdin, stdout, stderr = ssh.exec_command(command) result = json.dumps({"data" : [[0, "Started phase: " + phase]] }) else :command = "cat logfile.txt" stdin, stdout, stderr = ssh.exec_command(command) output = stdout.readlines() result = json.dumps({"data" : [[0, output]] })
+        if phase != 'checklog':
+            command = (
+                "docker exec "
+                "<your container ID> "
+                "bash -c 'zingg.sh "
+                "--properties-file "
+                "config/zingg.conf "
+                "--phase " + phase + " --conf examples/febrl/"
+                "configSnow.json'"
+                " > logfile.txt"
+            )
+            stdin, stdout, stderr = ssh.exec_command(command)
+            result = json.dumps({"data" : [[0, "Started phase: " + phase]]})
+        else:
+            command = "cat logfile.txt"
+            stdin, stdout, stderr = ssh.exec_command(command)
+            output = stdout.readlines()
+            result = json.dumps({"data" : [[0, output]]})
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            return {"statusCode" :status_code, "body" :result }
+        return {"statusCode" : status_code, "body" : result}
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    except ValueError: return {"statusCode" : 400, "body" :json.dumps({"data" : [[0, "Invalid parameters"]] }) } except Exception as e: return {"statusCode" : 400, "body" :json.dumps({"data" : [[0, str(e)]] }) }
+    except ValueError:
+        return {"statusCode" : 400, "body" : json.dumps({"data" : [[0, "Invalid parameters"]]})}
+    except Exception as e:
+        return {"statusCode" : 400, "body" : json.dumps({"data" : [[0, str(e)]]})}
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -157,18 +182,16 @@ The `checklog` option lets you read the Zingg log file directly from Snowflake t
 1. Inside EC2, create a virtual environment and install dependencies:
 
 ```bash
-python3 -
-    m venv awspackagelayer source awspackagelayer / bin /
-        activate pip install paramiko
+python3 -m venv awspackagelayer
+source awspackagelayer/bin/activate
+pip install paramiko
 
 #Zip the site - packages
-            zip -
-    r deploy.zip awspackagelayer / lib / python3 .7 / site -
-    packages
+zip -r deploy.zip awspackagelayer/lib/python3.7/site-packages
 
 #Add the script and key file
-        zip -
-    g deploy.zip lambda_function.py zip - g deploy.zip your - key.pem
+zip -g deploy.zip lambda_function.py
+zip -g deploy.zip your-key.pem
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -187,7 +210,7 @@ When the `.pem` key file is included in the zip, Lambda extracts it to `/var/tas
 A successful test returns `HTTP 200` and `Started phase: findTrainingData`. Monitor progress via `tail -f logfile.txt` on EC2.
 {% endhint %}
 
-_**IMAGE TO BE ADDED — AWS Lambda function test screen showing a successful HTTP 200 response with the "Started phase: findTrainingData" body. Tanwi to check with team for  screenshot this from a live Lambda test run and add here. Caption: "Lambda function test returning HTTP 200 — Zingg phase started successfully."**_&#x20;
+_**IMAGE TO BE ADDED — AWS Lambda function test screen showing a successful HTTP 200 response with the "Started phase: findTrainingData" body. Tanwi to check with team for screenshot this from a live Lambda test run and add here. Caption: "Lambda function test returning HTTP 200 — Zingg phase started successfully."**_
 
 ### **Step 5: Connect Lambda to Snowflake via external function**
 
@@ -220,7 +243,7 @@ SELECT run_zingg('findTrainingData');
 **Run label interactively on EC2 directly**
 
 ```sql
-./ zingg.sh-- phase label-- conf examples / febrl / configSnow.json
+./zingg.sh --phase label --conf examples/febrl/configSnow.json
 ```
 
 **Run train**
@@ -250,9 +273,7 @@ Run `findTrainingData` to generate candidate pairs. Zingg selects the most infor
 For large tables, Zingg phases can run for several hours. The SSH connection will time out and kill the job if you run synchronously. Use `nohup` to run phases as background processes on EC2:
 
 ```bash
-nohup./ scripts / zingg.sh-- properties -
-    file ~ / zingg / snowEnv.txt-- phase findTrainingData-- conf ~ / zingg /
-        snowConfigFile.json&
+nohup ./scripts/zingg.sh --properties-file ~/zingg/snowEnv.txt --phase findTrainingData --conf ~/zingg/snowConfigFile.json &
 ```
 
 Monitor progress from EC2:

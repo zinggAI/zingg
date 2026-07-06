@@ -15,12 +15,14 @@ The Neo4j connection configuration is available on this page. Zingg resolves ent
 ### Python API
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    neo4jPipe =
-    Pipe("neo", "org.neo4j.spark.DataSource")
-        neo4jPipe.addProperty("url", "bolt://localhost:7687")
-            neo4jPipe.addProperty("labels", "Person") args.setData(neo4jPipe)
+neo4jPipe =
+Pipe("neo", "org.neo4j.spark.DataSource")
+neo4jPipe.addProperty("url", "bolt://localhost:7687")
+neo4jPipe.addProperty("labels", "Person")
+args.setData(neo4jPipe)
 ```
 
 ### JSON Config

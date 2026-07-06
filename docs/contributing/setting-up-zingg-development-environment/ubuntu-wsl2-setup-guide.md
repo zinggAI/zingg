@@ -53,8 +53,9 @@ Follow this [tutorial](https://linuxize.com/post/install-java-on-ubuntu-20-04/) 
 For example:
 
 ```bash
-sudo apt install openjdk - 11 - jdk openjdk - 11 - jre javac - version java -
-    version
+sudo apt install openjdk-11-jdk openjdk-11-jre
+javac -version
+java -version
 ```
 
 ### **Step 3: Install Apache Spark**
@@ -66,12 +67,10 @@ Download Apache Spark - from the [Apache Spark Official Website](https://spark.a
 * For example, 3.5.0:
 
 ```bash
-curl -
-    O https
-    :  // archive.apache.org/dist/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
-       tar -
-       xvf spark - 3.5.0 - bin - hadoop3.tgz sudo mv spark - 3.5.0 - bin -
-       hadoop3 / opt / spark rm spark - 3.5.0 - bin - hadoop3.tgz
+curl -O https://archive.apache.org/dist/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+tar -xvf spark-3.5.0-bin-hadoop3.tgz
+sudo mv spark-3.5.0-bin-hadoop3 /opt/spark
+rm spark-3.5.0-bin-hadoop3.tgz
 ```
 
 #### **Original Ubuntu Instructions (Manual Wget)**
@@ -81,11 +80,10 @@ Install the downloaded Apache Spark - on your Ubuntu by following [this tutorial
 * For example, 3.5.0:
 
 ```bash
-wget https
-    :  // www.apache.org/dyn/closer.lua/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
-       tar -
-       xvf spark - 3.5.0 - bin - hadoop3.tgz rm - rf spark - 3.5.0 - bin -
-       hadoop3.tgz sudo mv spark - 3.5.0 - bin - hadoop3 / opt / spark
+wget https://www.apache.org/dyn/closer.lua/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+tar -xvf spark-3.5.0-bin-hadoop3.tgz
+rm -rf spark-3.5.0-bin-hadoop3.tgz
+sudo mv spark-3.5.0-bin-hadoop3 /opt/spark
 ```
 
 Make sure that Spark version you have installed is compatible with Java you have installed, and Zingg is supporting those versions.
@@ -101,11 +99,12 @@ Install the latest **maven** package.
 * For example, 3.8.8:
 
 ```bash
-wget https
-    :  // dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
-       tar -
-       xvf apache - maven - 3.8.8 - bin.tar.gz rm - rf apache - maven - 3.8.8 -
-       bin.tar.gz cd apache - maven - 3.8.8 / cd bin./ mvn-- version
+wget https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
+tar -xvf apache-maven-3.8.8-bin.tar.gz
+rm -rf apache-maven-3.8.8-bin.tar.gz
+cd apache-maven-3.8.8/
+cd bin
+./mvn --version
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -123,13 +122,13 @@ Apache Maven 3.8.7
 1. Open `.bashrc` and add env variables at the end of the file.
 
 ```bash
-vim ~ /.bashrc export SPARK_HOME =
-    / opt / spark export SPARK_MASTER = local[*] export MAVEN_HOME =
-        / home / ubuntu / apache - maven - 3.8.8 export ZINGG_HOME =
-            <path_to_zingg> / assembly / target export JAVA_HOME =
-                / usr / lib / jvm / java - 11 - openjdk - amd64 export PATH =
-                    $PATH : $SPARK_HOME / bin : $SPARK_HOME /
-                                                sbin : $JAVA_HOME / bin
+vim ~/.bashrc
+export SPARK_HOME=/opt/spark
+export SPARK_MASTER=local[*]
+export MAVEN_HOME=/home/ubuntu/apache-maven-3.8.8
+export ZINGG_HOME=<path_to_zingg>/assembly/target
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$JAVA_HOME/bin
 ```
 
 `<path_to_zingg>` will be a directory where you clone the repository of the Zingg. Similarly, if you have installed spark on a different directory you can set **SPARK\_HOME** accordingly.
@@ -147,7 +146,8 @@ source ~/.bashrc
 3. Verify:
 
 ```bash
-echo $PATH mvn-- version
+echo $PATH
+mvn --version
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -165,14 +165,15 @@ git branch
 2. Run the following to Compile the Zingg Repository
 
 ```bash
-mvn initialize mvn clean compile package - Dspark = sparkVer
+mvn initialize
+mvn clean compile package -Dspark=sparkVer
 ```
 
 3. Run the following to Compile while skipping tests.
 
 ```bash
-mvn initialize mvn clean compile package - Dspark =
-    sparkVer - Dmaven.test.skip = true
+mvn initialize
+mvn clean compile package -Dspark=sparkVer -Dmaven.test.skip=true
 ```
 
 {% hint style="success" icon="right-long" %}

@@ -33,7 +33,9 @@ args.setCollectMetrics(False)
 **JSON config**
 
 ```json
-{ "collectMetrics" : false }
+{
+  "collectMetrics": false
+}
 ```
 
 When `collectMetrics` is `false`, a blank event is logged and no data is sent to Zingg servers.
@@ -43,25 +45,27 @@ When `collectMetrics` is `false`, a blank event is logged and no data is sent to
 To see exactly what telemetry data is logged during a run, edit `log4j2.properties` and set the logging level of `zingg_analytics` to `warn` .
 
 ```bash
-logger.zingg_analytics.level = warn
+logger.zingg_analytics.level=warn
 ```
 
 An example telemetry event (when `collectMetrics` is `true`).
 
 ```json
 {
-  "client_id" : "localhost",
-                "events" : [ {
-                  "name" : "match",
-                  "params" : {
-                    "executionTime" : "1.743246748E9",
-                    "zingg_version" : "0.5.0",
-                    "modelId" : "100",
-                    "domain" : "localhost",
-                    "java_version" : "11.0.18",
-                    "dataCount" : "65.0"
-                  }
-                } ],
-                           "user_id" : "zingg"
+  "client_id": "localhost",
+  "events": [
+    {
+      "name": "match",
+      "params": {
+        "executionTime": "1.743246748E9",
+        "zingg_version": "0.5.0",
+        "modelId": "100",
+        "domain": "localhost",
+        "java_version": "11.0.18",
+        "dataCount": "65.0"
+      }
+    }
+  ],
+  "user_id": "zingg"
 }
 ```

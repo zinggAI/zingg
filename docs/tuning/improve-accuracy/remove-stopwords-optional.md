@@ -22,14 +22,16 @@ fields where generic terms are common.
 #### **Python**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "recommend" ]) zingg =
-    Zingg(args, options) zingg.setColumn("<column_name>") zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "recommend" ])
+zingg = Zingg(args, options)
+zingg.setColumn("<column_name>")
+zingg.initAndExecute()
 ```
 
 #### **CLI**
 
 ```bash
-./ scripts / zingg.sh-- phase recommend-- conf config.json-- column<column_name>
+./scripts/zingg.sh --phase recommend --conf config.json --column <column_name>
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -63,22 +65,22 @@ Once you have verified the stopwords, add the `stopWords` path to the relevant f
 ### **Python**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "recommend" ]) zingg =
-    EZingg(args, options) zingg.setColumn("<column_name>")
-        zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "recommend" ])
+zingg = EZingg(args, options)
+zingg.setColumn("<column_name>")
+zingg.initAndExecute()
 ```
 
 ### **CLI**
 
 ```bash
-./ scripts / zingg.sh-- phase recommend-- conf config.json-- column<column_name>
+./scripts/zingg.sh --phase recommend --conf config.json --column <column_name>
 ```
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-Stopwords are stored as a table: `zingg_stopWords_columnName_modelId`&#x20;
+Stopwords are stored as a table: `zingg_stopWords_columnName_modelId`
 
 **CHECK WITH SONAL ABOUT THIS TOPIC - NEEDS ENTIRELY DIFFERENT SET OF CONTENT TO BE DISCUSSED LATER.**
 {% endtab %}
 {% endtabs %}
-

@@ -38,36 +38,40 @@ Full auto-generated method signatures for every class above are at the [Zingg Py
 ### Imports
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 ```
 
 ### Build the arguments object
 
 ```python
-args = Arguments() args.setModelId("100") args.setZinggDir("models")
-           args.setNumPartitions(4) args.setLabelDataSampleSize(0.5)
+args = Arguments()
+args.setModelId("100")
+args.setZinggDir("models")
+args.setNumPartitions(4)
+args.setLabelDataSampleSize(0.5)
 ```
 
 ### Define fields and match types
 
 ```python
-fname = FieldDefinition("fname", "string", MatchType.FUZZY) lname =
-    FieldDefinition("lname", "string", MatchType.FUZZY) stNo = FieldDefinition(
-        "stNo", "string",
-        MatchType.FUZZY) add1 = FieldDefinition("add1", "string",
-                                                MatchType.FUZZY) add2 =
-        FieldDefinition("add2", "string", MatchType.FUZZY) city =
-            FieldDefinition("city", "string", MatchType.FUZZY) areacode =
-                FieldDefinition("areacode", "string", MatchType.FUZZY) state =
-                    FieldDefinition("state", "string", MatchType.FUZZY) dob =
-                        FieldDefinition("dob", "string", MatchType.FUZZY) ssn =
-                            FieldDefinition("ssn", "string", MatchType.FUZZY)
+fname = FieldDefinition("fname", "string", MatchType.FUZZY)
+lname = FieldDefinition("lname", "string", MatchType.FUZZY)
+stNo = FieldDefinition("stNo", "string", MatchType.FUZZY)
+add1 = FieldDefinition("add1", "string", MatchType.FUZZY)
+add2 = FieldDefinition("add2", "string", MatchType.FUZZY)
+city = FieldDefinition("city", "string", MatchType.FUZZY)
+areacode = FieldDefinition("areacode", "string", MatchType.FUZZY)
+state = FieldDefinition("state", "string", MatchType.FUZZY)
+dob = FieldDefinition("dob", "string", MatchType.FUZZY)
+ssn = FieldDefinition("ssn", "string", MatchType.FUZZY)
 
-                                fieldDefs = [
-                                  fname, lname, stNo, add1, add2, city,
-                                  areacode, state, dob,
-                                  ssn
-                                ] args.setFieldDefinition(fieldDefs)
+fieldDefs = [
+  fname, lname, stNo, add1, add2, city,
+  areacode, state, dob,
+  ssn
+]
+args.setFieldDefinition(fieldDefs)
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -79,20 +83,20 @@ fname = FieldDefinition("fname", "string", MatchType.FUZZY) lname =
 #### CSV pipe example:
 
 ```python
-schema =
-    ("id string, fname string, "
-     "lname string, stNo string, "
-     "add1 string, add2 string, "
-     "city string, areacode string, "
-     "state string, dob string, "
-     "ssn string")
+schema = (
+  "id string, fname string, "
+  "lname string, stNo string, "
+  "add1 string, add2 string, "
+  "city string, areacode string, "
+  "state string, dob string, "
+  "ssn string"
+)
 
-        inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
-                        args.setData(inputPipe)
+inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
+args.setData(inputPipe)
 
-                            outputPipe =
-            CsvPipe("resultFebrl", "/tmp/febrlOutput")
-                args.setOutput(outputPipe)
+outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
+args.setOutput(outputPipe)
 ```
 
 #### For BigQuery
@@ -110,13 +114,12 @@ snowPipe = SnowflakePipe("snowInput", "your-snowflake-table")
 #### For generic pipes
 
 ```python
-genericPipe =
-    Pipe("genericInput", "jdbc") genericPipe
-        .addProperty("url", "jdbc:postgresql://host:5432/db")
-            genericPipe.addProperty("dbtable", "customers") genericPipe
-        .addProperty("driver", "org.postgresql.Driver")
-            genericPipe.addProperty("user", "your_user")
-                genericPipe.addProperty("password", "your_password")
+genericPipe = Pipe("genericInput", "jdbc")
+genericPipe.addProperty("url", "jdbc:postgresql://host:5432/db")
+genericPipe.addProperty("dbtable", "customers")
+genericPipe.addProperty("driver", "org.postgresql.Driver")
+genericPipe.addProperty("user", "your_user")
+genericPipe.addProperty("password", "your_password")
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -130,15 +133,17 @@ Run any phase by passing its name to `ClientOptions`. The same pattern works for
 #### **Run `findTrainingData`:**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### **Run `label`:**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "label" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "label" ])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### **Run `findAndLabel`**
@@ -146,8 +151,9 @@ options = ClientOptions([ ClientOptions.PHASE, "label" ]) zingg =
 Combines `findTrainingData` and `label` into one call — use for smaller datasets where `findTrainingData` runs quickly.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findAndLabel" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "findAndLabel" ])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### **Run `updateLabel`**
@@ -155,36 +161,41 @@ options = ClientOptions([ ClientOptions.PHASE, "findAndLabel" ]) zingg =
 Revisit and correct previously marked pairs — run `generateDocs` first to identify pairs to update
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "updateLabel" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "updateLabel" ])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### **Run `generateDocs`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "generateDocs" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "generateDocs" ])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### **Run `train`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "train" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "train" ])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### **Run `match`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "match" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "match" ])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### **Run `link`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "link" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "link" ])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 ### Using `ZinggWithSpark` in notebooks
@@ -192,7 +203,8 @@ options = ClientOptions([ ClientOptions.PHASE, "link" ]) zingg =
 When running inside a Databricks, Fabric, or other notebook where a Spark session already exists, use `ZinggWithSpark` instead of `Zingg`:
 
 ```python
-zingg = ZinggWithSpark(args, options) zingg.initAndExecute()
+zingg = ZinggWithSpark(args, options)
+zingg.initAndExecute()
 ```
 
 `ZinggWithSpark` reuses the existing Spark session instead of creating a new one. This is the recommended class for notebook environments.
@@ -202,71 +214,55 @@ zingg = ZinggWithSpark(args, options) zingg.initAndExecute()
 Complete working example combining all the steps above:
 
 ```python
-from zingg.client import* from zingg.pipes import*
+from zingg.client import*
+from zingg.pipes import*
 
-    args = Arguments()
+args = Arguments()
 
-    fname = FieldDefinition(
-        "fname", "string",
-        MatchType.FUZZY) lname = FieldDefinition("lname", "string",
-                                                 MatchType.FUZZY) stNo =
-        FieldDefinition("stNo", "string",
-                        MatchType.FUZZY) add1 = FieldDefinition("add1",
-                                                                "string",
-                                                                MatchType.FUZZY)
-            add2 = FieldDefinition(
-                "add2", "string",
-                MatchType.FUZZY) city = FieldDefinition("city", "string",
-                                                        MatchType.FUZZY)
-                areacode = FieldDefinition("areacode", "string",
-                                           MatchType.FUZZY) state =
-                    FieldDefinition("state", "string", MatchType.FUZZY) dob =
-                        FieldDefinition("dob", "string", MatchType.FUZZY) ssn =
-                            FieldDefinition("ssn", "string", MatchType.FUZZY)
+fname = FieldDefinition("fname", "string", MatchType.FUZZY)
+lname = FieldDefinition("lname", "string", MatchType.FUZZY)
+stNo = FieldDefinition("stNo", "string", MatchType.FUZZY)
+add1 = FieldDefinition("add1", "string", MatchType.FUZZY)
+add2 = FieldDefinition("add2", "string", MatchType.FUZZY)
+city = FieldDefinition("city", "string", MatchType.FUZZY)
+areacode = FieldDefinition("areacode", "string", MatchType.FUZZY)
+state = FieldDefinition("state", "string", MatchType.FUZZY)
+dob = FieldDefinition("dob", "string", MatchType.FUZZY)
+ssn = FieldDefinition("ssn", "string", MatchType.FUZZY)
 
-                                fieldDefs =
-                                    [
-                                      fname, lname, stNo, add1, add2, city,
-                                      areacode, state, dob,
-                                      ssn
-                                    ] args
-                                        .setFieldDefinition(fieldDefs)
+fieldDefs = [
+  fname, lname, stNo, add1, add2, city,
+  areacode, state, dob,
+  ssn
+]
+args.setFieldDefinition(fieldDefs)
 
-                                            args
-                                        .setModelId("100") args
-                                        .setZinggDir("models") args
-                                        .setNumPartitions(
-                                            4) args.setLabelDataSampleSize(0.5)
+args.setModelId("100")
+args.setZinggDir("models")
+args.setNumPartitions(4)
+args.setLabelDataSampleSize(0.5)
 
-                                            schema =
-                                        ("id string, fname string, "
-                                         "lname string, stNo string, "
-                                         "add1 string, add2 string, "
-                                         "city string, areacode string, "
-                                         "state string, dob string, "
-                                         "ssn string")
+schema = (
+  "id string, fname string, "
+  "lname string, stNo string, "
+  "add1 string, add2 string, "
+  "city string, areacode string, "
+  "state string, dob string, "
+  "ssn string"
+)
 
-                                            inputPipe =
-                                                CsvPipe(
-                                                    "testFebrl",
-                                                    "examples/febrl/test.csv",
-                                                    schema)
-                                                    args.setData(inputPipe)
+inputPipe = CsvPipe("testFebrl", "examples/febrl/test.csv", schema)
+args.setData(inputPipe)
 
-                                                        outputPipe =
-                                                    CsvPipe("resultFebrl",
-                                                            "/tmp/febrlOutput")
-                                                        args.setOutput(
-                                                            outputPipe)
+outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
+args.setOutput(outputPipe)
 
-                                                            options =
-                                                        ClientOptions([
-                                                          ClientOptions.PHASE,
-                                                          "match"
-                                                        ]) zingg =
-                                                            Zingg(args,
-                                                                  options) zingg
-                                                                .initAndExecute()
+options = ClientOptions([
+  ClientOptions.PHASE,
+  "match"
+])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 ### Example notebooks and reference

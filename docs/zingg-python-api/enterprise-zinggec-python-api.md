@@ -45,20 +45,24 @@ Full auto-generated method signatures for every class are at the [Zingg Enterpri
 ### Imports
 
 ```python
-from zingg.client import* from zingg.pipes import* from
-    zinggEC.enterprise.common.ApproverArguments import* from
-        zinggEC.enterprise.common.IncrementalArguments import* from
-            zinggEC.enterprise.common.MappingMatchType import* from
-                zinggEC.enterprise.common.epipes import* from zinggEC.enterprise
-                    .common.EArguments import* from zinggEC.enterprise.common
-                    .EFieldDefinition import EFieldDefinition
+from zingg.client import*
+from zingg.pipes import*
+from zinggEC.enterprise.common.ApproverArguments import*
+from zinggEC.enterprise.common.IncrementalArguments import*
+from zinggEC.enterprise.common.MappingMatchType import*
+from zinggEC.enterprise.common.epipes import*
+from zinggEC.enterprise.common.EArguments import*
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 ```
 
 ### Build the Enterprise arguments object
 
 ```python
-args = EArguments() args.setModelId("100") args.setZinggDir("./models")
-           args.setNumPartitions(4) args.setLabelDataSampleSize(0.5)
+args = EArguments()
+args.setModelId("100")
+args.setZinggDir("./models")
+args.setNumPartitions(4)
+args.setLabelDataSampleSize(0.5)
 ```
 
 Set the blocking strategy. If not set, the model uses `DEFAULT`. `WIDER` is also available for cases where you want to cast a wider blocking net.
@@ -71,27 +75,25 @@ args.setBlockingModel("DEFAULT")
 
 ```python
 recId = EFieldDefinition("recId", "string", MatchType.DONT_USE)
-            recId.setPrimaryKey(True)
+recId.setPrimaryKey(True)
 
-                fname = EFieldDefinition("fname", "string", MatchType.FUZZY)
-    lname = EFieldDefinition("lname", "string", MatchType.FUZZY) stNo =
-        EFieldDefinition("stNo", "string", MatchType.FUZZY) add1 =
-            EFieldDefinition("add1", "string", MatchType.FUZZY) add2 =
-                EFieldDefinition("add2", "string", MatchType.FUZZY) city =
-                    EFieldDefinition("city", "string", MatchType.FUZZY)
-                        areacode = EFieldDefinition("areacode", "string",
-                                                    MatchType.FUZZY) state =
-                            EFieldDefinition("state", "string", MatchType.FUZZY)
-                                dob = EFieldDefinition("dob", "string",
-                                                       MatchType.FUZZY) ssn =
-                                    EFieldDefinition("ssn", "string",
-                                                     MatchType.FUZZY)
+fname = EFieldDefinition("fname", "string", MatchType.FUZZY)
+lname = EFieldDefinition("lname", "string", MatchType.FUZZY)
+stNo = EFieldDefinition("stNo", "string", MatchType.FUZZY)
+add1 = EFieldDefinition("add1", "string", MatchType.FUZZY)
+add2 = EFieldDefinition("add2", "string", MatchType.FUZZY)
+city = EFieldDefinition("city", "string", MatchType.FUZZY)
+areacode = EFieldDefinition("areacode", "string", MatchType.FUZZY)
+state = EFieldDefinition("state", "string", MatchType.FUZZY)
+dob = EFieldDefinition("dob", "string", MatchType.FUZZY)
+ssn = EFieldDefinition("ssn", "string", MatchType.FUZZY)
 
-                                        fieldDefs = [
-                                          recId, fname, lname, stNo, add1, add2,
-                                          city, areacode, state, dob,
-                                          ssn
-                                        ] args.setFieldDefinition(fieldDefs)
+fieldDefs = [
+  recId, fname, lname, stNo, add1, add2,
+  city, areacode, state, dob,
+  ssn
+]
+args.setFieldDefinition(fieldDefs)
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -138,10 +140,10 @@ Pass through excludes records from cluster formation. They still appear in the i
 Add hard rules where exact field matches always result in a match, regardless of probabilistic score:
 
 ```python
-dm1 = DeterministicMatching('fname', 'stNo', 'add1') dm2 =
-    DeterministicMatching('ssn') dm3 =
-        DeterministicMatching('fname', 'stNo', 'lname')
-            args.setDeterministicMatchingCondition(dm1, dm2, dm3)
+dm1 = DeterministicMatching('fname', 'stNo', 'add1')
+dm2 = DeterministicMatching('ssn')
+dm3 = DeterministicMatching('fname', 'stNo', 'lname')
+args.setDeterministicMatchingCondition(dm1, dm2, dm3)
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -154,8 +156,8 @@ Enterprise writes match quality statistics to three separate files using the `$Z
 
 ```python
 statsOutputPipe = ECsvPipe("stats", "/tmp/zinggStats_$ZINGG_DYNAMIC_STAT_NAME")
-                      statsOutputPipe.setHeader("true")
-                          args.setOutputStats(statsOutputPipe)
+statsOutputPipe.setHeader("true")
+args.setOutputStats(statsOutputPipe)
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -170,11 +172,11 @@ CSV input/output. Same as `CsvPipe` but for Enterprise.
 
 ```python
 inputPipe = ECsvPipe("testFebrl", "examples/febrl/test.csv", schema)
-                args.setData(inputPipe)
+args.setData(inputPipe)
 
-                    outputPipe = ECsvPipe("resultFebrl", "/tmp/febrlOutput")
-                                     outputPipe.setHeader("true")
-                                         args.setOutput(outputPipe)
+outputPipe = ECsvPipe("resultFebrl", "/tmp/febrlOutput")
+outputPipe.setHeader("true")
+args.setOutput(outputPipe)
 ```
 
 #### **`EPipe`**
@@ -186,8 +188,9 @@ Base pipe class with pass-through capability. Use for any source where the speci
 For reading from or writing to an in-memory Spark DataFrame instead of a file:
 
 ```python
-inMemPipe =
-    InMemoryPipe("testFebrl") inMemPipe.setDataset(df) args.setData(inMemPipe)
+inMemPipe = InMemoryPipe("testFebrl")
+inMemPipe.setDataset(df)
+args.setData(inMemPipe)
 ```
 
 Use this in notebook environments where you already have data in a DataFrame and do not want to write it to disk first.
@@ -197,8 +200,9 @@ Use this in notebook environments where you already have data in a DataFrame and
 For Databricks Unity Catalog tables:
 
 ```python
-ucPipe = UCPipe("testFebrl") ucPipe.setTable("catalog.schema.your_table")
-             args.setData(ucPipe)
+ucPipe = UCPipe("testFebrl")
+ucPipe.setTable("catalog.schema.your_table")
+args.setData(ucPipe)
 ```
 
 Use this when your data lives in a Unity Catalog table on Databricks.
@@ -210,103 +214,114 @@ ZinggEC uses the `EZingg` client. Pattern is the same as Community — set optio
 #### **Run `findTrainingData`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### **Run `label`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "label" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "label" ])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
-#### **Run `findAndLabel`**&#x20;
+#### **Run `findAndLabel`**
 
 Enterprise convenience — combines `findTrainingData` and `label`
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findAndLabel" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "findAndLabel" ])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### **Run `generateDocs`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "generateDocs" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "generateDocs" ])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### **Run `train`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "train" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "train" ])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
-#### **Run `trainMatch`**&#x20;
+#### **Run `trainMatch`**
 
 Enterprise convenience — combines `train` and `match`
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "trainMatch" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "trainMatch" ])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### **Run `match`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "match" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "match" ])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
 #### **Run `link`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "link" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "link" ])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
-#### **Run `updateLabel`**&#x20;
+#### **Run `updateLabel`**
 
 Revisit and correct previously marked pairs.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "updateLabel" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "updateLabel" ])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
-#### **Run `diff`**&#x20;
+#### **Run `diff`**
 
 Compare two model outputs.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "diff" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "diff" ])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
 ### Incremental matching with `IncrementalArguments`
 
 `runIncremental` requires `IncrementalArguments` instead of plain `EArguments`. It tracks new, changed, and deleted records, applies them to the existing identity graph, and writes the updated graph.
 
-#### Build incremental&#x20;
+#### Build incremental
 
 ```python
-incrArgs = IncrementalArguments() incrArgs.setParentArgs(args)
+incrArgs = IncrementalArguments()
+incrArgs.setParentArgs(args)
 ```
 
 #### Incremental data (new and changed records)
 
 ```python
 incrPipe = ECsvPipe("testFebrlIncr", "examples/febrl/test-incr.csv", schema)
-               incrArgs.setIncrementalData(incrPipe)
+incrArgs.setIncrementalData(incrPipe)
 ```
 
 #### Optional - deleted data
 
 ```python
-deletedPipe = ECsvPipe("testFebrlDeleted", "examples/febrl/test-deleted.csv",
-                       schema) incrArgs.setDeletedData(deletedPipe)
+deletedPipe = ECsvPipe("testFebrlDeleted", "examples/febrl/test-deleted.csv", schema)
+incrArgs.setDeletedData(deletedPipe)
 ```
 
 #### Optional - deleted action
@@ -321,11 +336,12 @@ incrArgs.setDeleteAction("HARD_DELETE")
 incrArgs.setOutputTmp("/tmp/zinggIncrTmp")
 ```
 
-#### Execute&#x20;
+#### Execute
 
 ```python
 incrOptions = ClientOptions([ ClientOptions.PHASE, "runIncremental" ])
-    zinggIncr = EZingg(incrArgs, incrOptions) zinggIncr.initAndExecute()
+zinggIncr = EZingg(incrArgs, incrOptions)
+zinggIncr.initAndExecute()
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -343,10 +359,11 @@ from zinggEC.enterprise.common.ApproverArguments import*
 #### Build approver arguments
 
 ```python
-apprArgs = ApproverArguments() apprArgs.setParentArgs(args)
+apprArgs = ApproverArguments()
+apprArgs.setParentArgs(args)
 ```
 
-#### Approval SQL query identifies clusters&#x20;
+#### Approval SQL query identifies clusters
 
 Requiring human review.
 
@@ -367,9 +384,10 @@ destPipe = ECsvPipe("approved", "/tmp/approvedClusters")
 
 ```python
 destPipe = ECsvPipe("approved", "/tmp/approvedClusters")
-               apprArgs.setDestination(destPipe) apprOptions =
-    ClientOptions([ ClientOptions.PHASE, "approve" ]) zinggAppr =
-        EZingg(apprArgs, apprOptions) zinggAppr.initAndExecute()
+apprArgs.setDestination(destPipe)
+apprOptions = ClientOptions([ ClientOptions.PHASE, "approve" ])
+zinggAppr = EZingg(apprArgs, apprOptions)
+zinggAppr.initAndExecute()
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -381,111 +399,86 @@ destPipe = ECsvPipe("approved", "/tmp/approvedClusters")
 Complete working example combining all the above.
 
 ```python
-from zingg.client import* from zingg.pipes import* from
-    zinggEC.enterprise.common.ApproverArguments import* from
-        zinggEC.enterprise.common.IncrementalArguments import* from
-            zinggEC.enterprise.common.MappingMatchType import* from
-                zinggEC.enterprise.common.epipes import* from zinggEC.enterprise
-                    .common.EArguments import* from zinggEC.enterprise.common
-                    .EFieldDefinition import EFieldDefinition
+from zingg.client import*
+from zingg.pipes import*
+from zinggEC.enterprise.common.ApproverArguments import*
+from zinggEC.enterprise.common.IncrementalArguments import*
+from zinggEC.enterprise.common.MappingMatchType import*
+from zinggEC.enterprise.common.epipes import*
+from zinggEC.enterprise.common.EArguments import*
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 
-                        args = EArguments()
+args = EArguments()
 
-    recId = EFieldDefinition("recId", "string", MatchType.DONT_USE)
-                recId.setPrimaryKey(True)
+recId = EFieldDefinition("recId", "string", MatchType.DONT_USE)
+recId.setPrimaryKey(True)
 
-                    fname = EFieldDefinition(
-        "fname", "string",
-        MatchType.FUZZY) lname = EFieldDefinition("lname", "string",
-                                                  MatchType.FUZZY) stNo =
-        EFieldDefinition("stNo", "string", MatchType.FUZZY) add1 = EFieldDefinition(
-            "add1",
-            "string",
-            MatchType
-                .FUZZY) add2 = EFieldDefinition("add2", "string", MatchType.FUZZY)
-            city = EFieldDefinition("city", "string", MatchType.FUZZY) areacode = EFieldDefinition(
-                "areacode",
-                "string", MatchType.FUZZY) state = EFieldDefinition("state",
-                                                                    "string",
-                                                                    MatchType.FUZZY)
-                dob = EFieldDefinition("dob", "string", MatchType.FUZZY) ssn =
-                    EFieldDefinition("ssn", "string", MatchType.FUZZY)
+fname = EFieldDefinition("fname", "string", MatchType.FUZZY)
+lname = EFieldDefinition("lname", "string", MatchType.FUZZY)
+stNo = EFieldDefinition("stNo", "string", MatchType.FUZZY)
+add1 = EFieldDefinition("add1", "string", MatchType.FUZZY)
+add2 = EFieldDefinition("add2", "string", MatchType.FUZZY)
+city = EFieldDefinition("city", "string", MatchType.FUZZY)
+areacode = EFieldDefinition("areacode", "string", MatchType.FUZZY)
+state = EFieldDefinition("state", "string", MatchType.FUZZY)
+dob = EFieldDefinition("dob", "string", MatchType.FUZZY)
+ssn = EFieldDefinition("ssn", "string", MatchType.FUZZY)
 
-                        fieldDefs =
-                            [
-                              recId, fname, lname, stNo, add1, add2, city,
-                              areacode, state, dob,
-                              ssn
-                            ] args
-                                .setFieldDefinition(fieldDefs)
+fieldDefs = [
+  recId, fname, lname, stNo, add1, add2, city,
+  areacode, state, dob,
+  ssn
+]
+args.setFieldDefinition(fieldDefs)
 
-                                    args
-                                .setModelId(
-                                    "100") args.setZinggDir("./models") args
-                                .setNumPartitions(
-                                    4) args.setLabelDataSampleSize(0.5) args
-                                .setBlockingModel("DEFAULT")
+args.setModelId("100")
+args.setZinggDir("./models")
+args.setNumPartitions(4)
+args.setLabelDataSampleSize(0.5)
+args.setBlockingModel("DEFAULT")
 
-                                    args
-                                .setPassthroughExpr("fname = 'matilda'")
+args.setPassthroughExpr("fname = 'matilda'")
 
-                                    dm1 = DeterministicMatching(
-                                'fname', 'stNo',
-                                'add1') dm2 = DeterministicMatching('ssn') dm3 =
-                                DeterministicMatching(
-                                    'fname', 'stNo', 'lname') args
-                                    .setDeterministicMatchingCondition(dm1, dm2,
-                                                                       dm3)
+dm1 = DeterministicMatching('fname', 'stNo', 'add1')
+dm2 = DeterministicMatching('ssn')
+dm3 = DeterministicMatching('fname', 'stNo', 'lname')
+args.setDeterministicMatchingCondition(dm1, dm2, dm3)
 
-                                        schema =
-                                    ("recId string, fname string, "
-                                     "lname string, stNo string, "
-                                     "add1 string, add2 string, "
-                                     "city string, areacode string, "
-                                     "state string, dob string, "
-                                     "ssn string")
+schema = (
+  "recId string, fname string, "
+  "lname string, stNo string, "
+  "add1 string, add2 string, "
+  "city string, areacode string, "
+  "state string, dob string, "
+  "ssn string"
+)
 
-                                        inputPipe =
-                                            ECsvPipe(
-                                                "testFebrl",
-                                                "examples/febrl/test.csv",
-                                                schema) args.setData(inputPipe)
+inputPipe = ECsvPipe("testFebrl", "examples/febrl/test.csv", schema)
+args.setData(inputPipe)
 
-                                                outputPipe =
-                                                ECsvPipe(
-                                                    "resultFebrl",
-                                                    "/tmp/febrlOutput") outputPipe
-                                                    .setHeader("true") args
-                                                    .setOutput(outputPipe)
+outputPipe = ECsvPipe("resultFebrl", "/tmp/febrlOutput")
+outputPipe.setHeader("true")
+args.setOutput(outputPipe)
 
-                                                        options = ClientOptions([
-                                                  ClientOptions.PHASE,
-                                                  "trainMatch"
-                                                ]) zingg = EZingg(args, options) zingg
-                                                               .initAndExecute()
+options = ClientOptions([
+  ClientOptions.PHASE,
+  "trainMatch"
+])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 
-                                                                   incrArgs =
-                                                    IncrementalArguments() incrArgs
-                                                        .setParentArgs(args)
-                                                            incrPipe =
-                                                        ECsvPipe(
-                                                            "testFebrlIncr",
-                                                            "examples/febrl/"
-                                                            "test-incr.csv",
-                                                            schema) incrArgs
-                                                            .setIncrementalData(
-                                                                incrPipe)
+incrArgs = IncrementalArguments()
+incrArgs.setParentArgs(args)
 
-                                                                incrOptions =
-                                                            ClientOptions([
-                                                              ClientOptions
-                                                                  .PHASE,
-                                                              "runIncremental"
-                                                            ]) zinggIncr =
-                                                                EZingg(
-                                                                    incrArgs,
-                                                                    incrOptions) zinggIncr
-                                                                    .initAndExecute()
+incrPipe = ECsvPipe("testFebrlIncr", "examples/febrl/test-incr.csv", schema)
+incrArgs.setIncrementalData(incrPipe)
+
+incrOptions = ClientOptions([
+  ClientOptions.PHASE,
+  "runIncremental"
+])
+zinggIncr = EZingg(incrArgs, incrOptions)
+zinggIncr.initAndExecute()
 ```
 
 {% hint style="success" icon="right-long" %}

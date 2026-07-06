@@ -48,14 +48,15 @@ All ZinggEC classes (`EArguments`, `EFieldDefinition`, `ECsvPipe`, `UCPipe`, `In
 ### Imports
 
 ```python
-from zingg.client import* from zingg.pipes import* from
-    zinggEC.enterprise.common.ApproverArguments import* from
-        zinggEC.enterprise.common.IncrementalArguments import* from
-            zinggEC.enterprise.common.MappingMatchType import* from
-                zinggEC.enterprise.common.epipes import* from zinggEC.enterprise
-                    .common.EArguments import* from zinggEC.enterprise.common
-                    .EFieldDefinition import EFieldDefinition from
-                        zinggES.enterprise.spark.ESparkClient import*
+from zingg.client import*
+from zingg.pipes import*
+from zinggEC.enterprise.common.ApproverArguments import*
+from zinggEC.enterprise.common.IncrementalArguments import*
+from zinggEC.enterprise.common.MappingMatchType import*
+from zinggEC.enterprise.common.epipes import*
+from zinggEC.enterprise.common.EArguments import*
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zinggES.enterprise.spark.ESparkClient import*
 ```
 
 ### Execute Zingg Enterprise Plus phases
@@ -65,18 +66,20 @@ Use `EZingg` (or `EZinggWithSpark` in notebook environments where a Spark sessio
 #### **Run `trainMatch`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "trainMatch" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "trainMatch" ])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
-**Run any other phase**  `findTrainingData`, `label`, `findAndLabel`, `generateDocs`, `train`, `match`, `link`, `updateLabel`, `diff` — by changing the phase name. See [Enterprise ZinggEC Python API](enterprise-zinggec-python-api.md) for the full list.
+**Run any other phase** `findTrainingData`, `label`, `findAndLabel`, `generateDocs`, `train`, `match`, `link`, `updateLabel`, `diff` — by changing the phase name. See [Enterprise ZinggEC Python API](enterprise-zinggec-python-api.md) for the full list.
 
 ### Using `EZinggWithSpark` in notebooks
 
 When running inside a Databricks, Fabric, or other notebook where a Spark session already exists, use `EZinggWithSpark`:
 
 ```python
-zingg = EZinggWithSpark(args, options) zingg.initAndExecute()
+zingg = EZinggWithSpark(args, options)
+zingg.initAndExecute()
 ```
 
 `EZinggWithSpark` reuses the existing Spark session instead of creating a new one. Recommended for notebook environments.
@@ -84,13 +87,14 @@ zingg = EZinggWithSpark(args, options) zingg.initAndExecute()
 ### Incremental matching
 
 ```python
-incrArgs = IncrementalArguments() incrArgs.setParentArgs(args) incrPipe =
-    ECsvPipe("testFebrlIncr", "examples/febrl/test-incr.csv", schema)
-        incrArgs.setIncrementalData(incrPipe)
+incrArgs = IncrementalArguments()
+incrArgs.setParentArgs(args)
+incrPipe = ECsvPipe("testFebrlIncr", "examples/febrl/test-incr.csv", schema)
+incrArgs.setIncrementalData(incrPipe)
 
-            incrOptions =
-        ClientOptions([ ClientOptions.PHASE, "runIncremental" ]) zinggIncr =
-            EZingg(incrArgs, incrOptions) zinggIncr.initAndExecute()
+incrOptions = ClientOptions([ ClientOptions.PHASE, "runIncremental" ])
+zinggIncr = EZingg(incrArgs, incrOptions)
+zinggIncr.initAndExecute()
 ```
 
 ### Full example
@@ -98,51 +102,50 @@ incrArgs = IncrementalArguments() incrArgs.setParentArgs(args) incrPipe =
 The full example matches the ZinggEC example exactly. The only difference is the `import` for `ESparkClient` and that the Spark client is invoked as `EZingg` from `zinggES.enterprise.spark.ESparkClient` instead of from `zinggEC`.
 
 ```python
-from zingg.client import* from zingg.pipes import* from
-    zinggEC.enterprise.common.ApproverArguments import* from
-        zinggEC.enterprise.common.IncrementalArguments import* from
-            zinggEC.enterprise.common.MappingMatchType import* from
-                zinggEC.enterprise.common.epipes import* from zinggEC.enterprise
-                    .common.EArguments import* from zinggEC.enterprise.common
-                    .EFieldDefinition import EFieldDefinition from
-                        zinggES.enterprise.spark.ESparkClient import*
+from zingg.client import*
+from zingg.pipes import*
+from zinggEC.enterprise.common.ApproverArguments import*
+from zinggEC.enterprise.common.IncrementalArguments import*
+from zinggEC.enterprise.common.MappingMatchType import*
+from zinggEC.enterprise.common.epipes import*
+from zinggEC.enterprise.common.EArguments import*
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zinggES.enterprise.spark.ESparkClient import*
 
-                            args = EArguments()
+args = EArguments()
 
-    recId = EFieldDefinition("recId", "string", MatchType.DONT_USE)
-                recId.setPrimaryKey(True)
+recId = EFieldDefinition("recId", "string", MatchType.DONT_USE)
+recId.setPrimaryKey(True)
 
-                    fname = EFieldDefinition("fname", "string",
-                                             MatchType.FUZZY) fieldDefs =
-        [ recId, fname ] args
-            .setFieldDefinition(fieldDefs)
+fname = EFieldDefinition("fname", "string", MatchType.FUZZY)
+fieldDefs = [ recId, fname ]
+args.setFieldDefinition(fieldDefs)
 
-                args.setModelId("100") args.setZinggDir("./models")
-                    args.setNumPartitions(4)
-                        args.setLabelDataSampleSize(0.5)
-                            args.setBlockingModel("DEFAULT")
-                                args.setPassthroughExpr("fname = 'matilda'")
+args.setModelId("100")
+args.setZinggDir("./models")
+args.setNumPartitions(4)
+args.setLabelDataSampleSize(0.5)
+args.setBlockingModel("DEFAULT")
+args.setPassthroughExpr("fname = 'matilda'")
 
-                                    dm1 =
-            DeterministicMatching('fname', 'stNo', 'add1')
-                args.setDeterministicMatchingCondition(dm1)
+dm1 = DeterministicMatching('fname', 'stNo', 'add1')
+args.setDeterministicMatchingCondition(dm1)
 
-                    schema =
-                ("recId string, fname string, "
-                 "lname string")
+schema = (
+  "recId string, fname string, "
+  "lname string"
+)
 
-                    inputPipe = ECsvPipe("testFebrl", "examples/febrl/test.csv",
-                                         schema) args.setData(inputPipe)
+inputPipe = ECsvPipe("testFebrl", "examples/febrl/test.csv", schema)
+args.setData(inputPipe)
 
-                                    outputPipe =
-                        ECsvPipe("resultFebrl", "/tmp/febrlOutput")
-                            outputPipe.setHeader("true")
-                                args.setOutput(outputPipe)
+outputPipe = ECsvPipe("resultFebrl", "/tmp/febrlOutput")
+outputPipe.setHeader("true")
+args.setOutput(outputPipe)
 
-                                    options =
-                            ClientOptions([ ClientOptions.PHASE, "trainMatch" ])
-                                zingg =
-                                    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "trainMatch" ])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
 {% hint style="success" icon="right-long" %}

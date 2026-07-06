@@ -33,8 +33,8 @@ The stats pipe is configured in Configure Zingg alongside your input and output 
 
 ```python
 statsOutputPipe = ECsvPipe("stats", "/tmp/febrlStats_$ZINGG_DYNAMIC_STAT_NAME")
-                      statsOutputPipe.setHeader("true")
-                          args.setOutputStats(statsOutputPipe)
+statsOutputPipe.setHeader("true")
+args.setOutputStats(statsOutputPipe)
 ```
 
 ### JSON
@@ -42,10 +42,12 @@ statsOutputPipe = ECsvPipe("stats", "/tmp/febrlStats_$ZINGG_DYNAMIC_STAT_NAME")
 ```json
 {
   "outputStats" : {
-    "name" : "stats", "format" : "csv", "props" : {
+    "name" : "stats",
+    "format" : "csv",
+    "props" : {
       "location" : "/tmp/zinggStats_$ZINGG_DYNAMIC_STAT_NAME",
-                   "delimiter" : ",",
-                                 "header" : true
+      "delimiter" : ",",
+      "header" : true
     }
   }
 }
@@ -84,7 +86,8 @@ Summary stats are written to the path configured with `$ZINGG_DYNAMIC_STAT_NAME`
 ```python
 summary_path = (zinggDir + "/" + modelId + "/stats/SUMMARY_*")
 
-    summary = spark.read.csv(summary_path, header = True) summary.show()
+summary = spark.read.csv(summary_path, header=True)
+summary.show()
 ```
 {% endtab %}
 
@@ -106,15 +109,17 @@ Cluster-level statistics give detail per resolved entity:
 ```python
 cluster_path = (zinggDir + "/" + modelId + "/stats/CLUSTER_*")
 
-    cluster_stats = spark.read.csv(cluster_path, header = True)
+cluster_stats = spark.read.csv(cluster_path, header=True)
 ```
 
-#### **Find large clusters with low density**&#x20;
+#### **Find large clusters with low density**
 
 ```python
-from pyspark.sql.functions import col cluster_stats
-    .filter((col("z_cluster_count") > 5) & (col("z_cluster_centrality") < 0.3))
-    .show()
+from pyspark.sql.functions import col
+
+cluster_stats \
+  .filter((col("z_cluster_count") > 5) & (col("z_cluster_centrality") < 0.3)) \
+  .show()
 ```
 {% endtab %}
 
@@ -135,24 +140,16 @@ Record-level statistics give detail per individual record:
 ```python
 record_path = (zinggDir + "/" + modelId + "/stats/RECORD_*")
 
-    record_stats = spark.read
-                       .csv(record_path, header = True)
+record_stats = spark.read.csv(record_path, header=True)
 
 #Find connector records(high centrality)
 #that may be bridging unrelated clusters
-                           from pyspark.sql.functions import col record_stats
-                       .filter(col("z_record_centrality") > 0.8)
-                       .orderBy("z_record_centrality", ascending = False)
-                       .show()
+from pyspark.sql.functions import col
+
+record_stats \
+  .filter(col("z_record_centrality") > 0.8) \
+  .orderBy("z_record_centrality", ascending=False) \
+  .show()
 ```
 {% endtab %}
 {% endtabs %}
-
-
-
-
-
-
-
-
-

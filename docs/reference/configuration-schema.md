@@ -16,7 +16,7 @@ This page is the reference. Every Zingg configuration parameter, JSON key and Py
 
 <table><thead><tr><th width="150.62890625" valign="top">Parameter</th><th width="108.40234375" valign="top">Type</th><th width="180.0703125" valign="top">Edition</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top"><code>modelId</code></td><td valign="top">string</td><td valign="top">All editions</td><td valign="top">Unique identifier for this model. Used as folder name under <code>zinggDir</code>. Use the same <code>modelId</code> across all phases for a given run.</td></tr><tr><td valign="top"><code>zinggDir</code></td><td valign="top">string</td><td valign="top">All editions</td><td valign="top">Root directory where Zingg writes model files and training data. Can be a local path, DBFS path (<code>dbfs:/</code>), GCS path (<code>gs://</code>), S3 path (<code>s3a://</code>), or OneLake path (<code>abfss://</code>).</td></tr><tr><td valign="top"><code>numPartitions</code></td><td valign="top">integer</td><td valign="top">All editions</td><td valign="top">Number of Spark partitions. Controls how data is distributed across cluster nodes. Rule of thumb: set to approximately 20–30× the number of worker vCPUs. Start with 4–8 for a standard development cluster. Increase proportionally for larger datasets.</td></tr><tr><td valign="top"><code>labelDataSampleSize</code></td><td valign="top">float (0.0001–0.1)</td><td valign="top">All editions</td><td valign="top">Fraction of the dataset scanned when running <code>findTrainingData</code>. Valid range: 0.0001 to 0.1. For 100k records use 0.1–0.5. For 1M+ records use 0.01–0.05. Reduce to 0.05 or lower if <code>findTrainingData</code> is slow on large datasets.</td></tr><tr><td valign="top"><code>stopWordsCutoff</code></td><td valign="top">float (0–1)</td><td valign="top">All editions, optional</td><td valign="top">Used with the <code>recommend</code> phase. Fraction of high-frequency words to extract as stopword candidates. Default is <code>0.1</code> (10%).</td></tr><tr><td valign="top"><code>collectMetrics</code></td><td valign="top">boolean</td><td valign="top">All editions</td><td valign="top">Controls telemetry collection. Default <code>true</code>. Set to <code>false</code> to disable. When enabled, Zingg captures runtime metrics (record count, field count, running phase, execution time). No input data or user data is ever captured. See <a href="../security-and-privacy/security-and-privacy.md">Security and Privacy</a> for full details.</td></tr><tr><td valign="top"><code>passthroughExpr</code></td><td valign="top">string</td><td valign="top"><strong>Enterprise only</strong>, optional</td><td valign="top">SQL expression defining records to exclude from matching. Records matching this expression are carried through to output with their own Zingg ID but do not influence cluster formation. Example: <code>"fname = 'matilda'"</code>.</td></tr><tr><td valign="top"><code>deterministicMatching</code></td><td valign="top">array</td><td valign="top"><strong>Enterprise only</strong>, optional</td><td valign="top">Deterministic match conditions, where exact field matches always result in a match regardless of the probabilistic score. See <a href="../zingg-concepts/entity-resolution/deterministic-vs-probabilistic-matching.md">Deterministic vs Probabilistic Matching</a> for full configuration.</td></tr><tr><td valign="top"><code>setBlockingModel</code></td><td valign="top">string</td><td valign="top"><strong>Enterprise only</strong>, optional</td><td valign="top">Blocking strategy. Valid values: <code>"DEFAULT"</code>, <code>"WIDER"</code>. If not set, the model uses <code>DEFAULT</code>.</td></tr></tbody></table>
 
-### `fieldDefinition`&#x20;
+### `fieldDefinition`
 
 Each entry in the `fieldDefinition` array defines one field in your input schema.
 
@@ -53,16 +53,21 @@ At runtime, Zingg replaces the placeholder with the actual environment variable 
 
 ```json
 {
-  "output" : [ {
-    "name" : "unifiedCustomers",
-    "format" : "net.snowflake.spark.snowflake",
-    "props" : {"path" : "$location$", "password" : "$passwd$"}
-  } ],
-             "labelDataSampleSize" : 0.5,
-             "numPartitions" : 4,
-             "modelId" : "$modelId$",
-                         "zinggDir" : "models",
-                                      "collectMetrics" : "$collectMetrics$"
+  "output": [
+    {
+      "name": "unifiedCustomers",
+      "format": "net.snowflake.spark.snowflake",
+      "props": {
+        "path": "$location$",
+        "password": "$passwd$"
+      }
+    }
+  ],
+  "labelDataSampleSize": 0.5,
+  "numPartitions": 4,
+  "modelId": "$modelId$",
+  "zinggDir": "models",
+  "collectMetrics": "$collectMetrics$"
 }
 ```
 
@@ -77,7 +82,7 @@ For every JSON parameter, there is an equivalent Python API method on the `Argum
 <table><thead><tr><th valign="top">JSON parameter</th><th valign="top">Python API method</th><th width="145.0078125" valign="top">Edition</th><th valign="top">Example</th></tr></thead><tbody><tr><td valign="top"><code>modelId</code></td><td valign="top"><code>args.setModelId()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setModelId("100")</code></td></tr><tr><td valign="top"><code>zinggDir</code></td><td valign="top"><code>args.setZinggDir()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setZinggDir("/tmp/models")</code></td></tr><tr><td valign="top"><code>numPartitions</code></td><td valign="top"><code>args.setNumPartitions()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setNumPartitions(4)</code></td></tr><tr><td valign="top"><code>labelDataSampleSize</code></td><td valign="top"><code>args.setLabelDataSampleSize()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setLabelDataSampleSize(0.5)</code></td></tr><tr><td valign="top"><code>fieldDefinition</code></td><td valign="top"><code>args.setFieldDefinition([])</code></td><td valign="top">All editions</td><td valign="top"><code>args.setFieldDefinition(fieldDefs)</code></td></tr><tr><td valign="top"><code>data</code></td><td valign="top"><code>args.setData()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setData(inputPipe)</code></td></tr><tr><td valign="top"><code>output</code></td><td valign="top"><code>args.setOutput()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setOutput(outputPipe)</code></td></tr><tr><td valign="top"><code>collectMetrics</code></td><td valign="top"><code>args.setCollectMetrics()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setCollectMetrics(False)</code></td></tr><tr><td valign="top"><code>outputStats</code></td><td valign="top"><code>args.setOutputStats()</code></td><td valign="top">Enterprise only</td><td valign="top"><code>args.setOutputStats(statsPipe)</code></td></tr><tr><td valign="top"><code>passthroughExpr</code></td><td valign="top"><code>args.setPassthroughExpr()</code></td><td valign="top">Enterprise only</td><td valign="top"><code>args.setPassthroughExpr("fname = 'matilda'")</code></td></tr><tr><td valign="top"><code>deterministicMatching</code></td><td valign="top"><code>args.setDeterministicMatchingCondition()</code></td><td valign="top">Enterprise only</td><td valign="top"><code>args.setDeterministicMatchingCondition(dm1, dm2)</code></td></tr><tr><td valign="top"><code>setBlockingModel</code></td><td valign="top"><code>args.setBlockingModel()</code></td><td valign="top">Enterprise only</td><td valign="top"><code>args.setBlockingModel("DEFAULT")</code></td></tr><tr><td valign="top"><code>primaryKey</code> (field-level)</td><td valign="top"><code>fieldDef.setPrimaryKey()</code></td><td valign="top">Enterprise only</td><td valign="top"><code>recId.setPrimaryKey(True)</code></td></tr><tr><td valign="top"><code>postProcessors</code> (field-level)</td><td valign="top"><code>fieldDef.setPostProcessors()</code></td><td valign="top">Enterprise only</td><td valign="top"><code>job_title.setPostProcessors([StandardisePostprocessorType("STANDARDISE", "jobtitles")])</code></td></tr></tbody></table>
 
 {% hint style="success" icon="right-long" %}
-Sample config files:&#x20;
+Sample config files:
 
 * `github.com/zinggAI/zingg/tree/main/ examples/febrl/config.json`
 * `github.com/zinggAI/zingg/tree/main/examples/febrl120k/config.json`

@@ -15,17 +15,13 @@ You can pass a JSON configuration file directly or point the CLI at a Python pro
 **Pass a JSON config file**
 
 ```bash
-./ scripts /
-    zingg.sh<optional-- properties -
-             file path to zingg.conf> --phase<phase> --conf<path to json>
+./scripts/zingg.sh <optional --properties-file path to zingg.conf> --phase <phase> --conf <path to json>
 ```
 
 **Run a Python program**
 
 ```bash
-./ scripts /
-    zingg.sh<optional-- properties - file path - to -
-             zingg.conf> --run<path - to - python - program>
+./scripts/zingg.sh <optional --properties-file path to zingg.conf> --run <path to python program>
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -33,7 +29,7 @@ Full command reference with all flags and options - [CLI command reference](cli-
 {% endhint %}
 
 {% tabs %}
-{% tab title="Community (OS)" %}
+{% tab title="Community" %}
 {% hint style="success" icon="right-long" %}
 Replace `config.json` with your actual config file path.
 {% endhint %}
@@ -41,7 +37,7 @@ Replace `config.json` with your actual config file path.
 ### **Find training pairs**
 
 ```bash
-./ zingg.sh-- phase findTrainingData-- conf config.json
+./zingg.sh --phase findTrainingData --conf config.json
 ```
 
 ### **Label pairs**
@@ -49,13 +45,13 @@ Replace `config.json` with your actual config file path.
 The `--showConcise=true` flag shows only fields used for matching and hides `DONT_USE` fields.
 
 ```bash
-./ zingg.sh-- phase label-- conf config.json-- showConcise = true
+./zingg.sh --phase label --conf config.json --showConcise=true
 ```
 
 ### Train the model
 
 ```bash
-./ zingg.sh-- phase train-- conf config.json
+./zingg.sh --phase train --conf config.json
 ```
 
 ### **Run match**
@@ -63,7 +59,7 @@ The `--showConcise=true` flag shows only fields used for matching and hides `DON
 `match` finds duplicates within a single dataset.
 
 ```bash
-./ zingg.sh-- phase match-- conf config.json
+./zingg.sh --phase match --conf config.json
 ```
 
 ### **Run link**
@@ -71,7 +67,7 @@ The `--showConcise=true` flag shows only fields used for matching and hides `DON
 `link` matches records across two separate datasets.
 
 ```bash
-./ zingg.sh-- phase link-- conf config.json
+./zingg.sh --phase link --conf config.json
 ```
 {% endtab %}
 
@@ -84,13 +80,13 @@ Enterprise adds two phases not available in Community: `generateDoc`s and\
 ### Find training pairs
 
 ```bash
-./ zingg.sh-- phase findTrainingData-- conf config.json
+./zingg.sh --phase findTrainingData --conf config.json
 ```
 
 ### Label pairs
 
 ```bash
-./ zingg.sh-- phase label-- conf config.json-- showConcise = true
+./zingg.sh --phase label --conf config.json --showConcise=true
 ```
 
 ### **Generate model documentation**
@@ -98,25 +94,25 @@ Enterprise adds two phases not available in Community: `generateDoc`s and\
 Optional but recommended before `train` — lets you inspect training data quality before committing to the train phase.
 
 ```bash
-./ zingg.sh-- phase generateDocs-- conf config.json
+./zingg.sh --phase generateDocs --conf config.json
 ```
 
 ### Train the model
 
 ```bash
-./ zingg.sh-- phase train-- conf config.json
+./zingg.sh --phase train --conf config.json
 ```
 
 ### Run match
 
 ```bash
-./ zingg.sh-- phase match-- conf config.json
+./zingg.sh --phase match --conf config.json
 ```
 
 ### Run link
 
 ```bash
-./ zingg.sh-- phase link-- conf config.json
+./zingg.sh --phase link --conf config.json
 ```
 
 ### **Run incremental**
@@ -124,7 +120,7 @@ Optional but recommended before `train` — lets you inspect training data quali
 Updates the identity graph with new and changed records without re-running the full match.
 
 ```bash
-./ zingg.sh-- phase runIncremental-- conf config.json
+./zingg.sh --phase runIncremental --conf config.json
 ```
 
 {% hint style="info" icon="right-long" %}
@@ -173,24 +169,28 @@ The JSON config file tells Zingg which fields to use, where your data lives, and
       "dataType": "string"
     }
   ],
-  "data": [{
-    "name": "inputData",
-    "format": "csv",
-    "props": {
-      "location": "/path/to/input.csv",
-      "delimiter": ",",
-      "header": "true"
+  "data": [
+    {
+      "name": "inputData",
+      "format": "csv",
+      "props": {
+        "location": "/path/to/input.csv",
+        "delimiter": ",",
+        "header": "true"
+      }
     }
-  }],
-  "output": [{
-    "name": "matchOutput",
-    "format": "csv",
-    "props": {
-      "location": "/path/to/output",
-      "delimiter": ",",
-      "header": "true"
+  ],
+  "output": [
+    {
+      "name": "matchOutput",
+      "format": "csv",
+      "props": {
+        "location": "/path/to/output",
+        "delimiter": ",",
+        "header": "true"
+      }
     }
-  }],
+  ],
   "modelId": "1",
   "zinggDir": "/tmp/zingg",
   "labelDataSampleSize": 0.5,

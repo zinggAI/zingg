@@ -60,31 +60,22 @@ Use `STANDARDISE_<basename>` to reference a mapping file named `<basename>.json`
 
 ```python
 from zingg.client import *
-from zinggEC.enterprise.common.EArguments \
-    import *
-from zinggEC.enterprise.common \
-    .EFieldDefinition import EFieldDefinition
-from zinggEC.enterprise.common \
-    .StandardisePostprocessorType \
-    import StandardisePostprocessorType
-from zinggEC.enterprise.common.epipes \
-    import *
-from zinggES.enterprise.spark.ESparkClient \
-    import *
-from zinggEC.enterprise.common \
-    .EClientOptions import *
+from zinggEC.enterprise.common.EArguments import *
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zinggEC.enterprise.common.StandardisePostprocessorType import StandardisePostprocessorType
+from zinggEC.enterprise.common.epipes import *
+from zinggES.enterprise.spark.ESparkClient import *
+from zinggEC.enterprise.common.EClientOptions import *
 
 args = EArguments()
 
-id = EFieldDefinition(
-    "id", "string", MatchType.DONT_USE)
+id = EFieldDefinition("id", "string", MatchType.DONT_USE)
 id.setPrimaryKey(True)
 
-job_title = EFieldDefinition(
-    "job_title", "string", MatchType.FUZZY)
-job_title.setPostProcessors(
-    [StandardisePostprocessorType(
-        "STANDARDISE", "jobtitles")])
+job_title = EFieldDefinition("job_title", "string", MatchType.FUZZY)
+job_title.setPostProcessors([
+    StandardisePostprocessorType("STANDARDISE", "jobtitles")
+])
 
 fieldDefs = [id, job_title]
 args.setFieldDefinition(fieldDefs)

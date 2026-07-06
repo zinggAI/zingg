@@ -56,18 +56,35 @@ Invoke the chain with a natural language query. The LLM retrieves top matching r
 ```python
 import pandas as pd
 
-    df = pd.read_csv("zingg-out.csv")
+df = pd.read_csv("zingg-out.csv")
 
-        def preprocess(row) :text =(f "First Name: {row['FNAME']}, " f "Last Name: {row['LNAME']}, " f "Date of Birth: {row['DOB']}, " f "Address: {row['STNO']} " f "{row['ADD1']}, {row['ADD2']}, " f "{row['AREA_CODE']} " f "{row['STATE']}") metadata = {"cluster" :row["Z_CLUSTER"], "ssn" :row["SSN"], "state" :row["STATE"], "dob" :row["DOB"] } return {"text" :text, "metadata" :metadata }
+def preprocess(row):
+    text = (
+        f"First Name: {row['FNAME']}, "
+        f"Last Name: {row['LNAME']}, "
+        f"Date of Birth: {row['DOB']}, "
+        f"Address: {row['STNO']} "
+        f"{row['ADD1']}, {row['ADD2']}, "
+        f"{row['AREA_CODE']} "
+        f"{row['STATE']}"
+    )
+    metadata = {
+        "cluster": row["Z_CLUSTER"],
+        "ssn": row["SSN"],
+        "state": row["STATE"],
+        "dob": row["DOB"]
+    }
+    return {"text": text, "metadata": metadata}
 
-                                                                                                                                                                                                                                                                                                                                                                 documents =[preprocess(row) for _, row in df.iterrows()]
+documents = [preprocess(row) for _, row in df.iterrows()]
 
-                                                                                                                                                                                                                                                                                                                                                                                        texts =[doc["text"] for doc in documents] metadatas =[doc["metadata"] for doc in documents]
+texts = [doc["text"] for doc in documents]
+metadatas = [doc["metadata"] for doc in documents]
 ```
 
 {% hint style="success" icon="right-long" %}
 `zingg-out.csv` is your Zingg match output. `Z_CLUSTER` is the resolved entity identifier added\
-by Zingg during the match phase. Update the field names (FNAME, LNAME etc.) to match your own schema.&#x20;
+by Zingg during the match phase. Update the field names (FNAME, LNAME etc.) to match your own schema.
 
 **Read more**: For running the match phase - [Run the Match Phase](../running-zingg/run-the-match-phase.md).
 {% endhint %}
@@ -81,22 +98,20 @@ This example uses Ollama with `nomic-embed-text` and Chroma as the vector store.
 {% endhint %}
 
 ```python
-from langchain_ollama import OllamaEmbeddings from langchain_chroma import
-    Chroma
+from langchain_ollama import OllamaEmbeddings
+from langchain_chroma import Chroma
 
-        embeddings = OllamaEmbeddings(model = "nomic-embed-text")
+embeddings = OllamaEmbeddings(model="nomic-embed-text")
 
-            vector_store = Chroma.from_texts(
-                texts = texts, embedding = embeddings, metadatas = metadatas,
-                persist_directory = "./chroma_db")
+vector_store = Chroma.from_texts(
+    texts=texts,
+    embedding=embeddings,
+    metadatas=metadatas,
+    persist_directory="./chroma_db"
+)
 
-                               retriever =
-                vector_store.as_retriever(search_kwargs = {"k" : 2})
+retriever = vector_store.as_retriever(search_kwargs={"k": 2})
 ```
-
-<figure><img src="../.gitbook/assets/image (1).png" alt="Embeddings and Vector Store"><figcaption><p><strong>Embeddings and Vector Store</strong></p></figcaption></figure>
-
-<figure><img src="../.gitbook/assets/image (2).png" alt="Retriever with Cluster Awarenes"><figcaption><p><strong>Retriever with Cluster Awarenes</strong></p></figcaption></figure>
 
 ### Build the LangChain chain
 
@@ -122,24 +137,23 @@ Format the response as:
 #### **Chain construction**
 
 ```python
-from langchain_core
-    .prompts import ChatPromptTemplate from langchain_ollama import ChatOllama
-        from langchain_core
-    .runnables import RunnablePassthrough from
-        langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_ollama import ChatOllama
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
 
-    template = "<paste prompt instructions here>"
+template = "<paste prompt instructions here>"
 
-    prompt = ChatPromptTemplate.from_template(template)
-                 llm = ChatOllama(model = "llama3:8b")
+prompt = ChatPromptTemplate.from_template(template)
+llm = ChatOllama(model="llama3:8b")
 
-        chain = ({"context" : retriever, "question" : RunnablePassthrough()} |
-                 prompt | llm | StrOutputParser())
+chain = (
+    {"context": retriever, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+)
 ```
-
-<figure><img src="../.gitbook/assets/image (37).png" alt="Prompt engineering for identity resolution"><figcaption><p>Prompt engineering for identity resolution</p></figcaption></figure>
-
-<figure><img src="../.gitbook/assets/image (38).png" alt="LangChain integration"><figcaption><p>LangChain integration</p></figcaption></figure>
 
 ### Query the chain
 
@@ -150,14 +164,12 @@ The query searches for records related to "benjamin koerbin" born on "19210210" 
 ```python
 response = chain.invoke(
     "Find records of benjamin koerbin "
-    "born on 19210210") print(response)
+    "born on 19210210"
+)
+print(response)
 ```
 
-<figure><img src="../.gitbook/assets/image (39).png" alt="Query 1 invocation"><figcaption><p>Query 1 invocation</p></figcaption></figure>
-
 The system successfully retrieves two matching records from the same cluster (Cluster ID 21) with 100% match confidence, confirming both documents correspond to the queried entity without discrepancies. The response shows the query, the closest match, the Cluster ID, record count, match confidence, and that exact matches were found on both name and date of birth.
-
-<figure><img src="../.gitbook/assets/image (40).png" alt="Query 1 output"><figcaption><p>Query 1 output</p></figcaption></figure>
 
 {% hint style="success" icon="right-long" %}
 In Query 2 the system identifies the correct cluster even though "`eling`" is a typo for "`eglinton`". Zingg grouped both spellings into the same cluster before the data reached the vector store, so the retriever found all matching records regardless of the variation.
@@ -168,14 +180,11 @@ In Query 2 the system identifies the correct cluster even though "`eling`" is a 
 The query searches for records of "jakson eling," which contains a potential typo in the last name.
 
 ```json
-response = chain.invoke("Find records of jakson eling") print(response)
+response = chain.invoke("Find records of jakson eling")
+print(response)
 ```
 
-<figure><img src="../.gitbook/assets/image (41).png" alt="Query 2 invocation"><figcaption><p>Query 2 invocation</p></figcaption></figure>
-
 The system identifies and retrieves three matching records under the same cluster, despite the typo in the query. It correctly maps `eling` to `eglinton` using fuzzy matching, ensuring accurate identity resolution.
-
-<figure><img src="../.gitbook/assets/image (42).png" alt="Query 2 output"><figcaption><p>Query 2 output</p></figcaption></figure>
 
 {% hint style="success" icon="right-long" %}
 Zingg grouped both spellings (`eglinton` and `eling`) into the same cluster during the match phase - before the data reached the vector store. The retriever finds all matching records regardless of input variation.
@@ -218,6 +227,6 @@ Unify customer profiles from different channels for personalized recommendations
 {% hint style="success" icon="right-long" %}
 **Read more:**
 
-* For the full Zingg workflow - [How Zingg works](../running-zingg/step-by-step-guide.md)&#x20;
+* For the full Zingg workflow - [How Zingg works](../running-zingg/step-by-step-guide.md)
 * Download the notebook from the Zingg GitHub repository: `github.com/zinggAI/zingg`
 {% endhint %}

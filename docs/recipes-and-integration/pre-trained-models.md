@@ -18,7 +18,8 @@ Use a pre-trained model when you want to run a quick proof of concept on data th
 The FEBRL pre-trained model is bundled in the Zingg Docker image. It is available in the models/ directory inside the container.
 
 ```bash
-docker pull zingg / zingg : 0.5.0 docker run - it zingg / zingg : 0.5.0 bash
+docker pull zingg/zingg:0.5.0
+docker run -it zingg/zingg:0.5.0 bash
 ```
 
 Inside the container, models are at:
@@ -61,22 +62,26 @@ Pre-trained models are also available from the Zingg GitHub releases page: `gith
       "dataType": "string"
     }
   ],
-  "data": [{
-    "name": "yourInput",
-    "format": "csv",
-    "props": {
-      "location": "path/to/your/data.csv",
-      "delimiter": ",",
-      "header": "true"
+  "data": [
+    {
+      "name": "yourInput",
+      "format": "csv",
+      "props": {
+        "location": "path/to/your/data.csv",
+        "delimiter": ",",
+        "header": "true"
+      }
     }
-  }],
-  "output": [{
-    "name": "yourOutput",
-    "format": "csv",
-    "props": {
-      "location": "/tmp/zinggOutput"
+  ],
+  "output": [
+    {
+      "name": "yourOutput",
+      "format": "csv",
+      "props": {
+        "location": "/tmp/zinggOutput"
+      }
     }
-  }],
+  ],
   "modelId": "100",
   "zinggDir": "models",
   "labelDataSampleSize": 0.5,
@@ -89,8 +94,9 @@ Pre-trained models are also available from the Zingg GitHub releases page: `gith
 **Python**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "match" ]) zingg =
-    Zingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ClientOptions.PHASE, "match"])
+zingg = Zingg(args, options)
+zingg.initAndExecute()
 ```
 
 **CLI**
@@ -98,12 +104,12 @@ options = ClientOptions([ ClientOptions.PHASE, "match" ]) zingg =
 Skip `findTrainingData` and `label`. Run `match` directly using the pre-trained model.
 
 ```bash
-./ zingg.sh-- phase match-- conf config.json
+./zingg.sh --phase match --conf config.json
 ```
 
 {% hint style="success" icon="right-long" %}
 The pre-trained `FEBRL` model works best on data with the same field schema: `fname`, `lname`, `stNo`,\
-`add1`, `add2`, `city`, `areacode`, `state`, `dob`, `ssn`.&#x20;
+`add1`, `add2`, `city`, `areacode`, `state`, `dob`, `ssn`.
 
 For significantly different schemas or data distributions, fine-tuning with your own labels will improve accuracy.
 {% endhint %}
@@ -117,9 +123,9 @@ This is faster than building a model from scratch when your data is structurally
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* Create training data - [Create training data](../running-zingg/create-training-data.md)&#x20;
-* Label training pairs - [Label training pairs](../running-zingg/label-training-pairs.md)&#x20;
-* Build and save the model - [Build and save the model](../running-zingg/build-and-save-the-model.md)&#x20;
+* Create training data - [Create training data](../running-zingg/create-training-data.md)
+* Label training pairs - [Label training pairs](../running-zingg/label-training-pairs.md)
+* Build and save the model - [Build and save the model](../running-zingg/build-and-save-the-model.md)
 {% endhint %}
 
 ### Other available pre-trained models

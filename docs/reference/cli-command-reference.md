@@ -7,13 +7,11 @@ description: All Zingg CLI phase commands and flags in one place.
 ### Basic invocation pattern
 
 ```bash
-./ scripts / zingg.sh-- phase<phase_name> --conf<path_to_config.json>
+./scripts/zingg.sh --phase <phase_name> --conf <path_to_config.json>
 ```
 
 ```bash
-./ scripts /
-    zingg.sh<optional-- properties - file path - to -
-             zingg.conf> --run<path - to - python - program>
+./scripts/zingg.sh <optional --properties-file path to zingg.conf> --run <path to python program>
 ```
 
 Use `--run` to execute a Python program through `zingg.sh`. Zingg Python programs are PySpark programs. The CLI executes both JSON config jobs and Python program jobs. It is not a replacement for the Python API; it is the runtime that executes both.
@@ -28,100 +26,92 @@ Use `--run` to execute a Python program through `zingg.sh`. Zingg Python program
 
 ### Example commands
 
-#### **`findTrainingData`**&#x20;
+#### **`findTrainingData`**
 
 ```bash
-./ scripts / zingg.sh-- phase findTrainingData-- conf config.json
+./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 
 #### **`label` (with concise display)**
 
 ```bash
-./ scripts / zingg.sh-- phase label-- conf config.json-- showConcise = true
+./scripts/zingg.sh --phase label --conf config.json --showConcise=true
 ```
 
-#### **`generateDocs`**&#x20;
+#### **`generateDocs`**
 
 ```bash
-./ scripts / zingg.sh-- phase generateDocs-- conf config.json-- showConcise =
-    true
+./scripts/zingg.sh --phase generateDocs --conf config.json --showConcise=true
 ```
 
-#### **`train`**&#x20;
+#### **`train`**
 
 ```bash
-./ scripts / zingg.sh-- phase train-- conf config.json
+./scripts/zingg.sh --phase train --conf config.json
 ```
 
-#### **`match`**&#x20;
+#### **`match`**
 
 ```bash
-./ scripts / zingg.sh-- phase match-- conf config.json
+./scripts/zingg.sh --phase match --conf config.json
 ```
 
-#### **`link`**&#x20;
+#### **`link`**
 
 ```bash
-./ scripts / zingg.sh-- phase link-- conf config.json
+./scripts/zingg.sh --phase link --conf config.json
 ```
 
 #### **`recommend` (stopwords for `fname`)**
 
 ```bash
-./ scripts / zingg.sh-- phase recommend-- conf config.json-- column fname
+./scripts/zingg.sh --phase recommend --conf config.json --column fname
 ```
 
-#### **`runIncremental`**&#x20;
+#### **`runIncremental`**
 
 ```bash
-./ scripts / zingg.sh-- phase runIncremental-- conf incrementalConf.json
+./scripts/zingg.sh --phase runIncremental --conf incrementalConf.json
 ```
 
-#### **`reassignZinggId`**&#x20;
+#### **`reassignZinggId`**
 
 ```bash
-./ scripts /
-        zingg.sh-- phase reassignZinggId-- conf configReassign
-            .json-- originalZinggId config.json-- properties -
-    file config / zingg.conf
+./scripts/zingg.sh --phase reassignZinggId --conf configReassign.json --originalZinggId config.json --properties-file config/zingg.conf
 ```
 
-#### **`updateLabel`**&#x20;
+#### **`updateLabel`**
 
 ```bash
-./ scripts / zingg.sh-- phase updateLabel-- conf config.json
+./scripts/zingg.sh --phase updateLabel --conf config.json
 ```
 
 #### `findAndLabel` (combined - smaller datasets)
 
 ```bash
-./ scripts / zingg.sh-- phase findAndLabel-- conf config.json
+./scripts/zingg.sh --phase findAndLabel --conf config.json
 ```
 
 #### `verifyBlocking` (run after label)
 
 ```bash
-./ scripts / zingg.sh-- phase verifyBlocking-- conf config.json
+./scripts/zingg.sh --phase verifyBlocking --conf config.json
 ```
 
 #### **`diff` (compare two model outputs)**
 
 ```bash
-./ scripts /
-        zingg.sh-- phase diff-- conf configNew.json-- compareTo configBaseline
-            .json-- properties -
-    file config / zingg.conf
+./scripts/zingg.sh --phase diff --conf configNew.json --compareTo configBaseline.json --properties-file config/zingg.conf
 ```
 
 #### **`explainOutput` (explain a specific cluster)**
 
 ```bash
-./ scripts / zingg.sh-- phase explainOutput-- zinggid ea67d79a - 56a7 - 4431 -
-    ab55 - d08bb3c10e2e-- conf explainConfig.json
+./scripts/zingg.sh --phase explainOutput --zinggid ea67d79a-56a7-4431-ab55-d08bb3c10e2e --conf explainConfig.json
 ```
 
 #### **trainMatch (combined - Enterprise)**
 
 ```bash
-./ scripts / zingg.sh-- phase trainMatch-- conf config.json
+./scripts/zingg.sh --phase trainMatch --conf config.json
 ```

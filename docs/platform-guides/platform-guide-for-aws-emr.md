@@ -12,7 +12,7 @@ model persistence using the `s3a://` path format.
 **CONTENT TO BE GIVEN BY NILANJAN/SIDDIK**
 
 {% tabs %}
-{% tab title="Community (OS)" %}
+{% tab title="Community" %}
 
 {% endtab %}
 

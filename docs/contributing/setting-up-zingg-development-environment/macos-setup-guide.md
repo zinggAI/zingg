@@ -16,9 +16,7 @@ Homebrew is the preferred package manager for macOS and makes installing system 
 #### **Install Homebrew**
 
 ```bash
-/ bin / bash - c
-    "$(curl -fsSL "
-    "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)")"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -54,12 +52,10 @@ Download Apache Spark from the [Apache Spark Official Website](https://spark.apa
 For example for 3.5.0:
 
 ```bash
-curl -
-    O https
-    :  // archive.apache.org/dist/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
-       tar -
-       xvf spark - 3.5.0 - bin - hadoop3.tgz sudo mv spark - 3.5.0 - bin -
-       hadoop3 / opt / spark rm spark - 3.5.0 - bin - hadoop3.tgz
+curl -O https://archive.apache.org/dist/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+tar -xvf spark-3.5.0-bin-hadoop3.tgz
+sudo mv spark-3.5.0-bin-hadoop3 /opt/spark
+rm spark-3.5.0-bin-hadoop3.tgz
 ```
 
 Make sure that Spark version you have installed is compatible with Java you have installed, and Zingg is supporting those versions.
@@ -77,13 +73,11 @@ brew install maven
 ### **Step 5: Update Environment Variables (\~/.zshrc)** <a href="#step-5-update-environment-variables-.zshrc" id="step-5-update-environment-variables-.zshrc"></a>
 
 ```bash
-export JAVA_HOME =
-    / Library / Java / JavaVirtualMachines / openjdk -
-    11.jdk / Contents / Home export SPARK_HOME =
-        / opt / spark export SPARK_MASTER = local[*] export ZINGG_HOME =
-            <path_to_zingg> / assembly / target export PATH =
-                $PATH : $SPARK_HOME / bin : $SPARK_HOME / sbin : $JAVA_HOME /
-                                                                 bin
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
+export SPARK_HOME=/opt/spark
+export SPARK_MASTER=local[*]
+export ZINGG_HOME=<path_to_zingg>/assembly/target
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$JAVA_HOME/bin
 ```
 
 `<path_to_zingg>` will be a directory where you clone the repository of the Zingg. Similarly, if you have installed spark on a different directory you can set **SPARK\_HOME** accordingly.
@@ -97,7 +91,8 @@ source ~/.zshrc
 **Verify**
 
 ```bash
-echo $PATH mvn-- version
+echo $PATH
+mvn --version
 ```
 
 ### **Step 6: Compile The Zingg Repository** <a href="#step-6-compile-the-zingg-repository" id="step-6-compile-the-zingg-repository"></a>
@@ -111,14 +106,15 @@ git branch
 2. Run the following to Compile the Zingg Repository:
 
 ```bash
-mvn initialize mvn clean compile package - Dspark = sparkVer
+mvn initialize
+mvn clean compile package -Dspark=sparkVer
 ```
 
 3. Run the following to Compile while skipping tests:
 
 ```bash
-mvn initialize mvn clean compile package - Dspark =
-    sparkVer - Dmaven.test.skip = true
+mvn initialize
+mvn clean compile package -Dspark=sparkVer -Dmaven.test.skip=true
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -136,8 +132,7 @@ Replace the `sparkVer` with the version of Spark you installed. For example, **-
 Run this script in the terminal opened in Zingg clones directory:
 
 ```bash
-./ scripts / zingg.sh-- phase findTrainingData-- conf examples / febrl /
-    config.json
+./scripts/zingg.sh --phase findTrainingData --conf examples/febrl/config.json
 ```
 
 _If everything is right, it should show Zingg banner._
@@ -147,9 +142,7 @@ _If everything is right, it should show Zingg banner._
 Run this script in the terminal opened in Zingg clones directory:
 
 ```bash
-./ scripts / zingg.sh-- phase label-- conf examples / febrl /
-        config.json-- properties -
-    file config / zingg.conf
+./scripts/zingg.sh --phase label --conf examples/febrl/config.json --properties-file config/zingg.conf
 ```
 
 ### **Step 10: Run Zingg To Train Model Based On Labeling** <a href="#step-10-run-zingg-to-train-model-based-on-labeling" id="step-10-run-zingg-to-train-model-based-on-labeling"></a>
@@ -157,9 +150,7 @@ Run this script in the terminal opened in Zingg clones directory:
 Run this script in the terminal opened in Zingg clones directory:
 
 ```bash
-./ scripts / zingg.sh-- phase train-- conf examples / febrl /
-        config.json-- properties -
-    file config / zingg.conf
+./scripts/zingg.sh --phase train --conf examples/febrl/config.json --properties-file config/zingg.conf
 ```
 
 ### **Step 11: Run Zingg To Prepare Final Output Data** <a href="#step-11-run-zingg-to-prepare-final-output-data" id="step-11-run-zingg-to-prepare-final-output-data"></a>
@@ -167,9 +158,7 @@ Run this script in the terminal opened in Zingg clones directory:
 Run this script in the terminal opened in Zingg clones directory:
 
 ```bash
-./ scripts / zingg.sh-- phase match-- conf examples / febrl /
-        config.json-- properties -
-    file config / zingg.conf
+./scripts/zingg.sh --phase match --conf examples/febrl/config.json --properties-file config/zingg.conf
 ```
 
 Change directory `cd /tmp/zinggOutput` (or the path provided in your config file) to see the output files.

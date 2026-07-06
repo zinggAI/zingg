@@ -4,6 +4,7 @@ description: >-
   cluster was formed.
 tags:
   - ent
+  - enterprise-only
 ---
 
 # Explain a Specific Cluster
@@ -20,21 +21,24 @@ that cluster formed. You can see which record pairs were compared, what their si
 ### Step 1: Import
 
 ```python
-from zingg.client import* from zingg.pipes import* from zinggEC.enterprise
-    .common.EArguments import* from
-        zinggEC.enterprise.common.epipes import* from zinggEC.enterprise.common
-    .EFieldDefinition import EFieldDefinition from zinggEC.enterprise.common
-    .ExplainArguments import* from zinggEC.enterprise.common
-    .EClientOptions import* from zinggES.enterprise.spark.ESparkClient import*
+from zingg.client import*
+from zingg.pipes import*
+from zinggEC.enterprise.common.EArguments import*
+from zinggEC.enterprise.common.epipes import*
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zinggEC.enterprise.common.ExplainArguments import*
+from zinggEC.enterprise.common.EClientOptions import*
+from zinggES.enterprise.spark.ESparkClient import*
 ```
 
-### Step 2: Set up `ExplainArgument`&#x20;
+### Step 2: Set up `ExplainArgument`
 
 Use the same arguments setup as your Configure Zingg notebook. All field definitions, pipes, `modelId`, and `zinggDir` must match the original match run exactly.
 
 ```python
-args = EArguments() args.setModelId("your-model-id")
-           args.setZinggDir("/tmp/models")
+args = EArguments()
+args.setModelId("your-model-id")
+args.setZinggDir("/tmp/models")
 ```
 
 ### **Step 3: Set the Zingg ID to explain**
@@ -48,22 +52,22 @@ args.setZinggId("ea67d79a-56a7-4431-ab55-d08bb3c10e2e")
 ### **Step 4: Run the explain phase**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "explainOutput" ]) zingg =
-    EZingg(args, options) zingg.initAndExecute()
+options = ClientOptions([ ClientOptions.PHASE, "explainOutput" ])
+zingg = EZingg(args, options)
+zingg.initAndExecute()
 ```
 
 ### **Step 5: Read the explain output**
 
 ```python
-explain_output =
-    spark.read.parquet(f "{zinggDir}/{modelId}/explainOutput")
-        explain_output.show()
+explain_output = spark.read.parquet(f"{zinggDir}/{modelId}/explainOutput")
+explain_output.show()
 ```
 
 The output shows pair-level evidence for how the cluster formed. Each row is a record pair with their similarity score.
 
 {% hint style="success" icon="right-long" %}
-**Read more**: `explainOutput` covers probabilistic matches only. Clusters formed through deterministic matching rules may return empty or partial results. For context on deterministic matching - [Configure Zingg](../running-zingg/configure-zingg.md).&#x20;
+**Read more**: `explainOutput` covers probabilistic matches only. Clusters formed through deterministic matching rules may return empty or partial results. For context on deterministic matching - [Configure Zingg](../running-zingg/configure-zingg.md).
 {% endhint %}
 
 ### Using the CLI instead of Python API
@@ -75,23 +79,22 @@ If you prefer the CLI, create an `explainConfig.json` and run with the `--zinggi
 ```json
 {
   "config" : "path_to_original_matching_config/config.json",
-             "explainOutput" : [ {
-               "name" : "outputExplain",
-               "format" : "csv",
-               "props" : {
-                 "location" : "/tmp/zinggOutput_explain",
-                 "delimiter" : ",",
-                 "header" : true
-               }
-             } ]
+  "explainOutput" : [ {
+    "name" : "outputExplain",
+    "format" : "csv",
+    "props" : {
+      "location" : "/tmp/zinggOutput_explain",
+      "delimiter" : ",",
+      "header" : true
+    }
+  } ]
 }
 ```
 
 #### CLI command
 
 ```bash
-./ scripts / zingg.sh-- phase explainOutput-- zinggid ea67d79a - 56a7 - 4431 -
-    ab55 - d08bb3c10e2e-- conf./ examples / febrl / explainConfig.json
+./scripts/zingg.sh --phase explainOutput --zinggid ea67d79a-56a7-4431-ab55-d08bb3c10e2e --conf ./examples/febrl/explainConfig.json
 ```
 {% endtab %}
 

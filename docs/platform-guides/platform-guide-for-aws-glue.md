@@ -15,7 +15,7 @@ AWS Glue provides serverless Spark on AWS. There are no servers to manage; you d
 {% endhint %}
 
 {% tabs %}
-{% tab title="Community (OS)" %}
+{% tab title="Community" %}
 Uses `Arguments`, `FieldDefinition`, `CsvPipe`, and `ZinggWithSpark`. The full workflow runs in a single Glue Studio notebook.
 
 ### AWS setup
@@ -39,7 +39,7 @@ Create an S3 bucket (for example `zingg-production-storage`) and upload all six 
 
 Download all JARs from `github.com/zinggAI/zingg/releases`. Also upload your data file to the bucket root.
 
-_**IMAGE TO BE ADDED — S3 bucket view showing the****&#x20;****`/jars/`****&#x20;****folder with all six Zingg JAR files listed. Tanwi to check with team for the screenshot.**_
+_**IMAGE TO BE ADDED — S3 bucket view showing the\*\*\*\*****&#x20;****`/jars/`****&#x20;****\*\*\*\*folder with all six Zingg JAR files listed. Tanwi to check with team for the screenshot.**_
 
 #### **Step 2: Create an IAM role for Glue**
 
@@ -64,14 +64,18 @@ Create an inline policy named `ZinggSessionPermissions` with the following JSON.
 
 ```json
 {
-  "Version" : "2012-10-17", "Statement" : [
+  "Version" : "2012-10-17",
+  "Statement" : [
     {
       "Sid" : "AllowIAMPassRole",
       "Effect" : "Allow",
       "Action" : "iam:PassRole",
       "Resource" : "arn:aws:iam::<account-id>:role/zingg-glue-role",
-      "Condition" :
-          {"StringLike" : {"iam:PassedToService" : "glue.amazonaws.com"}}
+      "Condition" : {
+        "StringLike" : {
+          "iam:PassedToService" : "glue.amazonaws.com"
+        }
+      }
     },
     {
       "Sid" : "ZinggBucketAccess",
@@ -80,9 +84,10 @@ Create an inline policy named `ZinggSessionPermissions` with the following JSON.
         "s3:GetObject", "s3:PutObject", "s3:ListBucket", "kms:Decrypt",
         "kms:GenerateDataKey"
       ],
-      "Resource" :
-          [ "arn:aws:s3:::your-bucket-name",
-            "arn:aws:s3:::your-bucket-name/*" ]
+      "Resource" : [
+        "arn:aws:s3:::your-bucket-name",
+        "arn:aws:s3:::your-bucket-name/*"
+      ]
     },
     {
       "Sid" : "GlueMetadata",
@@ -103,7 +108,7 @@ _**IMAGE TO BE ADDED — IAM Role creation screen in the AWS Console showing the
 3. Select the IAM role created in Step 2 (`zingg-glue-role`) from the dropdown.
 4. Open the notebook. Confirm the kernel in the top right shows **Glue PySpark**.
 
-_**IMAGE TO BE ADDED — AWS Glue Studio Notebooks screen showing the IAM role dropdown with the****&#x20;****`zingg-glue-role`****&#x20;****selected. Tanwi to check with team for the screenshot.**_
+_**IMAGE TO BE ADDED — AWS Glue Studio Notebooks screen showing the IAM role dropdown with the\*\*\*\*****&#x20;****`zingg-glue-role`****&#x20;****\*\*\*\*selected. Tanwi to check with team for the screenshot.**_
 
 ### Notebook 01: Set up Zingg
 
@@ -114,8 +119,11 @@ Everything in this guide runs in a single Glue Studio notebook. The steps below 
 This is the most important step for Glue. The `%%configure` magic cell must be **the very first cell you run** in a fresh notebook. It tells Glue to inject the Zingg JARs from S3 into every worker node and install the Zingg Python package before the Spark session starts. If you run any other cell first, the JARs will not be available.
 
 ```python
-% glue_version 5.0 % worker_type G .1X % number_of_workers 2 %
-    idle_timeout 2880 % % configure {
+% glue_version 5.0
+% worker_type G.1X
+% number_of_workers 2
+% idle_timeout 2880
+%% configure {
   "--extra-jars": "s3://your-bucket/jars/zingg-0.6.0.jar,s3://your-bucket/jars/zingg-common-client-0.6.0.jar,s3://your-bucket/jars/zingg-common-core-0.6.0.jar,s3://your-bucket/jars/zingg-spark-client-0.6.0.jar,s3://your-bucket/jars/zingg-spark-core-0.6.0.jar,s3://your-bucket/jars/zingg-common-infra-0.6.0.jar",
     "--additional-python-modules": "zingg==0.6.0,tabulate,ipywidgets",
     "--conf": "spark.serializer=org.apache.spark.serializer.KryoSerializer"
@@ -133,11 +141,18 @@ Replace `your-bucket` with your actual S3 bucket name throughout.
 AWS Glue requires a `GlueContext` alongside the standard Spark context. This is specific to Glue—other platforms do not need this.
 
 ```python
-import sys from awsglue.transforms import * from awsglue.context import GlueContext from pyspark.context import SparkContext from awsglue.job import Job
+import sys
+from awsglue.transforms import *
+from awsglue.context import GlueContext
+from pyspark.context import SparkContext
+from awsglue.job import Job
 
-    sc = SparkContext.getOrCreate() glueContext = GlueContext(sc) spark = glueContext.spark_session job = Job(glueContext)
+sc = SparkContext.getOrCreate()
+glueContext = GlueContext(sc)
+spark = glueContext.spark_session
+job = Job(glueContext)
 
-                                                                  print("Spark and Glue contexts initialized.")
+print("Spark and Glue contexts initialized.")
 ```
 
 Verify Java is available:
@@ -152,10 +167,10 @@ print("Java Version:",
 Zingg uses a checkpoint directory to store intermediate Spark computation state. On Glue, this must be an S3 path - Glue workers are ephemeral and have no persistent local storage.
 
 ```python
-checkpoint_path =
-    "s3://your-bucket/zingg_checkpoint/" sc.setCheckpointDir(checkpoint_path)
+checkpoint_path = "s3://your-bucket/zingg_checkpoint/"
+sc.setCheckpointDir(checkpoint_path)
 
-        print(f "Spark checkpoint directory set to: {checkpoint_path}")
+print(f"Spark checkpoint directory set to: {checkpoint_path}")
 ```
 
 Verify it is set:
@@ -173,16 +188,17 @@ Because Glue workers are temporary, storing checkpoints in S3 ensures Zingg can 
 `BUCKET` is your S3 bucket name. `modelId` is the unique name for this model run. `zinggDir` is where Zingg writes model files and training data. Use the same values for every step in this notebook.
 
 ```python
-BUCKET = "your-bucket-name" modelId = "testModelFebrl" zinggDir =
-    f "s3://{BUCKET}/models"
+BUCKET = "your-bucket-name"
+modelId = "testModelFebrl"
+zinggDir = f"s3://{BUCKET}/models"
 
-    MARKED_DIR =
-        f "s3://{BUCKET}/models/{modelId}/trainingData/marked/" UNMARKED_DIR =
-            f "s3://{BUCKET}/models/{modelId}/trainingData/unmarked/"
+MARKED_DIR = f"s3://{BUCKET}/models/{modelId}/trainingData/marked/"
+UNMARKED_DIR = f"s3://{BUCKET}/models/{modelId}/trainingData/unmarked/"
 
-    print("S3 Paths Configured:") print(f "Project Root:  {zinggDir}")
-        print(f "Marked Data:   {MARKED_DIR}")
-            print(f "Unmarked Data: {UNMARKED_DIR}")
+print("S3 Paths Configured:")
+print(f"Project Root:  {zinggDir}")
+print(f"Marked Data:   {MARKED_DIR}")
+print(f"Unmarked Data: {UNMARKED_DIR}")
 ```
 
 `MARKED_DIR` and `UNMARKED_DIR` are derived automatically. Zingg writes candidate pairs to `UNMARKED_DIR` during `findTrainingData` and reads labeled pairs from `MARKED_DIR` during `train`.
@@ -190,15 +206,23 @@ BUCKET = "your-bucket-name" modelId = "testModelFebrl" zinggDir =
 #### Step 8: Import libraries and set up helper functions
 
 ```python
-import pandas as pd import numpy as np import os, time, uuid, base64 from tabulate import tabulate from ipywidgets import widgets, interact, GridspecLayout import pyspark.sql.functions as fn
+import pandas as pd
+import numpy as np
+import os, time, uuid, base64
+from tabulate import tabulate
+from ipywidgets import widgets, interact, GridspecLayout
+import pyspark.sql.functions as fn
 
-                                                                                                                                             import boto3 from botocore.exceptions import ClientError
+import boto3
+from botocore.exceptions import ClientError
 
-                                                                                                                                             import zingg from zingg.client import * from zingg.pipes import *
+import zingg
+from zingg.client import *
+from zingg.pipes import *
 
-                                                                                                                                             s3_client = boto3.client('s3')
+s3_client = boto3.client('s3')
 
-                                                                                                                                                 print("AWS and Zingg libraries imported successfully.")
+print("AWS and Zingg libraries imported successfully.")
 ```
 
 Helper functions for managing training data and labels:
@@ -213,14 +237,11 @@ def cleanModel():
             f"models/{modelId}/trainingData/unmarked/"
         ]
         for prefix in prefixes:
-            paginator = s3_client.get_paginator(
-                'list_objects_v2')
-            for page in paginator.paginate(
-                    Bucket=BUCKET, Prefix=prefix):
+            paginator = s3_client.get_paginator('list_objects_v2')
+            for page in paginator.paginate(Bucket=BUCKET, Prefix=prefix):
                 if 'Contents' in page:
                     delete_keys = [
-                        {
-    'Key' : obj['Key']}
+                        {'Key': obj['Key']}
                         for obj in page['Contents']]
                     s3_client.delete_objects(
                         Bucket=BUCKET,
@@ -251,8 +272,10 @@ def count_labeled_pairs(marked_pd):
 `Arguments` is the central configuration object. Every phase in this workflow reads from the same `args` instance.
 
 ```python
-args =
-    Arguments() args.setModelId(modelId) args.setZinggDir(zinggDir) print(args)
+args = Arguments()
+args.setModelId(modelId)
+args.setZinggDir(zinggDir)
+print(args)
 ```
 
 #### **Step 10: Preview your data**
@@ -260,46 +283,47 @@ args =
 Read your CSV from S3 and preview it before configuring the Zingg pipes.
 
 ```python
-csv_path = f "s3://{BUCKET}/test.csv" spark_df =
-    spark.read.csv(csv_path, header = True, inferSchema = True) schema_list =
-        [
-          "id", "fname", "lname", "stNo", "add1", "add2", "city", "state",
-          "areacode", "dob", "ssn"
-        ] spark_df = spark_df
-                         .toDF(*schema_list)
+csv_path = f"s3://{BUCKET}/test.csv"
+spark_df = spark.read.csv(csv_path, header=True, inferSchema=True)
+schema_list = [
+  "id", "fname", "lname", "stNo", "add1", "add2", "city", "state",
+  "areacode", "dob", "ssn"
+]
+spark_df = spark_df.toDF(*schema_list)
 
-                             print(f "Previewing data from {csv_path}:")
-                                 spark_df.show(10)
+print(f"Previewing data from {csv_path}:")
+spark_df.show(10)
 ```
 
-_**IMAGE TO BE ADDED - Glue notebook cell showing the****&#x20;****`spark_df.show(10)`****&#x20;****output table with sample FEBRL records — the same entity appearing multiple times with field variations across rows. Tanwi to check with team for the screenshot.**_
+_**IMAGE TO BE ADDED - Glue notebook cell showing the\*\*\*\*****&#x20;****`spark_df.show(10)`****&#x20;****\*\*\*\*output table with sample FEBRL records — the same entity appearing multiple times with field variations across rows. Tanwi to check with team for the screenshot.**_
 
 #### **Step 11: Configure input and output pipes**
 
 `CsvPipe` connects Zingg to your S3 data. The schema string must match your dataset column names exactly.
 
 ```python
-schema =
-    ("id string, fname string, "
-     "lname string, stNo string, "
-     "add1 string, add2 string, "
-     "city string, state string, "
-     "areacode string, dob string, "
-     "ssn string")
+schema = (
+    "id string, fname string, "
+    "lname string, stNo string, "
+    "add1 string, add2 string, "
+    "city string, state string, "
+    "areacode string, dob string, "
+    "ssn string"
+)
 
-        inputPipe = CsvPipe("testFebrl", f "s3://{BUCKET}/test.csv", schema)
-                        args.setData(inputPipe)
+inputPipe = CsvPipe("testFebrl", f"s3://{BUCKET}/test.csv", schema)
+args.setData(inputPipe)
 
-                            output_path = f
-    "s3://{BUCKET}/results/" outputPipe =
-        CsvPipe("resultOutput", output_path)
-            outputPipe.addProperty("header", "true") args.setOutput(outputPipe)
+output_path = f"s3://{BUCKET}/results/"
+outputPipe = CsvPipe("resultOutput", output_path)
+outputPipe.addProperty("header", "true")
+args.setOutput(outputPipe)
 
-                print("Input and output pipes configured.")
+print("Input and output pipes configured.")
 ```
 
 {% hint style="success" icon="right-long" %}
-Zingg also supports Parquet and JSON output on S3. To push results downstream to Amazon Redshift, use the Redshift connector.&#x20;
+Zingg also supports Parquet and JSON output on S3. To push results downstream to Amazon Redshift, use the Redshift connector.
 
 For all connector formats → [Connect Relational Databases](../connect-your-data/connect-relational-databases.md)
 {% endhint %}
@@ -309,30 +333,30 @@ For all connector formats → [Connect Relational Databases](../connect-your-dat
 Every field in your input schema must appear in `fieldDefinition`. List the most important fields first — field order affects blocking quality.
 
 ```python
-id = FieldDefinition("id", "string", MatchType.EXACT) fname = FieldDefinition(
-    "fname", "string", MatchType.FUZZY) lname =
-    FieldDefinition("lname", "string", MatchType.FUZZY) stNo = FieldDefinition(
-        "stNo", "string",
-        MatchType.FUZZY) add1 = FieldDefinition("add1", "string",
-                                                MatchType.FUZZY) add2 =
-        FieldDefinition("add2", "string", MatchType.FUZZY) city =
-            FieldDefinition("city", "string", MatchType.FUZZY) state =
-                FieldDefinition("state", "string", MatchType.FUZZY) areacode =
-                    FieldDefinition("areacode", "string", MatchType.FUZZY) dob =
-                        FieldDefinition("dob", "string", MatchType.EXACT) ssn =
-                            FieldDefinition("ssn", "string", MatchType.EXACT)
+id = FieldDefinition("id", "string", MatchType.EXACT)
+fname = FieldDefinition("fname", "string", MatchType.FUZZY)
+lname = FieldDefinition("lname", "string", MatchType.FUZZY)
+stNo = FieldDefinition("stNo", "string", MatchType.FUZZY)
+add1 = FieldDefinition("add1", "string", MatchType.FUZZY)
+add2 = FieldDefinition("add2", "string", MatchType.FUZZY)
+city = FieldDefinition("city", "string", MatchType.FUZZY)
+state = FieldDefinition("state", "string", MatchType.FUZZY)
+areacode = FieldDefinition("areacode", "string", MatchType.FUZZY)
+dob = FieldDefinition("dob", "string", MatchType.EXACT)
+ssn = FieldDefinition("ssn", "string", MatchType.EXACT)
 
-                                fieldDefs = [
-                                  id, fname, lname, stNo, add1, add2, city,
-                                  state, areacode, dob,
-                                  ssn
-                                ] args.setFieldDefinition(fieldDefs)
+fieldDefs = [
+  id, fname, lname, stNo, add1, add2, city,
+  state, areacode, dob,
+  ssn
+]
+args.setFieldDefinition(fieldDefs)
 ```
 
 {% hint style="success" icon="right-long" %}
-`FUZZY` handles variations like 'Jon' vs 'John' or 'St' vs 'Street'. `EXACT` requires a character-for-character match. `DONT_USE` excludes a field from matching but keeps it in output.&#x20;
+`FUZZY` handles variations like 'Jon' vs 'John' or 'St' vs 'Street'. `EXACT` requires a character-for-character match. `DONT_USE` excludes a field from matching but keeps it in output.
 
-**Read more**: For all match types → [Match Types](../zingg-concepts/how-zingg-learns/match-types/)&#x20;
+**Read more**: For all match types → [Match Types](../zingg-concepts/how-zingg-learns/match-types/)
 {% endhint %}
 
 #### **Step 13: Configure performance settings**
@@ -376,13 +400,15 @@ zingg = ZinggWithSpark(args, options)
 zingg.init()
 
 candidate_pairs_pd = getPandasDfFromDs(
-    zingg.getUnmarkedRecords())
+    zingg.getUnmarkedRecords()
+)
 
 if candidate_pairs_pd.shape[0] == 0:
     print("No pairs found. Run findTrainingData first.")
 else:
     z_clusters = list(np.unique(
-        candidate_pairs_pd['z_cluster']))
+        candidate_pairs_pd['z_cluster']
+    ))
     print(f"{len(z_clusters)} candidate pairs found for labeling")
 ```
 
@@ -440,7 +466,7 @@ ready_for_save = True
 print(f"Review sheet exported for {n_pairs} pairs to: {export_path}")
 ```
 
-_**IMAGE TO BE ADDED — S3 console showing the****&#x20;****`/review/`****&#x20;****folder with the exported****&#x20;****`pending_labels.csv`****&#x20;****part file ready for download. Tanwi to check with team for the screenshot.**_
+_**IMAGE TO BE ADDED — S3 console showing the\*\*\*\*****&#x20;****`/review/`****&#x20;****folder with the exported****&#x20;****`pending_labels.csv`****&#x20;****\*\*\*\*part file ready for download. Tanwi to check with team for the screenshot.**_
 
 {% hint style="success" icon="right-long" %}
 How to label the review sheet:
@@ -452,7 +478,7 @@ How to label the review sheet:
 5. Run Step 16 to feed the labels into Zingg.
 {% endhint %}
 
-_**IMAGE TO BE ADDED — Example of the exported review CSV open in Excel showing two FEBRL records side by side in a vertical layout, with the****&#x20;****`>>> DECISION`****&#x20;****row highlighted and a****&#x20;****`1`****&#x20;****entered in the****&#x20;****`Record_B`****&#x20;****column. Tanwi to check with team for the screenshot.**_
+_**IMAGE TO BE ADDED — Example of the exported review CSV open in Excel showing two FEBRL records side by side in a vertical layout, with the\*\*\*\*****&#x20;****`>>> DECISION`****&#x20;****row highlighted and a****&#x20;****`1`****&#x20;****entered in the****&#x20;****`Record_B`****&#x20;****\*\*\*\*column. Tanwi to check with team for the screenshot.**_
 
 {% hint style="success" icon="right-long" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 14–16 in a loop until you reach this target. Label until all field types and data variation patterns in your schema are covered. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
@@ -488,14 +514,17 @@ else:
     else:
         print(f"Reading labels from: s3://{bucket_name}/{csv_key}")
 
-        file_obj   = s3_client.get_object(
-            Bucket=bucket_name, Key=csv_key)
+        file_obj = s3_client.get_object(
+            Bucket=bucket_name, Key=csv_key
+        )
         labeled_df = pd.read_csv(
             io.BytesIO(file_obj['Body'].read()),
-            sep=None, engine='python')
+            sep=None, engine='python'
+        )
         labeled_df.columns = (
             ['Attribute', 'Record_A', 'Record_B']
-            + list(labeled_df.columns[3:]))
+            + list(labeled_df.columns[3:])
+        )
 
         print("Mapping labels to Zingg DataFrame...")
 
@@ -506,24 +535,26 @@ else:
                 decision_idx = i + len(display_pd.columns) + 1
                 if decision_idx < len(labeled_df):
                     user_input = labeled_df.iloc[
-                        decision_idx]['Record_B']
+                        decision_idx
+                    ]['Record_B']
                     if (pd.notna(user_input)
                             and str(user_input).strip() != ""):
                         label_int = int(float(user_input))
-                        target_cluster = candidate_pairs_pd\
-                            .iloc[2*pair_idx]['z_cluster']
+                        target_cluster = candidate_pairs_pd.iloc[
+                            2*pair_idx
+                        ]['z_cluster']
                         candidate_pairs_pd.loc[
-                            candidate_pairs_pd[
-                                'z_cluster'] == target_cluster,
+                            candidate_pairs_pd['z_cluster'] == target_cluster,
                             'z_isMatch'] = label_int
 
         zingg.writeLabelledOutputFromPandas(
-            candidate_pairs_pd, args)
+            candidate_pairs_pd, args
+        )
 
         marked_pd_df = getPandasDfFromDs(
-            zingg.getMarkedRecords())
-        n_pos, n_neg, n_tot = \
-            count_labeled_pairs(marked_pd_df)
+            zingg.getMarkedRecords()
+        )
+        n_pos, n_neg, n_tot = count_labeled_pairs(marked_pd_df)
 
         print(f"Labels synchronized successfully.")
         print(f"Total labeled: {n_tot} | Matches: {n_pos} | Non-matches: {n_neg}")
@@ -594,19 +625,23 @@ Match output is written to `output_path` in your S3 bucket as distributed part f
 
 ```python
 outputDF = spark.read.option(
-    "header", "false").csv(output_path)
+    "header", "false"
+).csv(output_path)
 
-colNames = ["z_score", "z_cluster", "z_zid",
+colNames = [
+    "z_score", "z_cluster", "z_zid",
     "id", "fname", "lname", "stNo",
     "add1", "add2", "city", "state",
-    "areacode", "dob", "ssn"]
+    "areacode", "dob", "ssn"
+]
 
 final_results = outputDF.toDF(*colNames)
 final_results.orderBy("z_cluster").show(10, truncate=False)
 
-total_records  = final_results.count()
+total_records = final_results.count()
 unique_entities = final_results.select(
-    'z_cluster').distinct().count()
+    'z_cluster'
+).distinct().count()
 
 print(f"Total Records Processed: {total_records}")
 print(f"Unique Entities Identified: {unique_entities}")
@@ -614,9 +649,7 @@ print(f"Redundancy Reduced by: "
     f"{((total_records - unique_entities) / total_records) * 100:.2f}%")
 ```
 
-_**IMAGE TO BE ADDED — Glue notebook cell showing****&#x20;****`final_results.orderBy("z_cluster").show(10)`****&#x20;****output with resolved records grouped by****&#x20;****`z_cluster`****&#x20;****— two rows sharing the same cluster value visible in the output. Tanwi to check with team for the screenshot.**_
-
-
+_**IMAGE TO BE ADDED — Glue notebook cell showing\*\*\*\*****&#x20;****`final_results.orderBy("z_cluster").show(10)`****&#x20;****output with resolved records grouped by****&#x20;****`z_cluster`****&#x20;****\*\*\*\*— two rows sharing the same cluster value visible in the output. Tanwi to check with team for the screenshot.**_
 {% endtab %}
 
 {% tab title="Enterprise" %}
@@ -638,10 +671,3 @@ Download the notebooks used in this guide:
 * Community notebooks (NB01–04): Download the notebook used in this guide: `github.com/zinggAI/zingg/tree/main/examples/aws-glue`
 * Enterprise notebooks — TO BE ADDED
 {% endhint %}
-
-
-
-
-
-
-
