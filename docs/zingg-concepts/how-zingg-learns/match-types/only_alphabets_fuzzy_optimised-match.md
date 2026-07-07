@@ -56,7 +56,7 @@ The JSON `fieldDefinition` block below uses Enterprise-only match type `ONLY_ALP
 ### **CLI**
 
 ```bash
-./ scripts / zingg.sh-- phase findTrainingData-- conf config.json
+./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 {% endtab %}
 {% endtabs %}

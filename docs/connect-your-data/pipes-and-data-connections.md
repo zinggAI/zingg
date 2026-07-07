@@ -53,8 +53,8 @@ args.setOutput(outputPipe)
 ### **Enterprise**
 
 ```python
-from zinggEC.enterprise.common.epipes import*
-from zinggEC.enterprise.common.EArguments import*
+from zinggEC.enterprise.common.epipes import *
+from zinggEC.enterprise.common.EArguments import *
 ```
 
 #### **Input Pipe**
@@ -113,9 +113,7 @@ Define pipes in the data and output sections of your JSON config file.
       "delimiter" : ",",
       "header" : "false"
     },
-    "schema" : "id string, fname string, lname string, stNo string, add1 "
-               "string, add2 string, city string, state string, areacode "
-               "string, dob string, ssn string"
+    "schema" : "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn string"
   } ],
   "output" : [ {
     "name" : "OUTPUT_FEBRL",
@@ -127,7 +125,9 @@ Define pipes in the data and output sections of your JSON config file.
     }
   } ],
   "outputStats" : {
-    "name" : "stats", "format" : "csv", "props" : {
+    "name" : "stats",
+    "format" : "csv",
+    "props" : {
       "location" : "/tmp/zinggStats_$ZINGG_DYNAMIC_STAT_NAME",
       "delimiter" : ",",
       "header" : true

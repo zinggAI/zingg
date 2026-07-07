@@ -81,7 +81,7 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 ### **CLI**
 
 ```bash
-./ scripts / zingg.sh-- phase findTrainingData-- conf config.json
+./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 {% endtab %}
 {% endtabs %}

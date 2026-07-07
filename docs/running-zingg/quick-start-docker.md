@@ -10,7 +10,7 @@ description: >-
 This page walks you through the full Zingg workflow on your local machine using Docker. You will install Zingg, connect sample data, find candidate pairs, label those pairs, train the model, and run match to see your first results. By the end you will have run every phase of the Zingg workflow and seen entity resolution working on your local machine with real data.
 
 {% hint style="success" icon="right-long" %}
-New to entity resolution? Read [Entity Resolution](../zingg-concepts/entity-resolution/) for the problem space and why Zingg's approach works.&#x20;
+New to entity resolution? Read [Entity Resolution](../zingg-concepts/entity-resolution/) for the problem space and why Zingg's approach works.
 {% endhint %}
 
 {% tabs %}
@@ -42,10 +42,10 @@ docker run -it zingg/zingg:0.5.0 bash
 If you see a permission error, use the volume mount form:
 
 ```bash
-docker run - v / tmp : / tmp - it zingg / zingg : 0.5.0 bash
+docker run -v /tmp:/tmp -it zingg/zingg:0.5.0 bash
 ```
 
-The Zingg Python package is already installed inside the Docker container. Zingg Python programs run via the `zingg.sh` script provided with the Zingg release.&#x20;
+The Zingg Python package is already installed inside the Docker container. Zingg Python programs run via the `zingg.sh` script provided with the Zingg release.
 
 ### **Step 2: Use the bundled sample data**
 
@@ -58,11 +58,11 @@ If you want to use your own data instead, copy it into the running container fro
 
 {% code expandable="true" %}
 ```bash
-docker cp / path / to / your - data.csv<container_id> : / zingg / your - data.csv
+docker cp /path/to/your-data.csv <container_id>:/zingg/your-data.csv
 ```
 {% endcode %}
 
-{% hint style="info" icon="right-long" %}
+{% hint style="danger" icon="right-long" %}
 Replace `<container_id>` with your running container's ID (find it with `docker ps`).
 {% endhint %}
 
@@ -118,12 +118,13 @@ args.setOutput(outputPipe)
 #### Python - Enterprise
 
 ```python
-from zingg.client import* from zingg.pipes import * 
+from zingg.client import *
+from zingg.pipes import *
 from zinggEC.enterprise.common.epipes import *
-from zinggEC.enterprise.common.EArguments import * 
+from zinggEC.enterprise.common.EArguments import *
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 
-args = EArguments() 
+args = EArguments()
 args.setModelId("100")
 args.setZinggDir("models")
 args.setNumPartitions(4)
@@ -131,10 +132,10 @@ args.setLabelDataSampleSize(0.5)
 
 # Field definitions
 
-fname = EFieldDefinition("fname", "string", MatchType.FUZZY) 
+fname = EFieldDefinition("fname", "string", MatchType.FUZZY)
 lname = EFieldDefinition("lname", "string", MatchType.FUZZY)
 stNo = EFieldDefinition("stNo", "string", MatchType.FUZZY)
-add1 = EFieldDefinition("add1","string", MatchType.FUZZY)
+add1 = EFieldDefinition("add1", "string", MatchType.FUZZY)
 add2 = EFieldDefinition("add2", "string", MatchType.FUZZY)
 city = EFieldDefinition("city", "string", MatchType.FUZZY)
 areacode = EFieldDefinition("areacode", "string", MatchType.FUZZY)
@@ -142,23 +143,23 @@ state = EFieldDefinition("state", "string", MatchType.FUZZY)
 dob = EFieldDefinition("dob", "string", MatchType.EXACT)
 ssn = EFieldDefinition("ssn", "string", MatchType.EXACT)
 
-fieldDefs = [ fname, lname, stNo, add1, add2, city, areacode, state, dob, ssn ]
+fieldDefs = [fname, lname, stNo, add1, add2, city, areacode, state, dob, ssn]
 args.setFieldDefinition(fieldDefs)
 
 # Input schema and pipe
 schema = "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn  string"
 
-inputPipe =  ECsvPipe("testFebrl", "examples/febrl/test.csv", schema)
+inputPipe = ECsvPipe("testFebrl", "examples/febrl/test.csv", schema)
 args.setData(inputPipe)
 
- Output pipe
+# Output pipe
 
 outputPipe = ECsvPipe("resultFebrl", "/tmp/febrlOutput")
 outputPipe.setHeader("true")
 args.setOutput(outputPipe)
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="danger" icon="right-long" %}
 The JSON config blocks below are the equivalent declarations of the Python above. Use either approach - Python API for in-notebook orchestration, JSON for shell-driven workflows. Community and Enterprise use the same JSON structure with the addition of `outputStats` in Enterprise.
 {% endhint %}
 
@@ -215,7 +216,7 @@ The JSON config blocks below are the equivalent declarations of the Python above
 
 #### JSON - Enterprise
 
-```jsonl
+```json
 {
   "fieldDefinition": [
     {
@@ -285,7 +286,7 @@ For full configuration schema with all parameters → [Configuration Schema](../
 
 Zingg scans your dataset using the field rules defined in Step 3 and selects the most informative pairs for labeling - edge cases where the model has the most to learn. Candidate pairs are written to `zinggDir/modelId`.
 
-#### **Python - Community**&#x20;
+#### **Python - Community**
 
 ```python
 options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ])
@@ -306,7 +307,7 @@ zingg.initAndExecute()
 #### CLI (both editions)
 
 ```bash
-./ zingg.sh-- phase findTrainingData-- conf config.json
+./zingg.sh --phase findTrainingData --conf config.json
 ```
 
 ### **Step 5: Label pairs**
@@ -315,7 +316,7 @@ Zingg shows you the pairs selected by `findTrainingData`. For each pair, decide:
 
 * `1` - Match: these records represent the same real-world entity
 * `0` - Not a match: these records are different entities
-* `2`  - Not sure: when you cannot decide
+* `2` - Not sure: when you cannot decide
 
 {% hint style="success" icon="right-long" %}
 Zingg selects the most informative pairs from your data - not random samples. Label until all field types and data variation patterns in your schema are represented. Repeat Steps 4–5 in a loop if needed. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
@@ -340,7 +341,7 @@ zingg.initAndExecute()
 #### CLI (both editions)
 
 ```bash
-./ zingg.sh-- phase label-- conf config.json-- showConcise = true
+./zingg.sh --phase label --conf config.json --showConcise=true
 ```
 
 The `--showConcise=true` flag shows only fields used for matching and hides `DONT_USE` fields.
@@ -370,7 +371,7 @@ zingg.initAndExecute()
 #### CLI (both editions)
 
 ```bash
-./ zingg.sh-- phase train-- conf config.json
+./zingg.sh --phase train --conf config.json
 ```
 
 ### **Step 7: Run match and resolve identities**
@@ -398,7 +399,7 @@ zingg.initAndExecute()
 #### CLI (both editions)
 
 ```bash
-./ zingg.sh-- phase match-- conf config.json
+./zingg.sh --phase match --conf config.json
 ```
 
 ### **Reading the match output**
@@ -412,9 +413,9 @@ For threshold guidance and full output column definitions → [Interpret Output 
 {% hint style="success" icon="right-long" %}
 Completed the walkthrough? Next steps:
 
-* Connect your own data - [Connect Data](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data)&#x20;
-* Full configuration reference - [Configure Zingg](configure-zingg.md)&#x20;
-* Understanding output scores - [Interpreting output](../interpreting-results/interpret-output-scores.md)&#x20;
+* Connect your own data - [Connect Data](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data)
+* Full configuration reference - [Configure Zingg](configure-zingg.md)
+* Understanding output scores - [Interpreting output](../interpreting-results/interpret-output-scores.md)
 {% endhint %}
 
 {% hint style="warning" icon="right-long" %}

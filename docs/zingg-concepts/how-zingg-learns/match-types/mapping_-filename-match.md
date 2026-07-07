@@ -121,7 +121,7 @@ The JSON `fieldDefinition` block below uses Enterprise-only match type `mapping_
 ### **CLI**
 
 ```bash
-./ scripts / zingg.sh-- phase findTrainingData-- conf config.json
+./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 {% endtab %}
 {% endtabs %}

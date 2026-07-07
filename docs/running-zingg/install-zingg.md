@@ -128,13 +128,15 @@ Use the `spark-submit` option passing the Zingg JAR, phase name, and config file
 
 {% code title="spark-submit example" expandable="true" %}
 ```bash
-aws emr create - cluster-- name "Add Spark Step Cluster" --release - label emr - 6.2.0 \
---applications Name = Zingg-- ec2 - attributes KeyName = myKey-- instance - \
-type<instance type> --instance - count<num instances> --steps Type = Spark, \
-Name = "Zingg", ActionOnFailure = CONTINUE, Args = [ --class, \
-zingg.spark.client.SparkClient, <s3 location of zingg.jar>, --phase, \
-<findTrainingData or match etc>, --conf, <local location of config.json> ]-- \
-use - default - roles
+aws emr create-cluster \
+  --name "Add Spark Step Cluster" \
+  --release-label emr-6.2.0 \
+  --applications Name=Zingg \
+  --ec2-attributes KeyName=myKey \
+  --instance-type <instance type> \
+  --instance-count <num instances> \
+  --steps Type=Spark,Name="Zingg",ActionOnFailure=CONTINUE,Args=[--class,zingg.spark.client.SparkClient,<s3 location of zingg.jar>,--phase,<findTrainingData or match etc>,--conf,<local location of config.json>] \
+  --use-default-roles
 ```
 {% endcode %}
 
@@ -187,14 +189,14 @@ Docker is the fastest way to get started locally. Use installing from release if
 ### Option A - Docker (recommended)
 
 ```bash
-docker pull zingg / zingg : 0.5.0
-docker run - it zingg / zingg : 0.5.0 bash
+docker pull zingg/zingg:0.5.0
+docker run -it zingg/zingg:0.5.0 bash
 ```
 
 If permission denied:
 
 ```bash
-docker run - v / tmp : / tmp - it zingg / zingg : 0.5.0 bash
+docker run -v /tmp:/tmp -it zingg/zingg:0.5.0 bash
 ```
 
 ### Option B - Installing from Release
@@ -208,11 +210,9 @@ Assumes Zingg 0.5.0 on Spark 3.5.0
 **Prerequisites**: Java JDK 11.0.23, Spark 3.5.0
 
 ```bash
-wget https :  //github.com/zinggAI/zingg/\
-releases/download/v0.5.0/\
-zingg-0.5.0-spark_3.5.tar.gz
+wget https://github.com/zinggAI/zingg/releases/download/v0.5.0/zingg-0.5.0-spark_3.5.tar.gz
 
-tar - xvf zingg - 0.5.0 - spark_3 .5.tar.gz
+tar -xvf zingg-0.5.0-spark_3.5.tar.gz
 ```
 
 ### Set up environment variables
@@ -220,11 +220,11 @@ tar - xvf zingg - 0.5.0 - spark_3 .5.tar.gz
 Add the following to `~/.bash_aliases` (Linux) or `~/.zshrc` (macOS):
 
 ```bash
-export JAVA_HOME = <path to jdk>
-export SPARK_HOME = <path to Apache Spark>
-export SPARK_MASTER = local[*]
-export ZINGG_HOME = <path to zingg>
-export PATH = $PATH : $JAVA_HOME / bin : $SPARK_HOME / bin : $SPARK_HOME / sbin : $ZINGG_HOME / scripts
+export JAVA_HOME=<path to jdk>
+export SPARK_HOME=<path to Apache Spark>
+export SPARK_MASTER=local[*]
+export ZINGG_HOME=<path to zingg>
+export PATH=$PATH:$JAVA_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$ZINGG_HOME/scripts
 ```
 
 Also verify that your machine's IP is added to `/etc/hosts` for localhost. Run `ifconfig` to find the IP and add it.
@@ -236,7 +236,7 @@ Run bash and print the aliases to confirm they are set correctly:
 ```bash
 echo $SPARK_HOME
 echo $JAVA_HOME
-java-- version
+java --version
 echo $ZINGG_HOME
 ```
 
@@ -244,7 +244,7 @@ Then run a sample program to confirm the installation works:
 
 ```bash
 cd zingg
-./ scripts / zingg.sh-- phase trainMatch-- conf examples / febrl / config.json
+./scripts/zingg.sh --phase trainMatch --conf examples/febrl/config.json
 ```
 
 This builds Zingg models and finds duplicates in `examples/febrl/test.csv`. You will see Zingg logs on the console and output files under `/tmp/zinggOutput` with matching records sharing the same cluster ID. If you see this, Zingg is correctly installed.
@@ -284,9 +284,8 @@ Set the environment variables:
 
 {% code title="Set environment variables" overflow="wrap" %}
 ```bash
-export ZINGG_SNOW_HOME =
-    ~ / zingg - enterprise - snowflake - <version> export ZINGG_SNOW_JAR =
-        ~ / zingg - enterprise - snowflake - <version>
+export ZINGG_SNOW_HOME=~/zingg-enterprise-snowflake-<version>
+export ZINGG_SNOW_JAR=~/zingg-enterprise-snowflake-<version>
 ```
 {% endcode %}
 
@@ -314,10 +313,14 @@ touch snowEnv.txt
 
 {% code title="snowEnv.txt" overflow="wrap" %}
 ```bash
-URL = {snowflake_url} USER = {snowflake_user_name} PASSWORD =
-    {snowflake_password} ROLE = {role} WAREHOUSE = {warehouse} DB =
-        {database_name} SCHEMA = {
-            schema} CLIENT_SESSION_KEEP_ALIVE_HEARTBEAT_FREQUENCY = 900
+URL={snowflake_url}
+USER={snowflake_user_name}
+PASSWORD={snowflake_password}
+ROLE={role}
+WAREHOUSE={warehouse}
+DB={database_name}
+SCHEMA={schema}
+CLIENT_SESSION_KEEP_ALIVE_HEARTBEAT_FREQUENCY=900
 ```
 {% endcode %}
 
@@ -327,9 +330,10 @@ URL = {snowflake_url} USER = {snowflake_user_name} PASSWORD =
 
 {% code title="Verify installation" overflow="wrap" expandable="true" %}
 ```bash
-./ scripts / zingg.sh-- properties -
-    file snowEnv.txt-- phase findTrainingData-- conf examples / febrl /
-        configSnow.json
+./scripts/zingg.sh \
+  --properties-file snowEnv.txt \
+  --phase findTrainingData \
+  --conf examples/febrl/configSnow.json
 ```
 {% endcode %}
 

@@ -151,7 +151,7 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 ### **CLI**
 
 ```bash
-./ scripts / zingg.sh-- phase findTrainingData-- conf config.json
+./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 {% endtab %}
 {% endtabs %}
@@ -159,10 +159,10 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 {% hint style="success" icon="right-long" %}
 **Related match types:**
 
-* `FUZZY_OPTIMISED` - same quality, better performance at scale (ENT)
+* `FUZZY_OPTIMISED` - same quality, better performance at scale
 * `ONLY_ALPHABETS_FUZZY` - strip numbers first, then apply fuzzy to letters only
 * `MAPPING_(FILENAME)` - handle completely different strings (nicknames, abbreviations) that `FUZZY` cannot bridge
 * `NULL_OR_BLANK` - combine with FUZZY to treat nulls as non-matches
 
-**Read more**: [Match Types](./) |  [Configure Zingg](../../../running-zingg/configure-zingg.md)  | [How Zingg Learns](../)
+**Read more**: [Match Types](./) | [Configure Zingg](../../../running-zingg/configure-zingg.md) | [How Zingg Learns](../)
 {% endhint %}

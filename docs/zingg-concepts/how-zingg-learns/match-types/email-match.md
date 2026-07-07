@@ -20,8 +20,6 @@ _**COMMENT FOR TEAM — Algorithm detail for EMAIL to be added here.**_
 
 ### What `EMAIL` matches and what it does not
 
-{% include "../../../.gitbook/includes/exact-match-behavior-table.md" %}
-
 ### When to use `EMAIL`
 
 <details>
@@ -106,7 +104,7 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 ### **CLI**
 
 ```bash
-./ scripts / zingg.sh-- phase findTrainingData-- conf config.json
+./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 {% endtab %}
 {% endtabs %}
@@ -120,4 +118,3 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 
 **Read more**: [Match types](./)
 {% endhint %}
-

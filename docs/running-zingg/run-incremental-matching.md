@@ -31,13 +31,13 @@ New records that do not find a match receive their own new Zingg ID. Records tha
 ### Step 1: Imports
 
 ```python
-from zingg.client import*
-from zingg.pipes import*
-from zinggEC.enterprise.common.epipes import*
-from zinggEC.enterprise.common.EArguments import*
+from zingg.client import *
+from zingg.pipes import *
+from zinggEC.enterprise.common.epipes import *
+from zinggEC.enterprise.common.EArguments import *
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zinggEC.enterprise.common.IncrementalArguments import*
-from zinggES.enterprise.spark.ESparkClient import*
+from zinggEC.enterprise.common.IncrementalArguments import *
+from zinggES.enterprise.spark.ESparkClient import *
 ```
 
 ### Step 2: Set up base args
@@ -121,10 +121,12 @@ args.setZinggDir("/tmp/models")
 args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
 
-schema = "recId string, fname string, \
-lname string, stNo string, add1 string, \
-add2 string, city string, areacode string,\
- state string, dob string, ssn string"
+schema = (
+    "recId string, fname string, "
+    "lname string, stNo string, add1 string, "
+    "add2 string, city string, areacode string, "
+    "state string, dob string, ssn string"
+)
 
 inputPipe = ECsvPipe("testFebrl", "examples/febrl/test.csv", schema)
 args.setData(inputPipe)
@@ -197,12 +199,7 @@ If using the CLI instead of the Python API, create an `incrementalConf.json` fil
         "delimiter": ",",
         "header": false
       },
-      "schema": "recId string, fname string,
-        lname string, stNo string,
-        add1 string, add2 string,
-        city string, state string,
-        areacode string, dob string,
-        ssn string"
+      "schema": "recId string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn string"
     }
   ],
   "outputTmp": {

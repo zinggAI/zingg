@@ -12,7 +12,7 @@ What changes is the identity infrastructure, operational control, and advanced m
 
 Community is the right place to start. Enterprise is where you go when identity resolution moves into production and needs to stay accurate, auditable, and stable over time.
 
-<table><thead><tr><th width="148.5625" valign="top"></th><th valign="top">Community</th><th valign="top">Enterprise Lite</th><th valign="top">Enterprise</th></tr></thead><tbody><tr><td valign="top">Who it is for</td><td valign="top">Teams that are evaluating Zingg, running proofs of concept, or operating on self-managed Spark infrastructure.</td><td valign="top">Teams that are moving entity resolution into production and need persistent entity IDs and incremental updates.</td><td valign="top">Teams who need full lifecycle control: seamless model upgrades, governance, explainability, and dictionary-based matching for complex data.</td></tr><tr><td valign="top">Identity graph</td><td valign="top"><code>Z Cluster</code> is a unique cluster identifier assigned per run.</td><td valign="top">Persistent <code>Zingg ID</code> (GUID). Stable across runs and safe to reference in CRMs, warehouses, and pipelines.</td><td valign="top">Persistent <code>Zingg ID</code>  plus seamless ID reassignment when you upgrade your model. Downstream systems stay intact across changes.</td></tr><tr><td valign="top">Matching capability</td><td valign="top">Probabilistic matching trained on your labeled pairs. Handles typos, abbreviations, and variations across any field type.</td><td valign="top">Probabilistic + deterministic matching in a single flow. Hard rules for trusted identifiers like SSN, tax ID, email. <code>Pass Through</code> for records that should appear in output but not influence matching.</td><td valign="top">Everything in Lite, plus dictionary-based matching (nicknames, aliases, company name variants). Standardize fields before and after matching. Match statistics and explainability for audit and governance.</td></tr><tr><td valign="top">Model operations</td><td valign="top">Train once and match as data arrives.</td><td valign="top">Incremental runs update the identity graph as new records arrive without retraining. Verify blocking before committing to training.</td><td valign="top">Everything in Lite, plus compare two trained models side by side before deploying. Upgrade models without disrupting <code>Zingg ID</code>s. Re-assign IDs from an old model to a new one.</td></tr><tr><td valign="top">Platform</td><td valign="top">Any Spark environment - Databricks, Fabric, EMR, GCP Dataproc, and local Spark.</td><td valign="top">All Community platforms, plus native Snowflake run (no Spark cluster required), Unity Catalog, and OneLake integration.</td><td valign="top">All platforms in Lite.</td></tr></tbody></table>
+<table><thead><tr><th width="148.5625" valign="top"></th><th valign="top">Community</th><th valign="top">Enterprise Lite</th><th valign="top">Enterprise</th></tr></thead><tbody><tr><td valign="top">Who it is for</td><td valign="top">Teams that are evaluating Zingg, running proofs of concept, or operating on self-managed Spark infrastructure.</td><td valign="top">Teams that are moving entity resolution into production and need persistent entity IDs and incremental updates.</td><td valign="top">Teams who need full lifecycle control: seamless model upgrades, governance, explainability, and dictionary-based matching for complex data.</td></tr><tr><td valign="top">Identity graph</td><td valign="top"><code>Z Cluster</code> is a unique cluster identifier assigned per run.</td><td valign="top">Persistent <code>Zingg ID</code> (GUID). Stable across runs and safe to reference in CRMs, warehouses, and pipelines.</td><td valign="top">Persistent <code>Zingg ID</code> plus seamless ID reassignment when you upgrade your model. Downstream systems stay intact across changes.</td></tr><tr><td valign="top">Matching capability</td><td valign="top">Probabilistic matching trained on your labeled pairs. Handles typos, abbreviations, and variations across any field type.</td><td valign="top">Probabilistic + deterministic matching in a single flow. Hard rules for trusted identifiers like SSN, tax ID, email. <code>Pass Through</code> for records that should appear in output but not influence matching.</td><td valign="top">Everything in Lite, plus dictionary-based matching (nicknames, aliases, company name variants). Standardize fields before and after matching. Match statistics and explainability for audit and governance.</td></tr><tr><td valign="top">Model operations</td><td valign="top">Train once and match as data arrives.</td><td valign="top">Incremental runs update the identity graph as new records arrive without retraining. Verify blocking before committing to training.</td><td valign="top">Everything in Lite, plus compare two trained models side by side before deploying. Upgrade models without disrupting <code>Zingg ID</code>s. Re-assign IDs from an old model to a new one.</td></tr><tr><td valign="top">Platform</td><td valign="top">Any Spark environment - Databricks, Fabric, EMR, GCP Dataproc, and local Spark.</td><td valign="top">All Community platforms, plus native Snowflake run (no Spark cluster required), Unity Catalog, and OneLake integration.</td><td valign="top">All platforms in Lite.</td></tr></tbody></table>
 
 ### When to choose each edition
 
@@ -49,7 +49,7 @@ Clients who move to Enterprise Lite are typically building Customer 360 views, p
 
 _Choose Enterprise._
 
-Enterprise is built for teams where entity resolution is a core data product, not a one-time project.&#x20;
+Enterprise is built for teams where entity resolution is a core data product, not a one-time project.
 
 The additional capabilities in Enterprise address two things: complex data patterns and model lifecycle control.
 
@@ -75,12 +75,10 @@ _Community → Enterprise_ is the move you make when you need persistent entity 
 
 Enterprise Lite is for production with stability. Enterprise is for production with full lifecycle control.
 
-
-
-Ready to move to Enterprise?&#x20;
+Ready to move to Enterprise?
 
 * See [Migrating to Enterprise](migrating-from-community-to-enterprise-content-to-be-added.md) for the full upgrade path
-* Contact to us [here](https://www.zingg.ai/company/contact/contact)
+* [Contact Us](https://www.zingg.ai/company/contact/contact)
 {% endhint %}
 
 {% hint style="success" icon="right-long" %}
@@ -88,6 +86,6 @@ Ready to move to Enterprise?&#x20;
 
 This is the foundational difference from Community, where `Z_Cluster` is non-persistent and cannot be safely stored downstream.
 
-* [Zingg ID](../concept-glossary.md#zingg-id)&#x20;
+* [Zingg ID](../concept-glossary.md#zingg-id)
 * [Z Cluster and Zingg ID](../z-cluster-and-zingg-id.md)
 {% endhint %}

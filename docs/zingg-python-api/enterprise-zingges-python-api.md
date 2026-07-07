@@ -51,15 +51,15 @@ All ZinggEC classes (`EArguments`, `EFieldDefinition`, `ECsvPipe`, `UCPipe`, `In
 ### Imports
 
 ```python
-from zingg.client import*
-from zingg.pipes import*
-from zinggEC.enterprise.common.ApproverArguments import*
-from zinggEC.enterprise.common.IncrementalArguments import*
-from zinggEC.enterprise.common.MappingMatchType import*
-from zinggEC.enterprise.common.epipes import*
-from zinggEC.enterprise.common.EArguments import*
+from zingg.client import *
+from zingg.pipes import *
+from zinggEC.enterprise.common.ApproverArguments import *
+from zinggEC.enterprise.common.IncrementalArguments import *
+from zinggEC.enterprise.common.MappingMatchType import *
+from zinggEC.enterprise.common.epipes import *
+from zinggEC.enterprise.common.EArguments import *
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zinggES.enterprise.spark.ESparkClient import*
+from zinggES.enterprise.spark.ESparkClient import *
 ```
 
 ### Execute Zingg Enterprise Plus phases
@@ -105,15 +105,15 @@ zinggIncr.initAndExecute()
 The full example matches the ZinggEC example exactly. The only difference is the `import` for `ESparkClient` and that the Spark client is invoked as `EZingg` from `zinggES.enterprise.spark.ESparkClient` instead of from `zinggEC`.
 
 ```python
-from zingg.client import*
-from zingg.pipes import*
-from zinggEC.enterprise.common.ApproverArguments import*
-from zinggEC.enterprise.common.IncrementalArguments import*
-from zinggEC.enterprise.common.MappingMatchType import*
-from zinggEC.enterprise.common.epipes import*
-from zinggEC.enterprise.common.EArguments import*
+from zingg.client import *
+from zingg.pipes import *
+from zinggEC.enterprise.common.ApproverArguments import *
+from zinggEC.enterprise.common.IncrementalArguments import *
+from zinggEC.enterprise.common.MappingMatchType import *
+from zinggEC.enterprise.common.epipes import *
+from zinggEC.enterprise.common.EArguments import *
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zinggES.enterprise.spark.ESparkClient import*
+from zinggES.enterprise.spark.ESparkClient import *
 
 args = EArguments()
 

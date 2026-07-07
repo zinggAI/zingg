@@ -42,7 +42,7 @@ zingg.initAndExecute()
 ### CLI
 
 ```bash
-./ zingg.sh-- phase match-- conf config.json
+./zingg.sh --phase match --conf config.json
 ```
 
 ### Read and View Output

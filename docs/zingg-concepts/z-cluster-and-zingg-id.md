@@ -8,9 +8,7 @@ description: >-
 
 Zingg writes a cluster identifier into your match output so every record belonging to the same resolved entity carries the same value. Community uses `Z_CLUSTER`, a non-persistent identifier. Enterprise uses `Zingg_ID`, a persistent globally unique identifier. This page covers the difference between the two, the lifecycle behaviour, and how to use Zingg ID in your downstream systems.
 
-<figure><img src="../.gitbook/assets/zcluster-vs-zinggid.png" alt=""><figcaption></figcaption></figure>
-
-### `Z_Cluster` - Community (Open Source)
+### `Z_Cluster` - Community
 
 When Zingg Community resolves a set of records into a cluster, it assigns a `Z Cluster` to every record in that cluster. All records in the same cluster share the same `Z Cluster` value in the output. This is how you identify which records resolved to the same entity.
 
@@ -36,7 +34,7 @@ If any downstream system needs a stable entity identifier to reference across ti
 </details>
 
 {% hint style="warning" icon="right-long" %}
-Need stable entity IDs across runs? [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact).&#x20;
+Need stable entity IDs across runs? [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact).
 {% endhint %}
 
 ### `Zingg_ID` - Enterprise
@@ -47,7 +45,7 @@ However, if cluster membership changes significantly between runs. For example, 
 
 #### **Lifecycle behaviour**
 
-<table><thead><tr><th width="306.1484375">Scenario</th><th>Zingg_ID behaviour</th></tr></thead><tbody><tr><td>New record matches an existing cluster</td><td>Inherits the cluster's existing <code>Zingg_ID</code></td></tr><tr><td>New record does not match any existing cluster</td><td>Receives a new <code>Zingg_ID</code> </td></tr><tr><td>Cluster merges with another in an incremental run</td><td>Merge is handled automatically</td></tr><tr><td>Cluster splits due to new data or updated training</td><td><code>Zingg_ID</code> may be reassigned</td></tr><tr><td>Human-approved cluster decisions from previous runs</td><td>Preserved, not overridden</td></tr><tr><td>Model is retrained</td><td>Use <a href="../running-zingg/reassign-zingg-id.md">Reassign <code>Zingg_ID</code> </a>to carry existing IDs to the new model</td></tr></tbody></table>
+<table><thead><tr><th width="306.1484375">Scenario</th><th>Zingg_ID behaviour</th></tr></thead><tbody><tr><td>New record matches an existing cluster</td><td>Inherits the cluster's existing <code>Zingg_ID</code></td></tr><tr><td>New record does not match any existing cluster</td><td>Receives a new <code>Zingg_ID</code></td></tr><tr><td>Cluster merges with another in an incremental run</td><td>Merge is handled automatically</td></tr><tr><td>Cluster splits due to new data or updated training</td><td><code>Zingg_ID</code> may be reassigned</td></tr><tr><td>Human-approved cluster decisions from previous runs</td><td>Preserved, not overridden</td></tr><tr><td>Model is retrained</td><td>Use <a href="../running-zingg/reassign-zingg-id.md">Reassign <code>Zingg_ID</code> </a>to carry existing IDs to the new model</td></tr></tbody></table>
 
 ### The `Zingg_ID` column in your output
 
@@ -61,7 +59,7 @@ Use this column to:
 * Pass a stable entity reference to downstream CRM, analytics, or compliance systems
 
 {% hint style="success" icon="right-long" %}
-**Read more:**&#x20;
+**Read more:**
 
 * [Interpret Output Scores](../interpreting-results/interpret-output-scores.md) - for the full reference of every Zingg output column
 * [Identity Graph](identity-graph.md) - how Zingg's resolved entities form a graph structure

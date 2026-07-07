@@ -130,7 +130,7 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 ### **CLI**
 
 ```bash
-./ scripts / zingg.sh-- phase findTrainingData-- conf config.json
+./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 {% endtab %}
 {% endtabs %}
@@ -140,9 +140,9 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 
 * `FUZZY` - use when variation is expected
 * `PINCODE` - EXACT-like for postal codes with format normalisation built in
-* `DONT_USE`  - exclude from matching entirely (vs EXACT which contributes\
+* `DONT_USE` - exclude from matching entirely (vs EXACT which contributes\
   a match signal)
-* `Deterministic vs Probabilistic Matching`  - combine EXACT fields with deterministic rules (Enterprise)
+* `Deterministic vs Probabilistic Matching` - combine EXACT fields with deterministic rules (Enterprise)
 
-**Read more**: [Match Types](./)&#x20;
+**Read more**: [Match Types](./)
 {% endhint %}

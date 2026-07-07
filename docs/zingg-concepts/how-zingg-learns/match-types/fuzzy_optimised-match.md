@@ -30,7 +30,7 @@ _**COMMENT FOR TEAM — Algorithm detail for FUZZY\_OPTIMISED to be added here.*
 <table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">Jonathan Smith</td><td valign="top">Jon Smith</td><td valign="top">Yes - same as <code>FUZZY</code></td></tr><tr><td valign="top">J. Smith</td><td valign="top">John Smith</td><td valign="top">Yes - same as <code>FUZZY</code></td></tr><tr><td valign="top">Jonathon</td><td valign="top">Jonathan</td><td valign="top">Yes - single transposition</td></tr><tr><td valign="top">Johnson</td><td valign="top">Smith</td><td valign="top">No - too different</td></tr><tr><td valign="top">IBM Corp</td><td valign="top">IBM Corporation</td><td valign="top">Yes - abbreviation variant</td></tr><tr><td valign="top">[null]</td><td valign="top">John Smith</td><td valign="top">Depends - add <code>NULL_OR_BLANK</code> to control null behaviour</td></tr></tbody></table>
 
 _**COMMENT FOR TEAM — Please extend this table with real Zingg test runs comparing `FUZZY` and `FUZZY_OPTIMISED` outputs on the same data to confirm they are identical or document**_\
-&#xNAN;_**any known differences.**_
+\&#xNAN;_**any known differences.**_
 
 ### When to use `FUZZY_OPTIMISED`
 
@@ -96,7 +96,7 @@ The JSON `fieldDefinition` block below uses Enterprise-only match type `FUZZY_OP
 ### **CLI**
 
 ```bash
-./ scripts / zingg.sh-- phase findTrainingData-- conf config.json
+./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 {% endtab %}
 {% endtabs %}
@@ -105,8 +105,8 @@ The JSON `fieldDefinition` block below uses Enterprise-only match type `FUZZY_OP
 **Related Match types:**
 
 * `FUZZY` - same quality, use in development and evaluation
-* `EMAIL_OPTIMISED` - optimised version of EMAIL (ENT)
-* `ONLY_ALPHABETS_FUZZY_OPTIMISED` - optimised version for address fields (ENT)
+* `EMAIL_OPTIMISED` - optimised version of EMAIL (Enterprise only)
+* `ONLY_ALPHABETS_FUZZY_OPTIMISED` - optimised version for address fields (Enterprise only)
 
 **Read more:** [Match Types](./)
 {% endhint %}

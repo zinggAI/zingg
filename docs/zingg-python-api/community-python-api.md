@@ -38,8 +38,8 @@ Full auto-generated method signatures for every class above are at the [Zingg Py
 ### Imports
 
 ```python
-from zingg.client import*
-from zingg.pipes import*
+from zingg.client import *
+from zingg.pipes import *
 ```
 
 ### Build the arguments object
@@ -214,8 +214,8 @@ zingg.initAndExecute()
 Complete working example combining all the steps above:
 
 ```python
-from zingg.client import*
-from zingg.pipes import*
+from zingg.client import *
+from zingg.pipes import *
 
 args = Arguments()
 

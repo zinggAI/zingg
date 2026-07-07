@@ -35,7 +35,7 @@ zingg.initAndExecute()
 ### CLI
 
 ```bash
-./ scripts / zingg.sh-- phase verifyBlocking-- conf config.json
+./scripts/zingg.sh --phase verifyBlocking --conf config.json
 ```
 {% endtab %}
 
@@ -54,7 +54,7 @@ zingg.initAndExecute()
 ### CLI
 
 ```bash
-./ scripts / zingg.sh-- phase verifyBlocking-- conf config.json
+./scripts/zingg.sh --phase verifyBlocking --conf config.json
 ```
 {% endtab %}
 

@@ -214,7 +214,7 @@ Ready to see entity resolution in action?
 * [Run Zingg on your local machine](../../running-zingg/quick-start-docker.md) - full workflow in 30 minutes
 {% endhint %}
 
-{% hint style="warning" icon="align-justify" %}
+{% hint style="warning" icon="right-long" %}
 Need entity resolution at production scale with persistent identity and incremental\
 processing?
 

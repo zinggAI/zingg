@@ -42,7 +42,7 @@ zingg.initAndExecute()
 ### CLI
 
 ```bash
-./ zingg.sh-- phase link-- conf config.json
+./zingg.sh --phase link --conf config.json
 ```
 
 {% hint style="success" icon="right-long" %}

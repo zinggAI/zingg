@@ -50,7 +50,7 @@ zingg.initAndExecute()
 ### **CLI**
 
 ```bash
-./ zingg.sh-- phase label-- conf config.json-- showConcise = true
+./zingg.sh --phase label --conf config.json --showConcise=true
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -75,7 +75,7 @@ zingg.initAndExecute()
 #### CLI
 
 ```bash
-./ scripts / zingg.sh-- phase updateLabel-- conf<location to conf.json>
+./scripts/zingg.sh --phase updateLabel --conf <location to conf.json>
 ```
 
 This opens the console labeler, which accepts the cluster ID of the pairs you want to update. Note: Keep a backup of your model folder before running `updateLabel`.

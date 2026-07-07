@@ -17,26 +17,28 @@ On Microsoft Fabric, data lives in OneLake. Use the `abfss://` path format to co
 ### Python API
 
 ```python
-from zingg.client import*
-from zingg.pipes import*
+from zingg.client import *
+from zingg.pipes import *
 
-schema = "rec_id string, fname string, \
-lname string, stNo string, add1 string, \
-add2 string, city string, \
-areacode string, state string, \
-dob string, ssn string"
+schema = (
+    "rec_id string, fname string, "
+    "lname string, stNo string, add1 string, "
+    "add2 string, city string, "
+    "areacode string, state string, "
+    "dob string, ssn string"
+)
 
 workspace_id = "<workspace-id>"
 lakehouse_id = "<lakehouse-id>"
 base_path = (
-    f "abfss://{workspace_id}@onelake"
-    ".dfs.fabric.microsoft.com/" f "{lakehouse_id}/Files"
+    f"abfss://{workspace_id}@onelake.dfs.fabric.microsoft.com/"
+    f"{lakehouse_id}/Files"
 )
 
-inputPipe = CsvPipe("inputpipe", f "{base_path}/yourdata.csv", schema)
+inputPipe = CsvPipe("inputpipe", f"{base_path}/yourdata.csv", schema)
 args.setData(inputPipe)
 
-outputPipe = CsvPipe("resultOutput", f "{base_path}/Output")
+outputPipe = CsvPipe("resultOutput", f"{base_path}/Output")
 args.setOutput(outputPipe)
 ```
 
@@ -48,27 +50,15 @@ args.setOutput(outputPipe)
     "name" : "inputpipe",
     "format" : "csv",
     "props" : {
-      "location" : "abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/"
-                   "<lakehouse-id>/Files/yourdata.csv"
+      "location" : "abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/<lakehouse-id>/Files/yourdata.csv"
     },
-    "schema" : "rec_id string, fname string,
-    lname string,
-    stNo string,
-    add1 string,
-    add2 string,
-    city string,
-    areacode string,
-    state string,
-    dob string,
-    ssn string "
+    "schema" : "rec_id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn string"
   } ],
   "output" : [ {
     "name" : "resultOutput",
     "format" : "csv",
     "props" : {
-      "location" :
-        "abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/"
-        "<lakehouse-id>/Files/Output"
+      "location" : "abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/<lakehouse-id>/Files/Output"
     }
   } ]
 }
@@ -84,8 +74,7 @@ args.setOutput(outputPipe)
     "name" : "parquetInput",
     "format" : "parquet",
     "props" : {
-      "path" : "abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/"
-               "<lakehouse-id>/Files/input.parquet"
+      "path" : "abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/<lakehouse-id>/Files/input.parquet"
     }
   } ]
 }
@@ -99,8 +88,7 @@ args.setOutput(outputPipe)
     "name" : "deltaInput",
     "format" : "delta",
     "props" : {
-      "location" : "abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/"
-                   "<lakehouse-id>/Tables/yourtable"
+      "location" : "abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/<lakehouse-id>/Tables/yourtable"
     }
   } ]
 }
@@ -108,14 +96,13 @@ args.setOutput(outputPipe)
 
 #### **Avro**
 
-```
+```json
 {
   "data" : [ {
     "name" : "avroInput",
     "format" : "avro",
     "props" : {
-      "path" : "abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/"
-               "<lakehouse-id>/Files/input.avro"
+      "path" : "abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/<lakehouse-id>/Files/input.avro"
     }
   } ]
 }

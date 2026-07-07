@@ -26,8 +26,8 @@ Full parameter reference with all config options and schema → [Configuration S
 ### Step 1: Verify installation
 
 ```python
-from zingg.client import*
-from zingg.pipes import*
+from zingg.client import *
+from zingg.pipes import *
 ```
 
 Verify in your notebook
@@ -58,7 +58,7 @@ Use the same `modelId` in all subsequent phases for this run.
 
 #### JSON
 
-```
+```json
 {
   "modelId" : "100",
   "zinggDir" : "models",
@@ -198,15 +198,16 @@ args.setOutput(outputPipe)
       "delimiter" : ",",
       "header" : "true"
     },
-    "schema" : "id string, fname string, lname string, stNo string, add1 "
-               "string, add2 string, city string, areacode string, state "
-               "string, dob string, ssn string"
+    "schema" : "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn string"
   } ],
   "output" : [ {
     "name" : "resultFebrl",
     "format" : "csv",
-    "props" :
-      {"path" : "/tmp/febrlOutput", "delimiter" : ",", "header" : "true"}
+    "props" : {
+      "path" : "/tmp/febrlOutput",
+      "delimiter" : ",",
+      "header" : "true"
+    }
   } ]
 }
 ```

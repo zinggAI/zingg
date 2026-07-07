@@ -48,13 +48,13 @@ Full auto-generated method signatures for every class are at the [Zingg Enterpri
 ### Imports
 
 ```python
-from zingg.client import*
-from zingg.pipes import*
-from zinggEC.enterprise.common.ApproverArguments import*
-from zinggEC.enterprise.common.IncrementalArguments import*
-from zinggEC.enterprise.common.MappingMatchType import*
-from zinggEC.enterprise.common.epipes import*
-from zinggEC.enterprise.common.EArguments import*
+from zingg.client import *
+from zingg.pipes import *
+from zinggEC.enterprise.common.ApproverArguments import *
+from zinggEC.enterprise.common.IncrementalArguments import *
+from zinggEC.enterprise.common.MappingMatchType import *
+from zinggEC.enterprise.common.epipes import *
+from zinggEC.enterprise.common.EArguments import *
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 ```
 
@@ -356,7 +356,7 @@ For the full incremental matching workflow → [Run Incremental Matching](../run
 `ApproverArguments` is the Enterprise workflow for human-reviewed cluster approval — where domain experts approve or reject specific clusters before they enter the production identity graph.
 
 ```python
-from zinggEC.enterprise.common.ApproverArguments import*
+from zinggEC.enterprise.common.ApproverArguments import *
 ```
 
 #### Build approver arguments
@@ -380,7 +380,7 @@ apprArgs.setApprovalQuery(
 
 ```python
 destPipe = ECsvPipe("approved", "/tmp/approvedClusters")
-               apprArgs.setDestination(destPipe)
+apprArgs.setDestination(destPipe)
 ```
 
 #### Execute approval phase
@@ -402,13 +402,13 @@ zinggAppr.initAndExecute()
 Complete working example combining all the above.
 
 ```python
-from zingg.client import*
-from zingg.pipes import*
-from zinggEC.enterprise.common.ApproverArguments import*
-from zinggEC.enterprise.common.IncrementalArguments import*
-from zinggEC.enterprise.common.MappingMatchType import*
-from zinggEC.enterprise.common.epipes import*
-from zinggEC.enterprise.common.EArguments import*
+from zingg.client import *
+from zingg.pipes import *
+from zinggEC.enterprise.common.ApproverArguments import *
+from zinggEC.enterprise.common.IncrementalArguments import *
+from zinggEC.enterprise.common.MappingMatchType import *
+from zinggEC.enterprise.common.epipes import *
+from zinggEC.enterprise.common.EArguments import *
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 
 args = EArguments()

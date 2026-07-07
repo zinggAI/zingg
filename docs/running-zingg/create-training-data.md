@@ -25,7 +25,7 @@ args.setLabelDataSampleSize(0.5)
 ### Run findTrainingData
 
 ```bash
-./ zingg.sh-- phase findTrainingData-- conf config.json
+./zingg.sh --phase findTrainingData --conf config.json
 ```
 
 #### Using Python API
@@ -92,7 +92,7 @@ zingg.initAndExecute()
 #### CLI
 
 ```bash
-./ zingg.sh-- phase findTrainingData-- conf config.json
+./zingg.sh --phase findTrainingData --conf config.json
 ```
 
 Enterprise also provides the `findAndLabel` combined phase, which runs `findTrainingData` and `label` together in a single call. Use this for smaller datasets where `findTrainingData` completes quickly:

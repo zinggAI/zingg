@@ -32,7 +32,7 @@ zingg.initAndExecute()
 ### CLI
 
 ```bash
-./ zingg.sh-- phase train-- conf config.json
+./zingg.sh --phase train --conf config.json
 ```
 {% endtab %}
 

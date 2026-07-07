@@ -22,14 +22,14 @@ that cluster formed. You can see which record pairs were compared, what their si
 ### Step 1: Import
 
 ```python
-from zingg.client import*
-from zingg.pipes import*
-from zinggEC.enterprise.common.EArguments import*
-from zinggEC.enterprise.common.epipes import*
+from zingg.client import *
+from zingg.pipes import *
+from zinggEC.enterprise.common.EArguments import *
+from zinggEC.enterprise.common.epipes import *
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zinggEC.enterprise.common.ExplainArguments import*
-from zinggEC.enterprise.common.EClientOptions import*
-from zinggES.enterprise.spark.ESparkClient import*
+from zinggEC.enterprise.common.ExplainArguments import *
+from zinggEC.enterprise.common.EClientOptions import *
+from zinggES.enterprise.spark.ESparkClient import *
 ```
 
 ### Step 2: Set up `ExplainArgument`

@@ -32,8 +32,8 @@ zingg.initAndExecute()
 ### **CLI**
 
 ```bash
-./ scripts / zingg.sh-- phase generateDocs-- conf<location to conf.json> \
---showConcise = true
+./scripts/zingg.sh --phase generateDocs --conf <location to conf.json> \
+  --showConcise=true
 ```
 {% endtab %}
 
@@ -56,8 +56,8 @@ zingg.initAndExecute()
 ### CLI
 
 ```bash
-./ scripts / zingg.sh-- phase generateDocs-- conf<location to conf.json> \
---showConcise = true
+./scripts/zingg.sh --phase generateDocs --conf <location to conf.json> \
+  --showConcise=true
 ```
 {% endtab %}
 

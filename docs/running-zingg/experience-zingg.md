@@ -37,13 +37,13 @@ docker run -it zingg/zingg:0.5.0 bash
 If you see a permission error, use:
 
 ```bash
-docker run - v / tmp : / tmp - it zingg / zingg : 0.5.0 bash
+docker run -v /tmp:/tmp -it zingg/zingg:0.5.0 bash
 ```
 
 #### Step 3: Run match using the bundled FEBRL sample data and pre-trained model
 
 ```bash
-./ scripts / zingg.sh-- phase match-- conf examples / febrl / config.json
+./scripts/zingg.sh --phase match --conf examples/febrl/config.json
 ```
 
 {% hint style="success" icon="right-long" %}
