@@ -44,14 +44,19 @@ public class SparkMLPipeline implements Serializable {
 	private LogisticRegression lr;
 	private Transformer transformer;
 	private VectorValueExtractor vve;
-	private ModelColumnHelper columnHelper;
+	protected ModelColumnHelper columnHelper;
 
 	public SparkMLPipeline() {
 	}
 
-	public SparkMLPipeline(Map<FieldDefinition, Feature<DataType>> featurers, ModelColumnHelper columnHelper) {
+	public SparkMLPipeline(Map<FieldDefinition, Feature<DataType>> featurers, ModelColumnHelper columnHelper, SparkFeatureCreators featureCreators) {
 		this.columnHelper = columnHelper;
+		this.featureCreators = featureCreators;
 		buildPipeline(featurers, columnHelper);
+	}
+
+	public SparkMLPipeline(Map<FieldDefinition, Feature<DataType>> featurers, ModelColumnHelper columnHelper) {
+		this(featurers, columnHelper, new SparkFeatureCreators(featurers, columnHelper));
 	}
 
 	public void buildPipeline(Map<FieldDefinition, Feature<DataType>> featurers, ModelColumnHelper columnHelper) {
@@ -72,7 +77,6 @@ public class SparkMLPipeline implements Serializable {
 	}
 
 	protected SparkFeatureCreators getFeatureCreators(Map<FieldDefinition, Feature<DataType>> featurers){
-		featureCreators = new SparkFeatureCreators(featurers, columnHelper);
 		return featureCreators;
 	} 
 
