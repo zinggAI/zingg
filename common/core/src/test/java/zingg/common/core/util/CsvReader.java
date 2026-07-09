@@ -6,8 +6,9 @@ import com.opencsv.exceptions.CsvException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +45,14 @@ public class CsvReader implements ICsvReader {
         return records;
     }
 
-    private CSVReader getCSVReader(String source) throws IOException, URISyntaxException {
-        File file = new File(Objects.requireNonNull(this.getClass().getClassLoader().getResource(source)).toURI());
-        FileReader filereader = new FileReader(file);
-        CSVReader csvReader = new CSVReaderBuilder(filereader)
+    private CSVReader getCSVReader(String source) throws IOException {
+        InputStream is = Objects.requireNonNull(
+            this.getClass().getClassLoader().getResourceAsStream(source),
+            "Resource not found on classpath: " + source
+        );
+        return new CSVReaderBuilder(new InputStreamReader(is))
                 .withSkipLines(1)
                 .build();
-        return csvReader;
     }
 
 }

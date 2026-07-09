@@ -36,6 +36,11 @@ public class TestHashFunction {
             public Object apply(String s, Integer integer, String column) {
                 return null;
             }
+
+            @Override
+            public Object applyToValue(Object value) {
+                return null;
+            }
         };
 
         String expectedName = "hashFunction";
@@ -67,6 +72,11 @@ public class TestHashFunction {
 
             @Override
             public Object apply(String s, Integer integer, String column) {
+                return null;
+            }
+
+            @Override
+            public Object applyToValue(Object value) {
                 return null;
             }
         };
@@ -107,6 +117,11 @@ public class TestHashFunction {
             public Object apply(String s, Integer integer, String column) {
                 return null;
             }
+
+            @Override
+            public Object applyToValue(Object value) {
+                return null;
+            }
         };
 
         Boolean isUdf = false;
@@ -141,10 +156,15 @@ public class TestHashFunction {
             public Object apply(String s, Integer integer, String column) {
                 return null;
             }
+
+            @Override
+            public Object applyToValue(Object value) {
+                return null;
+            }
         };
         Integer value = 10;
         String column = "inputColumn";
         assertEquals(null, hashFunction.getAs(value, column));
     }
-    
+
 }
