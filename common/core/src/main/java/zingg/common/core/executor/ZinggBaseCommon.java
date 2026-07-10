@@ -63,6 +63,8 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
     public abstract IZArgs getArgs();
 
 	public abstract void setArgs(IZArgs a);
+
+	public abstract void track(boolean collectMetrics);
    
 	public void postMetrics() {
         boolean collectMetrics = getArgs().getCollectMetrics();
@@ -79,6 +81,8 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
         Analytics.trackPropValue(Metric.OS_ARCH, collectMetrics); 
         Analytics.trackPropValue(Metric.OS_NAME, collectMetrics); 
         Analytics.trackDomain(Metric.DOMAIN, collectMetrics);
+
+		track(collectMetrics); // populates dataFormat, outputFormat, numTotalFields, etc.
         Analytics.postEvent(zinggOption.getName(), collectMetrics);
 	}
 
