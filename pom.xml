@@ -30,22 +30,6 @@
 	</modules>
 	<profiles>
 		<profile>
-			<id>spark-3.4</id>
-			<activation>
-				<property>
-					<name>spark</name>
-					<value>3.4</value>
-				</property>
-			</activation>
-			<properties>
-				<spark.version>3.4.0</spark.version>
-				<scala.version>2.12.17</scala.version>
-				<spark.binary.version>3.4</spark.binary.version>
-				<scala.binary.version>2.12</scala.binary.version>
-				<graphframes.version>0.10.0</graphframes.version>
-			</properties>
-		</profile>
-		<profile>
 			<id>spark-3.5</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
