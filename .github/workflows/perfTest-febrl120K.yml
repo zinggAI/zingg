@@ -1,14 +1,14 @@
 name: performance-test-febrl120K
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: "0 0 */3 * *" # runs every 3 days at 00 AM UTC
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 */3 * *" # runs every 3 days at 00 AM UTC
 
 jobs:
-  perf-test:
-    uses: ./.github/workflows/perfTest-reusable.yml
-    with:
-      test_name: performance-test-febrl120K
-      input_file: "zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
-    secrets: inherit
+  perf-test:
+    uses: ./.github/workflows/perfTest-reusable.yml
+    with:
+      test_name: performance-test-febrl120K
+      input_file: "zingg_community_performance_reports/perf_test/perfTestInput_febrl120K.json"
+    secrets: inherit
