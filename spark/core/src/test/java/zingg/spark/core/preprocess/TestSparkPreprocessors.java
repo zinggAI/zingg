@@ -8,7 +8,7 @@ import org.apache.spark.sql.types.DataType;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.spark.core.TestSparkBase;
-import zingg.common.client.IZArgs;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.WithSession;

@@ -3,7 +3,7 @@ package zingg.common.core.preprocess.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import zingg.common.core.preprocess.stopwords.model.PriorStopWordProcess;
+import zingg.common.core.preprocess.model.PriorStopWordProcess;
 
 public class PreprocessTestData {
 
@@ -32,5 +32,5 @@ public class PreprocessTestData {
 
         return sample;
     }
-    
+
 }

@@ -71,7 +71,7 @@
 			"name":"output", 
 			"format":"csv", 
 			"props": {
-				"location": "/tmp/zinggOutput",
+				"path": "/tmp/zinggOutput",
 				"delimiter": ",",
 				"header":true
 			}
@@ -80,7 +80,7 @@
 			"name":"test1", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/febrl5M/febrl_data_5M_part1.csv.gz",
+				"path": "examples/febrl5M/febrl_data_5M_part1.csv.gz",
 				"delimiter": ",",
 				"header":true
 			},
@@ -90,7 +90,7 @@
 			"name":"test2", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/febrl5M/febrl_data_5M_part2.csv.gz",
+				"path": "examples/febrl5M/febrl_data_5M_part2.csv.gz",
 				"delimiter": ",",
 				"header":false					
 			},
@@ -100,7 +100,7 @@
 			"name":"test3", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/febrl5M/febrl_data_5M_part3.csv.gz",
+				"path": "examples/febrl5M/febrl_data_5M_part3.csv.gz",
 				"delimiter": ",",
 				"header":false					
 			},

@@ -1,13 +1,15 @@
 package zingg.common.core.executor;
 
 import java.io.IOException;
+import java.rmi.NoSuchObjectException;
+import java.util.Objects;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.IArguments;
-import zingg.common.client.Arguments;
-import zingg.common.client.ArgumentsUtil;
+import zingg.common.client.arguments.ArgumentServiceImpl;
+import zingg.common.client.arguments.model.IArguments;
+import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.Pipe;
@@ -34,8 +36,8 @@ public class ExecutorTester<S, D, R, C, T>{
 		setupArgs();
 	}
 
-	public IArguments setupArgs(String configFile, String phase) throws ZinggClientException, IOException {
-		args = new ArgumentsUtil<Arguments>(Arguments.class).createArgumentsFromJSON(getClass().getClassLoader().getResource(configFile).getFile(), phase);
+	public IArguments setupArgs(String configFile, String phase) throws ZinggClientException, NoSuchObjectException {
+		args = new ArgumentServiceImpl<Arguments>(Arguments.class).loadArguments(Objects.requireNonNull(getClass().getClassLoader().getResource(configFile)).getFile());
 		args = updateLocation(args);
 		args.setModelId(modelId);
 		return args;
@@ -43,10 +45,10 @@ public class ExecutorTester<S, D, R, C, T>{
 
 	public IArguments updateLocation(IArguments args){
 		for (Pipe p: args.getData()) {
-			if (p.getProps().containsKey("location")) {
-				String testOneFile = getClass().getClassLoader().getResource(p.get("location")).getFile();
+			if (p.getProps().containsKey("path")) {
+				String testOneFile = getClass().getClassLoader().getResource(p.get("path")).getFile();
 				// correct the location of test data
-				p.setProp("location", testOneFile);
+				p.setProp("path", testOneFile);
 			}
 		}
 		return args;

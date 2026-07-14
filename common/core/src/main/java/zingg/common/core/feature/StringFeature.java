@@ -30,8 +30,7 @@ public class StringFeature extends BaseFeature<String> {
 		// important
 		// then do cosine or something
 		if (f.getMatchType().contains(MatchTypes.FUZZY)) {
-			addSimFunction(new AffineGapSimilarityFunction());
-			addSimFunction(new JaroWinklerFunction());
+			addSimFunctionsForFuzzyString();
 		} 		
 		if (f.getMatchType().contains(MatchTypes.TEXT)) {
 			addSimFunction(new JaccSimFunction());			
@@ -60,6 +59,11 @@ public class StringFeature extends BaseFeature<String> {
 		if (f.getMatchType().contains(MatchTypes.ONLY_ALPHABETS_EXACT)) {
 			addSimFunction(new OnlyAlphabetsExactSimilarity());
 		}
+	}
+
+	public void addSimFunctionsForFuzzyString() {
+		addSimFunction(new AffineGapSimilarityFunction());
+		addSimFunction(new JaroWinklerFunction());
 	}
 
 }

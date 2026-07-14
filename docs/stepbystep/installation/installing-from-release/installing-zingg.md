@@ -16,4 +16,4 @@ Move the above folder to zingg.
 
 > `export ZINGG_HOME=path to zingg`
 
-> `export PATH=$PATH:$JAVA_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:ZINGG_HOME/scripts`
+> `export PATH=$PATH:$JAVA_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$ZINGG_HOME/scripts`

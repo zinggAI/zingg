@@ -33,24 +33,18 @@ public abstract class TestExecutorsGeneric<S, D, R, C, T> {
 
 	protected abstract DFObjectUtil<S,D,R,C> getDFObjectUtil();
 
-	public abstract List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException;
+	public abstract List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException, NoSuchMethodException;
 
 	//public abstract void tearDown();	
 
 	 @Test
-	public void testExecutors() throws ZinggClientException, IOException {
-		 try {
-			 List<ExecutorTester<S, D, R, C, T>> executorTesterList = getExecutors();
-			 for (ExecutorTester<S, D, R, C, T> executorTester : executorTesterList) {
-				 executorTester.setupArgs();
-				 executorTester.initAndExecute(session);
-				 executorTester.validateResults();
-			 }
-		 } catch (Throwable throwable) {
-			throwable.printStackTrace();
-			throw new ZinggClientException("Exception occurred while running one or more test executors, " + throwable.getMessage());
+	public void testExecutors() throws ZinggClientException, IOException, NoSuchMethodException {
+		 List<ExecutorTester<S, D, R, C, T>> executorTesterList = getExecutors();
+		 for (ExecutorTester<S, D, R, C, T> executorTester : executorTesterList) {
+			 executorTester.setupArgs();
+			 executorTester.initAndExecute(session);
+			 executorTester.validateResults();
 		 }
-
 	}
 
 	//model id getter

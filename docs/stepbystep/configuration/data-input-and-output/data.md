@@ -15,7 +15,7 @@ For example, for the CSV under [examples/febrl/test.csv](../../../../examples/fe
     "props" : {
       "delimiter" : ",",
       "header" : "true",
-      "location" : "examples/febrl/test.csv"
+      "path" : "examples/febrl/test.csv"
     },
     "schema" : "{
       \"type\":\"struct\",

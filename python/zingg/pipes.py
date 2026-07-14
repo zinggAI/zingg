@@ -38,7 +38,7 @@ class Pipe:
 
     :param name: name of the pipe
     :type name: String
-    :param format: formate of pipe e.g. bigquery,csv, etc.
+    :param format: format of pipe e.g. bigquery,csv, etc.
     :type format: Format
     """
 
@@ -251,4 +251,26 @@ class SnowflakePipe(Pipe):
         :param dbtable: provide bucket parameter.
         :type dbtable: String
         """
-        Pipe.addProperty(self, "dbtable", dbtable)     
+        Pipe.addProperty(self, "dbtable", dbtable)
+
+class UCPipe(Pipe):
+    """ Pipe Class for working with Delta tables in Unity Catalog of Databricks
+
+    :param name: name of the pipe
+    :type name: String
+    :param table: table from where we read data in the Catalog Volumes
+    :type table: String
+    """
+    def __init__(self, name, table):
+        setupPipes()
+        Pipe.__init__(self, name, JPipe.FORMAT_UNITYCATALOG)
+        if(table != None):
+            Pipe.addProperty(self, getFilePipe().TABLE, table)
+
+    def setTable(self, table):
+        """ Method to set table in pipe
+
+        :param table: table from where we read data
+        :type table: String
+        """
+        Pipe.addProperty(self, getFilePipe().TABLE, table)

@@ -47,7 +47,7 @@ public class VerticalDisplayUtility<S, D, R, C> {
             }
             return dfObjectUtil.getDFFromObjectList(samples, VerticalDisplayTwoRowModel.class);
         } catch (Exception exception) {
-            throw new ZinggClientException("Error occurred while converting to vertical, " + exception.getMessage());
+            throw new ZinggClientException("Error occurred while converting to vertical, ", exception);
         }
     }
 

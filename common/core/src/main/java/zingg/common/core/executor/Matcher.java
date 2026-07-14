@@ -2,12 +2,11 @@ package zingg.common.core.executor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IArguments;
-import zingg.common.client.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.arguments.model.IArguments;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.cols.ISelectedCols;
 import zingg.common.client.cols.PredictionColsSelector;
 import zingg.common.client.cols.ZidAndFieldDefSelector;
@@ -32,8 +31,7 @@ import zingg.common.core.util.Metric;
 public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements IPreprocessors<S,D,R,C,T> {
 
 	private static final long serialVersionUID = 1L;
-	protected static String name = "zingg.Matcher";
-	public static final Log LOG = LogFactory.getLog(Matcher.class);   
+	public static final Log LOG = LogFactory.getLog(Matcher.class);
 	protected IMatchOutputBuilder<S,D,R,C> matchOutputBuilder; 
 	ZFrame<D, R, C> output = null;
 	boolean toWrite = true;
@@ -148,7 +146,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		return dupes;
 	}
 
-	protected ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
+	public ZFrame<D,R,C> getActualDupes(ZFrame<D,R,C> blocked, ZFrame<D,R,C> testData) throws Exception, ZinggClientException{
 		return getActualDupes(blocked, testData, getPredictionFilter(), getIPairBuilder(), getPredictionColsSelector());
 	}
 
@@ -179,7 +177,7 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			// read input, filter, remove self joins
 			ZFrame<D,R,C>  testDataOriginal = getTestData();
 			testDataOriginal =  getFieldDefColumnsDS(testDataOriginal).cache();
-			ZFrame<D,R,C>  testData = preprocess(testDataOriginal);
+			ZFrame<D,R,C>  testData = preprocess(testDataOriginal).cache();
 			//testData = testData.repartition(args.getNumPartitions(), testData.col(ColName.ID_COL));
 			//testData = dropDuplicates(testData);
 			long count = testData.count();
@@ -198,12 +196,10 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 			//dupesActual.explain();
 			//dupesActual.toJavaRDD().saveAsTextFile("/tmp/zdupes");
 			
-			writeOutput(testDataOriginal, dupesActual);		
+			writeOutput(getOutput(testDataOriginal, dupesActual));		
 			
 		} catch (Exception e) {
-			if (LOG.isDebugEnabled()) e.printStackTrace();
-			e.printStackTrace();
-			throw new ZinggClientException(e.getMessage());
+			throw new ZinggClientException("Error in matching phase ", e);
 		}
     }
 
@@ -218,24 +214,26 @@ public abstract class Matcher<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implements
 		return this.matchOutputBuilder;
 	}
 
-	
-	public void writeOutput( ZFrame<D,R,C>  testDataOriginal,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException {
+	public ZFrame<D,R,C> getOutput(ZFrame<D,R,C>  testDataOriginal,  ZFrame<D,R,C>  dupesActual) throws ZinggClientException, Exception{
+		ZFrame<D, R, C> graphWithScores = getMatchOutputBuilder().getOutput(testDataOriginal, dupesActual);
+		return graphWithScores;
+	}
+
+	public void writeOutput( ZFrame<D,R,C>  graphWithScores) throws ZinggClientException {
 		try{
 		//input dupes are pairs
 		///pick ones according to the threshold by user
 		//all clusters consolidated in one place
-		ZFrame<D, R, C> graphWithScores = getMatchOutputBuilder().getOutput(testDataOriginal, dupesActual);
 		setOutput(graphWithScores);
 		if (args.getOutput() != null && toWrite) {
 				getPipeUtil().write(graphWithScores, args.getOutput());
 		}
 		}
 		catch(Exception e) {
-			e.printStackTrace(); 
+            throw new ZinggClientException("Exception occurred while getting output, ", e);
 		}
 		
 	}
-
 	
     protected abstract StopWordsRemover<S,D,R,C,T> getStopWords();
 	

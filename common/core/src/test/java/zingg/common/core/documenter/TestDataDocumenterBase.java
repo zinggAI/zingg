@@ -2,8 +2,8 @@ package zingg.common.core.documenter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
+import java.rmi.NoSuchObjectException;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -11,10 +11,11 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import zingg.common.client.Arguments;
-import zingg.common.client.ArgumentsUtil;
+import zingg.common.client.arguments.ArgumentServiceImpl;
+import zingg.common.client.arguments.IArgumentService;
+import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
@@ -37,16 +38,10 @@ public abstract class TestDataDocumenterBase<S,D,R,C,T> {
     protected abstract DataDocumenter<S,D,R,C,T> getDataDocumenter(IContext<S,D,R,C,T> context, IArguments args, ClientOptions options);
 
     @BeforeEach
-	public void setUp(){
-		try {
-			String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
-			ArgumentsUtil<Arguments> argsUtil = new ArgumentsUtil<Arguments>(Arguments.class);
-			docArguments = argsUtil.createArgumentsFromJSON(configPath);
-		} catch (Throwable e) {
-			e.printStackTrace();
-			LOG.info("Unexpected exception received " + e.getMessage());
-			fail(e.getMessage());
-		}
+	public void setUp() throws NoSuchObjectException, ZinggClientException {
+		String configPath = getClass().getResource("../../../../documenter/config.json").getFile();
+		IArgumentService<Arguments> argsUtil = new ArgumentServiceImpl<>(Arguments.class);
+		docArguments = argsUtil.loadArguments(configPath);
 	}
 
 	@Test
@@ -57,7 +52,7 @@ public abstract class TestDataDocumenterBase<S,D,R,C,T> {
 		
 		for (int i = 0; i < dataPipeArr.length; i++) {
 			String file = getClass().getResource("../../../../documenter/test.csv").getFile();
-			dataPipeArr[i].setProp(FilePipe.LOCATION, file);
+			dataPipeArr[i].setProp(FilePipe.PATH, file);
 		}
 		dataDoc.setData(context.getPipeUtil().read(false, false, dataPipeArr));
 

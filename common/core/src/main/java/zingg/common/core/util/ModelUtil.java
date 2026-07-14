@@ -6,7 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -18,7 +18,7 @@ import zingg.common.core.feature.FeatureFactory;
 import zingg.common.core.model.Model;
 
 
-public abstract class ModelUtil<S,T, D,R,C> {
+public abstract class ModelUtil<S,D,R,C,T> {
 
     public static final Log LOG = LogFactory.getLog(ModelUtil.class);
     protected Map<FieldDefinition, Feature<T>> featurers;
@@ -45,11 +45,9 @@ public abstract class ModelUtil<S,T, D,R,C> {
 			LOG.info("Finished reading internal configurations and functions");
 			}
 		}
-		catch(Throwable t) {
+		catch(Exception e) {
 			LOG.warn("Unable to initialize internal configurations and functions");
-            t.printStackTrace();
-			if (LOG.isDebugEnabled()) t.printStackTrace();
-			throw new ZinggClientException("Unable to initialize internal configurations and functions");
+			throw new ZinggClientException("Unable to initialize internal configurations and functions", e);
 		}
 	}
 
@@ -62,7 +60,7 @@ public abstract class ModelUtil<S,T, D,R,C> {
         this.featurers = featurers;
     }
 
-	public Model<S,T,D,R,C> createModel(ZFrame<D,R,C> positives,
+	public Model<S,D,R,C,T> createModel(ZFrame<D,R,C> positives,
         ZFrame<D,R,C> negatives, boolean isLabel, IArguments args) throws Exception, ZinggClientException {
         LOG.info("Learning similarity rules");
         ZFrame<D,R,C> posLabeledPointsWithLabel = positives.withColumn(ColName.MATCH_FLAG_COL, ColValues.MATCH_TYPE_MATCH);
@@ -76,15 +74,15 @@ public abstract class ModelUtil<S,T, D,R,C> {
                     + posLabeledPointsWithLabel.count() + ", "
                     + negLabeledPointsWithLabel.count());
         }
-        Model<S,T, D,R,C> model = getModel(isLabel, args);
+        Model<S,D,R,C,T> model = getModel(isLabel, args);
         model.register();
         model.fit(posLabeledPointsWithLabel, negLabeledPointsWithLabel);
         return model;
     }
 
-    public abstract Model<S,T,D,R,C> getModel(boolean isLabel, IArguments args) throws ZinggClientException;
+    public abstract Model<S,D,R,C,T> getModel(boolean isLabel, IArguments args) throws ZinggClientException;
 
-    public abstract Model<S,T,D,R,C> loadModel(boolean isLabel, IArguments args, IModelHelper mh) throws ZinggClientException;
+    public abstract Model<S,D,R,C,T> loadModel(boolean isLabel, IArguments args, IModelHelper mh) throws ZinggClientException;
 
 
 

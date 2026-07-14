@@ -15,7 +15,7 @@ import zingg.common.core.documenter.DataDocumenter;
 import zingg.common.core.documenter.TestDataDocumenterBase;
 import zingg.spark.core.TestSparkBase;
 import zingg.common.client.ClientOptions;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.spark.core.context.ZinggSparkContext;
 

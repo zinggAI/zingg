@@ -17,7 +17,7 @@ public abstract class Context <S,D, R, C,T> implements Serializable, IContext<S,
     protected HashUtil<S,D,R,C,T> hashUtil;
     protected DSUtil<S,D,R,C> dsUtil;
     protected GraphUtil<D,R,C> graphUtil;
-    protected ModelUtil<S,T,D,R,C> modelUtil;
+    protected ModelUtil<S,D,R,C,T> modelUtil;
     protected BlockingTreeUtil<S, D,R,C, T> blockingTreeUtil;
     
     public static final String hashFunctionFile = "hashFunctions.json";
@@ -43,7 +43,7 @@ public abstract class Context <S,D, R, C,T> implements Serializable, IContext<S,
     }
 
     @Override
-    public void setModelUtil(ModelUtil<S,T,D,R,C> t){
+    public void setModelUtil(ModelUtil<S,D,R,C,T> t){
         this.modelUtil = t;
     }
 
@@ -52,7 +52,7 @@ public abstract class Context <S,D, R, C,T> implements Serializable, IContext<S,
         this.blockingTreeUtil = t;
     }
     @Override
-    public ModelUtil<S,T,D,R,C>  getModelUtil(){
+    public ModelUtil<S,D,R,C,T>  getModelUtil(){
         return this.modelUtil;
     }
 

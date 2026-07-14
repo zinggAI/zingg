@@ -1,6 +1,6 @@
 package zingg.common.core.model.model;
 
-import zingg.common.core.preprocess.stopwords.model.PriorStopWordProcess;
+import zingg.common.core.preprocess.model.PriorStopWordProcess;
 
 public class InputDataModel extends PriorStopWordProcess {
     

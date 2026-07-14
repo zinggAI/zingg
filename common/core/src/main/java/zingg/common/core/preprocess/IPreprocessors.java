@@ -4,8 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.IArguments;
-import zingg.common.client.IZArgs;
+import zingg.common.client.arguments.model.IArguments;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.core.ZinggException;
@@ -43,7 +43,7 @@ public interface IPreprocessors<S,D,R,C,T> extends INeedsPreprocMap<S,D,R,C,T>, 
             }
         } catch (Exception exception) {
             LOG.warn("Error occurred while performing preprocessor" + exception);
-            throw new ZinggException("Error occurred while performing preprocessor");
+            throw new ZinggException("Error occurred while performing preprocessor", exception);
         }
         return dfp;
     }

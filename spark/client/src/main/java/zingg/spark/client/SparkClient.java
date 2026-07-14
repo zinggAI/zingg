@@ -7,12 +7,11 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
-
 import zingg.common.client.Client;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.IZingg;
-import zingg.common.client.IZArgs;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.util.PipeUtilBase;
 import zingg.common.core.util.Analytics;
 import zingg.common.core.util.Metric;
@@ -27,33 +26,38 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 	
 	private static final long serialVersionUID = 1L;
 	protected static final String zFactoryClassName = "zingg.spark.core.executor.SparkZFactory";
+    private static final String DEFAULT_CHECKPOINT_DIR = "/tmp/checkpoint";
 	private JavaSparkContext javaSparkContext;
 
 	public SparkClient(IZArgs args, ClientOptions options) throws ZinggClientException {
-		super(args, options, zFactoryClassName);
-		
+		this(args, options, zFactoryClassName);
 	}
 	
 
 	public SparkClient(IZArgs args, ClientOptions options, SparkSession s) throws ZinggClientException {
-		super(args, options, s, zFactoryClassName);
-		Analytics.track(Metric.IS_PYTHON, "true", args.getCollectMetrics());
+		this(args, options, s, zFactoryClassName);
 	}
 
 	
 	public SparkClient() {
-		/*SparkSession session = SparkSession
-                .builder()
-                .appName("Zingg")
-                .getOrCreate();
-		JavaSparkContext ctx = JavaSparkContext.fromSparkContext(session.sparkContext());
-        JavaSparkContext.jarOfClass(IZingg.class);
-		
-		*/
-		super(zFactoryClassName);
+		this(zFactoryClassName);
+	}
+
+	public SparkClient(IZArgs args, ClientOptions options, String zFactoryClassName) throws ZinggClientException {
+		super(args, options, zFactoryClassName);
 
 	}
 
+
+	public SparkClient(IZArgs args, ClientOptions options, SparkSession s, String zFactoryClassName) throws ZinggClientException {
+		super(args, options, s, zFactoryClassName);
+		Analytics.track(Metric.IS_PYTHON, "true", args.getCollectMetrics());
+	}
+
+
+	public SparkClient(String zFactoryClassName) {
+		super(zFactoryClassName);
+	}
 
 	@Override
 	public Client<SparkSession, Dataset<Row>, Row, Column, DataType> getClient(IZArgs args, 
@@ -79,20 +83,18 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 	@Override
 	public SparkSession getSession() {
 		if (session!=null) {
+            checkAndSetCheckpoint(session);
 			return session;
 		} else {
 			SparkSession s = SparkSession
                     .builder()
                     .appName("Zingg")
                     .getOrCreate();
+            checkAndSetCheckpoint(s);
 			SparkContext sparkContext = s.sparkContext();
-			if (sparkContext.getCheckpointDir().isEmpty()) {
-				sparkContext.setCheckpointDir("/tmp/checkpoint");
-			}
 			JavaSparkContext ctx = JavaSparkContext.fromSparkContext(sparkContext);
 					JavaSparkContext.jarOfClass(IZingg.class);
-					LOG.debug("Context " + ctx.toString());
-					//initHashFns();
+					LOG.debug("Context " + ctx);
 			if (!ctx.getCheckpointDir().isPresent()) {
 				ctx.setCheckpointDir(String.valueOf(sparkContext.getCheckpointDir()));
 			}
@@ -113,7 +115,12 @@ public class SparkClient extends Client<SparkSession, Dataset<Row>, Row, Column,
 			return p;
 		}
 	}
-
+    public void checkAndSetCheckpoint(SparkSession session) {
+        SparkContext sc = session.sparkContext();
+        if (sc.getCheckpointDir().isEmpty()) {
+            sc.setCheckpointDir(DEFAULT_CHECKPOINT_DIR);
+        }
+    }
 
 	public JavaSparkContext getJavaSparkContext() {
 		return javaSparkContext;

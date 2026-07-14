@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.FieldDefUtil;
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.ColName;
@@ -29,7 +29,7 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 	protected static String name = "zingg.ModelDocumenter";
 	public static final Log LOG = LogFactory.getLog(ModelDocumenter.class);
 
-	private final String MODEL_TEMPLATE = "model.ftlh";
+	protected final String MODEL_TEMPLATE = "model.ftlh";
 	protected ModelColDocumenter<S,D,R,C,T> modelColDoc;
 	protected  ZFrame<D,R,C>  markedRecords;
 	protected  ZFrame<D,R,C>  unmarkedRecords;
@@ -58,12 +58,11 @@ public abstract class ModelDocumenter<S,D,R,C,T> extends DocumenterBase<S,D,R,C,
 
 			LOG.info("Model document generation finishes");
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ZinggClientException(e.getMessage());
+			throw new ZinggClientException("Error while documenting model ", e);
 		}
 	}
 
-	private void writeModelDocument(Map<String, Object> root) throws ZinggClientException {
+	protected void writeModelDocument(Map<String, Object> root) throws ZinggClientException {
 		checkAndCreateDir(getModelHelper().getZinggDocDir(args));
 		writeDocument(MODEL_TEMPLATE, root, getModelHelper().getZinggModelDocFile(args));
 	}

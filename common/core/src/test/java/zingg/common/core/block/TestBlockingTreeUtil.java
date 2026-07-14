@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import zingg.common.client.Arguments;
-import zingg.common.client.ArgumentsUtil;
+import zingg.common.client.arguments.ArgumentServiceImpl;
+import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
@@ -75,9 +75,8 @@ public abstract class TestBlockingTreeUtil<S, D, R, C, T> {
         setTestDataBaseLocation();
         HashUtil<S, D, R, C, T> hashUtil = getHashUtil();
         String configFile = Objects.requireNonNull(getClass().getClassLoader().getResource(TEST_DATA_BASE_LOCATION + "/" + CONFIG_FILE)).getFile();
-        IArguments args = new ArgumentsUtil<Arguments>(Arguments.class).createArgumentsFromJSON(
-                configFile,
-                "");
+        IArguments args = new ArgumentServiceImpl<Arguments>(Arguments.class).loadArguments(
+                configFile);
         args.setBlockSize(8);
 
         Tree<Canopy<R>> blockingTreeOptimized = getBlockingTree(zFrameTest, zFramePositives, hashUtil, args, "cached");

@@ -44,6 +44,18 @@
       <includes>
         <include>**/*</include>
       </includes>
+      <excludes>
+        <exclude>venv/**</exclude>
+        <exclude>.venv/**</exclude>
+        <exclude>**/__pycache__/**</exclude>
+        <exclude>**/*.pyc</exclude>
+        <exclude>**/*.pyo</exclude>
+        <exclude>build/**</exclude>
+        <exclude>dist/**</exclude>
+        <exclude>*.egg-info/**</exclude>
+        <exclude>.pytest_cache/**</exclude>
+        <exclude>.tox/**</exclude>
+      </excludes>
     </fileSet>
     <fileSet>
       <directory>${project.parent.basedir}/assets</directory>
@@ -56,14 +68,17 @@
       <directory>${project.parent.basedir}/examples</directory>
       <outputDirectory>examples</outputDirectory>
       <includes>
-        <include>**/*</include>
+        <include>febrl/**</include>
+        <include>febrl120k/**</include>
       </includes>
     </fileSet>
     <fileSet>
       <directory>${project.parent.basedir}/models</directory>
       <outputDirectory>models</outputDirectory>
       <includes>
-        <include>**/*</include>
+        <include>100/**</include>
+        <include>101/**</include>
+        <include>102/**</include>
       </includes>
     </fileSet>
     <fileSet>

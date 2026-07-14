@@ -23,9 +23,9 @@ public abstract class FeatureFactory<T> implements Serializable {
 				init();
 			}
 			return map.get(getDataTypeFromString(dataType)).newInstance();
-		} catch (Throwable exception) {
+		} catch (Exception exception) {
 			LOG.error("can not get feature for given data type, " + exception.getMessage());
-			throw new ZinggException("DataType not supported, please check!");
+			throw new ZinggException("DataType not supported, please check!", exception);
 		}
 	}
 

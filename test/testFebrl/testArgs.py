@@ -473,114 +473,6 @@ class ArgumentsTest(TestCase):
         actual_stopWordsCutoff = java_args.getStopWordsCutoff()
         
         self.assertEqual(actual_stopWordsCutoff, stopWordsCutoff)
-    
-    def test_createArgumentsFromJSON(self):
-        fileName = "examples/febrl/config.json"
-        phase = "label"
-
-        obj = args.createArgumentsFromJSON(fileName, phase)
-        print("JSON file content:", obj)
-        print("Phase:", phase)
-
-        self.assertIsInstance(obj, Arguments)
-
-    def test_writeArgumentsToJSON(self):
-        json_file_name = "arguments_file.json"
-
-        args.writeArgumentsToJSON(json_file_name)
-
-        self.assertTrue(os.path.exists(json_file_name))
-        os.remove(json_file_name)
-    
-    def test_writeArgumentsToJSONString(self):
-        # print("new args: ", args1)
-        # print("old args: ", args)
-        json_string = args1.writeArgumentsToJSONString()
-        # json_string1 = args.writeArgumentsToJSONString()
-        print("json_string: ",json_string)
-        # print("oldjson_string: ", json_string1)
-        data = json.loads(json_string)
-        print("data: ", data)
-        
-        self.assertEqual(data['modelId'], "100")
-        self.assertEqual(data['zinggDir'], "models")
-
-    def test_createArgumentsFromJSONString(self):
-        sample_json = '''
-        {
-            "fieldDefinition": [
-                {
-                    "fieldName": "recId",
-                    "matchType": "dont_use",
-                    "fields": "recId",
-                    "dataType": "string"
-                },
-                {
-                    "fieldName": "fname",
-                    "matchType": "fuzzy",
-                    "fields": "fname",
-                    "dataType": "string"
-                },
-                {
-                    "fieldName": "lname",
-                    "matchType": "fuzzy",
-                    "fields": "lname",
-                    "dataType": "string"
-                },
-                {
-                    "fieldName": "stNo",
-                    "matchType": "fuzzy",
-                    "fields": "stNo",
-                    "dataType": "string"
-                },
-                {
-                    "fieldName": "add1",
-                    "matchType": "fuzzy",
-                    "fields": "add1",
-                    "dataType": "string"
-                }
-            ],
-            "output": [
-                {
-                    "name": "output",
-                    "format": "csv",
-                    "props": {
-                        "location": "/tmp/zinggOutput",
-                        "delimiter": ",",
-                        "header": true
-                    }
-                }
-            ],
-            "data": [
-                {
-                    "name": "test",
-                    "format": "csv",
-                    "props": {
-                        "location": "examples/febrl/test.csv",
-                        "delimiter": ",",
-                        "header": false
-                    },
-                    "schema": "recId string, fname string, lname string, stNo string, add1 string"
-                }
-            ],
-            "labelDataSampleSize": 0.5,
-            "numPartitions": 4,
-            "modelId": 100,
-            "zinggDir": "models"
-        }
-        '''
-        phase = "label"
-        
-        obj = args.createArgumentsFromJSONString(sample_json, phase)
-
-        self.assertIsInstance(obj, Arguments)
-        self.assertEqual(obj.getModelId(), "100")
-    
-    def test_copyArgs(self):
-        phase = "test_phase"
-        copied_args = args.copyArgs(phase)
-
-        self.assertIsInstance(copied_args, Arguments)
 
 class TestClientOptions(TestCase):
 
@@ -615,9 +507,6 @@ class TestClientOptions(TestCase):
             else:
                 self.fail(f"getOptionValue raised an unexpected exception: {str(e)}")
 
-    def test_getPhase(self):
-        phase_value = self.client_options.getPhase()
-        self.assertEqual(phase_value, 'peekModel')
 
     def test_setPhase(self):
         self.client_options.setPhase('new_phase')
@@ -706,7 +595,7 @@ class TestCsvPipe(TestCase):
         schema = "your_schema"
         pipe = CsvPipe("csv_pipe", location=location, schema=schema)
         
-        self.assertEqual(pipe.pipe.getProps()["location"], location)
+        self.assertEqual(pipe.pipe.getProps()["path"], location)
         self.assertEqual(pipe.pipe.getSchema(), schema)
     
     def test_init_with_location_and_schema(self):

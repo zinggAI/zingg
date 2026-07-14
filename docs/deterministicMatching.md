@@ -1,6 +1,5 @@
 ---
-description: >-
-  Ensuring higher matching accuracy and performance
+description: Ensuring higher matching accuracy and performance
 ---
 
 # Deterministic Matching
@@ -41,9 +40,9 @@ args.setDeterministicMatchingCondition(detMatchNameAdd,detMatchNameDobSsn,detMat
 The above conditions would translate into the following:
 
 1. Those rows which have **exactly** same `fname`, `stNo` and `add1` => exact match with max score 1\
-   _OR_
+   &#xNAN;_&#x4F;R_
 2. Those rows which have **exactly** same `fname`, `dob` and `ssn` => exact match with max score 1\
-   _OR_
+   &#xNAN;_&#x4F;R_
 3. Those rows which have **exactly** same `fname` and `email` => exact match with max score 1
 
 [^1]: Zingg Enterprise is an advance version of Zingg Community with production grade features

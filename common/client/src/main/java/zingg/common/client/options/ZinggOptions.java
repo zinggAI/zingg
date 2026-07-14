@@ -1,10 +1,10 @@
 package zingg.common.client.options;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.Util;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ZinggOptions {
 
@@ -18,9 +18,6 @@ public class ZinggOptions {
     public final static ZinggOption RECOMMEND = new ZinggOption("recommend");
     public final static ZinggOption UPDATE_LABEL = new ZinggOption("updateLabel");
     public final static ZinggOption FIND_AND_LABEL = new ZinggOption("findAndLabel");
-    public final static ZinggOption ASSESS_MODEL = new ZinggOption("assessModel");
-    public final static ZinggOption PEEK_MODEL = new ZinggOption("peekModel");
-    public final static ZinggOption EXPORT_MODEL = new ZinggOption("exportModel");
     
 
     public static Map<String, ZinggOption> allZinggOptions;// = new HashMap<String, ZinggOption>();

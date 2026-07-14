@@ -42,7 +42,7 @@
 				<scala.version>2.12.17</scala.version>
 				<spark.binary.version>3.4</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
-				<graphframes.version>0.8.3-spark3.4-s_2.12</graphframes.version>
+				<graphframes.version>0.11.0</graphframes.version>
 			</properties>
 		</profile>
 		<profile>
@@ -55,16 +55,16 @@
 				</property>
 			</activation>
 			<properties>
-				<spark.version>3.5.0</spark.version>
+				<spark.version>3.5.5</spark.version>
 				<scala.version>2.12.10</scala.version>
 				<spark.binary.version>3.5</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
-				<graphframes.version>0.8.3-spark3.5-s_2.12</graphframes.version>
+				<graphframes.version>0.11.0</graphframes.version>
 			</properties>
 		</profile>
 	</profiles>
 	<properties>
-		<zingg.version>0.5.0</zingg.version>
+		<zingg.version>0.7.0</zingg.version>
 		<skipTests>false</skipTests>
 		<failIfNoTests>false</failIfNoTests>
 		<maven.compiler.source>11</maven.compiler.source>
@@ -108,7 +108,14 @@
 		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
-			<version>5.9</version>
+			<version>5.12.0</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-beanutils</groupId>
+  					<artifactId>commons-beanutils</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

@@ -14,4 +14,4 @@ Sample configuration file [configLink.json](../../examples/febrl/configLink.json
 
 The sample output is given in the image below. The linked records are given the same **z\_cluster** id. The last column (**z\_source**) in the output tells the source dataset of that record.
 
-![Link Results](../../assets/link.png)
+![Link Results](../.gitbook/assets/link.png)

@@ -2,7 +2,7 @@ package zingg.common.client.util;
 
 
 import zingg.common.client.FieldDefinition;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.IMatchType;
 import zingg.common.client.MatchTypes;
 import zingg.common.client.ZFrame;
@@ -65,17 +65,6 @@ public abstract class DSUtil<S, D, R, C> {
 		if (LOG.isDebugEnabled()) {	
 			pairs.show(true);
 		}
-		return pairs;
-	}
-
-	public ZFrame<D, R, C> joinZColFirst(ZFrame<D, R, C> lines, ZFrame<D, R, C> lines1, String joinColumn, boolean filter) {
-		ZFrame<D, R, C> pairs = lines.joinRight(lines1, joinColumn);
-		//in training, we only need that record matches only with lines bigger than itself
-		//in the case of normal as well as in the case of linking
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("pairs length " + pairs.count());
-		}
-		if (filter) pairs = pairs.filter(pairs.gt(ColName.ID_COL));		
 		return pairs;
 	}
 

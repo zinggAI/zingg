@@ -33,6 +33,7 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	public static final String FORMAT_ELASTIC = "org.elasticsearch.spark.sql";
 	public static final String FORMAT_EXASOL = "com.exasol.spark";
 	public static final String FORMAT_BIGQUERY = "bigquery";
+	public static final String FORMAT_UNITYCATALOG = "delta";
 
 	String name;
 	String format;
@@ -84,9 +85,16 @@ public class Pipe<D,R,C> implements Serializable{ // St:StructType, Sv:SaveMode
 	}
 	
 	public void clone(Pipe<D,R,C> p) {
-		this.name = p.name;
-		this.format = p.format;
-		this.props = p.props;		
+		if (p == null) return;
+		if (p.getName() != null){
+			this.name = new String(p.getName());
+		}
+		if (p.getFormat() != null) {
+			this.format = new String(p.getFormat());
+		}
+		if (p.getProps() != null) {
+			this.props = new HashMap<>(p.getProps());
+		}
 	}
 	
 	public String get(String key) {

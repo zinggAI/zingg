@@ -9,8 +9,8 @@ import org.apache.spark.sql.SparkSession;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
-import zingg.common.client.Arguments;
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.Arguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
@@ -37,6 +37,6 @@ public class TestPipeUtil {
 		assertEquals(Pipe.FORMAT_CSV, p.getFormat(), "Format is not CSV");
 		assertEquals("true", p.get(FilePipe.HEADER).toLowerCase(), "Property 'header' is set to 'false'");
 		assertEquals(SaveMode.Overwrite.toString(), p.getMode(), "SaveMode is not 'Overwrite'");
-		assertEquals(fileName, p.get(FilePipe.LOCATION), "Absolute location of file differs");
+		assertEquals(fileName, p.get(FilePipe.PATH), "Absolute location of file differs");
 	}
 }

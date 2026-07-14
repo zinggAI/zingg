@@ -34,7 +34,7 @@ import zingg.spark.client.SparkFrame;
 import zingg.spark.core.similarity.SparkSimFunction;
 import zingg.spark.core.similarity.SparkTransformer;
 
-public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row, Column>{
+public class SparkModel extends Model<SparkSession, Dataset<Row>, Row, Column, DataType>{
 	
 	public static final Log LOG = LogFactory.getLog(SparkModel.class);
 	//private Map<FieldDefinition, Feature> featurers;
@@ -55,7 +55,6 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 			Feature fea = f.get(fd);
 			List<SimFunction> sfList = fea.getSimFunctions();
 			for (SimFunction sf : sfList) {
-				
 				String outputCol = getColumnName(fd.fieldName, sf.getName(), count);
 				columnsAdded.add(outputCol);	
 				SparkTransformer st = new SparkTransformer(fd.fieldName, new SparkSimFunction(sf), outputCol);
@@ -93,14 +92,16 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 		columnsAdded.add(ColName.RAW_PREDICTION);	
 	}
 	
+	@Override
 	public void fit(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
 		fitCore(pos, neg);
 	}
-	
-	public ZFrame<Dataset<Row>,Row,Column> fitCore(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
-		//transform
-		ZFrame<Dataset<Row>,Row,Column> input = transform(pos.union(neg)).coalesce(1).cache();
-		//if (LOG.isDebugEnabled()) input.write().csv("/tmp/input/" + System.currentTimeMillis());
+
+	public ZFrame<Dataset<Row>,Row,Column> transformTrainingData(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
+		return pos.union(neg).coalesce(1).cache();
+	}
+
+	public ZFrame<Dataset<Row>,Row,Column> applyFitPipeline(ZFrame<Dataset<Row>,Row,Column> input) {
 		Pipeline pipeline = new Pipeline();
 		pipeline.setStages(pipelineStage.toArray(new PipelineStage[pipelineStage.size()]));
 		
@@ -125,6 +126,12 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 		return input;
 	}
 	
+	public ZFrame<Dataset<Row>,Row,Column> fitCore(ZFrame<Dataset<Row>,Row,Column> pos, ZFrame<Dataset<Row>,Row,Column> neg) {
+		//transform
+		ZFrame<Dataset<Row>,Row,Column> input = transform(transformTrainingData(pos, neg));
+		return applyFitPipeline(input);
+	}
+	
 	
 	public void load(String path) {
 		transformer =  CrossValidatorModel.load(path);
@@ -143,17 +150,17 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
     public ZFrame<Dataset<Row>,Row,Column> predictCore(ZFrame<Dataset<Row>,Row,Column> data) {
 		//create features
 		LOG.info("threshold while predicting is " + lr.getThreshold());
-		//lr.setThreshold(0.95);
-		//LOG.info("new threshold while predicting is " + lr.getThreshold());
-		
-		Dataset<Row> predictWithFeatures = transformer.transform(transform(data).df());
+		return transformAndPredict(transform(data));
+	}
+
+	public ZFrame<Dataset<Row>,Row,Column> transformAndPredict(ZFrame<Dataset<Row>,Row,Column> data) {
+		Dataset<Row> predictWithFeatures = transformer.transform(data.df());
 		//LOG.debug(predictWithFeatures.schema());
 		predictWithFeatures = vve.transform(predictWithFeatures);
 		//LOG.debug("Original schema is " + predictWithFeatures.schema());
 		
 		LOG.debug("Return schema is " + predictWithFeatures.schema());
 		return new SparkFrame(predictWithFeatures);
-		
 	}
 
 	public void save(String path) throws IOException{
@@ -169,6 +176,10 @@ public class SparkModel extends Model<SparkSession, DataType, Dataset<Row>, Row,
 	
 	public ZFrame<Dataset<Row>,Row,Column> transform(ZFrame<Dataset<Row>,Row,Column> i) {
 		return transform(i.df());
+	}
+
+	public List<SparkTransformer> getFeatureCreators() {
+		return featureCreators;
 	}
 
 

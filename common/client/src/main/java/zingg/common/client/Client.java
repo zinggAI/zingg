@@ -1,11 +1,14 @@
 package zingg.common.client;
 
-import java.io.Serializable;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+import zingg.common.client.arguments.ArgumentServiceImpl;
+import zingg.common.client.arguments.IArgumentService;
+import zingg.common.client.arguments.model.Arguments;
+import zingg.common.client.arguments.model.IArguments;
+import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.event.events.IEvent;
+import zingg.common.client.event.events.ZinggFailEvent;
 import zingg.common.client.event.events.ZinggStartEvent;
 import zingg.common.client.event.events.ZinggStopEvent;
 import zingg.common.client.event.listeners.EventsListener;
@@ -17,6 +20,8 @@ import zingg.common.client.util.Email;
 import zingg.common.client.util.EmailBody;
 import zingg.common.client.util.PipeUtilBase;
 
+import java.io.Serializable;
+
 /**
  * This is the main point of interface with the Zingg matching product.
  * 
@@ -26,7 +31,6 @@ import zingg.common.client.util.PipeUtilBase;
 public abstract class Client<S,D,R,C,T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	protected IZArgs arguments;
-	protected ArgumentsUtil<?> argsUtil;
 	protected IZingg<S,D,R,C> zingg;
 	protected ClientOptions options;
 	protected S session;
@@ -55,11 +59,10 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
     	setOptions(options);
 		try {
 			buildAndSetArguments(args, options);
-			setZingg(args, options);					
+			setZingg(options);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
-			throw new ZinggClientException("An error has occured while setting up the client" + e.getMessage());
+			throw new ZinggClientException("An error has occured while setting up the client", e);
 		}
 	}
 
@@ -88,14 +91,14 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	
 
 
-	public void setZingg(IZArgs args, ClientOptions options) throws Exception{
+	public void setZingg(ClientOptions options) throws Exception{
 		IZinggFactory zf = getZinggFactory();
 		try{
 			setZingg(zf.get(ZinggOptions.getByValue(options.get(ClientOptions.PHASE).value.trim())));
 		}
 		catch(Exception e) {
-			//set default
-			setZingg(zf.get(ZinggOptions.getByValue(ZinggOptions.PEEK_MODEL.getName())));
+			LOG.error("Error creating zingg instance for phase " + options.get(ClientOptions.PHASE).value.trim(), e);
+			throw e;
 		}
 	}
 	
@@ -104,8 +107,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		this.zingg = zingg; 
 	}
 
-	public void buildAndSetArguments(IZArgs args, ClientOptions options) {
-		setOptions(options);
+	protected void setJobId(IZArgs args){
 		int jobId = new Long(System.currentTimeMillis()).intValue();
 		if (options.get(options.JOBID)!= null) {
 			LOG.info("Using job id from command line");
@@ -116,6 +118,11 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		else if (args.getJobId() != -1) {
 			jobId = (args).getJobId();
 		}
+	}
+
+	public void buildAndSetArguments(IZArgs args, ClientOptions options) {
+		setOptions(options);
+		setJobId(args);
 		
 		//override value of zinggDir passed from command line
 		if (options.get(options.ZINGG_DIR)!= null) {
@@ -187,7 +194,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public void mainMethod(String... args) {
 		Client<S,D,R,C,T> client = null;
 		ClientOptions options = null;
-		
+		boolean success = true;
 		try {
 			
 			for (String a: args) LOG.debug("args " + a);
@@ -200,16 +207,8 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			}
 			String phase = options.get(ClientOptions.PHASE).value.trim();
 			ZinggOptions.verifyPhase(phase);
-			if (options.get(ClientOptions.CONF).value.endsWith("json")) {
-					arguments = getArgsUtil(phase).createArgumentsFromJSON(options.get(ClientOptions.CONF).value, phase);
-			}
-			else if (options.get(ClientOptions.CONF).value.endsWith("env")) {
-				arguments = getArgsUtil(phase).createArgumentsFromJSONTemplate(options.get(ClientOptions.CONF).value, phase);
-			}
-			else {
-				arguments = getArgsUtil(phase).createArgumentsFromJSONString(options.get(ClientOptions.CONF).value, phase);
-			}
-
+			IArgumentService argumentService = getArgumentService();
+			arguments = argumentService.loadArguments(options.get(ClientOptions.CONF).getValue());
 			client = getClient(arguments, options);
 			client.init();
 			// after setting arguments etc. as some of the listeners need it
@@ -217,33 +216,28 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			
 			LOG.warn("Zingg processing has completed");				
 		} 
-		catch(ZinggClientException e) {
+		catch(Throwable throwable) {
+			success = false;
+
 			if (options != null && options.get(ClientOptions.EMAIL) != null) {
 				Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
 					"Zingg Error ",
-					e.getMessage()));
+						throwable.getMessage()));
 			}
 			LOG.warn("Apologies for this message. Zingg has encountered an error. "
-					+ e.getMessage());;
-			if (LOG.isDebugEnabled()) e.printStackTrace();
-		}
-		catch( Throwable e) {
-			if (options != null && options.get(ClientOptions.EMAIL) != null) {
-				Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
-					"Zingg Error ",
-					e.getMessage()));
-			}
-			LOG.warn("Apologies for this message. Zingg has encountered an error. "
-					+ e.getMessage());
-					e.printStackTrace();
-			if (LOG.isDebugEnabled()) e.printStackTrace();
+					+ throwable.getMessage());
+			if (LOG.isDebugEnabled()) throwable.printStackTrace();
 		}
 		finally {
+			cleanupAndExit(success, client);
 			try {
 				EventsListener.getInstance().fireEvent(new ZinggStopEvent());
 				if (client != null) {
 					//client.postMetrics();
 					client.stop();
+				}
+				if (!success) {
+					System.exit(1);
 				}
 			}
 			catch(ZinggClientException e) {
@@ -252,8 +246,15 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 						"Zingg Error ",
 						e.getMessage()));
 				}
+				if (!success) {
+					System.exit(1);
+				}
 			}
 		}
+	}
+
+	protected IArgumentService<? extends IZArgs> getArgumentService() {
+		return new ArgumentServiceImpl<>(Arguments.class);
 	}
 
 	public void init() throws ZinggClientException {
@@ -298,13 +299,27 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		this.options = options;
 	}
 
-
-	protected ArgumentsUtil<?> getArgsUtil(String phase) {	
-		if (argsUtil==null) {
-			argsUtil = new ArgumentsUtil(Arguments.class);
+	protected void cleanupAndExit(boolean success, Client<S,D,R,C,T> client) {
+		if (!success) {
+			EventsListener.getInstance().fireEvent(new ZinggFailEvent());
+		} else {
+			EventsListener.getInstance().fireEvent(new ZinggStopEvent());
 		}
-		return argsUtil;
-	}    
+
+		try {
+			if (client != null) {
+				client.stop();
+			}
+			if (success) {
+				System.exit(0);
+			} else {
+				System.exit(1);
+			}
+		} catch (ZinggClientException e) {
+			System.exit(1);
+		}
+	}
+
 
 	public void addListener(Class<? extends IEvent> eventClass, IEventListener listener) {
         EventsListener.getInstance().addListener(eventClass, listener);
@@ -332,7 +347,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	}
 
 	public String getProductVersion(){
-		return "0.5.0";
+		return "0.7.0";
 	}
 
 	public Long getMarkedRecordsStat(ZFrame<D,R,C>  markedRecords, long value) {
@@ -362,5 +377,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 	public ITrainingDataModel<S, D, R, C> getTrainingDataModel() throws UnsupportedOperationException {
 		return zingg.getTrainingDataModel();
 	}
+
 
 }

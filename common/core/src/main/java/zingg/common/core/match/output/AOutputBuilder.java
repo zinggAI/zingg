@@ -3,7 +3,7 @@ package zingg.common.core.match.output;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import zingg.common.client.IArguments;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.util.DSUtil;
 
 public abstract class AOutputBuilder<S,D,R,C> implements IMatchOutputBuilder<S,D,R,C> {

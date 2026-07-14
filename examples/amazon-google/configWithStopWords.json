@@ -35,7 +35,7 @@
 			"name":"output", 
 			"format":"csv", 
 			"props": {
-				"location": "/tmp/zinggOutput",
+				"path": "/tmp/zinggOutput",
 				"delimiter": ",",
 				"header":false
 			}
@@ -44,7 +44,7 @@
 			"name":"aws", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/amazon-google/Amazon.csv.gz",
+				"path": "examples/amazon-google/Amazon.csv.gz",
 				"delimiter": ",",
 				"header":true					
 			},
@@ -54,7 +54,7 @@
 			"name":"google", 
 			"format":"csv", 
 			"props": {
-				"location": "examples/amazon-google/GoogleProducts.csv.gz",
+				"path": "examples/amazon-google/GoogleProducts.csv.gz",
 				"delimiter": ",",
 				"header":true					
 			},

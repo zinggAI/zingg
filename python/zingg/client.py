@@ -23,7 +23,7 @@ _sqlContext = None
 _spark = None
 _jvm = None
 _gateway = None
-_zingg_jar = 'zingg-0.5.0.jar'
+_zingg_jar = 'zingg-0.7.0.jar'
 
 #JVM Base Objects
 ColName = None
@@ -546,7 +546,7 @@ class Arguments:
     """
 
     def __init__(self):
-        self.args = getJVM().zingg.common.client.Arguments()
+        self.args = getJVM().zingg.common.client.arguments.model.Arguments()
 
     def setFieldDefinition(self, fieldDef):
         """Method convert python objects to java FieldDefinition objects and set the field definitions associated with this client
@@ -670,14 +670,6 @@ class Arguments:
         """
         self.args.setLabelDataSampleSize(labelDataSampleSize)
 
-    def writeArgumentsToJSON(self, fileName):
-        """Method to write JSON file from the object of this class
-
-        :param fileName: The CONF parameter value of ClientOption object or file address of json file
-        :type fileName: String
-        """
-        getJVM().zingg.common.client.ArgumentsUtil().writeArgumentsToJSON(fileName, self.args)
-
     def setStopWordsCutoff(self, stopWordsCutoff):
         """Method to set stopWordsCutoff parameter value
         By default, Zingg extracts 10% of the high frequency unique words from a dataset. If user wants different selection, they should set up StopWordsCutoff property
@@ -695,44 +687,6 @@ class Arguments:
         :type stopWordsCutoff: float
         """
         self.args.setColumn(column)
-
-    @staticmethod
-    def createArgumentsFromJSON(fileName, phase):
-        """Method to create an object of this class from the JSON file and phase parameter value.
-
-        :param fileName: The CONF parameter value of ClientOption object
-        :type fileName: String
-        :param phase: The PHASE parameter value of ClientOption object
-        :type phase: String
-        :return: The pointer containing address of the this class object
-        :rtype: pointer(Arguments)
-        """
-        obj = Arguments()
-        obj.args = getJVM().zingg.common.client.ArgumentsUtil().createArgumentsFromJSON(fileName, phase)
-        return obj
-
-    def writeArgumentsToJSONString(self):
-        """Method to create an object of this class from the JSON file and phase parameter value.
-
-        :param fileName: The CONF parameter value of ClientOption object
-        :type fileName: String
-        :param phase: The PHASE parameter value of ClientOption object
-        :type phase: String
-        :return: The pointer containing address of the this class object
-        :rtype: pointer(Arguments)
-        """
-        return getJVM().zingg.common.client.ArgumentsUtil().writeArgumentstoJSONString(self.args)
-
-    @staticmethod
-    def createArgumentsFromJSONString(jsonArgs, phase):
-        obj = Arguments()
-        obj.args = getJVM().zingg.common.client.ArgumentsUtil().createArgumentsFromJSONString(jsonArgs, phase)
-        return obj
-
-    def copyArgs(self, phase):
-        argsString = self.writeArgumentsToJSONString()
-        return self.createArgumentsFromJSONString(argsString, phase)
-
 
 class ClientOptions:
     """Class that contains Client options for Zingg object
@@ -769,7 +723,6 @@ class ClientOptions:
             args = argsSent.copy()
         if self.PHASE not in args:
             args.append(self.PHASE)
-            args.append("peekModel")
         if self.LICENSE not in args:
             args.append(self.LICENSE)
             args.append("zinggLic.txt")
@@ -921,7 +874,7 @@ def parseArguments(argv):
     """
     parser = argparse.ArgumentParser(description="Zingg's python APIs")
     mandatoryOptions = parser.add_argument_group("mandatory arguments")
-    mandatoryOptions.add_argument("--phase", required=True, help="python phase e.g. assessModel")
+    mandatoryOptions.add_argument("--phase", required=True)
     mandatoryOptions.add_argument(
         "--conf",
         required=True,

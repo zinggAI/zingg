@@ -15,9 +15,7 @@ public class JsonStringify {
 			StringWriter writer = new StringWriter();
 			return mapper.writeValueAsString(o);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			throw new RuntimeException("Error converting object to JSON string", e);
         }
     }
 

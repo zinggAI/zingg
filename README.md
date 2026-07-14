@@ -7,7 +7,7 @@
 [![performance-test-febrl120K](https://github.com/zinggAI/zingg/actions/workflows/perfTest-febrl120K.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/perfTest-febrl120K.yml)
 [![performance-test-ncVoters5M](https://github.com/zinggAI/zingg/actions/workflows/perfTest-ncVoters5M.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/perfTest-ncVoters5M.yml)
 
-## 0.5.0 release of Zingg is coming soon!
+## 0.6.0 release is out!
 
 ## The Problem
 
@@ -19,25 +19,24 @@ With a modern data stack and DataOps, we have established patterns for E and L i
 
 With Zingg, the analytics engineer and the data scientist can quickly integrate data silos and build unified views at scale!
 
-![# Zingg - Data Mastering At Scale with ML](/assets/dataMastering.png)
-
-Besides probabilistic matching, also known as fuzzy matching, Zingg also does deterministic matching, which is useful in identity resolution and householding applications.
-
-![#Zingg Detereministic Matching](/assets/deterministicMatching.png)
+![# Zingg - Master Data At Scale with ML](/assets/dataMastering.png)
 
 ## Why Zingg
 
-Zingg is an ML based tool for entity resolution. The following features set Zingg apart from other tools and libraries: 
-- Ability to handle any entity like customer, patient, supplier, product etc 
-- Ability to connect to [disparate data sources](https://docs.zingg.ai/zingg/connectors). Local and cloud file systems in any format, enterprise applications and relational, NoSQL and cloud databases and warehouses
-- Ability to scale to large volumes of data. [See why this is important](https://docs.zingg.ai/zingg/zmodels/) and [Zingg performance numbers](https://docs.zingg.ai/zingg/stepbystep/hardwaresizing)
-- [Interactive training data builder](https://docs.zingg.ai/zingg/stepbystep/createtrainingdata/label) using active learning that builds models on frugally small training samples to high accuracy.
+Zingg is an ML based tool for master data management and entity resolution. Zingg's ML is purpose built for entity resolution to overcome the challenges of [Fellegi Sunter](https://www.zingg.ai/post/fellegi-sunter-model-limitations-modern-entity-resolution) and [Entity Centric Matching](https://www.zingg.ai/post/limits-of-entity-centric-matching). The following features set Zingg apart from other tools and libraries: 
+
+- [Interactive training data builder](https://docs.zingg.ai/latest/stepbystep/createtrainingdata/label) using active learning that builds models on frugally small training samples to high accuracy. 
+
 ![Shows records and asks user to mark yes, no, cant say on the cli.](/assets/labelvertical.gif) 
+
+- Auto learning blocking model to scale entity resolution to millions of records. [See why this is important](https://docs.zingg.ai/latest/zmodels/) and [Zingg performance numbers](https://docs.zingg.ai/zingg/stepbystep/hardwaresizing)
+- Ability to handle any entity like customer, patient, supplier, product etc 
+- Ability to connect to [disparate data sources](https://docs.zingg.ai/latest/connectors). Local and cloud file systems in any format, enterprise applications and relational, NoSQL and cloud databases and warehouses
 - Ability to define domain specific functions to improve matching  
 - Out of the box support for English as well as Chinese, Thai, Japanese, Hindi and other languages
 
 Zingg is useful for
-- Building unified and trusted views of customers and suppliers across multiple systems
+- Building unified and trusted views of customers and suppliers across multiple systems (Master Data Management) 
 - Large Scale Entity Resolution for AML, KYC and other fraud and compliance scenarios
 - [Deduplication](docs/patient.md) and data quality
 - Identity Resolution 
@@ -51,7 +50,7 @@ What is the [backstory behind Zingg](https://sonalgoyal.substack.com/p/time-to-z
 
 ## Documentation
 
-Check the detailed Zingg [documentation](https://docs.zingg.ai/zingg/) 
+Check the detailed Zingg [documentation](https://docs.zingg.ai/) 
 
 ## Community
 
@@ -69,12 +68,12 @@ See Zingg in action [here](https://www.youtube.com/watch?v=zOabyZxN9b0)
 
 The easiest way to get started with Zingg is through Docker and by running the prebuilt models.
 ```
-docker pull zingg/zingg:0.4.0
-docker run -it zingg/zingg:0.4.0 bash
+docker pull zingg/zingg
+docker run -it zingg/zingg bash
 ./scripts/zingg.sh --phase match --conf examples/febrl/config.json
 ``` 
 
-Check the [step by step guide](https://docs.zingg.ai/zingg/stepbystep) for more details.
+Check the [step by step guide](https://docs.zingg.ai/latest/stepbystep) for more details.
 
 ## Connectors
 
@@ -89,7 +88,7 @@ Zingg learns 2 models on the data:
 
 1. Blocking Model
 
-One fundamental problem with scaling data mastering is that the number of comparisons increase quadratically as the number of input record increases.
+One fundamental problem with scaling master data management is that the number of comparisons increase quadratically as the number of input record increases.
 ![Data Mastering At Scale](/assets/fuzzymatchingcomparisons.jpg)
 
 
@@ -109,20 +108,16 @@ To build these models, training data is needed. Zingg comes with an interactive 
 
 Zingg comes with pretrained models for the Febrl dataset under the [models](models) folder.
 
+## Asking questions on running Zingg
+
+If you have a question or issue while using Zingg, kindly log a [question](https://github.com/zinggAI/zingg/issues/new/choose) and we will reply very fast :-) 
+Or you can use [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA)
+
 ## Reporting bugs and contributing 
 
 Want to report a bug or request a feature? Let us know on [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA), or open an [issue](https://github.com/zinggAI/zingg/issues/new/choose)
 
 Want to commit code? Please check the [contributing documentation.](https://docs.zingg.ai/zingg/contributing)
-
-## Book Office Hours
-
-If you want to schedule a 30-min call with our team to help you understand if Zingg is the right technology for your problem, please book a slot [here](https://calendly.com/sonalgoyal/30min). For troubleshooting and Zingg issues, please report the problem as an issue on github. 
-
-## Asking questions on running Zingg
-
-If you have a question or issue while using Zingg, kindly log a [question](https://github.com/zinggAI/zingg/issues/new/choose) and we will reply very fast :-) 
-Or you can use [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA)
 
 ## License
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import zingg.common.client.Arguments;
+import zingg.common.client.arguments.model.Arguments;
 import zingg.common.client.FieldDefinition;
 import zingg.common.client.IMatchType;
 import zingg.common.client.MatchTypes;
@@ -33,12 +33,12 @@ public abstract class TestModelBase<S,D,R,C,T> {
         this.context = context;
     }
 
-    public abstract ModelUtil<S,T, D,R,C> getModelUtil();
+    public abstract ModelUtil<S,D,R,C,T> getModelUtil();
 
     @Test
     public void testPredict() throws ZinggClientException, Exception {  
-        ModelUtil<S,T, D,R,C> modelUtil = getModelUtil();
-        Model<S,T, D,R,C> model = modelUtil.getModel(false, getArgs()); 
+        ModelUtil<S,D,R,C,T> modelUtil = getModelUtil();
+        Model<S,D,R,C,T> model = modelUtil.getModel(false, getArgs());
         model.register();
 
         ZFrame<D, R, C> posDF = dfObjectUtil.getDFFromObjectList(ModelDFData.getPosDF(), ModelDF.class);
