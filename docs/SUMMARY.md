@@ -65,6 +65,7 @@
   * [MongoDB](dataSourcesAndSinks/mongodb.md)
   * [Neo4j](dataSourcesAndSinks/neo4j.md)
   * [Parquet](dataSourcesAndSinks/parquet.md)
+  * [Excel (XLS/XLSX)](dataSourcesAndSinks/excel.md)
   * [BigQuery](dataSourcesAndSinks/bigquery.md)
   * [Exasol](dataSourcesAndSinks/exasol.md)
 * [Working With Python](working-with-python.md)
