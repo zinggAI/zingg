@@ -1,0 +1,101 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!--
+	  Standalone module: intentionally NOT added to the root pom.xml's
+	  <modules> list yet. It builds fine on its own (`mvn install` from this
+	  directory) against the already-installed zingg:parent:0.7.0 reactor.
+	  Wire it into the root <modules> list when merging into spark-connect
+	  proper.
+	-->
+	<parent>
+		<groupId>zingg</groupId>
+		<artifactId>parent</artifactId>
+		<version>0.7.0</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+
+	<artifactId>zingg-spark-connect-proto</artifactId>
+	<packaging>jar</packaging>
+	<name>zingg-spark-connect-proto</name>
+
+	<profiles>
+		<profile>
+			<id>spark-3.4</id>
+			<activation>
+				<property>
+					<name>spark</name>
+					<value>3.4</value>
+				</property>
+			</activation>
+			<properties>
+				<!-- must match the protobuf-java version Spark 3.4.0's spark-connect_2.12 server pins -->
+				<protobuf.version>3.21.12</protobuf.version>
+			</properties>
+		</profile>
+		<profile>
+			<id>spark-3.5</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>spark</name>
+					<value>3.5</value>
+				</property>
+			</activation>
+			<properties>
+				<!-- must match the protobuf-java version Spark 3.5.5's spark-connect_2.12 server pins -->
+				<protobuf.version>3.23.4</protobuf.version>
+			</properties>
+		</profile>
+	</profiles>
+
+	<properties>
+		<!-- Where the generated Python stubs land, consumed directly by the
+		     zingg_connect python package next to this module. -->
+		<zingg.connect.python.proto.dir>${project.basedir}/../python/zingg_connect/proto</zingg.connect.python.proto.dir>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>${protobuf.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.github.os72</groupId>
+				<artifactId>protoc-jar-maven-plugin</artifactId>
+				<version>3.11.4</version>
+				<executions>
+					<execution>
+						<id>generate-java-and-python</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<protocArtifact>com.google.protobuf:protoc:${protobuf.version}</protocArtifact>
+							<inputDirectories>
+								<include>src/main/protobuf</include>
+							</inputDirectories>
+							<outputTargets>
+								<outputTarget>
+									<type>java</type>
+									<outputDirectory>${project.build.directory}/generated-sources/protobuf</outputDirectory>
+								</outputTarget>
+								<outputTarget>
+									<type>python</type>
+									<outputDirectory>${zingg.connect.python.proto.dir}</outputDirectory>
+								</outputTarget>
+							</outputTargets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

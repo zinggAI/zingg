@@ -1,0 +1,99 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!--
+	  Standalone module, deliberately not added to the root pom.xml's
+	  <modules> list yet (see spark-connect/proto/pom.xml for the same note).
+	  Builds against the already-installed zingg:parent:0.7.0 reactor.
+	-->
+	<parent>
+		<groupId>zingg</groupId>
+		<artifactId>parent</artifactId>
+		<version>0.7.0</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+
+	<artifactId>zingg-spark-connect-server-plugin</artifactId>
+	<packaging>jar</packaging>
+	<name>zingg-spark-connect-server-plugin</name>
+
+	<!--
+	  This jar is loaded on the classpath of an actual Spark Connect server
+	  process (via the "jars" / spark.jars config, alongside zingg-spark-core,
+	  zingg-spark-client, zingg-common-*, and this module's own proto
+	  dependency), and registered via:
+	    spark.connect.extensions.command.classes=zingg.spark.connect.server.ZinggCommandPlugin
+	  All Spark/Spark-Connect dependencies below are therefore "provided":
+	  the server supplies them at runtime.
+	-->
+
+	<profiles>
+		<profile>
+			<id>spark-3.4</id>
+			<activation>
+				<property>
+					<name>spark</name>
+					<value>3.4</value>
+				</property>
+			</activation>
+			<properties>
+				<protobuf.version>3.21.12</protobuf.version>
+			</properties>
+		</profile>
+		<profile>
+			<id>spark-3.5</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>spark</name>
+					<value>3.5</value>
+				</property>
+			</activation>
+			<properties>
+				<protobuf.version>3.23.4</protobuf.version>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>zingg-spark-connect-proto</artifactId>
+			<version>${zingg.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>zingg-common-client</artifactId>
+			<version>${zingg.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>zingg-spark-core</artifactId>
+			<version>${zingg.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>zingg</groupId>
+			<artifactId>zingg-spark-client</artifactId>
+			<version>${zingg.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>${protobuf.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-sql_${scala.binary.version}</artifactId>
+			<version>${spark.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-connect_${scala.binary.version}</artifactId>
+			<version>${spark.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>

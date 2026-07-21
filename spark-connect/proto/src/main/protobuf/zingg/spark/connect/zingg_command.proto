@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+// Wire schema for the Zingg Spark Connect command extension.
+//
+// FIELD NUMBERING RULES (read before touching this file):
+//   1. Every field has an explicit tag number. Wire compatibility is governed
+//      entirely by these numbers, never by declaration order -- reordering
+//      fields in this file is always safe, renumbering them never is.
+//   2. Once a field ships, its number is permanent. If a field is removed,
+//      add its number/name to a `reserved` statement in that message instead
+//      of deleting it outright, so the number can never be reused by
+//      accident.
+//   3. New fields always get the next unused number for that message; never
+//      backfill a gap left by a removed field.
+//   4. This keeps old clients/servers and new clients/servers interoperable:
+//      an old binary simply ignores field numbers it doesn't recognize, and
+//      a new binary sees defaults for fields an old sender never set.
+package zingg.spark.connect;
+
+option java_package = "zingg.spark.connect.proto";
+option java_multiple_files = true;
+
+// Mirrors zingg.common.client.MatchType / MatchTypes (common/client/src/main/java/zingg/common/client/MatchType.java).
+message MatchType {
+  string name = 1; // e.g. FUZZY, EXACT, PINCODE, EMAIL, TEXT, NUMERIC, NUMERIC_WITH_UNITS, NULL_OR_BLANK, ONLY_ALPHABETS_EXACT, ONLY_ALPHABETS_FUZZY, DONT_USE
+  // next available field number: 2
+}
+
+// Mirrors zingg.common.client.FieldDefinition.
+message FieldDefinition {
+  string field_name = 1;
+  string data_type = 2;
+  repeated MatchType match_type = 3;
+  string fields = 4;
+  string stop_words = 5;
+  string abbreviations = 6;
+  // next available field number: 7
+}
+
+// Mirrors zingg.common.client.pipe.Pipe.
+message Pipe {
+  string name = 1;
+  string format = 2;
+  string preprocessors = 3;
+  map<string, string> props = 4;
+  string schema = 5;
+  string mode = 6;
+  int32 id = 7;
+  // next available field number: 8
+}
+
+// Mirrors zingg.common.client.arguments.model.ZArgs + Arguments
+// (common/client/src/main/java/zingg/common/client/arguments/model/{ZArgs,Arguments}.java).
+message Arguments {
+  // ZArgs base fields
+  string zingg_dir = 1;
+  string model_id = 2;
+  int32 job_id = 3;
+  bool collect_metrics = 4;
+  repeated Pipe output = 5;
+
+  // Arguments (match-specific) fields
+  repeated Pipe data = 6;
+  repeated Pipe training_samples = 7;
+  repeated FieldDefinition field_definition = 8;
+  int32 num_partitions = 9;
+  float label_data_sample_size = 10;
+  double threshold = 11;
+  bool show_concise = 12;
+  float stop_words_cutoff = 13;
+  int64 block_size = 14;
+  string column = 15;
+  // next available field number: 16
+}
+
+// Mirrors the subset of zingg.common.client.ClientOptions flags relevant to
+// a Connect invocation. The phase itself travels on ZinggCommand.phase, not
+// here, since ClientOptions.PHASE is really the command dispatch key.
+message ClientOptions {
+  string license = 1;
+  string email = 2;
+  string job_id = 3; // string-typed --jobId CLI flag; distinct from Arguments.job_id (int)
+  string format = 4;
+  string location = 5;
+  string column = 6;
+  // next available field number: 7
+}
+
+// One ZinggCommand per phase invocation (train/match/label/...). Packed into
+// spark.connect.Command.extension (google.protobuf.Any) by the zingg_connect
+// python client and unpacked by ZinggCommandPlugin on the server.
+//
+// NOTE: Spark Connect's CommandPlugin.process(bytes, planner) -> boolean has
+// no channel back to the client for a data payload -- a thrown exception
+// propagates as a gRPC error, and a normal return just completes the RPC.
+// That is sufficient for phases that only need success/failure (train,
+// match, trainMatch, link, findTrainingData, generateDocs, recommend,
+// updateLabel). Phases that need to return row data to the client (the
+// interactive label/findAndLabel loop) cannot be modeled as a CommandPlugin
+// and need a RelationPlugin instead -- not yet implemented here.
+message ZinggCommand {
+  string phase = 1; // matches zingg.common.client.options.ZinggOptions value, e.g. "train","match","label",...
+  Arguments args = 2;
+  ClientOptions options = 3;
+  // next available field number: 4
+}

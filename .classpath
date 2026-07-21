@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+  <classpathentry kind="src" path="common/client/src/main/java"/>
+  <classpathentry kind="src" path="common/core/src/main/java"/>
+  <classpathentry kind="src" path="spark/client/src/main/java"/>
+  <classpathentry kind="src" path="spark/core/src/main/java"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="output" path="target/classes"/>
+</classpath>

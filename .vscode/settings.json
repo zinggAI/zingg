@@ -1,5 +1,22 @@
 {
     "editor.definitionLinkOpensInPeek": true,
     "java.dependency.syncWithFolderExplorer": true,
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.import.maven.enabled": true,
+    "java.maven.downloadSources": true,
+    "java.project.referencedLibraries": [
+        "/Users/sonal/zingg/common/client/target/classes",
+        "/Users/sonal/zingg/common/client/target/zingg-common-client-0.7.0.jar",
+        "/Users/sonal/zingg/common/core/target/classes",
+        "/Users/sonal/zingg/spark/client/target/classes",
+        "/Users/sonal/zingg/spark/client/target/zingg-spark-client-0.7.0.jar",
+        "/Users/sonal/zingg/spark/core/target/classes",
+        "/Users/sonal/zingg/spark/core/target/zingg-spark-core-0.7.0.jar"
+    ],
+    "java.project.sourcePaths": [
+        "/Users/sonal/zingg/common/client/src/main/java",
+        "/Users/sonal/zingg/common/core/src/main/java",
+        "/Users/sonal/zingg/spark/client/src/main/java",
+        "/Users/sonal/zingg/spark/core/src/main/java"
+    ]
 }
