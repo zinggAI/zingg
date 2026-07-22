@@ -12,12 +12,12 @@ import zingg.common.client.util.WithSession;
 import zingg.common.core.executor.Trainer;
 import zingg.common.core.executor.trainer.TestTrainer;
 import zingg.common.core.executor.trainer.util.IDataFrameUtility;
-import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.TestSparkBaseLite;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.executor.SparkTrainer;
 import zingg.spark.core.executor.trainer.util.SparkDataFrameUtility;
 
-@ExtendWith(TestSparkBase.class)
+@ExtendWith(TestSparkBaseLite.class)
 public class TestSparkTrainer extends TestTrainer<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
     private ZinggSparkContext zinggSparkContext;

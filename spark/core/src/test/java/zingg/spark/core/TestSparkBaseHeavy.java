@@ -9,10 +9,10 @@ import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import zingg.common.client.arguments.model.IArguments;
-import zingg.spark.core.session.SparkSessionProvider;
+import zingg.spark.core.session.SparkSessionProviderHeavy;
 import zingg.spark.core.context.ZinggSparkContext;
 
-public class TestSparkBase implements BeforeAllCallback, AfterAllCallback, ParameterResolver {
+public class TestSparkBaseHeavy implements BeforeAllCallback, AfterAllCallback, ParameterResolver {
     public static IArguments args;
     public static JavaSparkContext ctx;
     public static SparkSession spark;
@@ -40,7 +40,7 @@ public class TestSparkBase implements BeforeAllCallback, AfterAllCallback, Param
     @Override
     public void beforeAll(ExtensionContext context) {
         if (!isSetUp || spark == null) {
-            SparkSessionProvider sparkSessionProvider = SparkSessionProvider.getInstance();
+            SparkSessionProviderHeavy sparkSessionProvider = SparkSessionProviderHeavy.getInstance();
             spark = sparkSessionProvider.getSparkSession();
             ctx = sparkSessionProvider.getJavaSparkContext();
             args = sparkSessionProvider.getArgs();

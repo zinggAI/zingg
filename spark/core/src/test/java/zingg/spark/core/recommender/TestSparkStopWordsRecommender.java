@@ -20,10 +20,10 @@ import zingg.common.core.recommender.StopWordsRecommender;
 import zingg.common.core.recommender.TestStopWordsRecommenderBase;
 import zingg.spark.client.SparkFrame;
 import zingg.spark.client.util.SparkDFObjectUtil;
-import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.TestSparkBaseLite;
 import zingg.spark.core.context.ZinggSparkContext;
 
-@ExtendWith(TestSparkBase.class)
+@ExtendWith(TestSparkBaseLite.class)
 public class TestSparkStopWordsRecommender extends TestStopWordsRecommenderBase<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
 	public static final Log LOG = LogFactory.getLog(TestSparkStopWordsRecommender.class);
