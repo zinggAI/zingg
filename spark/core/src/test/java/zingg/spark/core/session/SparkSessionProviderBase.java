@@ -23,7 +23,7 @@ public abstract class SparkSessionProviderBase {
 
     protected abstract String getPropertiesFile();
 
-    protected void initializeSession() {
+    public void initializeSession() {
         if (sparkSession == null) {
             try {
                 SparkSession.Builder builder = SparkSession

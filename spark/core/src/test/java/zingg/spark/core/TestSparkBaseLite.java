@@ -17,7 +17,7 @@ public class TestSparkBaseLite implements BeforeAllCallback, AfterAllCallback, P
     public static JavaSparkContext ctx;
     public static SparkSession spark;
     public static ZinggSparkContext zsCTX;
-    static boolean isSetUp = false;
+    static boolean isSessionInitialised = false;
 
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
@@ -39,14 +39,15 @@ public class TestSparkBaseLite implements BeforeAllCallback, AfterAllCallback, P
 
     @Override
     public void beforeAll(ExtensionContext context) {
-        if (!isSetUp || spark == null) {
-            SparkSessionProviderLite sparkSessionProvider = SparkSessionProviderLite.getInstance();
+        if (!isSessionInitialised) {
+            SparkSessionProviderLite sparkSessionProvider = new SparkSessionProviderLite();
+            sparkSessionProvider.initializeSession();
             spark = sparkSessionProvider.getSparkSession();
             ctx = sparkSessionProvider.getJavaSparkContext();
             args = sparkSessionProvider.getArgs();
             zsCTX = sparkSessionProvider.getZinggSparkContext();
+            isSessionInitialised = true;
         }
-        isSetUp = true;
     }
 
 
