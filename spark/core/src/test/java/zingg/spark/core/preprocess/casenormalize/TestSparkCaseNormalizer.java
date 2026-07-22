@@ -14,13 +14,13 @@ import zingg.common.core.context.IContext;
 import zingg.common.core.preprocess.casenormalize.CaseNormalizer;
 import zingg.common.core.preprocess.casenormalize.TestCaseNormalizer;
 import zingg.spark.client.util.SparkDFObjectUtil;
-import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.TestSparkBaseLite;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.util.SparkCaseNormalizerUtility;
 
 import java.util.List;
 
-@ExtendWith(TestSparkBase.class)
+@ExtendWith(TestSparkBaseLite.class)
 public class TestSparkCaseNormalizer extends TestCaseNormalizer<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
     public static IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();

@@ -13,17 +13,17 @@ import zingg.spark.core.context.ZinggSparkContext;
 
 import java.util.Properties;
 
-public class SparkSessionProvider {
-
-    private static SparkSessionProvider sparkSessionProvider;
+public abstract class SparkSessionProviderBase {
 
     private SparkSession sparkSession;
     private JavaSparkContext javaSparkContext;
     private ZinggSparkContext zinggSparkContext;
     private IArguments args;
-    public static final Log LOG = LogFactory.getLog(SparkSessionProvider.class);
+    public static final Log LOG = LogFactory.getLog(SparkSessionProviderBase.class);
 
-    private void initializeSession() {
+    protected abstract String getPropertiesFile();
+
+    public void initializeSession() {
         if (sparkSession == null) {
             try {
                 SparkSession.Builder builder = SparkSession
@@ -31,7 +31,7 @@ public class SparkSessionProvider {
                         .master("local[*]")
                         .appName("ZinggJunit");
                 Properties props = new Properties();
-                props.load(getClass().getResourceAsStream("/zingg.properties"));
+                props.load(getClass().getResourceAsStream(getPropertiesFile()));
                 for (String key : props.stringPropertyNames()) {
                     builder = builder.config(key, props.getProperty(key));
                 }
@@ -57,14 +57,6 @@ public class SparkSessionProvider {
         } else {
             LOG.info("Spark session already active, ignoring create spark session!");
         }
-    }
-
-    public static SparkSessionProvider getInstance() {
-        if (sparkSessionProvider == null) {
-            sparkSessionProvider = new SparkSessionProvider();
-            sparkSessionProvider.initializeSession();
-        }
-        return sparkSessionProvider;
     }
 
     //set getters

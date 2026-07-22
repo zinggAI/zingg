@@ -16,11 +16,11 @@ import zingg.common.core.context.IContext;
 import zingg.common.core.preprocess.trim.TestTrimPreprocess;
 import zingg.common.core.preprocess.trim.TrimPreprocessor;
 import zingg.spark.client.util.SparkDFObjectUtil;
-import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.TestSparkBaseLite;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.util.SparkTrimPreprocessUtility;
 
-@ExtendWith(TestSparkBase.class)
+@ExtendWith(TestSparkBaseLite.class)
 public class TestSparkTrimPreprocess extends TestTrimPreprocess<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
     public static IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();

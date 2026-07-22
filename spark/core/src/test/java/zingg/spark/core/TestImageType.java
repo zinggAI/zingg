@@ -21,7 +21,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.core.similarity.function.ArrayDoubleSimilarityFunction;
 import zingg.spark.core.util.SparkFnRegistrar;
 
-@ExtendWith(TestSparkBase.class)
+@ExtendWith(TestSparkBaseLite.class)
 public class TestImageType {
 	
 	
