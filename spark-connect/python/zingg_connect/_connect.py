@@ -15,6 +15,7 @@ is the only integration point.
 from google.protobuf import any_pb2
 from pyspark.sql.connect.client.core import SparkConnectClient
 from pyspark.sql.connect.proto import commands_pb2
+from pyspark.sql.connect.proto import base_pb2, relations_pb2
 
 
 class ZinggConnectError(Exception):
@@ -69,4 +70,33 @@ def execute_zingg_command(remote, zingg_command):
     except Exception as e:
         raise ZinggConnectError(
             f"Zingg phase '{zingg_command.phase}' failed over Spark Connect: {e}"
+        ) from e
+
+
+def fetch_zingg_relation(remote, zingg_command):
+    """Sends a ZinggCommand as a Spark Connect *relation* (not a command) and
+    returns the resulting rows as a PyArrow Table.
+
+    This is the two-way channel the interactive label loop needs: the server
+    side (ZinggRelationPlugin) returns a LogicalPlan of the unmarked pairs, and
+    Spark streams those rows back here. Contrast execute_zingg_command(), which
+    can only report success/failure with no data payload.
+
+    :param remote: see _resolve_client
+    :param zingg_command: a zingg_command_pb2.ZinggCommand (phase label/findAndLabel)
+    """
+    client = _resolve_client(remote)
+
+    relation = relations_pb2.Relation()
+    relation.extension.Pack(zingg_command)
+
+    plan = base_pb2.Plan()
+    plan.root.CopyFrom(relation)
+
+    try:
+        table, _schema = client.to_table(plan)
+        return table
+    except Exception as e:
+        raise ZinggConnectError(
+            f"Zingg relation for phase '{zingg_command.phase}' failed over Spark Connect: {e}"
         ) from e

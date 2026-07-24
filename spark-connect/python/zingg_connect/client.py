@@ -14,7 +14,7 @@ match, trainMatch, link, findTrainingData, generateDocs, recommend,
 updateLabel.
 """
 
-from zingg_connect._connect import execute_zingg_command
+from zingg_connect._connect import execute_zingg_command, fetch_zingg_relation
 from zingg_connect.options import ZinggOptions
 from zingg_connect.proto import zingg_command_pb2 as pb2
 
@@ -80,3 +80,18 @@ class Zingg:
 
     def getOptions(self):
         return self.inpOptions
+
+    def getUnmarkedPairs(self):
+        """Fetch the unmarked training pairs from the server so they can be
+        labelled on the client. Uses the RelationPlugin path (returns row data),
+        unlike execute() which is fire-and-execute only.
+
+        Returns a PyArrow Table of the pairs still needing a label. Intended for
+        the label / findAndLabel phases; requires findTrainingData to have run.
+        """
+        command = pb2.ZinggCommand(
+            phase=self.inpOptions.getPhase(),
+            args=self.inpArgs.to_proto(),
+            options=self.inpOptions.to_proto(),
+        )
+        return fetch_zingg_relation(self.remote, command)
