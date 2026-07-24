@@ -14,7 +14,9 @@ match, trainMatch, link, findTrainingData, generateDocs, recommend,
 updateLabel.
 """
 
-from zingg_connect._connect import execute_zingg_command, fetch_zingg_relation
+from zingg_connect._connect import (
+    execute_zingg_command, fetch_zingg_relation, write_marked_pairs,
+)
 from zingg_connect.options import ZinggOptions
 from zingg_connect.proto import zingg_command_pb2 as pb2
 
@@ -95,3 +97,16 @@ class Zingg:
             options=self.inpOptions.to_proto(),
         )
         return fetch_zingg_relation(self.remote, command)
+
+    def writeMarkedPairs(self, labels):
+        """Write the client's label decisions back to the model's marked
+        training data, so a subsequent train() picks them up. Paths are derived
+        from the Arguments (zinggDir + modelId) -- nothing is hardcoded.
+
+        :param labels: iterable of (z_cluster, label), label 1=match, 0=no, 2=not sure
+        :returns: number of pairs written
+        """
+        zingg_dir = self.inpArgs.getZinggDir()
+        model_id = self.inpArgs.getModelId()
+        base = f"{zingg_dir}/{model_id}/trainingData"
+        return write_marked_pairs(self.remote, f"{base}/unmarked", f"{base}/marked", labels)
