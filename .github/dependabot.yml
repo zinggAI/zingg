@@ -1,16 +1,7 @@
-# Dependabot configuration for Zingg.
-# See: https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-#
-# NOTE (issue #1289): Zingg runs *on top of* a Spark cluster (Databricks, EMR,
-# spark-submit classpath). Spark, Scala, and the Jackson libs Spark ships are
-# declared as `provided` scope in the poms — they are compiled against but NOT
-# packaged into the Zingg jar. The runtime environment supplies (and patches)
-# them. Zingg cannot choose their runtime version, so Dependabot PRs/alerts on
-# these are noise. We therefore `ignore` them below.
-# GitHub classifies Maven `provided` scope as "runtime" (not "development"), so
-# there is no built-in scope filter for this yet (dependabot-core#7973) — the
-# ignore list is the config-level lever, and pom <exclusions> remain the real
-# fix for transitive artifacts we must strip from the shipped graph.
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
 updates:
