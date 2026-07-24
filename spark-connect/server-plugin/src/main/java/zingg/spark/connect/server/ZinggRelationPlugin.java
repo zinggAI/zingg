@@ -20,6 +20,7 @@ import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.arguments.model.IZArgs;
 import zingg.spark.core.executor.SparkLabeller;
+import zingg.spark.core.executor.SparkFindAndLabeller;
 import zingg.spark.connect.proto.ZinggCommand;
 
 /**
@@ -87,10 +88,19 @@ public class ZinggRelationPlugin implements RelationPlugin {
 		LOG.info("Producing unmarked pairs for Zingg phase '" + zinggCommand.getPhase()
 				+ "' via Spark Connect relation plugin");
 
-		SparkLabeller labeller = new SparkLabeller();
-		labeller.init(args, session, options);
+		ZFrame<Dataset<Row>, Row, Column> unmarked;
+		if (zinggCommand.getPhase().equals("findAndLabel")) {
+			// findAndLabel = generate fresh pairs (finder) then hand them back to label
+			SparkFindAndLabeller findAndLabeller = new SparkFindAndLabeller();
+			findAndLabeller.init(args, session, options);
+			findAndLabeller.getFinder().execute();
+			unmarked = findAndLabeller.getLabeller().getUnmarkedRecords();
+		} else {
+			SparkLabeller labeller = new SparkLabeller();
+			labeller.init(args, session, options);
+			unmarked = labeller.getUnmarkedRecords();
+		}
 
-		ZFrame<Dataset<Row>, Row, Column> unmarked = labeller.getUnmarkedRecords();
 		if (unmarked == null) {
 			throw new ZinggClientException("No unmarked training pairs found -- run findTrainingData first.");
 		}
