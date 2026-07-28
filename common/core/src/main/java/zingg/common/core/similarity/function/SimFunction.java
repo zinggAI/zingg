@@ -10,6 +10,7 @@ public abstract class SimFunction<T> implements Serializable{ //extends UDF2<T,T
 	
 	public static final Log LOG = LogFactory.getLog(SimFunction.class);
 	protected String name;
+	protected boolean isNative = false;
 	
 	public int getNumFeatures() {
 		return 1;
@@ -35,6 +36,9 @@ public abstract class SimFunction<T> implements Serializable{ //extends UDF2<T,T
 
 	public SimFunction(String name) {
 		this.name = name;
+	}
+	public boolean isNative() {
+		return this.isNative;
 	}
 	
 
