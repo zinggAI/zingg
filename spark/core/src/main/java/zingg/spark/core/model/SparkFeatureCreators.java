@@ -33,10 +33,14 @@ public class SparkFeatureCreators implements Serializable {
 			for (SimFunction sf : sfList) {
 				String outputCol = columnHelper.getColumnName(fd.fieldName, sf.getName(), count);
 				columnHelper.getColumnsAdded().add(outputCol);
-				transformers.add(new SparkTransformer(fd.fieldName, new SparkSimFunction(sf), outputCol));
+				transformers.add(createTransformer(sf, fd.fieldName, outputCol));
 				count++;
 			}
 		}
+	}
+
+	protected SparkTransformer createTransformer(SimFunction sf, String fieldName, String outputCol) {
+		return new SparkTransformer(fieldName, new SparkSimFunction(sf), outputCol);
 	}
 
 	public void register(SparkSession session) {

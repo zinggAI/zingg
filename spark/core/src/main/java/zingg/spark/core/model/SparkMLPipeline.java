@@ -32,7 +32,6 @@ import zingg.common.core.feature.Feature;
 import zingg.common.core.model.ModelColumnHelper;
 import zingg.common.core.model.ModelGrid;
 import zingg.spark.client.SparkFrame;
-import zingg.spark.core.similarity.SparkTransformer;
 
 public class SparkMLPipeline implements Serializable {
 
@@ -44,7 +43,7 @@ public class SparkMLPipeline implements Serializable {
 	private LogisticRegression lr;
 	private Transformer transformer;
 	private VectorValueExtractor vve;
-	protected ModelColumnHelper columnHelper;
+	private ModelColumnHelper columnHelper;
 
 	public SparkMLPipeline() {
 	}
