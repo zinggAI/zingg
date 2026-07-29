@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: zingg-connect
+Version: 0.1.0
+Summary: Spark-Connect-native Python API for Zingg (no py4j). Standalone module, not yet merged into the main zingg python package.
+Requires-Python: >=3.8
+Requires-Dist: pyspark>=3.4.0
+Requires-Dist: protobuf>=4.21
+Requires-Dist: grpcio>=1.48
