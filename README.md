@@ -7,6 +7,13 @@
 [![performance-test-febrl120K](https://github.com/zinggAI/zingg/actions/workflows/perfTest-febrl120K.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/perfTest-febrl120K.yml)
 [![performance-test-ncVoters5M](https://github.com/zinggAI/zingg/actions/workflows/perfTest-ncVoters5M.yml/badge.svg)](https://github.com/zinggAI/zingg/actions/workflows/perfTest-ncVoters5M.yml)
 
+## Performance
+
+Runtime history across releases, updated automatically on every performance run.
+
+![febrl 120K performance history](assets/performance_chart_febrl120K.png)
+![ncVoters 5M performance history](assets/performance_chart_ncVoters5M.png)
+
 ## 0.6.0 release is out!
 
 ## The Problem

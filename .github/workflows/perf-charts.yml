@@ -1,0 +1,62 @@
+name: performance-charts
+
+# Regenerates the performance history charts from the committed test-report
+# history and publishes them into this repo (shown on the README). Runs after
+# either performance test completes, and can also be triggered manually.
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - performance-test-febrl120K
+      - performance-test-ncVoters5M
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+jobs:
+  charts:
+    name: performance-charts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo content
+        uses: actions/checkout@v4
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12.7
+
+      - name: Install plotting dependencies
+        run: pip install pandas matplotlib
+
+      - name: Clone performance reports repo
+        run: |
+          set -e
+          git clone https://x-access-token:${{ secrets.GH_PERF_COMMUNITY_ACTION }}@github.com/zinggAI/zingg_community_performance_reports.git
+
+      - name: Fetch chart script
+        run: |
+          wget -O plot_result.py https://raw.githubusercontent.com/zinggAI/zingg_performance/main/plot_result.py
+
+      - name: Generate charts
+        env:
+          REPORTS_REPO: zingg_community_performance_reports
+          CHART_DIR: assets
+          OSS_REPO: zinggAI/zingg
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python plot_result.py
+
+      - name: Commit charts
+        run: |
+          git config user.name sonalgoyal
+          git config user.email sonalgoyal4@gmail.com
+          git add assets/performance_chart_*.png
+          if git diff --cached --quiet; then
+            echo "No chart changes to commit."
+          else
+            git commit -m "update performance charts"
+            git push
+          fi
