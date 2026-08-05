@@ -18,7 +18,7 @@ public class VerticalDisplayUtility<S, D, R, C> {
 
     public void showVertical(ZFrame<D, R, C> zFrame) throws ZinggClientException {
         ZFrame<D, R, C> verticalZFrame = convertVertical(zFrame);
-        verticalZFrame.show(MAX_COLUMNS);
+        verticalZFrame.show(MAX_COLUMNS, false);
     }
 
     public ZFrame<D, R, C> convertVertical(ZFrame<D, R, C> zFrame) throws ZinggClientException {
