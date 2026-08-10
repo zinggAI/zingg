@@ -120,7 +120,6 @@ public interface ZFrame<D, R, C> {
     public C or(C col1, C col2);
 
     public void show(int num);
-    public void show(int num, boolean truncate);
     public void show();
 
     public String showSchema();
