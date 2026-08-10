@@ -5,7 +5,7 @@ description: Hope you find us useful :-)
 # Welcome To Zingg
 
 This is the latest documentation for Zingg. Release wise documentation can be accessed through:
-
+* v0.7.0 (Coming soon!)
 * [v0.6.0](https://docs.zingg.ai/0.6.0/)
 * [v0.5.0](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/LzEhax5IUbfFVRkRns9Q/)
 * [v0.4.0](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/a7sgpR3odgfck5L8KMcN/)
