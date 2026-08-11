@@ -482,6 +482,150 @@ args.setPassthroughExpr("fname = 'matilda'")
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-**CHECK WITH SONAL ABOUT THIS TOPIC - NEEDS ENTIRELY DIFFERENT SET OF CONTENT TO BE DISCUSSED LATER.**
+
+### Step 1: Build the Enterprise arguments object
+
+
+Set the blocking strategy directly after `setLabelDataSampleSize`. If not set, the model follows `DEFAULT`.
+
+#### JSON
+
+```json
+{
+  "modelId": "100",
+  "zinggDir": "/tmp/models",
+  "numPartitions": 4,
+  "labelDataSampleSize": 0.5
+}
+```
+
+### Step 2: Define fields with `EFieldDefinition`
+
+#### JSON
+
+```json
+  "fieldDefinition":[
+		{
+			"fieldName" : "recid",
+			"matchType" : "dont_use",
+			"fields" : "recid",
+			"dataType": "string" ,
+			"primaryKey": "true"
+		},
+		{
+			"fieldName" : "givenname",
+			"matchType" : "fuzzy",
+			"fields" : "givenname",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "surname",
+			"matchType": "exact",
+			"fields" : "surname",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "suburb",
+			"matchType": "fuzzy",
+			"fields" : "suburb",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "postcode",
+			"matchType": "exact",
+			"fields" : "postcode",
+			"dataType": "string" 
+		}
+	]
+```
+
+{% hint style="info" icon="right-long" %}
+Enterprise requires a primary key field for `runIncremental`. Mark the primary key field by calling `recId.setPrimaryKey(True)` if you plan to use incremental matching.
+{% endhint %}
+
+### Step 3: Configure input and output pipes
+
+#### JSON
+
+```json
+    "data" : [{
+			"name":"test", 
+			"format":"csv", 
+			"props": {
+				"location": "examples/ncVoters5M/5Party-ocp20/",
+				"delimiter": ",",
+				"header":false					
+			},
+			"schema": "recid string, givenname string, surname string, suburb string, postcode string"
+		}],
+    "outputStats" : {
+      "name":"stats",
+      "format":"csv",
+      "props": {
+        "location": "/tmp/zinggStats_$ZINGG_DYNAMIC_STAT_NAME",
+        "delimiter": ",",
+        "header":true
+      }
+    }
+```
+
+### Step 4: Deterministic matching (optional)
+
+{% hint style="info" icon="right-long" %}
+Deterministic matching - **Enterprise** only.
+
+Skip this step if you only need probabilistic matching.
+{% endhint %}
+
+#### JSON
+
+```json
+{
+  "deterministicMatching": [
+    {"matchCondition": [
+      {"fieldName": "fname"},
+      {"fieldName": "stNo"},
+      {"fieldName": "add1"}
+    ]},
+    {"matchCondition": [
+      {"fieldName": "fname"},
+      {"fieldName": "dob"},
+      {"fieldName": "ssn"}
+    ]},
+    {"matchCondition": [
+      {"fieldName": "fname"},
+      {"fieldName": "email"}
+    ]}
+  ]
+}
+```
+
+### Step 5: Pass Through (optional)
+
+{% hint style="info" icon="right-long" %}
+Pass Through - **Enterprise** only.
+
+Excludes specific records from matching while still including them in output with their own `Zingg ID`.
+{% endhint %}
+
+Pass Through excludes specific records from matching while still including them in output with their own Zingg ID. Records matching the passthrough expression appear in the identity graph but never influence cluster formation.
+
+**Note**: Zingg internally applies the negation of `passthroughExpr` to filter matching records. If the passthrough condition applies to nullable fields, ensure the negative of the expression yields the records that are `NOT` passthrough.
+
+#### JSON
+
+```json
+{
+  "passthroughExpr": "fname = 'matilda'"
+}
+```
+
+#### Example with null-safe expression
+
+```json
+{
+  "passthroughExpr": "is_deceased = true AND is_deceased is NOT NULL"
+}
+```
 {% endtab %}
 {% endtabs %}
