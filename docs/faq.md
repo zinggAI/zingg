@@ -6,7 +6,7 @@ nav_order: 9
 
 ## How much training is enough?
 
-Typically 30-40 positive pairs (matches) should build a good first model. While marking records through the interactive learner, you can check Zingg's predictions for the shown pair. If they seem to be correct, you can pause and run Zingg in train and match phases to see what result you are getting. If not satisfied, you can always run the findTrainingData and label jobs again and they will pick from the last training round.
+Typically, 30-40 positive pairs (matches) should build a good first model. While marking records through the interactive learner, you can check Zingg's predictions for the shown pair. If they seem to be correct, you can pause and run Zingg in train and match phases to see what result you are getting. If not satisfied, you can always run the findTrainingData and label jobs again and they will pick from the last training round.
 
 ## Do I need to train for every new dataset?
 
@@ -16,19 +16,19 @@ No, absolutely not! Train only if the schema(attributes or their types) has chan
 
 Depends on the data size you have. Check [hardware sizing](setup/hardwareSizing.md) for more details.
 
-## I dont have much background in ML or Spark. Can I still use Zingg ?
+## I don't have much background in ML or Spark. Can I still use Zingg ?
 
 Very much! Zingg uses Spark and ML under the hood so that you don't have to worry about the rules and the scale.
 
 ## Is Zingg an MDM?
 
-Zingg Community Version is a DIY Master Data Management Product, solving the entity matching and linking process. You can build an MDM in a data store of your choice using Zingg Community. Zingg Enterprise Version is a lakehouse/warehouse native MDM with advance features for globally unique and peristent identifier, gden records, agentic stewardship and survivorship.
+Zingg Community Version is a DIY Master Data Management Product, solving the entity matching and linking process. You can build an MDM in a data store of your choice using Zingg Community. Zingg Enterprise Version is a lakehouse/warehouse native MDM with advanced features for globally unique and persistent identifiers, golden records, agentic stewardship and survivorship.
 
 ## Is Zingg a CDP ?
 
-No, Zingg is not a CDP. However, Zingg is part of the Composable CDP stack, where enterprises assemble  customer platform off your warehouse or datalake, Zingg is a great fit. You can leverage existing ETL, observability, and other tools which are part of your data stack and use Zingg for identity.\
-Zingg Community Version can be used to build a composable CDP by identity resolution natively on the warehouse and datalake and building customer 360 views. Zingg's identity resolution is far more powerful than what is offered by any out of the box CDP.\
-Zingg Enterprise's probabilistic and deterministic matching take this further beyond. Here is an [article](https://hightouch.com/blog/warehouse-identity-resolution/) describing how you can build your own CDP on the warehouse with Zingg.
+No, Zingg is not a CDP. However, Zingg is part of the Composable CDP stack, where enterprises assemble a customer platform off their warehouse or datalake, Zingg is a great fit. You can leverage existing ETL, observability, and other tools which are part of your data stack and use Zingg for identity.\
+Zingg Community Version can be used to build a composable CDP by identity resolution natively on the warehouse and datalake and building customer 360 views. Zingg's identity resolution is far more powerful than what is offered by any out-of-the-box CDP.\
+Zingg Enterprise's probabilistic and deterministic matching takes this further. Here is an [article](https://hightouch.com/blog/warehouse-identity-resolution/) describing how you can build your own CDP on the warehouse with Zingg.
 
 ## I can do Entity Resolution using a graph database like TigerGraph/Neo4J, why do I need Zingg ?
 
