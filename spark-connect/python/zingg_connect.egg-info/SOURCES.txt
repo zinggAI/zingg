@@ -1,0 +1,14 @@
+pyproject.toml
+zingg_connect/__init__.py
+zingg_connect/_connect.py
+zingg_connect/arguments.py
+zingg_connect/client.py
+zingg_connect/options.py
+zingg_connect/pipes.py
+zingg_connect.egg-info/PKG-INFO
+zingg_connect.egg-info/SOURCES.txt
+zingg_connect.egg-info/dependency_links.txt
+zingg_connect.egg-info/requires.txt
+zingg_connect.egg-info/top_level.txt
+zingg_connect/proto/__init__.py
+zingg_connect/proto/zingg_command_pb2.py

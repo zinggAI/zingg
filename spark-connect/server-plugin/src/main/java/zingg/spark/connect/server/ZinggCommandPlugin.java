@@ -105,6 +105,9 @@ public class ZinggCommandPlugin implements CommandPlugin {
 		SparkClient client = new SparkClient(args, options, session);
 		client.init();
 		client.execute();
-		client.stop();
+		// No client.stop() here: over Spark Connect the SparkSession is owned by
+		// the long-running server and shared across requests, so stopping it would
+		// tear down Spark for every subsequent phase. (The CLI's init/execute/stop
+		// pattern only fits a one-Spark-per-process run.)
 	}
 }
