@@ -7,7 +7,7 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 
 import org.junit.jupiter.api.extension.ExtendWith;
-import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.TestSparkBaseLite;
 import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.IWithSession;
@@ -19,7 +19,7 @@ import zingg.common.core.preprocess.TestPreprocessors;
 import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.core.context.ZinggSparkContext;
 
-@ExtendWith(TestSparkBase.class)
+@ExtendWith(TestSparkBaseLite.class)
 public class TestSparkPreprocessors extends TestPreprocessors<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
     public static IWithSession<SparkSession> iWithSession = new WithSession<SparkSession>();

@@ -16,7 +16,6 @@ import zingg.common.core.pairs.SelfPairBuilderSourceSensitive;
 public abstract class Linker<S,D,R,C,T> extends Matcher<S,D,R,C,T> {
 
 	private static final long serialVersionUID = 1L;
-	protected static String name = "zingg.Linker";
 	public static final Log LOG = LogFactory.getLog(Linker.class);
 
 	public Linker() {

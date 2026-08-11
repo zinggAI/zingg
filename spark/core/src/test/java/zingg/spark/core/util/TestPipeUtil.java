@@ -14,10 +14,10 @@ import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.pipe.FilePipe;
 import zingg.common.client.pipe.Pipe;
-import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.TestSparkBaseLite;
 import zingg.spark.core.context.ZinggSparkContext;
 
-@ExtendWith(TestSparkBase.class)
+@ExtendWith(TestSparkBaseLite.class)
 public class TestPipeUtil {
 	public static final Log LOG = LogFactory.getLog(TestPipeUtil.class);
 

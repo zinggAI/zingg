@@ -7,7 +7,7 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataType;
 import org.junit.jupiter.api.extension.ExtendWith;
 import zingg.common.core.block.TestBlockBase;
-import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.TestSparkBaseLite;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.util.IWithSession;
 import zingg.common.client.util.WithSession;
@@ -16,7 +16,7 @@ import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.util.SparkBlockingTreeUtil;
 import zingg.spark.core.util.SparkHashUtil;
 
-@ExtendWith(TestSparkBase.class)
+@ExtendWith(TestSparkBaseLite.class)
 public class TestSparkBlock extends TestBlockBase<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
     public static ZinggSparkContext zsCTX = new ZinggSparkContext();

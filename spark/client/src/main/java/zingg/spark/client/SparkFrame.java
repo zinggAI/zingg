@@ -312,6 +312,10 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
         df.show(num);
     }
 
+    public void show(int num, boolean truncate) {
+        df.show(num, truncate);
+    }
+
     public void show() {
         df.show();
     }

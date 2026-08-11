@@ -19,11 +19,11 @@ import zingg.common.core.util.BlockingTreeUtil;
 import zingg.common.core.util.HashUtil;
 import zingg.spark.client.util.SparkDFObjectUtil;
 import zingg.spark.client.util.SparkPipeUtil;
-import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.TestSparkBaseLite;
 import zingg.spark.core.util.SparkBlockingTreeUtil;
 import zingg.spark.core.util.SparkHashUtil;
 
-@ExtendWith(TestSparkBase.class)
+@ExtendWith(TestSparkBaseLite.class)
 public class TestSparkBlockingTreeUtil extends TestBlockingTreeUtil<SparkSession, Dataset<Row>, Row, Column, DataType>{
 
     private final IWithSession<SparkSession> withSession;

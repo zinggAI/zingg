@@ -1,0 +1,3 @@
+- tag: enterprise-only
+  label: Enterprise only
+  color: $primary

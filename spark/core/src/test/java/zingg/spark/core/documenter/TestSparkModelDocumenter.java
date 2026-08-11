@@ -18,11 +18,11 @@ import zingg.common.core.context.IContext;
 import zingg.common.core.documenter.ModelDocumenter;
 import zingg.common.core.documenter.TestModelDocumenterBase;
 import zingg.spark.client.SparkFrame;
-import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.TestSparkBaseLite;
 import zingg.spark.core.context.ZinggSparkContext;
 
 
-@ExtendWith(TestSparkBase.class)
+@ExtendWith(TestSparkBaseLite.class)
 public class TestSparkModelDocumenter extends TestModelDocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
 	public static final Log LOG = LogFactory.getLog(TestSparkModelDocumenter.class);

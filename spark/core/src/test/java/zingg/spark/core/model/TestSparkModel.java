@@ -13,12 +13,12 @@ import zingg.common.client.util.WithSession;
 import zingg.common.core.model.TestModelBase;
 import zingg.common.core.util.ModelUtil;
 import zingg.spark.client.util.SparkDFObjectUtil;
-import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.TestSparkBaseLite;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.util.SparkModelUtil;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(TestSparkBase.class)
+@ExtendWith(TestSparkBaseLite.class)
 public class TestSparkModel extends TestModelBase<SparkSession, Dataset<Row>, Row, Column, DataType> {
 
     private SparkSession sparkSession;

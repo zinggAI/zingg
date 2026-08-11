@@ -14,10 +14,10 @@ import zingg.common.client.ZinggClientException;
 import zingg.common.core.context.IContext;
 import zingg.common.core.documenter.DocumenterBase;
 import zingg.common.core.documenter.TestDocumenterBase;
-import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.TestSparkBaseLite;
 import zingg.spark.core.context.ZinggSparkContext;
 
-@ExtendWith(TestSparkBase.class)
+@ExtendWith(TestSparkBaseLite.class)
 public class TestSparkDocumenter extends TestDocumenterBase<SparkSession, Dataset<Row>, Row, Column, DataType>{
 
 	public static final Log LOG = LogFactory.getLog(TestSparkDocumenter.class);

@@ -19,13 +19,13 @@ import zingg.common.core.executor.TestExecutorsCompound;
 import zingg.common.core.executor.TrainMatcher;
 import zingg.common.core.util.ICleanUpUtil;
 import zingg.spark.client.util.SparkDFObjectUtil;
-import zingg.spark.core.TestSparkBase;
+import zingg.spark.core.TestSparkBaseHeavy;
 import zingg.spark.core.context.ZinggSparkContext;
 import zingg.spark.core.executor.labeller.ProgrammaticSparkLabeller;
 import zingg.spark.core.executor.validate.SparkTrainMatchValidator;
 import zingg.spark.core.util.SparkCleanUpUtil;
 
-@ExtendWith(TestSparkBase.class)
+@ExtendWith(TestSparkBaseHeavy.class)
 public class TestSparkExecutorsCompound extends TestExecutorsCompound<SparkSession,Dataset<Row>,Row,Column,DataType> {
 	protected static final String CONFIG_FILE = "zingg/spark/core/executor/compound/configSparkIntTest.json";
 	protected static final String TEST_DATA_FILE = "zingg/spark/core/executor/test.csv";
