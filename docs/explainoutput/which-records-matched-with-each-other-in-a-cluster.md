@@ -8,8 +8,6 @@ description: >-
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
-Coming Soon!
-
 Many times, records end up being in a cluster even when they may not have directly matched. For example Recod A matched with B, and B matched with C. Some records may match a lot more to other records in the cluster, while one record may just match with one andhence get included in the cluster. If you want to audit clusters, investigate anomalies, present rationale to stakeholders, or refine your matching strategy with confidence, it is important to understand pair wise matching.&#x20;
 
 The `explain` phase helps us learn this.&#x20;
@@ -21,8 +19,7 @@ The `explain` configuration references the original matching config and defines 
 ```json
 {
   "config": "path_to_original_matching_config/config.json",
-  "explainOutput": [
-    {
+  "explainOutput": {
       "name": "outputExplain",
       "format": "csv",
       "props": {
@@ -31,7 +28,6 @@ The `explain` configuration references the original matching config and defines 
         "header": true
       }
     }
-  ]
 }  
 ```
 
