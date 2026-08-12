@@ -103,6 +103,34 @@ Candidate pairs are written to `zinggDir/modelId`. Run the label phase next to r
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-**CHECK WITH SONAL ABOUT THIS TOPIC - NEEDS ENTIRELY DIFFERENT SET OF CONTENT TO BE DISCUSSED LATER.**
+### Set label data sample size
+
+#### JSON
+
+```json
+	"labelDataSampleSize" : 0.5,
+```
+
+### Run findTrainingData
+
+#### JSON
+
+```json
+./zingg.sh --phase findTrainingData --conf config.json \
+--properties-file <location to snowflake.properties>
+```
+
+Enterprise Snowflake also provides the `findAndLabel` combined phase, which runs `findTrainingData` and `label` together in a single call. Use this for smaller datasets where `findTrainingData` completes quickly:
+<!-- 
+#### JSON
+
+```json
+
+``` -->
+
+{% hint style="info" icon="right-long" %}
+Candidate pairs are written to `zinggDir/modelId`. Run the label phase next to review and label these pairs.
+{% endhint %}
+
 {% endtab %}
 {% endtabs %}

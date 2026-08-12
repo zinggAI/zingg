@@ -67,6 +67,19 @@ Available options:
 Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark cluster.
 {% endhint %}
 
-_**CHECK WITH SONAL ABOUT THE ENTIRE SNOWFLAKE RELATED CONTENT**_
+
+### CLI
+
+```bash
+./zingg.sh --phase train --conf config.json
+```
+
+Enterprise adds blocking model configuration via `args.setBlockingModel()`. Set this in Configure Zingg before running `train`.
+
+Available options:
+
+* `DEFAULT` - standard blocking strategy, suitable for most datasets
+* `WIDER` - casts a wider blocking net; use if known matching pairs are being missed
+
 {% endtab %}
 {% endtabs %}

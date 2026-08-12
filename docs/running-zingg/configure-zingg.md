@@ -540,7 +540,7 @@ Set the blocking strategy directly after `setLabelDataSampleSize`. If not set, t
 ```
 
 {% hint style="info" icon="right-long" %}
-Enterprise requires a primary key field for `runIncremental`. Mark the primary key field by calling `recId.setPrimaryKey(True)` if you plan to use incremental matching.
+Enterprise requires a primary key field for `runIncremental`. Mark the primary key field by adding `"primaryKey": "true"` if you plan to use incremental matching.
 {% endhint %}
 
 ### Step 3: Configure input and output pipes
@@ -548,25 +548,20 @@ Enterprise requires a primary key field for `runIncremental`. Mark the primary k
 #### JSON
 
 ```json
-    "data" : [{
-			"name":"test", 
-			"format":"csv", 
-			"props": {
-				"location": "examples/ncVoters5M/5Party-ocp20/",
-				"delimiter": ",",
-				"header":false					
-			},
-			"schema": "recid string, givenname string, surname string, suburb string, postcode string"
-		}],
-    "outputStats" : {
-      "name":"stats",
-      "format":"csv",
-      "props": {
-        "location": "/tmp/zinggStats_$ZINGG_DYNAMIC_STAT_NAME",
-        "delimiter": ",",
-        "header":true
-      }
-    }
+	"output" : [{
+		"name":"output_Febrl_5M",
+		"format":"snowflake",
+		"props": {
+			"table": "OUTPUT_Febrl_5M"
+		}
+	}],
+	"data" : [{
+		"name":"FEBRL5M",
+		"format":"snowflake",
+		"props": {
+			"table": "Febrl_5M"
+		}
+	}],
 ```
 
 ### Step 4: Deterministic matching (optional)
@@ -600,7 +595,31 @@ Skip this step if you only need probabilistic matching.
 }
 ```
 
-### Step 5: Pass Through (optional)
+### Step 5: Output stats (optional)
+
+{% hint style="info" icon="right-long" %}
+Output stats - **Enterprise** only.
+
+Skip this step if you do not need run statistics.
+{% endhint %}
+
+Configures where Zingg writes statistics for the `match` and `incrementalRun` phases. The `$ZINGG_DYNAMIC_STAT_NAME` placeholder is substituted at runtime with `SUMMARY`, `CLUSTER`, or `RECORD`, so each run writes the three statistics tables separately. If `outputStats` is not configured, Zingg skips stats writing and the run proceeds normally.
+
+#### JSON
+
+```json
+	"outputStats" : {
+		"name":"stats",
+		"format":"snowflake",
+		"props": {
+			"table": "zinggStats_$ZINGG_DYNAMIC_STAT_NAME2"
+		}
+	},
+```
+
+**Read more:** For the fields in each statistics table → [Output Statistics](../interpreting-results/output-statistics.md).
+
+### Step 6: Pass Through (optional)
 
 {% hint style="info" icon="right-long" %}
 Pass Through - **Enterprise** only.
