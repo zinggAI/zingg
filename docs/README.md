@@ -4,7 +4,7 @@ description: Hope you find us useful :-)
 
 # Welcome To Zingg
 
-This is the documentation for Zingg Enterprise v0.6.1.
+This is the documentation for Zingg Enterprise v0.6.1 .
 
 ## Why?
 
