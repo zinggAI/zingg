@@ -62,7 +62,7 @@ from zingg.pipes import *
 from zinggEC.enterprise.common.EArguments import *
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 from zinggES.enterprise.spark.ESparkClient import *
-from zinggEC.enterprise.common.TransformedOutputArguments import *
+from zinggEC.enterprise.common.CompareArguments import *
 from zinggEC.enterprise.common.EClientOptions import *
 
 # Step 1: Define your ORIGINAL production configuration
@@ -126,18 +126,19 @@ options = EClientOptions([EClientOptions.PHASE, "trainMatch"])
 zinggNew = EZingg(newArgs, options)
 zinggNew.initAndExecute()
 
-# Step 3: Create TransformedOutputArguments for reassignZinggId
-reassignArgs = TransformedOutputArguments()
-reassignArgs.setParentArgs(newArgs)        # New configuration
-reassignArgs.setOriginalArgs(originalArgs) # Original configuration
-
-# Set output path for reassigned results
+# Step 3: Create CompareArguments for reassignZinggId
+reassignArgs = CompareArguments()
+# Set the parent args to the NEW configuration
+reassignArgs.setParentArgs(newArgs)
+# Set the original args to the OLD configuration
+reassignArgs.setOriginalArgs(originalArgs)
+# Set the output path for the reassigned results
 reassignOutputPipe = ECsvPipe("reassignedOutput", "/tmp/zinggReassigned")
 reassignOutputPipe.setHeader("true")
-reassignArgs.setTransformedOutputPath(reassignOutputPipe)
+reassignArgs.setResults(reassignOutputPipe)
 
 # Step 4: Execute reassignZinggId
-# The phase will read outputs from both configurations and maximize original ID preservation
+# The original configuration is passed directly via the reassignArgs object
 reassignOptions = EClientOptions([EClientOptions.PHASE, "reassignZinggId"])
 zinggReassign = EZingg(reassignArgs, reassignOptions)
 zinggReassign.initAndExecute()

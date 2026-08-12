@@ -17,7 +17,7 @@ Entity resolution is more effective when you can observe how clusters form, conn
 
 ## Important Notes
 
-The `explainOutput` phase currently focuses on **probabilistic matches** between records. Please note the following:
+The `explain` phase currently focuses on **probabilistic matches** between records. Please note the following:
 
 * **Deterministic matches** are not included in the explain output at this time. These matches are based on exact rules and can be reviewed separately through your match results.
 * Some clusters may not generate explain output, particularly those formed primarily through deterministic matching rules.

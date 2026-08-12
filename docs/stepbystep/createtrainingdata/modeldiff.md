@@ -61,7 +61,7 @@ from zingg.pipes import *
 from zinggEC.enterprise.common.EArguments import *
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 from zinggES.enterprise.spark.ESparkClient import *
-from zinggEC.enterprise.common.TransformedOutputArguments import *
+from zinggEC.enterprise.common.CompareArguments import *
 from zinggEC.enterprise.common.EClientOptions import *
 
 # Step 1: Define your ORIGINAL/BASELINE configuration
@@ -132,15 +132,17 @@ options = EClientOptions([EClientOptions.PHASE, "trainMatch"])
 zinggNew = EZingg(newArgs, options)
 zinggNew.initAndExecute()
 
-# Step 3: Create TransformedOutputArguments for diff
-diffArgs = TransformedOutputArguments()
-diffArgs.setParentArgs(newArgs)        # New configuration
-diffArgs.setCompareToArgs(originalArgs) # Original configuration to compare against
+# Step 3: Create CompareArguments for diff
+diffArgs = CompareArguments()
+# Set the parent args to the NEW/updated configuration
+diffArgs.setParentArgs(newArgs)
+# Set the compareTo args to the configuration we want to compare against
+diffArgs.setCompareToArgs(originalArgs)
 
-# Set output path for diff results
+# Set the output path for the diff results
 diffOutputPipe = ECsvPipe("diffOutput", "/tmp/zinggDiff")
 diffOutputPipe.setHeader("true")
-diffArgs.setTransformedOutputPath(diffOutputPipe)
+diffArgs.setResults(diffOutputPipe)
 
 # Step 4: Execute diff phase
 diffOptions = EClientOptions([EClientOptions.PHASE, "diff"])
