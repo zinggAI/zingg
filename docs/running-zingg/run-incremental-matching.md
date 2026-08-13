@@ -226,6 +226,41 @@ The `outputTmp` section specifies a temporary output location where Zingg writes
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-_**CHECK WITH SONAL - Enterprise Snowflake content for this topic to be provivded by Sonal**_
+
+Create an `incrementalConf.json` file:
+
+```json
+{
+	"config" : "configSnow.json",
+    "incrementalData": [{
+        "name":"INCR_Febrl_5M",
+        "format":"snowflake",
+        "props": {
+            "table": "INCR_Febrl_5M"
+        },
+        "schema": "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn string" 
+	}],
+	"outputTmp" :{
+        "name":"customers_incr_temp",
+        "format":"snowflake",
+        "props": {
+            "table": "customers_incr_temp"
+        }
+	}
+}
+```
+
+**Run With**
+
+```bash
+./scripts/zingg.sh \
+  --phase runIncremental \
+  --conf <location to incrementalConf.json> \
+  --properties-file ./snowflakeConn.properties
+```
+
+The `outputTmp` section specifies a temporary output location where Zingg writes intermediate results before final processing or merging with the main output.
+{% endtab %}
+
 {% endtab %}
 {% endtabs %}

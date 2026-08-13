@@ -107,7 +107,7 @@ The `showConcise` flag only shows fields which are `NOT DONT_USE`. This makes th
 
 ### Run label
 
-#### JSON
+#### CLI
 
 ```json
 ./zingg.sh --phase label --conf config.json --showConcise=true \ --properties-file <location to snowflake.properties>

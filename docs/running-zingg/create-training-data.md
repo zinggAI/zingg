@@ -113,7 +113,7 @@ Candidate pairs are written to `zinggDir/modelId`. Run the label phase next to r
 
 ### Run findTrainingData
 
-#### JSON
+#### CLI
 
 ```json
 ./zingg.sh --phase findTrainingData --conf config.json \

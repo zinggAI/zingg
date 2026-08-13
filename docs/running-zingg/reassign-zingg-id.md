@@ -184,7 +184,7 @@ zinggReassign.initAndExecute()
 {% endtab %}
 
 {% tab title="Enterprise JSON" %}
-### **Configuration wrapper (`configReassign.json`)**
+### **Configuration wrapper (`reassignConf.json`)**
 
 The JSON wrapper config references your new model config and specifies the destination for the reassigned output.
 
@@ -203,7 +203,7 @@ The JSON wrapper config references your new model config and specifies the desti
 }
 ```
 
-* `--conf` - the wrapper config (`configReassign.json`) that references your new model
+* `--conf` - the wrapper config (`reassignConf.json`) that references your new model
 * `--originalZinggId` - your original production configuration
 * `--properties-file` - optional Zingg properties file
 
@@ -212,7 +212,7 @@ The CLI command takes three arguments:
 ```bash
 ./scripts/zingg.sh \
   --phase reassignZinggId \
-  --conf examples/febrl/sparkIncremental/configReassign5M.json \
+  --conf <location to reassignConf.json> \
   --originalZinggId examples/febrl5M/config.json \
   --properties-file config/zingg.conf
 ```
@@ -223,6 +223,41 @@ The `--originalZinggId` flag takes the path to your original production config f
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-_**CHECK WITH SONAL - Enterprise Snowflake content for this topic to be provivded by Sonal**_
+
+### **Configuration wrapper (`reassignConf.json`)**
+
+The JSON wrapper config references your new model config and specifies the destination for the reassigned output.
+
+```json
+{
+  "config": "configUpdated.json",
+  "transformedOutputPath": {
+    "name": "reassignedOutput",
+    "format":"snowflake",
+    "props": {
+      "table": "OUTPUT_REASSIGN_Febrl_5M"
+    }
+  }
+}
+```
+
+* `--conf` - the wrapper config (`reassignConf.json`) that references your new model
+* `--originalZinggId` - your original production configuration
+* `--properties-file` - optional Zingg properties file
+
+The CLI command takes three arguments:
+
+```bash
+./scripts/zingg.sh \
+  --phase reassignZinggId \
+  --conf <location to reassignConf.json> \
+  --originalZinggId examples/febrl5M/config.json \
+  --properties-file ./snowflakeConn.properties
+```
+
+{% hint style="info" icon="right-long" %}
+The `--originalZinggId` flag takes the path to your original production config file. Despite the flag name, you are passing the **configuration file** that defined the original model - Zingg uses that config to locate the original output containing the Zingg IDs to be preserved.
+{% endhint %}
+
 {% endtab %}
 {% endtabs %}

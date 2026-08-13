@@ -71,7 +71,8 @@ Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark c
 ### CLI
 
 ```bash
-./zingg.sh --phase train --conf config.json
+./zingg.sh --phase train --conf config.json \
+--properties-file <location to snowflake.properties>
 ```
 
 Enterprise adds blocking model configuration via `args.setBlockingModel()`. Set this in Configure Zingg before running `train`.

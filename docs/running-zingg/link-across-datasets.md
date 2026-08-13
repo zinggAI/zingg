@@ -100,7 +100,17 @@ Enterprise link output includes Zingg ID instead of `Z_CLUSTER`, plus the `Z_SOU
 Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark cluster.
 {% endhint %}
 
-_**CHECK WITH SONAL - Enterprise Snowflake content for this topic to be provivded by Sonal**_
+### CLI
+
+```bash
+./zingg.sh --phase link --conf config.json \
+--properties-file <location to snowflake.properties>
+```
+
+{% hint style="info" icon="right-long" %}
+Enterprise link output includes Zingg ID instead of `Z_CLUSTER`, plus the `Z_SOURCE` column identifying the source dataset of each record.
+{% endhint %}
+
 {% endtab %}
 {% endtabs %}
 
