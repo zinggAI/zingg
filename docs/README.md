@@ -6,13 +6,7 @@ description: >-
 
 # What is Zingg
 
-This is the latest documentation for Zingg. Release wise documentation can be accessed through:
-* v0.7.0 (Coming soon!)
-* [v0.6.0](https://docs.zingg.ai/0.6.0/)
-* [v0.5.0](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/LzEhax5IUbfFVRkRns9Q/)
-* [v0.4.0](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/a7sgpR3odgfck5L8KMcN/)
-* [v0.3.4](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/ngqsuC2LVWwrOiyPZbU2/)
-* [v0.3.3](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/1ZRr4ik7PJ2qmCP10In9/)
+This is the latest documentation for Zingg.
 
 Zingg solves this with ML-powered entity resolution that runs directly on your infrastructure on Spark or Snowflake, so your data never leaves your premises. You label a small set of example pairs to teach Zingg what a match looks like for your data. Zingg learns from those labels, adapts as it sees more variation, and scales that judgment across millions of records, giving your pipelines and agents a resolved, trustworthy view of every entity to act on.
 
