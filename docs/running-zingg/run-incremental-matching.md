@@ -260,7 +260,6 @@ Create an `incrementalConf.json` file:
 ```
 
 The `outputTmp` section specifies a temporary output location where Zingg writes intermediate results before final processing or merging with the main output.
-{% endtab %}
 
 {% endtab %}
 {% endtabs %}
