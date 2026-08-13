@@ -52,16 +52,14 @@ The `diff` phase then identifies:
 * Merged or split clusters between the two models
 
 {% tabs %}
-{% tab title="Enterprise" %}
-### Python
-
+{% tab title="Enterprise Python" %}
 ```python
 from zingg.client import*
 from zingg.pipes import*
 from zinggEC.enterprise.common.EArguments import*
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 from zinggES.enterprise.spark.ESparkClient import*
-from zinggEC.enterprise.common.TransformedOutputArguments import*
+from zinggEC.enterprise.common.CompareArguments import*
 from zinggEC.enterprise.common.EClientOptions import*
 ```
 
@@ -83,16 +81,16 @@ newArgs.setModelId("200")
 newArgs.setZinggDir("./models")
 ```
 
-#### Step 3: Create TransformedOutputArguments
+#### Step 3: Create CompareArguments
 
 ```python
-diffArgs = TransformedOutputArguments()
+diffArgs = CompareArguments()
 diffArgs.setParentArgs(newArgs)
-diffArgs.setOriginalArgs(originalArgs)
+diffArgs.setCompareToArgs(originalArgs)
 
 diffOutputPipe = ECsvPipe("diffOutput", "/tmp/zinggDiff")
 diffOutputPipe.setHeader("true")
-diffArgs.setTransformedOutputPath(diffOutputPipe)
+diffArgs.setResults(diffOutputPipe)
 ```
 
 #### Step 4: Execute diff
@@ -106,8 +104,9 @@ zinggDiff = EZingg(diffArgs, diffOptions)
 zinggDiff.initAndExecute()
 ```
 
-### CLI
+{% endtab %}
 
+{% tab title="Enterprise CLI" %}
 ```bash
 ./scripts/zingg.sh \
   --phase diff \

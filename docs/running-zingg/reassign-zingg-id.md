@@ -95,17 +95,12 @@ from zingg.pipes import*
 from zinggEC.enterprise.common.EArguments import*
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 from zinggES.enterprise.spark.ESparkClient import*
-from zinggEC.enterprise.common.TransformedOutputArguments import*
+from zinggEC.enterprise.common.CompareArguments import*
 from zinggEC.enterprise.common.EClientOptions import*
 
 originalArgs = EArguments()
-
-id = EFieldDefinition("id", "string", MatchType.DONT_USE)
-id.setPrimaryKey(True)
-fname = EFieldDefinition("fname", "string", MatchType.FUZZY)
-lname = EFieldDefinition("lname", "string", MatchType.FUZZY)
-
-originalArgs.setFieldDefinition([id, fname, lname])
+#... your original field definitions...
+# Mark exactly one field as the primary key, e.g. id.setPrimaryKey(True) - reassign matches clusters using it
 originalArgs.setModelId("107")
 originalArgs.setZinggDir("./models")
 originalArgs.setNumPartitions(4)
@@ -120,7 +115,7 @@ schema = (
 
 originalInputPipe = ECsvPipe(
     "originalData",
-    "examples/febrl5M/febrl_data.csv",
+    "examples/febrl/test.csv",
     schema
 )
 originalArgs.setData(originalInputPipe)
@@ -138,6 +133,7 @@ Set up `EArguments` for your new model. This is the model that produced the new 
 
 ```python
 newArgs = EArguments()
+#... your updated field definitions...
 newArgs.setModelId("999")
 newArgs.setZinggDir("./models")
 ```
@@ -157,18 +153,18 @@ zinggNew = EZingg(newArgs, options)
 zinggNew.initAndExecute()
 ```
 
-### **Step 4: Create `TransformedOutputArguments`**
+### **Step 4: Create `CompareArguments`**
 
-`TransformedOutputArguments` wraps both configurations and the destination for the reassigned output.
+`CompareArguments` wraps both configurations and the destination for the reassigned output.
 
 ```python
-reassignArgs = TransformedOutputArguments()
+reassignArgs = CompareArguments()
 reassignArgs.setParentArgs(newArgs)
 reassignArgs.setOriginalArgs(originalArgs)
 
 reassignOutputPipe = ECsvPipe("reassignedOutput", "/tmp/zinggReassigned")
 reassignOutputPipe.setHeader("true")
-reassignArgs.setTransformedOutputPath(reassignOutputPipe)
+reassignArgs.setResults(reassignOutputPipe)
 ```
 
 ### Step 5: Execute `reassignZinggId`
