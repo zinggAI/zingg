@@ -101,7 +101,18 @@ Enterprise output includes `Zingg ID` (persistent across runs) instead of `Z_CLU
 Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark cluster.
 {% endhint %}
 
-_**CHECK WITH SONAL - Enterprise Snowflake content for this topic to be provivded by Sonal**_
+
+### CLI
+
+```bash
+./zingg.sh --phase match --conf config.json \
+--properties-file <location to snowflake.properties>
+```
+
+{% hint style="info" icon="right-long" %}
+Enterprise output includes `Zingg ID` (persistent across runs) instead of `Z_CLUSTER`, plus deterministic match flag and Match Statistics. `Zingg ID` is stable across all subsequent incremental runs.
+{% endhint %}
+
 {% endtab %}
 {% endtabs %}
 

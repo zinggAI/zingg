@@ -482,6 +482,166 @@ args.setPassthroughExpr("fname = 'matilda'")
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-**CHECK WITH SONAL ABOUT THIS TOPIC - NEEDS ENTIRELY DIFFERENT SET OF CONTENT TO BE DISCUSSED LATER.**
+
+### Step 1: Build the Enterprise arguments
+
+#### JSON
+
+```json
+{
+  "modelId": "100",
+  "zinggDir": "/tmp/models",
+  "numPartitions": 4,
+  "labelDataSampleSize": 0.5
+}
+```
+
+### Step 2: Define fields definitions
+
+#### JSON
+
+```json
+  "fieldDefinition":[
+		{
+			"fieldName" : "recid",
+			"matchType" : "dont_use",
+			"fields" : "recid",
+			"dataType": "string" ,
+			"primaryKey": "true"
+		},
+		{
+			"fieldName" : "givenname",
+			"matchType" : "fuzzy",
+			"fields" : "givenname",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "surname",
+			"matchType": "exact",
+			"fields" : "surname",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "suburb",
+			"matchType": "fuzzy",
+			"fields" : "suburb",
+			"dataType": "string" 
+		},
+		{
+			"fieldName" : "postcode",
+			"matchType": "exact",
+			"fields" : "postcode",
+			"dataType": "string" 
+		}
+	]
+```
+
+{% hint style="info" icon="right-long" %}
+Enterprise requires a primary key field for `runIncremental`. Mark the primary key field by adding `"primaryKey": "true"` if you plan to use incremental matching.
+{% endhint %}
+
+### Step 3: Configure input and output pipes
+
+#### JSON
+
+```json
+	"output" : [{
+		"name":"output_Febrl_5M",
+		"format":"snowflake",
+		"props": {
+			"table": "OUTPUT_Febrl_5M"
+		}
+	}],
+	"data" : [{
+		"name":"FEBRL5M",
+		"format":"snowflake",
+		"props": {
+			"table": "Febrl_5M"
+		}
+	}],
+```
+
+### Step 4: Deterministic matching (optional)
+
+{% hint style="info" icon="right-long" %}
+Deterministic matching - **Enterprise** only.
+
+Skip this step if you only need probabilistic matching.
+{% endhint %}
+
+#### JSON
+
+```json
+{
+  "deterministicMatching": [
+    {"matchCondition": [
+      {"fieldName": "fname"},
+      {"fieldName": "stNo"},
+      {"fieldName": "add1"}
+    ]},
+    {"matchCondition": [
+      {"fieldName": "fname"},
+      {"fieldName": "dob"},
+      {"fieldName": "ssn"}
+    ]},
+    {"matchCondition": [
+      {"fieldName": "fname"},
+      {"fieldName": "email"}
+    ]}
+  ]
+}
+```
+
+### Step 5: Output stats (optional)
+
+{% hint style="info" icon="right-long" %}
+Output stats - **Enterprise** only.
+
+Skip this step if you do not need run statistics.
+{% endhint %}
+
+Configures where Zingg writes statistics for the `match` and `runIncremental` phases. The `$ZINGG_DYNAMIC_STAT_NAME` placeholder is substituted at runtime with `SUMMARY`, `CLUSTER`, or `RECORD`, so each run writes the three statistics tables separately. If `outputStats` is not configured, Zingg skips stats writing and the run proceeds normally.
+
+#### JSON
+
+```json
+	"outputStats" : {
+		"name":"stats",
+		"format":"snowflake",
+		"props": {
+			"table": "zinggStats_$ZINGG_DYNAMIC_STAT_NAME"
+		}
+	},
+```
+
+**Read more:** For the fields in each statistics table → [Output Statistics](../interpreting-results/output-statistics.md).
+
+### Step 6: Pass Through (optional)
+
+{% hint style="info" icon="right-long" %}
+Pass Through - **Enterprise** only.
+
+Excludes specific records from matching while still including them in output with their own `Zingg ID`.
+{% endhint %}
+
+Pass Through excludes specific records from matching while still including them in output with their own Zingg ID. Records matching the passthrough expression appear in the identity graph but never influence cluster formation.
+
+**Note**: Zingg internally applies the negation of `passthroughExpr` to filter matching records. If the passthrough condition applies to nullable fields, ensure the negative of the expression yields the records that are `NOT` passthrough.
+
+#### JSON
+
+```json
+{
+  "passthroughExpr": "fname = 'matilda'"
+}
+```
+
+#### Example with null-safe expression
+
+```json
+{
+  "passthroughExpr": "is_deceased = true AND is_deceased is NOT NULL"
+}
+```
 {% endtab %}
 {% endtabs %}

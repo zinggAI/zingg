@@ -103,6 +103,18 @@ _**CHECK WITH SONAL - Please confirm the exact Python code for the interactive l
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-**CHECK WITH SONAL ABOUT THIS TOPIC - NEEDS ENTIRELY DIFFERENT SET OF CONTENT TO BE DISCUSSED LATER.**
+The `showConcise` flag only shows fields which are `NOT DONT_USE`. This makes the labelling session cleaner when you have many fields.
+
+### Run label
+
+#### CLI
+
+```bash
+./zingg.sh --phase label --conf config.json --showConcise=true \ --properties-file <location to snowflake.properties>
+```
+
+{% hint style="info" icon="right-long" %}
+Enterprise provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons. Download the diagnostics view to share match quality with stakeholders before committing to training.
+{% endhint %}
 {% endtab %}
 {% endtabs %}

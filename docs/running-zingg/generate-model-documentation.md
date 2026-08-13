@@ -32,8 +32,7 @@ zingg.initAndExecute()
 ### **CLI**
 
 ```bash
-./scripts/zingg.sh --phase generateDocs --conf <location to conf.json> \
-  --showConcise=true
+./scripts/zingg.sh --phase generateDocs --conf <location to conf.json>
 ```
 {% endtab %}
 
@@ -57,12 +56,18 @@ zingg.initAndExecute()
 
 ```bash
 ./scripts/zingg.sh --phase generateDocs --conf <location to conf.json> \
-  --showConcise=true
 ```
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-**CHECK WITH SONAL ABOUT THIS TOPIC - NEEDS ENTIRELY DIFFERENT SET OF CONTENT TO BE DISCUSSED LATER.**
+
+### CLI
+
+```bash
+./scripts/zingg.sh --phase generateDocs --conf <location to conf.json> \
+  --properties-file <location to snowflake.properties>
+```
+
 {% endtab %}
 {% endtabs %}
 
