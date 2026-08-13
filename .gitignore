@@ -23,3 +23,4 @@ python/docs/_build/_doctrees
 **/python/build/*
 **/assembly/.classpath
 **/.DS_Store
+/python/venv
