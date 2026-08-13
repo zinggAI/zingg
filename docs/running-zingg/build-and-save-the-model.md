@@ -75,7 +75,7 @@ Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark c
 --properties-file <location to snowflake.properties>
 ```
 
-Enterprise adds blocking model configuration via `args.setBlockingModel()`. Set this in Configure Zingg before running `train`.
+Enterprise adds blocking model configuration via `"modelId": "FEBRL120K"`. Set this in Configure Zingg before running `train`.
 
 Available options:
 

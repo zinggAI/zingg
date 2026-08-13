@@ -483,10 +483,7 @@ args.setPassthroughExpr("fname = 'matilda'")
 
 {% tab title="Enterprise Snowflake" %}
 
-### Step 1: Build the Enterprise arguments object
-
-
-Set the blocking strategy directly after `setLabelDataSampleSize`. If not set, the model follows `DEFAULT`.
+### Step 1: Build the Enterprise arguments
 
 #### JSON
 
@@ -499,7 +496,7 @@ Set the blocking strategy directly after `setLabelDataSampleSize`. If not set, t
 }
 ```
 
-### Step 2: Define fields with `EFieldDefinition`
+### Step 2: Define fields definitions
 
 #### JSON
 
@@ -603,7 +600,7 @@ Output stats - **Enterprise** only.
 Skip this step if you do not need run statistics.
 {% endhint %}
 
-Configures where Zingg writes statistics for the `match` and `incrementalRun` phases. The `$ZINGG_DYNAMIC_STAT_NAME` placeholder is substituted at runtime with `SUMMARY`, `CLUSTER`, or `RECORD`, so each run writes the three statistics tables separately. If `outputStats` is not configured, Zingg skips stats writing and the run proceeds normally.
+Configures where Zingg writes statistics for the `match` and `runIncremental` phases. The `$ZINGG_DYNAMIC_STAT_NAME` placeholder is substituted at runtime with `SUMMARY`, `CLUSTER`, or `RECORD`, so each run writes the three statistics tables separately. If `outputStats` is not configured, Zingg skips stats writing and the run proceeds normally.
 
 #### JSON
 
@@ -612,7 +609,7 @@ Configures where Zingg writes statistics for the `match` and `incrementalRun` ph
 		"name":"stats",
 		"format":"snowflake",
 		"props": {
-			"table": "zinggStats_$ZINGG_DYNAMIC_STAT_NAME2"
+			"table": "zinggStats_$ZINGG_DYNAMIC_STAT_NAME"
 		}
 	},
 ```
