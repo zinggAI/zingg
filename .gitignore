@@ -14,3 +14,9 @@ client/src/test/resources/large.xlsx
 /target/
 /zingg/*
 **/snow.json
+/python/venv
+/python/build
+python/dist/zingg-0.7.0-py2.py3-none-any.whl
+assembly/.DS_Store
+/python/zingg.egg-info
+python/.DS_Store
