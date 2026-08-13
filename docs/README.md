@@ -4,11 +4,7 @@ description: Hope you find us useful :-)
 
 # Welcome To Zingg
 
-This is the latest documentation for Zingg. Release wise documentation can be accessed through:
-
-* [v0.4.0](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/a7sgpR3odgfck5L8KMcN/)
-* [v0.3.4](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/ngqsuC2LVWwrOiyPZbU2/)
-* [v0.3.3](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/1ZRr4ik7PJ2qmCP10In9/)
+This is the documentation for Zingg Community v0.5 .
 
 ## Why?
 

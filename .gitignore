@@ -32,3 +32,4 @@ perf_test/perf_test_report/testReport_febrl120K.json
 
 # Sphinx _build
 **/_build
+/python/venv
