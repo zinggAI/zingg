@@ -100,7 +100,6 @@ from zinggEC.enterprise.common.EClientOptions import*
 
 originalArgs = EArguments()
 #... your original field definitions...
-# Mark exactly one field as the primary key, e.g. id.setPrimaryKey(True) - reassign matches clusters using it
 originalArgs.setModelId("107")
 originalArgs.setZinggDir("./models")
 originalArgs.setNumPartitions(4)

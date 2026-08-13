@@ -18,17 +18,36 @@ tags:
 
 `MAPPING` resolves variants of the same value using a lookup file you provide. Use it when records contain the same entity referred to by different names - nicknames like "Jon" and "Jonathan", company abbreviations like "IBM" and "International Business Machines", or country codes like "US" and "United States" - that you want Zingg to treat as equivalent.
 
-The mapping file lists groups of equivalent values. Zingg uses it as a lookup during matching: when comparing two records, if both values for a `MAPPING` field appear in the same group, the field is treated as a match. The lookup is bidirectional and case-insensitive - "Jon" matches "Jonathan", "Jonathan" matches "Jon", "JOHN" matches "john".
-
-`MAPPING` can be combined with another match type using a comma-separated combination in the `matchType` string. Combined with `FUZZY`, Zingg checks the mapping file first and falls back to fuzzy matching for values not in the mapping.
+The mapping file lists groups of equivalent values. `MAPPING` is typically combined with another match type using a comma-separated combination in the `matchType` string, e.g. `MAPPING_nicknames,FUZZY`.
 
 ### How the algorithm works
 
-_**COMMENT FOR TEAM — Algorithm detail for MAPPING\_(FileName) to be added here.**_
+`MAPPING_(FILENAME)` runs as a standardization step before Zingg scores similarity, but it isn't a similarity scorer itself.
+
+1. **Dictionary loading** - Zingg reads the referenced lookup file, which groups equivalent values together (e.g., nicknames, abbreviations, codes). Each group represents synonyms for one real-world value.
+2. **Representative value selection** - within each group, Zingg picks the longest value as the representative form. Every other member of the group is treated as an alias for it.
+3. **Value substitution** - each field value is checked against the dictionary, case-insensitively. A match gets replaced with its representative form; no match means the original value passes through untouched.
+4. **Similarity scoring** - the standardized values are then handed to whichever other match type is configured on the field - most commonly `FUZZY`. That's where the real comparison happens.
+
+{% hint style="danger" icon="right-long" %}
+**Important:** `MAPPING_(FILENAME)` must be paired with another match type (eg. `FUZZY`, `EXACT` etc.). On its own, it only standardizes values - it doesn't score them.
+{% endhint %}
 
 ### What `MAPPING_(FileName)` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Result with MAPPING only</th><th valign="top">Result with MAPPING + FUZZY</th></tr></thead><tbody><tr><td valign="top">Jon</td><td valign="top">Jonathan</td><td valign="top">Match - both in same mapping row</td><td valign="top">Match</td></tr><tr><td valign="top">Bob</td><td valign="top">Robert</td><td valign="top">Match - both in same mapping row</td><td valign="top">Match</td></tr><tr><td valign="top">John</td><td valign="top">Jonathan</td><td valign="top">Match - both in same mapping row</td><td valign="top">Match</td></tr><tr><td valign="top">Jon</td><td valign="top">Jhon</td><td valign="top">No match - "Jhon" not in mapping</td><td valign="top">Match - caught by FUZZY tolerance</td></tr><tr><td valign="top">Robert</td><td valign="top">William</td><td valign="top">No match - different mapping rows</td><td valign="top">No match - FUZZY also too dissimilar</td></tr><tr><td valign="top">Jon</td><td valign="top">[null]</td><td valign="top">No match - null not in mapping</td><td valign="top">No match - combine with <code>NULL_OR_BLANK</code></td></tr></tbody></table>
+<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Result with MAPPING + EXACT</th><th valign="top">Result with MAPPING + FUZZY</th></tr></thead><tbody><tr><td valign="top">Jon</td><td valign="top">Jonathan</td><td valign="top">Match - both normalize to the same representative value</td><td valign="top">Match</td></tr><tr><td valign="top">Bob</td><td valign="top">Robert</td><td valign="top">Match - both normalize to the same representative value</td><td valign="top">Match</td></tr><tr><td valign="top">Jon</td><td valign="top">Jhon</td><td valign="top">No match - "Jhon" isn't in the mapping, so it's compared as-is against "Jonathan"</td><td valign="top">Match - caught by FUZZY's tolerance for the misspelling</td></tr><tr><td valign="top">Jon</td><td valign="top">John</td><td valign="top">No match - neither "John" nor the mapped "Jonathan" are equal strings</td><td valign="top">Match - FUZZY's similarity scoring treats them as close enough, even though they're not listed as synonyms</td></tr><tr><td valign="top">Robert</td><td valign="top">William</td><td valign="top">No match - normalize to different representative values</td><td valign="top">No match - FUZZY also finds them too dissimilar</td></tr><tr><td valign="top">Jon</td><td valign="top">[null]</td><td valign="top">No match - nothing to compare against</td><td valign="top">No match - combine with <code>NULL_OR_BLANK</code> to handle explicitly</td></tr></tbody></table>
+
+**Example mapping file**
+
+```json
+[
+  ["Jonathan", "Jon"],
+  ["Robert", "Rob", "Bob", "Bobby"],
+  ["William", "Will", "Bill"]
+]
+```
+
+Each inner array is one equivalence group. The longest value in a group becomes its representative form - so "Jon" normalizes to "Jonathan", and "Bob"/"Rob"/"Bobby" all normalize to "Robert". This is the exact dictionary used to produce the table above. "Jhon" and "John" aren't listed anywhere, so `MAPPING` leaves them untouched, and only `FUZZY` can catch them.
 
 ### When to use `MAPPING`
 
@@ -44,7 +63,7 @@ For datasets where the same person appears under different familiar names: Jonat
 
 <summary><strong>Company names with abbreviations and legal suffixes</strong></summary>
 
-"IBM" / "I.B.M." / "International Business Machines" will never be matched by `FUZZY` alone because the strings are too different. Build a mapping file of canonical company name variants and apply `MAPPING` to the company name field.
+"IBM" / "I.B.M." / "International Business Machines" will never be matched by `FUZZY` alone because the strings are too different. Build a mapping file of representative company name variants and apply `MAPPING` to the company name field.
 
 </details>
 
@@ -60,7 +79,7 @@ For datasets where the same person appears under different familiar names: Jonat
 
 <summary><strong>Product code variants across systems</strong></summary>
 
-When merging records from systems that use different SKU formats - "SKU-1234" vs "1234" vs "PROD\_1234" - list the canonical variants in a mapping file.
+When merging records from systems that use different SKU formats - "SKU-1234" vs "1234" vs "PROD\_1234" - list the representative variants in a mapping file.
 
 </details>
 
@@ -98,7 +117,7 @@ The mapping file is a JSON array where each element is an array of equivalent va
 {% tab title="Python" %}
 ```python
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-    fname = EFieldDefinition("fname", "string", "MAPPING_nicknames")
+    fname = EFieldDefinition("fname", "string", "MAPPING_nicknames,FUZZY")
 ```
 {% endtab %}
 
@@ -111,7 +130,7 @@ The JSON `fieldDefinition` block below uses Enterprise-only match type `mapping_
 {
   "fieldDefinition" : [ {
     "fieldName" : "fname",
-    "matchType" : "mapping_nicknames",
+    "matchType" : "mapping_nicknames,fuzzy",
     "fields" : "fname",
     "dataType" : "string"
   } ]
