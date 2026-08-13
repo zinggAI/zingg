@@ -95,8 +95,6 @@ zingg.initAndExecute()
 ./zingg.sh --phase findTrainingData --conf config.json
 ```
 
-Enterprise also provides the `findAndLabel` combined phase, which runs `findTrainingData` and `label` together in a single call. Use this for smaller datasets where `findTrainingData` completes quickly:
-
 {% hint style="info" icon="right-long" %}
 Candidate pairs are written to `zinggDir/modelId`. Run the label phase next to review and label these pairs.
 {% endhint %}
@@ -115,12 +113,11 @@ Candidate pairs are written to `zinggDir/modelId`. Run the label phase next to r
 
 #### CLI
 
-```json
+```bash
 ./zingg.sh --phase findTrainingData --conf config.json \
 --properties-file <location to snowflake.properties>
 ```
 
-Enterprise Snowflake also provides the `findAndLabel` combined phase, which runs `findTrainingData` and `label` together in a single call. Use this for smaller datasets where `findTrainingData` completes quickly:
 <!-- 
 #### JSON
 

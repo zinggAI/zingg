@@ -217,8 +217,7 @@ The CLI command takes three arguments:
   --properties-file config/zingg.conf
 ```
 
-{% hint style="info" icon="right-long" %}
-The `--originalZinggId` flag takes the path to your original production config file. Despite the flag name, you are passing the **configuration file** that defined the original model - Zingg uses that config to locate the original output containing the Zingg IDs to be preserved.
+
 {% endhint %}
 {% endtab %}
 
@@ -254,10 +253,6 @@ The CLI command takes three arguments:
   --originalZinggId examples/febrl5M/config.json \
   --properties-file ./snowflakeConn.properties
 ```
-
-{% hint style="info" icon="right-long" %}
-The `--originalZinggId` flag takes the path to your original production config file. Despite the flag name, you are passing the **configuration file** that defined the original model - Zingg uses that config to locate the original output containing the Zingg IDs to be preserved.
-{% endhint %}
 
 {% endtab %}
 {% endtabs %}

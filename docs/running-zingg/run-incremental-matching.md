@@ -231,7 +231,7 @@ Create an `incrementalConf.json` file:
 
 ```json
 {
-	"config" : "configSnow.json",
+	"config" : "path-to-config-file/configSnow.json",
     "incrementalData": [{
         "name":"INCR_Febrl_5M",
         "format":"snowflake",

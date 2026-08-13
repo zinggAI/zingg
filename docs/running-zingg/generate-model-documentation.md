@@ -32,8 +32,7 @@ zingg.initAndExecute()
 ### **CLI**
 
 ```bash
-./scripts/zingg.sh --phase generateDocs --conf <location to conf.json> \
-  --showConcise=true
+./scripts/zingg.sh --phase generateDocs --conf <location to conf.json>
 ```
 {% endtab %}
 
@@ -57,7 +56,6 @@ zingg.initAndExecute()
 
 ```bash
 ./scripts/zingg.sh --phase generateDocs --conf <location to conf.json> \
-  --showConcise=true
 ```
 {% endtab %}
 
@@ -67,7 +65,7 @@ zingg.initAndExecute()
 
 ```bash
 ./scripts/zingg.sh --phase generateDocs --conf <location to conf.json> \
-  --showConcise=true --properties-file <location to snowflake.properties>
+  --properties-file <location to snowflake.properties>
 ```
 
 {% endtab %}
