@@ -20,3 +20,7 @@ zingg.egg-info
 dist
 python/docs/_build/html
 python/docs/_build/_doctrees
+/python/build
+/python/venv
+python/.DS_Store
+assembly/.DS_Store

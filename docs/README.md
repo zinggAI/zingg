@@ -3,6 +3,7 @@ description: Hope you find us useful :-)
 ---
 
 # Welcome to Zingg
+This is the documentation for Zingg Community v0.3.4 .
 
 ## Why?
 
