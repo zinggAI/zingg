@@ -58,7 +58,7 @@ from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 
 {% tab title="JSON" %}
 {% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). The CLI command is identical for both editions.
+The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). 
 {% endhint %}
 
 ```json

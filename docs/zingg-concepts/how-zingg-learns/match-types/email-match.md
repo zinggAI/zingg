@@ -1,20 +1,21 @@
 ---
 description: >-
-  Compares only the local part of an email address before the @ symbol and
-  ignores the domain. Built for datasets where the same person appears with
-  different email domains.
+  Fuzzy-matches only the local part of an email address before the @ symbol
+  and ignores the domain. Built for datasets where the same person appears
+  with different email domains.
 ---
 
 # EMAIL Match
 
 ### What EMAIL does
 
-`EMAIL` splits an email address at the `@` symbol and compares only the local part, the portion before `@`. The domain is ignored entirely.
+`EMAIL` splits an email address at the `@` symbol, discards the domain entirely, and scores the local part (the portion before `@`) using the similarity function. It is not an exact/binary comparison — it is `FUZZY`.
 
-This handles the common scenario where the same person has a work email and a personal email, or where an organization's email domain changes over time. As long as the local part\
-is the same, EMAIL scores them as a match.
+This handles the common scenario where the same person has a work email and a personal email, or where an organization's email domain changes over time.
 
 ### What `EMAIL` matches and what it does not
+
+<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">j.smith@company.com</td><td valign="top">j.smith@other.com</td><td valign="top">Yes - identical local part, domain ignored</td></tr><tr><td valign="top">j.smith@company.com</td><td valign="top">john.smith@company.com</td><td valign="top">Partial - local parts differ but share "smith"; scores a graded similarity, not a hard match or non-match</td></tr><tr><td valign="top">support@ibm.com</td><td valign="top">support@microsoft.com</td><td valign="top">Yes - identical local part, even though the organisations are unrelated</td></tr><tr><td valign="top">[null]</td><td valign="top">j.smith@company.com</td><td valign="top">Yes - a null/blank value on either side is an automatic match; add <code>NULL_OR_BLANK</code> if you want nulls excluded</td></tr></tbody></table>
 
 ### When to use `EMAIL`
 
@@ -52,11 +53,9 @@ Use `EXACT` on the full email field when the domain matters.
 
 <details>
 
-<summary><strong>When local parts vary across your data (initials, format differences)</strong></summary>
+<summary><strong>When you need domain to factor into the score too</strong></summary>
 
-"j.smith@company.com" and "john.smith@company.com" have different local parts and will not match with `EMAIL`.
-
-If your data has local part variations like this, consider `FUZZY` on the full email field -accepting that different domains with similar local parts may produce false positives.
+`EMAIL` ignores the domain unconditionally - "j.smith@company.com" and "john.smith@company.com" are scored purely on "j.smith" vs "john.smith", with no credit or penalty for the domain being the same. If the domain itself should count towards the score (not just be a tie-breaker), use `FUZZY` on the full email field instead. Note this compares the whole string including the domain, so it doesn't restrict fuzziness to the local part the way `EMAIL` does, and dissimilar domains with similar local parts can drag the score down.
 
 </details>
 
@@ -69,21 +68,22 @@ If your data has local part variations like this, consider `FUZZY` on the full e
 ```python
 from zingg.client import*
 
- email = FieldDefinition("email", "string", MatchType.EMAIL)
+email = FieldDefinition("email", "string", MatchType.EMAIL)
 ```
 
 ### **Enterprise**
 
 ```python
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zingg.client import *
 
- email = EFieldDefinition("email", "string", MatchType.EMAIL)
+email = EFieldDefinition("email", "string", MatchType.EMAIL)
 ```
 {% endtab %}
 
 {% tab title="JSON" %}
 {% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). The CLI command is identical for both editions.
+The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise).
 {% endhint %}
 
 ```json
@@ -97,11 +97,6 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 }
 ```
 
-### **CLI**
-
-```bash
-./scripts/zingg.sh --phase findTrainingData --conf config.json
-```
 {% endtab %}
 {% endtabs %}
 
@@ -109,7 +104,7 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 **Related types**:
 
 * `EMAIL_OPTIMISED` - same as EMAIL, faster at production scale (ENT)
-* `EXACT` - use when the full email including domain must match
+* `EXACT` - use when the full email including domain must match exactly
 * `FUZZY` - use when local parts also have variation
 
 **Read more**: [Match types](./)
