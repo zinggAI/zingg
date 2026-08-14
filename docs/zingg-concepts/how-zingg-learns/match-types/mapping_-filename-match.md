@@ -117,7 +117,8 @@ The mapping file is a JSON array where each element is an array of equivalent va
 {% tab title="Python" %}
 ```python
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-    fname = EFieldDefinition("fname", "string", "MAPPING_nicknames,FUZZY")
+
+fname = EFieldDefinition("fname", "string", "MAPPING_nicknames,FUZZY")
 ```
 {% endtab %}
 
@@ -137,10 +138,5 @@ The JSON `fieldDefinition` block below uses Enterprise-only match type `mapping_
 }
 ```
 
-### **CLI**
-
-```bash
-./scripts/zingg.sh --phase findTrainingData --conf config.json
-```
 {% endtab %}
 {% endtabs %}
