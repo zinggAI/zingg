@@ -212,8 +212,6 @@ The CLI command takes three arguments:
   --properties-file config/zingg.conf
 ```
 
-
-{% endhint %}
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
