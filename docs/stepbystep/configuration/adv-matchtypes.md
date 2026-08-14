@@ -14,9 +14,7 @@ To leverage user expertise for nicknames for example, the user can supply Zingg 
 
 Here is the structure of the json:
 
-
-
-<pre class="language-json"><code class="lang-json"><strong>[  
+<pre class="language-json"><code class="lang-json"><strong>[
 </strong>  ["Will", "Bill", "William"],
   ["John", "Johnny", "Jack"],
   ["Robert", "Rob", "Bob", "Bobby"],
@@ -24,7 +22,7 @@ Here is the structure of the json:
   ["James", "Jim", "Jimmy"],
   ["Thomas", "Tom", "Tommy"]
 ...
-]   
+]
 </code></pre>
 
 Each line here represents common nicknames which represent the same name.&#x20;
@@ -45,10 +43,10 @@ To use this mapping within Zingg, define the field's match type as `MAPPING_<fil
 
 The `MAPPING` match type can also be used to transform and normalise categorical data. Let us say different data sources have different representations of gender. In one, gender is represented as M and F, in another it is noted as Male, Female and in the third as 1 and 2. Instead of transforming the gender column beforehand, one could create a mapping json called `gender.json` .&#x20;
 
-<pre><code><strong>[  
+<pre><code><strong>[
 </strong>  ["M", "Male", "1"],
   ["F", "Female", "2"]
-]  
+]
 </code></pre>
 
 When we use it for the gender field like below, Zingg would automatically handle the transformation so that you don't have to.&#x20;

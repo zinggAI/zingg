@@ -16,8 +16,6 @@ If you’ve ever asked “how deterministic rules are performing?” or “did m
 * Identify highly central records (connectors) and outliers
 * Track how clusters change across runs (growth, splits, merges, reassignments)
 
-
-
 If the number of clusters changes disproportionately to the number of records updated or added, an alert could be triggered.&#x20;
 
 ***
@@ -29,7 +27,5 @@ Zingg writes statistics to the stats directory whenever you run phases like matc
 * SUMMARY: High-level run summary
 * CLUSTER: One row per cluster with cluster level matching metrics
 * RECORD: One row per record with its matching metrics within its cluster
-
-
 
 [^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to [Zingg Entity Resolution Compare Versions](https://www.zingg.ai/product/zingg-entity-resolution-compare-versions) for individual tier features.

@@ -169,18 +169,6 @@ Run Zingg Python code directly in AWS EMR Notebooks using the Python API. Instal
 ```
 {% endtab %}
 
-{% tab title="AWS Glue" %}
-**AWS Glue install steps are not documented on any live docs page. CHECK WITH SONAL before publishing this tab.**
-{% endtab %}
-
-{% tab title="GCP Dataproc" %}
-_**CHECK WITH SONAL - - NEED TEAMS HELP TO CHECK WHAT EXACTLY FROM THE GCS GUIDE TO BE ADDED HERE**_
-{% endtab %}
-
-{% tab title="Azure Synapse" %}
-**CHECK WITH SONAL - if "Zingg on Azure Synapse" is the same as "Databricks installation instructions" above. Are the install method and library setup are the same.**
-{% endtab %}
-
 {% tab title="Local Spark" %}
 {% hint style="success" icon="right-long" %}
 Docker is the fastest way to get started locally. Use installing from release if you need a specific Spark version or want to integrate with an existing Spark installation.
@@ -255,7 +243,6 @@ This builds Zingg models and finds duplicates in `examples/febrl/test.csv`. You 
 Enterprise only. Zingg on Snowflake uses the Enterprise Snowflake package and runs natively inside Snowflake using Snowpark — no Spark cluster required.
 {% endhint %}
 
-**CHECK WITH SONAL** - Snowflake Enterprise install is referenced at\
 docs.zingg.ai/latest/stepbystep/installation/installing-zingg-enterprise-snowflake
 
 ### **Prerequisites**

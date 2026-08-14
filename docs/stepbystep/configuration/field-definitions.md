@@ -47,5 +47,4 @@ Type of the column - `string, integer, double`, etc.
 | ONLY_ALPHABETS_FUZZY_OPTIMISED | Same semantics as ONLY_ALPHABETS_FUZZY but uses optimized processing. Use this when you need the fuzzy alphabet-only behavior at production scale. [Zingg Enterprise Feature](#user-content-fn-1)[^1]                                                                                                                                            | string                                             |
 |             MAPPING_(FILENAME) | Maps input values to canonical values using a mapping file (e.g., nickname maps, company abbreviations, gender codes). Matching is tolerant to common variations defined in the mapping. See [Advanced Match Types](adv-matchtypes.md) for mapping file format and examples.                   | string                                             |
 
-
 [^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.

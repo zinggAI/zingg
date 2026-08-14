@@ -111,9 +111,6 @@ Use `STANDARDISE_<basename>` to reference a mapping file named `<basename>.json`
 {% endhint %}
 {% endtab %}
 
-{% tab title="Enterprise Snowflake" %}
-**CONTENT FOR THIS SECTION TO BE PROVIDED BY SONAL LATER**
-{% endtab %}
 {% endtabs %}
 
 ### **Verify the standardisation in your output**

@@ -156,10 +156,6 @@ Setting `zinggDir` to an S3 path stores all Zingg model files and training data 
 {% endhint %}
 {% endtab %}
 
-{% tab title="Azure Blob" %}
-_**CHECK WITH SONAL - - NEED TEAMS HELP TO CHECK WHAT EXACTLY TO BE ADDED HERE**_
-{% endtab %}
-
 {% tab title="GCS" %}
 On Google Cloud Storage, data lives in GCS buckets accessed via the `gs://` path format. Use `gs://<bucket-name>/<path-to-file>` to connect Zingg to your bucket. All formats — CSV, Parquet, JSON, Avro, Delta — are available in both Community and Enterprise.
 

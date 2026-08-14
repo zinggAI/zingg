@@ -99,7 +99,4 @@ If you prefer the CLI, create an `explainConfig.json` and run with the `--zinggi
 ```
 {% endtab %}
 
-{% tab title="Enterprise Snowflake" %}
-**CONTENT FOR THIS SECTION TO BE PROVIDED BY SONAL LATER**
-{% endtab %}
 {% endtabs %}

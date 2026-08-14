@@ -22,6 +22,4 @@ Note: Zingg internally applies the **negation** of the `passthroughExpr` to filt
      "passthroughExpr": "is_deceased = true AND is_deceased is NOT NULL"
 ```
 
-
-
 [^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.

@@ -1,10 +1,8 @@
 # Ubuntu/WSL2 Setup Guide
 
-The following steps will help you set up the Zingg Development Environment on **Ubuntu/WSL2**. 
-
+The following steps will help you set up the Zingg Development Environment on **Ubuntu/WSL2**.
 
 ### **Step 0: Initial OS Setup (Ubuntu/WSL2)**
-
 
 Make sure to update your Ubuntu installation:
 
@@ -82,8 +80,8 @@ Make sure that Spark version you have installed is compatible with Java you have
 
 ```
 wget https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
-tar -xvf apache-maven-3.8.8-bin.tar.gz 
-rm -rf apache-maven-3.8.8-bin.tar.gz 
+tar -xvf apache-maven-3.8.8-bin.tar.gz
+rm -rf apache-maven-3.8.8-bin.tar.gz
 cd apache-maven-3.8.8/
 cd bin
 ./mvn --version
@@ -150,7 +148,6 @@ mvn clean compile package -Dspark=sparkVer -Dmaven.test.skip=true
 **Note:** Replace the `sparkVer` with the version of Spark you installed. \
 For example, **-Dspark=3.5** you still face an error, include **-Dmaven.test.skip=true** with the above command.
 
-
 **Step 7: If you have any issue with 'SPARK_LOCAL_IP' (Ubuntu)**
 
 * Install **net-tools** using **sudo apt-get install -y net-tools**
@@ -174,4 +171,3 @@ For example, **-Dspark=3.5** you still face an error, include **-Dmaven.test.ski
 
 * Run this script in the terminal opened in Zingg clones directory `./scripts/zingg.sh --phase match --conf examples/febrl/config.json --properties-file config/zingg.conf`
 * change directory `cd /tmp/zinggOutput` (path provided in config file) to see the output files.
-

@@ -4,8 +4,6 @@ nav_order: 11
 
 # Reading Material
 
-
-
 Entity Resolution and The Modern Data Stack:
 
 * [From Rows to People](https://roundup.getdbt.com/p/from-rows-to-people)
@@ -25,4 +23,3 @@ A detailed write-up on entity resolution - the problem, its challenges, and appl
 Understanding Master Data and Master Data Management:
 
 * [Agile Data Mastering](https://towardsdatascience.com/a-guide-to-agile-data-mastering-with-ai-3bf38f103709)
-

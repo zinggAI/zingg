@@ -164,7 +164,7 @@ This wrapper configuration points to your new configuration and specifies where 
 }
 ```
 
-**Note**: 
+**Note**:
 - This wrapper only points to the new configuration. The original configuration is specified via the `--originalZinggId` command-line parameter.
 - The `name` field in `transformedOutputPath` can be any arbitrary identifier for the output pipe - it's used internally by Zingg to identify this output destination.
 
@@ -384,6 +384,5 @@ Migrating from Databricks to Fabric, or vice versa? When migrating data to new s
 
 ### 5. Platform Upgrades
 Upgrading Spark versions, Snowflake features, or other platform components? Keep your IDs stable through the upgrade process.
-
 
 [^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.

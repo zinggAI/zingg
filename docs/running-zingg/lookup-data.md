@@ -58,8 +58,6 @@ This is useful for operational post-match queries: looking up a new customer rec
 
 </details>
 
-**CHECK WITH SONAL -** [**https://docs.zingg.ai/latest/stepbystep/lookup**](https://docs.zingg.ai/latest/stepbystep/lookup) **-**
-
 **The lookup page on the live docs is minimal. Three things to confirm before publishing:**
 
 1. **What does the output look like? Which columns appear in lookup output?**

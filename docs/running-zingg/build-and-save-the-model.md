@@ -67,7 +67,6 @@ Available options:
 Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark cluster.
 {% endhint %}
 
-
 ### CLI
 
 ```bash

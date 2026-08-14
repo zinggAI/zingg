@@ -29,8 +29,7 @@ Once you have verified the above stop words, you can configure them in the JSON 
 
 In case of stopwords being set up manually by the user, the list of stopwords may consider multiple columns and Zingg used only the first column by default.
 
-
-For recommending stopwords in **Zingg Enterprise Snowflake**, 
+For recommending stopwords in **Zingg Enterprise Snowflake**,
 
 `./scripts/zingg.sh --phase recommend --conf <conf.json> --properties-file <path to Snowflake properties file> --column <name of column to generate stopword recommendations>`
 

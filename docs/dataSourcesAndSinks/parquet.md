@@ -5,14 +5,13 @@ parent: Data Sources and Sinks
 nav_order: 5
 ---
 
-
 ## Parquet files
 ```json
 "data" : [{
-		"name":"parquetFiles", 
-		"format":"parquet", 
+		"name":"parquetFiles",
+		"format":"parquet",
 		"props": {
-			"path": "/home/zingg"		
-			}	
+			"path": "/home/zingg"
+			}
 		}]
 ```

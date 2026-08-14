@@ -30,8 +30,6 @@ The Knowledge Graph is a post-match feature. The sequence is:
 3. The knowledge graph layer maps edges between nodes based on shared attributes, transactions, or relationships defined by your data model.
 4. Query the graph to find connected entities, paths between nodes, and clusters of related records.
 
-_**CHECK WITH TEAM/SONAL—Knowledge Graph is confirmed as an Enterprise Plus feature on the compare-versions page but is not yet documented on any live docs page. Please provide:**_
-
 1. _**How the Knowledge Graph is configured and invoked**_
 2. _**The graph database or format used (Neo4j, native graph store?)**_
 3. _**A worked example showing node and edge definition**_

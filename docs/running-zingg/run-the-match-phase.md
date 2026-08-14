@@ -101,7 +101,6 @@ Enterprise output includes `Zingg ID` (persistent across runs) instead of `Z_CLU
 Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark cluster.
 {% endhint %}
 
-
 ### CLI
 
 ```bash

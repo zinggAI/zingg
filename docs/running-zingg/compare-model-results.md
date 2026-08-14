@@ -116,9 +116,6 @@ zinggDiff.initAndExecute()
 ```
 {% endtab %}
 
-{% tab title="Enterprise for Snowflake" %}
-_**Enterprise Snowflake content for this topic to be provided by Sonal**_
-{% endtab %}
 {% endtabs %}
 
 ### Understand why use Diff with use cases

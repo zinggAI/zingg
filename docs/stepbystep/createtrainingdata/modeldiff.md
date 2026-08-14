@@ -34,7 +34,6 @@ The diff phase analyzes both outputs and identifies:
 - **New clusters** created in the updated model
 - **Merged or split clusters** between the two models
 
-
 ## Usage
 
 ### Command Line
@@ -169,7 +168,7 @@ This wrapper configuration points to your new configuration and specifies where 
 }
 ```
 
-**Note**: 
+**Note**:
 - This wrapper only points to the new configuration. The original/baseline configuration is specified via the `--compareTo` command-line parameter.
 - The `name` field in `transformedOutputPath` can be any arbitrary identifier for the output pipe - it's used internally by Zingg to identify this output destination. Here we use `diffOutput` to clearly distinguish it from the new model's match output.
 
@@ -406,7 +405,6 @@ The diff output includes:
 - **ZINGG_ID_UPDATED**: ZINGG ID from the new/updated model
 - **ZINGG_ID_ORIGINAL**: ZINGG ID from the original/baseline model
 
-
 This allows you to see side-by-side how each record's cluster assignment changed between the two models.
 
 ##  Enhanced Diff Output with Outer Join
@@ -415,7 +413,6 @@ We're developing an enhanced diff that will provide even more comprehensive comp
 
 - **All records from both models**, including those that appear in only one output
 - **Enhanced null handling**: Intelligent merging of primary key columns when records appear in only one model
-
 
 ## Use Cases
 
@@ -436,6 +433,5 @@ Ensure that model updates don't accidentally degrade match quality for specific 
 
 ### 6. Configuration Tuning
 Experiment with different labelDataSampleSize, numPartitions, or other parameters and see the impact.
-
 
 [^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.

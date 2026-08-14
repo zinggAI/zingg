@@ -26,6 +26,4 @@ The `explainOutput` phase currently focuses on **probabilistic matches** between
 
 This focused approach allows the explain phase to efficiently highlight the machine learning model's decision-making process for probabilistic matches, which typically require the most scrutiny and validation.
 
-
-
 [^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.

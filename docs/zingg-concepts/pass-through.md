@@ -84,9 +84,6 @@ For nullable fields, ensure the negative of your expression correctly identifies
 Zingg internally applies the negation of `passthroughExpr` to filter which records participate in matching. If you apply the condition to a nullable field without the null guard, records with null values in that field may behave unexpectedly.
 {% endtab %}
 
-{% tab title="Enterprise Snowflake" %}
-_**CHECK WITH SONAL - Enterprise Snowflake content for this topic to be provivded by Sonal**_
-{% endtab %}
 {% endtabs %}
 
 ### Pass Through records in the output

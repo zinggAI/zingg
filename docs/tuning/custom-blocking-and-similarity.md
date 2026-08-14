@@ -62,7 +62,4 @@ For similarity, you can define your comparison measures alongside Zingg's built-
 
 You can define your comparison functions and register them so Zingg uses them as additional features for the classifier. The classifier then determines the best weight for each feature, including your custom one, based on your labeled training data.
 
-_**LINK TO BE ADDED -  GitHub Zingg repository custom similarity example (add link to****&#x20;****`github.com/zinggAI/zingg`****&#x20;****once confirmed by team)**_
-
 Custom similarity and blocking function implementation requires Java/Scala code changes to the Zingg JAR. These are advanced customizations. For most use cases, adjusting match types, stopwords, and training data is sufficient before reaching this step.
-

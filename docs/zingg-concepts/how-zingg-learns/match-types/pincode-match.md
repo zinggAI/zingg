@@ -15,7 +15,7 @@ It is more permissive than `EXACT` (which would not match "94102" and "94102-123
 
 ### What `PINCODE` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">94102</td><td valign="top">94102-1234</td><td valign="top">Yes - 5-digit and ZIP+4 same base</td></tr><tr><td valign="top">94102</td><td valign="top">94103</td><td valign="top">No - different postal codes</td></tr><tr><td valign="top">EC1A 1BB</td><td valign="top">EC1A1BB</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>UK postcode with/without space</strong></em></td></tr><tr><td valign="top">110001</td><td valign="top">110001</td><td valign="top">Yes - Indian PIN code, identical</td></tr><tr><td valign="top">94102</td><td valign="top">941-02</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>hyphen in different position</strong></em></td></tr><tr><td valign="top">[null]</td><td valign="top">94102</td><td valign="top"><em><strong>Confirm — add NULL_OR_BLANK to control null behaviour</strong></em></td></tr></tbody></table>
+<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">94102</td><td valign="top">94102-1234</td><td valign="top">Yes - 5-digit and ZIP+4 same base</td></tr><tr><td valign="top">94102</td><td valign="top">94103</td><td valign="top">No - different postal codes</td></tr><tr><td valign="top">EC1A 1BB</td><td valign="top">EC1A1BB</td><td valign="top">—</td></tr><tr><td valign="top">110001</td><td valign="top">110001</td><td valign="top">Yes - Indian PIN code, identical</td></tr><tr><td valign="top">94102</td><td valign="top">941-02</td><td valign="top">—</td></tr><tr><td valign="top">[null]</td><td valign="top">94102</td><td valign="top"><em><strong>Confirm — add NULL_OR_BLANK to control null behaviour</strong></em></td></tr></tbody></table>
 
 ### When to use `PINCODE`
 
@@ -60,7 +60,7 @@ from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 
 {% tab title="JSON" %}
 {% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). 
+The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise).
 {% endhint %}
 
 ```json

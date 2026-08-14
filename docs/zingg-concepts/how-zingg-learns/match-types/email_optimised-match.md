@@ -45,7 +45,6 @@ performance matters. Customer datasets, patient registries, voter files—any do
 
 </details>
 
-
 ### Configuring `EMAIL_OPTIMISED`
 
 {% tabs %}
@@ -60,7 +59,7 @@ email = EFieldDefinition("email", "string", EMatchType.EMAIL_OPTIMISED)
 
 {% tab title="JSON" %}
 {% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block below uses Enterprise-only match type `EMAIL_OPTIMISED`. 
+The JSON `fieldDefinition` block below uses Enterprise-only match type `EMAIL_OPTIMISED`.
 {% endhint %}
 
 ```json

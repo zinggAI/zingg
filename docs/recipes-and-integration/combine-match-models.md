@@ -129,5 +129,3 @@ The combination is defined in a JSON config file with two top-level arrays: `ver
 * `strategy: 'pairs_and_vertices'` - the graph combination strategy. Determines how overlapping entity assignments are resolved.
 
 #### PYTHON API
-
-_**CHECK WITH SONAL \_ TEAM - Python API for combining match models is not documented in the reference PDF. Sonal to confirm before adding.**_

@@ -99,7 +99,6 @@ zingg.initAndExecute()
 Enterprise provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons. Download the diagnostics view to share match quality with stakeholders before committing to training.
 {% endhint %}
 
-_**CHECK WITH SONAL - Please confirm the exact Python code for the interactive label widget and saveMarkedRecords() call so this tab can be completed.**_
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}

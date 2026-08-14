@@ -81,6 +81,5 @@ zingg.initAndExecute()
 {% tab title="Enterprise Snowflake" %}
 Stopwords are stored as a table: `zingg_stopWords_columnName_modelId`
 
-**CHECK WITH SONAL ABOUT THIS TOPIC - NEEDS ENTIRELY DIFFERENT SET OF CONTENT TO BE DISCUSSED LATER.**
 {% endtab %}
 {% endtabs %}

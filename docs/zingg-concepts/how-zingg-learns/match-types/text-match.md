@@ -15,7 +15,7 @@ description: >-
 
 ### What `TEXT` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">Enterprise data management platform</td><td valign="top">Data management platform for enterprise</td><td valign="top">Yes - high word overlap<br>("enterprise", "data", "management",<br>"platform" all shared)</td></tr><tr><td valign="top">Enterprise software solutions</td><td valign="top">Consumer hardware products</td><td valign="top">No - low word overlap</td></tr><tr><td valign="top">Machine learning model training</td><td valign="top">Training machine learning models</td><td valign="top">Yes - same words, different order</td></tr><tr><td valign="top">ML model</td><td valign="top">Machine learning model</td><td valign="top">Partial - "model" shared,<br>"ML" vs "Machine learning" differs. Score reflects partial overlap.</td></tr><tr><td valign="top">[empty]</td><td valign="top">Enterprise data platform</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>empty string behaviour</strong></em></td></tr><tr><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></tbody></table>
+<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">Enterprise data management platform</td><td valign="top">Data management platform for enterprise</td><td valign="top">Yes - high word overlap<br>("enterprise", "data", "management",<br>"platform" all shared)</td></tr><tr><td valign="top">Enterprise software solutions</td><td valign="top">Consumer hardware products</td><td valign="top">No - low word overlap</td></tr><tr><td valign="top">Machine learning model training</td><td valign="top">Training machine learning models</td><td valign="top">Yes - same words, different order</td></tr><tr><td valign="top">ML model</td><td valign="top">Machine learning model</td><td valign="top">Partial - "model" shared,<br>"ML" vs "Machine learning" differs. Score reflects partial overlap.</td></tr><tr><td valign="top">[empty]</td><td valign="top">Enterprise data platform</td><td valign="top">—</td></tr><tr><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></tbody></table>
 
 ### When to use `TEXT`
 
@@ -79,7 +79,7 @@ from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 
 {% tab title="JSON" %}
 {% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). 
+The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise).
 {% endhint %}
 
 ```json

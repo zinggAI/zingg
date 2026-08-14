@@ -60,9 +60,6 @@ The `$ZINGG_DYNAMIC_STAT_NAME` placeholder is automatically substituted with the
 {% endhint %}
 {% endtab %}
 
-{% tab title="Enterprise Snowflake" %}
-**CONTENT FOR THIS SECTION TO BE PROVIDED BY SONAL LATER**
-{% endtab %}
 {% endtabs %}
 
 ### Three statistics levels

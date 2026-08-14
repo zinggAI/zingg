@@ -83,7 +83,6 @@ Use `PINCODE` not `FUZZY` for postal codes. `PINCODE` is built to handle the spe
 
 `FUZZY` is computationally heavier than `FUZZY_OPTIMISED`. For production runs on large datasets where you want the same matching quality with faster results, use `FUZZY_OPTIMISED` instead.
 
-
 </details>
 
 ### Configuring `FUZZY`

@@ -192,8 +192,6 @@ data.columns = schema
 data.head()
 ```
 
-_**IMAGE TO BE ADDED — Fabric notebook cell showing the data preview output table with sample FEBRL records — the same entity appearing multiple times with field variations across rows. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
-
 #### **Step 12: Configure input and output pipes**
 
 `CsvPipe` connects Zingg to your OneLake data. The schema string must match your dataset column names exactly.
@@ -350,8 +348,6 @@ display(widgets.VBox(children=vContainers))
 ready_for_save = True
 ```
 
-_**IMAGE TO BE ADDED — Zingg labeling widget running inside a Fabric notebook showing two candidate records side by side with Match / No Match / Uncertain toggle buttons. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
-
 {% hint style="success" icon="right-long" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 15–18 in a loop until you reach this target. Label until all field types and data variation patterns in your schema are covered. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
 {% endhint %}
@@ -414,8 +410,6 @@ displayHTML(open(DOCS_DIR + "model.html", 'r').read())
 displayHTML(open(DOCS_DIR + "data.html", 'r').read())
 ```
 
-_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****\*\*\*\* \*\*\*\*HTML output rendered inside a Fabric notebook showing labeled pair examples in a table. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
-
 ### Notebook 04: Train and match
 
 This notebook runs `trainMatch` and displays the output. It calls `%run 01-setting_up_zingg` at the top.
@@ -458,7 +452,6 @@ display(outputDF)
 print(outputDF.count())
 ```
 
-_**IMAGE TO BE ADDED— Match output table in a Fabric notebook showing resolved records with\*\*\*\*****&#x20;****`z_cluster`****&#x20;****\*\*\*\*column visible — two rows sharing the same cluster value highlighted to illustrate entity resolution. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
 {% endtab %}
 
 {% tab title="Enterprise" %}

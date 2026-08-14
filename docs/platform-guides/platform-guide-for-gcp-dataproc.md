@@ -32,8 +32,6 @@ Create a GCS bucket and upload the JARs and your dataset. You can do this from t
 3. Set the region to match where your Dataproc cluster will run (for example `us-central1`).
 4. Upload the three JARs and your data file (for example `customers.csv`) to the bucket.
 
-_**IMAGE TO BE ADDED - GCS bucket creation screen in the Google Cloud Console showing bucket name, region selector, and upload interface. Tanwi to check with team for screenshot from a live GCS console.**_
-
 #### gcloud CLI
 
 ```bash
@@ -59,8 +57,6 @@ The cluster must be created with the three JARs injected via `spark.jars`. This 
 5. Scroll to **Properties** and add:
    * **Key:** `spark.jars`
    * **Value:** `gs://YOUR_BUCKET/zingg-0.6.0.jar,gs://YOUR_BUCKET/spark-3.5-bigquery-0.44.1.jar,gs://YOUR_BUCKET/gcs-connector-hadoop3-latest.jar`
-
-_**IMAGE TO BE ADDED — Dataproc cluster creation screen showing the Properties section with\*\*\*\*****&#x20;****`spark.jars`****&#x20;****key and the three JAR paths as the value. Tanwi to check with team for screenshot from a live Dataproc console. This is the most important screenshot on the page — the****&#x20;****`spark.jars`****&#x20;****\*\*\*\*Properties field is not obvious to find and a screenshot here prevents the most common setup error.**_
 
 #### gcloud CLI
 
@@ -92,8 +88,6 @@ Once your cluster status shows **Running**, access the managed JupyterLab enviro
 3. Click the **Web Interfaces** tab.
 4. Under **Component Gateway**, click the **JupyterLab** link.
 5. Create a new notebook and select the **PySpark** kernel.
-
-_**IMAGE TO BE ADDED— Dataproc cluster Web Interfaces tab showing the Component Gateway section with the JupyterLab link highlighted. Tanwi to check with team for screenshot from a live Dataproc cluster.**_
 
 ### Step 4: Set a checkpoint directory and install Zingg
 
@@ -199,8 +193,6 @@ spark_df = spark_df.toDF(*schema_list)
 
 spark_df.limit(10).toPandas().head()
 ```
-
-_**IMAGE TO BE ADDED — Jupyter notebook cell showing the preview output table with sample FEBRL data — the same customer appearing multiple times with field variations across rows. Source: not in the GCP docx (text-only guide). Tanwi to screenshot from a live notebook run. Same principle as the Databricks guide — this image shows readers the exact problem Zingg is solving before they configure anything. Place: below the\*\*\*\*****&#x20;****`spark_df.limit(10).toPandas().head()`****&#x20;****\*\*\*\*line.**_
 
 ### Step 8: Configure input and output pipes
 
@@ -353,8 +345,6 @@ display(widgets.VBox(children=vContainers))
 ready_for_save = True
 ```
 
-_**IMAGE TO BE ADDED — Zingg labeling widget rendered in JupyterLab on Dataproc, showing two candidate records side by side with Match / No Match / Uncertain toggle buttons. Tanwi to check with team for screenshot from a live Dataproc notebook run.**_
-
 {% hint style="success" icon="right-long" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 11–14 in a loop until you reach this target. Label until all field types and data variation patterns in your schema are covered. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are underrepresented.
 {% endhint %}
@@ -411,8 +401,6 @@ with open(DOCS_DIR + "data.html", 'r') as f:
     display(HTML(f.read()))
 ```
 
-_**IMAGE TO BE ADDED—****&#x20;****`generateDocs`****\*\*\*\* \*\*\*\*HTML output rendered inside JupyterLab on Dataproc showing labeled pair examples. Source: not in the GCP docx. Tanwi to check with team for screenshot from a live notebook run.**_
-
 {% hint style="success" icon="right-long" %}
 `generateDocs` is optional. Skip it if you have 30–40 matches and 30–40 non-matches and are confident in your labeling quality.
 {% endhint %}
@@ -460,8 +448,6 @@ colNames = [
 final_results = outputDF.toDF(*colNames)
 final_results.show(10)
 ```
-
-_**IMAGE TO BE ADDED — match output table in JupyterLab on Dataproc showing resolved records with\*\*\*\*****&#x20;****`z_cluster`****&#x20;****column visible. Highlight two rows sharing the same****&#x20;****`z_cluster`****&#x20;****\*\*\*\*value to show they have been resolved to the same entity.Tanwi to check with team for screenshot from a live notebook run.**_
 
 {% hint style="success" icon="right-long" %}
 * `z_cluster`— unique entity ID assigned by Zingg. All records sharing the same `z_cluster` represent the same real-world entity. Group by `z_cluster` to collapse duplicates into a golden record.

@@ -232,8 +232,6 @@ args.setData(tsvPipe)
 
 **XLSX**
 
-_**CHECK WITH SONAL - XLSX is listed as supported on zingg.ai but the connector format string and Python class are not confirmed on any live docs page. Please confirm the XLSX config and whether it is all editions or ENT only.**_
-
 {% hint style="success" icon="right-long" %}
 For files on cloud platforms:
 

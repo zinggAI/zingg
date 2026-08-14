@@ -15,22 +15,22 @@ In such cases, Zingg can build the entire graph and relate different models toge
 
 ````json
 ```
-{ 
-    "vertices" : 
-    [ 
-        { 
-            "name" : "spouse",  
-            "vertexType" : "zingg_pipe", 
+{
+    "vertices" :
+    [
+        {
+            "name" : "spouse",
+            "vertexType" : "zingg_pipe",
             "data" : [
                 {
-                "name" : "spouse", 
-                "format" : "snowflake", 
+                "name" : "spouse",
+                "format" : "snowflake",
                 "props": {
                         "query": "select a.id as id, a.FNAME, a.LNAME, a.STNO, a.ADD1, a.CITY, a.STATE, a.ZINGG_ID_PERSON, b.id as z_id, b.fname as Z_FNAME,b.lname as Z_LNAME,b.stno as Z_STNO,b.add1 as Z_ADD1, b.city as Z_CITY,b.state as Z_STATE, b.ZINGG_ID_PERSON as Z_ZINGG_ID_PERSON from CUSTOMER_RELATE_PARTIAL a, CUSTOMER_RELATE_PARTIAL b where a.familyId = b.familyId"
                         }
                 }
                 ],
-            "edges" :  
+            "edges" :
             {   "edgeType" : "same_edge",
                 "edges":[
                     {
@@ -46,9 +46,9 @@ In such cases, Zingg can build the entire graph and relate different models toge
                 ]
             }
         },
-        { 
+        {
             "name" : "household",
-            "config" : "$ZINGG_ENTERPRISE_HOME$/zinggEnterprise/configHousehold.json", 
+            "config" : "$ZINGG_ENTERPRISE_HOME$/zinggEnterprise/configHousehold.json",
             "strategy" : {
                 "vDataStrategy" : "unique_edge",
                 "props" : {
@@ -56,8 +56,8 @@ In such cases, Zingg can build the entire graph and relate different models toge
                         "edge" : "zingg_personId,z_zingg_personId"
                     }
             },
-            "vertexType" : "zingg_match", 
-             "edges" :  
+            "vertexType" : "zingg_match",
+             "edges" :
             {   "edgeType" : "same_edge",
                 "edges":[
                     {
@@ -75,15 +75,14 @@ In such cases, Zingg can build the entire graph and relate different models toge
         }
     ],
     "output" : [{
-        "name":"relatedCustomers", 
-        "format":"snowflake", 
+        "name":"relatedCustomers",
+        "format":"snowflake",
         "props": {
             "table": "RELATED_CUSTOMERS_PARTIAL"
             }
     }],
     "strategy":"pairs_and_vertices"
 }
-
 
 ```
 ````
