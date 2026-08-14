@@ -8,15 +8,19 @@ description: >-
 
 ### What `NULL_OR_BLANK` does
 
-By default, Zingg treats null values as matching anything. If a field is null in one record and has a value in another, the default behavior scores them as matching on that field.
+By default, most Zingg match types treat a null or blank value as automatically matching anything.
 
-`NULL_OR_BLANK` changes this. When added to a field alongside another match type, it tells Zingg to build an explicit feature for null and blank values so the ML model can learn from them rather than defaulting to a match. The model then decides whether nulls should contribute to a match based on your labeled training pairs.
+`NULL_OR_BLANK` adds a separate feature flagging whether both values were actually present, so the model can learn to discount matches that were really just two missing values.
 
-Use `NULL_OR_BLANK` combined with another match type. It tells Zingg how to treat null and empty values for that field. Used in the `matchType` string with a comma-separated combination.
+**Exception:** `NUMERIC` does not follow the "null matches anything" default - a null paired with any value scores as a non-match under `NUMERIC`, the opposite of every other match type covered here.
+
+Use `NULL_OR_BLANK` combined with another match type, in the `matchType` string with a comma-separated combination.
 
 ### What **`NULL_OR_BLANK`** matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">null</td><td valign="top">John Smith</td><td valign="top"><p>Without <code>NULL_OR_BLANK</code>: treated as matching (default).</p><p>With <code>NULL_OR_BLANK</code>: model learns from labeled examples - likely not a match</p></td></tr><tr><td valign="top">[empty string]</td><td valign="top">John Smith</td><td valign="top">Same as above</td></tr><tr><td valign="top">null</td><td valign="top">null</td><td valign="top">Confirm with team - both null behavior</td></tr><tr><td valign="top">John Smith</td><td valign="top">John Smith</td><td valign="top">No change - <code>NULL_OR_BLANK</code> only affects null/blank values</td></tr><tr><td valign="top">null</td><td valign="top">[empty string</td><td valign="top">Confirm with team - null vs empty string</td></tr></tbody></table>
+<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top"><code>NULL_OR_BLANK</code> feature</th><th valign="top">Notes</th></tr></thead><tbody><tr><td valign="top">null</td><td valign="top">John Smith</td><td valign="top">0.0</td><td valign="top">One side null</td></tr><tr><td valign="top">[empty string]</td><td valign="top">John Smith</td><td valign="top">0.0</td><td valign="top">Empty string treated exactly like null</td></tr><tr><td valign="top">null</td><td valign="top">null</td><td valign="top">0.0</td><td valign="top">No distinction between one-sided and both-sided nulls</td></tr><tr><td valign="top">null</td><td valign="top">[empty string]</td><td valign="top">0.0</td><td valign="top">Null and blank are interchangeable</td></tr><tr><td valign="top">John Smith</td><td valign="top">John Smith</td><td valign="top">1.0</td><td valign="top">Both values present</td></tr></tbody></table>
+
+There is no distinction between "both null" and "one null, one populated" - all four null/blank rows above score identically.
 
 ### When to use **`NULL_OR_BLANK`**
 
@@ -46,9 +50,9 @@ If one source system reliably populates a field and another consistently leaves 
 
 <summary><strong>As a standalone match type</strong></summary>
 
-`NULL_OR_BLANK` cannot be used alone. It only modifies the null behaviour of another match type on the same field.
+On its own, `NULL_OR_BLANK` only contributes a "both present?" signal, with no similarity information - which isn't useful for distinguishing matches. Nothing currently validates or blocks this configuration, but it won't do anything meaningful by itself.
 
-Always combine: `FUZZY`, `NULL_OR_BLANK` or `EXACT`, `NULL_OR_BLANK` or `PINCODE`, `NULL_OR_BLANK`.
+Always pair it with another match type: `FUZZY`, `NULL_OR_BLANK` or `EXACT`, `NULL_OR_BLANK` or `PINCODE`, `NULL_OR_BLANK`.
 
 </details>
 
@@ -56,7 +60,7 @@ Always combine: `FUZZY`, `NULL_OR_BLANK` or `EXACT`, `NULL_OR_BLANK` or `PINCODE
 
 <summary><strong>On fields where null means the same thing across all records</strong></summary>
 
-If a field is null in almost all records across all source systems, `NULL_OR_BLANK` adds little value - there are no non-null values for the model to contrast against. Consider `DONT_USE` instead.
+If a field is universally null across all records with no non-null values to contrast against, `NULL_OR_BLANK` adds nothing. Use `DONT_USE` for those fields instead.
 
 </details>
 
@@ -66,14 +70,17 @@ If a field is null in almost all records across all source systems, `NULL_OR_BLA
 
 ```python
 from zingg.client import *
-    company = FieldDefinition("company", "string", "FUZZY,NULL_OR_BLANK")
+
+company = FieldDefinition("company", "string", "FUZZY,NULL_OR_BLANK")
 ```
 
 ### **Enterprise**
 
 ```python
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-    company = EFieldDefinition("company", "string", "FUZZY,NULL_OR_BLANK")
+from zingg.client import *
+
+company = EFieldDefinition("company", "string", "FUZZY,NULL_OR_BLANK")
 ```
 {% endtab %}
 
@@ -97,12 +104,12 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 {% endtabs %}
 
 {% hint style="success" icon="right-long" %}
-`NULL_OR_BLANK` always combines with another match type. Common combinations:
+`NULL_OR_BLANK` common combinations:
 
 * `FUZZY`, `NULL_OR_BLANK` - name and address fields often null
 * `EXACT`, `NULL_OR_BLANK` - identifier fields that may be absent
 * `PINCODE`, `NULL_OR_BLANK` - postal codes missing in some systems
 * `DONT_USE` - if the field should be excluded from matching entirely
 
-**Read more**: [Match Types](./)
+**Read more**: [Match Types](README.md)
 {% endhint %}
