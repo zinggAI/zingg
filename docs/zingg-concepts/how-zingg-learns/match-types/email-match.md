@@ -14,10 +14,6 @@ description: >-
 This handles the common scenario where the same person has a work email and a personal email, or where an organization's email domain changes over time. As long as the local part\
 is the same, EMAIL scores them as a match.
 
-### How the algorithm works
-
-_**COMMENT FOR TEAM — Algorithm detail for EMAIL to be added here.**_
-
 ### What `EMAIL` matches and what it does not
 
 ### When to use `EMAIL`

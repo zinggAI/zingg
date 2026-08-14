@@ -13,10 +13,6 @@ description: >-
 `DONT_USE` fields are also hidden from the labeller when the `showConcise` flag is set to `true` —\
 so your domain experts see only the fields that are actually being used for matching when they label pairs.
 
-### How the algorithm works
-
-_**COMMENT FOR TEAM — Algorithm detail for DONT\_USE to be added here.**_
-
 {% hint style="success" icon="right-long" %}
 `DONT_USE` performs no computation. There is no similarity algorithm to describe - the field is passed through to output unchanged.
 {% endhint %}

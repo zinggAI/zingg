@@ -13,10 +13,6 @@ description: >-
 
 This is the standard choice for address street name fields where the street name needs fuzzy comparison and the street number needs to be handled separately. Combine `ONLY_ALPHABETS_FUZZY` with NUMERIC on the same field, or split the field before matching.
 
-### How the algorithm works
-
-_**COMMENT FOR TEAM — Algorithm detail for ONLY\_ALPHABETS\_FUZZY to be added here.**_
-
 ### What **`ONLY_ALPHABETS_FUZZY`** matches and what it does not
 
 ### When to use **`ONLY_ALPHABETS_FUZZY`**

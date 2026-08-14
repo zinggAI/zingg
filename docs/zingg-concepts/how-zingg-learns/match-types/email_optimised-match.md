@@ -22,10 +22,6 @@ The difference is performance: `EMAIL_OPTIMISED` is substantially faster when co
 
 Use `EMAIL` in development. Switch to `EMAIL_OPTIMISED` for production runs.
 
-### How the algorithm works
-
-_**COMMENT FOR TEAM — Same algorithm question as EMAIL applies here.**_
-
 ### What `EMAIL_OPTIMISED` matches and what it does not
 
 {% hint style="info" icon="right-long" %}

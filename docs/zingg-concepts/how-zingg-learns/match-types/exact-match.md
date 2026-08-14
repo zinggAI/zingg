@@ -13,10 +13,6 @@ description: >-
 
 Use `EXACT` for any field where a difference in value means a definite difference in entity trusted identifiers like SSN, national ID, passport number, tax code and for categorical fields like country codes and boolean flags where variation is not expected.
 
-### How the algorithm works
-
-_**COMMENT FOR TEAM — Algorithm detail for EXACT to be added here.**_
-
 ### What `EXACT` matches and what it does not
 
 <table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">123-45-6789</td><td valign="top">123-45-6789</td><td valign="top">Yes - identical</td></tr><tr><td valign="top">123-45-6789</td><td valign="top">123-45-6780</td><td valign="top">No - single-digit difference</td></tr><tr><td valign="top">US</td><td valign="top">US</td><td valign="top">Yes - identical</td></tr><tr><td valign="top">US</td><td valign="top">us</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>see algorithm note above</strong></em></td></tr><tr><td valign="top">true</td><td valign="top">true</td><td valign="top">Yes</td></tr><tr><td valign="top">true</td><td valign="top">1</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>see algorithm note above</strong></em></td></tr><tr><td valign="top">2024-01-15</td><td valign="top">2024-01-15</td><td valign="top">Yes</td></tr><tr><td valign="top">2024-01-15</td><td valign="top">01/15/2024</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>different date format</strong></em></td></tr><tr><td valign="top">[null]</td><td valign="top">123-45-6789</td><td valign="top"><em><strong>Confirm — null behaviour with EXACT. Add NULL_OR_BLANK to be explicit.</strong></em></td></tr></tbody></table>

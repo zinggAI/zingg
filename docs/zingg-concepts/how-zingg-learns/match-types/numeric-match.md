@@ -13,10 +13,6 @@ description: >-
 
 This makes it useful for address fields where a number is embedded in a string - "42 Main St" and "42 Main Street" share the number 42, which `NUMERIC` extracts and matches. The alphabetic parts are not compared by `NUMERIC` - use `ONLY_ALPHABETS_FUZZY` or `FUZZY` for those.
 
-### How the algorithm works
-
-_**COMMENT FOR TEAM — Algorithm detail for NUMERIC to be added here.**_
-
 ### What `NUMERIC` matches and what it does not
 
 <table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">42 Main St</td><td valign="top">42 Main Street</td><td valign="top">Yes - 42 extracted from both</td></tr><tr><td valign="top">42B Main St</td><td valign="top">42 Main St</td><td valign="top">Yes - 42 extracted from both (B ignored)</td></tr><tr><td valign="top">42 Main St</td><td valign="top">43 Main St</td><td valign="top">No - different numbers (42 vs 43)</td></tr><tr><td valign="top">Suite 12, Floor 3</td><td valign="top">Suite 12, Floor 4</td><td valign="top">Partial - 12 matches, 3 vs 4 differs. Score reflects partial overlap.</td></tr><tr><td valign="top">Flat 4, Tower A</td><td valign="top">Flat 4, Tower A</td><td valign="top">Yes - 4 matches</td></tr><tr><td valign="top">[no numbers]</td><td valign="top">42 Main St</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>what score when one side has no numbers?</strong></em></td></tr></tbody></table>

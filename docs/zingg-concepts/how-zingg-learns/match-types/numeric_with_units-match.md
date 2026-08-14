@@ -11,10 +11,6 @@ description: >-
 
 `NUMERIC_WITH_UNITS` extracts number-and-unit pairs from a string field - "16gb," "500ml", "2.4GHz", and compares how many are the same across two records. It is an extension of NUMERIC that recognises units alongside numbers, making it suitable for product catalogs and specification data where a value without its unit is ambiguous.
 
-### How the algorithm works
-
-_**COMMENT FOR TEAM — Algorithm detail for NUMERIC\_WITH\_UNITS to be added here.**_
-
 ### What `NUMERIC_WITH_UNITS` matches and what it does not
 
 <table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">16gb RAM</td><td valign="top">16 GB Memory</td><td valign="top">Yes - 16 GB extracted from both</td></tr><tr><td valign="top">16gb RAM</td><td valign="top">32gb RAM</td><td valign="top">No - different numbers</td></tr><tr><td valign="top">500ml</td><td valign="top">0.5L</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>unit normalisation (ml vs L</strong></em>)</td></tr><tr><td valign="top">2.4GHz Dual Core</td><td valign="top">2.4GHz Processor</td><td valign="top">Yes - 2.4GHz matches</td></tr><tr><td valign="top">16gb</td><td valign="top">16</td><td valign="top">Confirm - with vs without unit</td></tr></tbody></table>

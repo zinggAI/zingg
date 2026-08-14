@@ -27,7 +27,7 @@ The mapping file lists groups of equivalent values. `MAPPING` is typically combi
 1. **Dictionary loading** - Zingg reads the referenced lookup file, which groups equivalent values together (e.g., nicknames, abbreviations, codes). Each group represents synonyms for one real-world value.
 2. **Representative value selection** - within each group, Zingg picks the longest value as the representative form. Every other member of the group is treated as an alias for it.
 3. **Value substitution** - each field value is checked against the dictionary, case-insensitively. A match gets replaced with its representative form; no match means the original value passes through untouched.
-4. **Similarity scoring** - the standardized values are then handed to whichever other match type is configured on the field - most commonly `FUZZY`. That's where the real comparison happens.
+4. **Similarity scoring** - the standardized values are then handed to whichever other match type is configured on the field - eg. `FUZZY`. That's where the real comparison happens.
 
 {% hint style="danger" icon="right-long" %}
 **Important:** `MAPPING_(FILENAME)` must be paired with another match type (eg. `FUZZY`, `EXACT` etc.). On its own, it only standardizes values - it doesn't score them.

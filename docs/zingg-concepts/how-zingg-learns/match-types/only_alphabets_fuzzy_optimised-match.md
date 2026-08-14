@@ -16,10 +16,6 @@ tags:
 
 Use `ONLY_ALPHABETS_FUZZY` in development. Switch to `ONLY_ALPHABETS_FUZZY_OPTIMISED` for production runs on large address datasets.
 
-### How the algorithm works
-
-_**COMMENT FOR TEAM - Same questions as ONLY\_ALPHABETS\_FUZZY apply. Additionally: what is the performance improvement in practice vs ONLY\_ALPHABETS\_FUZZY on a large address dataset?**_
-
 ### What **`ONLY_ALPHABETS_FUZZY_OPTIMISED`** matches and what it does not
 
 {% hint style="info" icon="right-long" %}

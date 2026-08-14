@@ -13,19 +13,9 @@ description: >-
 
 It is Zingg's most permissive match type and the right starting point for any field where values can legitimately vary between records representing the same entity.
 
-### How the algorithm works
-
-_**COMMENT FOR TEAM—Algorithm detail for FUZZY match type to be added here.**_
-
 ### What `FUZZY` matches and what it does not
 
-<table><thead><tr><th width="178.94921875" valign="top">Value A</th><th width="163.23828125" valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">Jonathan Smith</td><td valign="top">Jon Smith</td><td valign="top">Yes - abbreviation and short-form variation</td></tr><tr><td valign="top">John Smith</td><td valign="top">Jon Smith</td><td valign="top">Yes - single character substitution</td></tr><tr><td valign="top">J. Smith</td><td valign="top">John Smith</td><td valign="top">Yes - initial vs full name</td></tr><tr><td valign="top">Jonathon Smith</td><td valign="top">Jonathan Smith</td><td valign="top">Yes - common transposition</td></tr><tr><td valign="top">Johnson</td><td valign="top">Smith</td><td valign="top">No - too different, no common characters</td></tr><tr><td valign="top">[null]</td><td valign="top">John Smith</td><td valign="top">Depends on <code>NULL_OR_BLANK</code> - without it, null matches. With <code>NULL_OR_BLANK</code> added, no match.</td></tr></tbody></table>
-
-_**COMMENT FOR TEAM — Please review and extend this table with examples from real Zingg test runs. Specifically add:**_
-
-* _**At least 2 examples from address fields**_
-* _**At least 1 numeric-in-string example (e.g. "42nd Street" vs "42 Street")**_
-* _**At least 1 example showing where FUZZY fails and ONLY\_ALPHABETS\_FUZZY would be better**_
+<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">Jonathan Smith</td><td valign="top">Jon Smith</td><td valign="top">Yes - abbreviation and short-form variation</td></tr><tr><td valign="top">J. Smith</td><td valign="top">John Smith</td><td valign="top">Yes - initial vs full name</td></tr><tr><td valign="top">Jonathon</td><td valign="top">Jonathan</td><td valign="top">Yes - common transposition</td></tr><tr><td valign="top">Johnson</td><td valign="top">Smith</td><td valign="top">No - too different, no common characters</td></tr><tr><td valign="top">IBM Corp</td><td valign="top">IBM Corporation</td><td valign="top">Yes - long shared prefix scores high</td></tr><tr><td valign="top">[null]</td><td valign="top">John Smith</td><td valign="top">Depends - add <code>NULL_OR_BLANK</code> to control null behaviour</td></tr></tbody></table>
 
 ### When to use `FUZZY`
 
@@ -68,11 +58,7 @@ Use `ONLY_ALPHABETS_FUZZY` for the street name component (ignores numbers, appli
 
 Never use `FUZZY` on fields that are reliable unique identifiers. `FUZZY` tolerance on an SSN field means "123-45-6789" and "123-45-6780" could score above the match threshold, that is a false positive you cannot afford in a compliance context.
 
-Use `EXACT` for trusted identifiers. In Enterprise, also consider adding them as deterministic matching conditions, so an exact match on a trusted identifier produces a\
-guaranteed match with score 1, before the probabilistic model runs.
-
-→ [Deterministic vs Probabilistic Matching](../../entity-resolution/deterministic-vs-probabilistic-matching.md)
-
+Use `EXACT` for trusted identifiers.
 </details>
 
 <details>
@@ -95,9 +81,8 @@ Use `PINCODE` not `FUZZY` for postal codes. `PINCODE` is built to handle the spe
 
 <summary><strong>When performance at scale is critical</strong></summary>
 
-`FUZZY` is computationally heavier than `FUZZY_OPTIMISED`. For production runs on large datasets where you want the same matching quality with lower CPU and memory cost, use `FUZZY_OPTIMISED` instead.
+`FUZZY` is computationally heavier than `FUZZY_OPTIMISED`. For production runs on large datasets where you want the same matching quality with faster results, use `FUZZY_OPTIMISED` instead.
 
-→ FUZZY\_OPTIMISED (Enterprise only)
 
 </details>
 
@@ -126,7 +111,7 @@ lname = EFieldDefinition("lname", "string", MatchType.FUZZY)
 
 {% tab title="JSON" %}
 {% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). The CLI command is identical for both editions.
+The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise).
 {% endhint %}
 
 ```json
@@ -148,11 +133,6 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 }
 ```
 
-### **CLI**
-
-```bash
-./scripts/zingg.sh --phase findTrainingData --conf config.json
-```
 {% endtab %}
 {% endtabs %}
 
@@ -162,7 +142,6 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 * `FUZZY_OPTIMISED` - same quality, better performance at scale
 * `ONLY_ALPHABETS_FUZZY` - strip numbers first, then apply fuzzy to letters only
 * `MAPPING_(FILENAME)` - handle completely different strings (nicknames, abbreviations) that `FUZZY` cannot bridge
-* `NULL_OR_BLANK` - combine with FUZZY to treat nulls as non-matches
 
 **Read more**: [Match Types](./) | [Configure Zingg](../../../running-zingg/configure-zingg.md) | [How Zingg Learns](../)
 {% endhint %}

@@ -13,10 +13,6 @@ description: >-
 
 This is designed for situations where the numeric component of a value varies across records but the alphabetic component should be consistent - building names where flat or unit numbers differ, or wing identifiers where floor numbers change.
 
-### How the algorithm works
-
-_**COMMENT FOR TEAM — Algorithm detail for ONLY\_ALPHABETS\_EXACT to be added here.**_
-
 ### What **`ONLY_ALPHABETS_EXACT`** matches and what it does not
 
 <table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">Tower A, Flat 12</td><td valign="top">Tower A, Flat 7</td><td valign="top">Yes - both strip to "Tower A Flat", exact match</td></tr><tr><td valign="top">Tower A</td><td valign="top">Tower B</td><td valign="top">"No - "Tower A" vs "Tower B" after stripping, different</td></tr><tr><td valign="top">Block 3, Wing East</td><td valign="top">Block 7, Wing East</td><td valign="top">Yes - both strip to "Block Wing East",<br>exact match</td></tr><tr><td valign="top">Block 3, Wing East</td><td valign="top">Block 3, Wing West</td><td valign="top">No - "Wing East" vs "Wing West"</td></tr><tr><td valign="top">42nd Floor, Suite A</td><td valign="top">18th Floor, Suite A</td><td valign="top">Yes - both strip to "nd Floor Suite A" <em><strong>(confirm with team - ordinal suffixes)</strong></em></td></tr></tbody></table>

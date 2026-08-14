@@ -13,10 +13,6 @@ description: >-
 
 `TEXT` works best when your text fields do not have many typos - the comparison is at word level, not character level, so it will not catch spelling errors within words. For shorter name and address fields, use `FUZZY` instead.
 
-### How the algorithm works
-
-_**COMMENT FOR TEAM — Algorithm detail for TEXT to be added here.**_
-
 ### What `TEXT` matches and what it does not
 
 <table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">Enterprise data management platform</td><td valign="top">Data management platform for enterprise</td><td valign="top">Yes - high word overlap<br>("enterprise", "data", "management",<br>"platform" all shared)</td></tr><tr><td valign="top">Enterprise software solutions</td><td valign="top">Consumer hardware products</td><td valign="top">No - low word overlap</td></tr><tr><td valign="top">Machine learning model training</td><td valign="top">Training machine learning models</td><td valign="top">Yes - same words, different order</td></tr><tr><td valign="top">ML model</td><td valign="top">Machine learning model</td><td valign="top">Partial - "model" shared,<br>"ML" vs "Machine learning" differs. Score reflects partial overlap.</td></tr><tr><td valign="top">[empty]</td><td valign="top">Enterprise data platform</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>empty string behaviour</strong></em></td></tr><tr><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></tbody></table>
