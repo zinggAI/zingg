@@ -15,7 +15,7 @@ Use `EXACT` for any field where a difference in value means a definite differenc
 
 ### What `EXACT` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">123-45-6789</td><td valign="top">123-45-6789</td><td valign="top">Yes - identical</td></tr><tr><td valign="top">123-45-6789</td><td valign="top">123-45-6780</td><td valign="top">No - single-digit difference</td></tr><tr><td valign="top">US</td><td valign="top">US</td><td valign="top">Yes - identical</td></tr><tr><td valign="top">US</td><td valign="top">us</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>see algorithm note above</strong></em></td></tr><tr><td valign="top">true</td><td valign="top">true</td><td valign="top">Yes</td></tr><tr><td valign="top">true</td><td valign="top">1</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>see algorithm note above</strong></em></td></tr><tr><td valign="top">2024-01-15</td><td valign="top">2024-01-15</td><td valign="top">Yes</td></tr><tr><td valign="top">2024-01-15</td><td valign="top">01/15/2024</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>different date format</strong></em></td></tr><tr><td valign="top">[null]</td><td valign="top">123-45-6789</td><td valign="top"><em><strong>Confirm — null behaviour with EXACT. Add NULL_OR_BLANK to be explicit.</strong></em></td></tr></tbody></table>
+<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">123-45-6789</td><td valign="top">123-45-6789</td><td valign="top">Yes - identical</td></tr><tr><td valign="top">123-45-6789</td><td valign="top">123-45-6780</td><td valign="top">No - single-digit difference</td></tr><tr><td valign="top">US</td><td valign="top">US</td><td valign="top">Yes - identical</td></tr><tr><td valign="top">US</td><td valign="top">us</td><td valign="top">Yes - both values are lowercased by a case-normalization preprocessing step before the comparison runs, so "US" and "us" both become "us" and match</td></tr><tr><td valign="top">true</td><td valign="top">true</td><td valign="top">Yes</td></tr><tr><td valign="top">true</td><td valign="top">1</td><td valign="top">No - EXACT does plain equality with no boolean coercion, so "true" and "1" do not match</td></tr><tr><td valign="top">2024-01-15</td><td valign="top">2024-01-15</td><td valign="top">Yes</td></tr><tr><td valign="top">2024-01-15</td><td valign="top">01/15/2024</td><td valign="top">No - no date parsing under EXACT; differing formats are compared as literal strings</td></tr><tr><td valign="top">[null]</td><td valign="top">123-45-6789</td><td valign="top">Yes - EXACT treats a null on either side as an automatic match; add <code>NULL_OR_BLANK</code> if you want nulls excluded</td></tr></tbody></table>
 
 ### When to use `EXACT`
 
@@ -93,6 +93,7 @@ dob = FieldDefinition("dob", "string", MatchType.EXACT)
 
 ```python
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zingg.client import *
 
 ssn = EFieldDefinition("ssn", "string", MatchType.EXACT)
 dob = EFieldDefinition("dob", "string", MatchType.EXACT)
@@ -123,11 +124,6 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 }
 ```
 
-### **CLI**
-
-```bash
-./scripts/zingg.sh --phase findTrainingData --conf config.json
-```
 {% endtab %}
 {% endtabs %}
 
@@ -136,9 +132,7 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 
 * `FUZZY` - use when variation is expected
 * `PINCODE` - EXACT-like for postal codes with format normalisation built in
-* `DONT_USE` - exclude from matching entirely (vs EXACT which contributes\
-  a match signal)
-* `Deterministic vs Probabilistic Matching` - combine EXACT fields with deterministic rules (Enterprise)
+* `DONT_USE` - exclude from matching entirely 
 
 **Read more**: [Match Types](./)
 {% endhint %}

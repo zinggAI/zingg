@@ -103,6 +103,7 @@ lname = FieldDefinition("lname", "string", MatchType.FUZZY)
 
 ```python
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zingg.client import *
 
 fname = EFieldDefinition("fname", "string", MatchType.FUZZY)
 lname = EFieldDefinition("lname", "string", MatchType.FUZZY)
