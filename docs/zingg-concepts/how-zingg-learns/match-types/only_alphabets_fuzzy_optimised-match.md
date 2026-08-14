@@ -35,7 +35,7 @@ from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 
 {% tab title="JSON" %}
 {% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block below uses Enterprise-only match type `ONLY_ALPHABETS_FUZZY_OPTIMISED`. The CLI command is identical to other phases.
+The JSON `fieldDefinition` block below uses Enterprise-only match type `ONLY_ALPHABETS_FUZZY_OPTIMISED`. 
 {% endhint %}
 
 ```json

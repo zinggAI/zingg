@@ -28,7 +28,7 @@ The scoring pattern is exactly the same as `EMAIL` - only the computation time d
 
 <details>
 
-<summary><strong>Email fields on large datasets over</strong></summary>
+<summary><strong>Email fields on large datasets</strong></summary>
 
 Any use case where you would use `EMAIL` but your dataset is large enough that\
 performance matters. Customer datasets, patient registries, voter files—any domain where millions of email addresses are being compared.
@@ -60,7 +60,7 @@ email = EFieldDefinition("email", "string", EMatchType.EMAIL_OPTIMISED)
 
 {% tab title="JSON" %}
 {% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block below uses Enterprise-only match type `EMAIL_OPTIMISED`. The CLI command is identical to other phases.
+The JSON `fieldDefinition` block below uses Enterprise-only match type `EMAIL_OPTIMISED`. 
 {% endhint %}
 
 ```json

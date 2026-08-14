@@ -74,7 +74,7 @@ fname = EFieldDefinition("fname", "string", EMatchType.FUZZY_OPTIMISED)
 
 {% tab title="JSON" %}
 {% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block below uses Enterprise-only match type `FUZZY_OPTIMISED`. The CLI command is identical to other phases.
+The JSON `fieldDefinition` block below uses Enterprise-only match type `FUZZY_OPTIMISED`. 
 {% endhint %}
 
 ```json

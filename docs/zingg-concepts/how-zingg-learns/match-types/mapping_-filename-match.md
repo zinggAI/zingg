@@ -123,7 +123,7 @@ from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 
 {% tab title="JSON" %}
 {% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block below uses Enterprise-only match type `mapping_<filename>`. Replace `<filename>` with the name of your mapping file without the `.json` extension. The CLI command is identical to other phases.
+The JSON `fieldDefinition` block below uses Enterprise-only match type `mapping_<filename>`. Replace `<filename>` with the name of your mapping file without the `.json` extension. 
 {% endhint %}
 
 ```json
