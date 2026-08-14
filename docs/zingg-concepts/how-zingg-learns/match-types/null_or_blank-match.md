@@ -1,7 +1,6 @@
 ---
 description: >-
-  Changes how Zingg handles null and blank values in a field. Always combined
-  with another match type, never used alone.
+  Changes how Zingg handles null and blank values in a field.
 ---
 
 # NULL\_OR\_BLANK Match

@@ -17,10 +17,6 @@ so your domain experts see only the fields that are actually being used for matc
 `DONT_USE` performs no computation. There is no similarity algorithm to describe - the field is passed through to output unchanged.
 {% endhint %}
 
-### What **`DONT_USE`** matches and what it does not
-
-<table><thead><tr><th valign="top">Scenario</th><th valign="top">With DONT_USE</th><th valign="top">Without DONT_USE</th></tr></thead><tbody><tr><td valign="top">customer_id field in output</td><td valign="top">Appears in every output row with original value.<br>Not used in matching.</td><td valign="top">Would need to be in field<br>definitions for output -<br>but would also contribute<br>to match scoring.</td></tr><tr><td valign="top">record_id = "REC-00123"</td><td valign="top">Carried to output as "REC-00123". Not compared against other records.</td><td valign="top">"REC-00123" would be compared fuzzily or exactly against other record IDs - likely producing false positives or false negatives.</td></tr><tr><td valign="top">Shown in labeller</td><td valign="top">Hidden when <code>showConcise=true</code><br>reduces visual noise for labellers.</td><td valign="top">Would appear in every labeller row, distracting from the fields that actually drive matching.</td></tr></tbody></table>
-
 ### When to use `DONT_USE`
 
 <details>
@@ -58,9 +54,19 @@ interface cleaner. Labellers see only the fields that drive decisions.
 
 <summary><strong>When the field carries a matching signal</strong></summary>
 
-If a field has information that should influence whether two records represent the same entity, even as a weak signal do not use `DONT_USE`. Use `FUZZY` with low weight, or include it in a deterministic matching condition (Enterprise).
+If a field has information that should influence whether two records represent the same entity, even as a weak signal do not use `DONT_USE`. Use `FUZZY`.
 
 `DONT_USE` is for fields that carry zero matching information.
+
+</details>
+
+<details>
+
+<summary><strong>When the field is a decent blocking key, even if it's a poor similarity signal</strong></summary>
+
+`DONT_USE` removes a field from blocking as well as similarity scoring - there's no way to keep a field eligible for blocking while excluding it from the match score. If a field would narrow down candidate pairs well (a good blocking key) but you don't want its raw value driving the similarity score, `DONT_USE` is the wrong choice - it throws away the blocking value too. Give it a real match type instead, even a low-signal one, so it stays available to blocking.
+
+For example, a `region_code` field cheaply splits records into non-overlapping candidate sets - a good blocking key - but two records sharing the same region says almost nothing about whether they're the same entity, so you don't want it driving the match score. Marking it `DONT_USE` strips it from blocking too, forcing Zingg to compare far more candidate pairs than necessary. Use `EXACT` on it instead - its similarity contribution will be weak, but blocking can still use it.
 
 </details>
 
@@ -70,14 +76,16 @@ If a field has information that should influence whether two records represent t
 
 ```python
 from zingg.client import *
-    rec_id = FieldDefinition("rec_id", "string", MatchType.DONT_USE)
+rec_id = FieldDefinition("rec_id", "string", MatchType.DONT_USE)
 ```
 
 ### **Enterprise**
 
 ```python
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-    rec_id = EFieldDefinition("rec_id", "string", MatchType.DONT_USE)
+from zingg.client import *
+
+rec_id = EFieldDefinition("rec_id", "string", MatchType.DONT_USE)
 ```
 {% endtab %}
 
@@ -105,7 +113,6 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 
 * `NULL_OR_BLANK` - for fields that should participate in matching but have frequent nulls
 * `EXACT` - for fields that should contribute an exact match signal
-* `showConcise` flag - hide `DONT_USE` fields from the labeller (CLI command reference)
 
 **Read more**: [Match types](./)
 {% endhint %}
