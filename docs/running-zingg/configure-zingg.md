@@ -166,7 +166,7 @@ args.setFieldDefinition(fieldDefs)
 ```
 
 {% hint style="success" icon="right-long" %}
-**Read more**: Match types reference - [Match types](../zingg-concepts/how-zingg-learns/match-types/) | C[onfiguration schema](../reference/configuration-schema.md)
+**Read more**: Match types reference - [Match types](../zingg-concepts/how-zingg-learns/match-types/) | [Configuration schema](../reference/configuration-schema.md)
 {% endhint %}
 
 ### Step 4: Configure input and output pipes
@@ -235,7 +235,7 @@ If you do not want to pass sensitive values such as passwords through the config
 ```
 
 {% hint style="success" icon="right-long" %}
-**Read more**: For all supported connector types and formats - [Connect Your Data](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data)
+**Read more**: For all supported connector types and formats - [Connect Your Data](../connect-your-data/pipes-and-data-connections.md)
 {% endhint %}
 {% endtab %}
 

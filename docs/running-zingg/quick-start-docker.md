@@ -413,7 +413,7 @@ For threshold guidance and full output column definitions → [Interpret Output 
 {% hint style="success" icon="right-long" %}
 Completed the walkthrough? Next steps:
 
-* Connect your own data - [Connect Data](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data)
+* Connect your own data - [Connect Data](../connect-your-data/pipes-and-data-connections.md)
 * Full configuration reference - [Configure Zingg](configure-zingg.md)
 * Understanding output scores - [Interpreting output](../interpreting-results/interpret-output-scores.md)
 {% endhint %}

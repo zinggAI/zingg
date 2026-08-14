@@ -203,7 +203,7 @@ The JSON config file tells Zingg which fields to use, where your data lives, and
 
 * Full configuration schema with all parameters and options - [Configuration schema](configuration-schema.md)
 * Full flag and options reference - [CLI command reference](cli-command-reference.md)
-* Python API alternative - [Python API](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/zingg-python-api)
+* Python API alternative - [Python API](../zingg-python-api/working-with-python.md)
 {% endhint %}
 
 </details>

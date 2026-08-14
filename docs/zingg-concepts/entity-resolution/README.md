@@ -146,7 +146,7 @@ together, and the LLM reasons over a complete, entity-aware view.
 This process is the Identity RAG pattern entity resolution as infrastructure for AI accuracy.
 
 {% hint style="success" icon="right-long" %}
-**Read more**: [Enhancing LLM applications with Zingg and LangChain](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/recipes-and-integration)
+**Read more**: [Enhancing LLM applications with Zingg and LangChain](../../recipes-and-integration/identity-rag-with-zingg-and-langchain.md)
 {% endhint %}
 
 </details>
