@@ -78,6 +78,7 @@ Use the same `modelId` in all subsequent phases for this run.
 #### Python
 
 ```python
+id = FieldDefinition("id", "string", MatchType.DONT_USE)
 fname = FieldDefinition("fname", "string", MatchType.FUZZY)
 lname = FieldDefinition("lname", "string", MatchType.FUZZY)
 stNo = FieldDefinition("stNo", "string", MatchType.FUZZY)
@@ -90,7 +91,7 @@ dob = FieldDefinition("dob", "string", MatchType.FUZZY)
 ssn = FieldDefinition("ssn", "string", MatchType.FUZZY)
 
 fieldDefs = [
-  fname, lname, stNo, add1, add2, city,
+  id, fname, lname, stNo, add1, add2, city,
   areacode, state, dob, ssn
 ]
 args.setFieldDefinition(fieldDefs)
@@ -101,6 +102,12 @@ args.setFieldDefinition(fieldDefs)
 ```json
 {
   "fieldDefinition" : [
+    {
+      "fieldName" : "id",
+      "matchType" : "DONT_USE",
+      "fields" : "id",
+      "dataType" : "string"
+    },
     {
       "fieldName" : "fname",
       "matchType" : "FUZZY",
@@ -277,7 +284,8 @@ args.setBlockingModel("DEFAULT")
   "modelId": "100",
   "zinggDir": "/tmp/models",
   "numPartitions": 4,
-  "labelDataSampleSize": 0.5
+  "labelDataSampleSize": 0.5,
+  "blockingModel": "DEFAULT"
 }
 ```
 
@@ -391,6 +399,32 @@ outputPipe.setHeader("true")
 args.setOutput(outputPipe)
 ```
 
+#### JSON
+
+```json
+{
+  "data": [ {
+    "name": "testFebrl",
+    "format": "csv",
+    "props": {
+      "path": "examples/febrl/test.csv",
+      "delimiter": ",",
+      "header": "true"
+    },
+    "schema": "recId string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn string"
+  } ],
+  "output": [ {
+    "name": "resultFebrl",
+    "format": "csv",
+    "props": {
+      "path": "/tmp/febrlOutput",
+      "delimiter": ",",
+      "header": "true"
+    }
+  } ]
+}
+```
+
 ### Step 5: Deterministic matching (optional)
 
 {% hint style="info" icon="right-long" %}
@@ -412,14 +446,14 @@ detMatchNameDobSsn = DeterministicMatching(
     'dob',
     'ssn'
 )
-detMatchNameEmail = DeterministicMatching(
-    'fname',
-    'email'
+detMatchLnameDob = DeterministicMatching(
+    'lname',
+    'dob'
 )
 args.setDeterministicMatchingCondition(
     detMatchNameAdd,
     detMatchNameDobSsn,
-    detMatchNameEmail
+    detMatchLnameDob
 )
 ```
 
@@ -439,19 +473,57 @@ args.setDeterministicMatchingCondition(
       {"fieldName": "ssn"}
     ]},
     {"matchCondition": [
-      {"fieldName": "fname"},
-      {"fieldName": "email"}
+      {"fieldName": "lname"},
+      {"fieldName": "dob"}
     ]}
   ]
 }
 ```
 
-### Step 6: Pass Through (optional)
+### Step 6: Output stats (optional)
+
+{% hint style="info" icon="right-long" %}
+Output stats - **Enterprise** only.
+
+Skip this step if you do not need run statistics.
+{% endhint %}
+
+Configures where Zingg writes statistics for the `match` and `runIncremental` phases. The `$ZINGG_DYNAMIC_STAT_NAME` placeholder is substituted at runtime with `SUMMARY`, `CLUSTER`, or `RECORD`, so each run writes the three statistics files separately. If `outputStats` is not configured, Zingg skips stats writing and the run proceeds normally.
+
+#### Python
+
+```python
+statsPipe = ECsvPipe(
+    "stats",
+    "/tmp/febrlStats_$ZINGG_DYNAMIC_STAT_NAME"
+)
+args.setOutputStats(statsPipe)
+```
+
+#### JSON
+
+```json
+{
+  "outputStats": {
+    "name": "stats",
+    "format": "csv",
+    "props": {
+      "location": "/tmp/zinggStats_$ZINGG_DYNAMIC_STAT_NAME",
+      "delimiter": ",",
+      "header": true
+    }
+  }
+}
+```
+
+**Read more:** For the fields in each statistics table → [Output Statistics](../interpreting-results/output-statistics.md).
+
+### Step 7: Pass Through (optional)
 
 {% hint style="info" icon="right-long" %}
 Pass Through - **Enterprise** only.
 
-Excludes specific records from matching while still including them in output with their own `Zingg ID`.
+Skip this step if you do not need to exclude records from matching.
 {% endhint %}
 
 Pass Through excludes specific records from matching while still including them in output with their own Zingg ID. Records matching the passthrough expression appear in the identity graph but never influence cluster formation.
@@ -483,7 +555,7 @@ args.setPassthroughExpr("fname = 'matilda'")
 
 {% tab title="Enterprise Snowflake" %}
 
-### Step 1: Build the Enterprise arguments
+### Step 1: Build the Enterprise arguments object
 
 #### JSON
 
@@ -496,7 +568,7 @@ args.setPassthroughExpr("fname = 'matilda'")
 }
 ```
 
-### Step 2: Define fields definitions
+### Step 2: Define fields and match types
 
 #### JSON
 
@@ -575,18 +647,14 @@ Skip this step if you only need probabilistic matching.
 {
   "deterministicMatching": [
     {"matchCondition": [
-      {"fieldName": "fname"},
-      {"fieldName": "stNo"},
-      {"fieldName": "add1"}
+      {"fieldName": "givenname"},
+      {"fieldName": "surname"},
+      {"fieldName": "postcode"}
     ]},
     {"matchCondition": [
-      {"fieldName": "fname"},
-      {"fieldName": "dob"},
-      {"fieldName": "ssn"}
-    ]},
-    {"matchCondition": [
-      {"fieldName": "fname"},
-      {"fieldName": "email"}
+      {"fieldName": "givenname"},
+      {"fieldName": "surname"},
+      {"fieldName": "suburb"}
     ]}
   ]
 }
@@ -632,7 +700,7 @@ Pass Through excludes specific records from matching while still including them 
 
 ```json
 {
-  "passthroughExpr": "fname = 'matilda'"
+  "passthroughExpr": "givenname = 'matilda'"
 }
 ```
 
