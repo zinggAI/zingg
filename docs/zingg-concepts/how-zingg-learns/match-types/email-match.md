@@ -9,7 +9,7 @@ description: >-
 
 ### What EMAIL does
 
-`EMAIL` splits an email address at the `@` symbol, discards the domain entirely, and scores the local part (the portion before `@`) using the similarity function. It is not an exact/binary comparison — it is `FUZZY`.
+`EMAIL` splits an email address at the `@` symbol, discards the domain entirely, and scores the local part (the portion before `@`) using the similarity function. It is not an exact/binary comparison, it is `FUZZY`.
 
 This handles the common scenario where the same person has a work email and a personal email, or where an organization's email domain changes over time.
 
