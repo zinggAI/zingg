@@ -24,7 +24,7 @@ New to entity resolution or want to understand the problem space before diving i
 Configure input and output pipes to tell Zingg where your source data lives and where to write results. Zingg connects to the data where it lives - it does not move it.
 
 {% hint style="success" icon="right-long" %}
-**Read more**: [Content your Data](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data)
+**Read more**: [Content your Data](../connect-your-data/pipes-and-data-connections.md)
 {% endhint %}
 {% endstep %}
 
@@ -34,7 +34,7 @@ Configure input and output pipes to tell Zingg where your source data lives and 
 Define your field definitions, match types, model ID, partition count, and any optional Enterprise features (deterministic matching, primary key, pass through, standardization). The configuration drives every downstream phase.
 
 {% hint style="success" icon="right-long" %}
-**Read more**: [Content your Data](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data)
+**Read more**: [Content your Data](../connect-your-data/pipes-and-data-connections.md)
 {% endhint %}
 {% endstep %}
 
@@ -128,7 +128,7 @@ full Python API support. [Talk to us about Enterprise](https://www.zingg.ai/comp
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* Understanding the concepts behind each phase - [Overview section](https://app.gitbook.com/o/kn0G4kXLdlfPagjso48S/s/4FvYw4VaCJcugJzWCiLX/) | [Concepts glossary](../zingg-concepts/concept-glossary.md)
+* Understanding the concepts behind each phase - [Overview section](../README.md) | [Concepts glossary](../zingg-concepts/concept-glossary.md)
 * [Configure Zingg](configure-zingg.md) - full configuration reference
 * [Interpret Output Scores](../interpreting-results/interpret-output-scores.md) - every output column and how to read scores
 * [Zingg\_ID and Z\_Cluster](../zingg-concepts/z-cluster-and-zingg-id.md) - Community vs Enterprise identifiers in your output

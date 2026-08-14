@@ -97,6 +97,6 @@ Pass this file via `--properties-file` when running any Zingg phase on Snowflake
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* For connector-specific JAR setup per platform - [Connect Data](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data)
-* For platform-specific runtime config - [Run on Cloud](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/platform-guides)
+* For connector-specific JAR setup per platform - [Connect Data](../connect-your-data/pipes-and-data-connections.md)
+* For platform-specific runtime config - [Run on Cloud](../platform-guides/platform-guide-for-azure-databricks.md)
 {% endhint %}

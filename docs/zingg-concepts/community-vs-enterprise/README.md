@@ -37,7 +37,7 @@ Enterprise Lite also gives you:
 * [**Incremental matching**](../../running-zingg/run-incremental-matching.md) **-** update the identity graph as new records arrive, without re-running on your entire dataset
 * [**Deterministic matching**](../entity-resolution/deterministic-vs-probabilistic-matching.md) **-** combine hard rules for known trusted identifiers (SSN, tax ID, email) with probabilistic ML in a single flow
 * [**Pass Through**](../pass-through.md) **-** records that are incomplete or unsuitable for matching still appear in your output and receive a Zingg ID for governance and compliance
-* [**Production-grade notebooks**](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/platform-guides) **-** a 7-notebook sequence, one per workflow phase, built for repeatable production runs
+* [**Production-grade notebooks**](../../platform-guides/platform-guide-for-azure-databricks.md) **-** a 7-notebook sequence, one per workflow phase, built for repeatable production runs
 
 Clients who move to Enterprise Lite are typically building Customer 360 views, patient master indexes, or supplier deduplication pipelines where the entity identifier needs to be stable and trusted downstream.
 

@@ -153,7 +153,7 @@ Zingg connects to any datastore that has a Spark connector, plus Snowflake nativ
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* For the full connection config including required JARs, props, and code examples for each datastore - [Connect Data](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data)
+* For the full connection config including required JARs, props, and code examples for each datastore - [Cloud Warehouses](connect-cloud-warehouses/) | [Cloud Storage](connect-cloud-storage.md) | [File Formats](connect-file-formats.md) | [Relational Databases](connect-relational-databases.md) | [NoSQL Databases](connect-nosql-databases.md) | [Neo4j](connect-graph-databases-neo4j.md)
 * To configure your pipes step by step as part of your Zingg setup - [Configure Zingg](../running-zingg/configure-zingg.md)
 * To understand what Zingg adds to your output alongside your input fields (`Z_CLUSTER`, `Z_MINSCORE`, `Zingg ID` and others) - [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)
 {% endhint %}

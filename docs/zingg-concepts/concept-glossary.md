@@ -339,7 +339,7 @@ All of these are different ways to get Spark; Zingg runs on all of them. Zingg E
 also supports Snowflake native compute, which requires no Spark cluster at all.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [Install Zingg](../running-zingg/install-zingg.md) | [Run on cloud](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/platform-guides)
+**Read more:** [Install Zingg](../running-zingg/install-zingg.md) | [Run on cloud](../platform-guides/platform-guide-for-azure-databricks.md)
 {% endhint %}
 
 </details>
@@ -354,7 +354,7 @@ Databricks, BigQuery, Redshift, or a file store like S3.
 These are independent: you can have your data in Snowflake but run Zingg's computation on Spark. Zingg connects to the data platform and runs computations on whichever engine you configure.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [Connect data](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data) | [Install Zingg](../running-zingg/install-zingg.md)
+**Read more:** [Connect data](../connect-your-data/pipes-and-data-connections.md) | [Install Zingg](../running-zingg/install-zingg.md)
 {% endhint %}
 
 </details>
@@ -368,7 +368,7 @@ The two ways to invoke Zingg. The Python API is the most widely adopted method; 
 Both produce identical results; the choice is a developer preference based on your workflow. The Python API is the default method documented throughout these docs.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [Python API](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/zingg-python-api) | [Zingg command line](../reference/zingg-command-line.md)
+**Read more:** [Python API](../zingg-python-api/working-with-python.md) | [Zingg command line](../reference/zingg-command-line.md)
 {% endhint %}
 
 </details>

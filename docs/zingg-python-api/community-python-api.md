@@ -123,7 +123,7 @@ genericPipe.addProperty("password", "your_password")
 ```
 
 {% hint style="success" icon="right-long" %}
-**Read more**: For all connector formats and full pipe configuration → [Connect Your Data](https://app.gitbook.com/s/4FvYw4VaCJcugJzWCiLX/connect-your-data)
+**Read more**: For all connector formats and full pipe configuration → [Connect Your Data](../connect-your-data/pipes-and-data-connections.md)
 {% endhint %}
 
 ### Execute Zingg phases
