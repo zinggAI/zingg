@@ -25,7 +25,7 @@ args.setLabelDataSampleSize(0.5)
 ### Run findTrainingData
 
 ```bash
-./zingg.sh --phase findTrainingData --conf config.json
+./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 
 #### Using Python API
@@ -92,7 +92,7 @@ zingg.initAndExecute()
 #### CLI
 
 ```bash
-./zingg.sh --phase findTrainingData --conf config.json
+./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 
 {% hint style="info" icon="right-long" %}
@@ -114,11 +114,11 @@ Candidate pairs are written to `zinggDir/modelId`. Run the label phase next to r
 #### CLI
 
 ```bash
-./zingg.sh --phase findTrainingData --conf config.json \
+./scripts/zingg.sh --phase findTrainingData --conf config.json \
 --properties-file <location to snowflake.properties>
 ```
 
-<!-- 
+<!--
 #### JSON
 
 ```json

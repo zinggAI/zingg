@@ -104,7 +104,7 @@ zingg.initAndExecute()
 Skip `findTrainingData` and `label`. Run `match` directly using the pre-trained model.
 
 ```bash
-./zingg.sh --phase match --conf config.json
+./scripts/zingg.sh --phase match --conf config.json
 ```
 
 {% hint style="success" icon="right-long" %}

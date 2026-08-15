@@ -42,7 +42,7 @@ zingg.initAndExecute()
 ### CLI
 
 ```bash
-./zingg.sh --phase match --conf config.json
+./scripts/zingg.sh --phase match --conf config.json
 ```
 
 ### Read and View Output
@@ -77,7 +77,7 @@ zingg.initAndExecute()
 ### CLI
 
 ```bash
-./zingg.sh --phase match --conf config.json
+./scripts/zingg.sh --phase match --conf config.json
 ```
 
 ### Read and View Output
@@ -105,7 +105,7 @@ Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark c
 ### CLI
 
 ```bash
-./zingg.sh --phase match --conf config.json \
+./scripts/zingg.sh --phase match --conf config.json \
 --properties-file <location to snowflake.properties>
 ```
 

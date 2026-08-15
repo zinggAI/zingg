@@ -50,7 +50,7 @@ zingg.initAndExecute()
 ### **CLI**
 
 ```bash
-./zingg.sh --phase label --conf config.json --showConcise=true
+./scripts/zingg.sh --phase label --conf config.json --showConcise=true
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -110,7 +110,7 @@ The `showConcise` flag only shows fields which are `NOT DONT_USE`. This makes th
 #### CLI
 
 ```bash
-./zingg.sh --phase label --conf config.json --showConcise=true \ --properties-file <location to snowflake.properties>
+./scripts/zingg.sh --phase label --conf config.json --showConcise=true \ --properties-file <location to snowflake.properties>
 ```
 
 {% hint style="info" icon="right-long" %}

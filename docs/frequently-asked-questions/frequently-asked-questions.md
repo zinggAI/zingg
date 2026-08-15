@@ -66,7 +66,7 @@ Check blocking first. Run `verifyBlocking` to confirm your known matching pairs 
 
 <summary><strong>Can I use Zingg without writing any code?</strong></summary>
 
-Yes, using the JSON config file and CLI. Define your field definitions, data source, and output in config.json, then run each phase with `./zingg.sh --phase <phase_name> --conf config.json`. No Python code required.
+Yes, using the JSON config file and CLI. Define your field definitions, data source, and output in config.json, then run each phase with `./scripts/zingg.sh --phase <phase_name> --conf config.json`. No Python code required.
 
 </details>
 

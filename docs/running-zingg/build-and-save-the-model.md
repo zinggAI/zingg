@@ -32,7 +32,7 @@ zingg.initAndExecute()
 ### CLI
 
 ```bash
-./zingg.sh --phase train --conf config.json
+./scripts/zingg.sh --phase train --conf config.json
 ```
 {% endtab %}
 
@@ -51,7 +51,7 @@ zingg.initAndExecute()
 ### CLI
 
 ```bash
-./zingg.sh --phase train --conf config.json
+./scripts/zingg.sh --phase train --conf config.json
 ```
 
 Enterprise adds blocking model configuration via `args.setBlockingModel()`. Set this in Configure Zingg before running `train`.
@@ -71,7 +71,7 @@ Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark c
 ### CLI
 
 ```bash
-./zingg.sh --phase train --conf config.json \
+./scripts/zingg.sh --phase train --conf config.json \
 --properties-file <location to snowflake.properties>
 ```
 

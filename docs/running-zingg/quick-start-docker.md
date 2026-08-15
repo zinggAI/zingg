@@ -112,7 +112,7 @@ args.setData(inputPipe)
 
 outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
 args.setOutput(outputPipe)
-                                                        
+
 ```
 
 #### Python - Enterprise
@@ -298,16 +298,16 @@ zingg.initAndExecute()
 #### **Python - Enterprise**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ]) 
+options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ])
 
-zingg = EZingg(args, options) 
+zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
 
 #### CLI (both editions)
 
 ```bash
-./zingg.sh --phase findTrainingData --conf config.json
+./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 
 ### **Step 5: Label pairs**
@@ -325,7 +325,7 @@ Zingg selects the most informative pairs from your data - not random samples. La
 #### **Python - Community**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "label" ]) 
+options = ClientOptions([ ClientOptions.PHASE, "label" ])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -341,7 +341,7 @@ zingg.initAndExecute()
 #### CLI (both editions)
 
 ```bash
-./zingg.sh --phase label --conf config.json --showConcise=true
+./scripts/zingg.sh --phase label --conf config.json --showConcise=true
 ```
 
 The `--showConcise=true` flag shows only fields used for matching and hides `DONT_USE` fields.
@@ -371,7 +371,7 @@ zingg.initAndExecute()
 #### CLI (both editions)
 
 ```bash
-./zingg.sh --phase train --conf config.json
+./scripts/zingg.sh --phase train --conf config.json
 ```
 
 ### **Step 7: Run match and resolve identities**
@@ -392,14 +392,14 @@ zingg.initAndExecute()
 ```python
 options = ClientOptions([ ClientOptions.PHASE, "match" ])
 
-zingg = EZingg(args, options) 
+zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
 
 #### CLI (both editions)
 
 ```bash
-./zingg.sh --phase match --conf config.json
+./scripts/zingg.sh --phase match --conf config.json
 ```
 
 ### **Reading the match output**

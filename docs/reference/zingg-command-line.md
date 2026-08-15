@@ -37,7 +37,7 @@ Replace `config.json` with your actual config file path.
 ### **Find training pairs**
 
 ```bash
-./zingg.sh --phase findTrainingData --conf config.json
+./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 
 ### **Label pairs**
@@ -45,13 +45,13 @@ Replace `config.json` with your actual config file path.
 The `--showConcise=true` flag shows only fields used for matching and hides `DONT_USE` fields.
 
 ```bash
-./zingg.sh --phase label --conf config.json --showConcise=true
+./scripts/zingg.sh --phase label --conf config.json --showConcise=true
 ```
 
 ### Train the model
 
 ```bash
-./zingg.sh --phase train --conf config.json
+./scripts/zingg.sh --phase train --conf config.json
 ```
 
 ### **Run match**
@@ -59,7 +59,7 @@ The `--showConcise=true` flag shows only fields used for matching and hides `DON
 `match` finds duplicates within a single dataset.
 
 ```bash
-./zingg.sh --phase match --conf config.json
+./scripts/zingg.sh --phase match --conf config.json
 ```
 
 ### **Run link**
@@ -67,7 +67,7 @@ The `--showConcise=true` flag shows only fields used for matching and hides `DON
 `link` matches records across two separate datasets.
 
 ```bash
-./zingg.sh --phase link --conf config.json
+./scripts/zingg.sh --phase link --conf config.json
 ```
 {% endtab %}
 
@@ -80,13 +80,13 @@ Enterprise adds two phases not available in Community: `generateDoc`s and\
 ### Find training pairs
 
 ```bash
-./zingg.sh --phase findTrainingData --conf config.json
+./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 
 ### Label pairs
 
 ```bash
-./zingg.sh --phase label --conf config.json --showConcise=true
+./scripts/zingg.sh --phase label --conf config.json --showConcise=true
 ```
 
 ### **Generate model documentation**
@@ -94,25 +94,25 @@ Enterprise adds two phases not available in Community: `generateDoc`s and\
 Optional but recommended before `train` — lets you inspect training data quality before committing to the train phase.
 
 ```bash
-./zingg.sh --phase generateDocs --conf config.json
+./scripts/zingg.sh --phase generateDocs --conf config.json
 ```
 
 ### Train the model
 
 ```bash
-./zingg.sh --phase train --conf config.json
+./scripts/zingg.sh --phase train --conf config.json
 ```
 
 ### Run match
 
 ```bash
-./zingg.sh --phase match --conf config.json
+./scripts/zingg.sh --phase match --conf config.json
 ```
 
 ### Run link
 
 ```bash
-./zingg.sh --phase link --conf config.json
+./scripts/zingg.sh --phase link --conf config.json
 ```
 
 ### **Run incremental**
@@ -120,7 +120,7 @@ Optional but recommended before `train` — lets you inspect training data quali
 Updates the identity graph with new and changed records without re-running the full match.
 
 ```bash
-./zingg.sh --phase runIncremental --conf config.json
+./scripts/zingg.sh --phase runIncremental --conf config.json
 ```
 
 {% hint style="info" icon="right-long" %}
