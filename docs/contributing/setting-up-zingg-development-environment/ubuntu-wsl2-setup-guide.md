@@ -183,7 +183,7 @@ Replace the `sparkVer` with the version of Spark you installed. For example, **-
 ### **Step 7: If you have any issue with 'SPARK\_LOCAL\_IP' (Ubuntu)**
 
 1. Install **net-tools** using **sudo apt-get install -y net-tools**
-2. Run `ifconfig` in the terminal, find the **IP address** and paste the same in **/opt/hosts** IP address of your Pc-Name
+2. Run `ifconfig` in the terminal, find the **IP address**, and add an entry for it in **`/etc/hosts`** mapping the IP to your PC name.
 
 ### **Step 8: Run Zingg To Find Training Data**
 
