@@ -48,7 +48,12 @@ def initSparkClient():
     global  _gateway
     _spark_ctxt = SparkContext.getOrCreate()
     _sqlContext = SQLContext(_spark_ctxt)
-    _spark = SparkSession.builder.getOrCreate()
+    # Large Zingg blocking plans can make Spark 3.5's adaptive-plan string
+    # rendering exhaust the PySpark driver heap during model execution.
+    _spark = (SparkSession.builder
+              .config("spark.sql.adaptive.enabled", "false")
+              .config("spark.sql.debug.maxToStringFields", "10")
+              .getOrCreate())
     _jvm = _spark_ctxt._jvm
     _gateway = _spark_ctxt._gateway
     return 1
@@ -201,7 +206,7 @@ def setupJVMBaseObjects():
     global LabelMatchType
     ColName = getJVM().zingg.common.client.util.ColName
     MatchType = getJVM().zingg.common.client.MatchTypes
-    ZinggOptions = getJVM().zingg.common.client.ZinggOptions
+    ZinggOptions = getJVM().zingg.common.client.options.ZinggOptions
     LabelMatchType = getJVM().zingg.common.core.util.LabelMatchType
 
 #The first thing to do is set the JVM
@@ -270,9 +275,9 @@ class Zingg:
         if DATABRICKS_CONNECT == "Y" or DATABRICKS_CONNECT == "y":
             options = self.client.getOptions()
             inpPhase = options.get(ClientOptions.PHASE).getValue()
-            if inpPhase == ZinggOptions.LABEL.getValue():
+            if inpPhase == ZinggOptions.LABEL.getName():
                 self.executeLabel()
-            elif inpPhase == ZinggOptions.UPDATE_LABEL.getValue():
+            elif inpPhase == ZinggOptions.UPDATE_LABEL.getName():
                 self.executeLabelUpdate()
             else:
                 self.client.execute()
@@ -723,6 +728,7 @@ class ClientOptions:
             args = argsSent.copy()
         if self.PHASE not in args:
             args.append(self.PHASE)
+            args.append("trainMatch")
         if self.LICENSE not in args:
             args.append(self.LICENSE)
             args.append("zinggLic.txt")

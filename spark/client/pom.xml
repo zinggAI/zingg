@@ -74,6 +74,9 @@
 				</executions>
 				<configuration>
 					<scalaVersion>${scala.version}</scalaVersion>
+					<args>
+						<arg>-usejavacp</arg>
+					</args>
 				</configuration>
 			</plugin>			
 			<plugin>

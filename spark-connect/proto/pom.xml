@@ -22,17 +22,19 @@
 
 	<profiles>
 		<profile>
-			<id>spark-3.4</id>
-			<activation>
-				<property>
-					<name>spark</name>
-					<value>3.4</value>
-				</property>
-			</activation>
-			<properties>
-				<!-- must match the protobuf-java version Spark 3.4.0's spark-connect_2.12 server pins -->
-				<protobuf.version>3.21.12</protobuf.version>
-			</properties>
+			<id>spark-4.0</id>
+			<activation><property><name>spark</name><value>4.0</value></property></activation>
+			<properties><protobuf.version>4.29.3</protobuf.version></properties>
+		</profile>
+		<profile>
+			<id>spark-4.1</id>
+			<activation><property><name>spark</name><value>4.1</value></property></activation>
+			<properties><protobuf.version>4.33.0</protobuf.version></properties>
+		</profile>
+		<profile>
+			<id>spark-4.2</id>
+			<activation><property><name>spark</name><value>4.2</value></property></activation>
+			<properties><protobuf.version>4.33.5</protobuf.version></properties>
 		</profile>
 		<profile>
 			<id>spark-3.5</id>
