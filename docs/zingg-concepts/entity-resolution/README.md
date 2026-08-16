@@ -12,7 +12,7 @@ It answers one question: Given fragmented, inconsistent data spread across sales
 marketing, support, and operations systems, whose records actually belong to the same\
 customer, supplier, patient, or product?
 
-This question is harder than it looks. The data does not tell you. The records do not share a common key. The same person appears as "Jon Smith" in your CRM, "Jonathan Smith" in your billing system, and "J. Smith" with a different address in your support platform. No field is wrong. No field is complete. And your downstream systems like analytics, compliance, and AI agents are making decisions on all three records as if they were three different people.
+This question is harder than it looks. The records do not share a common key. The same person appears as "Jon Smith" in your CRM, "Jonathan Smith" in your billing system, and "J. Smith" with a different address in your support platform. No field is wrong. No field is complete. And your downstream systems like decisioning, analytics, compliance, and AI agents are making decisions on all three records as if they were three different people.
 
 ### Why this problem exists
 
@@ -23,75 +23,13 @@ Four forces drive the fragmentation:
 * **Systems are built independently:** CRMs, billing platforms, ERP systems, and support tools each have their own customer or entity schema. A customer acquired through a marketing campaign enters the CRM. The same customer's invoice enters the billing system. Their support ticket enters a helpdesk. No system knows about the others. Each creates its own record.
 * **Data entry is inconsistent:** Name abbreviations, spelling variations, transposed date formats, address shorthand—these are not data quality failures. They are the natural output of humans entering data under time pressure across different interfaces. "IBM" and "International Business Machines" are the same company. "Dr. A. Sharma" and "Anita Sharma" may be the same person. No rule-based system can enumerate all the ways real data varies.
 * **Records change over time:** People move. Companies merge. Names change after marriage or acquisition. A customer record that was accurate two years ago now has a different address, a different email, and a different phone number—and it still needs to resolve to the same entity in your identity graph.
-* **Scale makes manual resolution impossible:** At a few thousand records, you can resolve entities manually or with simple rules. With one million records, naive comparison necessitates evaluating 500 billion record pairs before making a single match decision. At ten million records, the number is 50 trillion.\
-  No rules engine can scale to this. No team can review it manually. The problem requires a system that learns and one that reduces the comparison space before it starts.
+* **Scale makes manual resolution impossible:** At a few thousand records, you can resolve entities manually or with simple rules. With one million records, naive comparison necessitates evaluating 500 billion record pairs before making a single match decision. At ten million records, the number is 50 trillion.<br>
 
-### Why custom matching logic breaks down
-
-Rule-based entity resolution fails for three reasons:
-
-1. **Rules cannot enumerate variation**. The number of ways a name, address, or company identifier can vary is unbounded. For every rule you write, new variations appear in production data that the rule does not cover. Maintaining a ruleset for a live dataset is a permanent, open-ended engineering commitment.
-2. **Rules cannot score confidence**. A rule fires, or it does not. It cannot tell you that two records are probably the same entity or that a cluster has a weak link worth human review. Entity resolution at production scale requires a graded confidence signal; not a binary match/no-match.
-3. **Rules do not scale to the comparison space**. At one million records, the naive approach requires evaluating 500 billion record pairs. At ten million, it is 50 trillion. A rule engine applied to every pair is computationally impossible.
-
-Zingg's ML model solves all three:
-
-* It learns variation from your data - 30 to 50 labeled examples are enough to build a model that generalizes to patterns it has not seen before.
-* It produces a graded confidence score (`Z_MINSCORE` and `Z_MAXSCORE`) per cluster, so you can route high-confidence matches to automated processing and low-confidence matches to human review.
-* It uses a blocking model to cut down the comparison space from billions of pairs to a tiny fraction without losing recall, so the similarity model only checks candidate pairs that could plausibly match.
-
-### How Zingg solves it
-
-Zingg is an ML-powered entity resolution engine built to run where your data already lives directly on your warehouse or lakehouse, with no data movement and no rules to write or maintain.
-
-Three capabilities work together to handle the full problem:
-
-<table><thead><tr><th valign="top">Warehouse-native execution</th><th valign="top">Probabilistic + deterministic matching</th><th valign="top">Persistent identity graph</th></tr></thead><tbody><tr><td valign="top">Zingg runs inside Databricks, Microsoft<br>Fabric, Snowflake, GCP Dataproc, AWS Glue, and AWS EMR. Your data never<br>leaves your environment. No ETL pipelines. No external APIs. There is no separate infrastructure to operate. The same model that runs on 100,000 records scales to hundreds of millions using your existing Spark or Snowflake compute, without any architectural changes.</td><td valign="top"><p>Probabilistic matching is Zingg's default. The ML model learns from your labeled pairs; 30 to 50 examples are enough to build a model calibrated<br>to your specific data and scores every candidate pair on multiple field-level features. It handles<br>typos, abbreviations, missing values, and format variations automatically.</p><p>Deterministic matching (Enterprise) adds hard rules for trusted identifiers.<br>When two records share the same SSN, tax ID, or email, Zingg treats them<br>as the same entity without consulting the ML model. Both approaches run in a single flow.</p><p>→ <a href="deterministic-vs-probabilistic-matching.md">Deterministic vs Probabilistic<br>Matching</a></p></td><td valign="top"><p>Every resolved entity receives a <code>Zingg ID</code>, a globally unique, persistent GUID assigned in Enterprise that remains stable<br>across runs, incremental updates, and model changes. Community produces a <code>Z Cluster</code><br>that is reassigned each run.<br>Enterprise produces a <code>Zingg ID</code> you can store in downstream systems<br>with confidence.</p><p>The identity graph grows incrementally. New records are matched to existing clusters without rerunning on your full dataset.</p><p>→ <a href="../identity-graph.md">Identity Graph</a><br>→ <a href="../z-cluster-and-zingg-id.md">Z Cluster and Zingg ID</a></p></td></tr></tbody></table>
-
-This is the combination that makes enterprise-scale entity resolution computationally feasible and practically maintainable.
-
-When your data contains reliable unique identifiers, a national ID, an email, or a combination like first name plus date of birth Zingg Enterprise can apply deterministic rules on top of the probabilistic model. Pairs that satisfy a deterministic condition are resolved with a score of 1, without consulting the ML model. Pairs that do not satisfy any condition fall through to probabilistic matching as normal. Enterprise runs both in a single flow, so you do not have to choose between them.
-
-{% hint style="success" icon="right-long" %}
-**Read more**:
-
-* [Deterministic vs Probabilistic Matching](deterministic-vs-probabilistic-matching.md)
-* [How Zingg Learns](../how-zingg-learns/)
-* [Zingg Models](../how-zingg-learns/zingg-models/) (blocking + similarity)
-{% endhint %}
-
-### Deduplication, linking, and resolving
-
-These three operations are often confused. They are distinct in scope and complexity.
-
-**DEDUPLICATION - within one dataset**
-
-Deduplication identifies that two records within the same system represent the same entity. This is the most constrained version of the problem same schema, same\
-source, single dataset.
-
-Zingg's `match` phase does just that. You run it against one dataset. Every record that resolves to the same entity gets the same `Z Cluster` or `Zingg ID`.
-
-**LINKING - across two datasets**
-
-Linking identifies that a record in dataset A matches a record in dataset B, where each dataset is individually duplicate-free. Linking is required for reference data mastering, enrichment, and dataset joins when exact key matches do not exist.
-
-Zingg's link phase does this. Same trained model, two input datasets. The output shows which records from each dataset represent the same entity.
-
-**RESOLVING - across many systems at scale**
-
-Full entity resolution identifies the same entity across multiple systems, with no shared key, inconsistent formats, partial data, and records that change over time. This is the general problem that Zingg is built to solve.
-
-{% hint style="success" icon="right-long" %}
-**Read more**:
-
-* [Run the match phase](../../running-zingg/run-the-match-phase.md)
-* [Link across datasets](../../running-zingg/link-across-datasets.md)
-{% endhint %}
+No rules engine can scale to this. No team can review it manually. The problem requires a system that learns and one that reduces the comparison space before it starts.
 
 ### Where teams use entity resolution
 
-Entity resolution is not a customer data problem. It is an entity data problem. Any time a real-world object, a person, organisation, location, product, or asset appears under different\
-representations across systems, entity resolution is the mechanism that unifies it.
+Entity resolution is not a customer data problem. It is an entity data problem. Any time a real-world object, a person, organisation, location, product, or asset appears under different representations across systems, entity resolution is the mechanism that unifies it.
 
 <details>
 
