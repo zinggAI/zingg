@@ -148,7 +148,7 @@ Use `STANDARDISE_<basename>` to reference a mapping file named `<basename>.json`
 Run the Transform phase with the following command:
 
 ```bash
-scripts/zingg.sh --phase transform --conf examples/febrl/config.json --properties-file config/zingg.conf
+./scripts/zingg.sh --phase transform --conf examples/febrl/config.json --properties-file config/zingg.conf
 ```
 
 This will:

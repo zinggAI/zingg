@@ -7,7 +7,7 @@ description: Finds the records that match with each other.
 
 # Finding The Matches
 
-`./zingg.sh --phase match --conf config.json`
+`./scripts/zingg.sh --phase match --conf config.json`
 
 As can be seen in the image below, matching records are given the same **z\_cluster** id/Zingg ID in the case of Zingg Enterprise. Each record also gets a **z\_minScore** and **z\_maxScore** which shows the _least/greatest_ it matched with other records in the same cluster.
 

@@ -9,7 +9,7 @@ description: Providing user feedback on the training pairs
 
 The label phase opens an _interactive_ learner where the user can mark the pairs found by **findTrainingData** phase as matches or non-matches. The **findTrainingData** phase generates edge cases for labeling and the label phase helps the user mark them.
 
-`./zingg.sh --phase label --conf config.json <optional --showConcise=true|false>`
+`./scripts/zingg.sh --phase label --conf config.json <optional --showConcise=true|false>`
 
 Proceed running **findTrainingData** followed by label phases till you have at least 30-40 positives, and when you see the predictions by Zingg converging with the output you want. At each stage, the user will get different variations of attributes across the records. Zingg performs pretty well with even a small number of training, as the samples to be labeled are chosen by the algorithm itself.
 
