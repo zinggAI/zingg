@@ -1,10 +1,14 @@
----
-description: >-
-  How to inspect the blocking model, understand its coverage, and fix missed
-  matches caused by blocking.
----
-
 # Blocking Model
+
+When your data contains reliable unique identifiers, a national ID, an email, or a combination like first name plus date of birth
+
+
+
+TODO - move to verify blocking
+
+How to inspect the blocking model, understand its coverage, and fix missed matches caused by blocking.
+
+
 
 The blocking model is the first filter in every Zingg run. It decides which record pairs the similarity model ever sees. If it places two matching records in different buckets, those records will never be compared, and the match will be missed regardless of how well everything else is configured.
 
@@ -75,12 +79,12 @@ influence matching.
 1. Add more labeled training pairs of the type being missed. The blocking model learns from the same training data as the similarity model. Focus on pairs that represent the variation patterns missing from your current training set.
 2. Review your field match types. Fields marked `DONT_US`E are excluded from blocking as well as similarity. If a field has a strong identity signal - a consistent identifier that appears across matching records - consider changing it from `DONT_USE` to `FUZZY`.
 3. Check whether missed pairs share a common characteristic. If all missed pairs have empty values in a key field, empty fields cannot contribute to blocking. Either remove that field from your blocking config or improve data completeness upstream.
-4. If standard blocking consistently misses a specific pattern in your data, consider custom blocking functions.&#x20;
+4. If standard blocking consistently misses a specific pattern in your data, consider custom blocking functions.
 
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
 * [Label Training Pairs](../../../running-zingg/label-training-pairs.md) - how to add more training data
 * [Configure Zingg](../../../running-zingg/configure-zingg.md) - changing field match types
-* [Custom Blocking and Similarity](../../../tuning/custom-blocking-and-similarity.md) Functions&#x20;
+* [Custom Blocking and Similarity](../../../tuning/custom-blocking-and-similarity.md) Functions
 {% endhint %}
