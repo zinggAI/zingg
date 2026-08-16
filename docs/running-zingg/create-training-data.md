@@ -101,33 +101,57 @@ Candidate pairs are written to `zinggDir/modelId`. Run the label phase next to r
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-### Set label data sample size
-
-#### JSON
-
-```json
-	"labelDataSampleSize" : 0.5,
-```
 
 ### Run findTrainingData
 
-#### CLI
+Zingg on Snowflake can be run either from a local terminal via the CLI, or natively inside Snowflake as a job service.
+
+#### CLI (local terminal)
 
 ```bash
 ./scripts/zingg.sh --phase findTrainingData --conf config.json \
 --properties-file <location to snowflake.properties>
 ```
 
-<!--
-#### JSON
-
-```json
-
-``` -->
+The `snowflake.properties` file supplies the connection details Zingg needs to reach your Snowflake account and run against your warehouse from outside Snowflake.
 
 {% hint style="info" icon="right-long" %}
 Candidate pairs are written to `zinggDir/modelId`. Run the label phase next to review and label these pairs.
 {% endhint %}
+
+#### Snowflake (job service)
+
+Run the phase as an asynchronous job service inside your Snowflake compute pool.
+
+```sql
+EXECUTE JOB SERVICE
+IN COMPUTE POOL CONTAINER_ZINGG_POOL
+NAME = ZINGG_FTD_ASYNC_JOB_SERVICE
+ASYNC = true
+EXTERNAL_ACCESS_INTEGRATIONS = (ALLOW_ALL_EAI)
+FROM @specs SPECIFICATION_TEMPLATE_FILE = '<zingg-job-spec-file>'
+USING (PHASE => 'findTrainingData', CONFIG => '<config-name>');
+```
+
+The specification file passed via `SPECIFICATION_TEMPLATE_FILE` defines the container and job service configuration Zingg needs to run inside Snowpark Container Services. It is maintained by your administrator and referenced from your `@specs` stage.
+
+`<config-name>` is the name of your Zingg configuration json file.
+
+**Monitor the job**
+
+Retrieve the service logs to monitor execution and debug any failures.
+```sql
+SELECT SYSTEM$GET_SERVICE_LOGS('ZINGG_FTD_ASYNC_JOB_SERVICE', 0, 'zingg-async-job-container');
+```
+`zingg-async-job-container` refers to the container name defined in the job specification.
+
+**Stop the compute pool**
+
+Once the job completes, stop the compute pool to release resources.
+
+```sql
+ALTER COMPUTE POOL CONTAINER_ZINGG_POOL STOP ALL;
+```
 
 {% endtab %}
 {% endtabs %}
