@@ -17,8 +17,6 @@ Zingg's identity graph is this structure. What differs between Community and Ent
 * **Enterprise:** `Zingg ID`, stable, globally unique, persistent across incremental updates.
 {% endhint %}
 
-<figure><img src="../.gitbook/assets/identity-graph.png" alt=""><figcaption></figcaption></figure>
-
 ### Community - a complete identity graph, rebuilt fresh every run
 
 Every Zingg Community run produces a complete, queryable identity graph. Every record in your dataset is assigned a `Z Cluster`. All records sharing the same `Z Cluster` represent the same real-world entity.
@@ -47,7 +45,6 @@ Enterprise gives you the same graph with stable `Zingg IDs` , so the graph can g
 
 * [Z Cluster vs Zingg ID](z-cluster-and-zingg-id.md)
 * [Zingg Models](how-zingg-learns/zingg-models/)
-* [Run incremental matching](../running-zingg/run-incremental-matching.md) &#x20;
+* [Run incremental matching](../running-zingg/run-incremental-matching.md)
 * [Community Vs Enterprise](community-vs-enterprise/)
 {% endhint %}
-
