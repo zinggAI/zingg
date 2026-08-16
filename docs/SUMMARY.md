@@ -11,6 +11,7 @@
 * [Community vs Enterprise](zingg-concepts/community-vs-enterprise/README.md)
   * [Migrating from Community to Enterprise (Content to be Added)](zingg-concepts/community-vs-enterprise/migrating-from-community-to-enterprise-content-to-be-added.md)
 * [How Zingg Learns](zingg-concepts/how-zingg-learns/README.md)
+  * [Zingg Active Learning](zingg-concepts/how-zingg-learns/zingg-active-learning.md)
   * [Zingg Models](zingg-concepts/how-zingg-learns/zingg-models/README.md)
     * [Blocking Model](zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
     * [Similarity Model](zingg-concepts/how-zingg-learns/zingg-models/similarity-model.md)
