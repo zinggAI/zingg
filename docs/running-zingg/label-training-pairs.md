@@ -54,7 +54,7 @@ zingg.initAndExecute()
 ```
 
 {% hint style="success" icon="right-long" %}
-The `showConcise` flag only shows fields which are `NOT DONT_USE`. This makes the labelling session cleaner when you have many fields.
+`--showConcise=true` is optional. It only shows fields which are `NOT DONT_USE`, making the labelling session cleaner when you have many fields.
 {% endhint %}
 
 ### `updateLabel` section
@@ -82,7 +82,7 @@ This opens the console labeler, which accepts the cluster ID of the pairs you wa
 {% endtab %}
 
 {% tab title="Enterprise" %}
-The `showConcise` flag only shows fields which are `NOT DONT_USE`. This makes the labelling session cleaner when you have many fields.
+`--showConcise=true` is optional. It only shows fields which are `NOT DONT_USE`, making the labelling session cleaner when you have many fields.
 
 #### Python
 
@@ -99,18 +99,50 @@ zingg.initAndExecute()
 Enterprise provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons. Download the diagnostics view to share match quality with stakeholders before committing to training.
 {% endhint %}
 
-_**CHECK WITH SONAL - Please confirm the exact Python code for the interactive label widget and saveMarkedRecords() call so this tab can be completed.**_
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-The `showConcise` flag only shows fields which are `NOT DONT_USE`. This makes the labelling session cleaner when you have many fields.
+`--showConcise=true` is optional. It only shows fields which are `NOT DONT_USE`, making the labelling session cleaner when you have many fields.
 
 ### Run label
 
-#### CLI
+Zingg on Snowflake can be run either from a local terminal via the CLI, or natively inside Snowflake using an interactive labeling service.
+
+#### CLI (local terminal)
 
 ```bash
-./scripts/zingg.sh --phase label --conf config.json --showConcise=true \ --properties-file <location to snowflake.properties>
+./scripts/zingg.sh --phase label --conf config.json --showConcise=true \
+--properties-file <location to snowflake.properties>
+```
+
+#### Snowflake (interactive service)
+
+The `label` phase is interactive, so instead of an async job, it runs as a standing service you connect to directly.
+
+```sql
+CREATE SERVICE CONTAINER_ZINGG_DB.PUBLIC.ZINGG_CLI_SERVICE
+IN COMPUTE POOL CONTAINER_ZINGG_POOL
+FROM @specs
+SPECIFICATION_FILE = '<zingg-cli-spec-file>'
+EXTERNAL_ACCESS_INTEGRATIONS = (ALLOW_ALL_EAI);
+```
+
+`<zingg-cli-spec-file>` is the specification file that defines the container and service configuration used to run the Zingg CLI interactively inside Snowpark Container Services. It is maintained by your administrator and referenced from your `@specs` stage.
+
+Once the service is running, retrieve its endpoint to connect to the labeling session.
+
+```sql
+SHOW ENDPOINTS IN SERVICE ZINGG_CLI_SERVICE;
+```
+
+Use the returned endpoint to open the interactive labeling terminal and label pairs as you would via CLI.
+
+**Stop the compute pool**
+
+Once you're done labeling, stop the compute pool to release resources.
+
+```sql
+ALTER COMPUTE POOL CONTAINER_ZINGG_POOL STOP ALL;
 ```
 
 {% hint style="info" icon="right-long" %}

@@ -116,7 +116,7 @@ Zingg on Snowflake can be run either from a local terminal via the CLI, or nativ
 The `snowflake.properties` file supplies the connection details Zingg needs to reach your Snowflake account and run against your warehouse from outside Snowflake.
 
 {% hint style="info" icon="right-long" %}
-Candidate pairs are written to `zinggDir/modelId`. Run the label phase next to review and label these pairs.
+Candidate pairs are written to `zinggDir/modelId`.
 {% endhint %}
 
 #### Snowflake (job service)
