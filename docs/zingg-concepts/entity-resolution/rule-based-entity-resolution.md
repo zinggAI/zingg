@@ -12,6 +12,6 @@ Rule-based entity resolution fails for three reasons:
 
 Zingg's ML model solves all three:
 
-* It learns variation from your data - roughly 50 labeled examples are enough to build a model that generalizes to patterns it has not seen before.
+* It learns variation from your data - roughly 30 - 50 labeled examples are enough to build a model that generalizes to patterns it has not seen before.
 * It produces a graded confidence score (`Z_MINSCORE` and `Z_MAXSCORE`) per cluster, so you can route high-confidence matches to automated processing and low-confidence matches to human review.
 * It learns a blocking model to cut down the comparison space from billions of pairs to a tiny fraction without losing recall, so the similarity model only checks candidate pairs that could plausibly match.

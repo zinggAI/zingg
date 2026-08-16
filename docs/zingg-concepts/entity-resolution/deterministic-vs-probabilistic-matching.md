@@ -1,7 +1,7 @@
 ---
 description: >-
-  How Zingg's two matching approaches work, when to use each, and how to
-  configure deterministic rules.
+  How Zingg's two matching approaches work individually and colelctively, when
+  to use each
 tags:
   - ent
 ---
@@ -14,17 +14,25 @@ Zingg supports two matching approaches: probabilistic and deterministic. Both ar
 
 Probabilistic matching is Zingg's default and is available in all editions. The model learns field-level similarity weights from your labeled training pairs and assigns a match score to every candidate pair. Pairs above the automatically optimized threshold are grouped into a cluster.
 
-This approach handles the full range of real-world data quality problems: typos, abbreviations, missing fields, name variations, and format differences across systems."
+This approach handles the full range of real-world data quality problems: typos, abbreviations, missing fields, name variations, and format differences across systems.
 
 _You do not write rules. You label examples. Zingg learns the rest._
 
 ### Deterministic matching
 
-Deterministic matching lets you define hard rules for cases where certain field combinations should always produce a match, regardless of the probabilistic score. If two records share the same combination of identifiers you specify, Zingg treats that pair as a match with a score of 1, bypassing the ML model entirely for that pair.
+Deterministic matching lets you define hard rules for cases where certain field combinations should always produce a match, regardless of the probabilistic score. When your data contains reliable unique identifiers, a national ID, an email, or a combination like first name plus date of birth,&#x20;
 
-Zingg Enterprise applies deterministic rules first. Pairs resolved deterministically are not re-evaluated probabilistically. Pairs that do not satisfy any deterministic condition fall through to the probabilistic model. Both paths produce output in the same format.
+If two records share the same combination of identifiers you specify, Zingg treats that pair as a match with a score of 1, bypassing the ML model entirely for that pair.
 
-### Configuring deterministic matching
+### How Zingg matches prbabilistically and deterministically
+
+Zingg Enterprise applies deterministic rules first. Pairs resolved deterministically are not re-evaluated probabilistically. Pairs that do not satisfy any deterministic condition fall through to the probabilistic model. Both paths produce output in the same format.\
+\
+Zingg Enterprise can apply deterministic rules on top of the probabilistic model. Pairs that satisfy a deterministic condition are resolved with a score of 1, without consulting the ML model. Pairs that do not satisfy any condition fall through to probabilistic matching as normal. All matching pairs get rolled into clusters.&#x20;
+
+Probabilistic and deterministic matching in Zingg Enterprise runs both in a single flow, so you do not have to choose between them.
+
+### Configuring deterministic matching - TODO shift to config
 
 {% hint style="info" icon="right-long" %}
 Deterministic matching is Enterprise only. Available in Enterprise Lite and above
