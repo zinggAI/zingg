@@ -150,7 +150,7 @@ args.setDeterministicMatchingCondition(dm1, dm2, dm3)
 ```
 
 {% hint style="success" icon="right-long" %}
-**Read more**: For full deterministic matching concepts and configuration → [Deterministic vs Probabilistic Matching](../zingg-concepts/entity-resolution/deterministic-vs-probabilistic-matching.md)
+**Read more**: For full deterministic matching concepts and configuration → [Deterministic vs Probabilistic Matching](../zingg-concepts/zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
 {% endhint %}
 
 ### Output statistics

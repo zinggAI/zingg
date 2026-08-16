@@ -35,7 +35,7 @@ The step from Community to Enterprise Lite is a step from evaluation to producti
 Enterprise Lite also gives you:
 
 * [**Incremental matching**](../../running-zingg/run-incremental-matching.md) **-** update the identity graph as new records arrive, without re-running on your entire dataset
-* [**Deterministic matching**](../entity-resolution/deterministic-vs-probabilistic-matching.md) **-** combine hard rules for known trusted identifiers (SSN, tax ID, email) with probabilistic ML in a single flow
+* [**Deterministic matching**](../zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md) **-** combine hard rules for known trusted identifiers (SSN, tax ID, email) with probabilistic ML in a single flow
 * [**Pass Through**](../pass-through.md) **-** records that are incomplete or unsuitable for matching still appear in your output and receive a Zingg ID for governance and compliance
 * [**Production-grade notebooks**](../../platform-guides/platform-guide-for-azure-databricks.md) **-** a 7-notebook sequence, one per workflow phase, built for repeatable production runs
 

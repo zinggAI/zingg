@@ -27,7 +27,7 @@ These fields are reliable unique identifiers. An exact match on SSN means the tw
 
 Always use `EXACT` on trusted identifiers. In Zingg Enterprise, also add them as deterministic matching conditions, an exact match on a trusted identifier produces a guaranteed match with score 1 before the probabilistic model runs.
 
-→ [Deterministic vs Probabilistic Matching](../../entity-resolution/deterministic-vs-probabilistic-matching.md)
+→ [Deterministic vs Probabilistic Matching](../../zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
 
 </details>
 
@@ -102,7 +102,7 @@ dob = EFieldDefinition("dob", "string", MatchType.EXACT)
 
 {% tab title="JSON" %}
 {% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). 
+The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise).
 {% endhint %}
 
 ```json
@@ -123,7 +123,6 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
   ]
 }
 ```
-
 {% endtab %}
 {% endtabs %}
 
@@ -132,7 +131,7 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 
 * `FUZZY` - use when variation is expected
 * `PINCODE` - EXACT-like for postal codes with format normalisation built in
-* `DONT_USE` - exclude from matching entirely 
+* `DONT_USE` - exclude from matching entirely
 
 **Read more**: [Match Types](./)
 {% endhint %}

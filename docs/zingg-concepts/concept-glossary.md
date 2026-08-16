@@ -47,11 +47,11 @@ typically enough to train a high-accuracy model on datasets of 100,000+ records.
 
 Zingg's default matching mode. The model learns similarity weights for each field from your labeled pairs and assigns a match score to every candidate pair. Records above the threshold are grouped into a cluster. The threshold is automatically chosen to balance accuracy and recall. Zingg optimizes it so you do not need to tune a cut-off manually.
 
-Probabilistic matching handles variations in names, addresses, and other messy real-world data that exact rules cannot account for. \
-&#xNAN;_&#x41;vailable in all editions_
+Probabilistic matching handles variations in names, addresses, and other messy real-world data that exact rules cannot account for.\
+\&#xNAN;_Available in all editions_
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [Deterministic vs probabilistic matching](entity-resolution/deterministic-vs-probabilistic-matching.md)
+**Read more:** [Deterministic vs probabilistic matching](zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
 {% endhint %}
 
 </details>
@@ -62,11 +62,11 @@ Probabilistic matching handles variations in names, addresses, and other messy r
 
 User-defined hard rules that force a match regardless of the probabilistic score. If the fields you specify all match exactly; for example, tax ID, date of birth, and registered address Zingg treats those records as the same entity without consulting the ML model.
 
-Both approaches run in a single flow; deterministic rules are evaluated first, and probabilistic matching handles everything else. \
-&#xNAN;_**Enterprise only**_
+Both approaches run in a single flow; deterministic rules are evaluated first, and probabilistic matching handles everything else.\
+\&#xNAN;_**Enterprise only**_
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [Deterministic vs probabilistic matching](entity-resolution/deterministic-vs-probabilistic-matching.md)
+**Read more:** [Deterministic vs probabilistic matching](zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
 {% endhint %}
 
 </details>
@@ -287,7 +287,7 @@ Reports what percentage of your known matching pairs are being blocked together 
 
 <details>
 
-<summary><strong><code>stopwords</code> recommend</strong> </summary>
+<summary><strong><code>stopwords</code> recommend</strong></summary>
 
 Analyses a specified column and returns a list of high-frequency words that should be treated as stopwords. Optional phase used before training when address or company name fields contain repeated noise words like 'St', 'Ave', 'Inc', 'Ltd'.
 
