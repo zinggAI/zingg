@@ -86,5 +86,6 @@ influence matching.
 
 * [Label Training Pairs](../../../running-zingg/label-training-pairs.md) - how to add more training data
 * [Configure Zingg](../../../running-zingg/configure-zingg.md) - changing field match types
+* [Blocking Strategies: DEFAULT vs WIDER](../../../tuning/blocking-strategy.md) - reorder candidate fields in the blocking tree (Enterprise only)
 * [Custom Blocking and Similarity](../../../tuning/custom-blocking-and-similarity.md) Functions
 {% endhint %}

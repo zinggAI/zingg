@@ -269,7 +269,7 @@ args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
 ```
 
-Set the blocking strategy directly after `setLabelDataSampleSize`. If not set, the model follows `DEFAULT`.
+Set the blocking strategy if needed. If not set, the model follows `DEFAULT`. See [Blocking Strategies: DEFAULT vs WIDER](../tuning/blocking-strategy.md) for how each strategy orders fields.
 
 #### Python
 

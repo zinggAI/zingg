@@ -112,7 +112,6 @@ USING (PHASE => 'match', CONFIG => '<config-name>');
 Retrieve the service logs to monitor execution and debug any failures.
 
 ```sql
-SHOW SERVICE CONTAINERS IN SERVICE ZINGG_MATCH_ASYNC_JOB_SERVICE;
 
 SELECT SYSTEM$GET_SERVICE_LOGS('ZINGG_MATCH_ASYNC_JOB_SERVICE', 0, 'zingg-async-job-container');
 ```

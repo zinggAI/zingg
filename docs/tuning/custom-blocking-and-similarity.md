@@ -66,3 +66,7 @@ _**LINK TO BE ADDED -  GitHub Zingg repository custom similarity example (add li
 
 Custom similarity and blocking function implementation requires Java/Scala code changes to the Zingg JAR. These are advanced customizations. For most use cases, adjusting match types, stopwords, and training data is sufficient before reaching this step.
 
+{% hint style="success" icon="right-long" %}
+**Read more**: Before writing custom functions, try switching the field ordering strategy at each blocking-tree node → [Blocking Strategies: DEFAULT vs WIDER](blocking-strategy.md) (Enterprise only)
+{% endhint %}
+

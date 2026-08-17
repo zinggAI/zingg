@@ -91,6 +91,7 @@ If `verifyBlocking` shows that many known matching pairs are not being blocked t
 
 1. **Add more labelled training pairs** of the type being missed. The blocking model learns from the same training data as the similarity model.
 2. **Check your field match types.** Fields set to `DONT_USE` are excluded from blocking. If a key identity field is set to `DONT_USE`, matching pairs that differ on other fields may end up in different blocks.
+3. **Try the `WIDER` blocking strategy** (Enterprise only) if large blocks suggest the tree is over-relying on one or two fields → [Blocking Strategies: DEFAULT vs WIDER](../tuning/blocking-strategy.md)
 
 {% hint style="success" icon="right-long" %}
 **Consider custom blocking functions** for specialised data patterns → [Custom Blocking and Similarity](../tuning/custom-blocking-and-similarity.md)
