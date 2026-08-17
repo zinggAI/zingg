@@ -20,15 +20,13 @@ _You do not write rules. You label examples. Zingg learns the rest._
 
 ### Deterministic matching
 
-Deterministic matching lets you define hard rules for cases where certain field combinations should always produce a match, regardless of the probabilistic score. When your data contains reliable unique identifiers, a national ID, an email, or a combination like first name plus date of birth,&#x20;
+Deterministic matching lets you define hard rules for cases where certain field combinations should always produce a match, regardless of the probabilistic score. When your data contains reliable unique identifiers, a national ID, an email, or a combination like first name, email plus date of birth, determinstic matching can bring them together. &#x20;
 
-If two records share the same combination of identifiers you specify, Zingg treats that pair as a match with a score of 1, bypassing the ML model entirely for that pair.
+
 
 ### How Zingg matches prbabilistically and deterministically
 
-Zingg Enterprise applies deterministic rules first. Pairs resolved deterministically are not re-evaluated probabilistically. Pairs that do not satisfy any deterministic condition fall through to the probabilistic model. Both paths produce output in the same format.\
-\
-Zingg Enterprise can apply deterministic rules on top of the probabilistic model. Pairs that satisfy a deterministic condition are resolved with a score of 1, without consulting the ML model. Pairs that do not satisfy any condition fall through to probabilistic matching as normal. All matching pairs get rolled into clusters.&#x20;
+Zingg Enterprise applies deterministic rules first. If two records share the same combination of identifiers you specify, Zingg treats that pair as a match with a score of 1, bypassing the ML model entirely for that pair. Pairs resolved deterministically are not re-evaluated probabilistically. Pairs that do not satisfy any deterministic condition fall through to the probabilistic model. All matching pairs get rolled into clusters.&#x20;
 
 Probabilistic and deterministic matching in Zingg Enterprise runs both in a single flow, so you do not have to choose between them.
 
