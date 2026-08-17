@@ -53,13 +53,6 @@ zingg.initAndExecute()
 ```bash
 ./scripts/zingg.sh --phase train --conf config.json
 ```
-
-Enterprise adds blocking model configuration via `args.setBlockingModel()`. Set this in Configure Zingg before running `train`.
-
-Available options:
-
-* `DEFAULT` - standard blocking strategy, suitable for most datasets
-* `WIDER` - casts a wider blocking net; use if known matching pairs are being missed
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
@@ -67,20 +60,50 @@ Available options:
 Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark cluster.
 {% endhint %}
 
+### Run train
 
-### CLI
+Zingg on Snowflake can be run either from a local terminal via the CLI, or natively inside Snowflake as a job service.
+
+#### CLI (local terminal)
 
 ```bash
 ./scripts/zingg.sh --phase train --conf config.json \
 --properties-file <location to snowflake.properties>
 ```
 
-Enterprise adds blocking model configuration via `"modelId": "FEBRL120K"`. Set this in Configure Zingg before running `train`.
+#### Snowflake (job service)
 
-Available options:
+Run the phase as an asynchronous job service inside your Snowflake compute pool.
 
-* `DEFAULT` - standard blocking strategy, suitable for most datasets
-* `WIDER` - casts a wider blocking net; use if known matching pairs are being missed
+```sql
+EXECUTE JOB SERVICE
+IN COMPUTE POOL CONTAINER_ZINGG_POOL
+NAME = ZINGG_TRAIN_ASYNC_JOB_SERVICE
+ASYNC = true
+EXTERNAL_ACCESS_INTEGRATIONS = (ALLOW_ALL_EAI)
+FROM @specs SPECIFICATION_TEMPLATE_FILE = '<zingg-job-spec-file>'
+USING (PHASE => 'train', CONFIG => '<config-name>');
+```
+
+`<zingg-job-spec-file>` defines the container and job service configuration Zingg needs to run inside Snowpark Container Services. It is maintained by your administrator and referenced from your `@specs` stage.
+
+`<config-name>` is the name of your Zingg configuration json file.
+
+**Check the job logs to monitor progress or troubleshoot errors.**
+
+```sql
+SELECT SYSTEM$GET_SERVICE_LOGS('ZINGG_TRAIN_ASYNC_JOB_SERVICE', 0, 'zingg-async-job-container');
+```
+
+`zingg-async-job-container` refers to the container name defined in the job specification.
+
+**Stop the compute pool**
+
+Once the job completes, stop the compute pool to release resources.
+
+```sql
+ALTER COMPUTE POOL CONTAINER_ZINGG_POOL STOP ALL;
+```
 
 {% endtab %}
 {% endtabs %}
