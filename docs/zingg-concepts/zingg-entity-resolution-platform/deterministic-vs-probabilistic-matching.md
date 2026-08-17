@@ -1,6 +1,6 @@
 ---
 description: >-
-  How Zingg's two matching approaches work individually and colelctively, when
+  How Zingg's two matching approaches work individually and collectively, when
   to use each
 tags:
   - ent
