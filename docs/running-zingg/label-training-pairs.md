@@ -16,7 +16,7 @@ If you already have labeled data from an external source, you can supply it dire
 {% step %}
 ### Step 1: Label
 
-Review each pair presented. Enter your decision: Match (1), No Match (2), or Can't Say (0). You will see different attribute variations at each stage.
+Review each pair presented. Enter your decision: Match (1), No Match (2), or Can't Say (0).
 {% endstep %}
 
 {% step %}
@@ -28,13 +28,13 @@ Your labels are saved automatically to `zinggDir/modelId` after each session.
 {% step %}
 ### Step 3: Iterate
 
+if the number of matched and unmatched pairs are still not sufficient, then iterate.
 Run `findTrainingData` again to obtain a fresh set of candidate pairs. Label those. Repeat until Zingg's predictions align with your expectations.
 {% endstep %}
 {% endstepper %}
 
 {% tabs %}
 {% tab title="Community" %}
-In Community, pairs are presented serially in the terminal. Review each pair and enter your decision.
 
 ### **Python**
 
@@ -57,28 +57,9 @@ zingg.initAndExecute()
 `--showConcise=true` is optional. It only shows fields which are `NOT DONT_USE`, making the labelling session cleaner when you have many fields.
 {% endhint %}
 
-### `updateLabel` section
-
-As your understanding of your data evolves, you may need to revisit and correct previously marked pairs. Generate model documentation first (see \[Generate Model Documentation]), then run `updateLabel`:
-
-#### Python
-
-```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "updateLabel"
-])
-zingg = Zingg(args, options)
-zingg.initAndExecute()
-```
-
-#### CLI
-
-```bash
-./scripts/zingg.sh --phase updateLabel --conf <location to conf.json>
-```
-
-This opens the console labeler, which accepts the cluster ID of the pairs you want to update. Note: Keep a backup of your model folder before running `updateLabel`.
+{% hint style="info" icon="right-long" %}
+Need to correct a pair you already labeled? See [Update Label](update-label.md).
+{% endhint %}
 {% endtab %}
 
 {% tab title="Enterprise" %}

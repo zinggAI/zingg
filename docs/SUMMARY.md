@@ -49,6 +49,7 @@
 * [Label Training Pairs](running-zingg/label-training-pairs.md)
 * [Verify Blocking](running-zingg/verify-blocking.md)
 * [Generate Model Documentation](running-zingg/generate-model-documentation.md)
+* [Update Label](running-zingg/update-label.md)
 * [Build and Save the Model](running-zingg/build-and-save-the-model.md)
 * [Run the match phase](running-zingg/run-the-match-phase.md)
 * [Link across Datasets](running-zingg/link-across-datasets.md)
