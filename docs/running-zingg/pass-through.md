@@ -57,7 +57,7 @@ Occasionally a specific attribute value should prevent a record from influencing
 
 ### How to configure Pass Through
 
-`Pass Through` is not a separate phase; it is a filter expression you set on your `args` object in [Configure Zingg](../running-zingg/configure-zingg.md), before running any phase. Records matching the expression are excluded from matching, linking, and incremental runs automatically.
+`Pass Through` is not a separate phase; it is a filter expression you set on your `args` object in [Configure Zingg](configure-zingg.md), before running any phase. Records matching the expression are excluded from matching, linking, and incremental runs automatically.
 
 {% tabs %}
 {% tab title="Enterprise" %}
@@ -99,6 +99,6 @@ _**CHECK WITH SONAL - Enterprise Snowflake content for this topic to be provivde
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* Pass Through concept in the glossary - [Concepts glossary](concept-glossary.md)
-* Configure Zingg where Pass Through is set up - [Configure Zingg](../running-zingg/configure-zingg.md)
+* Pass Through concept in the glossary - [Concepts glossary](../zingg-concepts/concept-glossary.md)
+* Configure Zingg where Pass Through is set up - [Configure Zingg](configure-zingg.md)
 {% endhint %}

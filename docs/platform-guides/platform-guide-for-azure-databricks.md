@@ -502,7 +502,7 @@ args.setPassthroughExpr("fname = 'matilda'")
 **Read more**:
 
 * For deterministic matching concepts → [Configure Zingg](../running-zingg/configure-zingg.md)
-* For pass-through → [Pass Through](../zingg-concepts/pass-through.md)
+* For pass-through → [Pass Through](../running-zingg/pass-through.md)
 {% endhint %}
 
 ### Notebook 02: Remove stopwords (Optional)

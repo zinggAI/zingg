@@ -319,7 +319,7 @@ An Enterprise feature for records that are partially populated, outdated, or not
 _Common uses_: Records flagged as deceased, bot-generated accounts identifiable by a synthetic email pattern, or corrupted records that must be traceable but should not influence cluster formation.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [Pass Through](pass-through.md)
+**Read more:** [Pass Through](../running-zingg/pass-through.md)
 {% endhint %}
 
 </details>
