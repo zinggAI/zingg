@@ -9,8 +9,6 @@
   * [The problems Zingg is built to solve and why they are harder than it looks](zingg-concepts/zingg-entity-resolution-platform/the-problems-zingg-is-built-to-solve-and-why-they-are-harder-than-it-looks.md)
   * [Deterministic vs Probabilistic Matching](zingg-concepts/zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
   * [Deduplication, linking and resolving](zingg-concepts/zingg-entity-resolution-platform/deduplication-linking-and-resolving.md)
-* [Community vs Enterprise](zingg-concepts/community-vs-enterprise/README.md)
-  * [Migrating from Community to Enterprise (Content to be Added)](zingg-concepts/community-vs-enterprise/migrating-from-community-to-enterprise-content-to-be-added.md)
 * [How Zingg Learns](zingg-concepts/how-zingg-learns/README.md)
   * [Zingg Active Learning](zingg-concepts/how-zingg-learns/zingg-active-learning.md)
   * [Zingg Models](zingg-concepts/how-zingg-learns/zingg-models/README.md)
@@ -36,6 +34,8 @@
 * [Identity Graph](zingg-concepts/identity-graph.md)
 * [Z Cluster and Zingg ID](zingg-concepts/z-cluster-and-zingg-id.md)
 * [Pass Through](zingg-concepts/pass-through.md)
+* [Community vs Enterprise](zingg-concepts/community-vs-enterprise/README.md)
+  * [Migrating from Community to Enterprise (Content to be Added)](zingg-concepts/community-vs-enterprise/migrating-from-community-to-enterprise-content-to-be-added.md)
 * [Concept Glossary](zingg-concepts/concept-glossary.md)
 
 ## Running Zingg
