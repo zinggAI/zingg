@@ -175,7 +175,7 @@ Zingg's underlying data structure representing resolved entities and the relatio
 * In Enterprise, it is persistent and updated incrementally: new and changed records are incorporated without a full re-run, and Zingg IDs serve as stable node identifiers within it.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [Identity graph](identity-graph.md) | [Run incremental matching](../running-zingg/run-incremental-matching.md)
+**Read more:** [Identity graph](identity-graph/) | [Run incremental matching](../running-zingg/run-incremental-matching.md)
 {% endhint %}
 
 </details>

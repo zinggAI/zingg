@@ -414,7 +414,7 @@ displayHTML(open(DOCS_DIR + "model.html", 'r').read())
 displayHTML(open(DOCS_DIR + "data.html", 'r').read())
 ```
 
-_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\* \*\*\*\*HTML output rendered inside a Fabric notebook showing labeled pair examples in a table. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
+_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*HTML output rendered inside a Fabric notebook showing labeled pair examples in a table. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
 
 ### Notebook 04: Train and match
 

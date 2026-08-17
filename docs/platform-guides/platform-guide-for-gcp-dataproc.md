@@ -411,7 +411,7 @@ with open(DOCS_DIR + "data.html", 'r') as f:
     display(HTML(f.read()))
 ```
 
-_**IMAGE TO BE ADDED—****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\* \*\*\*\*HTML output rendered inside JupyterLab on Dataproc showing labeled pair examples. Source: not in the GCP docx. Tanwi to check with team for screenshot from a live notebook run.**_
+_**IMAGE TO BE ADDED—****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*HTML output rendered inside JupyterLab on Dataproc showing labeled pair examples. Source: not in the GCP docx. Tanwi to check with team for screenshot from a live notebook run.**_
 
 {% hint style="success" icon="right-long" %}
 `generateDocs` is optional. Skip it if you have 30–40 matches and 30–40 non-matches and are confident in your labeling quality.

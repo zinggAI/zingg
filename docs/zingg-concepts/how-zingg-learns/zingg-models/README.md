@@ -14,38 +14,13 @@ you expect.
 
 ###
 
-### The similarity model - solving the accuracy problem
 
-The similarity model evaluates each candidate pair that the blocking model passes through and produces a similarity score: a number between 0 and 1 reflecting how likely it is that the two records represent the same real-world entity.
 
-It is a classifier, not a rules engine. For each pair, Zingg computes multiple features per field; character-level differences, string lengths, common transpositions, and prefix and suffix overlaps, and combines them into a single prediction. The threshold between match and no-match is automatically optimized. You do not set it manually.
 
-The similarity model learns from your labeled pairs. Match labels show it what a true match looks like in your specific data. Non-match labels show it, what different entities look like\
-even when their field values are similar.
 
-This is why label quality matters more than label quantity. A well-chosen set of 30 to 50 match pairs, covering the variation patterns in your schema produces a more accurate model than\
-a large set of casually labeled pairs.
+###
 
 {% hint style="success" icon="right-long" %}
-For diagnosing similarity model behaviour and concept details → [Similarity Model](similarity-model.md)
-{% endhint %}
-
-### The graph algorithm - from pairs to clusters
-
-After the similarity model scores every candidate pair, a graph algorithm groups them into complete clusters using transitive closure.
-
-If Record A matches Record B, and Record B matches Record C, the algorithm concludes that A, B, and C all represent the same entity and groups them into a single cluster, even if A and C were never directly compared.
-
-This is what turns a list of scored pairs into a usable identity graph. Every resolved entity becomes a node. Every cluster is an entity resolved across all its representations.
-
-In Community, clusters are assigned a `Z Cluster` that is non-persistent between runs. In Enterprise, each cluster is assigned a persistent `Zingg ID` (GUID) that remains stable across runs, incremental updates, and model changes.
-
-{% hint style="success" icon="right-long" %}
-**Read more**:
-
-* [Identity Graph](../../identity-graph.md)
-* [Z Cluster ID vs Zingg ID](../../z-cluster-and-zingg-id.md)
-* [Zingg ID](/broken/pages/9QpDFW20AMt0UJ4cEW6b)
 * Run [Incremental Matching](../../../running-zingg/run-incremental-matching.md) - how the graph grows over time
 {% endhint %}
 
