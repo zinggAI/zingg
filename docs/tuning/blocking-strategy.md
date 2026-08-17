@@ -6,16 +6,20 @@ description: >-
 
 # Blocking Strategies: DEFAULT vs WIDER
 
+{% hint style="info" icon="right-long" %}
 **Enterprise only.** Controlled by the `blockingModel` config key (`DEFAULT` or `WIDER`, case-insensitive). If omitted, Zingg uses `DEFAULT`. Community/OSS has no such key - it always behaves like `DEFAULT`.
+{% endhint %}
 
 ## What each strategy does
 
-Zingg builds a blocking tree greedily. At every node it asks: *of the eligible field/hash-function combinations , which one splits the group into smaller pieces?* That combination becomes the split at this node, and the process recurses into each resulting group.
+Zingg builds a blocking tree greedily. At every node it asks: *of the eligible field/hash-function combinations, which one splits the group into smaller pieces?* That combination becomes the split at this node, and the process recurses into each resulting group.
 
 The **strategy** controls only the *order* candidate fields are offered at each node - never the comparison logic itself:
 
 * **`DEFAULT`** - every node is offered your `fieldDefinition` list in the exact order you configured it. The field listed first is always tried first, everywhere in the tree.
 * **`WIDER`** - each node looks at which field its *parent* node just used, and pushes that field to the back of the candidate list for this node, so the very next field in line gets first consideration instead. This repeats going down the tree, so the field that "won" one level isn't automatically favored again immediately below it.
+
+<figure><img src="../.gitbook/assets/blocking-strategy-tree.png" alt="DEFAULT vs WIDER field ordering down the blocking tree"><figcaption><p>DEFAULT vs WIDER field ordering down the blocking tree</p></figcaption></figure>
 
 ## When to use which
 
