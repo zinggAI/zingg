@@ -6,6 +6,7 @@
 * [Entity Resolution](zingg-concepts/entity-resolution/README.md)
   * [Rule based entity resolution](zingg-concepts/entity-resolution/rule-based-entity-resolution.md)
 * [Zingg Entity Resolution Platform](zingg-concepts/zingg-entity-resolution-platform/README.md)
+  * [The problems Zingg is built to solve and why they are harder than it looks](zingg-concepts/zingg-entity-resolution-platform/the-problems-zingg-is-built-to-solve-and-why-they-are-harder-than-it-looks.md)
   * [Deterministic vs Probabilistic Matching](zingg-concepts/zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
   * [Deduplication, linking and resolving](zingg-concepts/zingg-entity-resolution-platform/deduplication-linking-and-resolving.md)
 * [Community vs Enterprise](zingg-concepts/community-vs-enterprise/README.md)
