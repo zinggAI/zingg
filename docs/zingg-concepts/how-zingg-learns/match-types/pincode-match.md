@@ -9,13 +9,15 @@ description: >-
 
 ### What `PINCODE` does
 
-`PINCODE` is built specifically for postal and PIN code fields. It handles the format variants that postal codes commonly appear in across source systems; a 5-digit US ZIP code and its 9-digit ZIP+4 equivalent. For example, without the tolerance that `FUZZY` would add.
+`PINCODE` splits a value on the first hyphen, keeps only the part before it, and compares that prefix for exact equality. It is not a fuzziness dial sitting between `EXACT` and `FUZZY` - it's exact-match on a preprocessed string, where the preprocessing is "truncate at the first hyphen." Concretely, this models the **US ZIP+4 format specifically**: "12345-6789" is compared as just "12345", since the "-6789" is a discardable delivery-route extension in that format.
 
-It is more permissive than `EXACT` (which would not match "94102" and "94102-1234") and more precise than `FUZZY` (which would score "94102" and "94103" as similar).
+A null or blank value on either side is an automatic match (1.0).
+
+**This is not a general international postal-code normalizer.** The hyphen-truncation logic assumes the part after the hyphen is always a discardable suffix. That's true for US ZIP+4, but many countries use a hyphen as a meaningful separator where *both* halves matter - for example, Polish postal codes ("00-950" vs "00-123") or Portuguese ones. On those formats, `PINCODE` truncates both sides down to "00" and reports a match, silently collapsing two genuinely different postal codes. See the table and "When not to use" below.
 
 ### What `PINCODE` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">94102</td><td valign="top">94102-1234</td><td valign="top">Yes - 5-digit and ZIP+4 same base</td></tr><tr><td valign="top">94102</td><td valign="top">94103</td><td valign="top">No - different postal codes</td></tr><tr><td valign="top">EC1A 1BB</td><td valign="top">EC1A1BB</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>UK postcode with/without space</strong></em></td></tr><tr><td valign="top">110001</td><td valign="top">110001</td><td valign="top">Yes - Indian PIN code, identical</td></tr><tr><td valign="top">94102</td><td valign="top">941-02</td><td valign="top"><em><strong>Confirm with team —</strong></em><br><em><strong>hyphen in different position</strong></em></td></tr><tr><td valign="top">[null]</td><td valign="top">94102</td><td valign="top"><em><strong>Confirm — add NULL_OR_BLANK to control null behaviour</strong></em></td></tr></tbody></table>
+<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">94102</td><td valign="top">94102-1234</td><td valign="top">Yes - both truncate to "94102"</td></tr><tr><td valign="top">94102</td><td valign="top">94103</td><td valign="top">No - "94102" vs "94103"</td></tr><tr><td valign="top">EC1A 1BB</td><td valign="top">EC1A1BB</td><td valign="top">No - neither string has a hyphen, so both pass through unsplit</td></tr><tr><td valign="top">110001</td><td valign="top">110001</td><td valign="top">Yes - Indian PIN code, identical</td></tr><tr><td valign="top">94102</td><td valign="top">941-02</td><td valign="top">No - "94102" vs "941" ("941-02" truncates to "941", discarding "02")</td></tr><tr><td valign="top">00-950</td><td valign="top">00-123</td><td valign="top">Yes - a false match. Both truncate to "00"; this is the Polish-postal-code failure case described above, not a US ZIP+4</td></tr><tr><td valign="top">[null]</td><td valign="top">94102</td><td valign="top">Yes - null/blank on either side auto-matches</td></tr></tbody></table>
 
 ### When to use `PINCODE`
 
@@ -39,6 +41,16 @@ This is the only match type specifically designed for postal codes
 
 </details>
 
+<details>
+
+<summary><strong>Hyphenated postal codes where both halves are significant</strong></summary>
+
+`PINCODE`'s hyphen handling is US-ZIP+4-specific: it assumes anything after the first hyphen is a discardable suffix. Many countries' formats don't work that way - Polish postal codes ("00-950" vs "00-123") use the hyphen as a meaningful internal separator, and `PINCODE` would truncate both down to "00" and report a false match.
+
+If your postal code format uses a hyphen where both sides carry meaning, use `EXACT` instead, or normalise the format upstream before matching.
+
+</details>
+
 {% tabs %}
 {% tab title="Python" %}
 ### **Community**
@@ -46,15 +58,16 @@ This is the only match type specifically designed for postal codes
 ```python
 from zingg.client import *
 
-    pincode = FieldDefinition("pincode", "string", MatchType.PINCODE)
+pincode = FieldDefinition("pincode", "string", MatchType.PINCODE)
 ```
 
 ### **Enterprise**
 
 ```python
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zingg.client import *
 
-    pincode = EFieldDefinition("pincode", "string", MatchType.PINCODE)
+pincode = EFieldDefinition("pincode", "string", MatchType.PINCODE)
 ```
 {% endtab %}
 
@@ -84,5 +97,5 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 * `NUMERIC` - for other numeric identifier fields
 * `NULL_OR_BLANK` - combine when postal codes are often missing
 
-**Read more:** [Match Types](./)
+**Read more:** [Match Types](README.md)
 {% endhint %}
