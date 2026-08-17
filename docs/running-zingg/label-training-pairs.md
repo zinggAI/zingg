@@ -10,7 +10,7 @@ The `label` phase opens an interactive layer where you review the candidate pair
 
 If you already have labeled data from an external source, you can supply it directly using `trainingSamples` in your configuration. See [Create Training Data](create-training-data.md) for how to set this up.
 
-30 to 40 matching pairs is a strong starting point. Label until you feel that your labeled examples represent all field types and data patterns in your schema. If accuracy needs improvement after your first match run, return to labeling—focus on the patterns or field combinations that appear to be missing or underrepresented.
+30 to 40 matching pairs is a strong starting point. Label until you feel that your labeled examples represent all field types and data patterns in your schema. If accuracy needs improvement after your first match run, return to labelling, focus on the patterns or field combinations that appear to be missing or underrepresented.
 
 {% stepper %}
 {% step %}
@@ -28,14 +28,12 @@ Your labels are saved automatically to `zinggDir/modelId` after each session.
 {% step %}
 ### Step 3: Iterate
 
-if the number of matched and unmatched pairs are still not sufficient, then iterate.
-Run `findTrainingData` again to obtain a fresh set of candidate pairs. Label those. Repeat until Zingg's predictions align with your expectations.
+if the number of matched and unmatched pairs are still not sufficient, then iterate. Run `findTrainingData` again to obtain a fresh set of candidate pairs. Label those. Repeat until Zingg's predictions align with your expectations.
 {% endstep %}
 {% endstepper %}
 
 {% tabs %}
 {% tab title="Community" %}
-
 ### **Python**
 
 ```python
@@ -54,7 +52,7 @@ zingg.initAndExecute()
 ```
 
 {% hint style="success" icon="right-long" %}
-`--showConcise=true` is optional. It only shows fields which are `NOT DONT_USE`, making the labelling session cleaner when you have many fields.
+`--showConcise=true` is optional. It only shows fields which are not `DONT_USE`, making the labelling session cleaner when you have many fields.
 {% endhint %}
 
 {% hint style="info" icon="right-long" %}
@@ -63,8 +61,6 @@ Need to correct a pair you already labeled? See [Update Label](update-label.md).
 {% endtab %}
 
 {% tab title="Enterprise" %}
-`--showConcise=true` is optional. It only shows fields which are `NOT DONT_USE`, making the labelling session cleaner when you have many fields.
-
 #### Python
 
 ```python
@@ -76,20 +72,32 @@ zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
 
-{% hint style="info" icon="right-long" %}
-Notebook provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons. 
+### **CLI**
+
+```bash
+./scripts/zingg.sh --phase label --conf config.json --showConcise=true
+```
+
+{% hint style="success" icon="right-long" %}
+`--showConcise=true` is optional. It only shows fields which are not `DONT_USE`, making the labelling session cleaner when you have many fields.
 {% endhint %}
 
+{% hint style="info" icon="right-long" %}
+Notebook provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons.
+{% endhint %}
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-
 ### Run label
 
 Zingg on Snowflake can be run either from a local terminal via the CLI, or natively inside Snowflake using an interactive labeling service.
 
 #### CLI (local terminal)
-`--showConcise=true` is optional. It only shows fields which are `NOT DONT_USE`, making the labelling session cleaner when you have many fields.
+
+{% hint style="success" icon="right-long" %}
+`--showConcise=true` is optional. It only shows fields which are not `DONT_USE`, making the labelling session cleaner when you have many fields.
+{% endhint %}
+
 ```bash
 ./scripts/zingg.sh --phase label --conf config.json --showConcise=true \
 --properties-file <location to snowflake.properties>
@@ -126,7 +134,7 @@ ALTER COMPUTE POOL CONTAINER_ZINGG_POOL STOP ALL;
 ```
 
 {% hint style="info" icon="right-long" %}
-Notebook provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons. 
+Notebook provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons.
 {% endhint %}
 {% endtab %}
 {% endtabs %}
