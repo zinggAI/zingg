@@ -13,7 +13,39 @@ The blocking model is Zingg's approach to making entity resolution scalable. Bef
 Only records within the same bucket are ever compared against each other. Records in different buckets are never compared, which means the blocking model is the first and most\
 consequential filter in the pipeline.
 
+### Blocking functions
 
+The blocking model is a purpose built entity resolution model, comprising of a tree with hash functions. Blocking functions control which records are compared. The blocking tree learns on the matched records you provided during labeling; at every node, Zingg selects the function and the field that produces the least elimination of your known matching pairs.
+
+**What makes a good blocking function:**
+
+A good blocking function never eliminates a matching pair entirely. It groups records that could be the same entity, even imperfectly; so the similarity model can evaluate them. A poor blocking function eliminates matching pairs from comparison entirely; no similarity scoring happens after that point.
+
+**Example: evaluating `first1char` on `firstname`**
+
+Take two labeled matching pairs:
+
+| 1 | A | john  | j |
+| - | - | ----- | - |
+| 1 | B | johnh | j |
+| 2 | A | mary  | m |
+| 2 | B | marry | m |
+
+Both pairs produce the same output from `first1char` - no elimination. This is a good function for `firstname`.
+
+**Contrast: `last1char` on `firstname`**
+
+| **1** | A | john  | n |
+| ----- | - | ----- | - |
+| 1     | B | johnh | h |
+| 1     | A | mary  | y |
+| 2     | B | marry | y |
+
+Pair 1 is eliminated (`n` ≠ `h`). `last1char` is not a good function for `firstname`. Zingg will therefore not choose it.
+
+So `first1char(firstname)` will be selected. It brings near-similar records together - clustering them to break the cartesian join.
+
+The good part is that the user does not have to think about these constructs at all. During active learning, the model is automatically learnt based on what the user labels.&#x20;
 
 
 

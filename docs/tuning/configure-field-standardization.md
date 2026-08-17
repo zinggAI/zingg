@@ -129,7 +129,7 @@ If the output still shows raw variants:
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* [Standardize Fields and Results](../zingg-concepts/how-zingg-learns/zingg-models/standardize-fields-and-results.md) - concept and where it is useful
+* [Standardize Fields and Results](../zingg-concepts/standardize-fields-and-results.md) - concept and where it is useful
 * [Configure Zingg](../running-zingg/configure-zingg.md) - full field definition configuration including all `EFieldDefinition` methods
 * [Match Types](../zingg-concepts/how-zingg-learns/match-types/) - for the MAPPING match type, which uses a similar mapping file approach for matching
 {% endhint %}
