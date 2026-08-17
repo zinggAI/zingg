@@ -1,5 +1,5 @@
 ---
-description: Solving the scale problem
+description: Solving the scale problem by learning from the data directly
 ---
 
 # Blocking Model
