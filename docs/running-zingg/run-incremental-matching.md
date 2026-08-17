@@ -227,6 +227,10 @@ The `outputTmp` section specifies a temporary output location where Zingg writes
 
 {% tab title="Enterprise Snowflake" %}
 
+Zingg on Snowflake can be run either from a local terminal via the CLI, or natively inside Snowflake as a job service.
+
+### CLI (local terminal)
+
 Create an `incrementalConf.json` file:
 
 ```json
@@ -260,6 +264,42 @@ Create an `incrementalConf.json` file:
 ```
 
 The `outputTmp` section specifies a temporary output location where Zingg writes intermediate results before final processing or merging with the main output.
+
+### Snowflake (job service)
+
+Run the phase as an asynchronous job service inside your Snowflake compute pool.
+
+```sql
+EXECUTE JOB SERVICE
+IN COMPUTE POOL CONTAINER_ZINGG_POOL
+NAME = ZINGG_INCREMENTAL_ASYNC_JOB_SERVICE
+ASYNC = true
+EXTERNAL_ACCESS_INTEGRATIONS = (ALLOW_ALL_EAI)
+FROM @specs SPECIFICATION_TEMPLATE_FILE = '<zingg-job-spec-file>'
+USING (PHASE => 'runIncremental', CONFIG => '<config-name>');
+```
+
+`<zingg-job-spec-file>` defines the container and job service configuration Zingg needs to run inside Snowpark Container Services. It is maintained by your administrator and referenced from your `@specs` stage.
+
+`<config-name>` is the name of your incremental configuration json file (e.g. `incrementalConf.json`).
+
+**Monitor the job**
+
+Retrieve the service logs to monitor execution and debug any failures.
+
+```sql
+SELECT SYSTEM$GET_SERVICE_LOGS('ZINGG_INCREMENTAL_ASYNC_JOB_SERVICE', 0, 'zingg-async-job-container');
+```
+
+`zingg-async-job-container` refers to the container name defined in the job specification.
+
+**Stop the compute pool**
+
+Once the job completes, stop the compute pool to release resources.
+
+```sql
+ALTER COMPUTE POOL CONTAINER_ZINGG_POOL STOP ALL;
+```
 
 {% endtab %}
 {% endtabs %}

@@ -56,9 +56,6 @@ zingg.initAndExecute()
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-{% hint style="info" icon="right-long" %}
-Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark cluster.
-{% endhint %}
 
 ### Run train
 
@@ -89,7 +86,9 @@ USING (PHASE => 'train', CONFIG => '<config-name>');
 
 `<config-name>` is the name of your Zingg configuration json file.
 
-**Check the job logs to monitor progress or troubleshoot errors.**
+****Monitor the job**
+
+Retrieve the service logs to monitor execution and debug any failures.**
 
 ```sql
 SELECT SYSTEM$GET_SERVICE_LOGS('ZINGG_TRAIN_ASYNC_JOB_SERVICE', 0, 'zingg-async-job-container');

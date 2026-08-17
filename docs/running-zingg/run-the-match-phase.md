@@ -77,15 +77,54 @@ Enterprise output includes `Zingg ID` (persistent across runs) instead of `Z_CLU
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-{% hint style="info" icon="right-long" %}
-Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark cluster.
-{% endhint %}
 
-### CLI
+### Run match
+
+Zingg on Snowflake can be run either from a local terminal via the CLI, or natively inside Snowflake as a job service.
+
+#### CLI (local terminal)
 
 ```bash
 ./scripts/zingg.sh --phase match --conf config.json \
 --properties-file <location to snowflake.properties>
+```
+
+#### Snowflake (job service)
+
+Run the phase as an asynchronous job service inside your Snowflake compute pool.
+
+```sql
+EXECUTE JOB SERVICE
+IN COMPUTE POOL CONTAINER_ZINGG_POOL
+NAME = ZINGG_MATCH_ASYNC_JOB_SERVICE
+ASYNC = true
+EXTERNAL_ACCESS_INTEGRATIONS = (ALLOW_ALL_EAI)
+FROM @specs SPECIFICATION_TEMPLATE_FILE = '<zingg-job-spec-file>'
+USING (PHASE => 'match', CONFIG => '<config-name>');
+```
+
+`<zingg-job-spec-file>` defines the container and job service configuration Zingg needs to run inside Snowpark Container Services. It is maintained by your administrator and referenced from your `@specs` stage.
+
+`<config-name>` is the name of your Zingg configuration json file.
+
+**Monitor the job**
+
+Retrieve the service logs to monitor execution and debug any failures.
+
+```sql
+SHOW SERVICE CONTAINERS IN SERVICE ZINGG_MATCH_ASYNC_JOB_SERVICE;
+
+SELECT SYSTEM$GET_SERVICE_LOGS('ZINGG_MATCH_ASYNC_JOB_SERVICE', 0, 'zingg-async-job-container');
+```
+
+`zingg-async-job-container` refers to the container name defined in the job specification.
+
+**Stop the compute pool**
+
+Once the job completes, stop the compute pool to release resources.
+
+```sql
+ALTER COMPUTE POOL CONTAINER_ZINGG_POOL STOP ALL;
 ```
 
 {% hint style="info" icon="right-long" %}

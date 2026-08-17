@@ -96,20 +96,19 @@ zingg.initAndExecute()
 ```
 
 {% hint style="info" icon="right-long" %}
-Enterprise provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons. Download the diagnostics view to share match quality with stakeholders before committing to training.
+Notebook provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons. 
 {% endhint %}
 
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-`--showConcise=true` is optional. It only shows fields which are `NOT DONT_USE`, making the labelling session cleaner when you have many fields.
 
 ### Run label
 
 Zingg on Snowflake can be run either from a local terminal via the CLI, or natively inside Snowflake using an interactive labeling service.
 
 #### CLI (local terminal)
-
+`--showConcise=true` is optional. It only shows fields which are `NOT DONT_USE`, making the labelling session cleaner when you have many fields.
 ```bash
 ./scripts/zingg.sh --phase label --conf config.json --showConcise=true \
 --properties-file <location to snowflake.properties>
@@ -146,7 +145,7 @@ ALTER COMPUTE POOL CONTAINER_ZINGG_POOL STOP ALL;
 ```
 
 {% hint style="info" icon="right-long" %}
-Enterprise provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons. Download the diagnostics view to share match quality with stakeholders before committing to training.
+Notebook provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons. 
 {% endhint %}
 {% endtab %}
 {% endtabs %}

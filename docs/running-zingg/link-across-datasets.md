@@ -96,9 +96,6 @@ Enterprise link output includes Zingg ID instead of `Z_CLUSTER`, plus the `Z_SOU
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-{% hint style="info" icon="right-long" %}
-Enterprise only. Zingg on Snowflake uses Snowpark and does not require a Spark cluster.
-{% endhint %}
 
 ### CLI
 
