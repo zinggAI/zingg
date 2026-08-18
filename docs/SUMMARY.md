@@ -39,6 +39,7 @@
 * [Zingg Pipes](zingg-concepts/zingg-pipes.md)
 * [Zingg Phases](zingg-concepts/zingg-phases.md)
 * [Concept Glossary](zingg-concepts/concept-glossary.md)
+* [Platform Infrastructure vs Data Platform](zingg-concepts/platform-infrastructure-vs-data-platform.md)
 
 ## Running Zingg
 
