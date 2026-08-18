@@ -69,7 +69,7 @@ Use `EZingg` (or `EZinggWithSpark` in notebook environments where a Spark sessio
 #### **Run `trainMatch`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "trainMatch" ])
+options = ClientOptions([ClientOptions.PHASE, "trainMatch"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -95,7 +95,7 @@ incrArgs.setParentArgs(args)
 incrPipe = ECsvPipe("testFebrlIncr", "examples/febrl/test-incr.csv", schema)
 incrArgs.setIncrementalData(incrPipe)
 
-incrOptions = ClientOptions([ ClientOptions.PHASE, "runIncremental" ])
+incrOptions = ClientOptions([ClientOptions.PHASE, "runIncremental"])
 zinggIncr = EZingg(incrArgs, incrOptions)
 zinggIncr.initAndExecute()
 ```
@@ -146,7 +146,7 @@ outputPipe = ECsvPipe("resultFebrl", "/tmp/febrlOutput")
 outputPipe.setHeader("true")
 args.setOutput(outputPipe)
 
-options = ClientOptions([ ClientOptions.PHASE, "trainMatch" ])
+options = ClientOptions([ClientOptions.PHASE, "trainMatch"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```

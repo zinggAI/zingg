@@ -217,7 +217,7 @@ ZinggEC uses the `EZingg` client. Pattern is the same as Community — set optio
 #### **Run `findTrainingData`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ])
+options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -225,7 +225,7 @@ zingg.initAndExecute()
 #### **Run `label`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "label" ])
+options = ClientOptions([ClientOptions.PHASE, "label"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -235,7 +235,7 @@ zingg.initAndExecute()
 Enterprise convenience — combines `findTrainingData` and `label`
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findAndLabel" ])
+options = ClientOptions([ClientOptions.PHASE, "findAndLabel"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -243,7 +243,7 @@ zingg.initAndExecute()
 #### **Run `generateDocs`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "generateDocs" ])
+options = ClientOptions([ClientOptions.PHASE, "generateDocs"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -251,7 +251,7 @@ zingg.initAndExecute()
 #### **Run `train`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "train" ])
+options = ClientOptions([ClientOptions.PHASE, "train"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -261,7 +261,7 @@ zingg.initAndExecute()
 Enterprise convenience — combines `train` and `match`
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "trainMatch" ])
+options = ClientOptions([ClientOptions.PHASE, "trainMatch"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -269,7 +269,7 @@ zingg.initAndExecute()
 #### **Run `match`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "match" ])
+options = ClientOptions([ClientOptions.PHASE, "match"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -277,7 +277,7 @@ zingg.initAndExecute()
 #### **Run `link`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "link" ])
+options = ClientOptions([ClientOptions.PHASE, "link"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -287,7 +287,7 @@ zingg.initAndExecute()
 Revisit and correct previously marked pairs.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "updateLabel" ])
+options = ClientOptions([ClientOptions.PHASE, "updateLabel"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -297,7 +297,7 @@ zingg.initAndExecute()
 Compare two model outputs.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "diff" ])
+options = ClientOptions([ClientOptions.PHASE, "diff"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -342,7 +342,7 @@ incrArgs.setOutputTmp("/tmp/zinggIncrTmp")
 #### Execute
 
 ```python
-incrOptions = ClientOptions([ ClientOptions.PHASE, "runIncremental" ])
+incrOptions = ClientOptions([ClientOptions.PHASE, "runIncremental"])
 zinggIncr = EZingg(incrArgs, incrOptions)
 zinggIncr.initAndExecute()
 ```
@@ -388,7 +388,7 @@ apprArgs.setDestination(destPipe)
 ```python
 destPipe = ECsvPipe("approved", "/tmp/approvedClusters")
 apprArgs.setDestination(destPipe)
-apprOptions = ClientOptions([ ClientOptions.PHASE, "approve" ])
+apprOptions = ClientOptions([ClientOptions.PHASE, "approve"])
 zinggAppr = EZingg(apprArgs, apprOptions)
 zinggAppr.initAndExecute()
 ```
@@ -463,10 +463,7 @@ outputPipe = ECsvPipe("resultFebrl", "/tmp/febrlOutput")
 outputPipe.setHeader("true")
 args.setOutput(outputPipe)
 
-options = ClientOptions([
-  ClientOptions.PHASE,
-  "trainMatch"
-])
+options = ClientOptions([ClientOptions.PHASE, "trainMatch"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 
@@ -476,10 +473,7 @@ incrArgs.setParentArgs(args)
 incrPipe = ECsvPipe("testFebrlIncr", "examples/febrl/test-incr.csv", schema)
 incrArgs.setIncrementalData(incrPipe)
 
-incrOptions = ClientOptions([
-  ClientOptions.PHASE,
-  "runIncremental"
-])
+incrOptions = ClientOptions([ClientOptions.PHASE, "runIncremental"])
 zinggIncr = EZingg(incrArgs, incrOptions)
 zinggIncr.initAndExecute()
 ```

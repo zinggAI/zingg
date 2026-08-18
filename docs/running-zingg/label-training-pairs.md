@@ -37,10 +37,7 @@ if the number of matched and unmatched pairs are still not sufficient, then iter
 ### **Python**
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "label"
-])
+options = ClientOptions([ClientOptions.PHASE, "label"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -64,10 +61,7 @@ Need to correct a pair you already labeled? See [Update Label](update-label.md).
 #### Python
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "label"
-])
+options = ClientOptions([ClientOptions.PHASE, "label"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```

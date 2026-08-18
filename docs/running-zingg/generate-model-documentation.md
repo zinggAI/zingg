@@ -21,10 +21,7 @@ The documentation is written to the `zinggDir/modelId` folder and can be viewed 
 ### **Python**
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "generateDocs"
-])
+options = ClientOptions([ClientOptions.PHASE, "generateDocs"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -44,10 +41,7 @@ Enterprise uses `EZingg` instead of `Zingg`.
 {% endhint %}
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "generateDocs"
-])
+options = ClientOptions([ClientOptions.PHASE, "generateDocs"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```

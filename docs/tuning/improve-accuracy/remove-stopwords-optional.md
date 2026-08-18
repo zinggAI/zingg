@@ -22,7 +22,7 @@ fields where generic terms are common.
 #### **Python**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "recommend" ])
+options = ClientOptions([ClientOptions.PHASE, "recommend"])
 zingg = Zingg(args, options)
 zingg.setColumn("<column_name>")
 zingg.initAndExecute()
@@ -65,7 +65,7 @@ Once you have verified the stopwords, add the `stopWords` path to the relevant f
 ### **Python**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "recommend" ])
+options = ClientOptions([ClientOptions.PHASE, "recommend"])
 zingg = EZingg(args, options)
 zingg.setColumn("<column_name>")
 zingg.initAndExecute()

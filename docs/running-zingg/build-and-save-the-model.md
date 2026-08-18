@@ -21,10 +21,7 @@ Use the same `modelId` when running `match`, `link`, or `runIncremental` to appl
 ### Python
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "train"
-])
+options = ClientOptions([ClientOptions.PHASE, "train"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -40,10 +37,7 @@ zingg.initAndExecute()
 ### Python
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "train"
-])
+options = ClientOptions([ClientOptions.PHASE, "train"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```

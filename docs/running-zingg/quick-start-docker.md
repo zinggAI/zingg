@@ -289,7 +289,7 @@ Zingg scans your dataset using the field rules defined in Step 3 and selects the
 #### **Python - Community**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ])
+options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
 
 zingg = Zingg(args, options)
 zingg.initAndExecute()
@@ -298,7 +298,7 @@ zingg.initAndExecute()
 #### **Python - Enterprise**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ])
+options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
 
 zingg = EZingg(args, options)
 zingg.initAndExecute()
@@ -325,7 +325,7 @@ Zingg selects the most informative pairs from your data - not random samples. La
 #### **Python - Community**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "label" ])
+options = ClientOptions([ClientOptions.PHASE, "label"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -333,7 +333,7 @@ zingg.initAndExecute()
 #### **Python - Enterprise**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "label" ])
+options = ClientOptions([ClientOptions.PHASE, "label"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
@@ -353,7 +353,7 @@ Once you have enough labelled pairs, run the `train` phase. Zingg builds blockin
 #### **Python - Community**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "train" ])
+options = ClientOptions([ClientOptions.PHASE, "train"])
 
 zingg = Zingg(args, options)
 zingg.initAndExecute()
@@ -362,7 +362,7 @@ zingg.initAndExecute()
 #### **Python - Enterprise**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "train" ])
+options = ClientOptions([ClientOptions.PHASE, "train"])
 
 zingg = EZingg(args, options)
 zingg.initAndExecute()
@@ -381,7 +381,7 @@ Run the `match` phase. Zingg applies the trained models to your full dataset and
 #### **Python - Community**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "match" ])
+options = ClientOptions([ClientOptions.PHASE, "match"])
 
 zingg = Zingg(args, options)
 zingg.initAndExecute()
@@ -390,7 +390,7 @@ zingg.initAndExecute()
 #### **Python - Enterprise**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "match" ])
+options = ClientOptions([ClientOptions.PHASE, "match"])
 
 zingg = EZingg(args, options)
 zingg.initAndExecute()

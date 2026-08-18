@@ -31,10 +31,7 @@ Link output contains all input fields plus four Zingg-generated columns:
 ### Python
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "link"
-])
+options = ClientOptions([ClientOptions.PHASE, "link"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -65,10 +62,7 @@ display(output)
 ### Python
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "link"
-])
+options = ClientOptions([ClientOptions.PHASE, "link"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```

@@ -22,10 +22,7 @@ Use `match` when you want to find duplicates within a single dataset. If you nee
 ### Python
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "match"
-])
+options = ClientOptions([ClientOptions.PHASE, "match"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```

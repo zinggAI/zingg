@@ -133,7 +133,7 @@ Run any phase by passing its name to `ClientOptions`. The same pattern works for
 #### **Run `findTrainingData`:**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ])
+options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -141,7 +141,7 @@ zingg.initAndExecute()
 #### **Run `label`:**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "label" ])
+options = ClientOptions([ClientOptions.PHASE, "label"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -151,7 +151,7 @@ zingg.initAndExecute()
 Combines `findTrainingData` and `label` into one call — use for smaller datasets where `findTrainingData` runs quickly.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findAndLabel" ])
+options = ClientOptions([ClientOptions.PHASE, "findAndLabel"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -161,7 +161,7 @@ zingg.initAndExecute()
 Revisit and correct previously marked pairs — run `generateDocs` first to identify pairs to update
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "updateLabel" ])
+options = ClientOptions([ClientOptions.PHASE, "updateLabel"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -169,7 +169,7 @@ zingg.initAndExecute()
 #### **Run `generateDocs`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "generateDocs" ])
+options = ClientOptions([ClientOptions.PHASE, "generateDocs"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -177,7 +177,7 @@ zingg.initAndExecute()
 #### **Run `train`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "train" ])
+options = ClientOptions([ClientOptions.PHASE, "train"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -185,7 +185,7 @@ zingg.initAndExecute()
 #### **Run `match`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "match" ])
+options = ClientOptions([ClientOptions.PHASE, "match"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -193,7 +193,7 @@ zingg.initAndExecute()
 #### **Run `link`**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "link" ])
+options = ClientOptions([ClientOptions.PHASE, "link"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -257,10 +257,7 @@ args.setData(inputPipe)
 outputPipe = CsvPipe("resultFebrl", "/tmp/febrlOutput")
 args.setOutput(outputPipe)
 
-options = ClientOptions([
-  ClientOptions.PHASE,
-  "match"
-])
+options = ClientOptions([ClientOptions.PHASE, "match"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```

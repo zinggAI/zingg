@@ -286,7 +286,7 @@ For 100k records use `labelDataSampleSize` between 0.1 and 0.5. For 1M+ records 
 Zingg scans your dataset using the field rules defined in Step 9 and identifies pairs of records the model is uncertain about — edge cases where human input is most valuable. Candidate pairs are saved to `UNMARKED_DIR` in your GCS bucket.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ])
+options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```
@@ -294,7 +294,7 @@ zingg.initAndExecute()
 ### Step 12: Load pairs for labeling
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "label" ])
+options = ClientOptions([ClientOptions.PHASE, "label"])
 zingg = ZinggWithSpark(args, options)
 zingg.init()
 
@@ -395,7 +395,7 @@ else:
 Run `generateDocs` after labeling to produce readable HTML reports of your training data, both matched and non-matched pairs. Use this to verify label consistency and share a visual audit with subject matter experts before training.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "generateDocs" ])
+options = ClientOptions([ClientOptions.PHASE, "generateDocs"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 
@@ -422,7 +422,7 @@ _**IMAGE TO BE ADDED—****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\*\*\*\*\* 
 `trainMatch` combines the `train` and `match` phases into a single call. Zingg builds a model from your labeled pairs and immediately applies it to the full dataset. This is the most compute-intensive step — it distributes the workload across all Dataproc nodes.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "trainMatch" ])
+options = ClientOptions([ClientOptions.PHASE, "trainMatch"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```
@@ -432,7 +432,7 @@ You can also run `train` and `match` as two separate phases if you want to inspe
 Train separately:
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "train" ])
+options = ClientOptions([ClientOptions.PHASE, "train"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```
@@ -440,7 +440,7 @@ zingg.initAndExecute()
 Then match separately:
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "match" ])
+options = ClientOptions([ClientOptions.PHASE, "match"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```

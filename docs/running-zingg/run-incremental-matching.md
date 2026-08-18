@@ -161,10 +161,7 @@ incrArgs.setOutputTmp(outputTmpPipe)
 ### Step 5: Run incremental matching
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "runIncremental"
-])
+options = ClientOptions([ClientOptions.PHASE, "runIncremental"])
 zingg = EZingg(incrArgs, options)
 zingg.initAndExecute()
 ```

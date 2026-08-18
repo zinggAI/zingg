@@ -19,10 +19,7 @@ Generate model documentation first - see [Generate Model Documentation](generate
 #### Python
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "updateLabel"
-])
+options = ClientOptions([ClientOptions.PHASE, "updateLabel"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```

@@ -282,7 +282,7 @@ For 100k records use `labelDataSampleSize` between 0.1 and 0.5. For 1M+ records 
 Zingg scans your dataset using the field rules defined in Step 13 and selects the most informative pairs for labeling — edge cases where the model has the most to learn. Candidate pairs are saved to `UNMARKED_DIR` in your OneLake Lakehouse.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ])
+options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```
@@ -290,7 +290,7 @@ zingg.initAndExecute()
 #### Step 16: Load pairs for labeling
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "label" ])
+options = ClientOptions([ClientOptions.PHASE, "label"])
 zingg = ZinggWithSpark(args, options)
 zingg.init()
 
@@ -404,7 +404,7 @@ This notebook runs `generateDocs`. It calls `%run 01-setting_up_zingg` at the to
 Run `generateDocs` to produce readable HTML reports of your labeled training data — both matched and non-matched pairs. Use this to verify label consistency and share with subject matter experts before committing to training.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "generateDocs" ])
+options = ClientOptions([ClientOptions.PHASE, "generateDocs"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 
@@ -425,7 +425,7 @@ This notebook runs `trainMatch` and displays the output. It calls `%run 01-setti
 `trainMatch` combines `train` and `match` into a single phase. Zingg builds a model from your labeled pairs and immediately applies it to the full dataset. This is the most compute-intensive step; Spark distributes the workload across all Fabric Spark nodes.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "trainMatch" ])
+options = ClientOptions([ClientOptions.PHASE, "trainMatch"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```
@@ -433,11 +433,11 @@ zingg.initAndExecute()
 You can also run `train` and `match` as separate phases if you want to inspect the trained model before running the full dataset:
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "train" ])
+options = ClientOptions([ClientOptions.PHASE, "train"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 
-options = ClientOptions([ ClientOptions.PHASE, "match" ])
+options = ClientOptions([ClientOptions.PHASE, "match"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```

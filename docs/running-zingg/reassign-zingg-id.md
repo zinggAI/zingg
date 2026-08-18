@@ -144,10 +144,7 @@ Add all field definitions from your new model config - only the structure is sho
 The new model must produce its own match output before reassign can compare clusters.
 
 ```python
-options = EClientOptions([
-    EClientOptions.PHASE,
-    "trainMatch"
-])
+options = EClientOptions([EClientOptions.PHASE, "trainMatch"])
 zinggNew = EZingg(newArgs, options)
 zinggNew.initAndExecute()
 ```
@@ -169,10 +166,7 @@ reassignArgs.setResults(reassignOutputPipe)
 ### Step 5: Execute `reassignZinggId`
 
 ```python
-reassignOptions = EClientOptions([
-    EClientOptions.PHASE,
-    "reassignZinggId"
-])
+reassignOptions = EClientOptions([EClientOptions.PHASE, "reassignZinggId"])
 zinggReassign = EZingg(reassignArgs, reassignOptions)
 zinggReassign.initAndExecute()
 ```

@@ -53,7 +53,7 @@ args.setZinggId("ea67d79a-56a7-4431-ab55-d08bb3c10e2e")
 ### **Step 4: Run the explain phase**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "explainOutput" ])
+options = ClientOptions([ClientOptions.PHASE, "explainOutput"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```

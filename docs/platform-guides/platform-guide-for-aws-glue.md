@@ -383,8 +383,7 @@ AWS Glue Interactive Sessions restrict standard Jupyter widgets. Zingg's standar
 Zingg scans your dataset using the field rules defined in Step 12 and selects the most informative pairs for labeling. Candidate pairs are saved to `UNMARKED_DIR` in your S3 bucket.
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE, "findTrainingData"])
+options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```
@@ -568,8 +567,7 @@ else:
 Run `generateDocs` after labeling to produce a model report showing field weights, training data quality, and precision and recall estimates. The HTML report is written to your S3 model directory and can be downloaded from the S3 console.
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE, "generateDocs"])
+options = ClientOptions([ClientOptions.PHASE, "generateDocs"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 
@@ -598,8 +596,7 @@ Unlike other platforms, Glue cannot render HTML inline in the notebook. Download
 `trainMatch` combines `train` and `match` into a single phase. Zingg builds a model from your labeled pairs and immediately applies it to the full dataset. This is the most compute-intensive step; it distributes the workload across all Glue workers.
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE, "trainMatch"])
+options = ClientOptions([ClientOptions.PHASE, "trainMatch"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 

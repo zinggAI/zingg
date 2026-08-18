@@ -31,10 +31,7 @@ args.setLabelDataSampleSize(0.5)
 #### Using Python API
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "findTrainingData"
-])
+options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -81,10 +78,7 @@ args.setLabelDataSampleSize(0.5)
 #### Python
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "findTrainingData"
-])
+options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```

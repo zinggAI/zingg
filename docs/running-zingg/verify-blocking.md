@@ -113,10 +113,7 @@ Run `verifyBlocking` in two situations:
 ### Python
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "verifyBlocking"
-])
+options = ClientOptions([ClientOptions.PHASE, "verifyBlocking"])
 zingg = Zingg(args, options)
 zingg.initAndExecute()
 ```
@@ -132,10 +129,7 @@ zingg.initAndExecute()
 ### Python
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE,
-    "verifyBlocking"
-])
+options = ClientOptions([ClientOptions.PHASE, "verifyBlocking"])
 zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```

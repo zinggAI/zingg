@@ -96,10 +96,7 @@ diffArgs.setResults(diffOutputPipe)
 #### Step 4: Execute diff
 
 ```python
-diffOptions = EClientOptions([
-    EClientOptions.PHASE,
-    "diff"
-])
+diffOptions = EClientOptions([EClientOptions.PHASE, "diff"])
 zinggDiff = EZingg(diffArgs, diffOptions)
 zinggDiff.initAndExecute()
 ```

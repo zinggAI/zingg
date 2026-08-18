@@ -176,8 +176,7 @@ ssn = FieldDefinition("ssn", "STRING", MatchType.EXACT)
 args.setFieldDefinition([
     recId, fName, lName, streetId, street,
     locality, area, areaCode, state, dob,
-    ssn
-])
+    ssn])
 ```
 
 {% hint style="success" icon="right-long" %}
@@ -191,7 +190,7 @@ args.setFieldDefinition([
 Zingg scans your data and selects the most informative pairs for labeling—edge cases where the model has the most to learn. Run this before labeling.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ])
+options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```
@@ -199,7 +198,7 @@ zingg.initAndExecute()
 #### Step 11: Load pairs for labeling
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "label" ])
+options = ClientOptions([ClientOptions.PHASE, "label"])
 zingg = ZinggWithSpark(args, options)
 zingg.init()
 
@@ -250,7 +249,7 @@ print(f"You have accumulated {n_uncer} pairs labeled as uncertain.")
 Before training, review the pairs you have labeled to verify quality. This uses the `updateLabel` phase to surface your marked records for inspection.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "updateLabel" ])
+options = ClientOptions([ClientOptions.PHASE, "updateLabel"])
 zingg = ZinggWithSpark(args, options)
 zingg.init()
 
@@ -263,7 +262,7 @@ display(markedRecords)
 Zingg builds the blocking and similarity models from your labeled pairs and persists them to `zinggDir/modelId`. Once trained, this model can be reused on new data without retraining.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "train" ])
+options = ClientOptions([ClientOptions.PHASE, "train"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```
@@ -273,7 +272,7 @@ zingg.initAndExecute()
 Applies the trained model to your full dataset and writes resolved clusters to the output location configured in Step 8.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "match" ])
+options = ClientOptions([ClientOptions.PHASE, "match"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```
@@ -297,7 +296,7 @@ Records sharing the same `Z_CLUSTER` value have been resolved to the same real-w
 Run `generateDocs` after labeling to produce readable HTML documentation of your training data—both matched and non-matched pairs. Run it before training to inspect data quality, or share the output with subject matter experts to validate labels before committing to train.
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "generateDocs" ])
+options = ClientOptions([ClientOptions.PHASE, "generateDocs"])
 zingg = ZinggWithSpark(args, options)
 zingg.initAndExecute()
 
@@ -516,7 +515,7 @@ Zingg analyses the specified column and returns a list of high-frequency words i
 ```python
 stopwordcolumn = "street"
 args.setColumn(stopwordcolumn)
-options = ClientOptions([ ClientOptions.PHASE, "recommend" ])
+options = ClientOptions([ClientOptions.PHASE, "recommend"])
 zingg = EZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```
@@ -563,7 +562,7 @@ For 100k records use 0.1–0.5. For 1M records use 0.01–0.05. If `findTraining
 #### Step 17: Find candidate pairs
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "findTrainingData" ])
+options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
 zingg = EZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```
@@ -571,7 +570,7 @@ zingg.initAndExecute()
 #### Step 18: Load pairs for labeling
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "label" ])
+options = ClientOptions([ClientOptions.PHASE, "label"])
 zingg = EZinggWithSpark(args, options)
 zingg.init()
 
@@ -612,8 +611,7 @@ print(f"You have accumulated {n_uncer} pairs labeled as uncertain.")
 Run `generateDocs` after labeling and before training to inspect training data quality. Produces readable HTML documentation of your labeled pairs—both matches and non-matches.
 
 ```python
-options = ClientOptions([
-    ClientOptions.PHASE, "generateDocs"])
+options = ClientOptions([ClientOptions.PHASE, "generateDocs"])
 zingg = EZinggWithSpark(args, options)
 zingg.initAndExecute()
 
@@ -635,7 +633,7 @@ _**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\*\*\*\*\*
 #### **Step 21: Train the model**
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "train" ])
+options = ClientOptions([ClientOptions.PHASE, "train"])
 zingg = EZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```
@@ -643,7 +641,7 @@ zingg.initAndExecute()
 #### Step 22: Run the match
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "match" ])
+options = ClientOptions([ClientOptions.PHASE, "match"])
 zingg = EZinggWithSpark(args, options)
 zingg.initAndExecute()
 ```
@@ -694,7 +692,7 @@ incrArgs.setOutputTmp(outputTmpPipe)
 #### Step 25: Run incremental
 
 ```python
-options = ClientOptions([ ClientOptions.PHASE, "runIncremental" ])
+options = ClientOptions([ClientOptions.PHASE, "runIncremental"])
 zingg = EZinggWithSpark(incrArgs, options)
 zingg.initAndExecute()
 ```
