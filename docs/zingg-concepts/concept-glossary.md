@@ -4,7 +4,7 @@ description: >-
   term to expand.
 ---
 
-# Concept Glossary
+# Frequently Asked Questions
 
 {% hint style="success" icon="right-long" %}
 New to Zingg? Start here. Understanding these terms will make every other page easier to follow.
@@ -92,11 +92,23 @@ Learn how field definitions, match types, and related settings influence matchin
 
 <details>
 
-<summary><strong>Match types</strong></summary>
+<summary><strong>Which Match types should I use?</strong></summary>
 
-The similarity function assigned to each field, telling Zingg how to compare values in that field across records. Zingg provides match types for fuzzy comparison, exact match, email, numeric, text, and several specialized types for alphabet-only or null handling.
+Match types are the combination of similarity functions assigned to each field, telling Zingg how to compare values in that field across records. Zingg provides match types for fuzzy comparison, exact match, email, numeric, text, and several specialized types for alphabet-only or null handling.
 
 Each field receives one match type. The full list of all match types; what they do, when to use each, and examples on [Match Types](how-zingg-learns/match-types/).
+
+A quick reference for the most common fields:
+
+* **Name fields (first name, last name, company name)** → `FUZZY`. Handles spelling variations and abbreviations. Use MAPPING for known alias or nickname lists (Enterprise only).
+* **Email address** → `EMAIL`. Matches before the `@` ; only avoids mismatches from different email domains for the same person.
+* **Date of birth / registration date** → `EXACT`. Dates should not have fuzzy tolerance.
+* **Postal / ZIP code** → `PINCODE`. Handles common format variants.
+* **Street address (full address line)** → `FUZZY` or `ONLY_ALPHABETS_FUZZY` combined with NUMERIC for the street number as a separate field.
+* **Street number / apartment number** → `NUMERIC`. Extracts and compares the number portion only.
+* **Internal record ID (not used for matching)** → `DONT_USE`. Appears in output but excluded from comparison.
+* **Any field frequently null across source systems** → Add `NULL_OR_BLANK` alongside the main match type.
+* **Product descriptions / notes** → TEXT. `Word` overlap comparison for longer free-text fields.
 
 {% hint style="success" icon="right-long" %}
 **Read more:** [Match types](concept-glossary.md#match-types) reference | [Configure Zingg](../running-zingg/configure-zingg.md)
