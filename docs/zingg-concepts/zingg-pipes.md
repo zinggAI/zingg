@@ -2,8 +2,12 @@
 description: Connecting to data
 ---
 
-# Pipes
+# Zingg Pipes
 
+Zingg's abstraction for connecting to data. A pipe encapsulates the source or destination of records; a delta file path, a Snowflake table, a UC table, an RDBMS dataset. Different pipes are configured by passing the format string in the configuration.&#x20;
 
+{% hint style="success" icon="right-long" %}
+**Read more**: [Pipes and Data Connections](../connect-your-data/pipes-and-data-connections.md)
+{% endhint %}
 
 <table><thead><tr><th valign="top">Datastore</th><th valign="top">Format string</th><th valign="top">Edition</th></tr></thead><tbody><tr><td valign="top">CSV / TSV</td><td valign="top">csv</td><td valign="top">All</td></tr><tr><td valign="top">Parquet</td><td valign="top">parquet</td><td valign="top">All</td></tr><tr><td valign="top">Avro</td><td valign="top">avro</td><td valign="top">All</td></tr><tr><td valign="top">JSON</td><td valign="top">json</td><td valign="top">All</td></tr><tr><td valign="top">Delta tables (Databricks)</td><td valign="top">delta</td><td valign="top">All</td></tr><tr><td valign="top">Unity Catalog (Databricks)</td><td valign="top">delta</td><td valign="top">All</td></tr><tr><td valign="top">OneLake / Fabric</td><td valign="top"><code>abfss://</code> path + csv or parquet</td><td valign="top">All</td></tr><tr><td valign="top">Snowflake (as data source via Spark)</td><td valign="top"><code>net.snowflake.spark.snowflake</code></td><td valign="top">All</td></tr><tr><td valign="top">Snowflake (native — no Spark cluster)</td><td valign="top">Configured via Snowflake properties file—no pipe class</td><td valign="top">Enterprise</td></tr><tr><td valign="top">AWS S3</td><td valign="top">csv / parquet via <code>s3a://</code></td><td valign="top">All</td></tr><tr><td valign="top">Google Cloud Storage</td><td valign="top">csv / parquet via <code>gs://</code></td><td valign="top">All</td></tr><tr><td valign="top">BigQuery</td><td valign="top"><code>com.google.cloud.spark.bigquery</code></td><td valign="top">All</td></tr><tr><td valign="top">PostgreSQL / MySQL / JDBC</td><td valign="top"><code>jdbc</code></td><td valign="top">All</td></tr><tr><td valign="top">Cassandra</td><td valign="top"><code>org.apache.spark.sql.cassandra</code></td><td valign="top">All</td></tr><tr><td valign="top">MongoDB</td><td valign="top">mongo</td><td valign="top">All</td></tr><tr><td valign="top">Neo4j</td><td valign="top"><code>org.neo4j.spark.DataSource</code></td><td valign="top">All</td></tr><tr><td valign="top">Exasol</td><td valign="top"><code>com.exasol.spark</code></td><td valign="top">All</td></tr><tr><td valign="top">Redshift</td><td valign="top"><code>jdbc</code> (redshift driver)</td><td valign="top">All</td></tr></tbody></table>

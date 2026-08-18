@@ -36,9 +36,9 @@
 * [Z Cluster and Zingg ID](zingg-concepts/z-cluster-and-zingg-id.md)
 * [Community vs Enterprise](zingg-concepts/community-vs-enterprise/README.md)
   * [Migrating from Community to Enterprise (Content to be Added)](zingg-concepts/community-vs-enterprise/migrating-from-community-to-enterprise-content-to-be-added.md)
-* [Pipes](zingg-concepts/pipes.md)
-* [Concept Glossary](zingg-concepts/concept-glossary.md)
+* [Zingg Pipes](zingg-concepts/zingg-pipes.md)
 * [Zingg Phases](zingg-concepts/zingg-phases.md)
+* [Concept Glossary](zingg-concepts/concept-glossary.md)
 
 ## Running Zingg
 

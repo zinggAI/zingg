@@ -219,11 +219,7 @@ Explore the settings, inputs, and preprocessing concepts that determine how reco
 
 <summary><strong>Pipes</strong></summary>
 
-Zingg's abstraction for connecting to data. A pipe encapsulates the source or destination of records; a CSV file path, a Snowflake table, a BigQuery dataset, a Cassandra keyspace. `CsvPipe`, `SnowflakePipe`, `BigQueryPipe`, and the generic `Pipe` class are the main pipe types in Community. Enterprise adds `ECsvPipe` and `UCPipe`.
 
-{% hint style="success" icon="right-long" %}
-**Read more**: [Pipes and Data Connections](../connect-your-data/pipes-and-data-connections.md)
-{% endhint %}
 
 </details>
 

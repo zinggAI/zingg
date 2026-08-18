@@ -304,7 +304,7 @@ DOCS_DIR = zinggDir + "/" + modelId + "/docs/"
 displayHTML(open(DOCS_DIR + "model.html", 'r').read())
 ```
 
-_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****&#x20;****HTML output rendered inside a Databricks notebook showing labeled pair examples. Tanwi to check with team for screenshot from a live notebook run. Even a small portion of the rendered HTML is sufficient — it tells the reader what to expect before they run it. Place: below the****&#x20;****`displayHTML`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*line.**_
+_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****&#x20;****HTML output rendered inside a Databricks notebook showing labeled pair examples. Tanwi to check with team for screenshot from a live notebook run. Even a small portion of the rendered HTML is sufficient — it tells the reader what to expect before they run it. Place: below the****&#x20;****`displayHTML`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*line.**_
 {% endtab %}
 
 {% tab title="Enterprise" %}
@@ -626,7 +626,7 @@ data_html = "\n".join(r.value for r in data_doc.collect())
 displayHTML(data_html)
 ```
 
-_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*output rendered inside a Databricks notebook showing labeled pair examples in HTML. Tanwi to check with team for screenshot from a live notebook run. Can reuse the OS version if the output looks the same.**_
+_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*output rendered inside a Databricks notebook showing labeled pair examples in HTML. Tanwi to check with team for screenshot from a live notebook run. Can reuse the OS version if the output looks the same.**_
 
 ### Notebook 05: Train and match
 

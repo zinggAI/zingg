@@ -1,10 +1,16 @@
+---
+description: Steps in the entity resolution pipeline
+---
+
 # Zingg Phases
+
+Zingg programs run different aspects of the entity resolution pipeline. Each aspect covers one aspect of the pipeline. Here are the phases Zingg defines.&#x20;
 
 <details>
 
 <summary><strong><code>findTrainingData</code></strong></summary>
 
-Scans your dataset and selects the most informative candidate record pairs for labeling - edge cases where the model has the most to learn. Candidate pairs are written to `UNMARKED_DIR`.
+Scans your dataset and selects the most informative candidate record pairs for labeling - edge cases where the model has the most to learn. Candidate pairs are written within the warehouse/lakehouse based on your configuration.&#x20;
 
 </details>
 
@@ -12,7 +18,7 @@ Scans your dataset and selects the most informative candidate record pairs for l
 
 <summary><strong><code>label</code></strong></summary>
 
-Loads the candidate pairs from `findTrainingData` and presents them in a labeling widget. You mark each pair as Match, No Match, or Uncertain. Labels are saved to `MARKED_DIR`.
+Loads the candidate pairs from `findTrainingData` and presents them in a labeling widget. You mark each pair as Match, No Match, or Uncertain.&#x20;
 
 </details>
 
@@ -20,7 +26,7 @@ Loads the candidate pairs from `findTrainingData` and presents them in a labelin
 
 <summary><strong><code>train</code></strong></summary>
 
-Builds the blocking and similarity models from your labeled pairs. Both models are persisted to `zinggDir/modelId`. Once trained, the model can be reused on new data without retraining.
+Builds the blocking and similarity models from your labeled pairs. Both models are persisted to the customer environment. Once trained, the model can be reused on new data without retraining.
 
 </details>
 
