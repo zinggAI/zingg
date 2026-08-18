@@ -16,7 +16,7 @@
     * [Blocking Model](zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
     * [Similarity Model](zingg-concepts/how-zingg-learns/zingg-models/similarity-model.md)
   * [Field Definition](zingg-concepts/how-zingg-learns/field-definition.md)
-  * [Match Types](zingg-concepts/how-zingg-learns/match-types/README.md)
+  * [Match Type](zingg-concepts/how-zingg-learns/match-types/README.md)
     * [FUZZY Match](zingg-concepts/how-zingg-learns/match-types/fuzzy-match.md)
     * [FUZZY\_OPTIMISED Match](zingg-concepts/how-zingg-learns/match-types/fuzzy_optimised-match.md)
     * [EXACT Match](zingg-concepts/how-zingg-learns/match-types/exact-match.md)
@@ -39,7 +39,6 @@
   * [Migrating from Community to Enterprise (Content to be Added)](zingg-concepts/community-vs-enterprise/migrating-from-community-to-enterprise-content-to-be-added.md)
 * [Zingg Pipes](zingg-concepts/zingg-pipes.md)
 * [Zingg Phases](zingg-concepts/zingg-phases.md)
-* [Frequently Asked Questions](zingg-concepts/concept-glossary.md)
 * [Platform Infrastructure vs Data Platform](zingg-concepts/platform-infrastructure-vs-data-platform.md)
 
 ## Running Zingg
@@ -140,6 +139,7 @@
 ## Frequently Asked Questions
 
 * [Frequently Asked Questions](frequently-asked-questions/frequently-asked-questions.md)
+* [Frequently Asked Questions](frequently-asked-questions/concept-glossary.md)
 
 ## Security and Privacy
 

@@ -1,5 +1,5 @@
 ---
-description: from pairs to clusters
+description: From pairs to clusters
 ---
 
 # The graph algorithm

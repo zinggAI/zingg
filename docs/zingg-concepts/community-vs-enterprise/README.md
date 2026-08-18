@@ -82,6 +82,6 @@ Ready to move to Enterprise?
 
 This is the foundational difference from Community, where `Z_Cluster` is non-persistent and cannot be safely stored downstream.
 
-* [Zingg ID](../concept-glossary.md#zingg-id)
+* [Zingg ID](../../frequently-asked-questions/concept-glossary.md#zingg-id)
 * [Z Cluster and Zingg ID](../z-cluster-and-zingg-id.md)
 {% endhint %}

@@ -11,7 +11,7 @@ Zingg works in phases. Each phase performs a specific task and produces an outpu
 The phases below represent the complete workflow from first setup to production matching. This page describes the workflow you follow once Zingg is installed.
 
 {% hint style="success" icon="right-long" %}
-This page describes the workflow you follow once Zingg is installed. \
+This page describes the workflow you follow once Zingg is installed.\
 For installing Zingg on your platform → [Install Zingg](install-zingg.md).
 
 New to entity resolution or want to understand the problem space before diving in? → E[ntity Resolution](../zingg-concepts/entity-resolution/)
@@ -128,7 +128,7 @@ full Python API support. [Talk to us about Enterprise](https://www.zingg.ai/comp
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* Understanding the concepts behind each phase - [Overview section](../README.md) | [Concepts glossary](../zingg-concepts/concept-glossary.md)
+* Understanding the concepts behind each phase - [Overview section](../) | [Concepts glossary](../frequently-asked-questions/concept-glossary.md)
 * [Configure Zingg](configure-zingg.md) - full configuration reference
 * [Interpret Output Scores](../interpreting-results/interpret-output-scores.md) - every output column and how to read scores
 * [Zingg\_ID and Z\_Cluster](../zingg-concepts/z-cluster-and-zingg-id.md) - Community vs Enterprise identifiers in your output

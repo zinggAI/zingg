@@ -36,7 +36,7 @@ The process by which Zingg builds its matching model from your feedback rather t
 typically enough to train a high-accuracy model on datasets of 100,000+ records.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [How Zingg learns](how-zingg-learns/) | [Label training pairs](../running-zingg/label-training-pairs.md)
+**Read more:** [How Zingg learns](../zingg-concepts/how-zingg-learns/) | [Label training pairs](../running-zingg/label-training-pairs.md)
 {% endhint %}
 
 </details>
@@ -51,7 +51,7 @@ Probabilistic matching handles variations in names, addresses, and other messy r
 \&#xNAN;_Available in all editions_
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [Deterministic vs probabilistic matching](zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
+**Read more:** [Deterministic vs probabilistic matching](../zingg-concepts/zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
 {% endhint %}
 
 </details>
@@ -66,7 +66,7 @@ Both approaches run in a single flow; deterministic rules are evaluated first, a
 \&#xNAN;_**Enterprise only**_
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [Deterministic vs probabilistic matching](zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
+**Read more:** [Deterministic vs probabilistic matching](../zingg-concepts/zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
 {% endhint %}
 
 </details>
@@ -80,7 +80,7 @@ The logic that turns pairwise match decisions into complete clusters. If Record 
 Zingg uses a graph clustering algorithm to apply this logic correctly without creating false chains from weak indirect matches. This is why records in a cluster can appear at varying confidence levels they matched transitively, not always directly.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [How Zingg learns](how-zingg-learns/)
+**Read more:** [How Zingg learns](../zingg-concepts/how-zingg-learns/)
 {% endhint %}
 
 </details>
@@ -96,7 +96,7 @@ Learn how field definitions, match types, and related settings influence matchin
 
 Match types are the combination of similarity functions assigned to each field, telling Zingg how to compare values in that field across records. Zingg provides match types for fuzzy comparison, exact match, email, numeric, text, and several specialized types for alphabet-only or null handling.
 
-Each field receives one match type. The full list of all match types; what they do, when to use each, and examples on [Match Types](how-zingg-learns/match-types/).
+Each field receives one match type. The full list of all match types; what they do, when to use each, and examples on [Match Types](../zingg-concepts/how-zingg-learns/match-types/).
 
 A quick reference for the most common fields:
 
@@ -158,7 +158,7 @@ The cluster identifier used in Zingg Community (Open Source). Records Zingg grou
 `Z Cluster` is non-persistent; re-running the job may produce different IDs for the same data. It cannot be safely referenced in downstream systems across runs.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [How Zingg learns](how-zingg-learns/)
+**Read more:** [How Zingg learns](../zingg-concepts/how-zingg-learns/)
 {% endhint %}
 
 </details>
@@ -172,7 +172,7 @@ A globally unique, persistent identifier assigned to each resolved entity in Zin
 Unlike Z Cluster, the Zingg ID does not change between runs. The downstream systems can store and reference it with confidence it will remain stable across incremental updates. _**Enterprise only**_
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [Z Cluster and Zingg ID](z-cluster-and-zingg-id.md)
+**Read more:** [Z Cluster and Zingg ID](../zingg-concepts/z-cluster-and-zingg-id.md)
 {% endhint %}
 
 </details>
@@ -187,7 +187,7 @@ Zingg's underlying data structure representing resolved entities and the relatio
 * In Enterprise, it is persistent and updated incrementally: new and changed records are incorporated without a full re-run, and Zingg IDs serve as stable node identifiers within it.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [Identity graph](identity-graph.md) | [Run incremental matching](../running-zingg/run-incremental-matching.md)
+**Read more:** [Identity graph](../zingg-concepts/identity-graph.md) | [Run incremental matching](../running-zingg/run-incremental-matching.md)
 {% endhint %}
 
 </details>
@@ -201,7 +201,7 @@ The single, authoritative version of an entity is built by combining the best av
 For example, a retail customer appears in an e-commerce platform, a loyalty program, and a support system under slightly different names and addresses. The golden record merges the most complete and reliable field values from each into a single trusted profile. Zingg identifies which records belong together and the golden record is typically constructed downstream in a data platform or MDM layer that consumes them.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [What is Zingg](../) | [Community vs Enterprise](community-vs-enterprise/).
+**Read more:** [What is Zingg](../) | [Community vs Enterprise](../zingg-concepts/community-vs-enterprise/).
 {% endhint %}
 
 </details>

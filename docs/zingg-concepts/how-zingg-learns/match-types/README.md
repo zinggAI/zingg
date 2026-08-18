@@ -1,10 +1,8 @@
 ---
-description: >-
-  The 12 similarity functions Zingg supports what each does, when to use it, and
-  which are  Enterprise only.
+description: Abstraction for similarity algorithms in human understandable terms
 ---
 
-# Match Types
+# Match Type
 
 Every field in your Zingg configuration gets a match type assigned to it. The match type tells\
 Zingg which similarity function to apply when comparing values in that field across two records. Each `dataType` has predefined features for the given `matchType`. For example, the `string` type with `FUZZY` match is configured for Affine and Jaro-Winkler string comparison.

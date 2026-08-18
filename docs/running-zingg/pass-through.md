@@ -99,6 +99,6 @@ _**CHECK WITH SONAL - Enterprise Snowflake content for this topic to be provivde
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* Pass Through concept in the glossary - [Concepts glossary](../zingg-concepts/concept-glossary.md)
+* Pass Through concept in the glossary - [Concepts glossary](../frequently-asked-questions/concept-glossary.md)
 * Configure Zingg where Pass Through is set up - [Configure Zingg](configure-zingg.md)
 {% endhint %}
