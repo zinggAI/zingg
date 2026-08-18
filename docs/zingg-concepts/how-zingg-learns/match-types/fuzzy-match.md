@@ -59,6 +59,7 @@ Use `ONLY_ALPHABETS_FUZZY` for the street name component (ignores numbers, appli
 Never use `FUZZY` on fields that are reliable unique identifiers. `FUZZY` tolerance on an SSN field means "123-45-6789" and "123-45-6780" could score above the match threshold, that is a false positive you cannot afford in a compliance context.
 
 Use `EXACT` for trusted identifiers.
+
 </details>
 
 <details>
@@ -83,59 +84,9 @@ Use `PINCODE` not `FUZZY` for postal codes. `PINCODE` is built to handle the spe
 
 `FUZZY` is computationally heavier than `FUZZY_OPTIMISED`. For production runs on large datasets where you want the same matching quality with faster results, use `FUZZY_OPTIMISED` instead.
 
-
 </details>
 
-### Configuring `FUZZY`
 
-{% tabs %}
-{% tab title="Python" %}
-### **Community**
-
-```python
-from zingg.client import*
-
-fname = FieldDefinition("fname", "string", MatchType.FUZZY)
-lname = FieldDefinition("lname", "string", MatchType.FUZZY)
-```
-
-### **Enterprise**
-
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zingg.client import *
-
-fname = EFieldDefinition("fname", "string", MatchType.FUZZY)
-lname = EFieldDefinition("lname", "string", MatchType.FUZZY)
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise).
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [
-    {
-      "fieldName" : "fname",
-      "matchType" : "fuzzy",
-      "fields" : "fname",
-      "dataType" : "string"
-    },
-    {
-      "fieldName" : "lname",
-      "matchType" : "fuzzy",
-      "fields" : "lname",
-      "dataType" : "string"
-    }
-  ]
-}
-```
-
-{% endtab %}
-{% endtabs %}
 
 {% hint style="success" icon="right-long" %}
 **Related match types:**
