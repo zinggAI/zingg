@@ -201,7 +201,7 @@ The single, authoritative version of an entity is built by combining the best av
 For example, a retail customer appears in an e-commerce platform, a loyalty program, and a support system under slightly different names and addresses. The golden record merges the most complete and reliable field values from each into a single trusted profile. Zingg identifies which records belong together and the golden record is typically constructed downstream in a data platform or MDM layer that consumes them.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [What is Zingg](../) | [Community vs Enterprise](../zingg-concepts/community-vs-enterprise/).
+**Read more:** [What is Zingg](../) | [Community vs Enterprise](../community-and-enterprise-editions/community-vs-enterprise/).
 {% endhint %}
 
 </details>

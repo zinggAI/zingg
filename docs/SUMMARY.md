@@ -37,8 +37,11 @@
 * [Zingg Pipes](zingg-concepts/zingg-pipes.md)
 * [Zingg Phases](zingg-concepts/zingg-phases.md)
 * [Platform Infrastructure vs Data Platform](zingg-concepts/platform-infrastructure-vs-data-platform.md)
-* [Community vs Enterprise](zingg-concepts/community-vs-enterprise/README.md)
-  * [Migrating from Community to Enterprise (Content to be Added)](zingg-concepts/community-vs-enterprise/migrating-from-community-to-enterprise-content-to-be-added.md)
+
+## Community And Enterprise Editions
+
+* [Community vs Enterprise](community-and-enterprise-editions/community-vs-enterprise/README.md)
+  * [Migrating from Community to Enterprise (Content to be Added)](community-and-enterprise-editions/community-vs-enterprise/migrating-from-community-to-enterprise-content-to-be-added.md)
 
 ## Running Zingg
 

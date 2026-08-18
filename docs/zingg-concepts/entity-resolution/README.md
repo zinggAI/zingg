@@ -157,5 +157,5 @@ Need entity resolution at production scale with persistent identity and incremen
 processing?
 
 * [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact)
-* [Community vs Enterprise](../community-vs-enterprise/)<br>
+* [Community vs Enterprise](../../community-and-enterprise-editions/community-vs-enterprise/)<br>
 {% endhint %}
