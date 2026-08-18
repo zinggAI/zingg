@@ -1,5 +1,5 @@
 ---
-description: Where Zingg runs, which data is resolves
+description: Where Zingg runs, which data it resolves
 ---
 
 # Platform Infrastructure vs Data Platform
