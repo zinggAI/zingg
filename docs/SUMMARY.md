@@ -15,6 +15,7 @@
   * [Zingg Models](zingg-concepts/how-zingg-learns/zingg-models/README.md)
     * [Blocking Model](zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
     * [Similarity Model](zingg-concepts/how-zingg-learns/zingg-models/similarity-model.md)
+  * [Field Definition](zingg-concepts/how-zingg-learns/field-definition.md)
   * [Match Types](zingg-concepts/how-zingg-learns/match-types/README.md)
     * [FUZZY Match](zingg-concepts/how-zingg-learns/match-types/fuzzy-match.md)
     * [FUZZY\_OPTIMISED Match](zingg-concepts/how-zingg-learns/match-types/fuzzy_optimised-match.md)
