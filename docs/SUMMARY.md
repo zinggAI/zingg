@@ -9,6 +9,7 @@
   * [The problems Zingg is built to solve](zingg-concepts/zingg-entity-resolution-platform/the-problems-zingg-is-built-to-solve-and-why-they-are-harder-than-it-looks.md)
   * [Deterministic vs Probabilistic Matching](zingg-concepts/zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
   * [Deduplication, linking and resolving](zingg-concepts/zingg-entity-resolution-platform/deduplication-linking-and-resolving.md)
+  * [Incremental Flow](zingg-concepts/zingg-entity-resolution-platform/incremental-flow.md)
 * [How Zingg Learns](zingg-concepts/how-zingg-learns/README.md)
   * [Zingg Active Learning](zingg-concepts/how-zingg-learns/zingg-active-learning.md)
   * [Zingg Models](zingg-concepts/how-zingg-learns/zingg-models/README.md)
@@ -31,8 +32,7 @@
     * [DONT\_USE Match](zingg-concepts/how-zingg-learns/match-types/dont_use-match.md)
     * [MAPPING\_(FILENAME) Match](zingg-concepts/how-zingg-learns/match-types/mapping_-filename-match.md)
 * [The graph algorithm](zingg-concepts/the-graph-algorithm.md)
-* [Identity Graph](zingg-concepts/identity-graph/README.md)
-  * [Standardize Fields and Results](zingg-concepts/identity-graph/standardize-fields-and-results.md)
+* [Identity Graph](zingg-concepts/identity-graph.md)
 * [Z Cluster and Zingg ID](zingg-concepts/z-cluster-and-zingg-id.md)
 * [Community vs Enterprise](zingg-concepts/community-vs-enterprise/README.md)
   * [Migrating from Community to Enterprise (Content to be Added)](zingg-concepts/community-vs-enterprise/migrating-from-community-to-enterprise-content-to-be-added.md)
@@ -63,6 +63,10 @@
 * [Cluster Approval](running-zingg/cluster-approval.md)
 * [Compare Model Results](running-zingg/compare-model-results.md)
 * [Knowledge Graph](running-zingg/knowledge-graph.md)
+
+***
+
+* [Standardize Fields and Results](standardize-fields-and-results.md)
 
 ## Connect Your Data
 

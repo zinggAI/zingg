@@ -62,7 +62,7 @@ Use this column to:
 **Read more:**
 
 * [Interpret Output Scores](../interpreting-results/interpret-output-scores.md) - for the full reference of every Zingg output column
-* [Identity Graph](identity-graph/) - how Zingg's resolved entities form a graph structure
+* [Identity Graph](identity-graph.md) - how Zingg's resolved entities form a graph structure
 * [Run Incremental Matching](../running-zingg/run-incremental-matching.md) - how Zingg IDs persist when new records arrive
 * [Reassign Zingg ID](../running-zingg/reassign-zingg-id.md) - preserve Zingg IDs across model retraining or platform migration
 * [Concept Glossary](concept-glossary.md) - every Zingg term in one place

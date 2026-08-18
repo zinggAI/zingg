@@ -15,7 +15,7 @@ In Community, clusters are assigned a `Z Cluster` that is non-persistent between
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* [Identity Graph](identity-graph/)
+* [Identity Graph](identity-graph.md)
 * [Z Cluster ID vs Zingg ID](z-cluster-and-zingg-id.md)
 * [Zingg ID](/broken/pages/9QpDFW20AMt0UJ4cEW6b)
 {% endhint %}

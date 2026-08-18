@@ -175,21 +175,7 @@ Zingg's underlying data structure representing resolved entities and the relatio
 * In Enterprise, it is persistent and updated incrementally: new and changed records are incorporated without a full re-run, and Zingg IDs serve as stable node identifiers within it.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [Identity graph](identity-graph/) | [Run incremental matching](../running-zingg/run-incremental-matching.md)
-{% endhint %}
-
-</details>
-
-<details>
-
-<summary><strong>Incremental flow</strong></summary>
-
-The process of updating the identity graph with new, changed, or deleted records without re-running the full match across the entire dataset. Zingg incorporates incoming records into existing clusters, handles cluster merges and unmerges automatically, generates new Zingg IDs for records that do not match any existing cluster, and preserves human-approved decisions so they are not overridden.
-
-Many tools claim incremental capability but cannot maintain match quality and stable IDs simultaneously. This feature is a key Zingg Enterprise differentiator. _Enterprise only_.
-
-{% hint style="success" icon="right-long" %}
-**Read more:** [Run incremental matching](../running-zingg/run-incremental-matching.md)
+**Read more:** [Identity graph](identity-graph.md) | [Run incremental matching](../running-zingg/run-incremental-matching.md)
 {% endhint %}
 
 </details>
@@ -214,14 +200,6 @@ For example, a retail customer appears in an e-commerce platform, a loyalty prog
 
 Learn how data is prepared and configured for matching.\
 Explore the settings, inputs, and preprocessing concepts that determine how records enter and move through the matching pipeline.
-
-<details>
-
-<summary><strong>Pipes</strong></summary>
-
-
-
-</details>
 
 <details>
 
@@ -253,21 +231,6 @@ also supports Snowflake native compute, which requires no Spark cluster at all.
 
 {% hint style="success" icon="right-long" %}
 **Read more:** [Install Zingg](../running-zingg/install-zingg.md) | [Run on cloud](../platform-guides/platform-guide-for-azure-databricks.md)
-{% endhint %}
-
-</details>
-
-<details>
-
-<summary><strong>Cloud infrastructure vs data platform</strong></summary>
-
-Two things that are easy to conflate but mean different things in Zingg's context. Cloud infrastructure is where computation happens, such as the Spark service or Snowflake compute that processes your data. A data platform is where your data lives -Snowflake.\
-Databricks, BigQuery, Redshift, or a file store like S3.
-
-These are independent: you can have your data in Snowflake but run Zingg's computation on Spark. Zingg connects to the data platform and runs computations on whichever engine you configure.
-
-{% hint style="success" icon="right-long" %}
-**Read more:** [Connect data](../connect-your-data/pipes-and-data-connections.md) | [Install Zingg](../running-zingg/install-zingg.md)
 {% endhint %}
 
 </details>

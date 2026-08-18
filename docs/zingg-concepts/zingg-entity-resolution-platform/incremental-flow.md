@@ -1,0 +1,14 @@
+---
+description: Continuously updated identity graph
+---
+
+# Incremental Flow
+
+The process of updating the identity graph with new, changed, or deleted records without re-running the full match across the entire dataset is known as incremental flow in Zingg. Zingg incorporates incoming records into existing clusters, handles cluster merges and unmerges automatically, generates new Zingg IDs for records that do not match any existing cluster, and preserves human-approved decisions so they are not overridden.
+
+Many tools claim incremental capability but cannot maintain match quality and stable IDs simultaneously. This feature is a key Zingg Enterprise differentiator. _Enterprise only_.
+
+{% hint style="success" icon="right-long" %}
+**Read more:** [Run incremental matching](../../running-zingg/run-incremental-matching.md)
+{% endhint %}
+

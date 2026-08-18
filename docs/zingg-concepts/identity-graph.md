@@ -43,8 +43,8 @@ Enterprise gives you the same graph with stable `Zingg IDs` , so the graph can g
 
 **Read more**:
 
-* [Z Cluster vs Zingg ID](../z-cluster-and-zingg-id.md)
-* [Zingg Models](../how-zingg-learns/zingg-models/)
-* [Run incremental matching](../../running-zingg/run-incremental-matching.md)
-* [Community Vs Enterprise](../community-vs-enterprise/)
+* [Z Cluster vs Zingg ID](z-cluster-and-zingg-id.md)
+* [Zingg Models](how-zingg-learns/zingg-models/)
+* [Run incremental matching](../running-zingg/run-incremental-matching.md)
+* [Community Vs Enterprise](community-vs-enterprise/)
 {% endhint %}
