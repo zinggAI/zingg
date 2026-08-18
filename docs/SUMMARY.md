@@ -97,7 +97,6 @@
 * [Configure Field Standardization](tuning/configure-field-standardization.md)
 * [Improve Accuracy](tuning/improve-accuracy/README.md)
   * [Remove Stopwords (Optional)](tuning/improve-accuracy/remove-stopwords-optional.md)
-* [Custom Blocking and Similarity](tuning/custom-blocking-and-similarity.md)
 * [Blocking Strategies: DEFAULT vs WIDER](tuning/blocking-strategy.md)
 
 ## Interpreting Results

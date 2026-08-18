@@ -21,8 +21,8 @@ The most reliable way to improve accuracy is to label more pairs. Return to the 
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* Label training pairs - [Label training pairs](../../running-zingg/label-training-pairs.md)&#x20;
-* Create training data - [Create training data ](../../running-zingg/create-training-data.md)
+* Label training pairs - [Label training pairs](../../running-zingg/label-training-pairs.md)
+* Create training data - [Create training data](../../running-zingg/create-training-data.md)
 {% endhint %}
 
 ### Step 2: Check your field match types
@@ -56,5 +56,4 @@ If Zingg is missing matches that you know exist (false negatives), the blocking 
 ### Step 5: Custom blocking and similarity
 
 For advanced use cases, you can define your own blocking and similarity functions to replace\
-or extend Zingg's built-in approaches. See [Custom Blocking and Similarity](../custom-blocking-and-similarity.md) for advanced tuning approaches.
-
+or extend Zingg's built-in approaches. See [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7) for advanced tuning approaches.

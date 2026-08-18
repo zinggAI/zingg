@@ -2,6 +2,8 @@
 description: >-
   Choose between DEFAULT and WIDER blocking strategies to control how Zingg
   orders candidate fields when building the blocking tree.
+tags:
+  - enterprise-only
 ---
 
 # Blocking Strategies: DEFAULT vs WIDER
@@ -12,12 +14,12 @@ description: >-
 
 ## What each strategy does
 
-Zingg builds a blocking tree greedily. At every node it asks: *of the eligible field/hash-function combinations, which one splits the group into smaller pieces?* That combination becomes the split at this node, and the process recurses into each resulting group.
+Zingg builds a blocking tree greedily. At every node it asks: _of the eligible field/hash-function combinations, which one splits the group into smaller pieces?_ That combination becomes the split at this node, and the process recurses into each resulting group.
 
-The **strategy** controls only the *order* candidate fields are offered at each node - never the comparison logic itself:
+The **strategy** controls only the _order_ candidate fields are offered at each node - never the comparison logic itself:
 
 * **`DEFAULT`** - every node is offered your `fieldDefinition` list in the exact order you configured it. The field listed first is always tried first, everywhere in the tree.
-* **`WIDER`** - each node looks at which field its *parent* node just used, and pushes that field to the back of the candidate list for this node, so the very next field in line gets first consideration instead. This repeats going down the tree, so the field that "won" one level isn't automatically favored again immediately below it.
+* **`WIDER`** - each node looks at which field its _parent_ node just used, and pushes that field to the back of the candidate list for this node, so the very next field in line gets first consideration instead. This repeats going down the tree, so the field that "won" one level isn't automatically favored again immediately below it.
 
 <figure><img src="../.gitbook/assets/blocking-strategy-tree.png" alt="DEFAULT vs WIDER field ordering down the blocking tree"><figcaption><p>DEFAULT vs WIDER field ordering down the blocking tree</p></figcaption></figure>
 
@@ -74,5 +76,5 @@ args.setBlockingModel("WIDER")
 * Set up field definitions and the arguments object this key belongs to → [Configure Zingg](../running-zingg/configure-zingg.md)
 * Check block-size distribution and coverage after changing strategy → [Verify Blocking](../running-zingg/verify-blocking.md)
 * Blocking model concept and how it fits in the pipeline → [Blocking Model](../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
-* Define your own blocking functions for specialized data patterns → [Custom Blocking and Similarity](custom-blocking-and-similarity.md)
+* Define your own blocking functions for specialized data patterns → [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7)
 {% endhint %}
