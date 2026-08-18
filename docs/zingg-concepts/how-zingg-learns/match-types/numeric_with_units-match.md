@@ -1,7 +1,7 @@
 ---
 description: >-
-  Extracts product codes or numbers with units and compares how many are the same across both values. Built for product
-  specification fields.
+  Extracts product codes or numbers with units and compares how many are the
+  same across both values. Built for product specification fields.
 ---
 
 # NUMERIC\_WITH\_UNITS Match
@@ -10,9 +10,9 @@ description: >-
 
 `NUMERIC_WITH_UNITS` extracts contiguous alphanumeric tokens that contain a digit - the number and any unit letters glued directly to it, like "16gb" or "2.4GHz" - and compares how many of those tokens are shared across two records.
 
-**The unit only glues to the number when there's no space between them.** "16gb" extracts as the single token `16gb`, but "16 GB" (with a space) extracts as just `16` - the unit is dropped, not glued. So a number and its unit written with a space in one record and without a space in the other extract to *different* tokens and won't match: `{16gb}` vs `{16}` share nothing. There is no unit-conversion logic either - "500ml" and "0.5L" extract to `{500ml}` and `{0.5L}`, which share nothing, regardless of them being the same physical quantity.
+**The unit only glues to the number when there's no space between them.** "16gb" extracts as the single token `16gb`, but "16 GB" (with a space) extracts as just `16` - the unit is dropped, not glued. So a number and its unit written with a space in one record and without a space in the other extract to _different_ tokens and won't match: `{16gb}` vs `{16}` share nothing. There is no unit-conversion logic either - "500ml" and "0.5L" extract to `{500ml}` and `{0.5L}`, which share nothing, regardless of them being the same physical quantity.
 
-**Null handling is a third, distinct behavior**, different from both `NUMERIC` and every other match type: if *both* sides extract zero tokens (both null/blank, or both have no digit anywhere), it scores a match (1.0). But if only *one* side extracts zero tokens - including one side being null while the other has real tokens - it scores a non-match (0.0), the same as `NUMERIC`.
+**Null handling is a third, distinct behavior**, different from both `NUMERIC` and every other match type: if _both_ sides extract zero tokens (both null/blank, or both have no digit anywhere), it scores a match (1.0). But if only _one_ side extracts zero tokens - including one side being null while the other has real tokens - it scores a non-match (0.0), the same as `NUMERIC`.
 
 ### What `NUMERIC_WITH_UNITS` matches and what it does not
 
@@ -48,50 +48,11 @@ Use `NUMERIC` for address fields. "42 Main Street" does not have units. `NUMERIC
 
 </details>
 
-{% tabs %}
-{% tab title="Python" %}
-### **Community**
-
-```python
-from zingg.client import *
-
-weight = FieldDefinition("weight", "string", MatchType.NUMERIC_WITH_UNITS)
-```
-
-### **Enterprise**
-
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zingg.client import *
-
-weight = EFieldDefinition("weight", "string", MatchType.NUMERIC_WITH_UNITS)
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). 
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [ {
-    "fieldName" : "weight",
-    "matchType" : "numeric_with_units",
-    "fields" : "weight",
-    "dataType" : "string"
-  } ]
-}
-```
-
-{% endtab %}
-{% endtabs %}
-
 {% hint style="success" icon="right-long" %}
 **Related types**:
 
 * `NUMERIC` - for numbers without unit
 * `TEXT` - for the descriptive parts of product fields
 
-**Read more**: [Match types](README.md)
+**Read more**: [Match types](./)
 {% endhint %}

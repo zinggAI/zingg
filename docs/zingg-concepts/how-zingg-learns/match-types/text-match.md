@@ -60,50 +60,11 @@ If your free-text fields have typos and spelling errors, `FUZZY` handles those b
 
 </details>
 
-{% tabs %}
-{% tab title="Python" %}
-### **Community**
-
-```python
-from zingg.client import *
-
-description = FieldDefinition("description", "string", MatchType.TEXT)
-```
-
-### **Enterprise**
-
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zingg.client import *
-
-description = EFieldDefinition("description", "string", MatchType.TEXT)
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). 
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [ {
-    "fieldName" : "description",
-    "matchType" : "text",
-    "fields" : "description",
-    "dataType" : "string"
-  } ]
-}
-```
-
-{% endtab %}
-{% endtabs %}
-
 {% hint style="info" icon="right-long" %}
 **Related types:**
 
 * `FUZZY` - better for short fields and when typos are present
 * `NUMERIC_WITH_UNITS` - Use for product description fields
 
-**Read more**: [Match Types](README.md)
+**Read more**: [Match Types](./)
 {% endhint %}

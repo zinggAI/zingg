@@ -70,44 +70,6 @@ For example, a `region_code` field cheaply splits records into non-overlapping c
 
 </details>
 
-{% tabs %}
-{% tab title="Python" %}
-### **Community**
-
-```python
-from zingg.client import *
-rec_id = FieldDefinition("rec_id", "string", MatchType.DONT_USE)
-```
-
-### **Enterprise**
-
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zingg.client import *
-
-rec_id = EFieldDefinition("rec_id", "string", MatchType.DONT_USE)
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). 
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [ {
-    "fieldName" : "rec_id",
-    "matchType" : "dont_use",
-    "fields" : "rec_id",
-    "dataType" : "string"
-  } ]
-}
-```
-
-{% endtab %}
-{% endtabs %}
-
 {% hint style="success" icon="right-long" %}
 **Related types**:
 

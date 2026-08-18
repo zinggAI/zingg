@@ -59,50 +59,11 @@ For "16gb", "500ml", and similar specifications where the unit matters as much a
 
 </details>
 
-{% tabs %}
-{% tab title="Python" %}
-### **Community**
-
-```python
-from zingg.client import *
-
-address = FieldDefinition("address", "string", MatchType.NUMERIC)
-```
-
-### **Enterprise**
-
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zingg.client import *
-
-address = EFieldDefinition("address", "string", MatchType.NUMERIC)
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). 
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [ {
-    "fieldName" : "address",
-    "matchType" : "numeric",
-    "fields" : "address",
-    "dataType" : "string"
-  } ]
-}
-```
-
-{% endtab %}
-{% endtabs %}
-
 {% hint style="success" icon="right-long" %}
 **Related matches:**
 
 * `NUMERIC_WITH_UNITS` - for product codes that include units (16gb, 500ml)
 * `FUZZY` - if you want a single match type covering the whole string
 
-**Read more**: [Match Types](README.md)
+**Read more**: [Match Types](./)
 {% endhint %}

@@ -76,56 +76,6 @@ Never use `EXACT` on name fields. Even internally consistent data has legitimate
 
 </details>
 
-### Configuring `EXACT`
-
-{% tabs %}
-{% tab title="Python" %}
-### **Community**
-
-```python
-from zingg.client import *
-
-ssn = FieldDefinition("ssn", "string", MatchType.EXACT) 
-dob = FieldDefinition("dob", "string", MatchType.EXACT)
-```
-
-### **Enterprise**
-
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zingg.client import *
-
-ssn = EFieldDefinition("ssn", "string", MatchType.EXACT)
-dob = EFieldDefinition("dob", "string", MatchType.EXACT)
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise).
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [
-    {
-      "fieldName" : "ssn",
-      "matchType" : "exact",
-      "fields" : "ssn",
-      "dataType" : "string"
-    },
-    {
-      "fieldName" : "dob",
-      "matchType" : "exact",
-      "fields" : "dob",
-      "dataType" : "string"
-    }
-  ]
-}
-```
-{% endtab %}
-{% endtabs %}
-
 {% hint style="success" icon="right-long" %}
 **Related types:**
 

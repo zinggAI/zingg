@@ -11,7 +11,6 @@ description: >-
 
 `ONLY_ALPHABETS_FUZZY` removes all numeric characters from both field values and then applies fuzzy string similarity to the remaining alphabetic characters. Two values match based on how similar their alphabetic portions are with tolerance for typos, abbreviations, and spelling variants.
 
-
 ### What **`ONLY_ALPHABETS_FUZZY`** matches and what it does not
 
 <table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">42 Main Street</td><td valign="top">44 Main Street</td><td valign="top">Yes - numbers stripped, "Main Street" is identical</td></tr><tr><td valign="top">42 Main St</td><td valign="top">44 Main Street</td><td valign="top">Yes - "Main St" vs "Main Street" scores a high fuzzy similarity</td></tr><tr><td valign="top">42 Main St</td><td valign="top">42 Oak St</td><td valign="top">No - "Main St" vs "Oak St" too different alphabetically</td></tr><tr><td valign="top">[null]</td><td valign="top">Main Street</td><td valign="top">Yes - a null/blank value on either side is an automatic match; add <code>NULL_OR_BLANK</code> if you want nulls excluded</td></tr></tbody></table>
@@ -94,51 +93,13 @@ If your address data is structured enough that `FUZZY` on the full string gives 
 
 </details>
 
-{% tabs %}
-{% tab title="Python" %}
-### **Community**
-
-```python
-from zingg.client import *
-street = FieldDefinition("street", "string", MatchType.ONLY_ALPHABETS_FUZZY)
-```
-
-### **Enterprise**
-
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zingg.client import *
-
-street = EFieldDefinition("street", "string", MatchType.ONLY_ALPHABETS_FUZZY)
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). 
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [ {
-    "fieldName" : "street",
-    "matchType" : "only_alphabets_fuzzy",
-    "fields" : "street",
-    "dataType" : "string"
-  } ]
-}
-```
-
-{% endtab %}
-{% endtabs %}
-
 {% hint style="success" icon="right-long" %}
 **Related types**:
 
 * `NUMERIC` - use this for numeric fields
 * `ONLY_ALPHABETS_EXACT` - use when the name must match exactly (no abbreviation tolerance)
-* `ONLY_ALPHABETS_FUZZY_OPTIMISED` - same match type, faster at scale 
+* `ONLY_ALPHABETS_FUZZY_OPTIMISED` - same match type, faster at scale
 * `FUZZY` - simpler alternative for the full string
 
-**Read more**: [Match Types](README.md)
+**Read more**: [Match Types](./)
 {% endhint %}

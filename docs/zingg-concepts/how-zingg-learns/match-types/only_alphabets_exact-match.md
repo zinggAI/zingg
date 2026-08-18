@@ -71,45 +71,6 @@ Use `ONLY_ALPHABETS_FUZZY` instead when the alphabetic component also has spelli
 
 </details>
 
-{% tabs %}
-{% tab title="Python" %}
-### **Community**
-
-```python
-from zingg.client import *
-
-street = FieldDefinition("street", "string", MatchType.ONLY_ALPHABETS_EXACT)
-```
-
-### **Enterprise**
-
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zinggEC.enterprise.common.EMatchTypes import *
-
-street = EFieldDefinition("street", "string", MatchType.ONLY_ALPHABETS_EXACT)
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). 
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [ {
-    "fieldName" : "street",
-    "matchType" : "only_alphabets_exact",
-    "fields" : "street",
-    "dataType" : "string"
-  } ]
-}
-```
-
-{% endtab %}
-{% endtabs %}
-
 {% hint style="success" icon="right-long" %}
 **Related types**:
 

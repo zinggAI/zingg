@@ -47,7 +47,7 @@ The mapping file lists groups of equivalent values. `MAPPING` is typically combi
 ]
 ```
 
-Each inner array is one equivalence group. The longest value in a group becomes its representative form - so "Jon" normalizes to "Jonathan", and "Bob"/"Rob"/"Bobby" all normalize to "Robert". This is the exact dictionary used to produce the table above. "Jhon" and "John" aren't listed anywhere, so `MAPPING` leaves them untouched, and only `FUZZY` can catch them.
+The mapping file is a JSON array where each element is an array of equivalent values. Each inner array is one equivalence group. The longest value in a group becomes its representative form - so "Jon" normalizes to "Jonathan", and "Bob"/"Rob"/"Bobby" all normalize to "Robert". This is the exact dictionary used to produce the table above. "Jhon" and "John" aren't listed anywhere, so `MAPPING` leaves them untouched, and only `FUZZY` can catch them.
 
 ### When to use `MAPPING`
 
@@ -109,34 +109,3 @@ Dates should use `EXACT`. Different formats of the same date (`2024-01-15` vs `0
 
 </details>
 
-### Configuring `MAPPING`
-
-The mapping file is a JSON array where each element is an array of equivalent values.
-
-{% tabs %}
-{% tab title="Python" %}
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-
-fname = EFieldDefinition("fname", "string", "MAPPING_nicknames,FUZZY")
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block below uses Enterprise-only match type `mapping_<filename>`. Replace `<filename>` with the name of your mapping file without the `.json` extension. 
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [ {
-    "fieldName" : "fname",
-    "matchType" : "mapping_nicknames,fuzzy",
-    "fields" : "fname",
-    "dataType" : "string"
-  } ]
-}
-```
-
-{% endtab %}
-{% endtabs %}

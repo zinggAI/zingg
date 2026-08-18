@@ -1,8 +1,8 @@
 ---
 description: >-
-  Fuzzy-matches only the local part of an email address before the @ symbol
-  and ignores the domain. Built for datasets where the same person appears
-  with different email domains.
+  Fuzzy-matches only the local part of an email address before the @ symbol and
+  ignores the domain. Built for datasets where the same person appears with
+  different email domains.
 ---
 
 # EMAIL Match
@@ -58,47 +58,6 @@ Use `EXACT` on the full email field when the domain matters.
 `EMAIL` ignores the domain unconditionally - "j.smith@company.com" and "john.smith@company.com" are scored purely on "j.smith" vs "john.smith", with no credit or penalty for the domain being the same. If the domain itself should count towards the score (not just be a tie-breaker), use `FUZZY` on the full email field instead. Note this compares the whole string including the domain, so it doesn't restrict fuzziness to the local part the way `EMAIL` does, and dissimilar domains with similar local parts can drag the score down.
 
 </details>
-
-### Configuring `EMAIL`
-
-{% tabs %}
-{% tab title="Python" %}
-### **Community**
-
-```python
-from zingg.client import*
-
-email = FieldDefinition("email", "string", MatchType.EMAIL)
-```
-
-### **Enterprise**
-
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zingg.client import *
-
-email = EFieldDefinition("email", "string", MatchType.EMAIL)
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise).
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [ {
-    "fieldName" : "email",
-    "matchType" : "email",
-    "fields" : "email",
-    "dataType" : "string"
-  } ]
-}
-```
-
-{% endtab %}
-{% endtabs %}
 
 {% hint style="success" icon="right-long" %}
 **Related types**:

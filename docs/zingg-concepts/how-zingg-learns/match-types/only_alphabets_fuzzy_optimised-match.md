@@ -48,37 +48,6 @@ Any field where you would use `ONLY_ALPHABETS_FUZZY` - street addresses, product
 `ONLY_ALPHABETS_FUZZY_OPTIMISED` is **Enterprise** only. Use `ONLY_ALPHABETS_FUZZY` in Community.
 {% endhint %}
 
-### Configuring `ONLY_ALPHABETS_FUZZY_OPTIMISED`
-
-{% tabs %}
-{% tab title="Python" %}
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zinggEC.enterprise.common.EMatchTypes import *
-
-street = EFieldDefinition("street", "string", EMatchType.ONLY_ALPHABETS_FUZZY_OPTIMISED)
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block below uses Enterprise-only match type `ONLY_ALPHABETS_FUZZY_OPTIMISED`. The CLI command is identical to other phases.
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [ {
-    "fieldName" : "street",
-    "matchType" : "only_alphabets_fuzzy_optimised",
-    "fields" : "street",
-    "dataType" : "string"
-  } ]
-}
-```
-
-{% endtab %}
-{% endtabs %}
-
 {% hint style="success" icon="right-long" %}
 **Related types**:
 
@@ -86,5 +55,5 @@ The JSON `fieldDefinition` block below uses Enterprise-only match type `ONLY_ALP
 * `FUZZY_OPTIMISED` - same optimisation pattern for name/text fields
 * `NUMERIC` - for numeric fields
 
-**Read more**: [Match Types](README.md)
+**Read more**: [Match Types](./)
 {% endhint %}

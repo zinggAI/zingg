@@ -1,6 +1,5 @@
 ---
-description: >-
-  Changes how Zingg handles null and blank values in a field.
+description: Changes how Zingg handles null and blank values in a field.
 ---
 
 # NULL\_OR\_BLANK Match
@@ -17,7 +16,7 @@ Use `NULL_OR_BLANK` combined with another match type, in the `matchType` string 
 
 ### What **`NULL_OR_BLANK`** matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top"><code>NULL_OR_BLANK</code> feature</th><th valign="top">Notes</th></tr></thead><tbody><tr><td valign="top">null</td><td valign="top">John Smith</td><td valign="top">0.0</td><td valign="top">One side null</td></tr><tr><td valign="top">[empty string]</td><td valign="top">John Smith</td><td valign="top">0.0</td><td valign="top">Empty string treated exactly like null</td></tr><tr><td valign="top">null</td><td valign="top">null</td><td valign="top">0.0</td><td valign="top">No distinction between one-sided and both-sided nulls</td></tr><tr><td valign="top">null</td><td valign="top">[empty string]</td><td valign="top">0.0</td><td valign="top">Null and blank are interchangeable</td></tr><tr><td valign="top">John Smith</td><td valign="top">John Smith</td><td valign="top">1.0</td><td valign="top">Both values present</td></tr></tbody></table>
+<table data-header-hidden><thead><tr><th valign="top"></th><th valign="top"></th><th valign="top"></th><th valign="top"></th></tr></thead><tbody><tr><td valign="top">Value A</td><td valign="top">Value B</td><td valign="top"><code>NULL_OR_BLANK</code> feature</td><td valign="top">Notes</td></tr><tr><td valign="top">null</td><td valign="top">John Smith</td><td valign="top">0.0</td><td valign="top">One side null</td></tr><tr><td valign="top">[empty string]</td><td valign="top">John Smith</td><td valign="top">0.0</td><td valign="top">Empty string treated exactly like null</td></tr><tr><td valign="top">null</td><td valign="top">null</td><td valign="top">0.0</td><td valign="top">No distinction between one-sided and both-sided nulls</td></tr><tr><td valign="top">null</td><td valign="top">[empty string]</td><td valign="top">0.0</td><td valign="top">Null and blank are interchangeable</td></tr><tr><td valign="top">John Smith</td><td valign="top">John Smith</td><td valign="top">1.0</td><td valign="top">Both values present</td></tr></tbody></table>
 
 There is no distinction between "both null" and "one null, one populated" - all four null/blank rows above score identically.
 
@@ -63,45 +62,6 @@ If a field is universally null across all records with no non-null values to con
 
 </details>
 
-{% tabs %}
-{% tab title="Python" %}
-### **Community**
-
-```python
-from zingg.client import *
-
-company = FieldDefinition("company", "string", "FUZZY,NULL_OR_BLANK")
-```
-
-### **Enterprise**
-
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zingg.client import *
-
-company = EFieldDefinition("company", "string", "FUZZY,NULL_OR_BLANK")
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). 
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [ {
-    "fieldName" : "company",
-    "matchType" : "fuzzy,null_or_blank",
-    "fields" : "company",
-    "dataType" : "string"
-  } ]
-}
-```
-
-{% endtab %}
-{% endtabs %}
-
 {% hint style="success" icon="right-long" %}
 `NULL_OR_BLANK` common combinations:
 
@@ -110,5 +70,5 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 * `PINCODE`, `NULL_OR_BLANK` - postal codes missing in some systems
 * `DONT_USE` - if the field should be excluded from matching entirely
 
-**Read more**: [Match Types](README.md)
+**Read more**: [Match Types](./)
 {% endhint %}

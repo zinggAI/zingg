@@ -45,38 +45,6 @@ performance matters. Customer datasets, patient registries, voter files—any do
 
 </details>
 
-
-### Configuring `EMAIL_OPTIMISED`
-
-{% tabs %}
-{% tab title="Python" %}
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zinggEC.enterprise.common.EMatchTypes import *
-
-email = EFieldDefinition("email", "string", EMatchType.EMAIL_OPTIMISED)
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block below uses Enterprise-only match type `EMAIL_OPTIMISED`. 
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [ {
-    "fieldName" : "email",
-    "matchType" : "email_optimised",
-    "fields" : "email",
-    "dataType" : "string"
-  } ]
-}
-```
-
-{% endtab %}
-{% endtabs %}
-
 {% hint style="success" icon="right-long" %}
 **Related types**:
 

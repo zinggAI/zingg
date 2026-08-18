@@ -13,7 +13,7 @@ description: >-
 
 A null or blank value on either side is an automatic match.
 
-**This is not a general international postal-code normalizer.** The hyphen-truncation logic assumes the part after the hyphen is always a discardable suffix. That's true for US ZIP+4, but many countries use a hyphen as a meaningful separator where *both* halves matter - for example, Polish postal codes ("00-950" vs "00-123") or Portuguese ones. On those formats, `PINCODE` truncates both sides down to "00" and reports a match, silently collapsing two genuinely different postal codes. See the table and "When not to use" below.
+**This is not a general international postal-code normalizer.** The hyphen-truncation logic assumes the part after the hyphen is always a discardable suffix. That's true for US ZIP+4, but many countries use a hyphen as a meaningful separator where _both_ halves matter - for example, Polish postal codes ("00-950" vs "00-123") or Portuguese ones. On those formats, `PINCODE` truncates both sides down to "00" and reports a match, silently collapsing two genuinely different postal codes. See the table and "When not to use" below.
 
 ### What `PINCODE` matches and what it does not
 
@@ -51,45 +51,6 @@ If your postal code format uses a hyphen where both sides carry meaning, use `EX
 
 </details>
 
-{% tabs %}
-{% tab title="Python" %}
-### **Community**
-
-```python
-from zingg.client import *
-
-pincode = FieldDefinition("pincode", "string", MatchType.PINCODE)
-```
-
-### **Enterprise**
-
-```python
-from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
-from zingg.client import *
-
-pincode = EFieldDefinition("pincode", "string", MatchType.PINCODE)
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-{% hint style="info" icon="right-long" %}
-The JSON `fieldDefinition` block is identical for Community and Enterprise. Only the Python class differs between editions — `FieldDefinition` (Community) vs `EFieldDefinition` (Enterprise). 
-{% endhint %}
-
-```json
-{
-  "fieldDefinition" : [ {
-    "fieldName" : "pincode",
-    "matchType" : "pincode",
-    "fields" : "pincode",
-    "dataType" : "string"
-  } ]
-}
-```
-
-{% endtab %}
-{% endtabs %}
-
 {% hint style="success" icon="right-long" %}
 **Related types:**
 
@@ -97,5 +58,5 @@ The JSON `fieldDefinition` block is identical for Community and Enterprise. Only
 * `NUMERIC` - for other numeric identifier fields
 * `NULL_OR_BLANK` - combine when postal codes are often missing
 
-**Read more:** [Match Types](README.md)
+**Read more:** [Match Types](./)
 {% endhint %}
