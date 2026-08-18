@@ -21,7 +21,7 @@ Every pipe, whether input or output, has three attributes.
 You can configure pipes in two ways. Both work in Community and Enterprise. Use whichever fits your workflow.
 
 {% tabs %}
-{% tab title="Python API" %}
+{% tab title="Community" %}
 Create pipe objects and attach them to your arguments object.
 
 ### **Community**
@@ -43,12 +43,15 @@ args.setData(inputPipe)
 
 #### **Output Pipe**
 
-```python
-outputPipe = CsvPipe(
-    "resultFebrl",
-    "/tmp/febrlOutput")
+<pre class="language-python"><code class="lang-python">outputPipe = CsvPipe(
+<strong>    "resultFebrl",
+</strong>    "/tmp/febrlOutput")
 args.setOutput(outputPipe)
-```
+</code></pre>
+{% endtab %}
+
+{% tab title="Enterprise" %}
+
 
 ### **Enterprise**
 
@@ -157,3 +160,4 @@ Zingg connects to any datastore that has a Spark connector, plus Snowflake nativ
 * To configure your pipes step by step as part of your Zingg setup - [Configure Zingg](../running-zingg/configure-zingg.md)
 * To understand what Zingg adds to your output alongside your input fields (`Z_CLUSTER`, `Z_MINSCORE`, `Zingg ID` and others) - [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)
 {% endhint %}
+
