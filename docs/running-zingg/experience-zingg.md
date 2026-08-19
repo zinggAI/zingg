@@ -25,19 +25,19 @@ is entity resolution.
 #### Step 1: Pull the Zingg Docker image
 
 ```bash
-docker pull zingg/zingg:0.5.0
+docker pull zingg/zingg
 ```
 
 #### Step 2: Start the container
 
 ```bash
-docker run -it zingg/zingg:0.5.0 bash
+docker run -it zingg/zingg bash
 ```
 
 If you see a permission error, use:
 
 ```bash
-docker run -v /tmp:/tmp -it zingg/zingg:0.5.0 bash
+docker run -v /tmp:/tmp -it zingg/zingg bash
 ```
 
 #### Step 3: Run match using the bundled FEBRL sample data and pre-trained model
