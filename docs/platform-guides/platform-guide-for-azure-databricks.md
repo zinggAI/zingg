@@ -29,6 +29,8 @@ Uses `Arguments`, `FieldDefinition`, `CsvPipe`, and `ZinggWithSpark`. The workfl
 3. Download the latest Zingg JAR from `github.com/zinggAI/zingg/releases`.
 4. Open the cluster → **Libraries** → **Install New** → **Upload JAR** → upload the file.
 
+   ![Databricks Install library dialog with the Zingg jar selected from the workspace file path.](../.gitbook/assets/databricks-install-zingg-jar.png)
+
 #### **Step 2: Install the Zingg Python package**
 
 Open a notebook attached to the cluster and run:
@@ -128,6 +130,8 @@ args.setData(inputPipe)
 df = spark.table(table)
 display(df)
 ```
+
+![Databricks notebook cell reading the input data and displaying the records, with the same entity appearing several times with field variations.](../.gitbook/assets/databricks-data-preview.png)
 
 If your data is in a CSV file, use `CsvPipe` instead of `UCPipe`:
 
@@ -285,7 +289,7 @@ display(df)
 print(df.count())
 ```
 
-_**IMAGE TO BE ADDED — match output table in Databricks showing resolved records with\*\*\*\*****&#x20;****`Z_CLUSTER`****&#x20;****column visible alongside original fields. Ideally highlight two rows sharing the same****&#x20;****`Z_CLUSTER`****&#x20;****\*\*\*\*to show they have been resolved to the same entity. Tanwi to check with team for screenshot from a live notebook run.**_
+![Databricks match output table with Z_MINSCORE, Z_MAXSCORE and Z_CLUSTER columns; several rows share Z_CLUSTER 3, meaning they resolved to the same entity.](../.gitbook/assets/databricks-match-output.png)
 
 {% hint style="success" icon="right-long" %}
 Records sharing the same `Z_CLUSTER` value have been resolved to the same real-world entity. `Z_MINSCORE` is the weakest match confidence within the cluster. `Z_MAXSCORE` is the strongest. For full output column definitions → [Interpret Output Scores](../interpreting-results/interpret-output-scores.md).
