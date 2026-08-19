@@ -20,11 +20,11 @@ _You do not write rules. You label examples. Zingg learns the rest._
 
 ### Deterministic matching
 
-Deterministic matching lets you define hard rules for cases where certain field combinations should always produce a match, regardless of the probabilistic score. When your data contains reliable unique identifiers, a national ID, an email, or a combination like first name, email plus date of birth, determinstic matching can bring them together.
+Deterministic matching is only available in the Enterprise Edition. It lets you define hard rules for cases where certain field combinations should always produce a match, regardless of the probabilistic score. When your data contains reliable unique identifiers, a national ID, an email, or a combination like first name, email plus date of birth, determinstic matching can bring them together. Zingg Enterprise can apply any combination of deterministic rules like (ssn) or (email and dob) or (passport number and dob).&#x20;
 
-### How Zingg matches prbabilistically and deterministically
+### How Zingg matches probabilistically AND deterministically
 
-Zingg Enterprise applies deterministic rules first. If two records share the same combination of identifiers you specify, Zingg treats that pair as a match with a score of 1, bypassing the ML model entirely for that pair. Pairs resolved deterministically are not re-evaluated probabilistically. Pairs that do not satisfy any deterministic condition fall through to the probabilistic model. All matching pairs get rolled into clusters.
+Zingg applies deterministic rules first. If two records share the same combination of identifiers you specify, Zingg treats that pair as a match with a score of 1, bypassing the ML model entirely for that pair. Pairs resolved deterministically are not re-evaluated probabilistically. Pairs that do not satisfy any deterministic condition fall through to the probabilistic model. All matching pairs get rolled into clusters.
 
 Probabilistic and deterministic matching in Zingg Enterprise runs both in a single flow, so you do not have to choose between them.
 
