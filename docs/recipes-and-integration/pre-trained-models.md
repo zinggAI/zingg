@@ -123,8 +123,8 @@ This is faster than building a model from scratch when your data is structurally
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* Create training data - [Create training data](../running-zingg/create-training-data.md)
-* Label training pairs - [Label training pairs](../running-zingg/label-training-pairs.md)
+* Create training data - [Create training data](../running-zingg/create-training-data/)
+* Label training pairs - [Label training pairs](../running-zingg/create-training-data/label-training-pairs.md)
 * Build and save the model - [Build and save the model](../running-zingg/build-and-save-the-model.md)
 {% endhint %}
 

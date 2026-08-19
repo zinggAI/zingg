@@ -10,8 +10,8 @@ Configuring Zingg is the first step in every Zingg workflow. This page follows n
 
 Complete this page before running any other phase. Every phase reads the configuration set here:
 
-* `findTrainingData` → \[[Create Training Data](create-training-data.md)]
-* `label` → \[[Label Training Pairs](label-training-pairs.md)]
+* `findTrainingData` → \[[Create Training Data](create-training-data/)]
+* `label` → \[[Label Training Pairs](create-training-data/label-training-pairs.md)]
 * `train` → \[[Build and Save the Model](build-and-save-the-model.md)]
 * `match` → \[[Run the Match Phase](run-the-match-phase.md)]
 * `link` → \[[Link Across Datasets](link-across-datasets.md)]

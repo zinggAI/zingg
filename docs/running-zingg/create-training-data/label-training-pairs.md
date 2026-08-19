@@ -8,7 +8,7 @@ description: >-
 
 The `label` phase opens an interactive layer where you review the candidate pairs found by `findTrainingData` and mark each pair. This is the only step in the Zingg workflow that requires human input. No ML knowledge is needed, just your domain understanding of whether two records represent the same real-world entity.
 
-If you already have labeled data from an external source, you can supply it directly using `trainingSamples` in your configuration. See [Create Training Data](create-training-data.md) for how to set this up.
+If you already have labeled data from an external source, you can supply it directly using `trainingSamples` in your configuration. See [Create Training Data](./) for how to set this up.
 
 30 to 40 matching pairs is a strong starting point. Label until you feel that your labeled examples represent all field types and data patterns in your schema. If accuracy needs improvement after your first match run, return to labelling, focus on the patterns or field combinations that appear to be missing or underrepresented.
 
@@ -53,7 +53,7 @@ zingg.initAndExecute()
 {% endhint %}
 
 {% hint style="info" icon="right-long" %}
-Need to correct a pair you already labeled? See [Update Label](update-label.md).
+Need to correct a pair you already labeled? See [Update Label](../update-label.md).
 {% endhint %}
 {% endtab %}
 

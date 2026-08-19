@@ -23,7 +23,7 @@ Blocking group records into candidate buckets before any matching begins. Withou
 Enterprise-scale entity resolution is computationally feasible.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [How Zingg learns](../running-zingg/step-by-step-guide.md) | [Verify blocking](../running-zingg/verify-blocking.md)
+**Read more:** [How Zingg learns](../running-zingg/step-by-step-guide.md) | [Verify blocking](../running-zingg/create-training-data/verify-blocking.md)
 {% endhint %}
 
 </details>
@@ -36,7 +36,7 @@ The process by which Zingg builds its matching model from your feedback rather t
 typically enough to train a high-accuracy model on datasets of 100,000+ records.
 
 {% hint style="success" icon="right-long" %}
-**Read more:** [How Zingg learns](../zingg-concepts/how-zingg-learns/) | [Label training pairs](../running-zingg/label-training-pairs.md)
+**Read more:** [How Zingg learns](../zingg-concepts/how-zingg-learns/) | [Label training pairs](../running-zingg/create-training-data/label-training-pairs.md)
 {% endhint %}
 
 </details>

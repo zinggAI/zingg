@@ -62,8 +62,8 @@ Run `findTrainingData` to generate candidate pairs, then label each pair as Matc
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* [Create Training Data](create-training-data.md)
-* [Label Training Pairs](label-training-pairs.md)
+* [Create Training Data](create-training-data/)
+* [Label Training Pairs](create-training-data/label-training-pairs.md)
 {% endhint %}
 {% endstep %}
 
@@ -73,7 +73,7 @@ Run `findTrainingData` to generate candidate pairs, then label each pair as Matc
 Run `verifyBlocking` to check what percentage of your known matching pairs are being blocked together correctly. Run after labelling and before committing to a full training run. If coverage is low, return to labelling.&#x20;
 
 {% hint style="success" icon="right-long" %}
-**Read more**: [Verify Blocking](verify-blocking.md)
+**Read more**: [Verify Blocking](create-training-data/verify-blocking.md)
 {% endhint %}
 {% endstep %}
 

@@ -7,7 +7,7 @@ description: >-
 # Remove Stopwords (Optional)
 
 {% hint style="success" icon="right-long" %}
-This is an optional step. Run this between [Configure Zingg](../../running-zingg/configure-zingg.md) and [Create Training Data](../../running-zingg/create-training-data.md) for best results. You can run it after matching has already started, but you will need to re-run the match phase for the stopwords to take effect. Most users skip this on the first run.
+This is an optional step. Run this between [Configure Zingg](../../running-zingg/configure-zingg.md) and [Create Training Data](../../running-zingg/create-training-data/) for best results. You can run it after matching has already started, but you will need to re-run the match phase for the stopwords to take effect. Most users skip this on the first run.
 {% endhint %}
 
 Common words like `Mr`, `Pvt`, `Av`, `St`, `Street` do not add differential signals and can confuse matching. These are called stopwords. Zingg can recommend which words to treat as stopwords by analyzing your data before training begins.

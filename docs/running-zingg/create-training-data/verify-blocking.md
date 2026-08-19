@@ -3,7 +3,8 @@ description: >-
   Verify that your blocking model is grouping known matching pairs into the same
   block before training and after.
 tags:
-  - enterprise-only
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Verify Blocking
@@ -92,8 +93,8 @@ influence matching.
 **Read more**:
 
 * [Label Training Pairs](label-training-pairs.md) - how to add more training data
-* [Configure Zingg](configure-zingg.md) - changing field match types
-* [Blocking Strategies: DEFAULT vs WIDER](../tuning/blocking-strategy.md) - reorder candidate fields in the blocking tree (Enterprise only)
+* [Configure Zingg](../configure-zingg.md) - changing field match types
+* [Blocking Strategies: DEFAULT vs WIDER](../../tuning/blocking-strategy.md) - reorder candidate fields in the blocking tree (Enterprise only)
 * [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7) Functions
 {% endhint %}
 
@@ -171,13 +172,13 @@ If `verifyBlocking` shows that many known matching pairs are not being blocked t
 
 1. **Add more labelled training pairs** of the type being missed. The blocking model learns from the same training data as the similarity model.
 2. **Check your field match types.** Fields set to `DONT_USE` are excluded from blocking. If a key identity field is set to `DONT_USE`, matching pairs that differ on other fields may end up in different blocks.
-3. **Try the `WIDER` blocking strategy** (Enterprise only) if large blocks suggest the tree is over-relying on one or two fields → [Blocking Strategies: DEFAULT vs WIDER](../tuning/blocking-strategy.md)
+3. **Try the `WIDER` blocking strategy** (Enterprise only) if large blocks suggest the tree is over-relying on one or two fields → [Blocking Strategies: DEFAULT vs WIDER](../../tuning/blocking-strategy.md)
 
 {% hint style="success" icon="right-long" %}
 **Consider custom blocking functions** for specialised data patterns → [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7)
 
 **Read more**:
 
-* Blocking model concept and how it fits in the pipeline → [Blocking Model](../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
+* Blocking model concept and how it fits in the pipeline → [Blocking Model](../../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
 * Custom blocking functions for advanced tuning → [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7)
 {% endhint %}

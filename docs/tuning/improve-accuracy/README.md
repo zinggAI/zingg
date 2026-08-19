@@ -21,8 +21,8 @@ The most reliable way to improve accuracy is to label more pairs. Return to the 
 {% hint style="success" icon="right-long" %}
 **Read more**:
 
-* Label training pairs - [Label training pairs](../../running-zingg/label-training-pairs.md)
-* Create training data - [Create training data](../../running-zingg/create-training-data.md)
+* Label training pairs - [Label training pairs](../../running-zingg/create-training-data/label-training-pairs.md)
+* Create training data - [Create training data](../../running-zingg/create-training-data/)
 {% endhint %}
 
 ### Step 2: Check your field match types
@@ -50,7 +50,7 @@ Common words like Mr, St, Street, Pvt add noise to fuzzy matching on address and
 If Zingg is missing matches that you know exist (false negatives), the blocking model may be filtering them out before they even reach the similarity model. Run Verify Blocking to inspect which pairs are being blocked and identify coverage gaps.
 
 {% hint style="success" icon="right-long" %}
-**Read more**: Verify blocking - [Verify blocking](../../running-zingg/verify-blocking.md)
+**Read more**: Verify blocking - [Verify blocking](../../running-zingg/create-training-data/verify-blocking.md)
 {% endhint %}
 
 ### Step 5: Custom blocking and similarity

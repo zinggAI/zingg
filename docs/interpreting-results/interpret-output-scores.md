@@ -123,8 +123,8 @@ Ordering clusters by `avg_min` ascending puts the weakest clusters at the top, t
 **Read more**:
 
 * [Interpret Output Scores](interpret-output-scores.md) - `Z_MINSCORE` and `Z_MAXSCORE` explained
-* [Label Training Pairs](../running-zingg/label-training-pairs.md) - adding training data for missed patterns
-* [Verify blocking](../running-zingg/verify-blocking.md)
+* [Label Training Pairs](../running-zingg/create-training-data/label-training-pairs.md) - adding training data for missed patterns
+* [Verify blocking](../running-zingg/create-training-data/verify-blocking.md)
 {% endhint %}
 
 A small number of targeted labels for the specific pattern being missed is more effective than a large general labeling run.
@@ -183,8 +183,6 @@ Before debugging the similarity model, confirm the missed pairs are actually rea
 How to inspect the similarity model, diagnose false positives and false negatives, and improve accuracy through targeted retraining.\
 \
 The similarity model scores every candidate pair that the blocking model passes through. If your results contain records incorrectly merged into the same cluster (false positives) or matching records that were missed (false negatives), the similarity model is where to investigate after first confirming that blocking is not the cause.
-
-
 
 ### Using scores to decide what to do with clusters
 
