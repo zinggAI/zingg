@@ -10,10 +10,6 @@ tags:
 
 # ONLY\_ALPHABETS\_FUZZY\_OPTIMISED Match
 
-{% hint style="info" icon="right-long" %}
-`ONLY_ALPHABETS_FUZZY_OPTIMISED` is Enterprise only. The Community (open source) edition does not support this match type. Available in Enterprise Lite and above.
-{% endhint %}
-
 ### What `ONLY_ALPHABETS_FUZZY_OPTIMISED` does
 
 `ONLY_ALPHABETS_FUZZY_OPTIMISED` produces the same matching results as `ONLY_ALPHABETS_FUZZY` - strips numbers, then applies fuzzy matching to the alphabetic portion.
@@ -45,7 +41,7 @@ Any field where you would use `ONLY_ALPHABETS_FUZZY` - street addresses, product
 </details>
 
 {% hint style="info" icon="right-long" %}
-`ONLY_ALPHABETS_FUZZY_OPTIMISED` is **Enterprise** only. Use `ONLY_ALPHABETS_FUZZY` in Community.
+`ONLY_ALPHABETS_FUZZY_OPTIMISED` is Enterprise only. The Community (open source) edition does not support this match type. Available in Enterprise Lite and above.
 {% endhint %}
 
 {% hint style="success" icon="right-long" %}

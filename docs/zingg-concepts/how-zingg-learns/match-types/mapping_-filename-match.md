@@ -10,10 +10,6 @@ tags:
 
 # MAPPING\_(FILENAME) Match
 
-{% hint style="info" icon="right-long" %}
-`MAPPING_(FILENAME)` is Enterprise only. The Community edition does not support mapping-based match types. Available in Enterprise Lite and above.
-{% endhint %}
-
 ### What `MAPPING_(FileName)` does
 
 `MAPPING` resolves variants of the same value using a lookup file you provide. Use it when records contain the same entity referred to by different names - nicknames like "Jon" and "Jonathan", company abbreviations like "IBM" and "International Business Machines", or country codes like "US" and "United States" - that you want Zingg to treat as equivalent.
@@ -109,3 +105,8 @@ Dates should use `EXACT`. Different formats of the same date (`2024-01-15` vs `0
 
 </details>
 
+
+
+{% hint style="info" icon="right-long" %}
+`MAPPING_(FILENAME)` is Enterprise only. The Community edition does not support mapping-based match types. Available in Enterprise Lite and above.
+{% endhint %}

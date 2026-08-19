@@ -10,10 +10,6 @@ tags:
 
 # EMAIL\_OPTIMISED Match
 
-{% hint style="info" icon="right-long" %}
-`EMAIL_OPTIMISED` is Enterprise only. The Community (open source) edition does not support this match type. Available in Enterprise Lite and above.
-{% endhint %}
-
 ### What `EMAIL_OPTIMISED` does
 
 `EMAIL_OPTIMISED` produces the same matching results as `EMAIL` - it splits on `@`, discards the domain, and scores the local part using the similarity function. It is not an exact/binary comparison, it is `FUZZY`.
@@ -44,6 +40,10 @@ performance matters. Customer datasets, patient registries, voter files—any do
 `EMAIL_OPTIMISED` carries the same domain-blind scoring as `EMAIL` - "support@ibm.com" and "support@microsoft.com" still score as an identical-local-part match even though the organisations are unrelated. If you are matching organisations rather than individuals, or the domain should count towards the score rather than be ignored, use `EXACT` (full email must match) or `FUZZY_OPTIMISED` (fuzzy-matches the whole string, domain included) instead.
 
 </details>
+
+{% hint style="info" icon="right-long" %}
+`EMAIL_OPTIMISED` is Enterprise only. The Community (open source) edition does not support this match type. Available in Enterprise Lite and above.
+{% endhint %}
 
 {% hint style="success" icon="right-long" %}
 **Related types**:
