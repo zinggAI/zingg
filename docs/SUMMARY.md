@@ -105,9 +105,9 @@
 ## Interpreting Results
 
 * [Interpret Output Scores](interpreting-results/interpret-output-scores.md)
-* [Explain Matches](interpreting-results/explain-matches.md)
-* [Explain a Specific Cluster](interpreting-results/explain-a-specific-cluster.md)
-* [Output Statistics](interpreting-results/output-statistics.md)
+* [Explainability and Statistics](interpreting-results/explainability-and-statistics.md)
+  * [Explain a Specific Cluster](interpreting-results/explain-a-specific-cluster.md)
+  * [Output Statistics](interpreting-results/output-statistics.md)
 
 ## Platform Guides
 

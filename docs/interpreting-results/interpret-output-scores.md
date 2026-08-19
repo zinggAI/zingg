@@ -233,6 +233,6 @@ Review clusters with `Z_MINSCORE` of `0` manually to confirm the full cluster is
 **Read more**:
 
 * Z Cluster and Zingg ID - [Z Cluster ID and Zingg ID](../zingg-concepts/z-cluster-and-zingg-id.md)
-* Explaining how a cluster formed - [Explain matches](explain-matches.md)
+* Explaining how a cluster formed - [Explainability and Statistics](explainability-and-statistics.md)
 * Improving accuracy when results are wrong - [Improve accuracy](../tuning/improve-accuracy/)
 {% endhint %}
