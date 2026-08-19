@@ -42,7 +42,7 @@
 ## Community And Enterprise Editions
 
 * [Community vs Enterprise](community-and-enterprise-editions/community-vs-enterprise/README.md)
-  * [Migrating from Community to Enterprise (Content to be Added)](community-and-enterprise-editions/community-vs-enterprise/migrating-from-community-to-enterprise-content-to-be-added.md)
+  * [Migrating from Community to Enterprise](community-and-enterprise-editions/community-vs-enterprise/migrating-from-community-to-enterprise-content-to-be-added.md)
 
 ## Running Zingg
 
