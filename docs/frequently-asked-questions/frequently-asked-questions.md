@@ -4,7 +4,25 @@ description: >-
   performance, and troubleshooting.
 ---
 
-# Frequently Asked Questions
+# ❓ Frequently Asked Questions
+
+### Data Preparation
+
+<details>
+
+<summary><strong>What kind of preprocessing and data cleaning do I need before running Zingg?</strong></summary>
+
+Zingg does not mandate any preprocessing on the input data. Zingg automatically takes care of extra spaces, punctutation characters and cases so you dont have to.
+
+</details>
+
+<details>
+
+<summary><strong>Can my data come from different tables?</strong></summary>
+
+Yes, you can add as many source pipes as you want. Just make sure they have the same schema.&#x20;
+
+</details>
 
 ### Training and labeling
 

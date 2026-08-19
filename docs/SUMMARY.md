@@ -142,7 +142,7 @@
 
 ## Frequently Asked Questions
 
-* [Frequently Asked Questions](frequently-asked-questions/frequently-asked-questions.md)
+* [❓ Frequently Asked Questions](frequently-asked-questions/frequently-asked-questions.md)
 * [Frequently Asked Questions](frequently-asked-questions/concept-glossary.md)
 
 ## Security and Privacy
