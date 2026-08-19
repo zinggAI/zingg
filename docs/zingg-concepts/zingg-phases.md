@@ -85,3 +85,11 @@ Reports what percentage of your known matching pairs are being blocked together 
 Analyses a specified column and returns a list of high-frequency words that should be treated as stopwords. Optional phase used before training when address or company name fields contain repeated noise words like 'St', 'Ave', 'Inc', 'Ltd'.
 
 </details>
+
+<details>
+
+<summary><strong><code>transform</code> (Enterprise)</strong></summary>
+
+Post processes Zingg output to consume in downstream applications. Supports disctionary based value substitution
+
+</details>
