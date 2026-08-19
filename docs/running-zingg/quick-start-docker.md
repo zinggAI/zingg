@@ -10,7 +10,7 @@ description: >-
 This page walks you through the full Zingg workflow on your local machine using Docker. You will install Zingg, connect sample data, find candidate pairs, label those pairs, train the model, and run match to see your first results. By the end you will have run every phase of the Zingg workflow and seen entity resolution working on your local machine with real data.
 
 {% hint style="success" icon="right-long" %}
-New to entity resolution? Read [Entity Resolution](../zingg-concepts/entity-resolution/) for the problem space and why Zingg's approach works.
+New to entity resolution? Read [Entity Resolution](../entity-resolution/) for the problem space and why Zingg's approach works.
 {% endhint %}
 
 {% tabs %}

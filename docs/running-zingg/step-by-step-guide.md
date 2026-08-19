@@ -14,7 +14,7 @@ The phases below represent the complete workflow from first setup to production 
 This page describes the workflow you follow once Zingg is installed.\
 For installing Zingg on your platform → [Install Zingg](install-zingg.md).
 
-New to entity resolution or want to understand the problem space before diving in? → E[ntity Resolution](../zingg-concepts/entity-resolution/)
+New to entity resolution or want to understand the problem space before diving in? → E[ntity Resolution](../entity-resolution/)
 {% endhint %}
 
 {% stepper %}

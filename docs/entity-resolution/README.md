@@ -84,7 +84,7 @@ together, and the LLM reasons over a complete, entity-aware view.
 This process is the Identity RAG pattern entity resolution as infrastructure for AI accuracy.
 
 {% hint style="success" icon="right-long" %}
-**Read more**: [Enhancing LLM applications with Zingg and LangChain](../../recipes-and-integration/identity-rag-with-zingg-and-langchain.md)
+**Read more**: [Enhancing LLM applications with Zingg and LangChain](../recipes-and-integration/identity-rag-with-zingg-and-langchain.md)
 {% endhint %}
 
 </details>
@@ -141,7 +141,7 @@ Not if your data has fuzzy variation. Graph databases like Neo4j are excellent a
 Zingg and graph databases work best together. Zingg does entity resolution, which means it finds out which records are for the same entity using ML-based probabilistic and deterministic matching. The graph database is used for downstream relationship analysis and inference in AML, KYC, Knowledge Graph, and Customer 360 scenarios.
 
 {% hint style="success" icon="right-long" %}
-**Read more**: [Connect graph databases](../../connect-your-data/connect-graph-databases-neo4j.md)
+**Read more**: [Connect graph databases](../connect-your-data/connect-graph-databases-neo4j.md)
 {% endhint %}
 
 </details>
@@ -149,7 +149,7 @@ Zingg and graph databases work best together. Zingg does entity resolution, whic
 {% hint style="success" icon="right-long" %}
 Ready to see entity resolution in action?
 
-* [Run Zingg on your local machine](../../running-zingg/quick-start-docker.md) - full workflow in 30 minutes
+* [Run Zingg on your local machine](../running-zingg/quick-start-docker.md) - full workflow in 30 minutes
 {% endhint %}
 
 {% hint style="warning" icon="right-long" %}
@@ -157,5 +157,5 @@ Need entity resolution at production scale with persistent identity and incremen
 processing?
 
 * [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact)
-* [Community vs Enterprise](../../community-and-enterprise-editions/community-vs-enterprise/)<br>
+* [Community vs Enterprise](../community-and-enterprise-editions/community-vs-enterprise/)<br>
 {% endhint %}
