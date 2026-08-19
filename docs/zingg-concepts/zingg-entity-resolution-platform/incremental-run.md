@@ -1,7 +1,8 @@
 ---
 description: When it is not enough to match once
 tags:
-  - enterprise-only
+  - tag: enterprise-only
+    primary: true
 ---
 
 # Incremental Flow
