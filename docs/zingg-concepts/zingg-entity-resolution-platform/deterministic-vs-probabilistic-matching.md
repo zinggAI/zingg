@@ -28,27 +28,5 @@ Zingg applies deterministic rules first. If two records share the same combinati
 
 Probabilistic and deterministic matching in Zingg Enterprise runs both in a single flow, so you do not have to choose between them.
 
-###
 
-<details>
-
-<summary><strong>When should I use deterministic matching?</strong></summary>
-
-Use deterministic matching when your data contains reliable unique identifier fields where an exact match between two records should always mean they are the same entity.
-
-Good candidates for deterministic rules:
-
-* First name + email address
-* First name + date of birth + national ID
-* First name + street number + address line 1
-
-Do not use deterministic matching on fields that are frequently incomplete or inconsistent. Null values or formatting variations will cause valid matches to be missed. Apply deterministic rules only to fields you trust.
-
-If you are unsure, start with probabilistic matching only. Add deterministic rules once you have reviewed match output and identified high-confidence identifier combinations in your data.
-
-{% hint style="success" icon="right-long" %}
-**Read more:** [Configure Zingg](../../running-zingg/configure-zingg.md) | [Concepts glossary](../../frequently-asked-questions/concept-glossary.md)
-{% endhint %}
-
-</details>
 
