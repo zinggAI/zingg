@@ -19,23 +19,39 @@ New to entity resolution or want to understand the problem space before diving i
 
 {% stepper %}
 {% step %}
-### Connect your data
+### Configure
+
+<details>
+
+<summary>Define your data and output</summary>
+
+{% hint style="success" icon="right-long" %}
+**Read more**: [Content your Data](../connect-your-data/pipes-and-data-connections.md)
+{% endhint %}
 
 Configure input and output pipes to tell Zingg where your source data lives and where to write results. Zingg connects to the data where it lives - it does not move it.
 
-{% hint style="success" icon="right-long" %}
-**Read more**: [Content your Data](../connect-your-data/pipes-and-data-connections.md)
-{% endhint %}
-{% endstep %}
+</details>
 
-{% step %}
-### Configure fields
+<details>
 
-Define your field definitions, match types, model ID, partition count, and relevant Enterprise features (deterministic matching, primary key, pass through, standardization). The configuration drives every downstream phase.
+<summary>Configure fields</summary>
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Content your Data](../connect-your-data/pipes-and-data-connections.md)
 {% endhint %}
+
+Define your field definitions, match types, relevant Enterprise features (deterministic matching, primary key, pass through, standardization). The configuration drives every downstream phase.
+
+</details>
+
+<details>
+
+<summary>Configure model id, number of partitions and labelDataSampleSize</summary>
+
+
+
+</details>
 {% endstep %}
 
 {% step %}
@@ -52,9 +68,9 @@ Run `findTrainingData` to generate candidate pairs, then label each pair as Matc
 {% endstep %}
 
 {% step %}
-### Verify Blocking
+### Verify Blocking (Enterprise Only)
 
-Run `verifyBlocking` to check what percentage of your known matching pairs are being blocked together correctly. Run after labelling and before committing to a full training run. If coverage is low, return to labelling. Enterprise Only.
+Run `verifyBlocking` to check what percentage of your known matching pairs are being blocked together correctly. Run after labelling and before committing to a full training run. If coverage is low, return to labelling.&#x20;
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Verify Blocking](verify-blocking.md)
@@ -62,7 +78,7 @@ Run `verifyBlocking` to check what percentage of your known matching pairs are b
 {% endstep %}
 
 {% step %}
-### Generate Model Documentation
+### Generate Model Documentation (Optional)
 
 Run `generateDocs` to produce a human-readable HTML report of your training data, including pairs labeled as matches and non-matches. Useful for sharing with subject-matter experts before training.
 
