@@ -30,6 +30,8 @@ If you are new to Fabric, sign up for a free trial at `microsoft.com/fabric`.
 2. Name it something like `Zingg-Fabric`.
 3. When prompted for a session cluster, choose **New Standard Session**.
 
+   ![Fabric session dropdown with New standard session selected.](../.gitbook/assets/fabric-new-standard-session.png)
+
 #### **Step 2: Create a Zingg Environment**
 
 Fabric Environments let you install JARs that persist across notebook sessions. Zingg requires its JAR to be installed in an Environment before any notebook runs.
@@ -37,13 +39,24 @@ Fabric Environments let you install JARs that persist across notebook sessions. 
 1. Inside your workspace, go to the **Environment** tab and click **New Environment**.
 2. Name it `Zingg Environment`.
 
+   ![Fabric notebook toolbar with the environment dropdown open on New environment.](../.gitbook/assets/fabric-new-environment.png)
+
 #### **Step 3: Install the Zingg JAR in the Environment**
 
 The Zingg JAR must be installed as a Custom Library in your Environment so Fabric's Spark runtime can find it.
 
 1. Go to `github.com/zinggAI/zingg/releases` and download the latest release `tar` file.
+
+   ![Zingg GitHub release page showing the spark tar.gz file under Assets.](../.gitbook/assets/fabric-zingg-release-assets.png)
+
 2. Extract the `tar` file and locate the JAR file inside it.
+
+   ![Extracted Zingg release folder with the zingg jar file highlighted.](../.gitbook/assets/fabric-zingg-jar-extracted.png)
+
 3. Open your `Zingg Environment`, go to **Custom Library**, and upload the JAR file.
+
+   ![Fabric Environment Custom libraries page showing the uploaded Zingg jar with Success status.](../.gitbook/assets/fabric-custom-library-upload.png)
+
 4. Click **Save** and then **Publish** the Environment.
 
 #### **Step 4: Create a Lakehouse and upload your data**
@@ -51,8 +64,13 @@ The Zingg JAR must be installed as a Custom Library in your Environment so Fabri
 Zingg reads from and writes to OneLake. Create a Lakehouse to give Zingg a storage location for your data, model files, and output.
 
 1. Inside your workspace, click **New Item** → **Lakehouse**.
+
+   ![Fabric New item panel with Lakehouse selected under Store data.](../.gitbook/assets/fabric-new-item-lakehouse.png)
+
 2. Give the Lakehouse a name (for example `ZinggLakehouse`).
 3. Go inside the Lakehouse, click **Get Data**, and upload your CSV file.
+
+   ![Lakehouse Get data menu with Upload files selected.](../.gitbook/assets/fabric-lakehouse-upload-files.png)
 
 {% hint style="success" icon="right-long" %}
 Sample data for testing: `github.com/zinggAI/zingg/blob/main/examples/febrl/test.csv`
@@ -65,6 +83,10 @@ For all connector formats → [Connect Microsoft Fabric](../connect-your-data/co
 ### Notebook 01: Set up Zingg
 
 Create a new notebook in your workspace, attach it to the `Zingg Environment`, and select **PySpark** as the kernel. All four notebooks in this workflow call `%run 01-setting_up_zingg` at the top — so everything configured here is inherited by Notebooks 02, 03, and 04 automatically.
+
+To use the sample notebooks instead of writing your own, use **Import** → **Notebook** → **From this computer** in your workspace.
+
+![Fabric workspace Import menu with Notebook and From this computer selected.](../.gitbook/assets/fabric-import-notebook.png)
 
 #### **Step 5: Verify Spark is configured correctly**
 
@@ -192,7 +214,7 @@ data.columns = schema
 data.head()
 ```
 
-_**IMAGE TO BE ADDED — Fabric notebook cell showing the data preview output table with sample FEBRL records — the same entity appearing multiple times with field variations across rows. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
+![Fabric notebook cell reading the CSV from OneLake with the preview table showing FEBRL records and their duplicate variations.](../.gitbook/assets/fabric-data-preview.png)
 
 #### **Step 12: Configure input and output pipes**
 
@@ -350,7 +372,7 @@ display(widgets.VBox(children=vContainers))
 ready_for_save = True
 ```
 
-_**IMAGE TO BE ADDED — Zingg labeling widget running inside a Fabric notebook showing two candidate records side by side with Match / No Match / Uncertain toggle buttons. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
+![Zingg labeling widget in a Fabric notebook showing two candidate records side by side with Uncertain, Match and No Match buttons.](../.gitbook/assets/fabric-labeling-widget.png)
 
 {% hint style="success" icon="right-long" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 15–18 in a loop until you reach this target. Label until all field types and data variation patterns in your schema are covered. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
@@ -414,7 +436,7 @@ displayHTML(open(DOCS_DIR + "model.html", 'r').read())
 displayHTML(open(DOCS_DIR + "data.html", 'r').read())
 ```
 
-_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*HTML output rendered inside a Fabric notebook showing labeled pair examples in a table. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
+![generateDocs HTML output in a Fabric notebook showing labeled pairs, matches in green and non-matches in red.](../.gitbook/assets/fabric-generatedocs-output.png)
 
 ### Notebook 04: Train and match
 
@@ -458,7 +480,8 @@ display(outputDF)
 print(outputDF.count())
 ```
 
-_**IMAGE TO BE ADDED— Match output table in a Fabric notebook showing resolved records with\*\*\*\*****&#x20;****`z_cluster`****&#x20;****\*\*\*\*column visible — two rows sharing the same cluster value highlighted to illustrate entity resolution. Tanwi to check with team for screenshot from a live Fabric notebook run.**_
+![Zingg match output table in a Fabric notebook with z_minScore, z_maxScore and z_cluster columns alongside the record fields.](../.gitbook/assets/fabric-match-output.png)
+
 {% endtab %}
 
 {% tab title="Enterprise" %}
