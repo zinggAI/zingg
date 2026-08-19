@@ -8,7 +8,15 @@ description: >-
 
 The training phase builds up the Zingg models using the training data from your label sessions and writes them to `zinggDir/modelId` as specified in your config.
 
-Once saved, reuse the same `modelId` in all subsequent phases - `match`, `link`, and `runIncremental` to apply this trained model to your data.
+<table><thead><tr><th width="205.12890625" valign="top">Model</th><th valign="top">Path</th></tr></thead><tbody><tr><td valign="top">Blocking model</td><td valign="top"><code>zinggDir/modelId/model/block/</code></td></tr><tr><td valign="top">Similarity model</td><td valign="top"><code>zinggDir/modelId/model/zingg.block</code></td></tr><tr><td valign="top">Both models</td><td valign="top">Written during the train phase. Present before any match, link,<br>or incremental run can proceed.</td></tr></tbody></table>
+
+Once saved, reuse the same `modelId` in all subsequent phases - `match`, `link`, and `runIncremental` to apply the trained models to your data.&#x20;
+
+If you retrain with a new model, use `Compare Model Results (diff phase)` in Enterprise to benchmark the new model against the current one before deploying. Zingg shows you exactly which clusters changed, merged, or split between the two models.
+
+{% hint style="success" icon="right-long" %}
+**Read more**:
+{% endhint %}
 
 {% hint style="success" icon="right-long" %}
 Model saved to: `zinggDir/modelId`
@@ -50,7 +58,6 @@ zingg.initAndExecute()
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-
 ### Run train
 
 Zingg on Snowflake can be run either from a local terminal via the CLI, or natively inside Snowflake as a job service.
@@ -80,9 +87,9 @@ USING (PHASE => 'train', CONFIG => '<config-name>');
 
 `<config-name>` is the name of your Zingg configuration json file.
 
-****Monitor the job**
+\*\***Monitor the job**
 
-Retrieve the service logs to monitor execution and debug any failures.**
+Retrieve the service logs to monitor execution and debug any failures.\*\*
 
 ```sql
 SELECT SYSTEM$GET_SERVICE_LOGS('ZINGG_TRAIN_ASYNC_JOB_SERVICE', 0, 'zingg-async-job-container');
@@ -97,6 +104,5 @@ Once the job completes, stop the compute pool to release resources.
 ```sql
 ALTER COMPUTE POOL CONTAINER_ZINGG_POOL STOP ALL;
 ```
-
 {% endtab %}
 {% endtabs %}
