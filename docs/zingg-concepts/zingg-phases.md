@@ -4,7 +4,7 @@ description: Steps in the entity resolution pipeline
 
 # Zingg Phases
 
-Zingg programs run different aspects of the entity resolution pipeline. Each aspect covers one aspect of the pipeline. Here are the phases Zingg defines.&#x20;
+Zingg programs run different aspects of the entity resolution pipeline. Each phase covers one aspect of the pipeline. Here are the phases Zingg defines.&#x20;
 
 <details>
 
