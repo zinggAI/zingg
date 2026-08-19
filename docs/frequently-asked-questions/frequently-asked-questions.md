@@ -82,8 +82,8 @@ Zingg is tested primarily on Linux and macOS. On Windows, use the Zingg Docker i
 
 <summary><strong>How do I upgrade Zingg?</strong></summary>
 
-* For the Python package: `pip install --upgrade zingg`.
-* For the Docker image: `docker pull zingg/zingg:<version>` - replace `<version>` with the release tag, for example `zingg/zingg:0.5.0`. Check `github.com/zinggAI/zingg/releases` for the latest version.
+* For the Python package: `pip install --upgrade zingg`. Also update the new jar from the release.
+* For the Docker image: `docker pull zingg/zingg:<version>` - replace `<version>` with the release tag, for example `zingg/zingg:0.7.0`. Check `github.com/zinggAI/zingg/releases` for the latest version.
 
 After upgrading, your existing trained models remain compatible. You do not need to retrain unless you want to use new match types or features that are introduced in the new version.
 
