@@ -27,9 +27,9 @@ Uses `Arguments`, `FieldDefinition`, `CsvPipe`, and `ZinggWithSpark`. The workfl
 1. Go to **Compute** → **Create Cluster**. Name it `Zingg-Community`.
 2. Set the runtime to a current LTS version for compatibility.
 3. Download the latest Zingg JAR from `github.com/zinggAI/zingg/releases`.
-4. Open the cluster → **Libraries** → **Install New** → **Upload JAR** → upload the file.
+4.  Open the cluster → **Libraries** → **Install New** → **Upload JAR** → upload the file.
 
-   ![Databricks Install library dialog with the Zingg jar selected from the workspace file path.](../.gitbook/assets/databricks-install-zingg-jar.png)
+    ![Databricks Install library dialog with the Zingg jar selected from the workspace file path.](../.gitbook/assets/databricks-install-zingg-jar.png)
 
 #### **Step 2: Install the Zingg Python package**
 
@@ -289,7 +289,7 @@ display(df)
 print(df.count())
 ```
 
-![Databricks match output table with Z_MINSCORE, Z_MAXSCORE and Z_CLUSTER columns; several rows share Z_CLUSTER 3, meaning they resolved to the same entity.](../.gitbook/assets/databricks-match-output.png)
+![Databricks match output table with Z\_MINSCORE, Z\_MAXSCORE and Z\_CLUSTER columns; several rows share Z\_CLUSTER 3, meaning they resolved to the same entity.](../.gitbook/assets/databricks-match-output.png)
 
 {% hint style="success" icon="right-long" %}
 Records sharing the same `Z_CLUSTER` value have been resolved to the same real-world entity. `Z_MINSCORE` is the weakest match confidence within the cluster. `Z_MAXSCORE` is the strongest. For full output column definitions → [Interpret Output Scores](../interpreting-results/interpret-output-scores.md).
@@ -308,7 +308,7 @@ DOCS_DIR = zinggDir + "/" + modelId + "/docs/"
 displayHTML(open(DOCS_DIR + "model.html", 'r').read())
 ```
 
-_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****&#x20;****HTML output rendered inside a Databricks notebook showing labeled pair examples. Tanwi to check with team for screenshot from a live notebook run. Even a small portion of the rendered HTML is sufficient — it tells the reader what to expect before they run it. Place: below the****&#x20;****`displayHTML`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*line.**_
+_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****&#x20;****HTML output rendered inside a Databricks notebook showing labeled pair examples. Tanwi to check with team for screenshot from a live notebook run. Even a small portion of the rendered HTML is sufficient — it tells the reader what to expect before they run it. Place: below the****&#x20;****`displayHTML`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*line.**_
 {% endtab %}
 
 {% tab title="Enterprise" %}
@@ -630,7 +630,7 @@ data_html = "\n".join(r.value for r in data_doc.collect())
 displayHTML(data_html)
 ```
 
-_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*output rendered inside a Databricks notebook showing labeled pair examples in HTML. Tanwi to check with team for screenshot from a live notebook run. Can reuse the OS version if the output looks the same.**_
+_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*output rendered inside a Databricks notebook showing labeled pair examples in HTML. Tanwi to check with team for screenshot from a live notebook run. Can reuse the OS version if the output looks the same.**_
 
 ### Notebook 05: Train and match
 

@@ -35,9 +35,9 @@
     * [MAPPING\_(FILENAME) Match](zingg-concepts/how-zingg-learns/match-types/mapping_-filename-match.md)
 * [Identity Graph](zingg-concepts/identity-graph.md)
 * [Z Cluster and Zingg ID](zingg-concepts/z-cluster-and-zingg-id.md)
-* [Zingg Pipes](zingg-concepts/zingg-pipes.md)
 * [Zingg Phases](zingg-concepts/zingg-phases.md)
 * [Platform Infrastructure vs Data Platform](zingg-concepts/platform-infrastructure-vs-data-platform.md)
+* [Zingg Configuration](zingg-concepts/zingg-configuration.md)
 
 ## Community And Enterprise Editions
 
