@@ -71,7 +71,7 @@ Replace `<container_id>` with your running container's ID (find it with `docker 
 Create or edit your configuration. The config defines your field definitions, input and output paths, model ID, and partition settings. Both editions use the same JSON structure — only the Python class differs between editions.
 
 {% hint style="success" icon="right-long" %}
-`FUZZY` handles typos and abbreviations. `EXACT` requires character-for-character match. `DONT_USE` excludes a field from matching but keeps it in output. For all match types → [Match Types](../zingg-concepts/how-zingg-learns/match-types/)
+`FUZZY` handles typos and abbreviations. `EXACT` requires character-for-character match. `DONT_USE` excludes a field from matching but keeps it in output. For all match types → [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}
 
 #### Python - Community

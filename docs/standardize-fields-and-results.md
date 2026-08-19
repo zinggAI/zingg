@@ -62,5 +62,5 @@ Enforce canonical values on classification fields like industry codes, status la
 
 * To create a mapping file and configure the postprocessor on a field → [Configure Field Standardization](tuning/configure-field-standardization.md)
 * For the full field definition configuration including all `EFieldDefinition` methods - [Configure Zingg](running-zingg/configure-zingg.md)
-* For dictionary-based matching using the MAPPING match type (nicknames, aliases, company names) - [Match Types](zingg-concepts/how-zingg-learns/match-types/)
+* For dictionary-based matching using the MAPPING match type (nicknames, aliases, company names) - [Match Types](zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}

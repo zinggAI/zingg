@@ -95,5 +95,5 @@ Use `PINCODE` not `FUZZY` for postal codes. `PINCODE` is built to handle the spe
 * `ONLY_ALPHABETS_FUZZY` - strip numbers first, then apply fuzzy to letters only
 * `MAPPING_(FILENAME)` - handle completely different strings (nicknames, abbreviations) that `FUZZY` cannot bridge
 
-**Read more**: [Match Types](./) | [Configure Zingg](../../../running-zingg/configure-zingg.md) | [How Zingg Learns](../)
+**Read more**: [Match Types](./) | [Configure Zingg](../../../../running-zingg/configure-zingg.md) | [How Zingg Learns](../../../how-zingg-learns/)
 {% endhint %}

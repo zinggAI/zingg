@@ -32,5 +32,5 @@ When you define your field configuration, you choose a match type for each field
 
 * For full field definition setup including the `fields`, `dataType`, and `stopWords` attributes -\
   [Configure Zingg](../../running-zingg/configure-zingg.md)
-* For the complete match types reference with all 12 types - [Match Types](match-types/)
+* For the complete match types reference with all 12 types - [Match Types](../zingg-configuration/field-definition/match-types/)
 {% endhint %}

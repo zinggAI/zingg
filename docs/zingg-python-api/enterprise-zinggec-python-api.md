@@ -115,7 +115,7 @@ fname = EFieldDefinition("fname", "string", MatchType.FUZZY,
 The second argument to `MappingMatchType` is the mapping file name (without extension). The mapping file must be present in your working directory.
 
 {% hint style="success" icon="right-long" %}
-**Read more**: For the full mapping file format and rules → [Mapping match type](../zingg-concepts/how-zingg-learns/match-types/)
+**Read more**: For the full mapping file format and rules → [Mapping match type](../zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}
 
 ### Pass through

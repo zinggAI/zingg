@@ -6,11 +6,11 @@ The configuration can be done either through JSON, or through Zingg's Python API
 
 Here is some important terminology to be aware of:
 
-
-
 1. Arguments - representative of the user input comprising of input and output data, fields and their matching criteria, models location as well as performance criteria. Zingg Enterprise also has specialised arguments for functionality like incremental run, reassign and diff etc.&#x20;
 2. Pipes - Zingg's abstraction for the data store. A pipe encapsulates the source or destination of records; a delta file path, a Snowflake table, a UC table, an RDBMS dataset. Different pipes are configured by passing the format string in the configuration.&#x20;
+3. Field Definition -&#x20;
+4. Match type -&#x20;
 
 {% hint style="success" icon="right-long" %}
-**Read more**: [Pipes and Data Connections](../connect-your-data/pipes-and-data-connections.md)
+**Read more**: [Pipes and Data Connections](../../connect-your-data/pipes-and-data-connections.md)
 {% endhint %}

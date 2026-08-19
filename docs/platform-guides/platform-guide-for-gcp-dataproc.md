@@ -258,7 +258,7 @@ args.setFieldDefinition(fieldDefs)
 {% hint style="success" icon="right-long" %}
 `FUZZY` handles variations like 'Jon' vs 'John' or 'St' vs 'Street'. `EXACT` requires a character-for-character match. `DONT_USE` excludes a field from matching but keeps it in output.
 
-For all match types → [Match Types](../zingg-concepts/how-zingg-learns/match-types/)
+For all match types → [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}
 
 ### Step 10: Configure performance settings

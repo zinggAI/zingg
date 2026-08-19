@@ -15,7 +15,7 @@ consequential filter in the pipeline.
 
 ### Blocking functions
 
-The blocking model is a purpose built entity resolution model, comprising of a tree with hash functions. Blocking functions control which records are compared. The blocking tree learns on the matched records you provided during labeling; at every node, Zingg selects the function and the field that produces the least elimination of your known matching pairs.
+The blocking model is a purpose built entity resolution micro clustering model, comprising of a tree with hash functions. Blocking functions control which records are compared. The blocking tree learns on the matched records you provided during labeling; at every node, Zingg selects the function and the field that produces the least elimination of your known matching pairs.
 
 **What makes a good blocking function:**
 
@@ -45,9 +45,7 @@ Pair 1 is eliminated (`n` ≠ `h`). `last1char` is not a good function for `firs
 
 So `first1char(firstname)` will be selected. It brings near-similar records together - clustering them to break the cartesian join.
 
-The good part is that the user does not have to think about these constructs at all. During active learning, the model is automatically learnt based on what the user labels.&#x20;
-
-
+The good part is that the user does not have to think about these constructs at all. During active learning, the model is automatically learnt based on what the user labels.
 
 {% hint style="success" icon="right-long" %}
 The blocking model learns from your labeled training pairs, the same training data that teaches the\

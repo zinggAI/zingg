@@ -34,7 +34,7 @@ Review your `FieldDefinition` match types. Common mismatches:
 * Using `DONT_USE` for a field that actually carries strong identity signal - adding it back with the right match type can improve recall
 
 {% hint style="success" icon="right-long" %}
-**Read more**: Match types reference - [Match types](../../zingg-concepts/how-zingg-learns/match-types/)
+**Read more**: Match types reference - [Match types](../../zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}
 
 ### Step 3: Remove stopwords

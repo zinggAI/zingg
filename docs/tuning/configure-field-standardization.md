@@ -131,5 +131,5 @@ If the output still shows raw variants:
 
 * [Standardize Fields and Results](../standardize-fields-and-results.md) - concept and where it is useful
 * [Configure Zingg](../running-zingg/configure-zingg.md) - full field definition configuration including all `EFieldDefinition` methods
-* [Match Types](../zingg-concepts/how-zingg-learns/match-types/) - for the MAPPING match type, which uses a similar mapping file approach for matching
+* [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/) - for the MAPPING match type, which uses a similar mapping file approach for matching
 {% endhint %}

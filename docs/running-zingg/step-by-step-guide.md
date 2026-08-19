@@ -4,11 +4,11 @@ description: >-
   for the entire Zingg docs site.
 ---
 
-# Step-by-Step Guide
+# Step-by-Step Overview
 
 Zingg works in phases. Each phase performs a specific task and produces an output that the next phase depends on. You do not need to run all phases every time. Once the model is trained, you run `match`, `link`, or `runIncremental` directly.
 
-The phases below represent the complete workflow from first setup to production matching. This page describes the workflow you follow once Zingg is installed.
+The steps below represent the complete workflow from first setup to production matching. This page describes the workflow you follow once Zingg is installed.
 
 {% hint style="success" icon="right-long" %}
 This page describes the workflow you follow once Zingg is installed.\
@@ -29,9 +29,9 @@ Configure input and output pipes to tell Zingg where your source data lives and 
 {% endstep %}
 
 {% step %}
-### Configure Zingg
+### Configure fields
 
-Define your field definitions, match types, model ID, partition count, and any optional Enterprise features (deterministic matching, primary key, pass through, standardization). The configuration drives every downstream phase.
+Define your field definitions, match types, model ID, partition count, and relevant Enterprise features (deterministic matching, primary key, pass through, standardization). The configuration drives every downstream phase.
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Content your Data](../connect-your-data/pipes-and-data-connections.md)
@@ -54,7 +54,7 @@ Run `findTrainingData` to generate candidate pairs, then label each pair as Matc
 {% step %}
 ### Verify Blocking
 
-Run `verifyBlocking` to check what percentage of your known matching pairs are being blocked together correctly. Run after labelling and before committing to a full training run. If coverage is low, return to labelling.
+Run `verifyBlocking` to check what percentage of your known matching pairs are being blocked together correctly. Run after labelling and before committing to a full training run. If coverage is low, return to labelling. Enterprise Only.
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Verify Blocking](verify-blocking.md)
@@ -82,7 +82,7 @@ Run `train` to build and save the blocking and similarity models from your label
 {% endstep %}
 
 {% step %}
-### Run the Match Phase or Link across Datasets
+### Match or Link across Datasets
 
 Apply the trained model to your data:
 

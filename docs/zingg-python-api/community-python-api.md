@@ -75,7 +75,7 @@ args.setFieldDefinition(fieldDefs)
 ```
 
 {% hint style="success" icon="right-long" %}
-**Read more**: For all match types and combinations → [Match Types](../zingg-concepts/how-zingg-learns/match-types/)
+**Read more**: For all match types and combinations → [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}
 
 ### Configure input and output pipes

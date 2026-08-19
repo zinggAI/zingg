@@ -28,49 +28,45 @@ If you are new to Fabric, sign up for a free trial at `microsoft.com/fabric`.
 
 1. Go to **Workspaces** and click **New workspace**.
 2. Name it something like `Zingg-Fabric`.
-3. When prompted for a session cluster, choose **New Standard Session**.
+3.  When prompted for a session cluster, choose **New Standard Session**.
 
-   ![Fabric session dropdown with New standard session selected.](../.gitbook/assets/fabric-new-standard-session.png)
+    ![Fabric session dropdown with New standard session selected.](../.gitbook/assets/fabric-new-standard-session.png)
 
 #### **Step 2: Create a Zingg Environment**
 
 Fabric Environments let you install JARs that persist across notebook sessions. Zingg requires its JAR to be installed in an Environment before any notebook runs.
 
 1. Inside your workspace, go to the **Environment** tab and click **New Environment**.
-2. Name it `Zingg Environment`.
+2.  Name it `Zingg Environment`.
 
-   ![Fabric notebook toolbar with the environment dropdown open on New environment.](../.gitbook/assets/fabric-new-environment.png)
+    ![Fabric notebook toolbar with the environment dropdown open on New environment.](../.gitbook/assets/fabric-new-environment.png)
 
 #### **Step 3: Install the Zingg JAR in the Environment**
 
 The Zingg JAR must be installed as a Custom Library in your Environment so Fabric's Spark runtime can find it.
 
-1. Go to `github.com/zinggAI/zingg/releases` and download the latest release `tar` file.
+1.  Go to `github.com/zinggAI/zingg/releases` and download the latest release `tar` file.
 
-   ![Zingg GitHub release page showing the spark tar.gz file under Assets.](../.gitbook/assets/fabric-zingg-release-assets.png)
+    ![Zingg GitHub release page showing the spark tar.gz file under Assets.](../.gitbook/assets/fabric-zingg-release-assets.png)
+2.  Extract the `tar` file and locate the JAR file inside it.
 
-2. Extract the `tar` file and locate the JAR file inside it.
+    ![Extracted Zingg release folder with the zingg jar file highlighted.](../.gitbook/assets/fabric-zingg-jar-extracted.png)
+3.  Open your `Zingg Environment`, go to **Custom Library**, and upload the JAR file.
 
-   ![Extracted Zingg release folder with the zingg jar file highlighted.](../.gitbook/assets/fabric-zingg-jar-extracted.png)
-
-3. Open your `Zingg Environment`, go to **Custom Library**, and upload the JAR file.
-
-   ![Fabric Environment Custom libraries page showing the uploaded Zingg jar with Success status.](../.gitbook/assets/fabric-custom-library-upload.png)
-
+    ![Fabric Environment Custom libraries page showing the uploaded Zingg jar with Success status.](../.gitbook/assets/fabric-custom-library-upload.png)
 4. Click **Save** and then **Publish** the Environment.
 
 #### **Step 4: Create a Lakehouse and upload your data**
 
 Zingg reads from and writes to OneLake. Create a Lakehouse to give Zingg a storage location for your data, model files, and output.
 
-1. Inside your workspace, click **New Item** → **Lakehouse**.
+1.  Inside your workspace, click **New Item** → **Lakehouse**.
 
-   ![Fabric New item panel with Lakehouse selected under Store data.](../.gitbook/assets/fabric-new-item-lakehouse.png)
-
+    ![Fabric New item panel with Lakehouse selected under Store data.](../.gitbook/assets/fabric-new-item-lakehouse.png)
 2. Give the Lakehouse a name (for example `ZinggLakehouse`).
-3. Go inside the Lakehouse, click **Get Data**, and upload your CSV file.
+3.  Go inside the Lakehouse, click **Get Data**, and upload your CSV file.
 
-   ![Lakehouse Get data menu with Upload files selected.](../.gitbook/assets/fabric-lakehouse-upload-files.png)
+    ![Lakehouse Get data menu with Upload files selected.](../.gitbook/assets/fabric-lakehouse-upload-files.png)
 
 {% hint style="success" icon="right-long" %}
 Sample data for testing: `github.com/zinggAI/zingg/blob/main/examples/febrl/test.csv`
@@ -279,7 +275,7 @@ args.setFieldDefinition(fieldDefs)
 ```
 
 {% hint style="success" icon="right-long" %}
-`FUZZY` handles variations like 'Jon' vs 'John' or 'St' vs 'Street'. `EXACT` requires a character-for-character match. `DONT_USE` excludes a field from matching but keeps it in output — use this for record identifiers. For all match types → [Match Types](../zingg-concepts/how-zingg-learns/match-types/)
+`FUZZY` handles variations like 'Jon' vs 'John' or 'St' vs 'Street'. `EXACT` requires a character-for-character match. `DONT_USE` excludes a field from matching but keeps it in output — use this for record identifiers. For all match types → [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}
 
 ### Notebook 02: Find training data and label pairs
@@ -480,8 +476,7 @@ display(outputDF)
 print(outputDF.count())
 ```
 
-![Zingg match output table in a Fabric notebook with z_minScore, z_maxScore and z_cluster columns alongside the record fields.](../.gitbook/assets/fabric-match-output.png)
-
+![Zingg match output table in a Fabric notebook with z\_minScore, z\_maxScore and z\_cluster columns alongside the record fields.](../.gitbook/assets/fabric-match-output.png)
 {% endtab %}
 
 {% tab title="Enterprise" %}

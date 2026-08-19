@@ -96,7 +96,7 @@ Learn how field definitions, match types, and related settings influence matchin
 
 Match types are the combination of similarity functions assigned to each field, telling Zingg how to compare values in that field across records. Zingg provides match types for fuzzy comparison, exact match, email, numeric, text, and several specialized types for alphabet-only or null handling.
 
-Each field receives one match type. The full list of all match types; what they do, when to use each, and examples on [Match Types](../zingg-concepts/how-zingg-learns/match-types/).
+Each field receives one match type. The full list of all match types; what they do, when to use each, and examples on [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/).
 
 A quick reference for the most common fields:
 

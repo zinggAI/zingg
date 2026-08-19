@@ -184,7 +184,7 @@ args.setFieldDefinition([
 ```
 
 {% hint style="success" icon="right-long" %}
-`FUZZY` handles variations like 'Jon' vs 'John' or 'St' vs 'Street'. `EXACT` requires a character-for-character match. `DONT_USE` excludes a field from matching but keeps it in the output - use this for identifiers like record IDs. For all match types → [Match Types](../zingg-concepts/how-zingg-learns/match-types/)
+`FUZZY` handles variations like 'Jon' vs 'John' or 'St' vs 'Street'. `EXACT` requires a character-for-character match. `DONT_USE` excludes a field from matching but keeps it in the output - use this for identifiers like record IDs. For all match types → [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}
 
 ### Notebook 02: Find training data and label pairs

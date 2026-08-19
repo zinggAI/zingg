@@ -173,7 +173,7 @@ args.setFieldDefinition(fieldDefs)
 ```
 
 {% hint style="success" icon="right-long" %}
-**Read more**: Match types reference - [Match types](../zingg-concepts/how-zingg-learns/match-types/) | [Configuration schema](../reference/configuration-schema.md)
+**Read more**: Match types reference - [Match types](../zingg-concepts/zingg-configuration/field-definition/match-types/) | [Configuration schema](../reference/configuration-schema.md)
 {% endhint %}
 
 ### Step 4: Configure input and output pipes
@@ -554,7 +554,6 @@ args.setPassthroughExpr("fname = 'matilda'")
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-
 ### Step 1: Build the Enterprise arguments object
 
 #### JSON
