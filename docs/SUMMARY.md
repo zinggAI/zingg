@@ -10,7 +10,7 @@
   * [The problems Zingg is built to solve](zingg-concepts/zingg-entity-resolution-platform/the-problems-zingg-is-built-to-solve-and-why-they-are-harder-than-it-looks.md)
   * [Deterministic vs Probabilistic Matching](zingg-concepts/zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
   * [Deduplication, linking and resolving](zingg-concepts/zingg-entity-resolution-platform/deduplication-linking-and-resolving.md)
-  * [Incremental Run](zingg-concepts/zingg-entity-resolution-platform/incremental-run.md)
+  * [Incremental Flow](zingg-concepts/zingg-entity-resolution-platform/incremental-run.md)
 * [How Zingg Learns](zingg-concepts/how-zingg-learns/README.md)
   * [Zingg Active Learning](zingg-concepts/how-zingg-learns/zingg-active-learning.md)
   * [Zingg Models](zingg-concepts/how-zingg-learns/zingg-models/README.md)
