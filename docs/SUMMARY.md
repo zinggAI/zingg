@@ -66,6 +66,7 @@
 * [Cluster Approval](running-zingg/cluster-approval.md)
 * [Compare Model Results](running-zingg/compare-model-results.md)
 * [Knowledge Graph](running-zingg/knowledge-graph.md)
+* [Set Deterministic Matching Conditions](running-zingg/set-deterministic-matching-conditions.md)
 
 ***
 
