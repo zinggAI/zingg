@@ -72,7 +72,7 @@ Produces HTML documentation of your labeled training pairs and model statistics.
 
 <details>
 
-<summary><strong><code>verifyBlocking</code></strong></summary>
+<summary><strong><code>verifyBlocking</code>(Enterprise)</strong></summary>
 
 Reports what percentage of your known matching pairs are being blocked together correctly. Run after labeling and before training to catch blocking issues early.
 

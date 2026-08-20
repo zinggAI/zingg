@@ -11,6 +11,7 @@
   * [Deterministic vs Probabilistic Matching](zingg-concepts/zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
   * [Deduplication, linking and resolving](zingg-concepts/zingg-entity-resolution-platform/deduplication-linking-and-resolving.md)
   * [Incremental Flow](zingg-concepts/zingg-entity-resolution-platform/incremental-run.md)
+  * [Streaming vs Batch Entity Resolution](zingg-concepts/zingg-entity-resolution-platform/streaming-vs-batch-entity-resolution.md)
 * [How Zingg Learns](zingg-concepts/how-zingg-learns/README.md)
   * [Zingg Active Learning](zingg-concepts/how-zingg-learns/zingg-active-learning.md)
   * [Zingg Models](zingg-concepts/how-zingg-learns/zingg-models/README.md)
