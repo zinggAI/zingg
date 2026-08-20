@@ -78,9 +78,9 @@ Run `verifyBlocking` to check what percentage of your known matching pairs are b
 {% endstep %}
 
 {% step %}
-### Generate Model Documentation (Optional)
+### Verify Model (Optional)
 
-Run `generateDocs` to produce a human-readable HTML report of your training data, including pairs labeled as matches and non-matches. Useful for sharing with subject-matter experts before training.
+Run `generateDocs` to produce a human-readable HTML report of your training data, including pairs labeled as matches and non-matches. Useful for sharing with subject-matter experts for feedback before training. Run `updateLabel` if needed to incorporate SME comments.&#x20;
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Generate Model Documentation](generate-model-documentation.md)
@@ -116,9 +116,11 @@ Apply the trained model to your data:
 {% endstep %}
 
 {% step %}
-### Interpret Output Scores
+### Interpret Output&#x20;
 
 Review output scores to understand match quality. Use `Z_MINSCORE` and `Z_MAXSCORE` to set confidence thresholds for automated vs human-reviewed clusters.
+
+Run `explain` to understand cluster formation and check the output statistics (Enterprise Only) to understand and explain matches.&#x20;
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)
@@ -126,9 +128,11 @@ Review output scores to understand match quality. Use `Z_MINSCORE` and `Z_MAXSCO
 {% endstep %}
 
 {% step %}
-### Improve Accuracy (if needed)
+### Tune (if needed)
 
-If match results need improvement, return to find-and-label with focused training data for the patterns being missed, then retrain. Remove stopwords from fields like addresses and company names to improve blocking. Use custom blocking and similarity for specialized data patterns.
+If match results need improvement, return to find-and-label with focused training data for the patterns being missed, then retrain. Remove stopwords from fields like addresses and company names to improve blocking.&#x20;
+
+If the Zingg job is slow, add more labels. The blocking model learns from the labels and adding more matches will help it branch better.&#x20;
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Improve Accuracy](../tuning/improve-accuracy/)
