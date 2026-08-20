@@ -27,7 +27,7 @@ Batch ER processes a full dataset (or a large incremental slice of one) at once,
 
 Batch is the foundation most entity resolution and MDM programs are built on, and it remains the right architecture for the majority of identity workloads today.
 
-### Streaming entity resolution: identity at the moment of decision
+### Streaming entity resolution: identity at the moment of decision (Enterprise Only)
 
 Streaming ER resolves identity against individual events as they arrive, typically within milliseconds, so that a decision being made _right now_ can use a trusted identity instead of a raw, unresolved record.
 
@@ -46,26 +46,15 @@ It's tempting to think streaming ER is just batch ER running on a shorter schedu
 
 Streaming entity resolution is different engineering problem (stateful stream processing, incremental identity graphs) rather than a smaller version of the same one.
 
-### They compose, rather than compete
+### Why not real time?
 
-In practice, most mature architectures use both, at different stages:
-
-|                       | Batch                                              | Streaming                                                   |
-| --------------------- | -------------------------------------------------- | ----------------------------------------------------------- |
-| **Answers**           | "What is our authoritative view of this entity?"   | "Is this event the same entity as one we already know?"     |
-| **Latency**           | Minutes to hours                                   | Milliseconds to seconds                                     |
-| **Context available** | Full dataset                                       | Event + existing identity state                             |
-| **Typical output**    | Golden records, MDM, customer 360                  | Real-time match/no-match decision, identity-enriched event  |
-| **Typical consumer**  | Analytics, reporting, downstream systems of record | Live application logic, fraud/risk engines, personalization |
+Warehouses and datalakes are still not ready for real time design patterns. While there is promising movement towards LTAP/HTAP with Lakebase and Postgres suppoer in Snowflake, we are watching this space keenly and will build something when the technology is right. Going out of the warehouse and supporting real time is one option, but that doesnt make the resolved entities easily consumable throughout the Enterprise.&#x20;
 
 ### Choosing an architecture in Zingg
 
 Zingg supports both batch and streaming entity resolution natively, so the choice is driven by your use case rather than by platform limitations:
 
-* If your consumers can tolerate latency measured in hours and need the highest-confidence, full-context match — **use batch**.
+* If your pipelines run batch, **use batch**.
 * If a decision is being made at the moment an event arrives and needs a trusted identity to act on — **use streaming**.
-* If you have both kinds of consumers — which most organizations eventually do — **run both**, with streaming handling live decisions and batch maintaining the authoritative identity graph underneath it.
-
-See \[Batch Entity Resolution: Getting Started] and \[Streaming Entity Resolution: Getting Started] for setup guides for each.
 
 ####
