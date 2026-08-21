@@ -8,7 +8,7 @@ Here is some important terminology to be aware of:
 
 1. Arguments - representative of the user input comprising of input and output data, fields and their matching criteria, models location as well as performance criteria. Zingg Enterprise also has specialised arguments for functionality like incremental run, reassign and diff etc.&#x20;
 2. Pipes - Zingg's abstraction for the data store. A pipe encapsulates the source or destination of records; a delta file path, a Snowflake table, a UC table, an RDBMS dataset. Different pipes are configured by passing the format string in the configuration.&#x20;
-3. Field Definition -&#x20;
+3. Field Definition - Field Definition is the configuration object that tells Zingg which fields to use for matching and how to compare them. Each field definition has four attributes: `fieldName` (the column name), `fields` (same as `fieldName` for now), `dataType` (string, integer, double, etc.), and `matchType` (the similarity functions to apply).
 4. Match type -&#x20;
 
 {% hint style="success" icon="right-long" %}
