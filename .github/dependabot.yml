@@ -5,7 +5,17 @@
 
 version: 2
 updates:
-  - package-ecosystem: "*" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "maven"
+    directories:
+      - "/**" # cover the root + all Maven submodules (common/*, spark/*, ...)
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
+    ignore:
+      # --- provided scope: supplied by the Spark runtime, not shipped by Zingg ---
+      - dependency-name: "org.apache.spark:*"
+      - dependency-name: "org.scala-lang:*"
+      - dependency-name: "com.fasterxml.jackson.core:jackson-core"
+      - dependency-name: "com.fasterxml.jackson.core:jackson-databind"
+      # NOTE: jackson-annotations is `compile` scope (shipped in the jar) — do
+      # NOT ignore it; its alerts are real and actionable.
