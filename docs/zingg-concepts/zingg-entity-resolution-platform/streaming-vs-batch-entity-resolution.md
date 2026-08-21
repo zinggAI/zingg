@@ -48,7 +48,7 @@ Streaming entity resolution is different engineering problem (stateful stream pr
 
 ### Why not real time?
 
-Warehouses and datalakes are still not ready for real time design patterns. While there is promising movement towards LTAP/HTAP with Lakebase and Postgres suppoer in Snowflake, we are watching this space keenly and will build something when the technology is right. Going out of the warehouse and supporting real time is one option, but that doesnt make the resolved entities easily consumable throughout the Enterprise.&#x20;
+Warehouses and datalakes are still not ready for real time design patterns. While there is promising movement towards LTAP/HTAP with Lakebase and Postgres suppoer in Snowflake, we are watching this space keenly and will build something when the technology is right. Going out of the warehouse and supporting real time is one option, but that becomes a separate source of truth with its own ETL and governance. Hence it gets limited to single departments and fails to become the universal source of truth. &#x20;
 
 ### Choosing an architecture in Zingg
 
