@@ -31,7 +31,12 @@ args.setLabelDataSampleSize(0.5)
 
 schema = "id string, fname string, lname string, stNo string, add1 string, add2 string, city string, state string, areacode string, dob string, ssn  string"
 inputPipe = CsvPipe("unittestFebrlInput", "examples/febrl/test.csv", schema)
-trainingPipe = CsvPipe("unittestFebrlTraining", "examples/febrl/training_data.csv", schema)
+# The labelled training file contains the two metadata columns used by Zingg.
+# Spark 4 validates the supplied schema more strictly, so keep its schema
+# separate from the unlabelled input schema.
+trainingSchema = "z_cluster string, z_isMatch string, fname string, lname string, stNo string, add1 string, add2 string, city string, areacode string, state string, dob string, ssn string"
+trainingPipe = CsvPipe("unittestFebrlTraining", "examples/febrl/training_data.csv", trainingSchema)
+trainingPipe.setHeader(True)
 outputPipe = CsvPipe("unittestFebrlResult", "/tmp/pythonTestFebrl")
 args.setData(inputPipe)
 args.setTrainingSamples(trainingPipe)
@@ -62,9 +67,16 @@ class TestZinggClient(TestCase):
     def test_initClient_databricks(self):
         global _spark_ctxt
         _spark_ctxt = None
-        os.environ['DATABRICKS_CONNECT'] = 'Y'
-        result = initClient()
-        self.assertEqual(result, 1)
+        previous = os.environ.get('DATABRICKS_CONNECT')
+        try:
+            os.environ['DATABRICKS_CONNECT'] = 'Y'
+            result = initClient()
+            self.assertEqual(result, 1)
+        finally:
+            if previous is None:
+                os.environ.pop('DATABRICKS_CONNECT', None)
+            else:
+                os.environ['DATABRICKS_CONNECT'] = previous
 
     def test_getSparkContext(self):
         global _spark_ctxt
@@ -327,9 +339,14 @@ class TestZinggWithSpark(TestCase):
         self.assertIsInstance(zingg_spark.client, object)
 
 class ArgumentsTest(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.client = Zingg(args, options)
+        cls.client.initAndExecute()
+
     def test_setArgsAndGetArgs(self):
-        client = Zingg(args, options)
-        client.initAndExecute()
+        client = self.client
         print("testcase 1")
         expected_args = {
             "zinggDir": "models",
@@ -348,8 +365,7 @@ class ArgumentsTest(TestCase):
         self.assertEqual(java_args.getZinggDir(), expected_args["zinggDir"])
 
     def test_setModelId(self):
-        client = Zingg(args, options)
-        client.initAndExecute()
+        client = self.client
         expected_model_id = "100"
 
         java_args = client.getArguments()
@@ -359,8 +375,7 @@ class ArgumentsTest(TestCase):
         self.assertEqual(actual_model_id, expected_model_id)
 
     def test_setFieldDefinition(self):
-        client = Zingg(args, options)
-        client.initAndExecute()
+        client = self.client
     
         java_args = client.getArguments()
         java_field_defs = java_args.getFieldDefinition()  
@@ -373,8 +388,7 @@ class ArgumentsTest(TestCase):
             self.assertEqual(java_field_def.getDataType(), expected_field_def.getFieldDefinition().getDataType())
     
     def test_setDataAndGetArgs(self):
-        client = Zingg(args, options)
-        client.initAndExecute()
+        client = self.client
 
         java_args = client.getArguments()
         java_pipes = java_args.getData()
@@ -386,8 +400,7 @@ class ArgumentsTest(TestCase):
             self.assertEqual(python_pipe.pipe.getFormat(), java_pipe.getFormat())
     
     def test_setOutput(self):
-        client = Zingg(args, options)
-        client.initAndExecute()
+        client = self.client
 
         java_args = client.getArguments()
         java_pipes = java_args.getOutput()
@@ -399,8 +412,7 @@ class ArgumentsTest(TestCase):
             self.assertEqual(python_pipe.pipe.getFormat(), java_pipe.getFormat())
     
     def test_setTrainingSamples(self):
-        client = Zingg(args, options)
-        client.initAndExecute()
+        client = self.client
 
         java_args = client.getArguments()
         java_pipes = java_args.getTrainingSamples()
@@ -431,8 +443,7 @@ class ArgumentsTest(TestCase):
     #     self.assertEqual(actual_conditions, expected_conditions)
 
     def test_setZinggDir(self):
-        client = Zingg(args, options)
-        client.initAndExecute()
+        client = self.client
         expected_dir = "models"
     
         java_args = client.getArguments()
@@ -442,8 +453,7 @@ class ArgumentsTest(TestCase):
         self.assertEqual(actual_dir, expected_dir)
     
     def test_setNumPartitions(self):
-        client = Zingg(args, options)
-        client.initAndExecute()
+        client = self.client
         expected_partitions = 4
         
         java_args = client.getArguments()
@@ -453,8 +463,7 @@ class ArgumentsTest(TestCase):
         self.assertEqual(actual_partitions, expected_partitions)
     
     def test_setLabelDataSampleSize(self):
-        client = Zingg(args, options)
-        client.initAndExecute()
+        client = self.client
         expected_sample_size = 0.5
         
         java_args = client.getArguments()
@@ -464,8 +473,7 @@ class ArgumentsTest(TestCase):
         self.assertEqual(actual_sample_size, expected_sample_size)
     
     def test_setStopWordsCutoff(self):
-        client = Zingg(args, options)
-        client.initAndExecute()
+        client = self.client
         stopWordsCutoff = 0.2
         
         args.setStopWordsCutoff(stopWordsCutoff)

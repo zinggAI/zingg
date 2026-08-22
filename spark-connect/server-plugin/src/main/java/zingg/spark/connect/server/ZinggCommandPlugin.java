@@ -58,11 +58,20 @@ public class ZinggCommandPlugin implements CommandPlugin {
 	 * round-trip it through bytes into the Any type our generated
 	 * ZinggCommand code actually understands.
 	 */
-	@Override
 	public Option<BoxedUnit> process(org.sparkproject.connect.protobuf.Any command, SparkConnectPlanner planner) {
+		return processLegacy(command.toByteArray(), planner);
+	}
+
+	/** Spark 4.x Connect plugin API. */
+	public boolean process(byte[] command, SparkConnectPlanner planner) {
+		Option<BoxedUnit> result = processLegacy(command, planner);
+		return result.isDefined();
+	}
+
+	private Option<BoxedUnit> processLegacy(byte[] command, SparkConnectPlanner planner) {
 		Any any;
 		try {
-			any = Any.parseFrom(command.toByteArray());
+			any = Any.parseFrom(command);
 		} catch (InvalidProtocolBufferException e) {
 			throw new RuntimeException("Malformed Spark Connect command extension", e);
 		}

@@ -90,7 +90,7 @@
 		</dependency>	
 		<dependency>
 			<groupId>io.graphframes</groupId>
-			<artifactId>graphframes-spark3_2.12</artifactId>
+			<artifactId>${graphframes.artifact}</artifactId>
 			<version>${graphframes.version}</version>
 			<exclusions>
 				<exclusion>

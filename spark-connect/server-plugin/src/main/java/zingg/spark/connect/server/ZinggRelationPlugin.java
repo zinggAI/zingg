@@ -14,6 +14,7 @@ import org.apache.spark.sql.connect.plugin.RelationPlugin;
 import org.apache.spark.sql.connect.planner.SparkConnectPlanner;
 
 import scala.Option;
+import java.util.Optional;
 
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZFrame;
@@ -45,11 +46,20 @@ public class ZinggRelationPlugin implements RelationPlugin {
 
 	public static final Log LOG = LogFactory.getLog(ZinggRelationPlugin.class);
 
-	@Override
 	public Option<LogicalPlan> transform(org.sparkproject.connect.protobuf.Any relation, SparkConnectPlanner planner) {
+		return transformLegacy(relation.toByteArray(), planner);
+	}
+
+	/** Spark 4.x Connect plugin API. */
+	public Optional<LogicalPlan> transform(byte[] relation, SparkConnectPlanner planner) {
+		Option<LogicalPlan> result = transformLegacy(relation, planner);
+		return result.isDefined() ? Optional.of(result.get()) : Optional.empty();
+	}
+
+	private Option<LogicalPlan> transformLegacy(byte[] relation, SparkConnectPlanner planner) {
 		Any any;
 		try {
-			any = Any.parseFrom(relation.toByteArray());
+			any = Any.parseFrom(relation);
 		} catch (InvalidProtocolBufferException e) {
 			throw new RuntimeException("Malformed Spark Connect relation extension", e);
 		}

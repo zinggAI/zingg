@@ -98,6 +98,8 @@ class CsvPipe(Pipe):
         Pipe.__init__(self, name, JPipe.FORMAT_CSV)
         if(location != None):
             Pipe.addProperty(self, FilePipe.LOCATION, location)
+            # Keep the legacy property name used by older Python clients.
+            Pipe.addProperty(self, FilePipe.PATH, location)
             if(schema != None):
                 #df = spark.read.format(JPipe.FORMAT_CSV).schema(schema).load(location)
                 #s = JStructType.fromDDL(schema)
@@ -126,7 +128,9 @@ class CsvPipe(Pipe):
         :param header: true if pipe have header, false otherwise
         :type header: Boolean
         """
-        Pipe.addProperty(self, FilePipe.HEADER, header)
+        # Java Pipe properties are strings; passing a Python bool fails in
+        # Py4J on Spark 4.
+        Pipe.addProperty(self, FilePipe.HEADER, str(header).lower())
 
 class BigQueryPipe(Pipe):
     """ Pipe Class for working with BigQuery pipeline
@@ -194,7 +198,7 @@ class SnowflakePipe(Pipe):
     def __init__(self,name):
         setupPipes()
         Pipe.__init__(self, name, JPipe.FORMAT_SNOWFLAKE)
-        Pipe.addProperty(self, "application", "zingg_zingg")
+        Pipe.addProperty(self, "application", "zinggai_zingg")
         
 
     def setURL(self, url):
@@ -274,3 +278,8 @@ class UCPipe(Pipe):
         :type table: String
         """
         Pipe.addProperty(self, getFilePipe().TABLE, table)
+
+
+# Populate the exported JVM constants before ``from zingg.pipes import *``
+# snapshots them, while retaining lazy setup in each pipe constructor.
+setupPipes()
