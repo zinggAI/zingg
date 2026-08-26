@@ -60,6 +60,8 @@
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<maven-jar-plugin.version>2.3.2</maven-jar-plugin.version>
 		<commons.lang.version>2.3</commons.lang.version>
+		<fasterxml.jackson.version>2.15.2</fasterxml.jackson.version>
+		<fasterxml.jackson.databind.version>2.15.2</fasterxml.jackson.databind.version>
 		<shade.plugin.version>2.4.3</shade.plugin.version>
 		<mainClass>zingg.client.Client</mainClass>
 	</properties>
@@ -133,22 +135,22 @@
        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.15.2</version>
-        </dependency>	
+            <version>${fasterxml.jackson.version}</version>
+        </dependency>
        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.15.2</version>
+            <version>${fasterxml.jackson.version}</version>
         </dependency>
        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.15.2</version>
-        </dependency>	
+            <version>${fasterxml.jackson.databind.version}</version>
+        </dependency>
        <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-scala_2.12</artifactId>
-            <version>2.15.2</version>
+            <version>${fasterxml.jackson.version}</version>
         </dependency>
 																	
 	</dependencies>
