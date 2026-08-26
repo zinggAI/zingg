@@ -64,7 +64,7 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
 
 	public abstract void setArgs(IZArgs a);
 
-	public abstract void track(boolean collectMetrics);
+	public void track(boolean collectMetrics){}
    
 	public void postMetrics() {
         boolean collectMetrics = getArgs().getCollectMetrics();
