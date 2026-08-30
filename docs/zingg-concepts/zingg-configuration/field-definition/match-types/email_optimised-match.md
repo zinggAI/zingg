@@ -46,11 +46,11 @@ performance matters. Customer datasets, patient registries, voter files—any do
 
 </details>
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="book-open" %}
 `EMAIL_OPTIMISED` is Enterprise only. The Community (open source) edition does not support this match type. Available in Enterprise Lite and above.
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related types**:
 
 * `EMAIL` - use in Community or in development (all editions)

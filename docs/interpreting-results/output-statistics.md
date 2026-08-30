@@ -8,9 +8,9 @@ tags:
     primary: true
 ---
 
-# Output Statistics
+# 📊 Output Statistics
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Enterprise only. Output statistics are generated when the stats output pipe is configured in [Configure Zingg](../running-zingg/configure-zingg.md).
 {% endhint %}
 
@@ -55,7 +55,7 @@ args.setOutputStats(statsOutputPipe)
 }
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 The `$ZINGG_DYNAMIC_STAT_NAME` placeholder is automatically substituted with the statistics type (`SUMMARY`, `CLUSTER`, or `RECORD`) and a timestamp. This ensures each phase run writes to a separate statistics file. If `outputStats` is not configured, Zingg will not write statistics but the run will proceed normally.
 {% endhint %}
 {% endtab %}

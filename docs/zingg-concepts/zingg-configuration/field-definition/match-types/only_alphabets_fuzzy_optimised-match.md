@@ -45,11 +45,11 @@ Any field where you would use `ONLY_ALPHABETS_FUZZY` - street addresses, product
 
 </details>
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="book-open" %}
 `ONLY_ALPHABETS_FUZZY_OPTIMISED` is Enterprise only. The Community (open source) edition does not support this match type. Available in Enterprise Lite and above.
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related types**:
 
 * `ONLY_ALPHABETS_FUZZY` - same matching quality, but more time

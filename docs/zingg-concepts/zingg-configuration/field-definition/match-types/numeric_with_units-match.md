@@ -56,7 +56,7 @@ Use `NUMERIC` for address fields. "42 Main Street" does not have units. `NUMERIC
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related types**:
 
 * `NUMERIC` - for numbers without unit

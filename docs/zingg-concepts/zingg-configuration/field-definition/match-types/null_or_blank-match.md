@@ -68,7 +68,7 @@ If a field is universally null across all records with no non-null values to con
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 `NULL_OR_BLANK` common combinations:
 
 * `FUZZY`, `NULL_OR_BLANK` - name and address fields often null

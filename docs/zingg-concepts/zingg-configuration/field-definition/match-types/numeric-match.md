@@ -67,7 +67,7 @@ For "16gb", "500ml", and similar specifications where the unit matters as much a
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related matches:**
 
 * `NUMERIC_WITH_UNITS` - for product codes that include units (16gb, 500ml)

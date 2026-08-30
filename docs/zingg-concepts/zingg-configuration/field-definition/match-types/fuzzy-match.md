@@ -95,7 +95,7 @@ Use `PINCODE` not `FUZZY` for postal codes. `PINCODE` is built to handle the spe
 
 
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related match types:**
 
 * `FUZZY_OPTIMISED` - same quality, better performance at scale

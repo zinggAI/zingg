@@ -6,7 +6,7 @@ tags:
   - enterprise-only
 ---
 
-# Blocking Strategies: DEFAULT vs WIDER
+# 🎛️ Blocking Strategies: DEFAULT vs WIDER
 
 {% hint style="info" icon="right-long" %}
 **Enterprise only.** Controlled by the `blockingModel` config key (`DEFAULT` or `WIDER`, case-insensitive). If omitted, Zingg uses `DEFAULT`. Community/OSS has no such key - it always behaves like `DEFAULT`.

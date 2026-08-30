@@ -4,7 +4,7 @@ description: >-
   enough.
 ---
 
-# Improve Accuracy
+# 🧪 Improve Accuracy
 
 When your Zingg match results contain false positives (records incorrectly grouped together) or false negatives (matching records not found), there are several ways to improve accuracy\
 without starting over.

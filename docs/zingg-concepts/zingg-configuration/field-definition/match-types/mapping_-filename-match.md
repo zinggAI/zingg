@@ -25,7 +25,7 @@ The mapping file lists groups of equivalent values. `MAPPING` is typically combi
 3. **Value substitution** - each field value is checked against the dictionary, case-insensitively. A match gets replaced with its representative form; no match means the original value passes through untouched.
 4. **Similarity scoring** - the standardized values are then handed to whichever other match type is configured on the field - eg. `FUZZY`. That's where the real comparison happens.
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="book-open" %}
 **Important:** `MAPPING_(FILENAME)` must be paired with another match type (eg. `FUZZY`, `EXACT` etc.). On its own, it only standardizes values - it doesn't score them.
 {% endhint %}
 
@@ -114,6 +114,6 @@ Dates should use `EXACT`. Different formats of the same date (`2024-01-15` vs `0
 
 
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="book-open" %}
 `MAPPING_(FILENAME)` is Enterprise only. The Community edition does not support mapping-based match types. Available in Enterprise Lite and above.
 {% endhint %}

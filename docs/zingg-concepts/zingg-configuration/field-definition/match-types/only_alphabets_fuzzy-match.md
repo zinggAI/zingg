@@ -98,7 +98,7 @@ If your address data is structured enough that `FUZZY` on the full string gives 
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related types**:
 
 * `NUMERIC` - use this for numeric fields

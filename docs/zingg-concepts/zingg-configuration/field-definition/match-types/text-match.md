@@ -67,7 +67,7 @@ If your free-text fields have typos and spelling errors, `FUZZY` handles those b
 
 </details>
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="book-open" %}
 **Related types:**
 
 * `FUZZY` - better for short fields and when typos are present

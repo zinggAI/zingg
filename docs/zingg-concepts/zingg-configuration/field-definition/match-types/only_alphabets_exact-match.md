@@ -78,7 +78,7 @@ Use `ONLY_ALPHABETS_FUZZY` instead when the alphabetic component also has spelli
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related types**:
 
 * `ONLY_ALPHABETS_FUZZY` - use when alphabetic parts also have variation

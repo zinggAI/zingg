@@ -59,7 +59,7 @@ If your postal code format uses a hyphen where both sides carry meaning, use `EX
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related types:**
 
 * `EXACT` - use when format is guaranteed consistent

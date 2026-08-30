@@ -8,7 +8,7 @@ tags:
     primary: true
 ---
 
-# Explain a Specific Cluster
+# 📊 Explain a Specific Cluster
 
 {% hint style="info" icon="right-long" %}
 Enterprise only. Requires a completed match or `runIncremental` phase before running.
@@ -40,7 +40,7 @@ Use the same arguments setup. All field definitions, pipes, `modelId`, and `zing
 args = EArguments()
 args.setModelId("your-model-id")
 args.setZinggDir("/tmp/models")
-# ... same field definitions and pipes as your original match run
+# 📊 ... same field definitions and pipes as your original match run
 ```
 
 ### Step 3: Wrap the arguments and set where the explain output goes

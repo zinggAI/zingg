@@ -64,7 +64,7 @@ Use `EXACT` on the full email field when the domain matters.
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related types**:
 
 * `EMAIL_OPTIMISED` - same as EMAIL, faster at production scale (ENT)

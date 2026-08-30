@@ -8,7 +8,7 @@ tags:
     primary: true
 ---
 
-# Configure Field Standardization
+# 🎛️ Configure Field Standardization
 
 {% hint style="info" icon="right-long" %}
 **Enterprise** only. The Standardise Postprocessor is available in ZinggEC (Enterprise) and ZinggES (Enterprise Plus). Not available in Community.

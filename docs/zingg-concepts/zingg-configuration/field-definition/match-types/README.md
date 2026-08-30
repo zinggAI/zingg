@@ -28,7 +28,7 @@ Multiple match types can be assigned to a single field, separated by commas.
 | [`DONT_USE`](dont_use-match.md) | Appears in output but no computation is done. Not shown in the labeller when `showConcise` is `true`. | any | Record IDs, internal keys, any field needed in output but not in matching | All | A `customer_id` field that must appear in output for traceability but should not influence whether two records are the same entity. |
 | [`MAPPING_(FILENAME)`](mapping_-filename-match.md) | Maps input field values to canonical values using a user-supplied lookup file. Handles nicknames, abbreviations, company name variants, and categorical normalisation. Matching is tolerant to common variations defined in the mapping file. | string | Name fields (nicknames), company fields, categorical fields with different representations across systems | Enterprise only | "Jon", "Jonathan", "Johnny" all map to canonical "John" via nicknames.json. "M", "Male", "1" all map to "M" via gender.json. Matched before similarity scoring runs. |
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read More:**
 
 Configure Zingg (full field definition setup in notebook 01) | Match types reference (Section 7) | Concepts glossary

@@ -4,7 +4,7 @@ description: >-
   high-frequency words that carry no matching signal.
 ---
 
-# Remove Stopwords (Optional)
+# 🎛️ Remove Stopwords (Optional)
 
 {% hint style="success" icon="right-long" %}
 This is an optional step. Run this between [Configure Zingg](../../running-zingg/configure-zingg.md) and [Create Training Data](../../running-zingg/create-training-data/) for best results. You can run it after matching has already started, but you will need to re-run the match phase for the stopwords to take effect. Most users skip this on the first run.

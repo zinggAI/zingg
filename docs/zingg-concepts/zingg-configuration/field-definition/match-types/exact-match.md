@@ -86,7 +86,7 @@ Never use `EXACT` on name fields. Even internally consistent data has legitimate
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related types:**
 
 * `FUZZY` - use when variation is expected

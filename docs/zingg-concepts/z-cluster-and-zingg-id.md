@@ -4,7 +4,7 @@ description: >-
   for every system that consumes Zingg's results.
 ---
 
-# Z Cluster and Zingg ID
+# 📘 Z Cluster and Zingg ID
 
 Zingg writes a cluster identifier into your match output so every record belonging to the same resolved entity carries the same value. Community uses `Z_CLUSTER`, a non-persistent identifier. Enterprise uses `Zingg_ID`, a persistent globally unique identifier. This page covers the difference between the two, the lifecycle behaviour, and how to use Zingg ID in your downstream systems.
 
@@ -33,7 +33,7 @@ If any downstream system needs a stable entity identifier to reference across ti
 
 </details>
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="warning" icon="building" %}
 Need stable entity IDs across runs? [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact).
 {% endhint %}
 
@@ -65,7 +65,7 @@ Use this column to:
 * Track the same entity across incremental runs
 * Pass a stable entity reference to downstream CRM, analytics, or compliance systems
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more:**
 
 * [Interpret Output Scores](../interpreting-results/interpret-output-scores.md) - for the full reference of every Zingg output column
