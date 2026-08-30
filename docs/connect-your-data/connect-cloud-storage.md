@@ -157,7 +157,40 @@ Setting `zinggDir` to an S3 path stores all Zingg model files and training data 
 {% endtab %}
 
 {% tab title="Azure Blob" %}
-_**CHECK WITH SONAL - - NEED TEAMS HELP TO CHECK WHAT EXACTLY TO BE ADDED HERE**_
+On Azure Blob Storage (ADLS Gen2), data lives in containers accessed via the `abfss://` path format. Use `abfss://<container>@<storage-account>.dfs.core.windows.net/<path-to-file>` to connect Zingg to your blob storage. All formats — CSV, Parquet, JSON, Avro, Delta — are available in both Community and Enterprise.
+
+{% hint style="success" icon="right-long" %}
+**Read more**: For the full Zingg installation, Azure Databricks cluster setup, and any additional dependency configuration required when running Zingg on Azure, follow the [Azure Databricks Platform Guide](../platform-guides/platform-guide-for-azure-databricks.md) or [Azure Synapse/Fabric Platform Guide](../platform-guides/platform-guide-for-microsoft-fabric.md).
+{% endhint %}
+
+### **Python API - Community**
+
+```python
+from zingg.client import *
+from zingg.pipes import *
+
+schema = "id string, fname string, lname string, city string"
+inputPipe = CsvPipe("inputData", "abfss://container@storageaccount.dfs.core.windows.net/path/to/data.csv", schema)
+args.setData(inputPipe)
+
+outputPipe = CsvPipe("outputData", "abfss://container@storageaccount.dfs.core.windows.net/path/to/output/")
+args.setOutput(outputPipe)
+```
+
+### **Python API - Enterprise**
+
+```python
+from zinggEC.enterprise.common.EArguments import *
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zinggEC.enterprise.common.epipes import *
+from zinggES.enterprise.spark.ESparkClient import *
+
+inputPipe = ECsvPipe("inputData", "abfss://container@storageaccount.dfs.core.windows.net/path/to/data.csv", schema)
+args.setData(inputPipe)
+
+outputPipe = ECsvPipe("outputData", "abfss://container@storageaccount.dfs.core.windows.net/path/to/output/")
+args.setOutput(outputPipe)
+```
 {% endtab %}
 
 {% tab title="GCS" %}

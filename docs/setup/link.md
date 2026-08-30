@@ -1,4 +1,6 @@
 ---
+description: >-
+  Link duplicate-free datasets against each other using the link phase. Records from different sources matched together get the same z_cluster ID with z_source indicating origin.
 title: Linking data
 parent: Step By Step Guide
 nav_order: 11

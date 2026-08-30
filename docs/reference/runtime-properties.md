@@ -65,7 +65,7 @@ For GCP Dataproc, inject JARs via cluster creation properties.
 
 **Value**:
 
-* `gs://BUCKET/zingg-0.6.0.jar`
+* `gs://BUCKET/zingg-0.7.0.jar`
 * `gs://BUCKET/spark-3.5-bigquery-0.44.1.jar`
 * `gs://BUCKET/gcs-connector-hadoop3-latest.jar`
 

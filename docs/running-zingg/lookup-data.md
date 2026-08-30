@@ -57,11 +57,3 @@ This is useful for operational post-match queries: looking up a new customer rec
   Where Zingg writes the lookup results. Each lookup record in the output will have its assigned Zingg ID showing which entity cluster it belongs to.
 
 </details>
-
-**CHECK WITH SONAL -** [**https://docs.zingg.ai/latest/stepbystep/lookup**](https://docs.zingg.ai/latest/stepbystep/lookup) **-**
-
-**The lookup page on the live docs is minimal. Three things to confirm before publishing:**
-
-1. **What does the output look like? Which columns appear in lookup output?**
-2. **Is lookupData always "inMemory" or can it be a file pipe (CSV, Parquet etc.)?**
-3. **Is lookup available in all Enterprise tiers or only specific editions?**

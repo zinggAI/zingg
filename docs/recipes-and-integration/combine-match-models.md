@@ -127,7 +127,3 @@ The combination is defined in a JSON config file with two top-level arrays: `ver
 * `vertexType: 'zingg_match'` - the output of a full Zingg match model. The `config` field points to the model's config file.
 * `edgeType: 'same_edge'` - connects records that represent the same entity across vertices.
 * `strategy: 'pairs_and_vertices'` - the graph combination strategy. Determines how overlapping entity assignments are resolved.
-
-#### PYTHON API
-
-_**CHECK WITH SONAL \_ TEAM - Python API for combining match models is not documented in the reference PDF. Sonal to confirm before adding.**_

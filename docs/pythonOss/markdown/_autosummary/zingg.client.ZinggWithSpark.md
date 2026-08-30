@@ -1,3 +1,8 @@
+---
+description: >-
+  ZinggWithSpark class reference for Community edition. Extends Zingg for Spark integration. Initialize with Arguments and ClientOptions, run init(), execute(), executeLabel(), and write labelled output.
+---
+
 # zingg.client.ZinggWithSpark
 
 ### *class* zingg.client.ZinggWithSpark(args, options)

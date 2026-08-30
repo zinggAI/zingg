@@ -10,8 +10,6 @@ description: >-
 **Prerequisites:** Docker installed on your machine. Nothing else required.
 {% endhint %}
 
-_**CHECK WITH SONAL - IF WE STILL NEED THIS PAGE AS PER THE NEW GROUPING - AS WE HAVE A DEDICATED PAGE FOR DOCKER - QUICK START. OUR INITIAL IDEA ABOUT KEEPING THIS PAGE IS NOW CHANGED.**_
-
 The fastest way to understand what Zingg does is to see it work. This page uses Docker and\
 a pre-trained model bundled with Zingg to run entity resolution on a sample dataset in three\
 commands. There is no installation, no configuration, and no labeling required.
@@ -69,10 +67,6 @@ The output contains all your input fields plus three columns added by Zingg:
 {% hint style="success" icon="right-long" %}
 **Read more**: To know more about output scores, check [Interpret Output Score](../interpreting-results/interpret-output-scores.md).
 {% endhint %}
-
-### VIDEO TO BE ADDED
-
-**Paste the Zingg video URL here once available from the team.**
 
 <details>
 

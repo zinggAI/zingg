@@ -1,4 +1,6 @@
 ---
+description: >-
+  Configure deterministic matching rules for exact-match scenarios. Define conditions as Python objects or JSON blocks. Enterprise only feature.
 tags:
   - enterprise-only
 ---

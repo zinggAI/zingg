@@ -1,4 +1,6 @@
 ---
+description: >-
+  How Zingg computes match scores, interprets similarity features, and chooses thresholds. Understand score distribution, transitivity, and cluster inspection.
 nav_order: 6
 ---
 

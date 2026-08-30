@@ -21,7 +21,7 @@ Uses `Arguments`, `FieldDefinition`, `CsvPipe`, and `ZinggWithSpark`. Runs on a 
 
 Zingg on GCP requires three JARs to bridge Spark with Google Cloud services. Download these to your local machine before creating the cluster.
 
-<table><thead><tr><th valign="top">JAR</th><th valign="top">Purpose</th><th valign="top">Download</th></tr></thead><tbody><tr><td valign="top"><code>zingg-0.6.0.jar</code></td><td valign="top">The Zingg engine</td><td valign="top"><code>github.com/zinggAI/zingg/releases</code></td></tr><tr><td valign="top"><code>spark-3.5-bigquery-0.44.1.jar</code></td><td valign="top">BigQuery connector</td><td valign="top"><code>github.com/GoogleCloudDataproc/spark-bigquery-connector</code></td></tr><tr><td valign="top"><code>gcs-connector-hadoop3-latest.jar</code></td><td valign="top">GCS connector</td><td valign="top"><code>docs.cloud.google.com/dataproc/docs/concepts/connectors/cloud-storage</code></td></tr></tbody></table>
+<table><thead><tr><th valign="top">JAR</th><th valign="top">Purpose</th><th valign="top">Download</th></tr></thead><tbody><tr><td valign="top"><code>zingg-0.7.0.jar</code></td><td valign="top">The Zingg engine</td><td valign="top"><code>github.com/zinggAI/zingg/releases</code></td></tr><tr><td valign="top"><code>spark-3.5-bigquery-0.44.1.jar</code></td><td valign="top">BigQuery connector</td><td valign="top"><code>github.com/GoogleCloudDataproc/spark-bigquery-connector</code></td></tr><tr><td valign="top"><code>gcs-connector-hadoop3-latest.jar</code></td><td valign="top">GCS connector</td><td valign="top"><code>docs.cloud.google.com/dataproc/docs/concepts/connectors/cloud-storage</code></td></tr></tbody></table>
 
 Create a GCS bucket and upload the JARs and your dataset. You can do this from the Cloud Console or the `gcloud` CLI.
 
@@ -32,7 +32,6 @@ Create a GCS bucket and upload the JARs and your dataset. You can do this from t
 3. Set the region to match where your Dataproc cluster will run (for example `us-central1`).
 4. Upload the three JARs and your data file (for example `customers.csv`) to the bucket.
 
-_**IMAGE TO BE ADDED - GCS bucket creation screen in the Google Cloud Console showing bucket name, region selector, and upload interface. Tanwi to check with team for screenshot from a live GCS console.**_
 
 #### gcloud CLI
 
@@ -58,9 +57,8 @@ The cluster must be created with the three JARs injected via `spark.jars`. This 
 4. Set **Master** and **Worker** nodes to `n2-standard-4` with 100GB boot disk.
 5. Scroll to **Properties** and add:
    * **Key:** `spark.jars`
-   * **Value:** `gs://YOUR_BUCKET/zingg-0.6.0.jar,gs://YOUR_BUCKET/spark-3.5-bigquery-0.44.1.jar,gs://YOUR_BUCKET/gcs-connector-hadoop3-latest.jar`
+   * **Value:** `gs://YOUR_BUCKET/zingg-0.7.0.jar,gs://YOUR_BUCKET/spark-3.5-bigquery-0.44.1.jar,gs://YOUR_BUCKET/gcs-connector-hadoop3-latest.jar`
 
-_**IMAGE TO BE ADDED — Dataproc cluster creation screen showing the Properties section with\*\*\*\*****&#x20;****`spark.jars`****&#x20;****key and the three JAR paths as the value. Tanwi to check with team for screenshot from a live Dataproc console. This is the most important screenshot on the page — the****&#x20;****`spark.jars`****&#x20;****\*\*\*\*Properties field is not obvious to find and a screenshot here prevents the most common setup error.**_
 
 #### gcloud CLI
 
@@ -74,7 +72,7 @@ gcloud dataproc clusters create zingg-cluster \
   --optional-components=JUPYTER \
   --enable-component-gateway \
   --properties="^#^spark:spark.jars=\
-gs://$BUCKET/zingg-0.6.0.jar,\
+gs://$BUCKET/zingg-0.7.0.jar,\
 gs://$BUCKET/spark-3.5-bigquery-0.44.1.jar,\
 gs://$BUCKET/gcs-connector-hadoop3-latest.jar"
 ```
@@ -93,7 +91,6 @@ Once your cluster status shows **Running**, access the managed JupyterLab enviro
 4. Under **Component Gateway**, click the **JupyterLab** link.
 5. Create a new notebook and select the **PySpark** kernel.
 
-_**IMAGE TO BE ADDED— Dataproc cluster Web Interfaces tab showing the Component Gateway section with the JupyterLab link highlighted. Tanwi to check with team for screenshot from a live Dataproc cluster.**_
 
 ### Step 4: Set a checkpoint directory and install Zingg
 
@@ -200,7 +197,6 @@ spark_df = spark_df.toDF(*schema_list)
 spark_df.limit(10).toPandas().head()
 ```
 
-_**IMAGE TO BE ADDED — Jupyter notebook cell showing the preview output table with sample FEBRL data — the same customer appearing multiple times with field variations across rows. Source: not in the GCP docx (text-only guide). Tanwi to screenshot from a live notebook run. Same principle as the Databricks guide — this image shows readers the exact problem Zingg is solving before they configure anything. Place: below the\*\*\*\*****&#x20;****`spark_df.limit(10).toPandas().head()`****&#x20;****\*\*\*\*line.**_
 
 ### Step 8: Configure input and output pipes
 
@@ -353,7 +349,6 @@ display(widgets.VBox(children=vContainers))
 ready_for_save = True
 ```
 
-_**IMAGE TO BE ADDED — Zingg labeling widget rendered in JupyterLab on Dataproc, showing two candidate records side by side with Match / No Match / Uncertain toggle buttons. Tanwi to check with team for screenshot from a live Dataproc notebook run.**_
 
 {% hint style="success" icon="right-long" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 11–14 in a loop until you reach this target. Label until all field types and data variation patterns in your schema are covered. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are underrepresented.
@@ -411,7 +406,6 @@ with open(DOCS_DIR + "data.html", 'r') as f:
     display(HTML(f.read()))
 ```
 
-_**IMAGE TO BE ADDED—****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*HTML output rendered inside JupyterLab on Dataproc showing labeled pair examples. Source: not in the GCP docx. Tanwi to check with team for screenshot from a live notebook run.**_
 
 {% hint style="success" icon="right-long" %}
 `generateDocs` is optional. Skip it if you have 30–40 matches and 30–40 non-matches and are confident in your labeling quality.
@@ -461,7 +455,6 @@ final_results = outputDF.toDF(*colNames)
 final_results.show(10)
 ```
 
-_**IMAGE TO BE ADDED — match output table in JupyterLab on Dataproc showing resolved records with\*\*\*\*****&#x20;****`z_cluster`****&#x20;****column visible. Highlight two rows sharing the same****&#x20;****`z_cluster`****&#x20;****\*\*\*\*value to show they have been resolved to the same entity.Tanwi to check with team for screenshot from a live notebook run.**_
 
 {% hint style="success" icon="right-long" %}
 * `z_cluster`— unique entity ID assigned by Zingg. All records sharing the same `z_cluster` represent the same real-world entity. Group by `z_cluster` to collapse duplicates into a golden record.
@@ -473,6 +466,159 @@ For threshold guidance and full output column definitions → [Interpret Output 
 {% endtab %}
 
 {% tab title="Enterprise" %}
+{% hint style="info" icon="right-long" %}
+Enterprise requires a Zingg licence and the Enterprise GCP package. [Contact Zingg to get access](https://www.zingg.ai/company/contact/contact).
+{% endhint %}
+
+Uses `EArguments`, `EFieldDefinition`, `ECsvPipe`, `EZinggWithSpark`. Adds blocking model configuration, primary key for incremental matching, stats output, deterministic matching rules, pass-through expressions, the `runIncremental` phase, and the `explain` phase.
+
+### Prerequisites
+
+* GCP account with Dataproc and GCS access
+* Zingg Enterprise license
+* Enterprise JAR: `zingg-enterprise-spark-0.7.0.jar`
+* Enterprise Python packages: `zinggEC`, `zinggES`
+
+### Step 1: Prepare GCS bucket and upload Enterprise artifacts
+
+Create a GCS bucket and upload the Enterprise JAR and Python wheels:
+
+```bash
+BUCKET="zingg-enterprise-storage"
+
+gcloud storage buckets create gs://$BUCKET --location=us-central1
+
+gsutil cp zingg-enterprise-spark-0.7.0.jar gs://$BUCKET/jars/
+gsutil cp zinggEC-0.7.0-py3-none-any.whl gs://$BUCKET/wheels/
+gsutil cp zinggES-0.7.0-py3-none-any.whl gs://$BUCKET/wheels/
+gsutil cp your-data.csv gs://$BUCKET/data/
+```
+
+### Step 2: Create a Dataproc cluster with Enterprise JAR
+
+```bash
+gcloud dataproc clusters create zingg-enterprise-cluster \
+  --region=us-central1 \
+  --image-version=2.2-debian12 \
+  --master-machine-type=n2-standard-4 \
+  --worker-machine-type=n2-standard-4 \
+  --num-workers=4 \
+  --optional-components=JUPYTER \
+  --enable-component-gateway \
+  --properties="^#^spark:spark.jars=\
+gs://$BUCKET/jars/zingg-enterprise-spark-0.7.0.jar"
+```
+
+### Step 3: Install Enterprise Python packages
+
+In JupyterLab on the cluster:
+
+```python
+!pip install gs://$BUCKET/wheels/zinggEC-0.7.0-py3-none-any.whl
+!pip install gs://$BUCKET/wheels/zinggES-0.7.0-py3-none-any.whl
+!pip install zingg==0.7.0
+
+# Verify installation
+!pip show zinggEC
+!pip show zinggES
+```
+
+### Step 4: Configure and run Zingg Enterprise
+
+Set up checkpoint directory and import libraries:
+
+```python
+checkpoint_path = f"gs://{BUCKET}/zingg_checkpoint"
+spark.sparkContext.setCheckpointDir(checkpoint_path)
+
+from zinggEC.enterprise.common.EArguments import *
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zinggEC.enterprise.common.epipes import *
+from zinggES.enterprise.spark.ESparkClient import *
+from zingg.client import *
+from zingg.pipes import *
+import pandas as pd
+import numpy as np
+```
+
+Configure Enterprise arguments:
+
+```python
+BUCKET = "your-bucket-name"
+modelId = "testModelFebrl"
+zinggDir = f"gs://{BUCKET}/models"
+
+args = EArguments()
+args.setModelId(modelId)
+args.setZinggDir(zinggDir)
+args.setBlockingModel("DEFAULT")  # Use "WIDER" if matches are being missed
+args.setNumPartitions(16)
+args.setLabelDataSampleSize(0.5)
+```
+
+Configure input/output pipes and field definitions (similar to Community but using Enterprise classes):
+
+```python
+inputPipe = ECsvPipe("testFebrl", f"gs://{BUCKET}/test.csv", schema)
+args.setData(inputPipe)
+
+outputPipe = ECsvPipe("resultOutput", f"gs://{BUCKET}/results")
+args.setOutput(outputPipe)
+
+# Field definitions using EFieldDefinition
+fieldDefs = [
+  EFieldDefinition("id", "string", MatchType.EXACT),
+  EFieldDefinition("fname", "string", MatchType.FUZZY),
+  EFieldDefinition("lname", "string", MatchType.FUZZY),
+  # ... add all your fields
+]
+args.setFieldDefinition(fieldDefs)
+```
+
+Run Enterprise phases:
+
+```python
+# Find training data
+options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
+zingg = EZinggWithSpark(args, options)
+zingg.initAndExecute()
+
+# Label (interactive widget)
+options = ClientOptions([ClientOptions.PHASE, "label"])
+zingg = EZinggWithSpark(args, options)
+zingg.init()
+
+# Train
+options = ClientOptions([ClientOptions.PHASE, "train"])
+zingg = EZinggWithSpark(args, options)
+zingg.initAndExecute()
+
+# Match
+options = ClientOptions([ClientOptions.PHASE, "match"])
+zingg = EZinggWithSpark(args, options)
+zingg.initAndExecute()
+
+# Enterprise-only: explain results
+options = ClientOptions([ClientOptions.PHASE, "explain"])
+zingg = EZinggWithSpark(args, options)
+zingg.initAndExecute()
+
+# Enterprise-only: incremental matching
+options = ClientOptions([ClientOptions.PHASE, "runIncremental"])
+zingg = EZinggWithSpark(args, options)
+zingg.initAndExecute()
+```
+
+### Key Differences from Community Edition
+
+| Feature | Community | Enterprise |
+|---------|-----------|------------|
+| Classes | `Arguments`, `FieldDefinition`, `CsvPipe`, `ZinggWithSpark` | `EArguments`, `EFieldDefinition`, `ECsvPipe`, `EZinggWithSpark` |
+| Blocking | Default only | `DEFAULT` or `WIDER` strategy |
+| Incremental | Not available | `runIncremental` phase |
+| Explainability | Not available | `explain` phase |
+| Deterministic | Not available | Built-in deterministic rules |
+| Pass-through | Not available | Pass-through expressions |
 
 {% endtab %}
 {% endtabs %}

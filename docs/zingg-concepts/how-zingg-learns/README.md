@@ -21,7 +21,7 @@ You label those pairs typically 30 to 50, as Match, No Match, or Uncertain. From
 
 Zingg models understand your data, and are not a generic algorithm applied to it.
 
-### Quick reference on which match type for which field - TODO Move
+### Quick reference on which match type for which field
 
 When you define your field configuration, you choose a match type for each field. Here is a starting point for the most common field types.
 

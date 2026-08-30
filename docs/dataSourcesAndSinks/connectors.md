@@ -1,4 +1,6 @@
 ---
+description: >-
+  Zingg connects to most on-premise and cloud data sources including Databricks, Fabric, Snowflake, Cassandra, S3, RDBMS, and Spark-supported sources. Supports all major file formats via Pipe abstraction.
 title: Data Sources and Sinks
 nav_order: 3
 has_children: true

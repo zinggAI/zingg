@@ -1,3 +1,8 @@
+---
+description: >-
+  Householding groups customer data into family units for marketing, compliance, and operational efficiency. Zingg's fuzzy matching simplifies householding without extensive parsing.
+---
+
 Householding means grouping customer data into groups of family units. These units make financial and budgetary decisions together. From a marketers’ viewpoint, householding helps to understand the relationships between individuals and execute the optimal communication strategy for the unit. With an understanding of the household, marketers can build a combined offer package that is valuable at the individual and household level. Opportunities for upselling and cross selling can also be discovered. For management, householding provides a deep view into customer lifetime value, risk, compliance and reporting metrics. For operations, householding reduces the mailing costs for disclosure and other mailers. For example, the SEC allows single mailers for a household while mailing prospectuses, annual and semi-annual reports.
 
 Householding, though highly desirable, is not easy to implement. Most business data is not segmented properly into first name, last name, suffixes, prefixes. Addresses are not standardised and remain unformatted. Missing components, abbreviations like St. for street, Av. for avenue, wrong zip codes or differing formats add to the complexities of householding implementation.

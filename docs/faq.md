@@ -1,4 +1,6 @@
 ---
+description: >-
+  Answers to common questions about Zingg entity resolution including training requirements, Spark setup, ML background needs, and more.
 nav_order: 9
 ---
 

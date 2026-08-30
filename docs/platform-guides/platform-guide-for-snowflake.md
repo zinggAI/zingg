@@ -39,8 +39,8 @@ Host <IP address of EC2 instance>
 3. Click **Open a Remote Window** in VS Code, select your EC2 host, and connect. 4. Pull the Zingg Docker image and start a bash session inside the container:
 
 ```bash
-docker pull zingg/zingg:0.6.0
-docker run -it zingg/zingg:0.6.0 bash
+docker pull zingg/zingg:0.7.0
+docker run -it zingg/zingg:0.7.0 bash
 ```
 
 Inside the container, your container ID is the alphanumeric string between `@` and `:` in the terminal prompt. For example in `root@fab997383957:/zingg#`, the container ID is `fab997383957`. Note this value—you will need it in Step 3.
@@ -210,8 +210,6 @@ When the `.pem` key file is included in the zip, Lambda extracts it to `/var/tas
 A successful test returns `HTTP 200` and `Started phase: findTrainingData`. Monitor progress via `tail -f logfile.txt` on EC2.
 {% endhint %}
 
-_**IMAGE TO BE ADDED — AWS Lambda function test screen showing a successful HTTP 200 response with the "Started phase: findTrainingData" body. Tanwi to check with team for screenshot this from a live Lambda test run and add here. Caption: "Lambda function test returning HTTP 200 — Zingg phase started successfully."**_
-
 ### **Step 5: Connect Lambda to Snowflake via external function**
 
 1. Create a new IAM role. Entity type: **Another AWS account**. Specify your AWS Account ID.
@@ -242,7 +240,7 @@ SELECT run_zingg('findTrainingData');
 
 **Run label interactively on EC2 directly**
 
-```sql
+```bash
 ./zingg.sh --phase label --conf examples/febrl/configSnow.json
 ```
 
@@ -284,7 +282,7 @@ tail -f nohup.out
 
 Or from Snowflake:
 
-```bash
+```sql
 SELECT run_zingg('checklog');
 ```
 
@@ -345,6 +343,160 @@ Enterprise only. Zingg Enterprise runs natively inside Snowflake using Snowpark.
 Enterprise requires a Zingg licence and the Enterprise Snowflake package. [Contact Zingg to get access](https://www.zingg.ai/company/contact/contact).
 {% endhint %}
 
-**Content for the Enterprise Snowflake platform guide is being prepared. This section will be updated with full step-by-step instructions once confirmed by the team.**
+### **Prerequisites**
+
+* Snowflake account with Snowpark enabled
+* Zingg Enterprise license
+* Python 3.8+ with Snowpark session
+* Access to Zingg Enterprise Snowflake package
+
+### **Step 1: Set up Snowpark Session**
+
+Install the Snowpark Python package and Zingg Enterprise package:
+
+```bash
+pip install snowflake-snowpark-python
+# Zingg Enterprise package provided after license purchase
+pip install zingg-enterprise-snowflake
+```
+
+Create a Snowpark session:
+
+```python
+from snowflake.snowpark import Session
+
+connection_parameters = {
+    "account": "<your-account>",
+    "user": "<your-username>",
+    "password": "<your-password>",
+    "role": "<your-role>",
+    "warehouse": "<your-warehouse>",
+    "database": "<your-database>",
+    "schema": "<your-schema>"
+}
+
+session = Session.builder.configs(connection_parameters).create()
+```
+
+### **Step 2: Configure Zingg Enterprise**
+
+Create a configuration dictionary for Zingg Enterprise:
+
+```python
+from zingg_enterprise import ZinggEnterprise
+
+config = {
+    "data": [{
+        "name": "inputData",
+        "table": "your_input_table",
+        "database": "your_database",
+        "schema": "your_schema"
+    }],
+    "output": [{
+        "name": "outputData",
+        "table": "your_output_table",
+        "database": "your_database",
+        "schema": "your_schema"
+    }],
+    "modelId": "100",
+    "zinggDir": "@your_stage/zingg_models",
+    "numPartitions": 4,
+    "labelDataSampleSize": 0.5,
+    "fieldDefinition": [
+        {
+            "fieldName": "fname",
+            "matchType": "FUZZY",
+            "fields": "fname",
+            "dataType": "string"
+        },
+        {
+            "fieldName": "lname",
+            "matchType": "FUZZY",
+            "fields": "lname",
+            "dataType": "string"
+        }
+    ]
+}
+
+zingg = ZinggEnterprise(session, config)
+```
+
+### **Step 3: Run Zingg Phases**
+
+Run phases directly from Python/Snowflake - no external infrastructure needed:
+
+```python
+# Find training data
+zingg.find_training_data()
+
+# Label interactively (opens labeling UI in Snowsight or Jupyter)
+zingg.label()
+
+# Train the model
+zingg.train()
+
+# Run matching
+results = zingg.match()
+
+# View results
+results.show()
+
+# Check statistics
+stats = zingg.get_statistics()
+print(stats)
+```
+
+### **Step 4: Incremental Matching**
+
+For incremental loads:
+
+```python
+# Configure incremental run
+incremental_config = {
+    **config,
+    "incremental": True,
+    "lastRunTimestamp": "2024-01-15 00:00:00"
+}
+
+zingg_incremental = ZinggEnterprise(session, incremental_config)
+results = zingg_incremental.match()
+```
+
+### **Key Differences from Community Edition**
+
+| Feature | Community | Enterprise |
+|---------|-----------|------------|
+| Infrastructure | EC2 + Docker + Lambda | Native Snowpark |
+| Deployment | Manual setup | Snowflake Marketplace / Package |
+| Scaling | EC2 instance sizing | Snowflake warehouse scaling |
+| Execution | Spark on EC2 | Snowpark on Snowflake |
+| Monitoring | Lambda logs + EC2 | Snowflake Query History |
+| Incremental | Via Lambda | Native API |
+
+### **Snowflake Marketplace Deployment (Recommended)**
+
+1. Search for "Zingg Enterprise" in Snowflake Marketplace
+2. Click **Get** to install in your Snowflake account
+3. Follow the setup wizard to configure database, schema, and warehouse
+4. Access Zingg functions directly from SQL:
+
+```sql
+-- Run Zingg phases from SQL
+CALL ZINGG.FIND_TRAINING_DATA();
+CALL ZINGG.LABEL();
+CALL ZINGG.TRAIN();
+CALL ZINGG.MATCH();
+```
+
+### **Getting Enterprise Access**
+
+Zingg Enterprise for Snowflake requires a commercial license. To get started:
+
+1. Visit [Zingg Enterprise Snowflake](https://www.zingg.ai/company/zingg-enterprise-snowflake)
+2. Contact sales for a trial license
+3. Receive the Enterprise package and installation instructions
+4. Follow this guide for setup
+
+For detailed API reference, see the [Zingg Python API Documentation](../zingg-python-api/enterprise-zingges-python-api.md).
 {% endtab %}
 {% endtabs %}

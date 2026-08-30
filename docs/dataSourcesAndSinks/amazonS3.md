@@ -1,3 +1,8 @@
+---
+description: >-
+  Run Zingg with AWS S3 as data source and sink. Configure bucket, AWS credentials, Hadoop AWS JARs, and run phases with s3a:// paths.
+---
+
 # AWS S3
 
 Zingg can use AWS S3 as a source and sink

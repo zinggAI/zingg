@@ -1,3 +1,8 @@
+---
+description: >-
+  Transform phase for data standardisation using predefined mappings. Clean and standardise field values before matching or as standalone transformation.
+---
+
 # Transform
 
 ## Overview

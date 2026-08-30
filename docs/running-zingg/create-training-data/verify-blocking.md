@@ -11,10 +11,7 @@ tags:
 
 The blocking model filters your dataset before any similarity comparisons happen. Records in different blocks are never compared. This is what makes Zingg scalable, but it also means that if the blocking model puts two matching records in different blocks, those records will never be matched no matter how well the similarity model is trained.
 
-`verifyBlocking` tells you what percentage of your known matching pairs are being blocked together correctly. Run this test after configuring Zingg and again after training if you suspect missed matches.\
-<br>
-
-TODO - move to verify blocking
+`verifyBlocking` tells you what percentage of your known matching pairs are being blocked together correctly. Run this test after configuring Zingg and again after training if you suspect missed matches.
 
 How to inspect the blocking model, understand its coverage, and fix missed matches caused by blocking.
 
@@ -95,7 +92,7 @@ influence matching.
 * [Label Training Pairs](label-training-pairs.md) - how to add more training data
 * [Configure Zingg](../configure-zingg.md) - changing field match types
 * [Blocking Strategies: DEFAULT vs WIDER](../../tuning/blocking-strategy.md) - reorder candidate fields in the blocking tree (Enterprise only)
-* [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7) Functions
+* [Custom Blocking and Similarity Functions](../../reference/custom-blocking-similarity.md) Functions
 {% endhint %}
 
 {% hint style="success" icon="right-long" %}
@@ -180,5 +177,5 @@ If `verifyBlocking` shows that many known matching pairs are not being blocked t
 **Read more**:
 
 * Blocking model concept and how it fits in the pipeline → [Blocking Model](../../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
-* Custom blocking functions for advanced tuning → [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7)
+* Custom blocking functions for advanced tuning → [Custom Blocking and Similarity Functions](../../reference/custom-blocking-similarity.md)
 {% endhint %}

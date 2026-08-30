@@ -1,3 +1,8 @@
+---
+description: >-
+  Zingg class reference for Community edition. Main interface for entity resolution. Initialize with Arguments and ClientOptions, then run init(), execute(), executeLabel(), and write labelled output.
+---
+
 # zingg.client.Zingg
 
 ### *class* zingg.client.Zingg(args, options)

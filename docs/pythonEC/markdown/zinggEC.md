@@ -1,3 +1,8 @@
+---
+description: >-
+  Zingg Enterprise Common (EC) Python package reference. Includes ApproverArguments, IncrementalArguments, MappingMatchType, epipes, EArguments, and EFieldDefinition classes.
+---
+
 # Zingg Enterprise Common Package
 
 Zingg Enterprise Python APIs for entity resolution, record linkage, data mastering and deduplication using ML

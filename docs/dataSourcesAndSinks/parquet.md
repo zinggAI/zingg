@@ -1,4 +1,6 @@
 ---
+description: >-
+  Connect Zingg to Parquet files using Spark's native Parquet reader. Configure path in data/output JSON configuration.
 layout: default
 title: Parquet
 parent: Data Sources and Sinks

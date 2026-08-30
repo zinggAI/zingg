@@ -1,4 +1,6 @@
 ---
+description: >-
+  Join the Zingg Community Slack to connect with other users, ask questions, and share experiences.
 nav_order: 8
 ---
 

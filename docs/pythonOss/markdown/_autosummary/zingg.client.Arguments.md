@@ -1,3 +1,8 @@
+---
+description: >-
+  Arguments class reference for Community edition. Configure model ID, Zingg directory, partitions, label sample size, field definitions, data pipes, output pipes, stopwords cutoff, and training samples.
+---
+
 # zingg.client.Arguments
 
 ### *class* zingg.client.Arguments

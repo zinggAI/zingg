@@ -1,4 +1,6 @@
 ---
+description: >-
+  Pre-trained Zingg models for common datasets including Febrl, North Carolina Voters, and Amazon-Google products.
 nav_order: 6
 parent: Zingg Models
 ---

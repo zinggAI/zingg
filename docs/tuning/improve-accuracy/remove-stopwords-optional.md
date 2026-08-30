@@ -79,8 +79,20 @@ zingg.initAndExecute()
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-Stopwords are stored as a table: `zingg_stopWords_columnName_modelId`
+Stopwords are stored as a Snowflake table: `zingg_stopWords_columnName_modelId`
 
-**CHECK WITH SONAL ABOUT THIS TOPIC - NEEDS ENTIRELY DIFFERENT SET OF CONTENT TO BE DISCUSSED LATER.**
+Run the stopwords recommendation phase:
+
+```bash
+./scripts/zingg.sh --phase recommend --conf config.json --column <column_name> --properties-file snowEnv.txt
+```
+
+The stopwords table will be created in your configured Snowflake schema and can be queried directly:
+
+```sql
+SELECT * FROM zingg_stopWords_columnName_modelId;
+```
+
+To apply stopwords in matching, the stopwords table is automatically referenced during the match phase when the column is configured with stopWords enabled.
 {% endtab %}
 {% endtabs %}

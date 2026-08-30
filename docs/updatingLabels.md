@@ -1,3 +1,8 @@
+---
+description: >-
+  Update previously labeled training pairs when your understanding of the data changes. Use the updateLabel phase to modify labels interactively.
+---
+
 # Updating Labeled Pairs
 
 N**ote: Please keep a backup copy of your model folder in a separate place before running this**

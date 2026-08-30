@@ -1,3 +1,8 @@
+---
+description: >-
+  Connect Zingg to databases via JDBC. Add driver JAR to spark.jars and configure connection properties. Supports MySQL, PostgreSQL, Oracle, SQL Server, and more.
+---
+
 # JDBC
 
 Zingg can connect to various databases such as MySQL, DB2, MariaDB, MS SQL, Oracle, PostgreSQL, etc. using JDBC. One just needs to download the appropriate driver and made it accessible to the application.

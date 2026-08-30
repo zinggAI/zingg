@@ -1,4 +1,6 @@
 ---
+description: >-
+  Connect Zingg to Exasol in-memory database using the Exasol Spark connector. Includes prerequisites, JAR download, and configuration examples.
 title: Exasol
 parent: Data Sources and Sinks
 nav_order: 4

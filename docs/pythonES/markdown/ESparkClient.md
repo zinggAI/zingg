@@ -1,3 +1,8 @@
+---
+description: >-
+  ESparkClient class reference for Zingg Enterprise Snowflake. Main entry point for ES Python API. Initialize with EArguments and ClientOptions, run init(), execute(), executeLabel(), and write labelled output.
+---
+
 # ESparkClient
 
 ## zinggES.enterprise.spark.ESparkClient

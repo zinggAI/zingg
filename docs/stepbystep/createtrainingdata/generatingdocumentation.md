@@ -1,3 +1,8 @@
+---
+description: >-
+  Generate readable HTML documentation of labeled training data for review by subject matter experts. Run the generateDocs phase to document matches and non-matches.
+---
+
 # Documenting The Training Data
 
 We may need to send our labeled data for a subject matter expert to review. We may also like to understand and analyse our training data. In such scenarios, we can document the records we have marked during the **label** phase by invoking the **generateDocs** phase.&#x20;

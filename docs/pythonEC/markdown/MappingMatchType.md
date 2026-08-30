@@ -1,3 +1,8 @@
+---
+description: >-
+  MappingMatchType class reference for Zingg Enterprise. Use domain expertise (nicknames, company abbreviations) to enhance matching accuracy via JSON mapping files.
+---
+
 # MappingMatchType
 
 ## zinggEC.enterprise.common.MappingMatchType

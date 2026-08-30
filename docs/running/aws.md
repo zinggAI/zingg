@@ -1,4 +1,6 @@
 ---
+description: >-
+  Run Zingg on AWS using EMR spark-submit or EMR Notebooks. Includes cluster creation steps and example commands.
 title: Running on AWS
 parent: Running Zingg on Cloud
 nav_order: 5

@@ -1,3 +1,8 @@
+---
+description: >-
+  Cluster statistics output for Zingg Enterprise. Includes cluster count, edges, deterministic edges, centrality, and determinism ratio metrics.
+---
+
 # Cluster Statistics
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]

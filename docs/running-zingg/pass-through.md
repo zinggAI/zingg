@@ -85,7 +85,19 @@ Zingg internally applies the negation of `passthroughExpr` to filter which recor
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-_**CHECK WITH SONAL - Enterprise Snowflake content for this topic to be provivded by Sonal**_
+Enterprise Snowflake supports pass-through expressions using the same syntax. Configure in your `EArguments`:
+
+```python
+args.setPassThroughExpression("is_deceased = true AND is_deceased IS NOT NULL")
+```
+
+Or in JSON config:
+
+```json
+{ "passthroughExpr" : "is_deceased = true AND is_deceased IS NOT NULL" }
+```
+
+Pass-through records are written to the same output table as matched records, each receiving their own unique `ZINGG_ID`.
 {% endtab %}
 {% endtabs %}
 

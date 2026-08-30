@@ -35,11 +35,10 @@ Create an S3 bucket (for example `zingg-production-storage`) and upload all six 
 3. Set the region to match where your Glue jobs will run (for example `us-east-1`).
 4. Once created, upload the following JAR files into a `/jars/` folder:
 
-<table><thead><tr><th valign="top">JAR</th><th valign="top">Purpose</th></tr></thead><tbody><tr><td valign="top"><code>zingg-0.6.0.jar</code></td><td valign="top">The Zingg engine</td></tr><tr><td valign="top"><code>zingg-common-client-0.6.0.jar</code></td><td valign="top">Common client</td></tr><tr><td valign="top"><code>zingg-common-core-0.6.0.jar</code></td><td valign="top">Common core</td></tr><tr><td valign="top"><code>zingg-spark-client-0.6.0.jar</code></td><td valign="top">Spark client</td></tr><tr><td valign="top"><code>zingg-spark-core-0.6.0.jar</code></td><td valign="top">Spark core</td></tr><tr><td valign="top"><code>zingg-common-infra-0.6.0.jar</code></td><td valign="top">Infrastructure link</td></tr></tbody></table>
+<table><thead><tr><th valign="top">JAR</th><th valign="top">Purpose</th></tr></thead><tbody><tr><td valign="top"><code>zingg-0.7.0.jar</code></td><td valign="top">The Zingg engine</td></tr><tr><td valign="top"><code>zingg-common-client-0.7.0.jar</code></td><td valign="top">Common client</td></tr><tr><td valign="top"><code>zingg-common-core-0.7.0.jar</code></td><td valign="top">Common core</td></tr><tr><td valign="top"><code>zingg-spark-client-0.7.0.jar</code></td><td valign="top">Spark client</td></tr><tr><td valign="top"><code>zingg-spark-core-0.7.0.jar</code></td><td valign="top">Spark core</td></tr><tr><td valign="top"><code>zingg-common-infra-0.7.0.jar</code></td><td valign="top">Infrastructure link</td></tr></tbody></table>
 
 Download all JARs from `github.com/zinggAI/zingg/releases`. Also upload your data file to the bucket root.
 
-_**IMAGE TO BE ADDED — S3 bucket view showing the\*\*\*\*****&#x20;****`/jars/`****&#x20;****\*\*\*\*folder with all six Zingg JAR files listed. Tanwi to check with team for the screenshot.**_
 
 #### **Step 2: Create an IAM role for Glue**
 
@@ -99,7 +98,6 @@ Create an inline policy named `ZinggSessionPermissions` with the following JSON.
 }
 ```
 
-_**IMAGE TO BE ADDED — IAM Role creation screen in the AWS Console showing the role name, attached managed policies, and the inline policy editor. Tanwi to check with team for the screenshot.**_
 
 #### **Step 3: Create a Glue notebook and attach the IAM role**
 
@@ -108,7 +106,6 @@ _**IMAGE TO BE ADDED — IAM Role creation screen in the AWS Console showing the
 3. Select the IAM role created in Step 2 (`zingg-glue-role`) from the dropdown.
 4. Open the notebook. Confirm the kernel in the top right shows **Glue PySpark**.
 
-_**IMAGE TO BE ADDED — AWS Glue Studio Notebooks screen showing the IAM role dropdown with the\*\*\*\*****&#x20;****`zingg-glue-role`****&#x20;****\*\*\*\*selected. Tanwi to check with team for the screenshot.**_
 
 ### Notebook 01: Set up Zingg
 
@@ -124,8 +121,8 @@ This is the most important step for Glue. The `%%configure` magic cell must be *
 % number_of_workers 2
 % idle_timeout 2880
 %% configure {
-  "--extra-jars": "s3://your-bucket/jars/zingg-0.6.0.jar,s3://your-bucket/jars/zingg-common-client-0.6.0.jar,s3://your-bucket/jars/zingg-common-core-0.6.0.jar,s3://your-bucket/jars/zingg-spark-client-0.6.0.jar,s3://your-bucket/jars/zingg-spark-core-0.6.0.jar,s3://your-bucket/jars/zingg-common-infra-0.6.0.jar",
-    "--additional-python-modules": "zingg==0.6.0,tabulate,ipywidgets",
+  "--extra-jars": "s3://your-bucket/jars/zingg-0.7.0.jar,s3://your-bucket/jars/zingg-common-client-0.7.0.jar,s3://your-bucket/jars/zingg-common-core-0.7.0.jar,s3://your-bucket/jars/zingg-spark-client-0.7.0.jar,s3://your-bucket/jars/zingg-spark-core-0.7.0.jar,s3://your-bucket/jars/zingg-common-infra-0.7.0.jar",
+    "--additional-python-modules": "zingg==0.7.0,tabulate,ipywidgets",
     "--conf": "spark.serializer=org.apache.spark.serializer.KryoSerializer"
 }
 ```
@@ -295,7 +292,6 @@ print(f"Previewing data from {csv_path}:")
 spark_df.show(10)
 ```
 
-_**IMAGE TO BE ADDED - Glue notebook cell showing the\*\*\*\*****&#x20;****`spark_df.show(10)`****&#x20;****\*\*\*\*output table with sample FEBRL records — the same entity appearing multiple times with field variations across rows. Tanwi to check with team for the screenshot.**_
 
 #### **Step 11: Configure input and output pipes**
 
@@ -464,7 +460,6 @@ ready_for_save = True
 print(f"Review sheet exported for {n_pairs} pairs to: {export_path}")
 ```
 
-_**IMAGE TO BE ADDED — S3 console showing the\*\*\*\*****&#x20;****`/review/`****&#x20;****folder with the exported****&#x20;****`pending_labels.csv`****&#x20;****\*\*\*\*part file ready for download. Tanwi to check with team for the screenshot.**_
 
 {% hint style="danger" icon="right-long" %}
 How to label the review sheet:
@@ -476,7 +471,6 @@ How to label the review sheet:
 5. Run Step 16 to feed the labels into Zingg.
 {% endhint %}
 
-_**IMAGE TO BE ADDED — Example of the exported review CSV open in Excel showing two FEBRL records side by side in a vertical layout, with the\*\*\*\*****&#x20;****`>>> DECISION`****&#x20;****row highlighted and a****&#x20;****`1`****&#x20;****entered in the****&#x20;****`Record_B`****&#x20;****\*\*\*\*column. Tanwi to check with team for the screenshot.**_
 
 {% hint style="success" icon="right-long" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 14–16 in a loop until you reach this target. Label until all field types and data variation patterns in your schema are covered. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
@@ -645,7 +639,6 @@ print(f"Redundancy Reduced by: "
     f"{((total_records - unique_entities) / total_records) * 100:.2f}%")
 ```
 
-_**IMAGE TO BE ADDED — Glue notebook cell showing\*\*\*\*****&#x20;****`final_results.orderBy("z_cluster").show(10)`****&#x20;****output with resolved records grouped by****&#x20;****`z_cluster`****&#x20;****\*\*\*\*— two rows sharing the same cluster value visible in the output. Tanwi to check with team for the screenshot.**_
 {% endtab %}
 
 {% tab title="Enterprise" %}
@@ -664,6 +657,6 @@ _**IMAGE TO BE ADDED — Glue notebook cell showing\*\*\*\*****&#x20;****`final_
 {% hint style="success" icon="right-long" %}
 Download the notebooks used in this guide:
 
-* Community notebooks (NB01–04): Download the notebook used in this guide: `github.com/zinggAI/zingg/tree/main/examples/aws-glue`
-* Enterprise notebooks — TO BE ADDED
+* Community notebooks (NB01–04): `github.com/zinggAI/zingg/tree/main/examples/aws-glue`
+* Enterprise notebooks (NB01–07): included in your Zingg Enterprise package
 {% endhint %}

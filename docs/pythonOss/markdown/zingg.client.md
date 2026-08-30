@@ -1,3 +1,8 @@
+---
+description: >-
+  zingg.client module reference for Community edition. Includes Zingg, ZinggWithSpark, Arguments, ClientOptions, and FieldDefinition classes for entity resolution.
+---
+
 # zingg.client module
 
 ## Classes

@@ -1,3 +1,8 @@
+---
+description: >-
+  Tune Zingg performance parameters: numPartitions (20-30x cores) and labelDataSampleSize (0.0001-0.1). Optimize for speed and edge case coverage.
+---
+
 # Tuning Label, Match And Link Jobs
 
 #### numPartitions

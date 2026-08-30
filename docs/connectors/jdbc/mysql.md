@@ -1,3 +1,8 @@
+---
+description: >-
+  Connect Zingg to MySQL via JDBC. Configure URL, dbtable, driver, user, and password in JSON config.
+---
+
 # MySQL
 
 ## Reading From MySQL Database:

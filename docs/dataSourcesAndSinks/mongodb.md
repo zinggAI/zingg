@@ -1,4 +1,6 @@
 ---
+description: >-
+  Connect Zingg to MongoDB using MongoDB Spark connector. Configure URI with database and collection for data input/output.
 layout: default
 title: MongoDB
 parent: Data Sources and Sinks

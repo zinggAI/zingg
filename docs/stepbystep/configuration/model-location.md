@@ -1,3 +1,8 @@
+---
+description: >-
+  Configure where Zingg saves trained models. zinggDir sets the base location (default /tmp/zingg), modelId identifies each model under that directory.
+---
+
 # Model Location
 
 #### zinggDir

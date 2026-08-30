@@ -1,3 +1,8 @@
+---
+description: >-
+  Configure input data sources in Zingg JSON config. Define data array with pipe name, format, props, and optional schema for non-self-describing formats like CSV.
+---
+
 # Data
 
 #### data

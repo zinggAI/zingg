@@ -1,3 +1,8 @@
+---
+description: >-
+  IncrementalArguments class reference for Zingg Enterprise. Configure incremental data, delete actions, output temp path, and parent EArguments.
+---
+
 # IncrementalArguments
 
 ## zinggEC.enterprise.common.IncrementalArguments

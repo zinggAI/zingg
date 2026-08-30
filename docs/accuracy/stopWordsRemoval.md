@@ -1,3 +1,8 @@
+---
+description: >-
+  Remove common words (stopwords) that don't add differential signals during matching. Zingg can recommend stopwords automatically or use custom lists. Available in Community and Enterprise Snowflake.
+---
+
 # Ignoring Commonly Occuring Words While Matching
 
 Common words like Mr, Pvt, Av, St, Street etc. do not add differential signals and confuse matching. These words are called **stopwords** and matching is more accurate when stopwords are ignored.

@@ -1,3 +1,8 @@
+---
+description: >-
+  Enterprise feature to lookup records in match output and assign Zingg IDs. Run the runLookup phase with lookup configuration.
+---
+
 # Lookup Data
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]

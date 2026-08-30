@@ -1,3 +1,8 @@
+---
+description: >-
+  Configure output statistics for Zingg Enterprise. Use $ZINGG_DYNAMIC_STAT_NAME placeholder for summary, cluster, and record stats. JSON and Python examples provided.
+---
+
 # Configuring Output Statistics
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]

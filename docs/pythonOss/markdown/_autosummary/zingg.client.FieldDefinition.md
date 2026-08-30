@@ -1,3 +1,8 @@
+---
+description: >-
+  FieldDefinition class reference for Community edition. Define field name, data type, match type (FUZZY, EXACT, etc.), and optional stopwords for matching configuration.
+---
+
 # zingg.client.FieldDefinition
 
 ### *class* zingg.client.FieldDefinition(name, dataType, \*matchType)
