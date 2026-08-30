@@ -389,7 +389,11 @@ mv ~/zingg.license .
 {% endcode %}
 
 {% hint style="info" icon="right-long" %}
-Add `ZINGG_SNOW_JAR` and `ZINGG_SNOW_HOME` to `.bashrc` so they persist across sessions. For the full end-to-end Snowflake guide → [Run on Snowflake](../platform-guides/platform-guide-for-snowflake.md)
+Add `ZINGG_SNOW_JAR` and `ZINGG_SNOW_HOME` to `.bashrc` so they persist across sessions. 
+
+For the full end-to-end Snowflake guide → [Run on Snowflake](../platform-guides/platform-guide-for-snowflake.md)
+
+For complete step-by-step instructions with B2B examples, SQL/Python APIs, and incremental matching → [Zingg Enterprise Snowflake Instructions](../../stepbystep/installation/installing-zingg-enterprise-snowflake/enterprise-snowflake-instructions.md)
 {% endhint %}
 
 ### **Create the Snowflake properties file (`snowEnv.txt`)**

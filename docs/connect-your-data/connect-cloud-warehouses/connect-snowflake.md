@@ -13,6 +13,8 @@ This `config` connects Zingg to Snowflake as a DATA SOURCE using Spark. Availabl
 {% hint style="warning" icon="right-long" %}
 Snowflake as a COMPUTE ENGINE (native Snowflake run without Spark) is Enterprise only.\
 [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact).
+
+For the complete Enterprise Snowflake guide including native Snowpark execution, SQL/Python APIs, incremental matching, and B2B customer/vendor examples → [Zingg Enterprise Snowflake Instructions](../../../stepbystep/installation/installing-zingg-enterprise-snowflake/enterprise-snowflake-instructions.md)
 {% endhint %}
 
 ### Prerequisites
