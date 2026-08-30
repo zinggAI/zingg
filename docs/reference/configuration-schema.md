@@ -4,11 +4,11 @@ description: >-
   arguments.
 ---
 
-# Configuration Schema
+# ⚙️ Configuration Schema
 
 This page is the reference. Every Zingg configuration parameter, JSON key and Python API method is documented here with type, valid values, and edition availability.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: For the step-by-step task of setting up configuration - [Configure Zingg](../running-zingg/configure-zingg.md).
 {% endhint %}
 
@@ -94,7 +94,7 @@ At runtime, Zingg replaces the placeholder with the actual environment variable 
 }
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Environment variable substitution applies anywhere in the JSON config - top-level parameters, pipe `props`, field paths, output locations, and credentials. The substitution is purely textual at runtime, so any environment variable Zingg can read can be referenced this way.
 {% endhint %}
 
@@ -119,14 +119,14 @@ For every JSON parameter, there is an equivalent Python API method on the `Argum
 | `primaryKey` (field-level) | `fieldDef.setPrimaryKey()` | Enterprise only | `recId.setPrimaryKey(True)` |
 | `postProcessors` (field-level) | `fieldDef.setPostProcessors()` | Enterprise only | `job_title.setPostProcessors([StandardisePostprocessorType("STANDARDISE", "jobtitles")])` |
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Sample config files:
 
 * `github.com/zinggAI/zingg/tree/main/ examples/febrl/config.json`
 * `github.com/zinggAI/zingg/tree/main/examples/febrl120k/config.json`
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related pages:**
 
 * [Configure Zingg](../running-zingg/configure-zingg.md) - step-by-step task of building your config
