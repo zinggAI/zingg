@@ -5,17 +5,25 @@ description: >-
   Community (open source) and Enterprise
 ---
 
-# Quick Start (Docker)
+# 🚀 Quick Start (Docker)
 
 This page walks you through the full Zingg workflow on your local machine using Docker. You will install Zingg, connect sample data, find candidate pairs, label those pairs, train the model, and run match to see your first results. By the end you will have run every phase of the Zingg workflow and seen entity resolution working on your local machine with real data.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="video" %}
+**See the full workflow in action:**
+{% endhint %}
+
+{% embed url="https://www.youtube.com/watch?v=F5Dw1QH0idQ" %}
+Entity Resolution with Open Source Zingg — end-to-end workflow demo.
+{% endembed %}
+
+{% hint style="success" icon="book-open" %}
 New to entity resolution? Read [Entity Resolution](../entity-resolution/) for the problem space and why Zingg's approach works.
 {% endhint %}
 
 {% tabs %}
 {% tab title="Local Spark (Docker)" %}
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="rocket" %}
 Fastest way to get started. Uses Docker and the Zingg Python API. No Spark cluster setup required. Covers Community (open source) and Enterprise - pull the Docker image and follow the same steps for either edition.
 {% endhint %}
 
@@ -62,7 +70,7 @@ docker cp /path/to/your-data.csv <container_id>:/zingg/your-data.csv
 ```
 {% endcode %}
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 Replace `<container_id>` with your running container's ID (find it with `docker ps`).
 {% endhint %}
 
@@ -70,7 +78,7 @@ Replace `<container_id>` with your running container's ID (find it with `docker 
 
 Create or edit your configuration. The config defines your field definitions, input and output paths, model ID, and partition settings. Both editions use the same JSON structure — only the Python class differs between editions.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 `FUZZY` handles typos and abbreviations. `EXACT` requires character-for-character match. `DONT_USE` excludes a field from matching but keeps it in output. For all match types → [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}
 
@@ -159,7 +167,7 @@ outputPipe.setHeader("true")
 args.setOutput(outputPipe)
 ```
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 The JSON config blocks below are the equivalent declarations of the Python above. Use either approach - Python API for in-notebook orchestration, JSON for shell-driven workflows. Community and Enterprise use the same JSON structure with the addition of `outputStats` in Enterprise.
 {% endhint %}
 
@@ -276,7 +284,7 @@ The JSON config blocks below are the equivalent declarations of the Python above
 }
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 `outputStats` is Enterprise-only. The `$ZINGG_DYNAMIC_STAT_NAME` placeholder is replaced at runtime with `SUMMARY`, `CLUSTER`, or `RECORD` for the three different stats files Zingg produces.
 
 For full configuration schema with all parameters → [Configuration Schema](../reference/configuration-schema.md)
@@ -318,7 +326,7 @@ Zingg shows you the pairs selected by `findTrainingData`. For each pair, decide:
 * `0` - Not a match: these records are different entities
 * `2` - Not sure: when you cannot decide
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 Zingg selects the most informative pairs from your data - not random samples. Label until all field types and data variation patterns in your schema are represented. Repeat Steps 4–5 in a loop if needed. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
 {% endhint %}
 
@@ -410,7 +418,7 @@ For threshold guidance and full output column definitions → [Interpret Output 
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="check-circle" %}
 Completed the walkthrough? Next steps:
 
 * Connect your own data - [Connect Data](../connect-your-data/pipes-and-data-connections.md)
@@ -418,6 +426,6 @@ Completed the walkthrough? Next steps:
 * Understanding output scores - [Interpreting output](../interpreting-results/interpret-output-scores.md)
 {% endhint %}
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="warning" icon="building" %}
 Enterprise Quick Start uses EArguments, ECsvPipe, and EZingg in 7 production-grade notebooks. [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact) to get access to the full notebook sequence.
 {% endhint %}

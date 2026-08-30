@@ -5,9 +5,9 @@ tags:
   - enterprise-only
 ---
 
-# Set Deterministic Matching Conditions
+# ⚙️ Set Deterministic Matching Conditions
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Deterministic matching is Enterprise only. Available in Enterprise Lite and above
 {% endhint %}
 
@@ -41,7 +41,7 @@ Do not use deterministic matching on fields that are frequently incomplete or in
 
 If you are unsure, start with probabilistic matching only. Add deterministic rules once you have reviewed match output and identified high-confidence identifier combinations in your data.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more:** [Configure Zingg](configure-zingg.md) | [Concepts glossary](../frequently-asked-questions/concept-glossary.md)
 {% endhint %}
 

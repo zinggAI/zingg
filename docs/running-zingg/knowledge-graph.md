@@ -8,9 +8,9 @@ tags:
     primary: true
 ---
 
-# Knowledge Graph
+# 🔗 Knowledge Graph
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Enterprise Plus only. Knowledge Graph is available in Zingg Enterprise Plus (ZinggES). Not available in Community, Enterprise Lite, or Enterprise.
 {% endhint %}
 
@@ -39,7 +39,7 @@ _**CHECK WITH TEAM/SONAL—Knowledge Graph is confirmed as an Enterprise Plus fe
 
 _**Full content and code example will be added once the above is confirmed**_
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more:**
 
 * Entity resolution and graph analysis with Neo4j - [Connect Graph Databases](../connect-your-data/connect-graph-databases-neo4j.md)

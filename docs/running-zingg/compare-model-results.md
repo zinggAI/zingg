@@ -8,9 +8,9 @@ tags:
     primary: true
 ---
 
-# Compare Model Results
+# 📊 Compare Model Results
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 **Enterprise** **Plus** only. Comparing model results is available in Zingg Enterprise Plus (ZinggES).\
 Not available in Community, Enterprise Lite, or Enterprise.
 {% endhint %}
@@ -29,7 +29,7 @@ Retrained an existing model with more labeled data and want to confirm the updat
 * Run an A/B test between two modeling strategies and need a quantitative basis for choosing one over the other.
 * Changed blocking strategy settings and want to measure the effect on cluster quality before committing to production
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more:**
 
 * Model workflow context - [Run the match phase](run-the-match-phase.md)

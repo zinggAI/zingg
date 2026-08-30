@@ -4,9 +4,9 @@ description: >-
   re-labeling everything from scratch.
 ---
 
-# Update Label
+# 🧪 Update Label
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="warning" icon="triangle-exclamation" %}
 Keep a backup of your model folder before running `updateLabel` - it overwrites previously saved labels.
 {% endhint %}
 
@@ -34,6 +34,6 @@ zingg.initAndExecute()
 
 The command opens an interactive prompt in the terminal. Enter the cluster ID of the pair you want to relabel, review the pair it displays, then enter the corrected decision: Match (1), No Match (2), or Can't Say (0). Enter 9 at either prompt to exit.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="check-circle" %}
 After updating labels, run [Generate Model Documentation](generate-model-documentation.md) again to confirm the change, then re-run `train` once you're satisfied.
 {% endhint %}

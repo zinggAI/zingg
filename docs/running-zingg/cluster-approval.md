@@ -8,9 +8,9 @@ tags:
     primary: true
 ---
 
-# Cluster Approval
+# ✅ Cluster Approval
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Enterprise only. Manual review and sign-off of matched clusters before committing to the identity graph. Approved decisions are preserved across incremental runs and never overridden.
 {% endhint %}
 

@@ -4,17 +4,17 @@ description: >-
   for the entire Zingg docs site.
 ---
 
-# Step-by-Step Overview
+# 🚀 Step-by-Step Overview
 
 Zingg works in phases. Each phase performs a specific task and produces an output that the next phase depends on. You do not need to run all phases every time. Once the model is trained, you run `match`, `link`, or `runIncremental` directly.
 
 The steps below represent the complete workflow from first setup to production matching. This page describes the workflow you follow once Zingg is installed.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 This page describes the workflow you follow once Zingg is installed.\
 For installing Zingg on your platform → [Install Zingg](install-zingg.md).
 
-New to entity resolution or want to understand the problem space before diving in? → E[ntity Resolution](../entity-resolution/)
+New to entity resolution or want to understand the problem space before diving in? → [Entity Resolution](../entity-resolution/)
 {% endhint %}
 
 {% stepper %}
@@ -25,8 +25,8 @@ New to entity resolution or want to understand the problem space before diving i
 
 <summary>Define your data and output</summary>
 
-{% hint style="success" icon="right-long" %}
-**Read more**: [Content your Data](../connect-your-data/pipes-and-data-connections.md)
+{% hint style="success" icon="plug" %}
+**Read more**: [Connect your Data](../connect-your-data/pipes-and-data-connections.md)
 {% endhint %}
 
 Configure input and output pipes to tell Zingg where your source data lives and where to write results. Zingg connects to the data where it lives - it does not move it.
@@ -37,8 +37,8 @@ Configure input and output pipes to tell Zingg where your source data lives and 
 
 <summary>Configure fields</summary>
 
-{% hint style="success" icon="right-long" %}
-**Read more**: [Content your Data](../connect-your-data/pipes-and-data-connections.md)
+{% hint style="success" icon="plug" %}
+**Read more**: [Connect your Data](../connect-your-data/pipes-and-data-connections.md)
 {% endhint %}
 
 Define your field definitions, match types, relevant Enterprise features (deterministic matching, primary key, pass through, standardization). The configuration drives every downstream phase.
@@ -59,7 +59,7 @@ Define your field definitions, match types, relevant Enterprise features (determ
 
 Run `findTrainingData` to generate candidate pairs, then label each pair as Match, No Match, or Uncertain. Zingg selects the most informative pairs, not random samples. Repeat the find-and-label cycle until all field types and data variation patterns in your schema are represented in your labeled data.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * [Create Training Data](create-training-data/)
@@ -72,7 +72,7 @@ Run `findTrainingData` to generate candidate pairs, then label each pair as Matc
 
 Run `verifyBlocking` to check what percentage of your known matching pairs are being blocked together correctly. Run after labelling and before committing to a full training run. If coverage is low, return to labelling. 
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: [Verify Blocking](create-training-data/verify-blocking.md)
 {% endhint %}
 {% endstep %}
@@ -82,7 +82,7 @@ Run `verifyBlocking` to check what percentage of your known matching pairs are b
 
 Run `generateDocs` to produce a human-readable HTML report of your training data, including pairs labeled as matches and non-matches. Useful for sharing with subject-matter experts for feedback before training. Run `updateLabel` if needed to incorporate SME comments. 
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: [Generate Model Documentation](generate-model-documentation.md)
 {% endhint %}
 {% endstep %}
@@ -92,7 +92,7 @@ Run `generateDocs` to produce a human-readable HTML report of your training data
 
 Run `train` to build and save the blocking and similarity models from your labelled training data. Models are written to `zinggDir/modelId` and can be reused on new data without retraining.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: [Build and Save the Model](build-and-save-the-model.md)
 {% endhint %}
 {% endstep %}
@@ -107,7 +107,7 @@ Apply the trained model to your data:
 
 `match` and `link` are two equal operations using the same trained model. As long as your input columns and field types are not changing, you do not need to rebuild the model.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * [Run the Match Phase](run-the-match-phase.md)
@@ -122,7 +122,7 @@ Review output scores to understand match quality. Use `Z_MINSCORE` and `Z_MAXSCO
 
 Run `explain` to understand cluster formation and check the output statistics (Enterprise Only) to understand and explain matches. 
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)
 {% endhint %}
 {% endstep %}
@@ -134,18 +134,18 @@ If match results need improvement, return to find-and-label with focused trainin
 
 If the Zingg job is slow, add more labels. The blocking model learns from the labels and adding more matches will help it branch better. 
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: [Improve Accuracy](../tuning/improve-accuracy/)
 {% endhint %}
 {% endstep %}
 {% endstepper %}
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="warning" icon="building" %}
 Enterprise: 7 production-grade notebooks, one per phase, with step-isolated execution and\
 full Python API support. [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact)
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * Understanding the concepts behind each phase - [Overview section](../) | [Concepts glossary](../frequently-asked-questions/concept-glossary.md)

@@ -7,7 +7,7 @@ tags:
     primary: true
 ---
 
-# Verify Blocking
+# 🧪 Verify Blocking
 
 The blocking model filters your dataset before any similarity comparisons happen. Records in different blocks are never compared. This is what makes Zingg scalable, but it also means that if the blocking model puts two matching records in different blocks, those records will never be matched no matter how well the similarity model is trained.
 
@@ -28,7 +28,7 @@ The `verifyBlocking` phase produces two output directories under `zinggDir/model
 | `counts`       | Record count per block. Shows how many records are in each block. Very large blocks indicate poor blocking specificity.                                  |
 | `blockSamples` | The top 10% of records associated with each block. Use this to understand which records are being grouped together and whether the groupings make sense. |
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: To run the `verifyBlocking` phase and inspect output coverage→ [Verify Blocking](verify-blocking.md)
 {% endhint %}
 
@@ -86,7 +86,7 @@ influence matching.
 3. Check whether missed pairs share a common characteristic. If all missed pairs have empty values in a key field, empty fields cannot contribute to blocking. Either remove that field from your blocking config or improve data completeness upstream.
 4. If standard blocking consistently misses a specific pattern in your data, consider custom blocking functions.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * [Label Training Pairs](label-training-pairs.md) - how to add more training data
@@ -95,7 +95,7 @@ influence matching.
 * [Blocking Model](../../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md) - define custom blocking functions
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 Run `verifyBlocking` in two situations:
 
 1. **Before labeling** - to confirm your blocking is covering expected matches before you invest in training data
@@ -171,7 +171,7 @@ If `verifyBlocking` shows that many known matching pairs are not being blocked t
 2. **Check your field match types.** Fields set to `DONT_USE` are excluded from blocking. If a key identity field is set to `DONT_USE`, matching pairs that differ on other fields may end up in different blocks.
 3. **Try the `WIDER` blocking strategy** (Enterprise only) if large blocks suggest the tree is over-relying on one or two fields → [Blocking Strategies: DEFAULT vs WIDER](../../tuning/blocking-strategy.md)
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Consider custom blocking functions** for specialised data patterns → [Blocking Model](../../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
 
 **Read more**:

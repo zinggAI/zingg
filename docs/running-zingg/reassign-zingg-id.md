@@ -8,9 +8,9 @@ tags:
     primary: true
 ---
 
-# Reassign Zingg ID
+# 🔗 Reassign Zingg ID
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Enterprise Plus only. Preserves Zingg IDs when switching to a new model. Maximises ID continuity and minimises downstream disruption. Available in ZinggES (Enterprise Plus).
 {% endhint %}
 
@@ -18,7 +18,7 @@ When you evolve your Zingg setup - upgrading your model, migrating infrastructur
 
 The `reassignZinggId` phase carries Zingg IDs from your original production model to a new model's output. It maps clusters from the new model back to the original cluster assignments and preserves the original Zingg IDs wherever clusters overlap. New IDs are generated only where no match is found.
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="book-open" %}
 For what the Zingg ID is and how it works in Enterprise output → [Zingg ID and Z Cluster](../zingg-concepts/z-cluster-and-zingg-id.md)
 {% endhint %}
 

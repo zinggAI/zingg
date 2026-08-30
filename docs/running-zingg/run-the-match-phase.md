@@ -4,13 +4,13 @@ description: >-
   your trained Zingg model.
 ---
 
-# Run the match phase
+# 🔗 Run the match phase
 
 The `match` phase runs AFTER `train`. It applies the trained Zingg model to your full dataset and groups records that represent the same real-world entity into clusters.
 
 Use `match` when you want to find duplicates within a single dataset. If you need to match records across two separate datasets, use the link phase instead - both are equal operations using the same trained model.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more:**
 
 * Scores are explained in detail - [Interpreting output scores](../interpreting-results/interpret-output-scores.md)
@@ -40,7 +40,7 @@ output = spark.read.csv("path-to-output-directory",header = True)
 display(output)
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Matching records share the same `Z_CLUSTER` value.
 {% endhint %}
 {% endtab %}
@@ -68,7 +68,7 @@ output = spark.read.csv("path-to-output-directory",header=True)
 display(output)
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Enterprise output includes `Zingg ID` (persistent across runs) instead of `Z_CLUSTER`, plus deterministic match flag and Match Statistics. `Zingg ID` is stable across all subsequent incremental runs.
 {% endhint %}
 {% endtab %}
@@ -123,7 +123,7 @@ Once the job completes, stop the compute pool to release resources.
 ALTER COMPUTE POOL CONTAINER_ZINGG_POOL STOP ALL;
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Enterprise output includes `Zingg ID` (persistent across runs) instead of `Z_CLUSTER`, plus deterministic match flag and Match Statistics. `Zingg ID` is stable across all subsequent incremental runs.
 {% endhint %}
 {% endtab %}

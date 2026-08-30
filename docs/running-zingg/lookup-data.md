@@ -8,9 +8,9 @@ tags:
     primary: true
 ---
 
-# Lookup Data
+# 🔗 Lookup Data
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 **Enterprise** only. The lookup feature assigns a Zingg ID to given lookup records by finding which entity cluster they belong to in the existing match output.
 {% endhint %}
 

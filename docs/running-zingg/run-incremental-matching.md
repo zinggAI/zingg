@@ -8,13 +8,13 @@ tags:
     primary: true
 ---
 
-# Run Incremental Matching
+# 🚀 Run Incremental Matching
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 **Enterprise only.** Incremental matching updates the identity graph and preserves Zingg IDs across runs. Not available in Community.
 {% endhint %}
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 **BEFORE YOU BEGIN:** The initial match phase must have been completed first. Run incremental only after a full match has been run on your base dataset.
 
 Output is written to the same location as your match output. There is no separate output path for\
@@ -143,7 +143,7 @@ incrArgs = IncrementalArguments()
 incrArgs.setParentArgs(args)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 `setParentArgs()` inherits all base configuration from notebook 01 - field definitions, model ID, zinggDir, and output pipe. You only need to configure the incremental input pipe separately.
 {% endhint %}
 
@@ -176,7 +176,7 @@ output = spark.read.csv(
 display(output)
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Output is at the same path as your match output. New records get new Zingg IDs. Records matching existing clusters get the existing Zingg ID. No separate output path is needed.
 {% endhint %}
 {% endtab %}

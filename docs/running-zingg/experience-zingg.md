@@ -4,9 +4,9 @@ description: >-
   configuration, no data preparation needed.
 ---
 
-# Experience Zingg
+# 🚀 Experience Zingg
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 **Prerequisites:** Docker installed on your machine. Nothing else required.
 {% endhint %}
 
@@ -44,7 +44,7 @@ docker run -v /tmp:/tmp -it zingg/zingg bash
 ./scripts/zingg.sh --phase match --conf examples/febrl/config.json
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 ### **What just happened**
 
 Zingg read the `FEBRL` sample dataset bundled in the Docker image, applied a pre-trained entity resolution model to it, and wrote the resolved output to the output path configured in `examples/febrl/config.json`.
@@ -64,7 +64,7 @@ The output contains all your input fields plus three columns added by Zingg:
 * `Z_MAXSCORE` - the highest similarity score between any two records in that cluster.\
   Indicates the strongest match within the cluster.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: To know more about output scores, check [Interpret Output Score](../interpreting-results/interpret-output-scores.md).
 {% endhint %}
 
@@ -104,6 +104,6 @@ As long as your input columns and field types are not changing, the same model w
 
 </details>
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="warning" icon="building" %}
 Enterprise adds persistent identity with Zingg ID, incremental matching, and production-grade notebooks. [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact)
 {% endhint %}

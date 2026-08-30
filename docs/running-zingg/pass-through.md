@@ -8,9 +8,9 @@ tags:
     primary: true
 ---
 
-# Pass Through
+# ⚙️ Pass Through
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Enterprise only. Pass Through excludes specific records from the matching process while still including them in the output. Each Pass Through record receives its own unique Zingg ID.
 {% endhint %}
 
@@ -108,7 +108,7 @@ Pass-through records are written to the same output table as matched records, ea
 * Normally matched records share a `Zingg ID` with other records in their cluster.
 * `Pass Through` records each receiving their own unique `Zingg ID`. They are not grouped with any other record. They are traceable and auditable but do not contribute to or inherit any entity cluster.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * Pass Through concept in the glossary - [Concepts glossary](../frequently-asked-questions/concept-glossary.md)

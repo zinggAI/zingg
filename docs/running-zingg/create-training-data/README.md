@@ -4,13 +4,13 @@ description: >-
   The first active step in building your Zingg model.
 ---
 
-# Create Training Data
+# 🧪 Create Training Data
 
 The `findTrainingData` phase prompts Zingg to search for edge cases in your data-record pairs that are informative for learning. Zingg selects these judiciously so that your labeling effort is minimized and models can be built quickly.
 
 Run `findTrainingData` first, then run the `label` phase. Repeat this cycle until you have enough labeled pairs.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 Zingg selects the most informative pairs from your data not random samples. Label until all field types and data variation patterns in your schema are represented. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
 {% endhint %}
 
@@ -63,7 +63,7 @@ Your training data must include:
 }
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 Even when supplying pre-existing training data, it is advisable to run `findTrainingData` and `label` for a few rounds to tune Zingg with the patterns it needs to learn independently.
 {% endhint %}
 {% endtab %}
@@ -89,7 +89,7 @@ zingg.initAndExecute()
 ./scripts/zingg.sh --phase findTrainingData --conf config.json
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Candidate pairs are written to `zinggDir/modelId`. Run the label phase next to review and label these pairs.
 {% endhint %}
 {% endtab %}
@@ -109,7 +109,7 @@ Zingg on Snowflake can be run either from a local terminal via the CLI, or nativ
 
 The `snowflake.properties` file supplies the connection details Zingg needs to reach your Snowflake account and run against your warehouse from outside Snowflake.
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Candidate pairs are written to `zinggDir/modelId`.
 {% endhint %}
 

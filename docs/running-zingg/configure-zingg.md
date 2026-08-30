@@ -4,20 +4,20 @@ description: >-
   subsequent Zingg phase depends on.
 ---
 
-# Configure Zingg
+# ⚙️ Configure Zingg
 
 Configuring Zingg is the first step in every Zingg workflow. This page follows notebook 01 step by step; defining your fields, configuring your pipes, and creating the arguments object that all subsequent phases inherit.
 
 Complete this page before running any other phase. Every phase reads the configuration set here:
 
-* `findTrainingData` → \[[Create Training Data](create-training-data/)]
-* `label` → \[[Label Training Pairs](create-training-data/label-training-pairs.md)]
-* `train` → \[[Build and Save the Model](build-and-save-the-model.md)]
-* `match` → \[[Run the Match Phase](run-the-match-phase.md)]
-* `link` → \[[Link Across Datasets](link-across-datasets.md)]
-* `runIncremental` → \[[Run Incremental Matching](run-incremental-matching.md)]
+* `findTrainingData` → [Create Training Data](create-training-data/)
+* `label` → [Label Training Pairs](create-training-data/label-training-pairs.md)
+* `train` → [Build and Save the Model](build-and-save-the-model.md)
+* `match` → [Run the Match Phase](run-the-match-phase.md)
+* `link` → [Link Across Datasets](link-across-datasets.md)
+* `runIncremental` → [Run Incremental Matching](run-incremental-matching.md)
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Full parameter reference with all config options and schema → [Configuration Schema](../reference/configuration-schema.md)
 {% endhint %}
 
@@ -48,7 +48,7 @@ args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 `setModelId` - unique name for this model.
 
 `setZinggDir` - where Zingg writes model files and training data.
@@ -172,7 +172,7 @@ args.setFieldDefinition(fieldDefs)
 }
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: Match types reference - [Match types](../zingg-concepts/zingg-configuration/field-definition/match-types/) | [Configuration schema](../reference/configuration-schema.md)
 {% endhint %}
 
@@ -241,7 +241,7 @@ If you do not want to pass sensitive values such as passwords through the config
 }
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="plug" %}
 **Read more**: For all supported connector types and formats - [Connect Your Data](../connect-your-data/pipes-and-data-connections.md)
 {% endhint %}
 {% endtab %}
@@ -368,7 +368,7 @@ fieldDefs = [
 args.setFieldDefinition(fieldDefs)
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Enterprise requires a primary key field for `runIncremental`. Mark the primary key field by calling `recId.setPrimaryKey(True)` if you plan to use incremental matching.
 {% endhint %}
 
@@ -427,7 +427,7 @@ args.setOutput(outputPipe)
 
 ### Step 5: Deterministic matching (optional)
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Deterministic matching - **Enterprise** only.
 
 Skip this step if you only need probabilistic matching.
@@ -482,7 +482,7 @@ args.setDeterministicMatchingCondition(
 
 ### Step 6: Output stats (optional)
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Output stats - **Enterprise** only.
 
 Skip this step if you do not need run statistics.
@@ -520,7 +520,7 @@ args.setOutputStats(statsPipe)
 
 ### Step 7: Pass Through (optional)
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Pass Through - **Enterprise** only.
 
 Skip this step if you do not need to exclude records from matching.
@@ -607,7 +607,7 @@ args.setPassthroughExpr("fname = 'matilda'")
 	]
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Enterprise requires a primary key field for `runIncremental`. Mark the primary key field by adding `"primaryKey": "true"` if you plan to use incremental matching.
 {% endhint %}
 
@@ -634,7 +634,7 @@ Enterprise requires a primary key field for `runIncremental`. Mark the primary k
 
 ### Step 4: Deterministic matching (optional)
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Deterministic matching - **Enterprise** only.
 
 Skip this step if you only need probabilistic matching.
@@ -661,7 +661,7 @@ Skip this step if you only need probabilistic matching.
 
 ### Step 5: Output stats (optional)
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Output stats - **Enterprise** only.
 
 Skip this step if you do not need run statistics.
@@ -685,7 +685,7 @@ Configures where Zingg writes statistics for the `match` and `runIncremental` ph
 
 ### Step 6: Pass Through (optional)
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Pass Through - **Enterprise** only.
 
 Excludes specific records from matching while still including them in output with their own `Zingg ID`.

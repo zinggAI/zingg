@@ -4,7 +4,7 @@ description: >-
   training data and save it for reuse.
 ---
 
-# Build and Save the Model
+# 🧪 Build and Save the Model
 
 The training phase builds up the Zingg models using the training data from your label sessions and writes them to `zinggDir/modelId` as specified in your config.
 
@@ -18,11 +18,11 @@ Once saved, reuse the same `modelId` in all subsequent phases - `match`, `link`,
 
 If you retrain with a new model, use `Compare Model Results (diff phase)` in Enterprise to benchmark the new model against the current one before deploying. Zingg shows you exactly which clusters changed, merged, or split between the two models.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="check-circle" %}
 Model saved to: `zinggDir/modelId`
 
 Use the same `modelId` when running `match`, `link`, or `runIncremental` to apply this trained model.

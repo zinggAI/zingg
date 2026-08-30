@@ -4,9 +4,9 @@ description: >-
   trained Zingg model.
 ---
 
-# Link across Datasets
+# 🔗 Link across Datasets
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 `Link` and `Match` are two EQUAL operations. Both use the same trained model. Neither is a subset of the other.
 
 * `Link` - match records across two datasets. Each record from the first source is matched with all records from the remaining sources.
@@ -42,7 +42,7 @@ zingg.initAndExecute()
 ./scripts/zingg.sh --phase link --conf config.json
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 The link config file needs two data sources defined. Sample config for link available at:\
 `github.com/zinggAI/zingg/blob/main/examples/febrl/configLink.json`
 {% endhint %}
@@ -84,7 +84,7 @@ output = spark.read.csv(
 display(output)
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Enterprise link output includes Zingg ID instead of `Z_CLUSTER`, plus the `Z_SOURCE` column identifying the source dataset of each record.
 {% endhint %}
 {% endtab %}
@@ -98,7 +98,7 @@ Enterprise link output includes Zingg ID instead of `Z_CLUSTER`, plus the `Z_SOU
 --properties-file <location to snowflake.properties>
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Enterprise link output includes Zingg ID instead of `Z_CLUSTER`, plus the `Z_SOURCE` column identifying the source dataset of each record.
 {% endhint %}
 

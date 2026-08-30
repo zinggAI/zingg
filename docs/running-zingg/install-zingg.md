@@ -4,7 +4,7 @@ description: >-
   Spark and notebook environments
 ---
 
-# Install Zingg
+# 🔌 Install Zingg
 
 Zingg runs on Spark (all editions) or Snowflake (Enterprise only). Select your platform from the tabs below. Each tab covers both Community and Enterprise where applicable.
 
@@ -112,7 +112,7 @@ pip show zingg
 1. In your workspace, click **New Item** and select **Lakehouse**. Name it and go inside it.
 2. Click **Get Data** and upload your data file as CSV or Parquet.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="cloud" %}
 Note the `abfss` path of your Lakehouse for use in the notebook. It follows this format: `abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/<lakehouse-id>/Files`
 
 For the full step-by-step Fabric guide including screenshots → [Run on Microsoft Fabric](../platform-guides/platform-guide-for-microsoft-fabric.md)
@@ -209,7 +209,7 @@ For production jobs, use a Glue Job with the Zingg JAR and Python packages.
    - `--additional-python-modules`: `zingg==0.7.0,tabulate,ipywidgets`
 4. Set **Worker type** to `G.1X` or `G.2X` and **Number of workers** based on data size.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 For the full AWS Glue guide including IAM roles, S3 setup, and screenshots → [Platform Guide for AWS Glue](../platform-guides/platform-guide-for-aws-glue.md)
 {% endhint %}
 {% endtab %}
@@ -231,7 +231,7 @@ Install the Zingg Python package in JupyterLab:
 %pip install ipywidgets
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 For the full GCP Dataproc guide including cluster creation, JAR upload, and screenshots → [Platform Guide for GCP Dataproc](../platform-guides/platform-guide-for-gcp-dataproc.md)
 {% endhint %}
 {% endtab %}
@@ -270,13 +270,13 @@ zinggDir = "abfss://container@storageaccount.dfs.core.windows.net/zingg/models"
 modelId = "synapseModel"
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 For the full Azure Databricks guide which shares similar concepts → [Platform Guide for Azure Databricks](../platform-guides/platform-guide-for-azure-databricks.md)
 {% endhint %}
 {% endtab %}
 
 {% tab title="Local Spark" %}
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="rocket" %}
 Docker is the fastest way to get started locally. Use installing from release if you need a specific Spark version or want to integrate with an existing Spark installation.
 {% endhint %}
 
@@ -345,7 +345,7 @@ This builds Zingg models and finds duplicates in `examples/febrl/test.csv`. You 
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="cloud" %}
 Enterprise only. Zingg on Snowflake uses the Enterprise Snowflake package and runs natively inside Snowflake using Snowpark — no Spark cluster required.
 {% endhint %}
 
@@ -388,7 +388,7 @@ mv ~/zingg.license .
 ```
 {% endcode %}
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Add `ZINGG_SNOW_JAR` and `ZINGG_SNOW_HOME` to `.bashrc` so they persist across sessions. 
 
 For the full end-to-end Snowflake guide → [Run on Snowflake](../platform-guides/platform-guide-for-snowflake.md)

@@ -4,9 +4,9 @@ description: >-
   quality before committing to the train phase.
 ---
 
-# Generate Model Documentation
+# 📊 Generate Model Documentation
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 Run this BETWEEN `label` and `train`. Do not skip - it lets you inspect training data quality before the model is built.
 {% endhint %}
 
@@ -36,7 +36,7 @@ zingg.initAndExecute()
 {% tab title="Enterprise" %}
 ### **Python**
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Enterprise uses `EZingg` instead of `Zingg`.
 {% endhint %}
 
@@ -65,7 +65,7 @@ zingg.initAndExecute()
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="check-circle" %}
 The generated documentation is viewable in a browser. It shows all pairs you labelled as matches and non-matches in a readable format. Share this with subject matter experts to validate training data quality before running `train`.
 
 [Build and Save the Model ](build-and-save-the-model.md)→ run `train` once you are satisfied with the training data quality.
