@@ -4,13 +4,13 @@ description: >-
   connector. Available in all editions.
 ---
 
-# Connect Snowflake
+# ☁️ Connect Snowflake
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="cloud" %}
 This `config` connects Zingg to Snowflake as a DATA SOURCE using Spark. Available in all editions.
 {% endhint %}
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="warning" icon="triangle-exclamation" %}
 Snowflake as a COMPUTE ENGINE (native Snowflake run without Spark) is Enterprise only.\
 [Talk to us about Enterprise](https://www.zingg.ai/company/contact/contact).
 
@@ -67,7 +67,7 @@ args.setData(snowflakePipe)
 }
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="cloud" %}
 ### Supported file formats
 
 Snowflake as a data source connects to tables and views via the Snowflake Spark connector. File formats (CSV, Parquet) are handled by Snowflake internally before Zingg reads the data. No additional format config needed on this connector.

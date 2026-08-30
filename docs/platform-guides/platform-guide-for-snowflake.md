@@ -7,15 +7,15 @@ tags:
   - ent
 ---
 
-# Platform Guide for Snowflake
+# 🔌 Platform Guide for Snowflake
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="cloud" %}
 Run Zingg with Snowflake as your data source using the Snowflake Spark connector on EC2, or run Zingg natively inside Snowflake with Enterprise.
 {% endhint %}
 
 {% tabs %}
 {% tab title="Community" %}
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 For the Snowflake connector JSON config → [Connect Snowflake](../connect-your-data/connect-cloud-warehouses/connect-snowflake.md) Sample Snowflake config file: `github.com/zinggAI/zingg/blob/main/examples/febrl/configSnow.json`
 {% endhint %}
 
@@ -51,7 +51,7 @@ Before connecting to Snowflake, download the Snowflake Spark connector JAR and t
 spark.jars=snowflake-jdbc-3.13.19.jar,spark-snowflake_2.12-2.10.0-spark_3.1.jar
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: For JAR download links and full `zingg.conf` setup → [Connect Snowflake](../connect-your-data/connect-cloud-warehouses/connect-snowflake.md)
 {% endhint %}
 
@@ -110,7 +110,7 @@ Configure your `config.json` with your Snowflake connection details, field defin
 }
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Replace `your-customer-table` with your source Snowflake table name and `your-output-table` with the table Zingg will create for resolved output. For all `fieldDefinition` parameters → [Configuration Schema](../reference/configuration-schema.md)
 
 Set `numPartitions` to approximately 20–30× your Snowflake warehouse vCPU count. For a standard XS warehouse (1 node), start with 4. For a LARGE warehouse (4 nodes), use 16–32. Reduce `labelDataSampleSize` to 0.05–0.1 for tables with more than 1M rows.
@@ -173,7 +173,7 @@ def lambda_handler(event, context):
         return {"statusCode" : 400, "body" : json.dumps({"data" : [[0, str(e)]]})}
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 The `checklog` option lets you read the Zingg log file directly from Snowflake to monitor phase progress without logging back into EC2.
 {% endhint %}
 
@@ -194,7 +194,7 @@ zip -g deploy.zip lambda_function.py
 zip -g deploy.zip your-key.pem
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 When the `.pem` key file is included in the zip, Lambda extracts it to `/var/task/your-key.pem` at runtime. The `key_filename` value in `lambda_function.py` must be set to `/var/task/your-key.pem` before zipping and deploying. If the path is wrong, the SSH connection will fail.
 {% endhint %}
 
@@ -206,7 +206,7 @@ When the `.pem` key file is included in the zip, Lambda extracts it to `/var/tas
 { "body" : "{\"data\": [[0, \"findTrainingData\"]]}" }
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="check-circle" %}
 A successful test returns `HTTP 200` and `Started phase: findTrainingData`. Monitor progress via `tail -f logfile.txt` on EC2.
 {% endhint %}
 
@@ -262,7 +262,7 @@ SELECT run_zingg('match');
 SELECT run_zingg('checklog');
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="check-circle" %}
 Run `findTrainingData` to generate candidate pairs. Zingg selects the most informative pairs from your data, not random samples. Run `label` interactively on EC2 to label those pairs as Match, No Match, or Uncertain. Label until all field types and data variation patterns in your schema are represented. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
 {% endhint %}
 
@@ -286,7 +286,7 @@ Or from Snowflake:
 SELECT run_zingg('checklog');
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Output is written to the Snowflake table configured in the `output` section of your `config.json`. Records with the same `Z_CLUSTER` value represent the same real-world entity. For output column definitions → [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)
 {% endhint %}
 
@@ -337,7 +337,7 @@ Same as the main guide above; pull the Zingg Docker image, configure Lambda, and
 {% endtab %}
 
 {% tab title="Enterprise" %}
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Enterprise only. Zingg Enterprise runs natively inside Snowflake using Snowpark. No EC2, no Docker, and no Lambda required.
 
 Enterprise requires a Zingg licence and the Enterprise Snowflake package. [Contact Zingg to get access](https://www.zingg.ai/company/contact/contact).

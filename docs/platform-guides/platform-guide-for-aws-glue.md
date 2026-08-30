@@ -5,11 +5,11 @@ description: >-
   Enterprise.
 ---
 
-# Platform Guide for AWS GLUE
+# 🔌 Platform Guide for AWS GLUE
 
 AWS Glue provides serverless Spark on AWS. There are no servers to manage; you define your session configuration, Glue provisions the workers, and you pay only for what you use. Zingg runs on Glue Interactive Sessions using the standard Python API. S3 is used for all data input, output, model storage, and checkpointing.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 * Tested with AWS Glue version 5.0, worker type G.1X, Spark 3.5.
 * AWS Glue Interactive Sessions restrict standard Jupyter widgets. Zingg's usual labeling widget does not render in Glue notebooks. This guide uses a CSV-based review workflow instead - candidate pairs are exported to S3 for offline labeling and read back into the session. This is covered in detail in Step 14.
 {% endhint %}
@@ -141,7 +141,7 @@ This is the most important step for Glue. The `%%configure` magic cell must be *
 
 Replace `your-bucket` with your actual S3 bucket name throughout.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 `%%configure` must be the first cell executed. Running any other cell before this, including imports, starts the Glue session without the JARs. If this happens, stop the session (`%stop_session`) and start a fresh notebook.
 {% endhint %}
 
@@ -188,7 +188,7 @@ Verify it is set:
 spark.sparkContext.getCheckpointDir()
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 Because Glue workers are temporary, storing checkpoints in S3 ensures Zingg can recover from any worker interruption during long-running training or match phases. Without this, a worker restart causes the entire job to fail.
 {% endhint %}
 
@@ -272,7 +272,7 @@ def count_labeled_pairs(marked_pd):
     return n_positive, n_negative, n_total
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 `boto3` is the AWS SDK for Python. It is used here for low-level S3 operations - scanning folders, reading labeled files, and deleting training data, that Spark cannot handle directly. `cleanModel()` uses a paginator to ensure all files are found even when a folder contains more than 1,000 objects.
 {% endhint %}
 
@@ -330,7 +330,7 @@ args.setOutput(outputPipe)
 print("Input and output pipes configured.")
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Zingg also supports Parquet and JSON output on S3. To push results downstream to Amazon Redshift, use the Redshift connector.
 
 For all connector formats → [Connect Relational Databases](../connect-your-data/connect-relational-databases.md)
@@ -361,7 +361,7 @@ fieldDefs = [
 args.setFieldDefinition(fieldDefs)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 `FUZZY` handles variations like 'Jon' vs 'John' or 'St' vs 'Street'. `EXACT` requires a character-for-character match. `DONT_USE` excludes a field from matching but keeps it in output.
 
 **Read more**: For all match types → [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/)
@@ -376,13 +376,13 @@ args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
 ```
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 For a 2-worker G.1X cluster (4 vCPUs each), 4–8 partitions is a good starting point. Set `numPartitions` to approximately 2–3× your total worker vCPU count. For 1M+ records, reduce `labelDataSampleSize` to 0.01–0.05 to prevent the sampling phase from exhausting worker memory.
 {% endhint %}
 
 ### Notebook 01 continued: Find training data and label pairs
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 AWS Glue Interactive Sessions restrict standard Jupyter widgets. Zingg's standard `ipywidgets` labeling interface does not render in Glue notebooks. Instead, this guide exports candidate pairs as a CSV to S3 for offline review. You label each pair by entering 0, 1, or 2 in a spreadsheet, upload the file back to S3, and run a sync cell to feed the labels back into Zingg. The process is covered in Steps 15 and 16.
 {% endhint %}
 
@@ -473,7 +473,7 @@ print(f"Review sheet exported for {n_pairs} pairs to: {export_path}")
 ```
 
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 How to label the review sheet:
 
 1. Go to **S3 → your-bucket → review/** in the AWS Console and download the `part-00000-*.csv` file.
@@ -484,7 +484,7 @@ How to label the review sheet:
 {% endhint %}
 
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="check-circle" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 14–16 in a loop until you reach this target. Label until all field types and data variation patterns in your schema are covered. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
 {% endhint %}
 
@@ -589,7 +589,7 @@ except Exception as e:
     print(f"Documentation not found at expected S3 path. {e}")
 ```
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 Unlike other platforms, Glue cannot render HTML inline in the notebook. Download `model.html` from the S3 console and open it in a browser to view the documentation. Navigate to **S3 → your-bucket → models → modelId → docs** to find the file.
 
 `generateDocs` is optional. Skip it if you have 30–40 matches and 30–40 non-matches and are confident in your labeling quality.
@@ -658,7 +658,7 @@ print(f"Redundancy Reduced by: "
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * Tune accuracy → [Improve Accuracy](../tuning/improve-accuracy/)
@@ -666,7 +666,7 @@ print(f"Redundancy Reduced by: "
 * Set up incremental for production → [Run Incremental Matching](../running-zingg/run-incremental-matching.md)
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 Download the notebooks used in this guide:
 
 * Community notebooks (NB01–04): `github.com/zinggAI/zingg/tree/main/examples/aws-glue`

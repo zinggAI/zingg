@@ -5,11 +5,11 @@ description: >-
   and Enterprise.
 ---
 
-# Platform Guide for Microsoft Fabric
+# 🔌 Platform Guide for Microsoft Fabric
 
 Microsoft Fabric paired with Zingg gives you entity resolution with built-in data governance via Microsoft Purview. Fabric's OneLake provides a single storage layer for all your data. Zingg runs on Fabric Spark pools using the same Python API as on other platforms.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 * Tested with Fabric Runtime 1.3 (Spark 3.5).
 * Download the sample Fabric notebook from `github.com/zinggAI/zingg/blob/main/examples/fabric/ExampleNotebook.ipynb` and upload it to your workspace to follow this guide.
 {% endhint %}
@@ -68,7 +68,7 @@ Zingg reads from and writes to OneLake. Create a Lakehouse to give Zingg a stora
 
     ![Lakehouse Get data menu with Upload files selected.](../.gitbook/assets/fabric-lakehouse-upload-files.png)
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Sample data for testing: `github.com/zinggAI/zingg/blob/main/examples/febrl/test.csv`
 
 Zingg also supports Delta Lake tables, Parquet, and JSON - change the format in the input pipe configuration.
@@ -187,7 +187,7 @@ args.setNumPartitions(32)
 spark.conf.set("spark.sql.adaptive.enabled", False)
 ```
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 Set `numPartitions` to approximately 20–30× your worker vCPU count. `labelDataSampleSize` is set in Notebook 02 where the labeling loop runs — see Step 13.
 {% endhint %}
 
@@ -245,7 +245,7 @@ outputPipe = CsvPipe("resultOutput", output_path)
 args.setOutput(outputPipe)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: To use Delta tables instead of CSV, change the format to `delta` and point to your Lakehouse Tables directory. For all connector formats → [Connect Microsoft Fabric](../connect-your-data/connect-cloud-warehouses/connect-microsoft-fabric.md)
 {% endhint %}
 
@@ -274,7 +274,7 @@ fieldDefs = [
 args.setFieldDefinition(fieldDefs)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 `FUZZY` handles variations like 'Jon' vs 'John' or 'St' vs 'Street'. `EXACT` requires a character-for-character match. `DONT_USE` excludes a field from matching but keeps it in output — use this for record identifiers. For all match types → [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}
 
@@ -291,7 +291,7 @@ args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.4)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 For 100k records use `labelDataSampleSize` between 0.1 and 0.5. For 1M+ records use 0.01 to 0.05. If `findTrainingData` is slow, reduce by approximately 10× and try again.
 {% endhint %}
 
@@ -370,7 +370,7 @@ ready_for_save = True
 
 ![Zingg labeling widget in a Fabric notebook showing two candidate records side by side with Uncertain, Match and No Match buttons.](../.gitbook/assets/fabric-labeling-widget.png)
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="check-circle" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 15–18 in a loop until you reach this target. Label until all field types and data variation patterns in your schema are covered. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
 {% endhint %}
 
@@ -409,7 +409,7 @@ else:
     ready_for_save = False
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 `notebookutils.fs.mkdirs(MARKED_DIR)` creates the target directory in OneLake if it does not already exist. This is a Fabric-specific utility — it is not used on other platforms.
 {% endhint %}
 
@@ -480,7 +480,7 @@ print(outputDF.count())
 {% endtab %}
 
 {% tab title="Enterprise" %}
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Enterprise requires a Zingg licence and the Enterprise Fabric package. [Contact Zingg to get access](https://www.zingg.ai/company/contact/contact).
 {% endhint %}
 
@@ -551,7 +551,7 @@ Verify installation:
 !pip show zinggES
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 All three must show as installed: `zingg` (Community base), `zinggEC` (Enterprise), `zinggES` (Enterprise Plus). If any show as not found, install the corresponding `.whl` file from the cluster Libraries tab using the wheels provided in your Enterprise package.
 {% endhint %}
 
@@ -607,7 +607,7 @@ args.setNumPartitions(32)
 spark.conf.set("spark.sql.adaptive.enabled", False)
 ```
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 Set `numPartitions` to approximately 20–30× your worker vCPU count. `labelDataSampleSize` is set in Notebook 03 where the labeling loop runs.
 {% endhint %}
 
@@ -805,14 +805,14 @@ zingg.initAndExecute()
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * Tune accuracy → [Improve Accuracy](../tuning/improve-accuracy/)
 * Understand scores and set thresholds → [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 Download the notebooks used in this guide:
 
 * Community notebooks (NB01–04): `github.com/zinggAI/zingg/tree/main/examples/fabric`

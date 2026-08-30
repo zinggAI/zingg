@@ -4,9 +4,9 @@ description: >-
   JDBC.
 ---
 
-# Connect Relational Databases
+# ☁️ Connect Relational Databases
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 New to Zingg pipes? Understand how pipes work before configuring them - [Pipes and data connections](pipes-and-data-connections.md).
 {% endhint %}
 
@@ -123,7 +123,7 @@ in `zingg.conf` before running.
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more:**
 
 * For NoSQL databases - [Connect NoSQL databases](connect-nosql-databases.md)

@@ -5,11 +5,11 @@ description: >-
   source) and Enterprise.
 ---
 
-# Platform Guide for GCP Dataproc
+# 🔌 Platform Guide for GCP Dataproc
 
 Combining Zingg with Google Cloud gives you elastic Spark scale via Dataproc, flexible storage via GCS, and a managed JupyterLab workspace via the Component Gateway. Spin up a cluster when you need it and shut it down when the job is done.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 Tested with Dataproc image version 2.2-debian12 (Spark 3.5). The `n2-standard-4` machine type with 16GB RAM per node is the recommended minimum for Zingg's training phases.
 {% endhint %}
 
@@ -81,7 +81,7 @@ gs://$BUCKET/spark-3.5-bigquery-0.44.1.jar,\
 gs://$BUCKET/gcs-connector-hadoop3-latest.jar"
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 `numPartitions` should be set to approximately 20–30× your worker vCPU count. For a 2-worker `n2-standard-4` cluster (8 vCPUs each), start with 4–8.
 {% endhint %}
 
@@ -224,7 +224,7 @@ outputPipe = CsvPipe("resultOutput", output_path)
 args.setOutput(outputPipe)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: Zingg supports CSV, Parquet, and JSON output on GCS. To push results directly to BigQuery after matching, use the BigQuery Spark connector.
 
 For connector config → [Connect BigQuery](../connect-your-data/connect-cloud-warehouses/connect-bigquery.md)
@@ -255,7 +255,7 @@ fieldDefs = [
 args.setFieldDefinition(fieldDefs)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 `FUZZY` handles variations like 'Jon' vs 'John' or 'St' vs 'Street'. `EXACT` requires a character-for-character match. `DONT_USE` excludes a field from matching but keeps it in output.
 
 For all match types → [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/)
@@ -277,7 +277,7 @@ Reduce to 0.1 if `findTrainingData` is slow on large datasets
 args.setLabelDataSampleSize(0.5)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 For 100k records use `labelDataSampleSize` between 0.1 and 0.5. For 1M+ records use 0.01 to 0.05. If `findTrainingData` takes too long, reduce by approximately 10× and try again.
 {% endhint %}
 
@@ -354,7 +354,7 @@ ready_for_save = True
 ```
 
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="check-circle" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 11–14 in a loop until you reach this target. Label until all field types and data variation patterns in your schema are covered. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are underrepresented.
 {% endhint %}
 
@@ -411,7 +411,7 @@ with open(DOCS_DIR + "data.html", 'r') as f:
 ```
 
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 `generateDocs` is optional. Skip it if you have 30–40 matches and 30–40 non-matches and are confident in your labeling quality.
 {% endhint %}
 
@@ -460,7 +460,7 @@ final_results.show(10)
 ```
 
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 * `z_cluster`— unique entity ID assigned by Zingg. All records sharing the same `z_cluster` represent the same real-world entity. Group by `z_cluster` to collapse duplicates into a golden record.
 * `z_score` — model confidence. Values closer to 1.0 indicate a stronger match.
 * `z_zid` — unique internal row identifier assigned during this run.
@@ -470,7 +470,7 @@ For threshold guidance and full output column definitions → [Interpret Output 
 {% endtab %}
 
 {% tab title="Enterprise" %}
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Enterprise requires a Zingg licence and the Enterprise GCP package. [Contact Zingg to get access](https://www.zingg.ai/company/contact/contact).
 {% endhint %}
 
@@ -627,7 +627,7 @@ zingg.initAndExecute()
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * Tune accuracy → [Improve Accuracy](../tuning/improve-accuracy/)

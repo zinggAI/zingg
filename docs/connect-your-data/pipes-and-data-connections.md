@@ -2,7 +2,7 @@
 description: What a Zingg pipe is and how you configure one to connect your data.
 ---
 
-# Pipes and Data Connections
+# ☁️ Pipes and Data Connections
 
 A Zingg pipe is a configuration object that tells Zingg where to find your source data and where to write resolved output. It is how Zingg connects to your datastore, whether that is a\
 CSV file, a Delta table, a Snowflake table, a Parquet path on S3, or any other Spark-supported connector.
@@ -145,7 +145,7 @@ Define pipes in the data and output sections of your JSON config file.
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 `CsvPipe` and the standard `Pipe` class are Community APIs. `ECsvPipe`, `UCPipe`, and the other `E*Pipe` classes are Enterprise APIs that add features like Unity Catalog table access, Lakehouse table support, and stats output. The connection properties and basic pipe operations are identical, only the class name and the import path change.
 
 See [Install Zingg → Snowflake](../running-zingg/install-zingg.md) for the full setup.
@@ -176,7 +176,7 @@ Zingg connects to any datastore that has a Spark connector, plus Snowflake nativ
 | Exasol | `com.exasol.spark` | All |
 | Redshift | `jdbc` (redshift driver) | All |
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * For the full connection config including required JARs, props, and code examples for each datastore - [Cloud Warehouses](connect-cloud-warehouses/) | [Cloud Storage](connect-cloud-storage.md) | [File Formats](connect-file-formats.md) | [Relational Databases](connect-relational-databases.md) | [NoSQL Databases](connect-nosql-databases.md) | [Neo4j](connect-graph-databases-neo4j.md)

@@ -4,9 +4,9 @@ description: >-
   graph database.
 ---
 
-# Connect Graph Databases (Neo4j)
+# 🔗 Connect Graph Databases (Neo4j)
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 New to Zingg pipes? Understand how pipes work before configuring them - [Pipes and data connections](pipes-and-data-connections.md).
 {% endhint %}
 

@@ -4,9 +4,9 @@ description: >-
   formats.
 ---
 
-# Connect File Formats
+# ☁️ Connect File Formats
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 New to Zingg pipes? Understand how pipes work before configuring them - [Pipes and data connections](pipes-and-data-connections.md).
 {% endhint %}
 
@@ -17,7 +17,7 @@ For files stored in cloud platforms, use the format sections within each platfor
 * Files on Databricks or Fabric - Connect cloud warehouses
 * Files on S3 - Connect cloud storage
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 All file formats shown here are available in Community and Enterprise.
 
 The only edition difference is the pipe class in the Python API:
@@ -46,7 +46,7 @@ args.setOutput(outputPipe)
 
 ### Python API - Enterprise
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Enterprise uses ECsvPipe. The pipe setup is identical - only the class `name` and `import` changes.
 {% endhint %}
 
@@ -89,7 +89,7 @@ args.setOutput(outputPipe)
 }
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 If your CSV has no header row, set `header`: `false` and define the schema field explicitly.
 
 Schema uses Spark SQL types: string, integer, double, date, timestamp.
@@ -110,7 +110,7 @@ args.setData(parquetPipe)
 
 ### **JSON Config**
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 Parquet uses `path` as the property key, not `location` as CSV uses.
 {% endhint %}
 
@@ -180,7 +180,7 @@ args.setData(jsonPipe)
 }
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 * For multiline JSON files, add `multiLine`: `true` to props.
 * For JSON Lines (one object per line), no additional props needed.
 {% endhint %}
@@ -243,7 +243,7 @@ xlsxPipe = CsvPipe("xlsxData", "path/to/file.xlsx", schema, format="com.crealyti
 args.setData(xlsxPipe)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 For files on cloud platforms:
 
 * Databricks and Fabric - [Connect Cloud Warehouses](connect-cloud-warehouses/)

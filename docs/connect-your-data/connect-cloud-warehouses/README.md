@@ -6,13 +6,13 @@ description: >-
 
 # Connect Cloud Warehouses
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 Snowflake on this page means Snowflake as a DATA SOURCE, available in all editions. This is different from Snowflake as a COMPUTE ENGINE, which is Enterprise only and does not require Spark. For the Enterprise native Snowflake run, see [Install Zingg](../../running-zingg/install-zingg.md)
 {% endhint %}
 
 Zingg connects to cloud warehouses using the Zingg pipe abstraction.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 New to Zingg pipes? Understand how pipes work before configuring them - [Pipes and data connections](../pipes-and-data-connections.md)
 {% endhint %}
 

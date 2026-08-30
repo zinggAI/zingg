@@ -4,7 +4,7 @@ description: >-
   editions.
 ---
 
-# Connect Exasol
+# ☁️ Connect Exasol
 
 ### Prerequisites
 
@@ -44,7 +44,7 @@ args.setOutput(exasolOutput)
 
 ### JSON Config <a href="#json-config-4" id="json-config-4"></a>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="plug" %}
 The host parameter must be the first internal node IPv4 address. Full Exasol connector options: `github.com/exasol/spark-connector/blob/main/doc/user_guide/user_guide.md`
 {% endhint %}
 

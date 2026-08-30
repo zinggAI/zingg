@@ -4,13 +4,13 @@ description: >-
   resolution on AWS infrastructure.
 ---
 
-# Platform Guide for AWS EMR
+# 🔌 Platform Guide for AWS EMR
 
 AWS EMR provides managed Spark on AWS infrastructure. Zingg runs on EMR using the standard Python API for Community and EZingg for Enterprise. S3 is used for data storage and model persistence using the `s3a://` path format.
 
 {% tabs %}
 {% tab title="Community" %}
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 Tested with EMR 7.3.0 (Spark 3.5.1). Recommended instance type: `m6g.xlarge` or larger for worker nodes.
 {% endhint %}
 
@@ -118,7 +118,7 @@ Check logs in `/mnt/var/log/spark/` or via the Spark UI at `http://<master-publi
 {% endtab %}
 
 {% tab title="Enterprise" %}
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Enterprise requires a Zingg licence and the Enterprise EMR package. [Contact Zingg to get access](https://www.zingg.ai/company/contact/contact).
 {% endhint %}
 
@@ -224,7 +224,7 @@ Use `explain` phase output for detailed match analysis.
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * Tune accuracy → [Improve Accuracy](../tuning/improve-accuracy/)
