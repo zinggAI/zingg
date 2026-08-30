@@ -4,7 +4,7 @@ description: >-
   build pipes, and run every Community phase from Python.
 ---
 
-# Community Python API
+# 📘 Community Python API
 
 The Community Zingg Python API is the open source way to run Zingg from Python. It provides classes for arguments, field definitions, client options, pipes, and the Zingg execution client.
 
@@ -42,7 +42,7 @@ pip install zingg
 | `BigQueryPipe` | Read from or write to Google BigQuery. |
 | `SnowflakePipe` | Read from or write to Snowflake (via Spark connector). |
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Full auto-generated method signatures for every class above are at the [Zingg Python OSS API reference on GitHub](https://github.com/zinggAI/zingg/blob/main/docs/pythonOss/markdown/zingg.client.md).
 {% endhint %}
 
@@ -85,7 +85,7 @@ fieldDefs = [
 args.setFieldDefinition(fieldDefs)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: For all match types and combinations → [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}
 
@@ -133,7 +133,7 @@ genericPipe.addProperty("user", "your_user")
 genericPipe.addProperty("password", "your_password")
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: For all connector formats and full pipe configuration → [Connect Your Data](../connect-your-data/pipes-and-data-connections.md)
 {% endhint %}
 
@@ -277,6 +277,6 @@ zingg.initAndExecute()
 
 Working example notebooks are at `github.com/zinggAI/zingg/tree/main/examples/febrl`. Start with `FebrlExample.py`.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: Auto-generated API reference for every class and method: [Zingg Community Python API on GitHub](https://github.com/zinggAI/zingg/blob/main/docs/pythonOss/markdown/zingg.client.md)
 {% endhint %}

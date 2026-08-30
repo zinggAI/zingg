@@ -13,14 +13,14 @@ ZinggES is the Zingg Enterprise Spark Python package. It provides the Spark clie
 
 Use this when you have an Enterprise Plus licence. The arguments, field definitions, pipes, and execution pattern are the same as ZinggEC; only the import package and Spark client classes differ.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * For Enterprise (and Enterprise Lite) without the Spark client - [Enterprise ZinggEC Python API](enterprise-zinggec-python-api.md)
 * For Community - [Community Python API](community-python-api.md)
 {% endhint %}
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="warning" icon="book-open" %}
 ZinggES requires a Zingg Enterprise Plus licence and the `zinggES` package. [Contact Zingg to get access](https://www.zingg.ai/company/contact/contact)
 {% endhint %}
 
@@ -46,7 +46,7 @@ pip install zinggES
 
 `EZingg` is the standard Enterprise Plus client. `EZinggWithSpark` is for environments where a Spark session already exists (Databricks, Fabric notebooks) - it reuses that session instead of creating a new one.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 All ZinggEC classes (`EArguments`, `EFieldDefinition`, `ECsvPipe`, `UCPipe`, `IncrementalArguments`, `ApproverArguments`, `MappingMatchType`, etc) work identically with ZinggES. Only the Spark client class changes.
 {% endhint %}
 
@@ -153,10 +153,10 @@ zingg = EZingg(args, options)
 zingg.initAndExecute()
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: The full example shown on the [ZinggEC Python API reference](https://docs.zingg.ai/latest/working-with-python/working-with-python-enterprise/index) and the [ZinggES Python API reference](https://docs.zingg.ai/latest/working-with-python/working-with-python-enterprise/index-1) is identical, except for which Spark client package is imported.
 {% endhint %}
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="book-open" %}
 Auto-generated API reference for `ESparkClient`, `EZingg`, `EZinggWithSpark`: [Zingg Enterprise Spark Python API on GitHub](https://github.com/zinggAI/zingg/blob/main/docs/pythonES/markdown/ESparkClient.md).
 {% endhint %}

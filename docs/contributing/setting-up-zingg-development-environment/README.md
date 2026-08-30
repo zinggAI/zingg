@@ -4,7 +4,7 @@ description: >-
   locally. Step-by-step setup for macOS, Ubuntu, and WSL2
 ---
 
-# Setting Up Zingg Development Environment
+# 🎛️ Setting Up Zingg Development Environment
 
 Welcome to the Zingg development setup guide. To provide you with the most accurate instructions, please select your operating system:
 

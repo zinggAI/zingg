@@ -10,7 +10,7 @@ Instead of configuring Zingg using JSON, you can use Python to build and run Zin
 
 The Python API is available in three editions, each with its own package and class names. The pattern is the same across all three: set up `args`, set `options` with the phase name, create the Zingg object, call `initAndExecute()`.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 To run on a local machine, install Zingg from the release before running Zingg Python programs. The Python package can be installed via `pip install zingg`. Detailed auto-generated API documentation is available at [readthedocs.org/projects/zingg](https://readthedocs.org/projects/zingg/).
 {% endhint %}
 
@@ -22,7 +22,7 @@ To run on a local machine, install Zingg from the release before running Zingg P
 | **Enterprise (ZinggEC)** | `zinggEC` | Enterprise Lite or Enterprise — adds deterministic matching, blocking strategy, primary key, pass-through, mapping match types, incremental, output stats |
 | **Enterprise Plus (ZinggES)** | `zinggES` | Adds the Spark client (`EZingg`, `EZinggWithSpark`) used by Enterprise Plus distributions |
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: Pick your edition and follow the sub-page below:
 
 * [Community Python API](community-python-api.md)
@@ -40,7 +40,7 @@ Every Zingg Python program regardless of edition, follows the same five-step pat
 4. **Set input and output pipes** - configure data sources and sinks
 5. **Set options and execute** - create `ClientOptions` with the phase name, instantiate the Zingg object, call `initAndExecute()`
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * [Configure Zingg](../running-zingg/configure-zingg.md) - the configuration that feeds into every Python API call

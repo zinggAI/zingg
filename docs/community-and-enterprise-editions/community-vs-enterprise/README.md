@@ -72,7 +72,7 @@ Enterprise clients are typically teams who run Zingg as a core data infrastructu
 
 </details>
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 _Community → Enterprise_ is the move you make when you need persistent entity IDs, incremental updates, and matching that stays accurate as your data and models evolve.
 
 Enterprise Lite is for production with stability. Enterprise is for production with full lifecycle control.
@@ -83,7 +83,7 @@ Ready to move to Enterprise?
 * [Contact Us](https://www.zingg.ai/company/contact/contact)
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: Every record in Enterprise output receives a `Zingg_ID`, a GUID that persists across runs, incremental updates, and model upgrades.
 
 This is the foundational difference from Community, where `Z_Cluster` is non-persistent and cannot be safely stored downstream.

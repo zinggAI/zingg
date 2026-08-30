@@ -4,7 +4,7 @@ description: >-
 nav_order: 9
 ---
 
-# Frequently Asked Questions
+# 📘 Frequently Asked Questions
 
 ## How much training is enough?
 
