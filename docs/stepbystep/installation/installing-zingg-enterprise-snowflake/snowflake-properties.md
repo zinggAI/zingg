@@ -111,6 +111,6 @@ ALTER USER zingg_user SET RSA_PUBLIC_KEY='MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCg
 
 ### Related Documentation
 
-* [Platform Guide for Snowflake](../../platform-guides/platform-guide-for-snowflake.md)
-* [Connect Snowflake](../connect-your-data/connect-cloud-warehouses/connect-snowflake.md)
-* [Zingg Runtime Properties](../stepbystep/zingg-runtime-properties.md)
+* [Platform Guide for Snowflake](../../../platform-guides/platform-guide-for-snowflake.md)
+* [Connect Snowflake](../../../connect-your-data/connect-cloud-warehouses/connect-snowflake.md)
+* [Zingg Runtime Properties](../../../reference/runtime-properties.md)

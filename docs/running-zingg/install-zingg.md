@@ -344,7 +344,7 @@ cd zingg
 This builds Zingg models and finds duplicates in `examples/febrl/test.csv`. You will see Zingg logs on the console and output files under `/tmp/zinggOutput` with matching records sharing the same cluster ID. If you see this, Zingg is correctly installed.
 {% endtab %}
 
-{% tab title="Snowflake (ENT)" %}
+{% tab title="Enterprise Snowflake" %}
 {% hint style="info" icon="right-long" %}
 Enterprise only. Zingg on Snowflake uses the Enterprise Snowflake package and runs natively inside Snowflake using Snowpark — no Spark cluster required.
 {% endhint %}
@@ -393,7 +393,7 @@ Add `ZINGG_SNOW_JAR` and `ZINGG_SNOW_HOME` to `.bashrc` so they persist across s
 
 For the full end-to-end Snowflake guide → [Run on Snowflake](../platform-guides/platform-guide-for-snowflake.md)
 
-For complete step-by-step instructions with B2B examples, SQL/Python APIs, and incremental matching → [Zingg Enterprise Snowflake Instructions](../../stepbystep/installation/installing-zingg-enterprise-snowflake/enterprise-snowflake-instructions.md)
+For complete step-by-step instructions with B2B examples, SQL/Python APIs, and incremental matching → [Zingg Enterprise Snowflake Instructions](../stepbystep/installation/installing-zingg-enterprise-snowflake/enterprise-snowflake-instructions.md)
 {% endhint %}
 
 ### **Create the Snowflake properties file (`snowEnv.txt`)**

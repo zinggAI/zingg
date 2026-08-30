@@ -8,9 +8,13 @@ description: >-
 
 The training phase builds up the Zingg models using the training data from your label sessions and writes them to `zinggDir/modelId` as specified in your config.
 
-<table><thead><tr><th width="205.12890625" valign="top">Model</th><th valign="top">Path</th></tr></thead><tbody><tr><td valign="top">Blocking model</td><td valign="top"><code>zinggDir/modelId/model/block/</code></td></tr><tr><td valign="top">Similarity model</td><td valign="top"><code>zinggDir/modelId/model/zingg.block</code></td></tr><tr><td valign="top">Both models</td><td valign="top">Written during the train phase. Present before any match, link,<br>or incremental run can proceed.</td></tr></tbody></table>
+| Model | Path |
+|---|---|
+| Blocking model | `zinggDir/modelId/model/block/` |
+| Similarity model | `zinggDir/modelId/model/zingg.block` |
+| Both models | Written during the train phase. Present before any match, link, or incremental run can proceed. |
 
-Once saved, reuse the same `modelId` in all subsequent phases - `match`, `link`, and `runIncremental` to apply the trained models to your data.&#x20;
+Once saved, reuse the same `modelId` in all subsequent phases - `match`, `link`, and `runIncremental` to apply the trained models to your data. 
 
 If you retrain with a new model, use `Compare Model Results (diff phase)` in Enterprise to benchmark the new model against the current one before deploying. Zingg shows you exactly which clusters changed, merged, or split between the two models.
 

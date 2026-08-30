@@ -18,7 +18,7 @@ If you’ve ever asked “how deterministic rules are performing?” or “did m
 
 
 
-If the number of clusters changes disproportionately to the number of records updated or added, an alert could be triggered.&#x20;
+If the number of clusters changes disproportionately to the number of records updated or added, an alert could be triggered. 
 
 ***
 

@@ -16,7 +16,11 @@ To run on a local machine, install Zingg from the release before running Zingg P
 
 #### Choose your edition
 
-<table><thead><tr><th width="237.09375" valign="top">Edition</th><th width="127.88671875" valign="top">Package</th><th valign="top">Use when</th></tr></thead><tbody><tr><td valign="top"><strong>Community (Open Source)</strong></td><td valign="top"><code>zingg</code></td><td valign="top">Free, open-source Zingg for any Spark deployment</td></tr><tr><td valign="top"><strong>Enterprise (ZinggEC)</strong></td><td valign="top"><code>zinggEC</code></td><td valign="top">Enterprise Lite or Enterprise — adds deterministic matching, blocking strategy, primary key, pass-through, mapping match types, incremental, output stats</td></tr><tr><td valign="top"><strong>Enterprise Plus (ZinggES)</strong></td><td valign="top"><code>zinggES</code></td><td valign="top">Adds the Spark client (<code>EZingg</code>, <code>EZinggWithSpark</code>) used by Enterprise Plus distributions</td></tr></tbody></table>
+| Edition | Package | Use when |
+|---|---|---|
+| **Community (Open Source)** | `zingg` | Free, open-source Zingg for any Spark deployment |
+| **Enterprise (ZinggEC)** | `zinggEC` | Enterprise Lite or Enterprise — adds deterministic matching, blocking strategy, primary key, pass-through, mapping match types, incremental, output stats |
+| **Enterprise Plus (ZinggES)** | `zinggES` | Adds the Spark client (`EZingg`, `EZinggWithSpark`) used by Enterprise Plus distributions |
 
 {% hint style="success" icon="right-long" %}
 **Read more**: Pick your edition and follow the sub-page below:

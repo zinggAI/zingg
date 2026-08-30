@@ -7,7 +7,7 @@ tags:
 
 # Incremental Flow
 
-Data in enteprise systems gets regularly updated. The business expands, and new customer records come in. Entities change - people move, get new phones, register new businesses. Some systems cease and records get deleted. Matching once is powerful, but it ceases to be enough in such cases. A full rematch is costly, and loses state.&#x20;
+Data in enteprise systems gets regularly updated. The business expands, and new customer records come in. Entities change - people move, get new phones, register new businesses. Some systems cease and records get deleted. Matching once is powerful, but it ceases to be enough in such cases. A full rematch is costly, and loses state. 
 
 The process of updating the identity graph with new, changed, or deleted records without re-running the full match across the entire dataset is known as incremental flow in Zingg. Zingg incorporates incoming records into existing clusters, handles cluster merges and unmerges automatically, generates new Zingg IDs for records that do not match any existing cluster, and preserves human-approved decisions so they are not overridden.
 

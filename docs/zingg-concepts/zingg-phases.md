@@ -4,13 +4,13 @@ description: Steps in the entity resolution pipeline
 
 # Zingg Phases
 
-Zingg programs run different aspects of the entity resolution pipeline. Each phase covers one aspect of the pipeline. Here are the phases Zingg defines.&#x20;
+Zingg programs run different aspects of the entity resolution pipeline. Each phase covers one aspect of the pipeline. Here are the phases Zingg defines. 
 
 <details>
 
 <summary><strong><code>findTrainingData</code></strong></summary>
 
-Scans your dataset and selects the most informative candidate record pairs for labeling - edge cases where the model has the most to learn. Candidate pairs are written within the warehouse/lakehouse based on your configuration.&#x20;
+Scans your dataset and selects the most informative candidate record pairs for labeling - edge cases where the model has the most to learn. Candidate pairs are written within the warehouse/lakehouse based on your configuration. 
 
 </details>
 
@@ -18,7 +18,7 @@ Scans your dataset and selects the most informative candidate record pairs for l
 
 <summary><strong><code>label</code></strong></summary>
 
-Loads the candidate pairs from `findTrainingData` and presents them in a labeling widget. You mark each pair as Match, No Match, or Uncertain.&#x20;
+Loads the candidate pairs from `findTrainingData` and presents them in a labeling widget. You mark each pair as Match, No Match, or Uncertain. 
 
 </details>
 

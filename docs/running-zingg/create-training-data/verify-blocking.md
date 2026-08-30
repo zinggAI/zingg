@@ -92,7 +92,7 @@ influence matching.
 * [Label Training Pairs](label-training-pairs.md) - how to add more training data
 * [Configure Zingg](../configure-zingg.md) - changing field match types
 * [Blocking Strategies: DEFAULT vs WIDER](../../tuning/blocking-strategy.md) - reorder candidate fields in the blocking tree (Enterprise only)
-* [Custom Blocking and Similarity Functions](../../reference/custom-blocking-similarity.md) Functions
+* [Blocking Model](../../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md) - define custom blocking functions
 {% endhint %}
 
 {% hint style="success" icon="right-long" %}
@@ -172,10 +172,10 @@ If `verifyBlocking` shows that many known matching pairs are not being blocked t
 3. **Try the `WIDER` blocking strategy** (Enterprise only) if large blocks suggest the tree is over-relying on one or two fields → [Blocking Strategies: DEFAULT vs WIDER](../../tuning/blocking-strategy.md)
 
 {% hint style="success" icon="right-long" %}
-**Consider custom blocking functions** for specialised data patterns → [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7)
+**Consider custom blocking functions** for specialised data patterns → [Blocking Model](../../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
 
 **Read more**:
 
 * Blocking model concept and how it fits in the pipeline → [Blocking Model](../../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
-* Custom blocking functions for advanced tuning → [Custom Blocking and Similarity Functions](../../reference/custom-blocking-similarity.md)
+* Custom blocking functions for advanced tuning → [Blocking Model](../../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
 {% endhint %}

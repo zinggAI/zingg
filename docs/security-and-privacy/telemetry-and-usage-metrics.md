@@ -16,7 +16,17 @@ Telemetry events are sent to Zingg servers when `collectMetrics` is `true` (the 
 
 ### **What is captured**
 
-<table><thead><tr><th width="251.61328125" valign="top">Metric</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top">Data source type</td><td valign="top">Format of your data source (e.g. CSV, Snowflake, Parquet)</td></tr><tr><td valign="top">Fields count</td><td valign="top">Number of fields configured for matching</td></tr><tr><td valign="top">Record count</td><td valign="top">Total number of records passing through Zingg</td></tr><tr><td valign="top">Execution time</td><td valign="top">Duration of the phase run</td></tr><tr><td valign="top">Running phase</td><td valign="top">Which Zingg phase was executed</td></tr><tr><td valign="top">Matches and non-matches</td><td valign="top">Count of matched and non-matched records in the model</td></tr><tr><td valign="top">JDK information</td><td valign="top">JDK version and flavour</td></tr><tr><td valign="top">OS information</td><td valign="top">Operating system type</td></tr><tr><td valign="top">Zingg version</td><td valign="top">Version of Zingg being used</td></tr></tbody></table>
+| Metric | Description |
+|---|---|
+| Data source type | Format of your data source (e.g. CSV, Snowflake, Parquet) |
+| Fields count | Number of fields configured for matching |
+| Record count | Total number of records passing through Zingg |
+| Execution time | Duration of the phase run |
+| Running phase | Which Zingg phase was executed |
+| Matches and non-matches | Count of matched and non-matched records in the model |
+| JDK information | JDK version and flavour |
+| OS information | Operating system type |
+| Zingg version | Version of Zingg being used |
 
 No field values, record content, or personally identifiable information is included in any telemetry event.
 

@@ -15,7 +15,12 @@ This handles the common scenario where the same person has a work email and a pe
 
 ### What `EMAIL` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">j.smith@company.com</td><td valign="top">j.smith@other.com</td><td valign="top">Yes - identical local part, domain ignored</td></tr><tr><td valign="top">j.smith@company.com</td><td valign="top">john.smith@company.com</td><td valign="top">Partial - local parts differ but share "smith"; scores a graded similarity, not a hard match or non-match</td></tr><tr><td valign="top">support@ibm.com</td><td valign="top">support@microsoft.com</td><td valign="top">Yes - identical local part, even though the organisations are unrelated</td></tr><tr><td valign="top">[null]</td><td valign="top">j.smith@company.com</td><td valign="top">Yes - a null/blank value on either side is an automatic match; add <code>NULL_OR_BLANK</code> if you want nulls excluded</td></tr></tbody></table>
+| Value A | Value B | Match? |
+|---|---|---|
+| j.smith@company.com | j.smith@other.com | Yes - identical local part, domain ignored |
+| j.smith@company.com | john.smith@company.com | Partial - local parts differ but share "smith"; scores a graded similarity, not a hard match or non-match |
+| support@ibm.com | support@microsoft.com | Yes - identical local part, even though the organisations are unrelated |
+| [null] | j.smith@company.com | Yes - a null/blank value on either side is an automatic match; add `NULL_OR_BLANK` if you want nulls excluded |
 
 ### When to use `EMAIL`
 

@@ -40,7 +40,9 @@ pip install zinggES
 
 #### **`zinggES.enterprise.spark` package**
 
-<table><thead><tr><th valign="top">Module</th><th valign="top">Classes</th><th valign="top">Purpose</th></tr></thead><tbody><tr><td valign="top"><code>ESparkClient</code></td><td valign="top"><code>EZingg</code>, <code>EZinggWithSpark</code></td><td valign="top">Enterprise Plus Spark execution clients</td></tr></tbody></table>
+| Module | Classes | Purpose |
+|---|---|---|
+| `ESparkClient` | `EZingg`, `EZinggWithSpark` | Enterprise Plus Spark execution clients |
 
 `EZingg` is the standard Enterprise Plus client. `EZinggWithSpark` is for environments where a Spark session already exists (Databricks, Fabric notebooks) - it reuses that session instead of creating a new one.
 

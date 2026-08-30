@@ -18,7 +18,12 @@ Use the benchmarks below as starting points when sizing your Zingg deployment. Y
 
 Real-world Zingg runs across different dataset sizes and hardware:
 
-<table><thead><tr><th width="171.26953125" valign="top">Records</th><th>Reported By</th><th width="154.53515625" valign="top">Fields</th><th valign="top">Hardware</th><th valign="top">Runtime</th></tr></thead><tbody><tr><td valign="top">120k</td><td>Zingg Team</td><td valign="top">febrl test schema</td><td valign="top">4 cores, 10 GB RAM, local Spark</td><td valign="top">5 minutes</td></tr><tr><td valign="top">5m (North Carolina Voters)</td><td>Zingg Team</td><td valign="top">voter schema</td><td valign="top">4 cores, 10 GB RAM, local Spark</td><td valign="top">~4 hours</td></tr><tr><td valign="top">9m</td><td>Zingg Team</td><td valign="top">3 fields (first name, last name, email)</td><td valign="top">AWS m5.24xlarge - 96 cores, 384 GB RAM</td><td valign="top">45 minutes</td></tr><tr><td valign="top">80m</td><td>Community User</td><td valign="top">8 to 10 fields</td><td valign="top">1 driver (128 GB RAM, 32 cores) + 8 workers (224 GB RAM, 64 cores)</td><td valign="top">Less than 2 hours</td></tr></tbody></table>
+| Records | Reported By | Fields | Hardware | Runtime |
+|---|---|---|---|---|
+| 120k | Zingg Team | febrl test schema | 4 cores, 10 GB RAM, local Spark | 5 minutes |
+| 5m (North Carolina Voters) | Zingg Team | voter schema | 4 cores, 10 GB RAM, local Spark | ~4 hours |
+| 9m | Zingg Team | 3 fields (first name, last name, email) | AWS m5.24xlarge - 96 cores, 384 GB RAM | 45 minutes |
+| 80m | Community User | 8 to 10 fields | 1 driver (128 GB RAM, 32 cores) + 8 workers (224 GB RAM, 64 cores) | Less than 2 hours |
 
 ### When to use Spark local mode
 

@@ -21,7 +21,11 @@ Uses `Arguments`, `FieldDefinition`, `CsvPipe`, and `ZinggWithSpark`. Runs on a 
 
 Zingg on GCP requires three JARs to bridge Spark with Google Cloud services. Download these to your local machine before creating the cluster.
 
-<table><thead><tr><th valign="top">JAR</th><th valign="top">Purpose</th><th valign="top">Download</th></tr></thead><tbody><tr><td valign="top"><code>zingg-0.7.0.jar</code></td><td valign="top">The Zingg engine</td><td valign="top"><code>github.com/zinggAI/zingg/releases</code></td></tr><tr><td valign="top"><code>spark-3.5-bigquery-0.44.1.jar</code></td><td valign="top">BigQuery connector</td><td valign="top"><code>github.com/GoogleCloudDataproc/spark-bigquery-connector</code></td></tr><tr><td valign="top"><code>gcs-connector-hadoop3-latest.jar</code></td><td valign="top">GCS connector</td><td valign="top"><code>docs.cloud.google.com/dataproc/docs/concepts/connectors/cloud-storage</code></td></tr></tbody></table>
+| JAR | Purpose | Download |
+|---|---|---|
+| `zingg-0.7.0.jar` | The Zingg engine | `github.com/zinggAI/zingg/releases` |
+| `spark-3.5-bigquery-0.44.1.jar` | BigQuery connector | `github.com/GoogleCloudDataproc/spark-bigquery-connector` |
+| `gcs-connector-hadoop3-latest.jar` | GCS connector | `docs.cloud.google.com/dataproc/docs/concepts/connectors/cloud-storage` |
 
 Create a GCS bucket and upload the JARs and your dataset. You can do this from the Cloud Console or the `gcloud` CLI.
 

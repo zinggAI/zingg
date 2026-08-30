@@ -31,7 +31,14 @@ The mapping file lists groups of equivalent values. `MAPPING` is typically combi
 
 ### What `MAPPING_(FileName)` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Result with MAPPING + EXACT</th><th valign="top">Result with MAPPING + FUZZY</th></tr></thead><tbody><tr><td valign="top">Jon</td><td valign="top">Jonathan</td><td valign="top">Match - both normalize to the same representative value</td><td valign="top">Match</td></tr><tr><td valign="top">Bob</td><td valign="top">Robert</td><td valign="top">Match - both normalize to the same representative value</td><td valign="top">Match</td></tr><tr><td valign="top">Jon</td><td valign="top">Jhon</td><td valign="top">No match - "Jhon" isn't in the mapping, so it's compared as-is against "Jonathan"</td><td valign="top">Match - caught by FUZZY's tolerance for the misspelling</td></tr><tr><td valign="top">Jon</td><td valign="top">John</td><td valign="top">No match - neither "John" nor the mapped "Jonathan" are equal strings</td><td valign="top">Match - FUZZY's similarity scoring treats them as close enough, even though they're not listed as synonyms</td></tr><tr><td valign="top">Robert</td><td valign="top">William</td><td valign="top">No match - normalize to different representative values</td><td valign="top">No match - FUZZY also finds them too dissimilar</td></tr><tr><td valign="top">Jon</td><td valign="top">[null]</td><td valign="top">No match - nothing to compare against</td><td valign="top">No match - combine with <code>NULL_OR_BLANK</code> to handle explicitly</td></tr></tbody></table>
+| Value A | Value B | Result with MAPPING + EXACT | Result with MAPPING + FUZZY |
+|---|---|---|---|
+| Jon | Jonathan | Match - both normalize to the same representative value | Match |
+| Bob | Robert | Match - both normalize to the same representative value | Match |
+| Jon | Jhon | No match - "Jhon" isn't in the mapping, so it's compared as-is against "Jonathan" | Match - caught by FUZZY's tolerance for the misspelling |
+| Jon | John | No match - neither "John" nor the mapped "Jonathan" are equal strings | Match - FUZZY's similarity scoring treats them as close enough, even though they're not listed as synonyms |
+| Robert | William | No match - normalize to different representative values | No match - FUZZY also finds them too dissimilar |
+| Jon | [null] | No match - nothing to compare against | No match - combine with `NULL_OR_BLANK` to handle explicitly |
 
 **Example mapping file**
 

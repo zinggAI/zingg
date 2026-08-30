@@ -39,7 +39,14 @@ pip install zinggEC
 
 #### **`zinggEC.enterprise.common` package**
 
-<table><thead><tr><th width="203.640625" valign="top">Module</th><th width="222.890625" valign="top">Classes</th><th valign="top">Purpose</th></tr></thead><tbody><tr><td valign="top"><code>ApproverArguments</code></td><td valign="top"><code>ApproverArguments</code></td><td valign="top">Cluster approval workflow - set approval query and destination for human-reviewed clusters</td></tr><tr><td valign="top"><code>IncrementalArguments</code></td><td valign="top"><code>IncrementalArguments</code></td><td valign="top">Incremental matching - incremental data, deleted data, delete action, output temp directory, parent args</td></tr><tr><td valign="top"><code>MappingMatchType</code></td><td valign="top"><code>MappingMatchType</code></td><td valign="top">User-supplied lookup file for nickname/abbreviation matching</td></tr><tr><td valign="top"><code>epipes</code></td><td valign="top"><code>ECsvPipe</code>, <code>EPipe</code>, <code>InMemoryPipe</code>, <code>UCPipe</code></td><td valign="top">Enterprise pipe types including CSV, base pipe, in-memory DataFrame, and Unity Catalog table</td></tr><tr><td valign="top"><code>EArguments</code></td><td valign="top"><code>EArguments</code>, <code>DeterministicMatching</code></td><td valign="top">Enterprise arguments object plus deterministic matching rules</td></tr><tr><td valign="top"><code>EFieldDefinition</code></td><td valign="top"><code>EFieldDefinition</code></td><td valign="top">Enterprise field definition with primary key support and mapping match type</td></tr></tbody></table>
+| Module | Classes | Purpose |
+|---|---|---|
+| `ApproverArguments` | `ApproverArguments` | Cluster approval workflow - set approval query and destination for human-reviewed clusters |
+| `IncrementalArguments` | `IncrementalArguments` | Incremental matching - incremental data, deleted data, delete action, output temp directory, parent args |
+| `MappingMatchType` | `MappingMatchType` | User-supplied lookup file for nickname/abbreviation matching |
+| `epipes` | `ECsvPipe`, `EPipe`, `InMemoryPipe`, `UCPipe` | Enterprise pipe types including CSV, base pipe, in-memory DataFrame, and Unity Catalog table |
+| `EArguments` | `EArguments`, `DeterministicMatching` | Enterprise arguments object plus deterministic matching rules |
+| `EFieldDefinition` | `EFieldDefinition` | Enterprise field definition with primary key support and mapping match type |
 
 {% hint style="success" icon="right-long" %}
 Full auto-generated method signatures for every class are at the [Zingg Enterprise Common Python API reference on GitHub](https://github.com/zinggAI/zingg/blob/main/docs/pythonEC/markdown/zinggEC.md).

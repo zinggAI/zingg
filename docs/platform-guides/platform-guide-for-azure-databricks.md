@@ -657,7 +657,7 @@ print(outputDF.count())
 **Read more**: Enterprise output includes `ZINGG_ID` — a globally unique, persistent identifier for each resolved entity. Unlike `Z_CLUSTER` in Community, `ZINGG_ID` does not change between runs including incremental runs.
 
 * For output column definitions → [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)
-* For Zingg ID lifecycle → [Zingg ID](/broken/pages/9QpDFW20AMt0UJ4cEW6b)
+* For Zingg ID lifecycle → [Z Cluster and Zingg ID](../zingg-concepts/z-cluster-and-zingg-id.md)
 {% endhint %}
 
 ### Notebook 06: Run incremental matching

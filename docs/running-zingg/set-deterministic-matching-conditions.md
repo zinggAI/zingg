@@ -19,7 +19,11 @@ Each `matchCondition` is evaluated independently. Any pair that satisfies at lea
 
 Using the example above:
 
-<table><thead><tr><th width="252.984375" valign="top">Condition</th><th valign="top">What it means</th></tr></thead><tbody><tr><td valign="top"><code>fname</code> + <code>stNo</code> + <code>add1</code> match <code>exactly</code></td><td valign="top">Same first name at the same street number and address line → treated as same entity, score 1.</td></tr><tr><td valign="top"><code>fname</code> + <code>dob</code> + <code>ssn</code> match <code>exactly</code></td><td valign="top">Same first name, date of birth, and SSN → treated as same entity, score 1.</td></tr><tr><td valign="top"><code>fname</code> + <code>email</code> match <code>exactly</code></td><td valign="top">Same first name and email address → treated as same entity, score 1.</td></tr></tbody></table>
+| Condition | What it means |
+|---|---|
+| `fname` + `stNo` + `add1` match `exactly` | Same first name at the same street number and address line → treated as same entity, score 1. |
+| `fname` + `dob` + `ssn` match `exactly` | Same first name, date of birth, and SSN → treated as same entity, score 1. |
+| `fname` + `email` match `exactly` | Same first name and email address → treated as same entity, score 1. |
 
 <details>
 

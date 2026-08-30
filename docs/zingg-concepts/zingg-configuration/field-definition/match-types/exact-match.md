@@ -15,7 +15,17 @@ Use `EXACT` for any field where a difference in value means a definite differenc
 
 ### What `EXACT` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">123-45-6789</td><td valign="top">123-45-6789</td><td valign="top">Yes - identical</td></tr><tr><td valign="top">123-45-6789</td><td valign="top">123-45-6780</td><td valign="top">No - single-digit difference</td></tr><tr><td valign="top">US</td><td valign="top">US</td><td valign="top">Yes - identical</td></tr><tr><td valign="top">US</td><td valign="top">us</td><td valign="top">Yes - both values are lowercased by a case-normalization preprocessing step before the comparison runs, so "US" and "us" both become "us" and match</td></tr><tr><td valign="top">true</td><td valign="top">true</td><td valign="top">Yes</td></tr><tr><td valign="top">true</td><td valign="top">1</td><td valign="top">No - EXACT does plain equality with no boolean coercion, so "true" and "1" do not match</td></tr><tr><td valign="top">2024-01-15</td><td valign="top">2024-01-15</td><td valign="top">Yes</td></tr><tr><td valign="top">2024-01-15</td><td valign="top">01/15/2024</td><td valign="top">No - no date parsing under EXACT; differing formats are compared as literal strings</td></tr><tr><td valign="top">[null]</td><td valign="top">123-45-6789</td><td valign="top">Yes - EXACT treats a null on either side as an automatic match; add <code>NULL_OR_BLANK</code> if you want nulls excluded</td></tr></tbody></table>
+| Value A | Value B | Match? |
+|---|---|---|
+| 123-45-6789 | 123-45-6789 | Yes - identical |
+| 123-45-6789 | 123-45-6780 | No - single-digit difference |
+| US | US | Yes - identical |
+| US | us | Yes - both values are lowercased by a case-normalization preprocessing step before the comparison runs, so "US" and "us" both become "us" and match |
+| true | true | Yes |
+| true | 1 | No - EXACT does plain equality with no boolean coercion, so "true" and "1" do not match |
+| 2024-01-15 | 2024-01-15 | Yes |
+| 2024-01-15 | 01/15/2024 | No - no date parsing under EXACT; differing formats are compared as literal strings |
+| [null] | 123-45-6789 | Yes - EXACT treats a null on either side as an automatic match; add `NULL_OR_BLANK` if you want nulls excluded |
 
 ### When to use `EXACT`
 

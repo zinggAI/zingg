@@ -17,7 +17,15 @@ A null or blank value on either side is an automatic match.
 
 ### What `PINCODE` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">94102</td><td valign="top">94102-1234</td><td valign="top">Yes - both truncate to "94102"</td></tr><tr><td valign="top">94102</td><td valign="top">94103</td><td valign="top">No - "94102" vs "94103"</td></tr><tr><td valign="top">EC1A 1BB</td><td valign="top">EC1A1BB</td><td valign="top">No - neither string has a hyphen, so both pass through unsplit</td></tr><tr><td valign="top">110001</td><td valign="top">110001</td><td valign="top">Yes - Indian PIN code, identical</td></tr><tr><td valign="top">94102</td><td valign="top">941-02</td><td valign="top">No - "94102" vs "941" ("941-02" truncates to "941", discarding "02")</td></tr><tr><td valign="top">00-950</td><td valign="top">00-123</td><td valign="top">Yes - a false match. Both truncate to "00"; this is the Polish-postal-code failure case</td></tr><tr><td valign="top">[null]</td><td valign="top">94102</td><td valign="top">Yes - null/blank on either side auto-matches</td></tr></tbody></table>
+| Value A | Value B | Match? |
+|---|---|---|
+| 94102 | 94102-1234 | Yes - both truncate to "94102" |
+| 94102 | 94103 | No - "94102" vs "94103" |
+| EC1A 1BB | EC1A1BB | No - neither string has a hyphen, so both pass through unsplit |
+| 110001 | 110001 | Yes - Indian PIN code, identical |
+| 94102 | 941-02 | No - "94102" vs "941" ("941-02" truncates to "941", discarding "02") |
+| 00-950 | 00-123 | Yes - a false match. Both truncate to "00"; this is the Polish-postal-code failure case |
+| [null] | 94102 | Yes - null/blank on either side auto-matches |
 
 ### When to use `PINCODE`
 

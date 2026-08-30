@@ -25,11 +25,22 @@ pip install zingg
 
 #### **`zingg.client` module**
 
-<table><thead><tr><th width="245.59375" valign="top">Class</th><th valign="top">Purpose</th></tr></thead><tbody><tr><td valign="top"><code>Zingg</code></td><td valign="top">The Zingg execution client. Pass it <code>args</code> and <code>options</code>, call <code>initAndExecute()</code>.</td></tr><tr><td valign="top"><code>ZinggWithSpark</code></td><td valign="top">Same as <code>Zingg</code> but for use when an existing Spark session is already present (e.g. in a Databricks or Fabric notebook).</td></tr><tr><td valign="top"><code>Arguments</code></td><td valign="top">Configuration object holding the model ID, Zingg directory, partition count, field definitions, and pipes.</td></tr><tr><td valign="top"><code>ClientOptions</code></td><td valign="top">Holds the phase name. Pass to the Zingg execution client.</td></tr><tr><td valign="top"><code>FieldDefinition</code></td><td valign="top">Defines a single field with its name, data type, and match type.</td></tr></tbody></table>
+| Class | Purpose |
+|---|---|
+| `Zingg` | The Zingg execution client. Pass it `args` and `options`, call `initAndExecute()`. |
+| `ZinggWithSpark` | Same as `Zingg` but for use when an existing Spark session is already present (e.g. in a Databricks or Fabric notebook). |
+| `Arguments` | Configuration object holding the model ID, Zingg directory, partition count, field definitions, and pipes. |
+| `ClientOptions` | Holds the phase name. Pass to the Zingg execution client. |
+| `FieldDefinition` | Defines a single field with its name, data type, and match type. |
 
 #### **`zingg.pipes` module**
 
-<table><thead><tr><th width="249.9453125" valign="top">Class</th><th valign="top">Purpose</th></tr></thead><tbody><tr><td valign="top"><code>Pipe</code></td><td valign="top">Base class for any input or output. Use for generic JDBC, custom formats, or any source where the specialised classes do not fit.</td></tr><tr><td valign="top"><code>CsvPipe</code></td><td valign="top">Read or write CSV files.</td></tr><tr><td valign="top"><code>BigQueryPipe</code></td><td valign="top">Read from or write to Google BigQuery.</td></tr><tr><td valign="top"><code>SnowflakePipe</code></td><td valign="top">Read from or write to Snowflake (via Spark connector).</td></tr></tbody></table>
+| Class | Purpose |
+|---|---|
+| `Pipe` | Base class for any input or output. Use for generic JDBC, custom formats, or any source where the specialised classes do not fit. |
+| `CsvPipe` | Read or write CSV files. |
+| `BigQueryPipe` | Read from or write to Google BigQuery. |
+| `SnowflakePipe` | Read from or write to Snowflake (via Spark connector). |
 
 {% hint style="success" icon="right-long" %}
 Full auto-generated method signatures for every class above are at the [Zingg Python OSS API reference on GitHub](https://github.com/zinggAI/zingg/blob/main/docs/pythonOss/markdown/zingg.client.md).

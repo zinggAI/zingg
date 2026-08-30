@@ -18,7 +18,12 @@ The scoring pattern is exactly the same as `EMAIL` - only the computation time d
 
 ### What `EMAIL_OPTIMISED` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">j.smith@company.com</td><td valign="top">j.smith@other.com</td><td valign="top">Yes - same as <code>EMAIL</code>, identical local part, domain ignored</td></tr><tr><td valign="top">j.smith@company.com</td><td valign="top">john.smith@company.com</td><td valign="top">Partial - same as <code>EMAIL</code>, local parts differ but share "smith"; scores a graded similarity, not a hard match or non-match</td></tr><tr><td valign="top">support@ibm.com</td><td valign="top">support@microsoft.com</td><td valign="top">Yes - identical local part, even though the organisations are unrelated</td></tr><tr><td valign="top">[null]</td><td valign="top">j.smith@company.com</td><td valign="top">Yes - same as <code>EMAIL</code>, a null/blank value on either side is an automatic match; add <code>NULL_OR_BLANK</code> if you want nulls excluded</td></tr></tbody></table>
+| Value A | Value B | Match? |
+|---|---|---|
+| j.smith@company.com | j.smith@other.com | Yes - same as `EMAIL`, identical local part, domain ignored |
+| j.smith@company.com | john.smith@company.com | Partial - same as `EMAIL`, local parts differ but share "smith"; scores a graded similarity, not a hard match or non-match |
+| support@ibm.com | support@microsoft.com | Yes - identical local part, even though the organisations are unrelated |
+| [null] | j.smith@company.com | Yes - same as `EMAIL`, a null/blank value on either side is an automatic match; add `NULL_OR_BLANK` if you want nulls excluded |
 
 ### When to use `EMAIL_OPTIMISED`
 

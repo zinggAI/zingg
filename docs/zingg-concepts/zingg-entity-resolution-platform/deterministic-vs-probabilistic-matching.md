@@ -20,7 +20,7 @@ _You do not write rules. You label examples. Zingg learns the rest._
 
 ### Deterministic matching
 
-Deterministic matching is only available in the Enterprise Edition. It lets you define hard rules for cases where certain field combinations should always produce a match, regardless of the probabilistic score. When your data contains reliable unique identifiers, a national ID, an email, or a combination like first name, email plus date of birth, determinstic matching can bring them together. Zingg Enterprise can apply any combination of deterministic rules like (ssn) or (email and dob) or (passport number and dob).&#x20;
+Deterministic matching is only available in the Enterprise Edition. It lets you define hard rules for cases where certain field combinations should always produce a match, regardless of the probabilistic score. When your data contains reliable unique identifiers, a national ID, an email, or a combination like first name, email plus date of birth, determinstic matching can bring them together. Zingg Enterprise can apply any combination of deterministic rules like (ssn) or (email and dob) or (passport number and dob). 
 
 ### How Zingg matches probabilistically AND deterministically
 

@@ -46,7 +46,11 @@ Create a JSON file where each element is an array of equivalent values. The firs
 
 #### **Three rules your mapping file must follow**
 
-<table><thead><tr><th width="236.6796875">Rule</th><th>Why it matters</th></tr></thead><tbody><tr><td>First value is canonical</td><td>All variants in the array map to the first value in the output. <code>["Chief Executive Officer", "CEO"]</code> → output will always say "Chief Executive Officer". Order your arrays with the canonical form first.</td></tr><tr><td>Lookup is case-insensitive</td><td>"CEO", "ceo", and "Ceo" all match the same entry. You do not need separate entries for casing variants.</td></tr><tr><td>Rows must be disjoint</td><td>A string must not appear in two different arrays. If "CEO" appears in two separate canonical groups, Zingg's behaviour is undefined. Each value belongs to exactly one canonical group.</td></tr></tbody></table>
+| Rule | Why it matters |
+|---|---|
+| First value is canonical | All variants in the array map to the first value in the output. `["Chief Executive Officer", "CEO"]` → output will always say "Chief Executive Officer". Order your arrays with the canonical form first. |
+| Lookup is case-insensitive | "CEO", "ceo", and "Ceo" all match the same entry. You do not need separate entries for casing variants. |
+| Rows must be disjoint | A string must not appear in two different arrays. If "CEO" appears in two separate canonical groups, Zingg's behaviour is undefined. Each value belongs to exactly one canonical group. |
 
 {% hint style="info" icon="right-long" %}
 Place your mapping JSON file in the directory from which you are executing Zingg. Reference it by base filename (without the `.json` extension) in your configuration. For example, a file named `jobtitles.json` is referenced as `jobtitles`.
@@ -112,7 +116,9 @@ Use `STANDARDISE_<basename>` to reference a mapping file named `<basename>.json`
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-**CONTENT FOR THIS SECTION TO BE PROVIDED BY SONAL LATER**
+{% hint style="info" %}
+**Coming soon** — Enterprise Snowflake guidance for field standardisation is in progress and will be published here when available.
+{% endhint %}
 {% endtab %}
 {% endtabs %}
 

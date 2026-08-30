@@ -32,6 +32,12 @@ jobs:
         run: |
           python3 .github/scripts/validate_frontmatter.py
 
+      - name: Check markdown formatting (markdownlint-cli2)
+        uses: DavidAnson/markdownlint-cli2-action@v24
+        with:
+          config: '.markdownlint-cli2.jsonc'
+          globs: 'docs/**/*.md'
+
   validate-sphinx:
     name: Validate Sphinx Build
     runs-on: ubuntu-latest

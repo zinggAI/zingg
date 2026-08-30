@@ -42,13 +42,13 @@ The requirement underneath all of these is the same: **real-time decisioning req
 
 ### Why not just make batch faster?
 
-It's tempting to think streaming ER is just batch ER running on a shorter schedule. It isn't, for a structural reason: architectures are built differently in data platforms.&#x20;
+It's tempting to think streaming ER is just batch ER running on a shorter schedule. It isn't, for a structural reason: architectures are built differently in data platforms. 
 
 Streaming entity resolution is different engineering problem (stateful stream processing, incremental identity graphs) rather than a smaller version of the same one.
 
 ### Why not real time?
 
-Warehouses and datalakes are still not ready for real time design patterns. While there is promising movement towards LTAP/HTAP with Lakebase and Postgres suppoer in Snowflake, we are watching this space keenly and will build something when the technology is right. Going out of the warehouse and supporting real time is one option, but that becomes a separate source of truth with its own ETL and governance. Hence it gets limited to single departments and fails to become the universal source of truth. &#x20;
+Warehouses and datalakes are still not ready for real time design patterns. While there is promising movement towards LTAP/HTAP with Lakebase and Postgres suppoer in Snowflake, we are watching this space keenly and will build something when the technology is right. Going out of the warehouse and supporting real time is one option, but that becomes a separate source of truth with its own ETL and governance. Hence it gets limited to single departments and fails to become the universal source of truth.  
 
 ### Choosing an architecture in Zingg
 

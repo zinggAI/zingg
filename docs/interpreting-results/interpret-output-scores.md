@@ -12,7 +12,13 @@ This page defines every Zingg output column and shows how to use the scores to d
 
 ### Output columns - quick reference
 
-<table><thead><tr><th valign="top">Column</th><th valign="top">Available in</th><th valign="top">What it tells you</th><th valign="top">Jump to detail</th></tr></thead><tbody><tr><td valign="top"><code>Z_CLUSTER</code></td><td valign="top">All editions</td><td valign="top">Which records resolved to the same entity</td><td valign="top"><a href="interpret-output-scores.md#z_cluster">Z_CLUSTER →</a></td></tr><tr><td valign="top"><code>Z_MINSCORE</code></td><td valign="top">All editions</td><td valign="top">Weakest match confidence in the cluster</td><td valign="top"><a href="interpret-output-scores.md#z_minscore">Z_MINSCORE →</a></td></tr><tr><td valign="top"><code>Z_MAXSCORE</code></td><td valign="top">All editions</td><td valign="top">Strongest match confidence in the cluster</td><td valign="top"><a href="interpret-output-scores.md#z_maxscore">Z_MAXSCORE →</a></td></tr><tr><td valign="top"><code>ZINGG_ID</code></td><td valign="top">Enterprise only</td><td valign="top">Persistent, globally unique entity GUID</td><td valign="top"><a href="interpret-output-scores.md#zingg_id-enterprise">ZINGG_ID →</a></td></tr><tr><td valign="top"><code>Z_SCORE</code></td><td valign="top">Enterprise only</td><td valign="top">Per-record-pair model confidence score</td><td valign="top"><a href="interpret-output-scores.md#z_score-enterprise">Z_SCORE →</a></td></tr></tbody></table>
+| Column | Available in | What it tells you | Jump to detail |
+|--------|--------------|-------------------|----------------|
+| `Z_CLUSTER` | All editions | Which records resolved to the same entity | [Z_CLUSTER →](interpret-output-scores.md#z_cluster) |
+| `Z_MINSCORE` | All editions | Weakest match confidence in the cluster | [Z_MINSCORE →](interpret-output-scores.md#z_minscore) |
+| `Z_MAXSCORE` | All editions | Strongest match confidence in the cluster | [Z_MAXSCORE →](interpret-output-scores.md#z_maxscore) |
+| `ZINGG_ID` | Enterprise only | Persistent, globally unique entity GUID | [ZINGG_ID →](interpret-output-scores.md#zingg_id-enterprise) |
+| `Z_SCORE` | Enterprise only | Per-record-pair model confidence score | [Z_SCORE →](interpret-output-scores.md#z_score-enterprise) |
 
 ### How Zingg computes scores
 
@@ -54,7 +60,7 @@ has both strong and weak matches - worth inspecting.
 Globally unique, persistent identifier for each resolved entity. It does not change between runs, including incremental runs. Safe to store and reference in downstream systems. Replaces `Z_CLUSTER` in Enterprise output.
 
 {% hint style="success" icon="right-long" %}
-**Read more**: For the full Zingg ID concept - [Zingg ID](/broken/pages/9QpDFW20AMt0UJ4cEW6b)
+**Read more**: For the full Zingg ID concept — [Z Cluster and Zingg ID](../zingg-concepts/z-cluster-and-zingg-id.md)
 {% endhint %}
 
 #### `Z_SCORE` (Enterprise)
@@ -109,7 +115,9 @@ output.groupBy("ZINGG_ID") \
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-**CONTENT FOR THIS SECTION TO BE GIVEN BY SONAL LATER**
+{% hint style="info" %}
+**Coming soon** — Enterprise Snowflake guidance for interpreting output scores is in progress and will be published here when available.
+{% endhint %}
 {% endtab %}
 {% endtabs %}
 

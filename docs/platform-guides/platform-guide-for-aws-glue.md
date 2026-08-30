@@ -35,7 +35,14 @@ Create an S3 bucket (for example `zingg-production-storage`) and upload all six 
 3. Set the region to match where your Glue jobs will run (for example `us-east-1`).
 4. Once created, upload the following JAR files into a `/jars/` folder:
 
-<table><thead><tr><th valign="top">JAR</th><th valign="top">Purpose</th></tr></thead><tbody><tr><td valign="top"><code>zingg-0.7.0.jar</code></td><td valign="top">The Zingg engine</td></tr><tr><td valign="top"><code>zingg-common-client-0.7.0.jar</code></td><td valign="top">Common client</td></tr><tr><td valign="top"><code>zingg-common-core-0.7.0.jar</code></td><td valign="top">Common core</td></tr><tr><td valign="top"><code>zingg-spark-client-0.7.0.jar</code></td><td valign="top">Spark client</td></tr><tr><td valign="top"><code>zingg-spark-core-0.7.0.jar</code></td><td valign="top">Spark core</td></tr><tr><td valign="top"><code>zingg-common-infra-0.7.0.jar</code></td><td valign="top">Infrastructure link</td></tr></tbody></table>
+| JAR | Purpose |
+|---|---|
+| `zingg-0.7.0.jar` | The Zingg engine |
+| `zingg-common-client-0.7.0.jar` | Common client |
+| `zingg-common-core-0.7.0.jar` | Common core |
+| `zingg-spark-client-0.7.0.jar` | Spark client |
+| `zingg-spark-core-0.7.0.jar` | Spark core |
+| `zingg-common-infra-0.7.0.jar` | Infrastructure link |
 
 Download all JARs from `github.com/zinggAI/zingg/releases`. Also upload your data file to the bucket root.
 
@@ -55,7 +62,12 @@ AWS Glue Interactive Sessions require a dedicated IAM Role that allows the noteb
 
 Search for and attach these four AWS managed policies:
 
-<table><thead><tr><th valign="top">Policy</th><th valign="top">Purpose</th></tr></thead><tbody><tr><td valign="top"><code>AmazonS3FullAccess</code></td><td valign="top">Read and write data and models in S3</td></tr><tr><td valign="top"><code>AWSGlueConsoleFullAccess</code></td><td valign="top">Manage Glue jobs via the Studio UI</td></tr><tr><td valign="top"><code>AWSGlueServiceRole</code></td><td valign="top">Required for Glue to run worker nodes</td></tr><tr><td valign="top"><code>AmazonQDeveloperAccess</code></td><td valign="top">Enables AI coding assistance (optional)</td></tr></tbody></table>
+| Policy | Purpose |
+|---|---|
+| `AmazonS3FullAccess` | Read and write data and models in S3 |
+| `AWSGlueConsoleFullAccess` | Manage Glue jobs via the Studio UI |
+| `AWSGlueServiceRole` | Required for Glue to run worker nodes |
+| `AmazonQDeveloperAccess` | Enables AI coding assistance (optional) |
 
 **Step 2c: Attach an inline policy**
 

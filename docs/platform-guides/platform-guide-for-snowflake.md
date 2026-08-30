@@ -499,6 +499,6 @@ Zingg Enterprise for Snowflake requires a commercial license. To get started:
 
 For detailed API reference, see the [Zingg Python API Documentation](../zingg-python-api/enterprise-zingges-python-api.md).
 
-For the complete step-by-step installation, configuration, and B2B entity resolution guide → [Zingg Enterprise Snowflake Instructions](../../stepbystep/installation/installing-zingg-enterprise-snowflake/enterprise-snowflake-instructions.md)
+For the complete step-by-step installation, configuration, and B2B entity resolution guide → [Zingg Enterprise Snowflake Instructions](../stepbystep/installation/installing-zingg-enterprise-snowflake/enterprise-snowflake-instructions.md)
 {% endtab %}
 {% endtabs %}

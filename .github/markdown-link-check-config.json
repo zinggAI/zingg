@@ -11,6 +11,10 @@
     {
       "pattern": "http://localhost.*",
       "reason": "Local development URLs"
+    },
+    {
+      "pattern": "(py-modindex|genindex|search)\\.md",
+      "reason": "Sphinx-generated API index pages (produced at build time in pythonES/pythonEC)"
     }
   ],
   "retryOn429": true,

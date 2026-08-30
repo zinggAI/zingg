@@ -1,0 +1,88 @@
+{
+  // =========================================================================
+  //  Zingg documentation markdownlint configuration
+  // -------------------------------------------------------------------------
+  //  The Zingg docs are authored for GitBook. GitBook uses its own block
+  //  syntax ({% hint %}, {% tabs %}, {% stepper %}, {% embed %}), inline HTML
+  //  (<details>, <figure>, <table>, <a>), bare URLs, and compact tables.
+  //  Docs are also synced from the GitBook CLI, which exports Markdown that
+  //  doesn't conform to strict CommonMark conventions (heading levels across
+  //  tabs, trailing spaces, hard tabs inside code, single-pipe tables).
+  //
+  //  As a result, only a subset of markdownlint rules can be meaningfully
+  //  enforced. Disabled rules are grouped here with the reason each one is
+  //  turned off. The remaining enabled rules act as a lightweight but useful
+  //  gate for new and edited content.
+  // =========================================================================
+
+  "config": {
+    // ---------- GitBook syntax compatibility (permanently disabled) --------
+    // MD013: Line length (hints, tables, bare URLs exceed 80 chars)
+    // MD025/MD041: Frontmatter precedes every H1
+    // MD024: Duplicate headings occur across steps and tabs
+    // MD033: Inline HTML is required for GitBook blocks
+    // MD034: Bare URLs are used in hints/embeds
+    // MD036: Emphasis-instead-of-heading is used intentionally
+    // MD040: Bare code fences and mermaid blocks omit language tags
+    "MD013": false,
+    "MD025": false,
+    "MD041": false,
+    "MD024": false,
+    "MD033": false,
+    "MD034": false,
+    "MD036": false,
+    "MD040": false,
+
+    // ---------- GitBook CLI export artifacts (currently too noisy) ---------
+    // MD001: Heading levels "skip" between tab/step sub-headings
+    // MD004: Mixed unordered-list markers from tooling
+    // MD007: Unordered-list indentation from tooling
+    // MD009: Trailing spaces introduced by the GitBook CLI export
+    // MD010: Hard tabs inside fenced code blocks (valid in code samples)
+    // MD014: Dollar signs preceding shell commands in code samples
+    // MD019: Multiple spaces after atx heading marker
+    // MD026: Trailing punctuation in headings (many contain  ':', '!')
+    // MD028: Blank line inside blockquote (common in nested hints)
+    // MD029: Ordered-list item prefixes from numbering carried over from docs
+    // MD030: Spaces after list markers
+    // MD037: Spaces inside emphasis markers (rendered text uses " **x** ")
+    // MD038: Spaces inside code span markers
+    // MD039: Spaces inside link text
+    // MD045: Images without alt text (GitBook figure blocks)
+    // MD047: Files must end with a single newline
+    // MD051: Link fragments (anchors target GitBook-generated headings)
+    // MD059: Descriptive link text (inline links are intentionally terse)
+    // MD060: Table column style (compact single-pipe GitBook tables)
+    "MD001": false,
+    "MD004": false,
+    "MD007": false,
+    "MD009": false,
+    "MD010": false,
+    "MD012": false,
+    "MD014": false,
+    "MD019": false,
+    "MD022": false,
+    "MD026": false,
+    "MD028": false,
+    "MD029": false,
+    "MD030": false,
+    "MD031": false,
+    "MD032": false,
+    "MD037": false,
+    "MD038": false,
+    "MD039": false,
+    "MD045": false,
+    "MD047": false,
+    "MD051": false,
+    "MD059": false,
+    "MD060": false
+
+    // ---- Remaining rules stay at their defaults as a lightweight gate ----
+    // MD003 (heading-style), MD018-MD021 (space-after-heading), MD023
+    // (space-before-heading), MD035 (hr-style), MD046 (code-block-style),
+    // MD048 (code-fence-style), MD049/MD050 (emphasis-style).
+  },
+
+  "globs": ["docs/**/*.md"],
+  "ignores": ["docs/.gitbook/**"]
+}

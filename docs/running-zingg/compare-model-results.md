@@ -113,8 +113,10 @@ zinggDiff.initAndExecute()
 ```
 {% endtab %}
 
-{% tab title="Enterprise for Snowflake" %}
-_**Enterprise Snowflake content for this topic to be provided by Sonal**_
+{% tab title="Enterprise Snowflake" %}
+{% hint style="info" %}
+**Coming soon** — Enterprise Snowflake guidance for comparing model results is in progress and will be published here when available.
+{% endhint %}
 {% endtab %}
 {% endtabs %}
 

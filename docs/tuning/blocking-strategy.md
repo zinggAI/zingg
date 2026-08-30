@@ -76,5 +76,5 @@ args.setBlockingModel("WIDER")
 * Set up field definitions and the arguments object this key belongs to → [Configure Zingg](../running-zingg/configure-zingg.md)
 * Check block-size distribution and coverage after changing strategy → [Verify Blocking](../running-zingg/create-training-data/verify-blocking.md)
 * Blocking model concept and how it fits in the pipeline → [Blocking Model](../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
-* Define your own blocking functions for specialized data patterns → [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7)
+* Define your own blocking functions for specialized data patterns → [Blocking Model](../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
 {% endhint %}
