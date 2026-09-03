@@ -1,3 +1,8 @@
+---
+description: >-
+  Zingg Enterprise Spark (ES) Python package reference. Includes ESparkClient for Snowflake-based entity resolution with ML.
+---
+
 # Zingg Enterprise Spark Package
 
 Zingg Enterprise Python APIs for entity resolution, record linkage, data mastering and deduplication using ML

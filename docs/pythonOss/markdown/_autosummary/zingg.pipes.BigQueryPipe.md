@@ -1,3 +1,8 @@
+---
+description: >-
+  BigQueryPipe class reference for Community edition. Configure BigQuery table, credential file, temporary GCS bucket, views enabled, and schema for data input/output.
+---
+
 # zingg.pipes.BigQueryPipe
 
 ### *class* zingg.pipes.BigQueryPipe(name)

@@ -4,15 +4,23 @@ description: >-
   your first match result. Covers Community (open source) and Enterprise
 ---
 
-# Platform Guide for Azure Databricks
+# 🔌 Platform Guide for Azure Databricks
 
 Databricks is a fully managed Spark environment that integrates seamlessly with Zingg. Both Community and Enterprise run on the same Databricks cluster. The difference is the libraries, class names, and the additional phases available in Enterprise.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="video" %}
+**Watch**: Zingg at the Databricks Community Meetup — entity resolution in action on Databricks.
+{% endhint %}
+
+{% embed url="https://www.youtube.com/watch?v=6yIiPe-rcIg" %}
+Zingg at the Databricks Community Meetup — end-to-end entity resolution on Databricks.
+{% endembed %}
+
+{% hint style="success" icon="circle-info" %}
 Tested with Databricks Runtime 16.4 LTS (Spark 3.5.2, Scala 2.12). Newer LTS versions with Spark 3.5 are compatible.
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: For the Databricks connector config including Delta format, see [Connect Azure Databricks](../connect-your-data/connect-cloud-warehouses/connect-azure-databricks.md).
 {% endhint %}
 
@@ -36,7 +44,7 @@ Uses `Arguments`, `FieldDefinition`, `CsvPipe`, and `ZinggWithSpark`. The workfl
 Open a notebook attached to the cluster and run:
 
 ```python
-%pip install zingg==0.6.0
+%pip install zingg==0.7.0
 dbutils.library.restartPython()
 ```
 
@@ -106,7 +114,7 @@ args.setLabelDataSampleSize(0.5)
 spark.conf.set("spark.sql.adaptive.enabled", False)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 For 100k records start with `labelDataSampleSize` between 0.1 and 0.5. For 1M+ records use 0.01 to 0.05. If `findTrainingData` takes too long, reduce by approximately 10× and try again. Disabling Adaptive Query Execution gives Zingg more predictable Spark behavior.
 {% endhint %}
 
@@ -183,7 +191,7 @@ args.setFieldDefinition([
     ssn])
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 `FUZZY` handles variations like 'Jon' vs 'John' or 'St' vs 'Street'. `EXACT` requires a character-for-character match. `DONT_USE` excludes a field from matching but keeps it in the output - use this for identifiers like record IDs. For all match types → [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}
 
@@ -225,9 +233,8 @@ A widget displays each candidate pair side by side. For each pair, select:
 
 The widget code handles the display and state management. Run the cell to render it.
 
-_**IMAGE TO BE ADDED — Zingg labeling widget in a Databricks notebook showing two candidate records side by side with Match / No Match / Uncertain toggle buttons. Tanwi to check with team for a screenshot from a live notebook run.**_
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="check-circle" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 10–12 until you reach this target. Label until all field types and data variation patterns in your schema are covered. If results need improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
 {% endhint %}
 
@@ -291,7 +298,7 @@ print(df.count())
 
 ![Databricks match output table with Z\_MINSCORE, Z\_MAXSCORE and Z\_CLUSTER columns; several rows share Z\_CLUSTER 3, meaning they resolved to the same entity.](../.gitbook/assets/databricks-match-output.png)
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Records sharing the same `Z_CLUSTER` value have been resolved to the same real-world entity. `Z_MINSCORE` is the weakest match confidence within the cluster. `Z_MAXSCORE` is the strongest. For full output column definitions → [Interpret Output Scores](../interpreting-results/interpret-output-scores.md).
 {% endhint %}
 
@@ -308,7 +315,6 @@ DOCS_DIR = zinggDir + "/" + modelId + "/docs/"
 displayHTML(open(DOCS_DIR + "model.html", 'r').read())
 ```
 
-_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****&#x20;****HTML output rendered inside a Databricks notebook showing labeled pair examples. Tanwi to check with team for screenshot from a live notebook run. Even a small portion of the rendered HTML is sufficient — it tells the reader what to expect before they run it. Place: below the****&#x20;****`displayHTML`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*line.**_
 {% endtab %}
 
 {% tab title="Enterprise" %}
@@ -316,7 +322,7 @@ Uses `EArguments`, `EFieldDefinition`, `ECsvPipe`, `EZinggWithSpark`. Seven note
 
 Enterprise adds blocking model configuration, a primary key for incremental matching, stats output, deterministic matching rules, pass-through expressions, the `runIncremental` phase, and the `explain` phase.
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="warning" icon="building" %}
 Enterprise requires a Zingg licence and the `zinggEC` and `zinggES` packages. [Contact Zingg to get access](https://www.zingg.ai/company/contact/contact).
 {% endhint %}
 
@@ -327,11 +333,10 @@ Enterprise requires a Zingg licence and the `zinggEC` and `zinggES` packages. [C
 1. Go to **Compute** → **Create Cluster**. Name it `Zingg-Enterprise`.
 2. Set the runtime to a current LTS version.
 3. Create a managed Volume inside your catalog schema.
-4. Upload `zingg-enterprise-spark-0.6.0.jar` and `zingg_license.jar` to the Volume.
-5. Open the cluster → **Libraries** → **Install New** → **Volumes** → navigate to: `/Volumes/catalog_name/schema_name/volume_name/zingg-enterprise-spark-0.6.0.jar`
+4. Upload `zingg-enterprise-spark-0.7.0.jar` and `zingg_license.jar` to the Volume.
+5. Open the cluster → **Libraries** → **Install New** → **Volumes** → navigate to: `/Volumes/catalog_name/schema_name/volume_name/zingg-enterprise-spark-0.7.0.jar`
 6. Repeat for `zingg_license.jar`.
 
-_**IMAGE TO BE ADDED — Databricks cluster Libraries tab showing the Enterprise JAR files installed from a Volume path. Tanwi to check with team for screenshot from a live Enterprise cluster setup.**_
 
 #### Step 2: Verify all three packages are installed
 
@@ -341,7 +346,7 @@ _**IMAGE TO BE ADDED — Databricks cluster Libraries tab showing the Enterprise
 !pip show zinggES
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 All three must show as installed: `zingg` (Community base), `zinggEC` (Enterprise), `zinggES` (Enterprise Plus). If any show as not found, install the corresponding `.whl` file from the cluster Libraries tab using the wheels provided in your Enterprise package.
 {% endhint %}
 
@@ -405,7 +410,7 @@ args.setNumPartitions(32)
 spark.conf.set("spark.sql.adaptive.enabled", False)
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Set `numPartitions` to approximately 20–30× your worker vCPU count. For a 4-node cluster with 8 vCPUs each, 32 is a good starting point. `labelDataSampleSize` is set in Notebook 03—see that notebook for guidance.
 {% endhint %}
 
@@ -453,7 +458,7 @@ statsOutputPipe.addProperty("header", "true")
 args.setOutputStats(statsOutputPipe)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more:** If `outputStats` is not configured, Zingg skips stats writing and the run proceeds normally. For stats field definitions → [Output Statistics](../interpreting-results/output-statistics.md).
 {% endhint %}
 
@@ -501,7 +506,7 @@ args.setDeterministicMatchingCondition(dm1, dm2)
 args.setPassthroughExpr("fname = 'matilda'")
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * For deterministic matching concepts → [Configure Zingg](../running-zingg/configure-zingg.md)
@@ -533,7 +538,6 @@ stopwordsForStreet = spark.read.csv(
 stopwordsForStreet.show()
 ```
 
-_**IMAGE TO BE ADDED — Databricks notebook showing the stopwords output table with word and frequency columns. Tanwi to check with team for screenshot from a live notebook run. A simple table with 10–15 rows is sufficient that tells the reader what the recommendation output looks like before they run it.**_
 
 #### **Step 15: Apply stopwords to the field definition**
 
@@ -545,7 +549,7 @@ street.setStopWords(zingg_dir + "/" + model_id + "/stopWords/" + stopwordcolumn)
 print(args.getArgs())
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more:** Skip this notebook on the first run. Return to it if match accuracy on text-heavy fields needs improvement. For the full stopwords guide → [Remove Stopwords](../tuning/improve-accuracy/remove-stopwords-optional.md)
 {% endhint %}
 
@@ -559,7 +563,7 @@ print(args.getArgs())
 args.setLabelDataSampleSize(0.1)
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 For 100k records use 0.1–0.5. For 1M records use 0.01–0.05. If `findTrainingData` takes too long, reduce by approximately 10× and try again.
 {% endhint %}
 
@@ -591,9 +595,8 @@ else:
 
 The Enterprise widget shows one pair at a time with Prev and Next navigation. For each pair select `Match`, `No Match`, or `Uncertain`. Labels are saved directly to the `DataFrame` as you click.
 
-_**IMAGE TO BE ADDED — Enterprise labeling widget in a Databricks notebook: two records displayed in a table, Match / No Match / Uncertain toggle buttons, Prev and Next navigation. Tanwi to check with team for screenshot from a live Enterprise notebook run. If the OS and Enterprise widgets look identical, the same screenshot can be reused.**_
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="check-circle" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 17–19 until all field types and data patterns are represented. If accuracy needs improvement after the first match run, return here and focus on patterns that are underrepresented.
 {% endhint %}
 
@@ -630,7 +633,6 @@ data_html = "\n".join(r.value for r in data_doc.collect())
 displayHTML(data_html)
 ```
 
-_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*output rendered inside a Databricks notebook showing labeled pair examples in HTML. Tanwi to check with team for screenshot from a live notebook run. Can reuse the OS version if the output looks the same.**_
 
 ### Notebook 05: Train and match
 
@@ -658,13 +660,12 @@ display(outputDF)
 print(outputDF.count())
 ```
 
-_**IMAGE TO BE ADDED — Enterprise match output in Databricks showing\*\*\*\*****&#x20;****`ZINGG_ID`****&#x20;****column alongside resolved records. Show two rows with the same****&#x20;****`ZINGG_ID`****&#x20;****\*\*\*\*to illustrate entity resolution. Tanwi to check with team for screenshot from a live notebook run.**_
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: Enterprise output includes `ZINGG_ID` — a globally unique, persistent identifier for each resolved entity. Unlike `Z_CLUSTER` in Community, `ZINGG_ID` does not change between runs including incremental runs.
 
 * For output column definitions → [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)
-* For Zingg ID lifecycle → [Zingg ID](/broken/pages/9QpDFW20AMt0UJ4cEW6b)
+* For Zingg ID lifecycle → [Z Cluster and Zingg ID](../zingg-concepts/z-cluster-and-zingg-id.md)
 {% endhint %}
 
 ### Notebook 06: Run incremental matching
@@ -689,7 +690,7 @@ outputTmpPipe.addProperty("header", "true")
 incrArgs.setOutputTmp(outputTmpPipe)
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 `setOutputTmp` specifies a temporary path where Zingg writes intermediate results before merging them into the main output. It must be different from your main output path.
 {% endhint %}
 
@@ -709,7 +710,7 @@ display(outputDF)
 print(outputDF.count())
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: For the full incremental matching guide including cluster merge and reassignment behaviour → [Run Incremental Matching](../running-zingg/run-incremental-matching.md)
 {% endhint %}
 
@@ -757,9 +758,8 @@ display(outputDF)
 print(outputDF.count())
 ```
 
-_**IMAGE TO BE ADDED — explain output table in Databricks showing\*\*\*\*****&#x20;****`pk1`****,****&#x20;****`pk2`****\*\*\*\*, and similarity score columns for matched pairs within the cluster. Tanwi to check with team for screenshot from a live notebook run. A small 5–10 row output table is sufficient.**_
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: Each row in the output represents a matched record pair within the cluster — `pk1` and `pk2` are the primary keys of the two records, with their similarity score.
 
 For the full explain guide → [Explain a Specific Cluster](../interpreting-results/explain-a-specific-cluster.md)
@@ -767,7 +767,7 @@ For the full explain guide → [Explain a Specific Cluster](../interpreting-resu
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 Download the notebooks used in this guide:
 
 * Community notebooks (NB01–04): `github.com/zinggAI/zingg/tree/main/examples/databricks`

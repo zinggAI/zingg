@@ -1,3 +1,8 @@
+---
+description: >-
+  Step-by-step guide to set up Zingg development environment on Ubuntu/WSL2 including Java, Spark, Git, and Maven.
+---
+
 # Ubuntu/WSL2 Setup Guide
 
 The following steps will help you set up the Zingg Development Environment on **Ubuntu/WSL2**. 

@@ -4,7 +4,7 @@ description: >-
   to decide which clusters need human review.
 ---
 
-# Interpret Output Scores
+# 📊 Interpret Output Scores
 
 Every Zingg match or link output contains your original input fields plus a set of columns added by Zingg. These columns tell you which records have been resolved into the same entity, how confident the model is about each match, and (in Enterprise) provide a persistent identifier you can store downstream.
 
@@ -12,7 +12,13 @@ This page defines every Zingg output column and shows how to use the scores to d
 
 ### Output columns - quick reference
 
-<table><thead><tr><th valign="top">Column</th><th valign="top">Available in</th><th valign="top">What it tells you</th><th valign="top">Jump to detail</th></tr></thead><tbody><tr><td valign="top"><code>Z_CLUSTER</code></td><td valign="top">All editions</td><td valign="top">Which records resolved to the same entity</td><td valign="top"><a href="interpret-output-scores.md#z_cluster">Z_CLUSTER →</a></td></tr><tr><td valign="top"><code>Z_MINSCORE</code></td><td valign="top">All editions</td><td valign="top">Weakest match confidence in the cluster</td><td valign="top"><a href="interpret-output-scores.md#z_minscore">Z_MINSCORE →</a></td></tr><tr><td valign="top"><code>Z_MAXSCORE</code></td><td valign="top">All editions</td><td valign="top">Strongest match confidence in the cluster</td><td valign="top"><a href="interpret-output-scores.md#z_maxscore">Z_MAXSCORE →</a></td></tr><tr><td valign="top"><code>ZINGG_ID</code></td><td valign="top">Enterprise only</td><td valign="top">Persistent, globally unique entity GUID</td><td valign="top"><a href="interpret-output-scores.md#zingg_id-enterprise">ZINGG_ID →</a></td></tr><tr><td valign="top"><code>Z_SCORE</code></td><td valign="top">Enterprise only</td><td valign="top">Per-record-pair model confidence score</td><td valign="top"><a href="interpret-output-scores.md#z_score-enterprise">Z_SCORE →</a></td></tr></tbody></table>
+| Column | Available in | What it tells you | Jump to detail |
+|--------|--------------|-------------------|----------------|
+| `Z_CLUSTER` | All editions | Which records resolved to the same entity | [Z_CLUSTER →](interpret-output-scores.md#z_cluster) |
+| `Z_MINSCORE` | All editions | Weakest match confidence in the cluster | [Z_MINSCORE →](interpret-output-scores.md#z_minscore) |
+| `Z_MAXSCORE` | All editions | Strongest match confidence in the cluster | [Z_MAXSCORE →](interpret-output-scores.md#z_maxscore) |
+| `ZINGG_ID` | Enterprise only | Persistent, globally unique entity GUID | [ZINGG_ID →](interpret-output-scores.md#zingg_id-enterprise) |
+| `Z_SCORE` | Enterprise only | Per-record-pair model confidence score | [Z_SCORE →](interpret-output-scores.md#z_score-enterprise) |
 
 ### How Zingg computes scores
 
@@ -36,7 +42,7 @@ the next run.
 
 In the Enterprise version, `Z_CLUSTER` is replaced by the persistent `Zingg ID`. See `Zingg ID` in the next section.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: [Z Cluster ID and Zingg ID](../zingg-concepts/z-cluster-and-zingg-id.md)
 {% endhint %}
 
@@ -53,8 +59,8 @@ has both strong and weak matches - worth inspecting.
 
 Globally unique, persistent identifier for each resolved entity. It does not change between runs, including incremental runs. Safe to store and reference in downstream systems. Replaces `Z_CLUSTER` in Enterprise output.
 
-{% hint style="success" icon="right-long" %}
-**Read more**: For the full Zingg ID concept - [Zingg ID](/broken/pages/9QpDFW20AMt0UJ4cEW6b)
+{% hint style="success" icon="book-open" %}
+**Read more**: For the full Zingg ID concept — [Z Cluster and Zingg ID](../zingg-concepts/z-cluster-and-zingg-id.md)
 {% endhint %}
 
 #### `Z_SCORE` (Enterprise)
@@ -65,7 +71,7 @@ The model confidence score is provided for each record pair. Higher values close
 
 Appears only in the link phase output. Identifies which source dataset each record came from. Use `Z_SOURCE` to trace each resolved record back to its origin system after linking two datasets together.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: For the link phase - [Link across datasets](../running-zingg/link-across-datasets.md)
 {% endhint %}
 
@@ -109,15 +115,17 @@ output.groupBy("ZINGG_ID") \
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-**CONTENT FOR THIS SECTION TO BE GIVEN BY SONAL LATER**
+{% hint style="info" %}
+**Coming soon** — Enterprise Snowflake guidance for interpreting output scores is in progress and will be published here when available.
+{% endhint %}
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 Reading match output is the same in Community and Enterprise - only the cluster column name differs. Community produces `Z_CLUSTER`. Enterprise produces `ZINGG_ID`. Replace the column name in your code accordingly.
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 Ordering clusters by `avg_min` ascending puts the weakest clusters at the top, those are the ones worth reviewing for false positives first.
 
 **Read more**:
@@ -176,7 +184,7 @@ A false positive is a cluster that contains records representing different real-
 
 ### Diagnosing false positives records that should not be together
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 Before debugging the similarity model, confirm the missed pairs are actually reaching it. If two records are in different blocks, the similarity model never evaluates them regardless of its accuracy.
 {% endhint %}
 
@@ -227,7 +235,7 @@ Review clusters with `Z_MINSCORE` of `0` manually to confirm the full cluster is
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * Z Cluster and Zingg ID - [Z Cluster ID and Zingg ID](../zingg-concepts/z-cluster-and-zingg-id.md)

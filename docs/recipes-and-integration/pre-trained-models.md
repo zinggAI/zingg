@@ -132,6 +132,10 @@ This is faster than building a model from scratch when your data is structurally
 
 Zingg ships with pre-trained models for several datasets. All models are bundled under the `models/` directory in the Zingg installation. Check `models/modelIds.txt` for the complete list of available models and their IDs.
 
-<table><thead><tr><th valign="top">Model</th><th valign="top">Dataset</th><th valign="top">Fields</th></tr></thead><tbody><tr><td valign="top">FEBRL</td><td valign="top">Synthetic Australian population</td><td valign="top"><code>fname</code>, <code>lname</code>, <code>stNo</code>, <code>add1</code>, <code>add2</code>, <code>city</code>, <code>areacode</code>, <code>state</code>, <code>dob</code>, <code>ssn</code></td></tr><tr><td valign="top">North Carolina Voters</td><td valign="top">US voter registration records</td><td valign="top">Name, address, date of birth</td></tr><tr><td valign="top">Amazon-Google Products</td><td valign="top">Product catalog matching</td><td valign="top">Product title, description</td></tr></tbody></table>
+| Model | Dataset | Fields |
+|---|---|---|
+| FEBRL | Synthetic Australian population | `fname`, `lname`, `stNo`, `add1`, `add2`, `city`, `areacode`, `state`, `dob`, `ssn` |
+| North Carolina Voters | US voter registration records | Name, address, date of birth |
+| Amazon-Google Products | Product catalog matching | Product title, description |
 
 For schemas and model IDs, see `models/modelIds.txt` inside your Zingg installation.

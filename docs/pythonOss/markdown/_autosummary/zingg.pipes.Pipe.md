@@ -1,3 +1,8 @@
+---
+description: >-
+  Pipe base class reference for Community edition. Configure pipe name, format (bigquery, csv, etc.), add properties, set schema, and retrieve pipe configuration.
+---
+
 # zingg.pipes.Pipe
 
 ### *class* zingg.pipes.Pipe(name, format)

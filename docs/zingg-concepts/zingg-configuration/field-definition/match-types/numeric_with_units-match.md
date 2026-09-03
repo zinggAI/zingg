@@ -16,7 +16,15 @@ description: >-
 
 ### What `NUMERIC_WITH_UNITS` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Score</th><th valign="top">Notes</th></tr></thead><tbody><tr><td valign="top">16gb RAM</td><td valign="top">16 GB Memory</td><td valign="top">0.0 (No)</td><td valign="top"><code>{16gb}</code> vs <code>{16}</code> - the space in "16 GB" stops the unit from gluing to the number, so they extract as different tokens</td></tr><tr><td valign="top">16gb RAM</td><td valign="top">32gb RAM</td><td valign="top">0.0 (No)</td><td valign="top"><code>{16gb}</code> vs <code>{32gb}</code> share nothing</td></tr><tr><td valign="top">500ml</td><td valign="top">0.5L</td><td valign="top">0.0 (No)</td><td valign="top"><code>{500ml}</code> vs <code>{0.5L}</code> share nothing; there is no unit conversion</td></tr><tr><td valign="top">2.4GHz Dual Core</td><td valign="top">2.4GHz Processor</td><td valign="top">1.0 (Yes)</td><td valign="top"><code>2.4GHz</code> extracted from both - same glued format on both sides</td></tr><tr><td valign="top">16gb</td><td valign="top">16</td><td valign="top">0.0 (No)</td><td valign="top"><code>{16gb}</code> vs <code>{16}</code> share nothing</td></tr><tr><td valign="top">[null]</td><td valign="top">[null]</td><td valign="top">1.0 (Yes)</td><td valign="top">Both sides extract zero tokens - the auto-match case unique to this match type</td></tr><tr><td valign="top">[null]</td><td valign="top">16gb RAM</td><td valign="top">0.0 (No)</td><td valign="top">Only one side extracts zero tokens - falls back to a non-match, same as <code>NUMERIC</code></td></tr></tbody></table>
+| Value A | Value B | Score | Notes |
+|---|---|---|---|
+| 16gb RAM | 16 GB Memory | 0.0 (No) | `{16gb}` vs `{16}` - the space in "16 GB" stops the unit from gluing to the number, so they extract as different tokens |
+| 16gb RAM | 32gb RAM | 0.0 (No) | `{16gb}` vs `{32gb}` share nothing |
+| 500ml | 0.5L | 0.0 (No) | `{500ml}` vs `{0.5L}` share nothing; there is no unit conversion |
+| 2.4GHz Dual Core | 2.4GHz Processor | 1.0 (Yes) | `2.4GHz` extracted from both - same glued format on both sides |
+| 16gb | 16 | 0.0 (No) | `{16gb}` vs `{16}` share nothing |
+| [null] | [null] | 1.0 (Yes) | Both sides extract zero tokens - the auto-match case unique to this match type |
+| [null] | 16gb RAM | 0.0 (No) | Only one side extracts zero tokens - falls back to a non-match, same as `NUMERIC` |
 
 ### When to use `NUMERIC_WITH_UNITS`
 
@@ -48,7 +56,7 @@ Use `NUMERIC` for address fields. "42 Main Street" does not have units. `NUMERIC
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related types**:
 
 * `NUMERIC` - for numbers without unit

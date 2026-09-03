@@ -8,7 +8,7 @@ tags:
     primary: true
 ---
 
-# Explainability and Statistics
+# 📊 Explainability and Statistics
 
 {% hint style="info" icon="right-long" %}
 Enterprise only.

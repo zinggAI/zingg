@@ -10,15 +10,19 @@ Instead of configuring Zingg using JSON, you can use Python to build and run Zin
 
 The Python API is available in three editions, each with its own package and class names. The pattern is the same across all three: set up `args`, set `options` with the phase name, create the Zingg object, call `initAndExecute()`.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 To run on a local machine, install Zingg from the release before running Zingg Python programs. The Python package can be installed via `pip install zingg`. Detailed auto-generated API documentation is available at [readthedocs.org/projects/zingg](https://readthedocs.org/projects/zingg/).
 {% endhint %}
 
 #### Choose your edition
 
-<table><thead><tr><th width="237.09375" valign="top">Edition</th><th width="127.88671875" valign="top">Package</th><th valign="top">Use when</th></tr></thead><tbody><tr><td valign="top"><strong>Community (Open Source)</strong></td><td valign="top"><code>zingg</code></td><td valign="top">Free, open-source Zingg for any Spark deployment</td></tr><tr><td valign="top"><strong>Enterprise (ZinggEC)</strong></td><td valign="top"><code>zinggEC</code></td><td valign="top">Enterprise Lite or Enterprise — adds deterministic matching, blocking strategy, primary key, pass-through, mapping match types, incremental, output stats</td></tr><tr><td valign="top"><strong>Enterprise Plus (ZinggES)</strong></td><td valign="top"><code>zinggES</code></td><td valign="top">Adds the Spark client (<code>EZingg</code>, <code>EZinggWithSpark</code>) used by Enterprise Plus distributions</td></tr></tbody></table>
+| Edition | Package | Use when |
+|---|---|---|
+| **Community (Open Source)** | `zingg` | Free, open-source Zingg for any Spark deployment |
+| **Enterprise (ZinggEC)** | `zinggEC` | Enterprise Lite or Enterprise — adds deterministic matching, blocking strategy, primary key, pass-through, mapping match types, incremental, output stats |
+| **Enterprise Plus (ZinggES)** | `zinggES` | Adds the Spark client (`EZingg`, `EZinggWithSpark`) used by Enterprise Plus distributions |
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: Pick your edition and follow the sub-page below:
 
 * [Community Python API](community-python-api.md)
@@ -36,7 +40,7 @@ Every Zingg Python program regardless of edition, follows the same five-step pat
 4. **Set input and output pipes** - configure data sources and sinks
 5. **Set options and execute** - create `ClientOptions` with the phase name, instantiate the Zingg object, call `initAndExecute()`
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * [Configure Zingg](../running-zingg/configure-zingg.md) - the configuration that feeds into every Python API call

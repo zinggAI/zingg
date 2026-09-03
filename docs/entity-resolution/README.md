@@ -4,9 +4,13 @@ description: >-
   Zingg handles each part of it systematically.
 ---
 
-# Entity Resolution
+# 📘 Entity Resolution
 
 Entity resolution is the process of identifying that multiple records across different systems represent the same real-world entity.
+
+{% embed url="https://www.youtube.com/watch?v=uMAsmly8kqE" %}
+A short explainer on entity resolution vs identity resolution.
+{% endembed %}
 
 It answers one question: Given fragmented, inconsistent data spread across sales,\
 marketing, support, and operations systems, whose records actually belong to the same\
@@ -83,7 +87,7 @@ together, and the LLM reasons over a complete, entity-aware view.
 
 This process is the Identity RAG pattern entity resolution as infrastructure for AI accuracy.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: [Enhancing LLM applications with Zingg and LangChain](../recipes-and-integration/identity-rag-with-zingg-and-langchain.md)
 {% endhint %}
 
@@ -140,19 +144,19 @@ Not if your data has fuzzy variation. Graph databases like Neo4j are excellent a
 
 Zingg and graph databases work best together. Zingg does entity resolution, which means it finds out which records are for the same entity using ML-based probabilistic and deterministic matching. The graph database is used for downstream relationship analysis and inference in AML, KYC, Knowledge Graph, and Customer 360 scenarios.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="plug" %}
 **Read more**: [Connect graph databases](../connect-your-data/connect-graph-databases-neo4j.md)
 {% endhint %}
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="rocket" %}
 Ready to see entity resolution in action?
 
 * [Run Zingg on your local machine](../running-zingg/quick-start-docker.md) - full workflow in 30 minutes
 {% endhint %}
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="warning" icon="building" %}
 Need entity resolution at production scale with persistent identity and incremental\
 processing?
 

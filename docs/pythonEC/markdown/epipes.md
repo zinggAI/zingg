@@ -1,3 +1,8 @@
+---
+description: >-
+  Enterprise pipes module reference. Includes ECsvPipe for CSV files, EPipe base class with passthrough support, InMemoryPipe, and UCPipe for Unity Catalog Delta tables.
+---
+
 # epipes
 
 ## zinggEC.enterprise.common.epipes

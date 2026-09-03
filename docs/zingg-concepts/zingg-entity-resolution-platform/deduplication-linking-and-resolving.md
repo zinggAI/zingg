@@ -1,3 +1,8 @@
+---
+description: >-
+  Distinguish deduplication (within one dataset), linking (across two duplicate-free datasets), and resolving (across many systems at scale). Zingg handles all three.
+---
+
 # Deduplication, linking and resolving
 
 These three operations are often confused. They are distinct in scope and complexity.

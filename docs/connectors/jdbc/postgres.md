@@ -1,3 +1,8 @@
+---
+description: >-
+  Connect Zingg to PostgreSQL via JDBC. Configure URL, dbtable, driver, user, and password in JSON config.
+---
+
 # Postgres
 
 ## JSON Settings For Reading Data From Postgres Database:

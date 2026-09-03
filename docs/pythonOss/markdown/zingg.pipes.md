@@ -1,3 +1,8 @@
+---
+description: >-
+  zingg.pipes module reference for Community edition. Includes Pipe base class, CsvPipe, BigQueryPipe, and SnowflakePipe for data source/sink connections.
+---
+
 # zingg.pipes module
 
 ## Classes

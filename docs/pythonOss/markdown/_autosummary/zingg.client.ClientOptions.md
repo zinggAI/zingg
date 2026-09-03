@@ -1,3 +1,8 @@
+---
+description: >-
+  ClientOptions class reference for Community edition. Configure Zingg phase (trainMatch, train, match, link, findTrainingData, recommend), conf, location, and other options.
+---
+
 # zingg.client.ClientOptions
 
 ### *class* zingg.client.ClientOptions(argsSent=None)

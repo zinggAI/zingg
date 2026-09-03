@@ -1,4 +1,6 @@
 ---
+description: >-
+  Combined phase that runs findTrainingData and label together. Use for small datasets where findTrainingData completes quickly, enabling faster training data creation.
 parent: Creating training data
 title: Find training data and labelling
 grand_parent: Step By Step Guide

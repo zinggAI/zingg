@@ -18,11 +18,11 @@ The scoring pattern is exactly the same as `FUZZY` - their results are not affec
 
 For harder abbreviation cases like "IBM" vs "International Business Machines", `FUZZY_OPTIMISED` needs the same help `FUZZY` does - the strings are too dissimilar on their own, so combine with `MAPPING_(company_names)` to map the representative form explicitly.
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="book-open" %}
 `FUZZY_OPTIMISED` is Enterprise only. The Community (open source) edition does not support this match type. Available in Enterprise Lite and above.
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related Match types:**
 
 * `FUZZY` - same quality, use in development and evaluation

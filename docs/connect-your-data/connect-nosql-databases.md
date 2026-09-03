@@ -4,13 +4,13 @@ description: >-
   destinations.
 ---
 
-# Connect NoSQL Databases
+# ☁️ Connect NoSQL Databases
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 New to Zingg pipes? Understand how pipes work before configuring them - [Pipes and data connections](pipes-and-data-connections.md).
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 This page covers NoSQL database connections.
 
 * For relational databases see [Connect Relational Databases](connect-relational-databases.md).
@@ -21,7 +21,7 @@ All NoSQL connectors are available in Community and Enterprise.
 
 {% tabs %}
 {% tab title="Cassandra" %}
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 The config below shows Cassandra as a write destination (output).
 
 To read FROM Cassandra, use the same props under "`data`" with `args.setData()`.
@@ -87,12 +87,12 @@ args.setData(mongoPipe)
 }
 ```
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 * URI format: `mongodb://host:port/database.collection`
 * Authenticated: `mongodb://user:password@host:port/database.collection`
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * For relational databases - [Connect Relational Databases](connect-relational-databases.md)

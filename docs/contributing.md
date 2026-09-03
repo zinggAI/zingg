@@ -1,4 +1,6 @@
 ---
+description: >-
+  Report bugs, request features, or contribute code to Zingg. All code contributions require signing the Contributor License Agreement.
 nav_order: 7
 ---
 

@@ -16,7 +16,13 @@ Use `NULL_OR_BLANK` combined with another match type, in the `matchType` string 
 
 ### What **`NULL_OR_BLANK`** matches and what it does not
 
-<table data-header-hidden><thead><tr><th valign="top"></th><th valign="top"></th><th valign="top"></th><th valign="top"></th></tr></thead><tbody><tr><td valign="top">Value A</td><td valign="top">Value B</td><td valign="top"><code>NULL_OR_BLANK</code> feature</td><td valign="top">Notes</td></tr><tr><td valign="top">null</td><td valign="top">John Smith</td><td valign="top">0.0</td><td valign="top">One side null</td></tr><tr><td valign="top">[empty string]</td><td valign="top">John Smith</td><td valign="top">0.0</td><td valign="top">Empty string treated exactly like null</td></tr><tr><td valign="top">null</td><td valign="top">null</td><td valign="top">0.0</td><td valign="top">No distinction between one-sided and both-sided nulls</td></tr><tr><td valign="top">null</td><td valign="top">[empty string]</td><td valign="top">0.0</td><td valign="top">Null and blank are interchangeable</td></tr><tr><td valign="top">John Smith</td><td valign="top">John Smith</td><td valign="top">1.0</td><td valign="top">Both values present</td></tr></tbody></table>
+| Value A | Value B | `NULL_OR_BLANK` feature | Notes |
+|---|---|---|---|
+| null | John Smith | 0.0 | One side null |
+| [empty string] | John Smith | 0.0 | Empty string treated exactly like null |
+| null | null | 0.0 | No distinction between one-sided and both-sided nulls |
+| null | [empty string] | 0.0 | Null and blank are interchangeable |
+| John Smith | John Smith | 1.0 | Both values present |
 
 There is no distinction between "both null" and "one null, one populated" - all four null/blank rows above score identically.
 
@@ -62,7 +68,7 @@ If a field is universally null across all records with no non-null values to con
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 `NULL_OR_BLANK` common combinations:
 
 * `FUZZY`, `NULL_OR_BLANK` - name and address fields often null

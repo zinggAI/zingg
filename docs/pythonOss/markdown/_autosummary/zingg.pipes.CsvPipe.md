@@ -1,3 +1,8 @@
+---
+description: >-
+  CsvPipe class reference for Community edition. Configure CSV file location, delimiter, header, and schema for data input/output.
+---
+
 # zingg.pipes.CsvPipe
 
 ### *class* zingg.pipes.CsvPipe(name, location=None, schema=None)

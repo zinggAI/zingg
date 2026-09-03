@@ -4,7 +4,7 @@ description: >-
   Spark and notebook environments
 ---
 
-# Install Zingg
+# 🔌 Install Zingg
 
 Zingg runs on Spark (all editions) or Snowflake (Enterprise only). Select your platform from the tabs below. Each tab covers both Community and Enterprise where applicable.
 
@@ -57,7 +57,7 @@ Restart the Python kernel: **Runtime → Restart Python**.
 {% endtab %}
 
 {% tab title="Microsoft Fabric" %}
-Zingg on Microsoft Fabric uses the Fabric notebook interface and a custom environment.\
+Zingg on Microsoft Fabric uses the Fabric notebook interface and a custom environment.
 Follow these steps before opening the Zingg notebook.
 
 ### **Step 1: Create a Fabric workspace and session**
@@ -112,7 +112,7 @@ pip show zingg
 1. In your workspace, click **New Item** and select **Lakehouse**. Name it and go inside it.
 2. Click **Get Data** and upload your data file as CSV or Parquet.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="cloud" %}
 Note the `abfss` path of your Lakehouse for use in the notebook. It follows this format: `abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/<lakehouse-id>/Files`
 
 For the full step-by-step Fabric guide including screenshots → [Run on Microsoft Fabric](../platform-guides/platform-guide-for-microsoft-fabric.md)
@@ -170,49 +170,143 @@ Run Zingg Python code directly in AWS EMR Notebooks using the Python API. Instal
 {% endtab %}
 
 {% tab title="AWS Glue" %}
-**AWS Glue install steps are not documented on any live docs page. CHECK WITH SONAL before publishing this tab.**
+### **AWS Glue Studio Notebooks**
+
+Run Zingg Python code in AWS Glue Studio Notebooks using the Python API.
+
+#### Community
+
+```bash
+%pip install zingg
+%pip install tabulate
+%pip install ipywidgets
+```
+
+#### Enterprise Lite or Enterprise
+
+```bash
+%pip install zinggEC
+%pip install tabulate
+%pip install ipywidgets
+```
+
+#### Enterprise Plus
+
+```bash
+%pip install zinggES
+%pip install tabulate
+%pip install ipywidgets
+```
+
+### **AWS Glue Job (Spark)**
+
+For production jobs, use a Glue Job with the Zingg JAR and Python packages.
+
+1. Create a Glue Job with **Spark** as the job type.
+2. Under **Script filename**, upload your Zingg Python script.
+3. Under **Job parameters**, add:
+   - `--extra-jars`: `s3://your-bucket/jars/zingg-0.7.0.jar` (and all required Zingg JARs for Enterprise)
+   - `--additional-python-modules`: `zingg==0.7.0,tabulate,ipywidgets`
+4. Set **Worker type** to `G.1X` or `G.2X` and **Number of workers** based on data size.
+
+{% hint style="success" icon="book-open" %}
+For the full AWS Glue guide including IAM roles, S3 setup, and screenshots → [Platform Guide for AWS Glue](../platform-guides/platform-guide-for-aws-glue.md)
+{% endhint %}
 {% endtab %}
 
 {% tab title="GCP Dataproc" %}
-_**CHECK WITH SONAL - - NEED TEAMS HELP TO CHECK WHAT EXACTLY FROM THE GCS GUIDE TO BE ADDED HERE**_
+### **GCP Dataproc Cluster**
+
+Create a Dataproc cluster with the required JARs and install the Zingg Python package.
+
+1. Create a GCS bucket and upload Zingg JAR + data.
+2. Create Dataproc cluster with `--properties="spark:spark.jars=gs://your-bucket/zingg-0.7.0.jar,..."`
+3. Enable **Jupyter** optional component and **Component Gateway**.
+
+Install the Zingg Python package in JupyterLab:
+
+```bash
+%pip install zingg
+%pip install tabulate
+%pip install ipywidgets
+```
+
+{% hint style="success" icon="book-open" %}
+For the full GCP Dataproc guide including cluster creation, JAR upload, and screenshots → [Platform Guide for GCP Dataproc](../platform-guides/platform-guide-for-gcp-dataproc.md)
+{% endhint %}
 {% endtab %}
 
 {% tab title="Azure Synapse" %}
-**CHECK WITH SONAL - if "Zingg on Azure Synapse" is the same as "Databricks installation instructions" above. Are the install method and library setup are the same.**
+### **Azure Synapse Spark Pools**
+
+Zingg on Azure Synapse uses Synapse Spark pools with the same installation pattern as Azure Databricks.
+
+#### **Step 1: Create a Spark pool**
+
+1. In Synapse Studio, go to **Manage → Spark pools → New**.
+2. Name it `Zingg-Spark-Pool`.
+3. Set **Node size** to `Medium` (4 vCPU, 32GB) or larger.
+4. Set **Autoscale** enabled with min 1, max 4 nodes.
+
+#### **Step 2: Install Zingg JAR and Python package**
+
+1. Go to **Manage → Spark pools → Packages**.
+2. Add the Zingg JAR from your workspace/ADLS:
+   - `abfss://container@storageaccount.dfs.core.windows.net/jars/zingg-0.7.0.jar`
+3. In your Synapse notebook, attach to the `Zingg-Spark-Pool` and install Python packages:
+
+```bash
+%pip install zingg
+%pip install tabulate
+%pip install ipywidgets
+```
+
+#### **Step 3: Configure Zingg**
+
+Use `abfss://` paths for data and model storage in OneLake/ADLS.
+
+```python
+zinggDir = "abfss://container@storageaccount.dfs.core.windows.net/zingg/models"
+modelId = "synapseModel"
+```
+
+{% hint style="success" icon="book-open" %}
+For the full Azure Databricks guide which shares similar concepts → [Platform Guide for Azure Databricks](../platform-guides/platform-guide-for-azure-databricks.md)
+{% endhint %}
 {% endtab %}
 
 {% tab title="Local Spark" %}
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="rocket" %}
 Docker is the fastest way to get started locally. Use installing from release if you need a specific Spark version or want to integrate with an existing Spark installation.
 {% endhint %}
 
 ### Option A - Docker (recommended)
 
 ```bash
-docker pull zingg/zingg:0.5.0
-docker run -it zingg/zingg:0.5.0 bash
+docker pull zingg/zingg:0.7.0
+docker run -it zingg/zingg:0.7.0 bash
 ```
 
 If permission denied:
 
 ```bash
-docker run -v /tmp:/tmp -it zingg/zingg:0.5.0 bash
+docker run -v /tmp:/tmp -it zingg/zingg:0.7.0 bash
 ```
 
 ### Option B - Installing from Release
 
 Download the latest release from GitHub: `github.com/zinggAI/zingg/releases`
 
-**Example for Zingg 0.5.0 on Spark 3.5.0**
+**Example for Zingg 0.7.0 on Spark 3.5.0**
 
-Assumes Zingg 0.5.0 on Spark 3.5.0
+Assumes Zingg 0.7.0 on Spark 3.5.0
 
 **Prerequisites**: Java JDK 11.0.23, Spark 3.5.0
 
 ```bash
-wget https://github.com/zinggAI/zingg/releases/download/v0.5.0/zingg-0.5.0-spark_3.5.tar.gz
+wget https://github.com/zinggAI/zingg/releases/download/v0.7.0/zingg-0.7.0-spark_3.5.tar.gz
 
-tar -xvf zingg-0.5.0-spark_3.5.tar.gz
+tar -xvf zingg-0.7.0-spark_3.5.tar.gz
 ```
 
 ### Set up environment variables
@@ -250,13 +344,10 @@ cd zingg
 This builds Zingg models and finds duplicates in `examples/febrl/test.csv`. You will see Zingg logs on the console and output files under `/tmp/zinggOutput` with matching records sharing the same cluster ID. If you see this, Zingg is correctly installed.
 {% endtab %}
 
-{% tab title="Snowflake (ENT)" %}
-{% hint style="info" icon="right-long" %}
+{% tab title="Enterprise Snowflake" %}
+{% hint style="info" icon="cloud" %}
 Enterprise only. Zingg on Snowflake uses the Enterprise Snowflake package and runs natively inside Snowflake using Snowpark — no Spark cluster required.
 {% endhint %}
-
-**CHECK WITH SONAL** - Snowflake Enterprise install is referenced at\
-docs.zingg.ai/latest/stepbystep/installation/installing-zingg-enterprise-snowflake
 
 ### **Prerequisites**
 
@@ -297,8 +388,12 @@ mv ~/zingg.license .
 ```
 {% endcode %}
 
-{% hint style="info" icon="right-long" %}
-Add `ZINGG_SNOW_JAR` and `ZINGG_SNOW_HOME` to `.bashrc` so they persist across sessions. For the full end-to-end Snowflake guide → [Run on Snowflake](../platform-guides/platform-guide-for-snowflake.md)
+{% hint style="info" icon="building" %}
+Add `ZINGG_SNOW_JAR` and `ZINGG_SNOW_HOME` to `.bashrc` so they persist across sessions. 
+
+For the full end-to-end Snowflake guide → [Run on Snowflake](../platform-guides/platform-guide-for-snowflake.md)
+
+For complete step-by-step instructions with B2B examples, SQL/Python APIs, and incremental matching → [Zingg Enterprise Snowflake Instructions](../stepbystep/installation/installing-zingg-enterprise-snowflake/enterprise-snowflake-instructions.md)
 {% endhint %}
 
 ### **Create the Snowflake properties file (`snowEnv.txt`)**

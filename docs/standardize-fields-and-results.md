@@ -20,7 +20,13 @@ Use it when matched records contain the same entity but use different representa
 
 ### **What it does and does not do**
 
-<table><thead><tr><th width="248.80859375" valign="top">Behavior</th><th valign="top">Details</th></tr></thead><tbody><tr><td valign="top">When it runs</td><td valign="top">After matching, before writing the output.<br>It does not affect matching behaviour it transforms output values only</td></tr><tr><td valign="top">What it applies to</td><td valign="top">Any field you configure it on. One field can have one mapping file.</td></tr><tr><td valign="top">What it does not apply to</td><td valign="top">Primary key fields. These are never postprocessed.</td></tr><tr><td valign="top">Case sensitivity</td><td valign="top">Lookup is case-insensitive. CEO, ceo, and Ceo all match<br>the same mapping entry.</td></tr><tr><td valign="top">What it does not handle</td><td valign="top">Extra whitespace, punctuation differences, or partial matches. Those need to be cleaned upstream.</td></tr></tbody></table>
+| Behavior | Details |
+|---|---|
+| When it runs | After matching, before writing the output. It does not affect matching behaviour it transforms output values only |
+| What it applies to | Any field you configure it on. One field can have one mapping file. |
+| What it does not apply to | Primary key fields. These are never postprocessed. |
+| Case sensitivity | Lookup is case-insensitive. CEO, ceo, and Ceo all match the same mapping entry. |
+| What it does not handle | Extra whitespace, punctuation differences, or partial matches. Those need to be cleaned upstream. |
 
 ### Where this is useful
 

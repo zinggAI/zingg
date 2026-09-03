@@ -20,7 +20,7 @@ Zingg does not mandate any preprocessing on the input data. Zingg automatically 
 
 <summary><strong>Can my data come from different tables?</strong></summary>
 
-Yes, you can add as many source pipes as you want. Just make sure they have the same schema.&#x20;
+Yes, you can add as many source pipes as you want. Just make sure they have the same schema. 
 
 </details>
 

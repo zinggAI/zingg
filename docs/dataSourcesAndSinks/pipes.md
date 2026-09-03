@@ -1,4 +1,6 @@
 ---
+description: >-
+  Zingg Pipes abstract data sources and sinks for any Spark-supported datastore. Configure name, format, and options for input/output connections.
 title: Zingg Pipes
 parent: Data Sources and Sinks
 nav_order: 4

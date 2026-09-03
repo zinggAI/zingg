@@ -5,11 +5,11 @@ description: >-
   Enterprise.
 ---
 
-# Platform Guide for AWS GLUE
+# 🔌 Platform Guide for AWS GLUE
 
 AWS Glue provides serverless Spark on AWS. There are no servers to manage; you define your session configuration, Glue provisions the workers, and you pay only for what you use. Zingg runs on Glue Interactive Sessions using the standard Python API. S3 is used for all data input, output, model storage, and checkpointing.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 * Tested with AWS Glue version 5.0, worker type G.1X, Spark 3.5.
 * AWS Glue Interactive Sessions restrict standard Jupyter widgets. Zingg's usual labeling widget does not render in Glue notebooks. This guide uses a CSV-based review workflow instead - candidate pairs are exported to S3 for offline labeling and read back into the session. This is covered in detail in Step 14.
 {% endhint %}
@@ -35,11 +35,17 @@ Create an S3 bucket (for example `zingg-production-storage`) and upload all six 
 3. Set the region to match where your Glue jobs will run (for example `us-east-1`).
 4. Once created, upload the following JAR files into a `/jars/` folder:
 
-<table><thead><tr><th valign="top">JAR</th><th valign="top">Purpose</th></tr></thead><tbody><tr><td valign="top"><code>zingg-0.6.0.jar</code></td><td valign="top">The Zingg engine</td></tr><tr><td valign="top"><code>zingg-common-client-0.6.0.jar</code></td><td valign="top">Common client</td></tr><tr><td valign="top"><code>zingg-common-core-0.6.0.jar</code></td><td valign="top">Common core</td></tr><tr><td valign="top"><code>zingg-spark-client-0.6.0.jar</code></td><td valign="top">Spark client</td></tr><tr><td valign="top"><code>zingg-spark-core-0.6.0.jar</code></td><td valign="top">Spark core</td></tr><tr><td valign="top"><code>zingg-common-infra-0.6.0.jar</code></td><td valign="top">Infrastructure link</td></tr></tbody></table>
+| JAR | Purpose |
+|---|---|
+| `zingg-0.7.0.jar` | The Zingg engine |
+| `zingg-common-client-0.7.0.jar` | Common client |
+| `zingg-common-core-0.7.0.jar` | Common core |
+| `zingg-spark-client-0.7.0.jar` | Spark client |
+| `zingg-spark-core-0.7.0.jar` | Spark core |
+| `zingg-common-infra-0.7.0.jar` | Infrastructure link |
 
 Download all JARs from `github.com/zinggAI/zingg/releases`. Also upload your data file to the bucket root.
 
-_**IMAGE TO BE ADDED — S3 bucket view showing the\*\*\*\*****&#x20;****`/jars/`****&#x20;****\*\*\*\*folder with all six Zingg JAR files listed. Tanwi to check with team for the screenshot.**_
 
 #### **Step 2: Create an IAM role for Glue**
 
@@ -56,7 +62,12 @@ AWS Glue Interactive Sessions require a dedicated IAM Role that allows the noteb
 
 Search for and attach these four AWS managed policies:
 
-<table><thead><tr><th valign="top">Policy</th><th valign="top">Purpose</th></tr></thead><tbody><tr><td valign="top"><code>AmazonS3FullAccess</code></td><td valign="top">Read and write data and models in S3</td></tr><tr><td valign="top"><code>AWSGlueConsoleFullAccess</code></td><td valign="top">Manage Glue jobs via the Studio UI</td></tr><tr><td valign="top"><code>AWSGlueServiceRole</code></td><td valign="top">Required for Glue to run worker nodes</td></tr><tr><td valign="top"><code>AmazonQDeveloperAccess</code></td><td valign="top">Enables AI coding assistance (optional)</td></tr></tbody></table>
+| Policy | Purpose |
+|---|---|
+| `AmazonS3FullAccess` | Read and write data and models in S3 |
+| `AWSGlueConsoleFullAccess` | Manage Glue jobs via the Studio UI |
+| `AWSGlueServiceRole` | Required for Glue to run worker nodes |
+| `AmazonQDeveloperAccess` | Enables AI coding assistance (optional) |
 
 **Step 2c: Attach an inline policy**
 
@@ -99,7 +110,6 @@ Create an inline policy named `ZinggSessionPermissions` with the following JSON.
 }
 ```
 
-_**IMAGE TO BE ADDED — IAM Role creation screen in the AWS Console showing the role name, attached managed policies, and the inline policy editor. Tanwi to check with team for the screenshot.**_
 
 #### **Step 3: Create a Glue notebook and attach the IAM role**
 
@@ -108,7 +118,6 @@ _**IMAGE TO BE ADDED — IAM Role creation screen in the AWS Console showing the
 3. Select the IAM role created in Step 2 (`zingg-glue-role`) from the dropdown.
 4. Open the notebook. Confirm the kernel in the top right shows **Glue PySpark**.
 
-_**IMAGE TO BE ADDED — AWS Glue Studio Notebooks screen showing the IAM role dropdown with the\*\*\*\*****&#x20;****`zingg-glue-role`****&#x20;****\*\*\*\*selected. Tanwi to check with team for the screenshot.**_
 
 ### Notebook 01: Set up Zingg
 
@@ -124,15 +133,15 @@ This is the most important step for Glue. The `%%configure` magic cell must be *
 % number_of_workers 2
 % idle_timeout 2880
 %% configure {
-  "--extra-jars": "s3://your-bucket/jars/zingg-0.6.0.jar,s3://your-bucket/jars/zingg-common-client-0.6.0.jar,s3://your-bucket/jars/zingg-common-core-0.6.0.jar,s3://your-bucket/jars/zingg-spark-client-0.6.0.jar,s3://your-bucket/jars/zingg-spark-core-0.6.0.jar,s3://your-bucket/jars/zingg-common-infra-0.6.0.jar",
-    "--additional-python-modules": "zingg==0.6.0,tabulate,ipywidgets",
+  "--extra-jars": "s3://your-bucket/jars/zingg-0.7.0.jar,s3://your-bucket/jars/zingg-common-client-0.7.0.jar,s3://your-bucket/jars/zingg-common-core-0.7.0.jar,s3://your-bucket/jars/zingg-spark-client-0.7.0.jar,s3://your-bucket/jars/zingg-spark-core-0.7.0.jar,s3://your-bucket/jars/zingg-common-infra-0.7.0.jar",
+    "--additional-python-modules": "zingg==0.7.0,tabulate,ipywidgets",
     "--conf": "spark.serializer=org.apache.spark.serializer.KryoSerializer"
 }
 ```
 
 Replace `your-bucket` with your actual S3 bucket name throughout.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 `%%configure` must be the first cell executed. Running any other cell before this, including imports, starts the Glue session without the JARs. If this happens, stop the session (`%stop_session`) and start a fresh notebook.
 {% endhint %}
 
@@ -179,7 +188,7 @@ Verify it is set:
 spark.sparkContext.getCheckpointDir()
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 Because Glue workers are temporary, storing checkpoints in S3 ensures Zingg can recover from any worker interruption during long-running training or match phases. Without this, a worker restart causes the entire job to fail.
 {% endhint %}
 
@@ -263,7 +272,7 @@ def count_labeled_pairs(marked_pd):
     return n_positive, n_negative, n_total
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 `boto3` is the AWS SDK for Python. It is used here for low-level S3 operations - scanning folders, reading labeled files, and deleting training data, that Spark cannot handle directly. `cleanModel()` uses a paginator to ensure all files are found even when a folder contains more than 1,000 objects.
 {% endhint %}
 
@@ -295,7 +304,6 @@ print(f"Previewing data from {csv_path}:")
 spark_df.show(10)
 ```
 
-_**IMAGE TO BE ADDED - Glue notebook cell showing the\*\*\*\*****&#x20;****`spark_df.show(10)`****&#x20;****\*\*\*\*output table with sample FEBRL records — the same entity appearing multiple times with field variations across rows. Tanwi to check with team for the screenshot.**_
 
 #### **Step 11: Configure input and output pipes**
 
@@ -322,7 +330,7 @@ args.setOutput(outputPipe)
 print("Input and output pipes configured.")
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Zingg also supports Parquet and JSON output on S3. To push results downstream to Amazon Redshift, use the Redshift connector.
 
 For all connector formats → [Connect Relational Databases](../connect-your-data/connect-relational-databases.md)
@@ -353,7 +361,7 @@ fieldDefs = [
 args.setFieldDefinition(fieldDefs)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 `FUZZY` handles variations like 'Jon' vs 'John' or 'St' vs 'Street'. `EXACT` requires a character-for-character match. `DONT_USE` excludes a field from matching but keeps it in output.
 
 **Read more**: For all match types → [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/)
@@ -368,13 +376,13 @@ args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.5)
 ```
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 For a 2-worker G.1X cluster (4 vCPUs each), 4–8 partitions is a good starting point. Set `numPartitions` to approximately 2–3× your total worker vCPU count. For 1M+ records, reduce `labelDataSampleSize` to 0.01–0.05 to prevent the sampling phase from exhausting worker memory.
 {% endhint %}
 
 ### Notebook 01 continued: Find training data and label pairs
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 AWS Glue Interactive Sessions restrict standard Jupyter widgets. Zingg's standard `ipywidgets` labeling interface does not render in Glue notebooks. Instead, this guide exports candidate pairs as a CSV to S3 for offline review. You label each pair by entering 0, 1, or 2 in a spreadsheet, upload the file back to S3, and run a sync cell to feed the labels back into Zingg. The process is covered in Steps 15 and 16.
 {% endhint %}
 
@@ -464,9 +472,8 @@ ready_for_save = True
 print(f"Review sheet exported for {n_pairs} pairs to: {export_path}")
 ```
 
-_**IMAGE TO BE ADDED — S3 console showing the\*\*\*\*****&#x20;****`/review/`****&#x20;****folder with the exported****&#x20;****`pending_labels.csv`****&#x20;****\*\*\*\*part file ready for download. Tanwi to check with team for the screenshot.**_
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 How to label the review sheet:
 
 1. Go to **S3 → your-bucket → review/** in the AWS Console and download the `part-00000-*.csv` file.
@@ -476,9 +483,8 @@ How to label the review sheet:
 5. Run Step 16 to feed the labels into Zingg.
 {% endhint %}
 
-_**IMAGE TO BE ADDED — Example of the exported review CSV open in Excel showing two FEBRL records side by side in a vertical layout, with the\*\*\*\*****&#x20;****`>>> DECISION`****&#x20;****row highlighted and a****&#x20;****`1`****&#x20;****entered in the****&#x20;****`Record_B`****&#x20;****\*\*\*\*column. Tanwi to check with team for the screenshot.**_
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="check-circle" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 14–16 in a loop until you reach this target. Label until all field types and data variation patterns in your schema are covered. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
 {% endhint %}
 
@@ -583,7 +589,7 @@ except Exception as e:
     print(f"Documentation not found at expected S3 path. {e}")
 ```
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 Unlike other platforms, Glue cannot render HTML inline in the notebook. Download `model.html` from the S3 console and open it in a browser to view the documentation. Navigate to **S3 → your-bucket → models → modelId → docs** to find the file.
 
 `generateDocs` is optional. Skip it if you have 30–40 matches and 30–40 non-matches and are confident in your labeling quality.
@@ -645,7 +651,6 @@ print(f"Redundancy Reduced by: "
     f"{((total_records - unique_entities) / total_records) * 100:.2f}%")
 ```
 
-_**IMAGE TO BE ADDED — Glue notebook cell showing\*\*\*\*****&#x20;****`final_results.orderBy("z_cluster").show(10)`****&#x20;****output with resolved records grouped by****&#x20;****`z_cluster`****&#x20;****\*\*\*\*— two rows sharing the same cluster value visible in the output. Tanwi to check with team for the screenshot.**_
 {% endtab %}
 
 {% tab title="Enterprise" %}
@@ -653,7 +658,7 @@ _**IMAGE TO BE ADDED — Glue notebook cell showing\*\*\*\*****&#x20;****`final_
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * Tune accuracy → [Improve Accuracy](../tuning/improve-accuracy/)
@@ -661,9 +666,9 @@ _**IMAGE TO BE ADDED — Glue notebook cell showing\*\*\*\*****&#x20;****`final_
 * Set up incremental for production → [Run Incremental Matching](../running-zingg/run-incremental-matching.md)
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 Download the notebooks used in this guide:
 
-* Community notebooks (NB01–04): Download the notebook used in this guide: `github.com/zinggAI/zingg/tree/main/examples/aws-glue`
-* Enterprise notebooks — TO BE ADDED
+* Community notebooks (NB01–04): `github.com/zinggAI/zingg/tree/main/examples/aws-glue`
+* Enterprise notebooks (NB01–07): included in your Zingg Enterprise package
 {% endhint %}

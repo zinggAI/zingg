@@ -1,4 +1,6 @@
 ---
+description: >-
+  Zingg builds similarity models from training data. Use the Interactive Labeler to create training data by labeling candidate pairs as Match, No Match, or Uncertain.
 parent: Step By Step Guide
 nav_order: 6
 title: Creating training data

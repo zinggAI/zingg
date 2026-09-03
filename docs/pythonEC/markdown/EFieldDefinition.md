@@ -1,3 +1,8 @@
+---
+description: >-
+  EFieldDefinition class reference for Zingg Enterprise. Extends FieldDefinition with primary key support and post-processors for output value standardization.
+---
+
 # EFieldDefinition
 
 ## zinggEC.enterprise.common.EFieldDefinition

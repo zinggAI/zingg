@@ -5,7 +5,7 @@ description: >-
   source and run the full match workflow.
 ---
 
-# macOS Setup Guide
+# 🎛️ macOS Setup Guide
 
 This guide provides specific instructions for setting up the Zingg development environment on macOS.
 
@@ -19,7 +19,7 @@ Homebrew is the preferred package manager for macOS and makes installing system 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **For Apple Silicon:** If `brew` is not found, run: `echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc && source ~/.zshrc`
 {% endhint %}
 
@@ -29,7 +29,7 @@ Homebrew is the preferred package manager for macOS and makes installing system 
 brew install git
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 It is suggested to fork the repository to your account and then clone the repository.
 {% endhint %}
 
@@ -60,7 +60,7 @@ rm spark-3.5.0-bin-hadoop3.tgz
 
 Make sure that Spark version you have installed is compatible with Java you have installed, and Zingg is supporting those versions.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Zingg supports Spark 3.5 and the corresponding Java version.
 {% endhint %}
 
@@ -117,7 +117,7 @@ mvn initialize
 mvn clean compile package -Dspark=sparkVer -Dmaven.test.skip=true
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Replace the `sparkVer` with the version of Spark you installed. For example, **-Dspark=3.5**. If you still face an error, include **-Dmaven.test.skip=true** with the above command.
 {% endhint %}
 

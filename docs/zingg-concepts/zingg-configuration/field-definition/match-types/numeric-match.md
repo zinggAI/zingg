@@ -19,7 +19,15 @@ This makes it useful for address fields where a number is embedded in a string -
 
 ### What `NUMERIC` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Score</th><th valign="top">Notes</th></tr></thead><tbody><tr><td valign="top">42 Main St</td><td valign="top">42 Main Street</td><td valign="top">1.0 (Yes)</td><td valign="top">42 extracted from both</td></tr><tr><td valign="top">42B Main St</td><td valign="top">42 Main St</td><td valign="top">1.0 (Yes)</td><td valign="top">42 extracted from both - "B" isn't a digit, so it's dropped</td></tr><tr><td valign="top">42 Main St</td><td valign="top">43 Main St</td><td valign="top">0.0 (No)</td><td valign="top">{42} vs {43} share nothing</td></tr><tr><td valign="top">Suite 12, Floor 3</td><td valign="top">Suite 12, Floor 4</td><td valign="top">0.33</td><td valign="top">{12,3} vs {12,4} share one of three distinct numbers</td></tr><tr><td valign="top">10 Main St, Apt 10</td><td valign="top">10 Main St</td><td valign="top">1.0 (Yes)</td><td valign="top">"10" appears twice on the left but dedupes to the set {10}, same as the right side</td></tr><tr><td valign="top">[no numbers]</td><td valign="top">42 Main St</td><td valign="top">0.0 (No)</td><td valign="top">One side extracts no numbers, so there's nothing to intersect</td></tr><tr><td valign="top">[null]</td><td valign="top">42 Main St</td><td valign="top">0.0 (No)</td><td valign="top">The null-matches-anything default every other match type uses does not apply here</td></tr></tbody></table>
+| Value A | Value B | Score | Notes |
+|---|---|---|---|
+| 42 Main St | 42 Main Street | 1.0 (Yes) | 42 extracted from both |
+| 42B Main St | 42 Main St | 1.0 (Yes) | 42 extracted from both - "B" isn't a digit, so it's dropped |
+| 42 Main St | 43 Main St | 0.0 (No) | {42} vs {43} share nothing |
+| Suite 12, Floor 3 | Suite 12, Floor 4 | 0.33 | {12,3} vs {12,4} share one of three distinct numbers |
+| 10 Main St, Apt 10 | 10 Main St | 1.0 (Yes) | "10" appears twice on the left but dedupes to the set {10}, same as the right side |
+| [no numbers] | 42 Main St | 0.0 (No) | One side extracts no numbers, so there's nothing to intersect |
+| [null] | 42 Main St | 0.0 (No) | The null-matches-anything default every other match type uses does not apply here |
 
 ### When to use `NUMERIC`
 
@@ -59,7 +67,7 @@ For "16gb", "500ml", and similar specifications where the unit matters as much a
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related matches:**
 
 * `NUMERIC_WITH_UNITS` - for product codes that include units (16gb, 500ml)

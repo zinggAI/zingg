@@ -17,7 +17,12 @@ spark.driver.memory=4g
 spark.sql.shuffle.partitions=200
 ```
 
-<table><thead><tr><th width="309.85546875" valign="top">Property</th><th width="117.21484375" valign="top">Default</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top"><code>spark.master</code></td><td valign="top"><code>local[*]</code></td><td valign="top">Spark master URL. Use <code>local[*]</code> for local development (all cores). For cluster mode, set to your cluster manager URL. On managed platforms (Databricks, Fabric, EMR) this is managed automatically; do not override.</td></tr><tr><td valign="top"><code>spark.executor.memory</code></td><td valign="top"><code>4g</code></td><td valign="top">Memory allocated per executor. Increase if you see OOM errors during training or matching. For large datasets (1M+ records) try <code>8g</code> or <code>16g</code>.</td></tr><tr><td valign="top"><code>spark.driver.memory</code></td><td valign="top"><code>4g</code></td><td valign="top">Memory allocated to the Spark driver. Usually matches or is slightly lower than <code>spark.executor.memory</code>.</td></tr><tr><td valign="top"><code>spark.sql.shuffle.partitions</code></td><td valign="top"><code>200</code></td><td valign="top">Number of partitions used during shuffle operations. Increase for very large datasets during the <code>match</code> phase. A common value for large datasets is <code>400</code>–<code>800</code>.</td></tr></tbody></table>
+| Property | Default | Description |
+|---|---|---|
+| `spark.master` | `local[*]` | Spark master URL. Use `local[*]` for local development (all cores). For cluster mode, set to your cluster manager URL. On managed platforms (Databricks, Fabric, EMR) this is managed automatically; do not override. |
+| `spark.executor.memory` | `4g` | Memory allocated per executor. Increase if you see OOM errors during training or matching. For large datasets (1M+ records) try `8g` or `16g`. |
+| `spark.driver.memory` | `4g` | Memory allocated to the Spark driver. Usually matches or is slightly lower than `spark.executor.memory`. |
+| `spark.sql.shuffle.partitions` | `200` | Number of partitions used during shuffle operations. Increase for very large datasets during the `match` phase. A common value for large datasets is `400`–`800`. |
 
 ### Adding JARs for connectors
 
@@ -65,7 +70,7 @@ For GCP Dataproc, inject JARs via cluster creation properties.
 
 **Value**:
 
-* `gs://BUCKET/zingg-0.6.0.jar`
+* `gs://BUCKET/zingg-0.7.0.jar`
 * `gs://BUCKET/spark-3.5-bigquery-0.44.1.jar`
 * `gs://BUCKET/gcs-connector-hadoop3-latest.jar`
 

@@ -1,3 +1,8 @@
+---
+description: >-
+  EArguments class reference for Zingg Enterprise. Extends Arguments with blocking model, deterministic matching, primary key, output stats, and passthrough expression.
+---
+
 # EArguments
 
 ## zinggEC.enterprise.common.EArguments

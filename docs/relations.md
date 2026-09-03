@@ -9,9 +9,9 @@ description: When a single match model is not sufficient
 
 [Zingg Enterprise Feature](#user-content-fn-1)[^1]
 
-In many cases, we want to build the identity graph using a combination of different datasets, schemas and matching logic. An example could be having a source system which only contains userids and emails, another one wtih user name and phone numbers and a few others with person information with addresses. Another example could be some systems capturing spousal information,  but others to be matched on the basis of lastname and address.&#x20;
+In many cases, we want to build the identity graph using a combination of different datasets, schemas and matching logic. An example could be having a source system which only contains userids and emails, another one wtih user name and phone numbers and a few others with person information with addresses. Another example could be some systems capturing spousal information,  but others to be matched on the basis of lastname and address. 
 
-In such cases, Zingg can build the entire graph and relate different models together. In the following case, results of a query with exact match on family Id and a matching model(household) using address and lastname are brought together.&#x20;
+In such cases, Zingg can build the entire graph and relate different models together. In the following case, results of a query with exact match on family Id and a matching model(household) using address and lastname are brought together. 
 
 ````json
 ```

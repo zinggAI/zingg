@@ -1,4 +1,6 @@
 ---
+description: >-
+  Enterprise feature for manual cluster approval workflow. Review, approve, or reject matched clusters before committing to the identity graph.
 title: Approve Clusters
 parent: Step By Step Guide
 nav_order: 13

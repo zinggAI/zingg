@@ -1,3 +1,8 @@
+---
+description: >-
+  SnowflakePipe class reference for Community edition. Configure Snowflake connection: URL, user, password, database, schema, warehouse, and table for data input/output.
+---
+
 # zingg.pipes.SnowflakePipe
 
 ### *class* zingg.pipes.SnowflakePipe(name)

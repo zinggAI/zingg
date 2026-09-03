@@ -1,3 +1,8 @@
+---
+description: >-
+  Connect Zingg to Google BigQuery using Spark BigQuery connector. Requires driver JARs, GCS connector, service account credentials, and temporary GCS bucket for writes.
+---
+
 # BigQuery
 
 Zingg can seamlessly work with Google BigQuery. Please find below details about the properties that must be set.

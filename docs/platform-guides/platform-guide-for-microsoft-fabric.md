@@ -5,11 +5,11 @@ description: >-
   and Enterprise.
 ---
 
-# Platform Guide for Microsoft Fabric
+# 🔌 Platform Guide for Microsoft Fabric
 
 Microsoft Fabric paired with Zingg gives you entity resolution with built-in data governance via Microsoft Purview. Fabric's OneLake provides a single storage layer for all your data. Zingg runs on Fabric Spark pools using the same Python API as on other platforms.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 * Tested with Fabric Runtime 1.3 (Spark 3.5).
 * Download the sample Fabric notebook from `github.com/zinggAI/zingg/blob/main/examples/fabric/ExampleNotebook.ipynb` and upload it to your workspace to follow this guide.
 {% endhint %}
@@ -68,7 +68,7 @@ Zingg reads from and writes to OneLake. Create a Lakehouse to give Zingg a stora
 
     ![Lakehouse Get data menu with Upload files selected.](../.gitbook/assets/fabric-lakehouse-upload-files.png)
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Sample data for testing: `github.com/zinggAI/zingg/blob/main/examples/febrl/test.csv`
 
 Zingg also supports Delta Lake tables, Parquet, and JSON - change the format in the input pipe configuration.
@@ -187,7 +187,7 @@ args.setNumPartitions(32)
 spark.conf.set("spark.sql.adaptive.enabled", False)
 ```
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 Set `numPartitions` to approximately 20–30× your worker vCPU count. `labelDataSampleSize` is set in Notebook 02 where the labeling loop runs — see Step 13.
 {% endhint %}
 
@@ -245,7 +245,7 @@ outputPipe = CsvPipe("resultOutput", output_path)
 args.setOutput(outputPipe)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: To use Delta tables instead of CSV, change the format to `delta` and point to your Lakehouse Tables directory. For all connector formats → [Connect Microsoft Fabric](../connect-your-data/connect-cloud-warehouses/connect-microsoft-fabric.md)
 {% endhint %}
 
@@ -274,7 +274,7 @@ fieldDefs = [
 args.setFieldDefinition(fieldDefs)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 `FUZZY` handles variations like 'Jon' vs 'John' or 'St' vs 'Street'. `EXACT` requires a character-for-character match. `DONT_USE` excludes a field from matching but keeps it in output — use this for record identifiers. For all match types → [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}
 
@@ -291,7 +291,7 @@ args.setNumPartitions(4)
 args.setLabelDataSampleSize(0.4)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 For 100k records use `labelDataSampleSize` between 0.1 and 0.5. For 1M+ records use 0.01 to 0.05. If `findTrainingData` is slow, reduce by approximately 10× and try again.
 {% endhint %}
 
@@ -370,7 +370,7 @@ ready_for_save = True
 
 ![Zingg labeling widget in a Fabric notebook showing two candidate records side by side with Uncertain, Match and No Match buttons.](../.gitbook/assets/fabric-labeling-widget.png)
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="check-circle" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 15–18 in a loop until you reach this target. Label until all field types and data variation patterns in your schema are covered. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
 {% endhint %}
 
@@ -409,7 +409,7 @@ else:
     ready_for_save = False
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 `notebookutils.fs.mkdirs(MARKED_DIR)` creates the target directory in OneLake if it does not already exist. This is a Fabric-specific utility — it is not used on other platforms.
 {% endhint %}
 
@@ -480,18 +480,339 @@ print(outputDF.count())
 {% endtab %}
 
 {% tab title="Enterprise" %}
+{% hint style="info" icon="building" %}
+Enterprise requires a Zingg licence and the Enterprise Fabric package. [Contact Zingg to get access](https://www.zingg.ai/company/contact/contact).
+{% endhint %}
+
+Uses `EArguments`, `EFieldDefinition`, `ECsvPipe`, `EZinggWithSpark`. Seven notebooks, each covering one phase. Enterprise adds blocking model configuration, a primary key for incremental matching, stats output, deterministic matching rules, pass-through expressions, the `runIncremental` phase, and the `explain` phase.
+
+### Prerequisites
+
+* Microsoft Fabric workspace with Lakehouse
+* Zingg Enterprise license
+* Enterprise JAR: `zingg-enterprise-spark-0.7.0.jar`
+* Enterprise Python packages: `zinggEC`, `zinggES`
+* License JAR: `zingg_license.jar`
+
+### Fabric workspace setup (Enterprise)
+
+Complete these steps in the Fabric UI before opening any notebook.
+
+#### **Step 1: Create a Fabric workspace**
+
+Same as Community - create a workspace named `Zingg-Fabric-Enterprise`.
+
+#### **Step 2: Create a Zingg Enterprise Environment**
+
+1. Inside your workspace, go to the **Environment** tab and click **New Environment**.
+2. Name it `Zingg Enterprise Environment`.
+
+#### **Step 3: Install Enterprise JARs in the Environment**
+
+1. Download the Enterprise package (provided with your license) which includes:
+   - `zingg-enterprise-spark-0.7.0.jar`
+   - `zingg_license.jar`
+2. Open your `Zingg Enterprise Environment`, go to **Custom Library**, and upload both JAR files.
+3. Click **Save** and then **Publish** the Environment.
+
+#### **Step 4: Create a Lakehouse and upload your data**
+
+Same as Community - create a Lakehouse and upload your CSV file to OneLake.
+
+### Notebook 01: Set up Zingg Enterprise
+
+Create a new notebook in your workspace, attach it to the `Zingg Enterprise Environment`, and select **PySpark** as the kernel.
+
+#### **Step 5: Verify Spark is configured correctly**
+
+```python
+spark.sparkContext.getConf().get('spark.hadoop.trident.workspace.id')
+```
+
+#### **Step 6: Set the checkpoint directory**
+
+```python
+spark.sparkContext.setCheckpointDir("Files")
+```
+
+#### **Step 7: Install Enterprise Python packages**
+
+```python
+pip install zingg
+pip install zinggEC
+pip install zinggES
+```
+
+Verify installation:
+
+```python
+!pip show zingg
+!pip show zinggEC
+!pip show zinggES
+```
+
+{% hint style="info" icon="circle-info" %}
+All three must show as installed: `zingg` (Community base), `zinggEC` (Enterprise), `zinggES` (Enterprise Plus). If any show as not found, install the corresponding `.whl` file from the cluster Libraries tab using the wheels provided in your Enterprise package.
+{% endhint %}
+
+#### **Step 8: Set the model ID and storage paths**
+
+Replace `<workspace-id>` and `<lakehouse-id>` with the actual IDs from your Fabric workspace and Lakehouse.
+
+```python
+files_dir = (
+    "abfss://<workspace-id>@onelake.dfs.fabric.microsoft.com/"
+    "<lakehouse-id>/Files"
+)
+zingg_dir = files_dir + "/zingg"
+model_id = "zinggModel"
+MARKED_DIR = zingg_dir + "/" + model_id + "/trainingData/marked/"
+UNMARKED_DIR = zingg_dir + "/" + model_id + "/trainingData/unmarked/"
+```
+
+#### **Step 9: Import libraries**
+
+```python
+import pandas as pd
+import numpy as np
+import os, time, uuid
+from ipywidgets import widgets, interact, GridspecLayout
+import base64
+import pyspark.sql.functions as fn
+from zinggEC.enterprise.common.ApproverArguments import *
+from zinggEC.enterprise.common.IncrementalArguments import *
+from zinggEC.enterprise.common.epipes import *
+from zinggEC.enterprise.common.EArguments import *
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zinggES.enterprise.spark.ESparkClient import *
+from zingg.client import *
+from zingg.pipes import *
+```
+
+#### **Step 10: Build the Enterprise arguments object**
+
+`EArguments` is the Enterprise equivalent of `Arguments`. `setBlockingModel` sets the blocking strategy. `DEFAULT` suits most datasets—use `WIDER` if you know matching pairs are being missed.
+
+```python
+args = EArguments()
+args.setModelId(model_id)
+args.setZinggDir(zingg_dir)
+args.setBlockingModel("DEFAULT")
+```
+
+#### **Step 11: Configure performance settings**
+
+```python
+args.setNumPartitions(32)
+spark.conf.set("spark.sql.adaptive.enabled", False)
+```
+
+{% hint style="danger" icon="triangle-exclamation" %}
+Set `numPartitions` to approximately 20–30× your worker vCPU count. `labelDataSampleSize` is set in Notebook 03 where the labeling loop runs.
+{% endhint %}
+
+#### **Step 12: Preview your data**
+
+Same as Community Notebook 01, Step 11.
+
+#### **Step 13: Configure input and output pipes**
+
+Use `ECsvPipe` for Enterprise:
+
+```python
+schema = (
+    "rec_id string, fname string, "
+    "lname string, stNo string, "
+    "add1 string, add2 string, "
+    "city string, areacode string, "
+    "state string, dob string, "
+    "ssn string"
+)
+
+inputPipe = ECsvPipe(
+    "inputpipe",
+    "abfss://<workspace-id>@onelake"
+    ".dfs.fabric.microsoft.com/"
+    "<lakehouse-id>/Files/test.csv",
+    schema
+)
+args.setData(inputPipe)
+
+output_path = (
+    "abfss://<workspace-id>@onelake"
+    ".dfs.fabric.microsoft.com/"
+    "<lakehouse-id>/Files/Output" + model_id
+)
+outputPipe = ECsvPipe("resultOutput", output_path)
+args.setOutput(outputPipe)
+```
+
+#### **Step 14: Define fields and match types**
+
+Use `EFieldDefinition` for Enterprise:
+
+```python
+rec_id = EFieldDefinition("rec_id", "string", MatchType.DONT_USE)
+fname = EFieldDefinition("fname", "string", MatchType.FUZZY)
+lname = EFieldDefinition("lname", "string", MatchType.FUZZY)
+stNo = EFieldDefinition("stNo", "string", MatchType.FUZZY)
+add1 = EFieldDefinition("add1", "string", MatchType.FUZZY)
+add2 = EFieldDefinition("add2", "string", MatchType.FUZZY)
+city = EFieldDefinition("city", "string", MatchType.FUZZY)
+areacode = EFieldDefinition("areacode", "string", MatchType.FUZZY)
+state = EFieldDefinition("state", "string", MatchType.FUZZY)
+dob = EFieldDefinition("dob", "string", MatchType.EXACT)
+ssn = EFieldDefinition("ssn", "string", MatchType.EXACT)
+
+fieldDefs = [
+    rec_id, fname, lname, stNo, add1,
+    add2, city, areacode, state, dob,
+    ssn
+]
+args.setFieldDefinition(fieldDefs)
+```
+
+### Notebook 02: Find training data
+
+This notebook runs `findTrainingData`. It calls `%run 01-setting_up_zingg` at the top.
+
+#### **Step 15: Set `labelDataSampleSize`**
+
+```python
+args.setNumPartitions(4)
+args.setLabelDataSampleSize(0.4)
+```
+
+#### **Step 16: Find candidate pairs**
+
+```python
+options = ClientOptions([ClientOptions.PHASE, "findTrainingData"])
+zingg = EZinggWithSpark(args, options)
+zingg.initAndExecute()
+```
+
+### Notebook 03: Label pairs
+
+This notebook runs `label`. It calls `%run 01-setting_up_zingg` at the top.
+
+#### **Step 17: Load pairs for labeling**
+
+```python
+options = ClientOptions([ClientOptions.PHASE, "label"])
+zingg = EZinggWithSpark(args, options)
+zingg.init()
+
+candidate_pairs_pd = getPandasDfFromDs(zingg.getUnmarkedRecords())
+
+if candidate_pairs_pd.shape[0] == 0:
+    print("No pairs found. Run findTrainingData first.")
+else:
+    z_clusters = list(np.unique(candidate_pairs_pd['z_cluster']))
+    print(f"{len(z_clusters)} candidate pairs found for labeling")
+```
+
+#### **Step 18: Label pairs in the widget**
+
+Same widget code as Community (Step 17).
+
+#### **Step 19: Save labeled pairs**
+
+```python
+if not ready_for_save:
+    print("Run the widget cell first.")
+else:
+    for pair in vContainers[1:]:
+        user_assigned_label = pair.children[1].get_interact_value()
+        start = pair.children[0].value.find('data-title="')
+        if start > 0:
+            start += len('data-title="')
+            end = pair.children[0].value.find('"', start+2)
+        pair_id = pair.children[0].value[start:end]
+        candidate_pairs_pd.loc[
+            candidate_pairs_pd['z_cluster'] == pair_id,
+            'z_isMatch'] = LABELS.get(user_assigned_label)
+
+    notebookutils.fs.mkdirs(MARKED_DIR)
+    zingg.writeLabelledOutputFromPandas(
+        candidate_pairs_pd, args)
+
+    marked_pd_df = getPandasDfFromDs(
+        zingg.getMarkedRecords())
+    n_pos, n_neg, n_uncer, n_tot = \
+        count_labeled_pairs(marked_pd_df)
+    print(f"Out of total {n_tot} pairs,")
+    print(f"You have accumulated {n_pos} pairs labeled as positive matches.")
+    print(f"You have accumulated {n_neg} pairs labeled as not matches.")
+    print(f"You have accumulated {n_uncer} pairs labeled as uncertain.")
+    print("Run Steps 16-19 again if you need more pairs.")
+    ready_for_save = False
+```
+
+### Notebook 04: Generate model documentation (optional)
+
+Run `generateDocs` after labeling to produce HTML reports of your training data.
+
+```python
+options = ClientOptions([ClientOptions.PHASE, "generateDocs"])
+zingg = EZinggWithSpark(args, options)
+zingg.initAndExecute()
+
+DOCS_DIR = zingg_dir + "/" + model_id + "/docs/"
+displayHTML(open(DOCS_DIR + "model.html", 'r').read())
+displayHTML(open(DOCS_DIR + "data.html", 'r').read())
+```
+
+### Notebook 05: Train and match
+
+#### **Step 20: Train and match**
+
+```python
+options = ClientOptions([ClientOptions.PHASE, "trainMatch"])
+zingg = EZinggWithSpark(args, options)
+zingg.initAndExecute()
+```
+
+Run `train` and `match` separately if you want to inspect the model first.
+
+### Notebook 06: Explain results (Enterprise only)
+
+```python
+options = ClientOptions([ClientOptions.PHASE, "explain"])
+zingg = EZinggWithSpark(args, options)
+zingg.initAndExecute()
+```
+
+### Notebook 07: Incremental matching (Enterprise only)
+
+```python
+options = ClientOptions([ClientOptions.PHASE, "runIncremental"])
+zingg = EZinggWithSpark(args, options)
+zingg.initAndExecute()
+```
+
+### Key Differences from Community Edition
+
+| Feature | Community | Enterprise |
+|---------|-----------|------------|
+| Classes | `Arguments`, `FieldDefinition`, `CsvPipe`, `ZinggWithSpark` | `EArguments`, `EFieldDefinition`, `ECsvPipe`, `EZinggWithSpark` |
+| Blocking | Default only | `DEFAULT` or `WIDER` strategy |
+| Incremental | Not available | `runIncremental` phase |
+| Explainability | Not available | `explain` phase |
+| Deterministic | Not available | Built-in deterministic rules |
+| Pass-through | Not available | Pass-through expressions |
+| Notebooks | 4 | 7 |
 
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * Tune accuracy → [Improve Accuracy](../tuning/improve-accuracy/)
 * Understand scores and set thresholds → [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 Download the notebooks used in this guide:
 
 * Community notebooks (NB01–04): `github.com/zinggAI/zingg/tree/main/examples/fabric`

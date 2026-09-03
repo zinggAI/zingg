@@ -1,4 +1,6 @@
 ---
+description: >-
+  How Zingg computes match scores, interprets similarity features, and chooses thresholds. Understand score distribution, transitivity, and cluster inspection.
 nav_order: 6
 ---
 
@@ -20,5 +22,5 @@ The threshold is automatically chosen so that you can pick up most of the result
 A few things to keep in mind while interpreting the scores:
 
 * Matching is _transitive_, so if record A matches Record B and Record B matches C, we put records A, B, and C in the same cluster. That is how different records in a cluster get matched at various confidence levels to the rest and all these records showed up together.
-* Our recommendation is to keep a threshold below **x**% of the max score as suspect records - manual review/to be visited later/flow through but will lessen confidence. **x** will depend on how accurate you find the results and how much you want to control the outcome.
+* Identify the records you consider **suspect** — those with a score below a threshold you set based on your own accuracy needs and how much you want to control the outcome. The exact threshold depends on your data and the quality of the results you observe, so inspect a sample of clusters and adjust accordingly.
 * Keep cluster size above 4 or 5 for inspection. You could keep it irrespective of the score, or look at only those clusters whose **z\_minScore** is 0. This will depend on what the results look like to you.

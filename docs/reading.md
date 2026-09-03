@@ -1,4 +1,6 @@
 ---
+description: >-
+  Curated reading list on entity resolution, identity resolution, customer data platforms, and master data management.
 nav_order: 11
 ---
 

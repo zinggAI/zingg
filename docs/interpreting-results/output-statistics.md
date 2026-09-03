@@ -8,9 +8,9 @@ tags:
     primary: true
 ---
 
-# Output Statistics
+# 📊 Output Statistics
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Enterprise only. Output statistics are generated when the stats output pipe is configured in [Configure Zingg](../running-zingg/configure-zingg.md).
 {% endhint %}
 
@@ -55,13 +55,15 @@ args.setOutputStats(statsOutputPipe)
 }
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="circle-info" %}
 The `$ZINGG_DYNAMIC_STAT_NAME` placeholder is automatically substituted with the statistics type (`SUMMARY`, `CLUSTER`, or `RECORD`) and a timestamp. This ensures each phase run writes to a separate statistics file. If `outputStats` is not configured, Zingg will not write statistics but the run will proceed normally.
 {% endhint %}
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-**CONTENT FOR THIS SECTION TO BE PROVIDED BY SONAL LATER**
+{% hint style="info" %}
+**Coming soon** — Enterprise Snowflake guidance for output statistics is in progress and will be published here when available.
+{% endhint %}
 {% endtab %}
 {% endtabs %}
 
@@ -79,7 +81,11 @@ Summary statistics give a high-level view of the match run:
 
 ### Summary statistics field names
 
-<table><thead><tr><th width="244.69921875" valign="top">Field</th><th valign="top">Descriptio</th></tr></thead><tbody><tr><td valign="top"><code>z_num_records</code></td><td valign="top">Total number of records processed in this run</td></tr><tr><td valign="top"><code>z_num_clusters</code></td><td valign="top">Total number of clusters formed</td></tr><tr><td valign="top"><code>z_time_stamp</code></td><td valign="top">Timestamp of the match or incremental run</td></tr></tbody></table>
+| Field | Description |
+|-------|-------------|
+| `z_num_records` | Total number of records processed in this run |
+| `z_num_clusters` | Total number of clusters formed |
+| `z_time_stamp` | Timestamp of the match or incremental run |
 
 ### Reading summary statistics
 
@@ -104,7 +110,13 @@ Cluster-level statistics give detail per resolved entity:
 
 ### Cluster statistics field names
 
-<table><thead><tr><th width="275.1640625" valign="top">Field</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top"><code>z_cluster_count</code></td><td valign="top">Number of records in the cluster (cluster size)</td></tr><tr><td valign="top"><code>z_cluster_edges</code></td><td valign="top">Total number of deterministic and probabilistic pairs among all records in the cluster</td></tr><tr><td valign="top"><code>z_cluster_deterministic_edges</code></td><td valign="top">Number of edges explained by deterministic rules</td></tr><tr><td valign="top"><code>z_cluster_centrality</code></td><td valign="top">Edge density: <code>z_cluster_edges / (n*(n-1)/2)</code>. Values near 1 = dense cluster; lower = sparse</td></tr><tr><td valign="top"><code>z_cluster_determinism</code></td><td valign="top">Proportion of connectivity driven by deterministic rules: <code>z_cluster_deterministic_edges / (n*(n-1)/2)</code></td></tr></tbody></table>
+| Field | Description |
+|-------|-------------|
+| `z_cluster_count` | Number of records in the cluster (cluster size) |
+| `z_cluster_edges` | Total number of deterministic and probabilistic pairs among all records in the cluster |
+| `z_cluster_deterministic_edges` | Number of edges explained by deterministic rules |
+| `z_cluster_centrality` | Edge density: `z_cluster_edges / (n*(n-1)/2)`. Values near 1 = dense cluster; lower = sparse |
+| `z_cluster_determinism` | Proportion of connectivity driven by deterministic rules: `z_cluster_deterministic_edges / (n*(n-1)/2)` |
 
 ### Reading cluster statistics
 
@@ -135,7 +147,13 @@ Record-level statistics give detail per individual record:
 
 ### Record statistics field names
 
-<table><thead><tr><th width="270.16796875" valign="top">Field</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top"><code>z_record_edges</code></td><td valign="top">Total number of other records this record matches (deterministically and probabilistically)</td></tr><tr><td valign="top"><code>z_record_deterministic_edges</code></td><td valign="top">Number of records this record matches deterministically</td></tr><tr><td valign="top"><code>z_cluster_count</code></td><td valign="top">Number of records in the cluster this record belongs to</td></tr><tr><td valign="top"><code>z_record_centrality</code></td><td valign="top">How central this record is within its cluster: <code>z_record_edges / (n-1)</code></td></tr><tr><td valign="top"><code>z_record_determinism</code></td><td valign="top">Proportion of this record's connectivity explained by deterministic rules: <code>z_record_deterministic_edges / (n-1)</code></td></tr></tbody></table>
+| Field | Description |
+|-------|-------------|
+| `z_record_edges` | Total number of other records this record matches (deterministically and probabilistically) |
+| `z_record_deterministic_edges` | Number of records this record matches deterministically |
+| `z_cluster_count` | Number of records in the cluster this record belongs to |
+| `z_record_centrality` | How central this record is within its cluster: `z_record_edges / (n-1)` |
+| `z_record_determinism` | Proportion of this record's connectivity explained by deterministic rules: `z_record_deterministic_edges / (n-1)` |
 
 ### Reading record statistics
 

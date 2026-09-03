@@ -8,9 +8,9 @@ tags:
     primary: true
 ---
 
-# Connect Azure Databricks
+# 🔌 Connect Azure Databricks
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 All standard Spark formats (CSV, Parquet, JSON, Avro) are available in Community. Delta format and Unity Catalog are Enterprise only.
 {% endhint %}
 
@@ -20,7 +20,7 @@ On Azure Databricks, data sits in cloud storage (Azure Data Lake Storage Gen2) o
 
 ### **Python API - Community**
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 `dbfs:/` paths are deprecated in Databricks. Use Unity Catalog paths for tables or cloud storage paths (`s3a://`, `abfss://)` for files. For Unity Catalog table access, Enterprise uses UCPipe—see below.
 {% endhint %}
 
@@ -43,7 +43,7 @@ args.setOutput(outputPipe)
 
 ### Python API - Enterprise
 
-{% hint style="danger" icon="right-long" %}
+{% hint style="danger" icon="triangle-exclamation" %}
 **Enterprise** uses `ECsvPipe`. Supports all formats including Delta and Unity Catalog.
 {% endhint %}
 
@@ -76,7 +76,7 @@ inputPipe = UCPipe("databricksInput", "catalog.schema.tablename")
 args.setData(inputPipe)
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Enterprise supports Unity Catalog via UCPipe. Replace catalog, schema, and tablename with your Unity Catalog path. UCPipe is recommended for governed Delta tables in Databricks Enterprise deployments.
 {% endhint %}
 

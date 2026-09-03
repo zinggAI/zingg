@@ -1,3 +1,8 @@
+---
+description: >-
+  Step-by-step guide to set up Zingg development environment on macOS including Homebrew, Java, Spark, and Git.
+---
+
 # MacOS Setup for Zingg
 
 This guide provides specific instructions for setting up the Zingg development environment on macOS.

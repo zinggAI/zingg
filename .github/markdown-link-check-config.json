@@ -1,0 +1,30 @@
+{
+  "ignorePatterns": [
+    {
+      "pattern": "https://docs.zingg.ai/latest/.*",
+      "reason": "Live docs site - validated separately"
+    },
+    {
+      "pattern": "https://github.com/zinggAI/zingg/.*",
+      "reason": "GitHub repo links - validated by GitHub"
+    },
+    {
+      "pattern": "http://localhost.*",
+      "reason": "Local development URLs"
+    },
+    {
+      "pattern": "(py-modindex|genindex|search)\\.md",
+      "reason": "Sphinx-generated API index pages (produced at build time in pythonES/pythonEC)"
+    }
+  ],
+  "retryOn429": true,
+  "retryCount": 3,
+  "fallbackRetryDelay": 5000,
+  "aliveStatusCodes": [200, 206],
+  "replacementPatterns": [
+    {
+      "pattern": "^/([^/])",
+      "replacement": "https://github.com/zinggAI/zingg/blob/main/$1"
+    }
+  ]
+}

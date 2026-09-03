@@ -12,7 +12,7 @@ When you run the train phase, Zingg builds two separate machine learning models 
 Understanding what each model does gives you a clear framework for diagnosing problems, tuning performance, and knowing which part of the pipeline to adjust when results are not what\
 you expect.
 
-Models are saved within the customer environment at a location of their choice.&#x20;
+Models are saved within the customer environment at a location of their choice. 
 
 
 

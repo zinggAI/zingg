@@ -1,3 +1,8 @@
+---
+description: >-
+  The cost of duplicate patient records in healthcare. Survey data showing $1.5M annual cost per hospital and how Zingg reduces data cleaning time.
+---
+
 It is a truth universally acknowledged, that duplicate records are bad. They hurt analytics, increase operational overheads, make compliance a pain and increase risk. But well, there are so many challenges in the data stack, surely duplicate records can be something we can live with? How bad can it be?
 A recent survey by [Black Book](https://blackbookmarketresearch.newswire.com/news/improving-provider-interoperability-congruently-increasing-patient-20426295) has quantified just how bad duplicate records can be. The survey found that an average hospital is spending an extra 1.5 million USD an year due to duplicate and fragmented patient records. 1.5 million USD! Lack of a master patient index is clearly a very costly affair.
 The survey also found that with hospitals with more than 150 beds and hundreds of thousands of records, it took approximately 5 months for data cleaning with data validation and normalisation.

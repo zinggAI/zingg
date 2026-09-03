@@ -1,3 +1,8 @@
+---
+description: >-
+  Connect Zingg to ClickHouse via JDBC. Configure URL with SSL, driver, credentials, and dbtable for input/output. Add clickhouse-jdbc JAR to spark.jars.
+---
+
 # ClickHouse
 
 ClickHouse Pipe Definitions

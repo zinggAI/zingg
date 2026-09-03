@@ -4,9 +4,9 @@ description: >-
   S3, Azure Blob Storage, and Google Cloud Storage.
 ---
 
-# Connect Cloud Storage
+# ☁️ Connect Cloud Storage
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 New to Zingg pipes? Understand how pipes work before configuring them - [Pipes and data connections](pipes-and-data-connections.md).
 {% endhint %}
 
@@ -57,7 +57,7 @@ args.setOutput(outputPipe)
 
 ### Python API - Enterprise
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Enterprise uses `ECsvPipe`. Replace import and class name only - the `s3a://` path pattern stays the same.
 {% endhint %}
 
@@ -151,19 +151,52 @@ zingg28032023/zingg
 conf examples / febrl / config.json-- zinggDir s3a:  // zingg28032023/zingg
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="cloud" %}
 Setting `zinggDir` to an S3 path stores all Zingg model files and training data in S3. Models are saved at: `your-bucket/zingg/your-model-id/`
 {% endhint %}
 {% endtab %}
 
 {% tab title="Azure Blob" %}
-_**CHECK WITH SONAL - - NEED TEAMS HELP TO CHECK WHAT EXACTLY TO BE ADDED HERE**_
+On Azure Blob Storage (ADLS Gen2), data lives in containers accessed via the `abfss://` path format. Use `abfss://<container>@<storage-account>.dfs.core.windows.net/<path-to-file>` to connect Zingg to your blob storage. All formats — CSV, Parquet, JSON, Avro, Delta — are available in both Community and Enterprise.
+
+{% hint style="success" icon="book-open" %}
+**Read more**: For the full Zingg installation, Azure Databricks cluster setup, and any additional dependency configuration required when running Zingg on Azure, follow the [Azure Databricks Platform Guide](../platform-guides/platform-guide-for-azure-databricks.md) or [Azure Synapse/Fabric Platform Guide](../platform-guides/platform-guide-for-microsoft-fabric.md).
+{% endhint %}
+
+### **Python API - Community**
+
+```python
+from zingg.client import *
+from zingg.pipes import *
+
+schema = "id string, fname string, lname string, city string"
+inputPipe = CsvPipe("inputData", "abfss://container@storageaccount.dfs.core.windows.net/path/to/data.csv", schema)
+args.setData(inputPipe)
+
+outputPipe = CsvPipe("outputData", "abfss://container@storageaccount.dfs.core.windows.net/path/to/output/")
+args.setOutput(outputPipe)
+```
+
+### **Python API - Enterprise**
+
+```python
+from zinggEC.enterprise.common.EArguments import *
+from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
+from zinggEC.enterprise.common.epipes import *
+from zinggES.enterprise.spark.ESparkClient import *
+
+inputPipe = ECsvPipe("inputData", "abfss://container@storageaccount.dfs.core.windows.net/path/to/data.csv", schema)
+args.setData(inputPipe)
+
+outputPipe = ECsvPipe("outputData", "abfss://container@storageaccount.dfs.core.windows.net/path/to/output/")
+args.setOutput(outputPipe)
+```
 {% endtab %}
 
 {% tab title="GCS" %}
 On Google Cloud Storage, data lives in GCS buckets accessed via the `gs://` path format. Use `gs://<bucket-name>/<path-to-file>` to connect Zingg to your bucket. All formats — CSV, Parquet, JSON, Avro, Delta — are available in both Community and Enterprise.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: For the full Zingg installation, Dataproc cluster setup, and any additional dependency configuration required when running Zingg on Google Cloud, follow the [GCP Dataproc Platform Guide](../platform-guides/platform-guide-for-gcp-dataproc.md).
 {% endhint %}
 
@@ -297,13 +330,13 @@ GCS supports all standard Spark formats. Replace `format` and the path suffix in
 }
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 For Delta format on GCS, see the Azure Databricks tab — Delta is Enterprise only and works the same way with the path schema swapped to `gs://`.
 {% endhint %}
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * For cloud warehouses - [Connect Cloud Warehouses](connect-cloud-warehouses/)

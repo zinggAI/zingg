@@ -1,0 +1,104 @@
+name: Docs Validation
+
+on:
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'docs/**'
+      - '.readthedocs.yaml'
+      - 'python/docs/**'
+  push:
+    branches: [main, master]
+    paths:
+      - 'docs/**'
+      - '.readthedocs.yaml'
+      - 'python/docs/**'
+
+jobs:
+  validate-markdown:
+    name: Validate Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check markdown links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          config-file: '.github/markdown-link-check-config.json'
+
+      - name: Check frontmatter
+        run: |
+          python3 .github/scripts/validate_frontmatter.py
+
+      - name: Check markdown formatting (markdownlint-cli2)
+        uses: DavidAnson/markdownlint-cli2-action@v24
+        with:
+          config: '.markdownlint-cli2.jsonc'
+          globs: 'docs/**/*.md'
+
+  validate-sphinx:
+    name: Validate Sphinx Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          cd python/docs
+          pip install -r ../../python/requirements.txt
+          pip install sphinx sphinx-rtd-theme sphinx-markdown-builder
+
+      - name: Build Sphinx docs
+        run: |
+          cd python/docs
+          make html
+
+  validate-readthedocs-config:
+    name: Validate ReadTheDocs Config
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate .readthedocs.yaml syntax
+        run: |
+          python3 -c "
+          import yaml
+          with open('.readthedocs.yaml') as f:
+              config = yaml.safe_load(f)
+          print('ReadTheDocs config is valid YAML')
+          print(f'Version: {config.get(\"version\")}')
+          print(f'Python version: {config.get(\"build\", {}).get(\"tools\", {}).get(\"python\")}')
+          "
+
+  validate-version-consistency:
+    name: Check Version Consistency
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check version in conf.py
+        run: |
+          VERSION=$(grep -E "version\s*=\s*['\"]([^'\"]+)['\"]" python/docs/conf.py | head -1 | sed -E "s/.*['\"]([^'\"]+)['\"].*/\1/")
+          echo "Sphinx version: $VERSION"
+          if [[ -z "$VERSION" ]]; then
+            echo "ERROR: Could not find version in python/docs/conf.py"
+            exit 1
+          fi
+
+      - name: Check for old version references in docs
+        run: |
+          if grep -r "0\.6\.0" docs/ --include="*.md" 2>/dev/null; then
+            echo "WARNING: Found references to version 0.6.0 in docs"
+          else
+            echo "No old version references found"
+          fi

@@ -4,7 +4,7 @@ description: >-
   Requires two dependency JARs and Google Cloud credentials.
 ---
 
-# Connect BigQuery
+# ☁️ Connect BigQuery
 
 ### Prerequisites
 
@@ -73,7 +73,7 @@ args.setOutput(bqOutput)
 }
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="plug" %}
 ### **JAR download links:**
 
 * **spark-bigquery-with-dependencies:** repo1.maven.org/maven2/com/google/\

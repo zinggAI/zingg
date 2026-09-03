@@ -1,3 +1,8 @@
+---
+description: >-
+  Community Zingg Entity Resolution Python Package reference. Complete API documentation for zingg.client and zingg.pipes modules with example usage.
+---
+
 <!-- zingg documentation master file, created by
 sphinx-quickstart on Thu Jul  7 12:24:41 2022.
 You can adapt this file completely to your liking, but it should at least

@@ -1,4 +1,6 @@
 ---
+description: >-
+  Connect Zingg to Apache Cassandra using Spark Cassandra connector. Configure keyspace, table, cluster, and connection host for input/output.
 title: Cassandra
 parent: Data Sources and Sinks
 nav_order: 5

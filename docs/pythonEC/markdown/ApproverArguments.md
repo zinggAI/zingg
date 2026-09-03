@@ -1,3 +1,8 @@
+---
+description: >-
+  ApproverArguments class reference for Zingg Enterprise cluster approval. Configure approval queries, destination output, and parent EArguments for manual cluster review workflow.
+---
+
 # ApproverArguments
 
 ## zinggEC.enterprise.common.ApproverArguments

@@ -15,7 +15,14 @@ This is designed for situations where the numeric component of a value varies ac
 
 ### What **`ONLY_ALPHABETS_EXACT`** matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">Tower A, Flat 12</td><td valign="top">Tower A, Flat 7</td><td valign="top">Yes - both strip to "Tower A Flat", exact match</td></tr><tr><td valign="top">Tower A</td><td valign="top">Tower B</td><td valign="top">No - "Tower A" vs "Tower B" after stripping, different</td></tr><tr><td valign="top">Block 3, Wing East</td><td valign="top">Block 7, Wing East</td><td valign="top">Yes - both strip to "Block Wing East",<br>exact match</td></tr><tr><td valign="top">Block 3, Wing East</td><td valign="top">Block 3, Wing West</td><td valign="top">No - "Wing East" vs "Wing West"</td></tr><tr><td valign="top">42nd Floor, Suite A</td><td valign="top">18th Floor, Suite A</td><td valign="top">No - strips to "nd Floor, Suite A" vs "th Floor, Suite A"; the ordinal suffix letters survive stripping and differ</td></tr><tr><td valign="top">[null]</td><td valign="top">Tower A, Flat 12</td><td valign="top">Yes - a null/blank value on either side is an automatic match; add <code>NULL_OR_BLANK</code> if you want nulls excluded</td></tr></tbody></table>
+| Value A | Value B | Match? |
+|---|---|---|
+| Tower A, Flat 12 | Tower A, Flat 7 | Yes - both strip to "Tower A Flat", exact match |
+| Tower A | Tower B | No - "Tower A" vs "Tower B" after stripping, different |
+| Block 3, Wing East | Block 7, Wing East | Yes - both strip to "Block Wing East", exact match |
+| Block 3, Wing East | Block 3, Wing West | No - "Wing East" vs "Wing West" |
+| 42nd Floor, Suite A | 18th Floor, Suite A | No - strips to "nd Floor, Suite A" vs "th Floor, Suite A"; the ordinal suffix letters survive stripping and differ |
+| [null] | Tower A, Flat 12 | Yes - a null/blank value on either side is an automatic match; add `NULL_OR_BLANK` if you want nulls excluded |
 
 ### When to use **`ONLY_ALPHABETS_EXACT`**
 
@@ -71,7 +78,7 @@ Use `ONLY_ALPHABETS_FUZZY` instead when the alphabetic component also has spelli
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related types**:
 
 * `ONLY_ALPHABETS_FUZZY` - use when alphabetic parts also have variation

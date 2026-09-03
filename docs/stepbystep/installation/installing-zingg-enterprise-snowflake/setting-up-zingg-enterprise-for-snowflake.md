@@ -1,3 +1,7 @@
+---
+description: >-
+  Install Zingg Enterprise for Snowflake. Extract release archive, set environment variables, and move license file to install directory.
+---
 
 # Installing Zingg Enterprise For Snowflake
 

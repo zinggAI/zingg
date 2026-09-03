@@ -5,7 +5,7 @@ description: >-
   source and run the full match workflow.
 ---
 
-# Ubuntu/WSL2 Setup Guide
+# 🎛️ Ubuntu/WSL2 Setup Guide
 
 The following steps will help you set up the Zingg Development Environment on **Ubuntu/WSL2**.
 
@@ -31,7 +31,7 @@ wsl --install
 sudo apt update
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Follow this [tutorial](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview) for more information.
 {% endhint %}
 
@@ -42,7 +42,7 @@ Follow this [tutorial](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-wi
 3. Set up Git by following the [tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-20-04).
 4. Clone the Zingg Repository: `git clone https://github.com/zinggAI/zingg.git`
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 It is suggested to fork the repository to your account and then clone the repository.
 {% endhint %}
 
@@ -88,7 +88,7 @@ sudo mv spark-3.5.0-bin-hadoop3 /opt/spark
 
 Make sure that Spark version you have installed is compatible with Java you have installed, and Zingg is supporting those versions.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Zingg supports Spark 3.5 and the corresponding Java version.
 {% endhint %}
 
@@ -107,7 +107,7 @@ cd bin
 ./mvn --version
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Make sure that mvn -version should display correct java version as well(JAVA 11)
 
 Apache Maven 3.8.7
@@ -133,7 +133,7 @@ export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$JAVA_HOME/bin
 
 `<path_to_zingg>` will be a directory where you clone the repository of the Zingg. Similarly, if you have installed spark on a different directory you can set **SPARK\_HOME** accordingly.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Skip exporting `MAVEN_HOME` if multiple maven version are not required.
 {% endhint %}
 
@@ -150,7 +150,7 @@ echo $PATH
 mvn --version
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 If you have already set up **JAVA\_HOME** and **SPARK\_HOME** in the steps before you don't need to do this again.
 {% endhint %}
 
@@ -176,7 +176,7 @@ mvn initialize
 mvn clean compile package -Dspark=sparkVer -Dmaven.test.skip=true
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Replace the `sparkVer` with the version of Spark you installed. For example, **-Dspark=3.5** you still face an error, include **-Dmaven.test.skip=true** with the above command.
 {% endhint %}
 

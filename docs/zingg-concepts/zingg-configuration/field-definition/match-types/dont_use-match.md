@@ -13,7 +13,7 @@ description: >-
 `DONT_USE` fields are also hidden from the labeller when the `showConcise` flag is set to `true` —\
 so your domain experts see only the fields that are actually being used for matching when they label pairs.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 `DONT_USE` performs no computation. There is no similarity algorithm to describe - the field is passed through to output unchanged.
 {% endhint %}
 
@@ -70,7 +70,7 @@ For example, a `region_code` field cheaply splits records into non-overlapping c
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related types**:
 
 * `NULL_OR_BLANK` - for fields that should participate in matching but have frequent nulls

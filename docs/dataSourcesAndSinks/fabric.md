@@ -1,3 +1,8 @@
+---
+description: >-
+  Run Zingg Community and Enterprise on Microsoft Fabric. Access Parquet and file formats via Fabric's Spark environment. See running/running-on-fabric.md for full guide.
+---
+
 # Microsoft Fabric
 
 As a Spark-based application, the **Zingg Community version** works seamlessly on Microsoft Fabric. Zingg leverages Fabric's Spark environment.

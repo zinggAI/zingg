@@ -13,7 +13,12 @@ description: >-
 
 ### What **`ONLY_ALPHABETS_FUZZY`** matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">42 Main Street</td><td valign="top">44 Main Street</td><td valign="top">Yes - numbers stripped, "Main Street" is identical</td></tr><tr><td valign="top">42 Main St</td><td valign="top">44 Main Street</td><td valign="top">Yes - "Main St" vs "Main Street" scores a high fuzzy similarity</td></tr><tr><td valign="top">42 Main St</td><td valign="top">42 Oak St</td><td valign="top">No - "Main St" vs "Oak St" too different alphabetically</td></tr><tr><td valign="top">[null]</td><td valign="top">Main Street</td><td valign="top">Yes - a null/blank value on either side is an automatic match; add <code>NULL_OR_BLANK</code> if you want nulls excluded</td></tr></tbody></table>
+| Value A | Value B | Match? |
+|---|---|---|
+| 42 Main Street | 44 Main Street | Yes - numbers stripped, "Main Street" is identical |
+| 42 Main St | 44 Main Street | Yes - "Main St" vs "Main Street" scores a high fuzzy similarity |
+| 42 Main St | 42 Oak St | No - "Main St" vs "Oak St" too different alphabetically |
+| [null] | Main Street | Yes - a null/blank value on either side is an automatic match; add `NULL_OR_BLANK` if you want nulls excluded |
 
 ### When to use **`ONLY_ALPHABETS_FUZZY`**
 
@@ -93,7 +98,7 @@ If your address data is structured enough that `FUZZY` on the full string gives 
 
 </details>
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related types**:
 
 * `NUMERIC` - use this for numeric fields

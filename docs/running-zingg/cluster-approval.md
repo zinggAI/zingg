@@ -8,9 +8,9 @@ tags:
     primary: true
 ---
 
-# Cluster Approval
+# ✅ Cluster Approval
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="building" %}
 Enterprise only. Manual review and sign-off of matched clusters before committing to the identity graph. Approved decisions are preserved across incremental runs and never overridden.
 {% endhint %}
 
@@ -18,8 +18,6 @@ After Zingg runs the match or incremental phase, some clusters may need human re
 
 Approved and rejected decisions are stored by Zingg and preserved across subsequent incremental runs. Zingg will not override a human-approved or human-rejected cluster decision\
 in future runs, the human decision always takes precedence.
-
-_**CHECK WITH SONAL—The cluster approval page currently shows "Coming Soon" on the live docs with no technical content. All content above is written from KT notes and the incremental page context. Please review and confirm**_
 
 ### When to use cluster approval
 

@@ -17,7 +17,14 @@ A null or blank value on either side is an automatic match (1.0).
 
 ### What `TEXT` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Score</th><th valign="top">Notes</th></tr></thead><tbody><tr><td valign="top">Enterprise data management platform</td><td valign="top">Data management platform for enterprise</td><td valign="top">0.8 (Yes)</td><td valign="top">4 of 5 distinct words shared - only "for" is unmatched</td></tr><tr><td valign="top">Enterprise software solutions</td><td valign="top">Consumer hardware products</td><td valign="top">0.0 (No)</td><td valign="top">No shared words</td></tr><tr><td valign="top">Machine learning model training</td><td valign="top">Training machine learning model</td><td valign="top">1.0 (Yes)</td><td valign="top">Same four words, different order - word overlap is order-independent</td></tr><tr><td valign="top">ML model</td><td valign="top">Machine learning model</td><td valign="top">0.25 (Partial)</td><td valign="top">Only "model" is shared out of 4 distinct words across both - "ML" and "machine learning" don't overlap at the word level</td></tr><tr><td valign="top">[null]</td><td valign="top">Enterprise data platform</td><td valign="top">1.0 (Yes)</td><td valign="top">Null/blank on either side auto-matches</td></tr><tr><td valign="top">[empty string]</td><td valign="top">Enterprise data platform</td><td valign="top">1.0 (Yes)</td><td valign="top">Empty string is treated exactly like null</td></tr></tbody></table>
+| Value A | Value B | Score | Notes |
+|---|---|---|---|
+| Enterprise data management platform | Data management platform for enterprise | 0.8 (Yes) | 4 of 5 distinct words shared - only "for" is unmatched |
+| Enterprise software solutions | Consumer hardware products | 0.0 (No) | No shared words |
+| Machine learning model training | Training machine learning model | 1.0 (Yes) | Same four words, different order - word overlap is order-independent |
+| ML model | Machine learning model | 0.25 (Partial) | Only "model" is shared out of 4 distinct words across both - "ML" and "machine learning" don't overlap at the word level |
+| [null] | Enterprise data platform | 1.0 (Yes) | Null/blank on either side auto-matches |
+| [empty string] | Enterprise data platform | 1.0 (Yes) | Empty string is treated exactly like null |
 
 ### When to use `TEXT`
 
@@ -60,7 +67,7 @@ If your free-text fields have typos and spelling errors, `FUZZY` handles those b
 
 </details>
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="book-open" %}
 **Related types:**
 
 * `FUZZY` - better for short fields and when typos are present

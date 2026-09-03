@@ -4,7 +4,7 @@ description: >-
   human feedback step that teaches Zingg what a match looks like in your data.
 ---
 
-# Label Training Pairs
+# 🧪 Label Training Pairs
 
 The `label` phase opens an interactive layer where you review the candidate pairs found by `findTrainingData` and mark each pair. This is the only step in the Zingg workflow that requires human input. No ML knowledge is needed, just your domain understanding of whether two records represent the same real-world entity.
 
@@ -48,11 +48,11 @@ zingg.initAndExecute()
 ./scripts/zingg.sh --phase label --conf config.json --showConcise=true
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 `--showConcise=true` is optional. It only shows fields which are not `DONT_USE`, making the labelling session cleaner when you have many fields.
 {% endhint %}
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="book-open" %}
 Need to correct a pair you already labeled? See [Update Label](../update-label.md).
 {% endhint %}
 {% endtab %}
@@ -72,11 +72,11 @@ zingg.initAndExecute()
 ./scripts/zingg.sh --phase label --conf config.json --showConcise=true
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 `--showConcise=true` is optional. It only shows fields which are not `DONT_USE`, making the labelling session cleaner when you have many fields.
 {% endhint %}
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Notebook provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons.
 {% endhint %}
 {% endtab %}
@@ -88,7 +88,7 @@ Zingg on Snowflake can be run either from a local terminal via the CLI, or nativ
 
 #### CLI (local terminal)
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 `--showConcise=true` is optional. It only shows fields which are not `DONT_USE`, making the labelling session cleaner when you have many fields.
 {% endhint %}
 
@@ -127,7 +127,7 @@ Once you're done labeling, stop the compute pool to release resources.
 ALTER COMPUTE POOL CONTAINER_ZINGG_POOL STOP ALL;
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 Notebook provides a visual widget showing one pair at a time with Match, No Match, and Can't Say buttons.
 {% endhint %}
 {% endtab %}

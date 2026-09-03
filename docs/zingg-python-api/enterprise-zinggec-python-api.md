@@ -12,14 +12,14 @@ tags:
 
 ZinggEC is the Zingg Enterprise Common Python API. It extends the Community API with features required for production identity resolution - persistent Zingg IDs, deterministic matching, pass-through, output statistics, incremental matching, cluster approval, and additional pipe types for Unity Catalog and in-memory data.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * [Community Python API](community-python-api.md) - Community (open source)
 * [Enterprise ZinggES Python API](enterprise-zingges-python-api.md) - Enterprise Plus with Spark client
 {% endhint %}
 
-{% hint style="warning" icon="right-long" %}
+{% hint style="warning" icon="book-open" %}
 ZinggEC requires a Zingg Enterprise licence and the `zinggEC` package. [Contact Zingg to get access](https://www.zingg.ai/company/contact/contact).
 {% endhint %}
 
@@ -39,9 +39,16 @@ pip install zinggEC
 
 #### **`zinggEC.enterprise.common` package**
 
-<table><thead><tr><th width="203.640625" valign="top">Module</th><th width="222.890625" valign="top">Classes</th><th valign="top">Purpose</th></tr></thead><tbody><tr><td valign="top"><code>ApproverArguments</code></td><td valign="top"><code>ApproverArguments</code></td><td valign="top">Cluster approval workflow - set approval query and destination for human-reviewed clusters</td></tr><tr><td valign="top"><code>IncrementalArguments</code></td><td valign="top"><code>IncrementalArguments</code></td><td valign="top">Incremental matching - incremental data, deleted data, delete action, output temp directory, parent args</td></tr><tr><td valign="top"><code>MappingMatchType</code></td><td valign="top"><code>MappingMatchType</code></td><td valign="top">User-supplied lookup file for nickname/abbreviation matching</td></tr><tr><td valign="top"><code>epipes</code></td><td valign="top"><code>ECsvPipe</code>, <code>EPipe</code>, <code>InMemoryPipe</code>, <code>UCPipe</code></td><td valign="top">Enterprise pipe types including CSV, base pipe, in-memory DataFrame, and Unity Catalog table</td></tr><tr><td valign="top"><code>EArguments</code></td><td valign="top"><code>EArguments</code>, <code>DeterministicMatching</code></td><td valign="top">Enterprise arguments object plus deterministic matching rules</td></tr><tr><td valign="top"><code>EFieldDefinition</code></td><td valign="top"><code>EFieldDefinition</code></td><td valign="top">Enterprise field definition with primary key support and mapping match type</td></tr></tbody></table>
+| Module | Classes | Purpose |
+|---|---|---|
+| `ApproverArguments` | `ApproverArguments` | Cluster approval workflow - set approval query and destination for human-reviewed clusters |
+| `IncrementalArguments` | `IncrementalArguments` | Incremental matching - incremental data, deleted data, delete action, output temp directory, parent args |
+| `MappingMatchType` | `MappingMatchType` | User-supplied lookup file for nickname/abbreviation matching |
+| `epipes` | `ECsvPipe`, `EPipe`, `InMemoryPipe`, `UCPipe` | Enterprise pipe types including CSV, base pipe, in-memory DataFrame, and Unity Catalog table |
+| `EArguments` | `EArguments`, `DeterministicMatching` | Enterprise arguments object plus deterministic matching rules |
+| `EFieldDefinition` | `EFieldDefinition` | Enterprise field definition with primary key support and mapping match type |
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Full auto-generated method signatures for every class are at the [Zingg Enterprise Common Python API reference on GitHub](https://github.com/zinggAI/zingg/blob/main/docs/pythonEC/markdown/zinggEC.md).
 {% endhint %}
 
@@ -99,7 +106,7 @@ fieldDefs = [
 args.setFieldDefinition(fieldDefs)
 ```
 
-{% hint style="info" icon="right-long" %}
+{% hint style="info" icon="book-open" %}
 `setPrimaryKey(True)` marks the primary key field, required for `runIncremental` to track records correctly across runs.
 {% endhint %}
 
@@ -114,7 +121,7 @@ fname = EFieldDefinition("fname", "string", MatchType.FUZZY,
 
 The second argument to `MappingMatchType` is the mapping file name (without extension). The mapping file must be present in your working directory.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: For the full mapping file format and rules → [Mapping match type](../zingg-concepts/zingg-configuration/field-definition/match-types/)
 {% endhint %}
 
@@ -134,7 +141,7 @@ args.setPassthroughExpr(
     "AND is_deceased IS NOT NULL")
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Pass through excludes records from cluster formation. They still appear in the identity graph and output with their own Zingg ID. Zingg internally applies the negation of `passthroughExpr` to filter matching records - ensure the negative of your expression yields the records that are NOT pass-through.
 {% endhint %}
 
@@ -149,7 +156,7 @@ dm3 = DeterministicMatching('fname', 'stNo', 'lname')
 args.setDeterministicMatchingCondition(dm1, dm2, dm3)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: For full deterministic matching concepts and configuration → [Deterministic vs Probabilistic Matching](../zingg-concepts/zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
 {% endhint %}
 
@@ -163,7 +170,7 @@ statsOutputPipe.setHeader("true")
 args.setOutputStats(statsOutputPipe)
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: For statistics interpretation → [Output Statistics](../interpreting-results/output-statistics.md)
 {% endhint %}
 
@@ -347,7 +354,7 @@ zinggIncr = EZingg(incrArgs, incrOptions)
 zinggIncr.initAndExecute()
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 For the full incremental matching workflow → [Run Incremental Matching](../running-zingg/run-incremental-matching.md)
 {% endhint %}
 
@@ -393,7 +400,7 @@ zinggAppr = EZingg(apprArgs, apprOptions)
 zinggAppr.initAndExecute()
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: For the full cluster approval workflow → [Cluster Approval](../running-zingg/cluster-approval.md)
 {% endhint %}
 
@@ -478,6 +485,6 @@ zinggIncr = EZingg(incrArgs, incrOptions)
 zinggIncr.initAndExecute()
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: Auto-generated API reference for every class and method: [Zingg Enterprise Common Python API on GitHub](https://github.com/zinggAI/zingg/blob/main/docs/pythonEC/markdown/zinggEC.md)
 {% endhint %}

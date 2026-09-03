@@ -4,33 +4,60 @@ description: >-
   arguments.
 ---
 
-# Configuration Schema
+# ⚙️ Configuration Schema
 
 This page is the reference. Every Zingg configuration parameter, JSON key and Python API method is documented here with type, valid values, and edition availability.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: For the step-by-step task of setting up configuration - [Configure Zingg](../running-zingg/configure-zingg.md).
 {% endhint %}
 
 ### Top-level parameters
 
-<table><thead><tr><th width="150.62890625" valign="top">Parameter</th><th width="108.40234375" valign="top">Type</th><th width="113.53912353515625" valign="top">Edition</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top"><code>modelId</code></td><td valign="top">string</td><td valign="top">All editions</td><td valign="top">Unique identifier for this model. Used as folder name under <code>zinggDir</code>. Use the same <code>modelId</code> across all phases for a given run.</td></tr><tr><td valign="top"><code>zinggDir</code></td><td valign="top">string</td><td valign="top">All editions</td><td valign="top">Root directory where Zingg writes model files and training data. Can be a local path, DBFS path (<code>dbfs:/</code>), GCS path (<code>gs://</code>), S3 path (<code>s3a://</code>), or OneLake path (<code>abfss://</code>).</td></tr><tr><td valign="top"><code>numPartitions</code></td><td valign="top">integer</td><td valign="top">All editions</td><td valign="top">Number of Spark partitions. Controls how data is distributed across cluster nodes. Rule of thumb: set to approximately 20–30× the number of worker vCPUs. Start with 4–8 for a standard development cluster. Increase proportionally for larger datasets.</td></tr><tr><td valign="top"><code>labelDataSampleSize</code></td><td valign="top">float (0.0001–0.1)</td><td valign="top">All editions</td><td valign="top">Fraction of the dataset scanned when running <code>findTrainingData</code>. Valid range: 0.0001 to 0.1. For 100k records use 0.1–0.5. For 1M+ records use 0.01–0.05. Reduce to 0.05 or lower if <code>findTrainingData</code> is slow on large datasets.</td></tr><tr><td valign="top"><code>stopWordsCutoff</code></td><td valign="top">float (0–1)</td><td valign="top">All editions, optional</td><td valign="top">Used with the <code>recommend</code> phase. Fraction of high-frequency words to extract as stopword candidates. Default is <code>0.1</code> (10%).</td></tr><tr><td valign="top"><code>collectMetrics</code></td><td valign="top">boolean</td><td valign="top">All editions</td><td valign="top">Controls telemetry collection. Default <code>true</code>. Set to <code>false</code> to disable. When enabled, Zingg captures runtime metrics (record count, field count, running phase, execution time). No input data or user data is ever captured. See <a href="../security-and-privacy/security-and-privacy.md">Security and Privacy</a> for full details.</td></tr><tr><td valign="top"><code>passthroughExpr</code></td><td valign="top">string</td><td valign="top"><strong>Enterprise only</strong>, optional</td><td valign="top">SQL expression defining records to exclude from matching. Records matching this expression are carried through to output with their own Zingg ID but do not influence cluster formation. Example: <code>"fname = 'matilda'"</code>.</td></tr><tr><td valign="top"><code>deterministicMatching</code></td><td valign="top">array</td><td valign="top"><strong>Enterprise only</strong>, optional</td><td valign="top">Deterministic match conditions, where exact field matches always result in a match regardless of the probabilistic score. See <a href="../zingg-concepts/zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md">Deterministic vs Probabilistic Matching</a> for full configuration.</td></tr><tr><td valign="top"><code>setBlockingModel</code></td><td valign="top">string</td><td valign="top"><strong>Enterprise only</strong>, optional</td><td valign="top">Blocking strategy. Valid values: <code>"DEFAULT"</code>, <code>"WIDER"</code>. If not set, the model uses <code>DEFAULT</code>.</td></tr></tbody></table>
+| Parameter | Type | Edition | Description |
+|---|---|---|---|
+| `modelId` | string | All editions | Unique identifier for this model. Used as folder name under `zinggDir`. Use the same `modelId` across all phases for a given run. |
+| `zinggDir` | string | All editions | Root directory where Zingg writes model files and training data. Can be a local path, DBFS path (`dbfs:/`), GCS path (`gs://`), S3 path (`s3a://`), or OneLake path (`abfss://`). |
+| `numPartitions` | integer | All editions | Number of Spark partitions. Controls how data is distributed across cluster nodes. Rule of thumb: set to approximately 20–30× the number of worker vCPUs. Start with 4–8 for a standard development cluster. Increase proportionally for larger datasets. |
+| `labelDataSampleSize` | float (0.0001–0.1) | All editions | Fraction of the dataset scanned when running `findTrainingData`. Valid range: 0.0001 to 0.1. For 100k records use 0.1–0.5. For 1M+ records use 0.01–0.05. Reduce to 0.05 or lower if `findTrainingData` is slow on large datasets. |
+| `stopWordsCutoff` | float (0–1) | All editions, optional | Used with the `recommend` phase. Fraction of high-frequency words to extract as stopword candidates. Default is `0.1` (10%). |
+| `collectMetrics` | boolean | All editions | Controls telemetry collection. Default `true`. Set to `false` to disable. When enabled, Zingg captures runtime metrics (record count, field count, running phase, execution time). No input data or user data is ever captured. See [Security and Privacy](../security-and-privacy/security-and-privacy.md) for full details. |
+| `passthroughExpr` | string | **Enterprise only**, optional | SQL expression defining records to exclude from matching. Records matching this expression are carried through to output with their own Zingg ID but do not influence cluster formation. Example: `"fname = 'matilda'"`. |
+| `deterministicMatching` | array | **Enterprise only**, optional | Deterministic match conditions, where exact field matches always result in a match regardless of the probabilistic score. See [Deterministic vs Probabilistic Matching](../zingg-concepts/zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md) for full configuration. |
+| `setBlockingModel` | string | **Enterprise only**, optional | Blocking strategy. Valid values: `"DEFAULT"`, `"WIDER"`. If not set, the model uses `DEFAULT`. |
 
 ### `fieldDefinition`
 
 Each entry in the `fieldDefinition` array defines one field in your input schema.
 
-<table><thead><tr><th width="166.0765380859375" valign="top">Parameter</th><th width="116.16015625" valign="top">Type</th><th width="113.979736328125" valign="top">Edition</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top"><code>fieldName</code></td><td valign="top">string</td><td valign="top">All editions</td><td valign="top">Name of the field in your input dataset. Must match exactly.</td></tr><tr><td valign="top"><code>matchType</code></td><td valign="top">enum</td><td valign="top">All editions</td><td valign="top">How to compare this field. See <a href="../zingg-concepts/zingg-configuration/field-definition/match-types/">Match Types</a> for all values.</td></tr><tr><td valign="top"><code>fields</code></td><td valign="top">string</td><td valign="top">All editions</td><td valign="top">The field to use for comparison. Keep the same as <code>fieldName</code> for standard use. Can reference a different column name if the field you want to compare appears under a different name in the input schema. For now, keep this the same as <code>fieldName</code> unless specifically advised otherwise.</td></tr><tr><td valign="top"><code>dataType</code></td><td valign="top">string</td><td valign="top">All editions</td><td valign="top">Spark SQL data type - <code>string</code>, <code>integer</code>, <code>double</code>, <code>date</code>, <code>timestamp</code>.</td></tr><tr><td valign="top"><code>stopWords</code></td><td valign="top">string (path)</td><td valign="top">All editions, optional</td><td valign="top">Path to a CSV file of stopwords for this field. One word per row. The file must have a header row. Generated by the <code>recommend</code> phase.</td></tr><tr><td valign="top"><code>primaryKey</code></td><td valign="top">boolean</td><td valign="top"><strong>Enterprise only</strong>, optional</td><td valign="top">Marks this field as the primary key. Used by <code>runIncremental</code> to identify records uniquely across runs and by <code>reassignZinggId</code> for ID preservation. Set <code>true</code> on exactly one field per config.</td></tr><tr><td valign="top"><code>postProcessors</code></td><td valign="top">string</td><td valign="top"><strong>Enterprise only</strong>, optional</td><td valign="top">Standardise postprocessor reference. Format: <code>STANDARDISE_&#x3C;basename></code> where <code>&#x3C;basename>.json</code> is the mapping file. Normalises field values to canonical form after matching.</td></tr></tbody></table>
+| Parameter | Type | Edition | Description |
+|---|---|---|---|
+| `fieldName` | string | All editions | Name of the field in your input dataset. Must match exactly. |
+| `matchType` | enum | All editions | How to compare this field. See [Match Types](../zingg-concepts/zingg-configuration/field-definition/match-types/) for all values. |
+| `fields` | string | All editions | The field to use for comparison. Keep the same as `fieldName` for standard use. Can reference a different column name if the field you want to compare appears under a different name in the input schema. For now, keep this the same as `fieldName` unless specifically advised otherwise. |
+| `dataType` | string | All editions | Spark SQL data type - `string`, `integer`, `double`, `date`, `timestamp`. |
+| `stopWords` | string (path) | All editions, optional | Path to a CSV file of stopwords for this field. One word per row. The file must have a header row. Generated by the `recommend` phase. |
+| `primaryKey` | boolean | **Enterprise only**, optional | Marks this field as the primary key. Used by `runIncremental` to identify records uniquely across runs and by `reassignZinggId` for ID preservation. Set `true` on exactly one field per config. |
+| `postProcessors` | string | **Enterprise only**, optional | Standardise postprocessor reference. Format: `STANDARDISE_<basename>` where `<basename>.json` is the mapping file. Normalises field values to canonical form after matching. |
 
 ### `data/output` (pipe)
 
-<table><thead><tr><th width="119.6796875" valign="top">Parameter</th><th width="110.30078125" valign="top">Type</th><th width="113.47186279296875" valign="top">Edition</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top"><code>name</code></td><td valign="top">string</td><td valign="top">All editions</td><td valign="top">Logical name for this pipe. Used in logging.</td></tr><tr><td valign="top"><code>format</code></td><td valign="top">string</td><td valign="top">All editions</td><td valign="top">Connector format. See <a href="../connect-your-data/pipes-and-data-connections.md">Connect Your Data</a> for all supported formats.</td></tr><tr><td valign="top"><code>props</code></td><td valign="top">object</td><td valign="top">All editions</td><td valign="top">Connector-specific properties. Keys depend on the format. See <a href="../connect-your-data/pipes-and-data-connections.md">Connect Your Data</a> for <code>props</code> per connector.</td></tr><tr><td valign="top"><code>schema</code></td><td valign="top">string</td><td valign="top">All editions</td><td valign="top">Spark SQL schema string. Required for CSV. Format: <code>"field1 type1, field2 type2, ..."</code>.</td></tr></tbody></table>
+| Parameter | Type | Edition | Description |
+|---|---|---|---|
+| `name` | string | All editions | Logical name for this pipe. Used in logging. |
+| `format` | string | All editions | Connector format. See [Connect Your Data](../connect-your-data/pipes-and-data-connections.md) for all supported formats. |
+| `props` | object | All editions | Connector-specific properties. Keys depend on the format. See [Connect Your Data](../connect-your-data/pipes-and-data-connections.md) for `props` per connector. |
+| `schema` | string | All editions | Spark SQL schema string. Required for CSV. Format: `"field1 type1, field2 type2, ..."`. |
 
 ### `outputStats` (statistics pipe)
 
 Uses the same `format`, `name`, and `props` pattern as `data` and `output`. The path must contain the `$ZINGG_DYNAMIC_STAT_NAME` placeholder, which is replaced at runtime with `SUMMARY`, `CLUSTER`, or `RECORD` depending on the statistics type written. If not configured, statistics are not written and the run proceeds normally.
 
-<table><thead><tr><th width="164.5" valign="top">Parameter</th><th width="102.40234375" valign="top">Type</th><th width="172.96484375" valign="top">Edition</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top"><code>name</code></td><td valign="top">string</td><td valign="top">Enterprise only</td><td valign="top">Logical name for this stats pipe.</td></tr><tr><td valign="top"><code>format</code></td><td valign="top">string</td><td valign="top">Enterprise only</td><td valign="top">Connector format. Usually <code>csv</code>.</td></tr><tr><td valign="top"><code>props.location</code></td><td valign="top">string</td><td valign="top">Enterprise only</td><td valign="top">Path must contain <code>$ZINGG_DYNAMIC_STAT_NAME</code>. Example: <code>/tmp/zinggStats_$ZINGG_DYNAMIC_STAT_NAME</code></td></tr></tbody></table>
+| Parameter | Type | Edition | Description |
+|---|---|---|---|
+| `name` | string | Enterprise only | Logical name for this stats pipe. |
+| `format` | string | Enterprise only | Connector format. Usually `csv`. |
+| `props.location` | string | Enterprise only | Path must contain `$ZINGG_DYNAMIC_STAT_NAME`. Example: `/tmp/zinggStats_$ZINGG_DYNAMIC_STAT_NAME` |
 
 ### JSON Config
 
@@ -67,7 +94,7 @@ At runtime, Zingg replaces the placeholder with the actual environment variable 
 }
 ```
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Environment variable substitution applies anywhere in the JSON config - top-level parameters, pipe `props`, field paths, output locations, and credentials. The substitution is purely textual at runtime, so any environment variable Zingg can read can be referenced this way.
 {% endhint %}
 
@@ -75,16 +102,31 @@ Environment variable substitution applies anywhere in the JSON config - top-leve
 
 For every JSON parameter, there is an equivalent Python API method on the `Arguments` (Community) or `EArguments` (Enterprise) object.
 
-<table><thead><tr><th valign="top">JSON parameter</th><th valign="top">Python API method</th><th width="145.0078125" valign="top">Edition</th><th valign="top">Example</th></tr></thead><tbody><tr><td valign="top"><code>modelId</code></td><td valign="top"><code>args.setModelId()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setModelId("100")</code></td></tr><tr><td valign="top"><code>zinggDir</code></td><td valign="top"><code>args.setZinggDir()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setZinggDir("/tmp/models")</code></td></tr><tr><td valign="top"><code>numPartitions</code></td><td valign="top"><code>args.setNumPartitions()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setNumPartitions(4)</code></td></tr><tr><td valign="top"><code>labelDataSampleSize</code></td><td valign="top"><code>args.setLabelDataSampleSize()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setLabelDataSampleSize(0.5)</code></td></tr><tr><td valign="top"><code>fieldDefinition</code></td><td valign="top"><code>args.setFieldDefinition([])</code></td><td valign="top">All editions</td><td valign="top"><code>args.setFieldDefinition(fieldDefs)</code></td></tr><tr><td valign="top"><code>data</code></td><td valign="top"><code>args.setData()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setData(inputPipe)</code></td></tr><tr><td valign="top"><code>output</code></td><td valign="top"><code>args.setOutput()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setOutput(outputPipe)</code></td></tr><tr><td valign="top"><code>collectMetrics</code></td><td valign="top"><code>args.setCollectMetrics()</code></td><td valign="top">All editions</td><td valign="top"><code>args.setCollectMetrics(False)</code></td></tr><tr><td valign="top"><code>outputStats</code></td><td valign="top"><code>args.setOutputStats()</code></td><td valign="top">Enterprise only</td><td valign="top"><code>args.setOutputStats(statsPipe)</code></td></tr><tr><td valign="top"><code>passthroughExpr</code></td><td valign="top"><code>args.setPassthroughExpr()</code></td><td valign="top">Enterprise only</td><td valign="top"><code>args.setPassthroughExpr("fname = 'matilda'")</code></td></tr><tr><td valign="top"><code>deterministicMatching</code></td><td valign="top"><code>args.setDeterministicMatchingCondition()</code></td><td valign="top">Enterprise only</td><td valign="top"><code>args.setDeterministicMatchingCondition(dm1, dm2)</code></td></tr><tr><td valign="top"><code>setBlockingModel</code></td><td valign="top"><code>args.setBlockingModel()</code></td><td valign="top">Enterprise only</td><td valign="top"><code>args.setBlockingModel("DEFAULT")</code></td></tr><tr><td valign="top"><code>primaryKey</code> (field-level)</td><td valign="top"><code>fieldDef.setPrimaryKey()</code></td><td valign="top">Enterprise only</td><td valign="top"><code>recId.setPrimaryKey(True)</code></td></tr><tr><td valign="top"><code>postProcessors</code> (field-level)</td><td valign="top"><code>fieldDef.setPostProcessors()</code></td><td valign="top">Enterprise only</td><td valign="top"><code>job_title.setPostProcessors([StandardisePostprocessorType("STANDARDISE", "jobtitles")])</code></td></tr></tbody></table>
+| JSON parameter | Python API method | Edition | Example |
+|---|---|---|---|
+| `modelId` | `args.setModelId()` | All editions | `args.setModelId("100")` |
+| `zinggDir` | `args.setZinggDir()` | All editions | `args.setZinggDir("/tmp/models")` |
+| `numPartitions` | `args.setNumPartitions()` | All editions | `args.setNumPartitions(4)` |
+| `labelDataSampleSize` | `args.setLabelDataSampleSize()` | All editions | `args.setLabelDataSampleSize(0.5)` |
+| `fieldDefinition` | `args.setFieldDefinition([])` | All editions | `args.setFieldDefinition(fieldDefs)` |
+| `data` | `args.setData()` | All editions | `args.setData(inputPipe)` |
+| `output` | `args.setOutput()` | All editions | `args.setOutput(outputPipe)` |
+| `collectMetrics` | `args.setCollectMetrics()` | All editions | `args.setCollectMetrics(False)` |
+| `outputStats` | `args.setOutputStats()` | Enterprise only | `args.setOutputStats(statsPipe)` |
+| `passthroughExpr` | `args.setPassthroughExpr()` | Enterprise only | `args.setPassthroughExpr("fname = 'matilda'")` |
+| `deterministicMatching` | `args.setDeterministicMatchingCondition()` | Enterprise only | `args.setDeterministicMatchingCondition(dm1, dm2)` |
+| `setBlockingModel` | `args.setBlockingModel()` | Enterprise only | `args.setBlockingModel("DEFAULT")` |
+| `primaryKey` (field-level) | `fieldDef.setPrimaryKey()` | Enterprise only | `recId.setPrimaryKey(True)` |
+| `postProcessors` (field-level) | `fieldDef.setPostProcessors()` | Enterprise only | `job_title.setPostProcessors([StandardisePostprocessorType("STANDARDISE", "jobtitles")])` |
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 Sample config files:
 
 * `github.com/zinggAI/zingg/tree/main/ examples/febrl/config.json`
 * `github.com/zinggAI/zingg/tree/main/examples/febrl120k/config.json`
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related pages:**
 
 * [Configure Zingg](../running-zingg/configure-zingg.md) - step-by-step task of building your config

@@ -1,4 +1,6 @@
 ---
+description: >-
+  Zingg learns two models from your data: a blocking model to reduce comparison space quadratically, and a similarity model to predict matches within blocks.
 title: Zingg Models
 nav_order: 5
 has_children: true

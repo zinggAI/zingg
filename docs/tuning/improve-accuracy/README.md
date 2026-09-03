@@ -4,7 +4,7 @@ description: >-
   enough.
 ---
 
-# Improve Accuracy
+# 🧪 Improve Accuracy
 
 When your Zingg match results contain false positives (records incorrectly grouped together) or false negatives (matching records not found), there are several ways to improve accuracy\
 without starting over.
@@ -56,4 +56,4 @@ If Zingg is missing matches that you know exist (false negatives), the blocking 
 ### Step 5: Custom blocking and similarity
 
 For advanced use cases, you can define your own blocking and similarity functions to replace\
-or extend Zingg's built-in approaches. See [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7) for advanced tuning approaches.
+or extend Zingg's built-in approaches. See the [Blocking Model](../../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md) and [Similarity Model](../../zingg-concepts/how-zingg-learns/zingg-models/similarity-model.md) for advanced tuning approaches.

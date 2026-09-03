@@ -7,14 +7,11 @@ tags:
     primary: true
 ---
 
-# Verify Blocking
+# 🧪 Verify Blocking
 
 The blocking model filters your dataset before any similarity comparisons happen. Records in different blocks are never compared. This is what makes Zingg scalable, but it also means that if the blocking model puts two matching records in different blocks, those records will never be matched no matter how well the similarity model is trained.
 
-`verifyBlocking` tells you what percentage of your known matching pairs are being blocked together correctly. Run this test after configuring Zingg and again after training if you suspect missed matches.\
-<br>
-
-TODO - move to verify blocking
+`verifyBlocking` tells you what percentage of your known matching pairs are being blocked together correctly. Run this test after configuring Zingg and again after training if you suspect missed matches.
 
 How to inspect the blocking model, understand its coverage, and fix missed matches caused by blocking.
 
@@ -31,7 +28,7 @@ The `verifyBlocking` phase produces two output directories under `zinggDir/model
 | `counts`       | Record count per block. Shows how many records are in each block. Very large blocks indicate poor blocking specificity.                                  |
 | `blockSamples` | The top 10% of records associated with each block. Use this to understand which records are being grouped together and whether the groupings make sense. |
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**: To run the `verifyBlocking` phase and inspect output coverage→ [Verify Blocking](verify-blocking.md)
 {% endhint %}
 
@@ -89,16 +86,16 @@ influence matching.
 3. Check whether missed pairs share a common characteristic. If all missed pairs have empty values in a key field, empty fields cannot contribute to blocking. Either remove that field from your blocking config or improve data completeness upstream.
 4. If standard blocking consistently misses a specific pattern in your data, consider custom blocking functions.
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * [Label Training Pairs](label-training-pairs.md) - how to add more training data
 * [Configure Zingg](../configure-zingg.md) - changing field match types
 * [Blocking Strategies: DEFAULT vs WIDER](../../tuning/blocking-strategy.md) - reorder candidate fields in the blocking tree (Enterprise only)
-* [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7) Functions
+* [Blocking Model](../../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md) - define custom blocking functions
 {% endhint %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="lightbulb" %}
 Run `verifyBlocking` in two situations:
 
 1. **Before labeling** - to confirm your blocking is covering expected matches before you invest in training data
@@ -174,11 +171,11 @@ If `verifyBlocking` shows that many known matching pairs are not being blocked t
 2. **Check your field match types.** Fields set to `DONT_USE` are excluded from blocking. If a key identity field is set to `DONT_USE`, matching pairs that differ on other fields may end up in different blocks.
 3. **Try the `WIDER` blocking strategy** (Enterprise only) if large blocks suggest the tree is over-relying on one or two fields → [Blocking Strategies: DEFAULT vs WIDER](../../tuning/blocking-strategy.md)
 
-{% hint style="success" icon="right-long" %}
-**Consider custom blocking functions** for specialised data patterns → [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7)
+{% hint style="success" icon="book-open" %}
+**Consider custom blocking functions** for specialised data patterns → [Blocking Model](../../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
 
 **Read more**:
 
 * Blocking model concept and how it fits in the pipeline → [Blocking Model](../../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
-* Custom blocking functions for advanced tuning → [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7)
+* Custom blocking functions for advanced tuning → [Blocking Model](../../zingg-concepts/how-zingg-learns/zingg-models/blocking-model.md)
 {% endhint %}

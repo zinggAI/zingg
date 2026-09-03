@@ -1,3 +1,8 @@
+---
+description: >-
+  Post-process matched output to standardise field values using predefined mappings. Transforms output after matching without affecting match behavior.
+---
+
 # Standardise Postprocessor
 
 ## Overview

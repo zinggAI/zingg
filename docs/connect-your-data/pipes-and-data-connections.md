@@ -2,7 +2,7 @@
 description: What a Zingg pipe is and how you configure one to connect your data.
 ---
 
-# Pipes and Data Connections
+# ☁️ Pipes and Data Connections
 
 A Zingg pipe is a configuration object that tells Zingg where to find your source data and where to write resolved output. It is how Zingg connects to your datastore, whether that is a\
 CSV file, a Delta table, a Snowflake table, a Parquet path on S3, or any other Spark-supported connector.
@@ -14,7 +14,11 @@ for input, `args.setOutput()` for output.
 
 Every pipe, whether input or output, has three attributes.
 
-<table><thead><tr><th width="152.70703125" valign="top">Attribute</th><th valign="top">What it does</th></tr></thead><tbody><tr><td valign="top"><code>name</code></td><td valign="top">A unique label for this pipe. Used internally by Zingg to identify the data source or destination in logs and output.</td></tr><tr><td valign="top"><code>format</code></td><td valign="top">The Spark connector format string for your datastore: csv, parquet, delta, net.snowflake.spark.snowflake, jdbc, avro, and others.</td></tr><tr><td valign="top"><code>props</code> / <code>options</code></td><td valign="top">The connection properties are passed to <code>spark.read</code> and<br><code>spark.write</code> path, delimiter, header, credentials, and any connector-<br>specific settings.</td></tr></tbody></table>
+| Attribute | What it does |
+|---|---|
+| `name` | A unique label for this pipe. Used internally by Zingg to identify the data source or destination in logs and output. |
+| `format` | The Spark connector format string for your datastore: csv, parquet, delta, net.snowflake.spark.snowflake, jdbc, avro, and others. |
+| `props` / `options` | The connection properties are passed to `spark.read` and `spark.write` path, delimiter, header, credentials, and any connector- specific settings. |
 
 ### Configuring a pipe
 
@@ -141,7 +145,7 @@ Define pipes in the data and output sections of your JSON config file.
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" icon="right-long" %}
+{% hint style="info" icon="circle-info" %}
 `CsvPipe` and the standard `Pipe` class are Community APIs. `ECsvPipe`, `UCPipe`, and the other `E*Pipe` classes are Enterprise APIs that add features like Unity Catalog table access, Lakehouse table support, and stats output. The connection properties and basic pipe operations are identical, only the class name and the import path change.
 
 See [Install Zingg → Snowflake](../running-zingg/install-zingg.md) for the full setup.
@@ -151,9 +155,28 @@ See [Install Zingg → Snowflake](../running-zingg/install-zingg.md) for the ful
 
 Zingg connects to any datastore that has a Spark connector, plus Snowflake natively in Enterprise. The pipe format string is all that changes.
 
-<table><thead><tr><th valign="top">Datastore</th><th valign="top">Format string</th><th valign="top">Edition</th></tr></thead><tbody><tr><td valign="top">CSV / TSV</td><td valign="top">csv</td><td valign="top">All</td></tr><tr><td valign="top">Parquet</td><td valign="top">parquet</td><td valign="top">All</td></tr><tr><td valign="top">Avro</td><td valign="top">avro</td><td valign="top">All</td></tr><tr><td valign="top">JSON</td><td valign="top">json</td><td valign="top">All</td></tr><tr><td valign="top">Delta tables (Databricks)</td><td valign="top">delta</td><td valign="top">All</td></tr><tr><td valign="top">Unity Catalog (Databricks)</td><td valign="top">delta</td><td valign="top">All</td></tr><tr><td valign="top">OneLake / Fabric</td><td valign="top"><code>abfss://</code> path + csv or parquet</td><td valign="top">All</td></tr><tr><td valign="top">Snowflake (as data source via Spark)</td><td valign="top"><code>net.snowflake.spark.snowflake</code></td><td valign="top">All</td></tr><tr><td valign="top">Snowflake (native — no Spark cluster)</td><td valign="top">Configured via Snowflake properties file—no pipe class</td><td valign="top">Enterprise</td></tr><tr><td valign="top">AWS S3</td><td valign="top">csv / parquet via <code>s3a://</code></td><td valign="top">All</td></tr><tr><td valign="top">Google Cloud Storage</td><td valign="top">csv / parquet via <code>gs://</code></td><td valign="top">All</td></tr><tr><td valign="top">BigQuery</td><td valign="top"><code>com.google.cloud.spark.bigquery</code></td><td valign="top">All</td></tr><tr><td valign="top">PostgreSQL / MySQL / JDBC</td><td valign="top"><code>jdbc</code></td><td valign="top">All</td></tr><tr><td valign="top">Cassandra</td><td valign="top"><code>org.apache.spark.sql.cassandra</code></td><td valign="top">All</td></tr><tr><td valign="top">MongoDB</td><td valign="top">mongo</td><td valign="top">All</td></tr><tr><td valign="top">Neo4j</td><td valign="top"><code>org.neo4j.spark.DataSource</code></td><td valign="top">All</td></tr><tr><td valign="top">Exasol</td><td valign="top"><code>com.exasol.spark</code></td><td valign="top">All</td></tr><tr><td valign="top">Redshift</td><td valign="top"><code>jdbc</code> (redshift driver)</td><td valign="top">All</td></tr></tbody></table>
+| Datastore | Format string | Edition |
+|---|---|---|
+| CSV / TSV | csv | All |
+| Parquet | parquet | All |
+| Avro | avro | All |
+| JSON | json | All |
+| Delta tables (Databricks) | delta | All |
+| Unity Catalog (Databricks) | delta | All |
+| OneLake / Fabric | `abfss://` path + csv or parquet | All |
+| Snowflake (as data source via Spark) | `net.snowflake.spark.snowflake` | All |
+| Snowflake (native — no Spark cluster) | Configured via Snowflake properties file—no pipe class | Enterprise |
+| AWS S3 | csv / parquet via `s3a://` | All |
+| Google Cloud Storage | csv / parquet via `gs://` | All |
+| BigQuery | `com.google.cloud.spark.bigquery` | All |
+| PostgreSQL / MySQL / JDBC | `jdbc` | All |
+| Cassandra | `org.apache.spark.sql.cassandra` | All |
+| MongoDB | mongo | All |
+| Neo4j | `org.neo4j.spark.DataSource` | All |
+| Exasol | `com.exasol.spark` | All |
+| Redshift | `jdbc` (redshift driver) | All |
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Read more**:
 
 * For the full connection config including required JARs, props, and code examples for each datastore - [Cloud Warehouses](connect-cloud-warehouses/) | [Cloud Storage](connect-cloud-storage.md) | [File Formats](connect-file-formats.md) | [Relational Databases](connect-relational-databases.md) | [NoSQL Databases](connect-nosql-databases.md) | [Neo4j](connect-graph-databases-neo4j.md)

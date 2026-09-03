@@ -1,3 +1,8 @@
+---
+description: >-
+  Run Zingg Community and Enterprise on Databricks. Access Parquet, Delta, and Unity Catalog. See running/databricks.md for full guide.
+---
+
 # Databricks
 
 As a Spark-based application, the **Zingg Community version** works seamlessly on Databricks. Zingg leverages Databricks' Spark environment.

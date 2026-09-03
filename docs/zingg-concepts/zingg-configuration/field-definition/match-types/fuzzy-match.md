@@ -15,7 +15,14 @@ It is Zingg's most permissive match type and the right starting point for any fi
 
 ### What `FUZZY` matches and what it does not
 
-<table><thead><tr><th valign="top">Value A</th><th valign="top">Value B</th><th valign="top">Match?</th></tr></thead><tbody><tr><td valign="top">Jonathan Smith</td><td valign="top">Jon Smith</td><td valign="top">Yes - abbreviation and short-form variation</td></tr><tr><td valign="top">J. Smith</td><td valign="top">John Smith</td><td valign="top">Yes - initial vs full name</td></tr><tr><td valign="top">Jonathon</td><td valign="top">Jonathan</td><td valign="top">Yes - common transposition</td></tr><tr><td valign="top">Johnson</td><td valign="top">Smith</td><td valign="top">No - too different, no common characters</td></tr><tr><td valign="top">IBM Corp</td><td valign="top">IBM Corporation</td><td valign="top">Yes - long shared prefix scores high</td></tr><tr><td valign="top">[null]</td><td valign="top">John Smith</td><td valign="top">Depends - add <code>NULL_OR_BLANK</code> to control null behaviour</td></tr></tbody></table>
+| Value A | Value B | Match? |
+|---|---|---|
+| Jonathan Smith | Jon Smith | Yes - abbreviation and short-form variation |
+| J. Smith | John Smith | Yes - initial vs full name |
+| Jonathon | Jonathan | Yes - common transposition |
+| Johnson | Smith | No - too different, no common characters |
+| IBM Corp | IBM Corporation | Yes - long shared prefix scores high |
+| [null] | John Smith | Depends - add `NULL_OR_BLANK` to control null behaviour |
 
 ### When to use `FUZZY`
 
@@ -88,7 +95,7 @@ Use `PINCODE` not `FUZZY` for postal codes. `PINCODE` is built to handle the spe
 
 
 
-{% hint style="success" icon="right-long" %}
+{% hint style="success" icon="book-open" %}
 **Related match types:**
 
 * `FUZZY_OPTIMISED` - same quality, better performance at scale
