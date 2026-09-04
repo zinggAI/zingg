@@ -80,8 +80,6 @@ Create a GCS bucket in the region where your Dataproc cluster will run, then upl
 
 ![GCS bucket Objects tab in the Google Cloud Console with the Upload menu open, showing Upload files and Upload folder alongside the Create folder button.](../.gitbook/assets/dataproc-gcs-bucket-upload.png)
 
-_**IMAGE TO BE ADDED - the bucket **creation** dialog (name field, Location type selector, access control options) for steps 1-5. Tanwi to check with team for a screenshot from a live GCS console.**_
-
 #### gcloud CLI
 
 {% tabs %}
@@ -771,7 +769,6 @@ else:
     print("Run Steps 12-15 again if you need more pairs.")
     ready_for_save = False
 ```
-
 
 ### Step 16: Train and match
 
