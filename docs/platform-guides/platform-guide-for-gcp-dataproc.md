@@ -303,6 +303,25 @@ Restart the kernel (**Kernel → Restart Kernel**), then confirm all three are p
 ```
 
 You should see `zingg`, `zinggEC`, and `zinggES`.
+{% endtab %}
+
+{% tab title="Community" %}
+Community needs only the open-source `zingg` package.
+
+```python
+!gcloud storage cp gs://YOUR_BUCKET/zingg-*.whl /tmp/
+!pip install /tmp/zingg-*.whl
+```
+
+Restart the kernel (**Kernel → Restart Kernel**), then confirm it is present:
+
+```python
+!pip list | grep -i zingg
+```
+
+You should see `zingg`.
+{% endtab %}
+{% endtabs %}
 
 ![Notebook cell running pip list piped to grep zingg, with zingg 0.6.0, zinggEC 1.0.0 and zinggES 1.0.0 boxed in the output.](../.gitbook/assets/dataproc-pip-list-zingg.png)
 {% endtab %}
@@ -382,6 +401,50 @@ from zinggEC.enterprise.common.EArguments import EArguments
 from zinggEC.enterprise.common.EFieldDefinition import EFieldDefinition
 from zinggEC.enterprise.common.epipes import ECsvPipe
 from zinggES.enterprise.spark.ESparkClient import EZinggWithSpark
+
+client = storage.Client()
+
+def cleanModel():
+    """
+    Clears previous training data to restart model learning from scratch.
+    """
+    try:
+        bucket = client.get_bucket(BUCKET)
+        for prefix in [
+            f"models/{modelId}/trainingData/marked/",
+            f"models/{modelId}/trainingData/unmarked/"
+        ]:
+            for blob in bucket.list_blobs(prefix=prefix):
+                blob.delete()
+        print("Model cleaned.")
+    except Exception as e:
+        print(f"Error: {str(e)}")
+
+def count_labeled_pairs(marked_pd):
+    """
+    Returns positive, negative, uncertain, and total labeled pair counts.
+    """
+    if marked_pd.empty:
+        return 0, 0, 0, 0
+    n_total = len(np.unique(marked_pd['z_cluster']))
+    n_positive = len(np.unique(marked_pd[marked_pd['z_isMatch'] == 1]['z_cluster']))
+    n_negative = len(np.unique(marked_pd[marked_pd['z_isMatch'] == 0]['z_cluster']))
+    n_uncertain = len(np.unique(marked_pd[marked_pd['z_isMatch'] == 2]['z_cluster']))
+    return n_positive, n_negative, n_uncertain, n_total
+{% endtab %}
+
+{% tab title="Community" %}
+```python
+import pandas as pd
+import numpy as np
+import os, time, uuid
+from ipywidgets import widgets, interact, GridspecLayout
+import base64
+import pyspark.sql.functions as fn
+from google.cloud import storage
+
+from zingg.client import *
+from zingg.pipes import *
 
 client = storage.Client()
 
