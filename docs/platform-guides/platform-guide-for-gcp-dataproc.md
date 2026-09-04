@@ -54,7 +54,38 @@ Enterprise requires four JARs — the Enterprise engine, your license, and the t
 <table><thead><tr><th valign="top">JAR</th><th valign="top">Purpose</th><th valign="top">Source</th></tr></thead><tbody><tr><td valign="top"><code>zingg-enterprise-spark-1.0.0.jar</code></td><td valign="top">The Enterprise engine</td><td valign="top">Provided with your Enterprise distribution</td></tr><tr><td valign="top"><code>zingg_license.jar</code></td><td valign="top">Your Enterprise license</td><td valign="top">Provided with your Enterprise distribution</td></tr><tr><td valign="top"><code>spark-3.5-bigquery-0.44.1.jar</code></td><td valign="top">BigQuery connector</td><td valign="top"><code>github.com/GoogleCloudDataproc/spark-bigquery-connector</code></td></tr><tr><td valign="top"><code>gcs-connector-hadoop3-latest.jar</code></td><td valign="top">GCS connector</td><td valign="top"><code>docs.cloud.google.com/dataproc/docs/concepts/connectors/cloud-storage</code></td></tr></tbody></table>
 
 You also need three Python wheels — `zinggEC` and `zinggES` from your Enterprise distribution, plus the open-source `zingg` package that they extend.
+{% endtab %}
 
+{% tab title="Community" %}
+Community requires three JARs — the Zingg engine and the two Google connectors.
+
+<table><thead><tr><th valign="top">JAR</th><th valign="top">Purpose</th><th valign="top">Source</th></tr></thead><tbody><tr><td valign="top"><code>zingg-0.6.0.jar</code></td><td valign="top">The Zingg engine</td><td valign="top"><code>github.com/zinggAI/zingg/releases</code></td></tr><tr><td valign="top"><code>spark-3.5-bigquery-0.44.1.jar</code></td><td valign="top">BigQuery connector</td><td valign="top"><code>github.com/GoogleCloudDataproc/spark-bigquery-connector</code></td></tr><tr><td valign="top"><code>gcs-connector-hadoop3-latest.jar</code></td><td valign="top">GCS connector</td><td valign="top"><code>docs.cloud.google.com/dataproc/docs/concepts/connectors/cloud-storage</code></td></tr></tbody></table>
+
+No license JAR and no Python wheels are needed — the `zingg` package installs from PyPI.
+{% endtab %}
+{% endtabs %}
+
+Create a GCS bucket in the region where your Dataproc cluster will run, then upload the JARs, any wheels, and your dataset. Use either the Cloud Console or the `gcloud` CLI.
+
+#### Cloud Console
+
+1. Navigate to **Cloud Storage → Buckets → Create**.
+2. Name your bucket with a globally unique identifier (for example `zingg-production-storage`).
+3. Set **Location type** to **Region** and pick the region your Dataproc cluster will run in (for example `us-central1`).
+4. Under **Choose how to control access**, select **Uniform** — this matches `--uniform-bucket-level-access` in the CLI form below.
+5. Click **Create**.
+6. Open the bucket and click **UPLOAD FILES**. Upload the JARs from the table above, plus the Python wheels if you are on Enterprise.
+7. Click **CREATE FOLDER**, name it `data`, open it, and upload your dataset (for example `test.csv`). Step 5 reads from `gs://YOUR_BUCKET/data/`.
+8. Note the exact filenames in the bucket listing — Step 2 needs them verbatim.
+
+![GCS bucket Objects tab in the Google Cloud Console with the Upload menu open, showing Upload files and Upload folder alongside the Create folder button.](../.gitbook/assets/dataproc-gcs-bucket-upload.png)
+
+_**IMAGE TO BE ADDED - the bucket **creation** dialog (name field, Location type selector, access control options) for steps 1-5. Tanwi to check with team for a screenshot from a live GCS console.**_
+
+#### gcloud CLI
+
+{% tabs %}
+{% tab title="Enterprise" %}
 ```bash
 BUCKET="zingg-production-storage"
 
@@ -82,12 +113,6 @@ gcloud storage ls -l gs://$BUCKET/
 {% endtab %}
 
 {% tab title="Community" %}
-Community requires three JARs — the Zingg engine and the two Google connectors.
-
-<table><thead><tr><th valign="top">JAR</th><th valign="top">Purpose</th><th valign="top">Source</th></tr></thead><tbody><tr><td valign="top"><code>zingg-0.6.0.jar</code></td><td valign="top">The Zingg engine</td><td valign="top"><code>github.com/zinggAI/zingg/releases</code></td></tr><tr><td valign="top"><code>spark-3.5-bigquery-0.44.1.jar</code></td><td valign="top">BigQuery connector</td><td valign="top"><code>github.com/GoogleCloudDataproc/spark-bigquery-connector</code></td></tr><tr><td valign="top"><code>gcs-connector-hadoop3-latest.jar</code></td><td valign="top">GCS connector</td><td valign="top"><code>docs.cloud.google.com/dataproc/docs/concepts/connectors/cloud-storage</code></td></tr></tbody></table>
-
-No license JAR and no Python wheels are needed — the `zingg` package installs from PyPI.
-
 ```bash
 BUCKET="zingg-production-storage"
 
@@ -136,7 +161,7 @@ gcloud dataproc clusters create zingg-cluster \
   --bucket=$BUCKET \
   --max-idle=4h \
   --scopes=cloud-platform \
-  --properties="^#^spark:spark.jars=gs://$BUCKET/zingg-enterprise-spark-1.0.0.jar,gs://$BUCKET/zingg_license.jar,gs://$BUCKET/spark-3.5-bigquery-0.44.1.jar,gs://$BUCKET/gcs-connector-hadoop3-latest.jar#spark:spark.driver.memory=12g#spark:spark.executor.memory=8g#spark:spark.driver.maxResultSize=4g"
+  --properties="^#^spark:spark.jars=gs://$BUCKET/zingg-enterprise-spark-1.0.0.jar,gs://$BUCKET/zingg_license.jar,gs://$BUCKET/spark-3.5-bigquery-0.44.1.jar,gs://$BUCKET/gcs-connector-hadoop3-latest.jar#spark:spark.driver.memory=12g#spark:spark.executor.memory=8g#spark:spark.driver.maxResultSize=4g#spark:spark.eventLog.enabled=false#spark:spark.sql.maxPlanStringLength=8192#spark:spark.sql.shuffle.partitions=8"
 ```
 {% endtab %}
 
@@ -154,7 +179,7 @@ gcloud dataproc clusters create zingg-cluster \
   --bucket=$BUCKET \
   --max-idle=4h \
   --scopes=cloud-platform \
-  --properties="^#^spark:spark.jars=gs://$BUCKET/zingg-0.6.0.jar,gs://$BUCKET/spark-3.5-bigquery-0.44.1.jar,gs://$BUCKET/gcs-connector-hadoop3-latest.jar#spark:spark.driver.memory=12g#spark:spark.executor.memory=8g#spark:spark.driver.maxResultSize=4g"
+  --properties="^#^spark:spark.jars=gs://$BUCKET/zingg-0.6.0.jar,gs://$BUCKET/spark-3.5-bigquery-0.44.1.jar,gs://$BUCKET/gcs-connector-hadoop3-latest.jar#spark:spark.driver.memory=12g#spark:spark.executor.memory=8g#spark:spark.driver.maxResultSize=4g#spark:spark.eventLog.enabled=false#spark:spark.sql.maxPlanStringLength=8192#spark:spark.sql.shuffle.partitions=8"
 ```
 {% endtab %}
 {% endtabs %}
@@ -183,7 +208,13 @@ gcloud dataproc clusters describe zingg-cluster --region=us-central1 \
    * **Prefix:** `spark`
    * **Key:** `spark.jars`
    * **Value:** the four `gs://` paths, comma-separated with no spaces
-6. Add `spark.driver.memory` = `12g` and `spark.executor.memory` = `8g` with the same `spark` prefix.
+6. Add the remaining properties, each with the same `spark` prefix:
+   * `spark.driver.memory` = `12g`
+   * `spark.executor.memory` = `8g`
+   * `spark.driver.maxResultSize` = `4g`
+   * `spark.eventLog.enabled` = `false`
+   * `spark.sql.maxPlanStringLength` = `8192`
+   * `spark.sql.shuffle.partitions` = `8`
 7. Under **Scheduled deletion**, check **Delete on idle** and set 2 hours.
 8. Under **Manage security**, check **Enables the cloud-platform scope for this cluster**.
 
@@ -191,6 +222,12 @@ gcloud dataproc clusters describe zingg-cluster --region=us-central1 \
 **`^#^` is required in the CLI form.** It tells gcloud to use `#` rather than a comma as the `--properties` delimiter. Because `spark.jars` is itself comma-separated, omitting this splits the JAR paths into separate malformed properties. This is the single most common failure on this step.
 
 **In the console, the Prefix dropdown is easy to miss.** Set to anything other than `spark`, the property lands in the wrong config file and Spark never reads it — the cluster builds successfully and Zingg fails later.
+
+**The three tuning properties are not optional for Zingg workloads.**
+
+* `spark.eventLog.enabled=false` — Dataproc writes a Spark event log to the staging bucket by default. Zingg's iterative blocking produces a very large number of stages, so that log grows enough to slow the run down or fail it.
+* `spark.sql.maxPlanStringLength=8192` — Spark's default is effectively unbounded. Zingg builds deeply nested query plans, and rendering the full plan string into logs or an error message can exhaust driver heap on its own, masking the real failure.
+* `spark.sql.shuffle.partitions=8` — Spark defaults to 200, far more than these data volumes need, which adds pure task overhead on a small cluster. Keep it in line with `setNumPartitions()` in Step 11.
 
 **The license JAR must be in the bucket before the cluster boots.** `spark.jars` paths resolve when the Spark session starts, not at job submission.
 
@@ -207,11 +244,26 @@ gcloud dataproc clusters describe zingg-cluster --region=us-central1 \
 
 Once the cluster reports **Running**, access JupyterLab through the Component Gateway — no SSH or firewall configuration needed.
 
+![Dataproc Clusters list with zingg-cluster in us-central1 and its status circled, reading Running.](../.gitbook/assets/dataproc-cluster-running.png)
+
 1. Navigate to **Dataproc → Clusters**.
 2. Click your cluster name.
 3. Click the **Web Interfaces** tab.
 4. Under **Component Gateway**, click the **JupyterLab** link.
 5. Create a new notebook and select the **PySpark** kernel.
+
+![Dataproc Cluster details page for zingg-cluster with Status showing Running, and the Web Interfaces tab circled at the end of the tab row below the details table.](../.gitbook/assets/dataproc-cluster-details.png)
+
+![The Web Interfaces tab open, with the Component gateway section listing YARN ResourceManager, Spark History Server and Jupyter, and the JupyterLab link circled at the bottom.](../.gitbook/assets/dataproc-web-interfaces-jupyterlab.png)
+
+In JupyterLab, set the kernel in two clicks:
+
+1. Click the **kernel indicator** at the top right of the notebook toolbar — marked **1** below. It reads `No Kernel` until one is attached, and clicking it opens the Select Kernel dialog.
+2. Choose **PySpark** — marked **2** — not Python 3, then confirm.
+
+The same indicator doubles as your check: after selecting, it should read `PySpark` before you run any cell.
+
+![JupyterLab with the Select Kernel dialog open. Marker 1 circles the kernel indicator reading No Kernel at the top right of the toolbar; marker 2 circles the ticked PySpark entry in the dialog, above Python 3.](../.gitbook/assets/dataproc-select-kernel-pyspark.png)
 
 Or retrieve the link from the CLI:
 
@@ -249,6 +301,8 @@ Restart the kernel (**Kernel → Restart Kernel**), then confirm all three are p
 ```
 
 You should see `zingg`, `zinggEC`, and `zinggES`.
+
+![Notebook cell running pip list piped to grep zingg, with zingg 0.6.0, zinggEC 1.0.0 and zinggES 1.0.0 boxed in the output.](../.gitbook/assets/dataproc-pip-list-zingg.png)
 {% endtab %}
 
 {% tab title="Community" %}
@@ -356,6 +410,18 @@ def count_labeled_pairs(marked_pd):
     n_negative = len(np.unique(marked_pd[marked_pd['z_isMatch'] == 0]['z_cluster']))
     n_uncertain = len(np.unique(marked_pd[marked_pd['z_isMatch'] == 2]['z_cluster']))
     return n_positive, n_negative, n_uncertain, n_total
+
+def fix_void_columns(df):
+    """
+    Casts all-null columns to string. Spark cannot infer a type for a
+    column that is entirely null, which fails the write in Step 15.
+    """
+    for col in df.columns:
+        if df[col].apply(lambda x: x is None).all():
+            print(f"{col} is all None")
+            df[col] = df[col].astype(str)
+    return df
+```
 {% endtab %}
 
 {% tab title="Community" %}
@@ -414,17 +480,6 @@ def fix_void_columns(df):
 ```
 {% endtab %}
 {% endtabs %}
-def fix_void_columns(df):
-    """
-    Casts all-null columns to string. Spark cannot infer a type for a
-    column that is entirely null, which fails the write in Step 14.
-    """
-    for col in df.columns:
-        if df[col].apply(lambda x: x is None).all():
-            print(f"{col} is all None")
-            df[col] = df[col].astype(str)
-    return df
-```
 
 ### Step 7: Build the arguments object
 
