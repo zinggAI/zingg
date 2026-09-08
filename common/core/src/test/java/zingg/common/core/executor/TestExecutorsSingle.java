@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.AfterEach;
 
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.core.executor.validate.LabellerValidator;
 import zingg.common.core.executor.validate.LinkerValidator;
 import zingg.common.core.executor.validate.MatcherValidator;
@@ -38,28 +39,30 @@ public abstract class TestExecutorsSingle<S, D, R, C, T> extends TestExecutorsGe
 
 		TrainingDataFinder<S, D, R, C, T> tdf = getTrainingDataFinder();
     	Labeller<S, D, R, C, T> labeler = getLabeller();
-		executorTesterList.add(new FtdAndLabelCombinedExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf), getConfigFile(),
+		executorTesterList.add(new FtdAndLabelCombinedExecutorTester<S, D, R, C, T>(tdf, new TrainingDataFinderValidator<S, D, R, C, T>(tdf), getArgs(),
 				labeler, new LabellerValidator<S, D, R, C, T>(labeler), getModelId(), getDFObjectUtil()));
 
 
 		Trainer<S, D, R, C, T> trainer = getTrainer();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer),getConfigFile(),getModelId(),getDFObjectUtil()));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainer,getTrainerValidator(trainer),getArgs(),getModelId(),getDFObjectUtil()));
 
 	}
 
 	public void getAdditionalExecutors() throws ZinggClientException, IOException {
 		
 		Matcher<S, D, R, C, T> matcher = getMatcher();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher),getConfigFile(),getModelId(),getDFObjectUtil()));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(matcher,new MatcherValidator<S, D, R, C, T>(matcher),getArgs(),getModelId(),getDFObjectUtil()));
 
 		Linker<S, D, R, C, T> linker = getLinker();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker),getLinkerConfigFile(),getModelId(),getDFObjectUtil()));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(linker,new LinkerValidator<S, D, R, C, T>(linker),getLinkerArgs(),getModelId(),getDFObjectUtil()));
 	
 	}
 
-	public abstract String getConfigFile();
+	/** The args the single phase executors run on; built in code, not read from a file. */
+	public abstract IArguments getArgs() throws ZinggClientException;
 
-	public abstract String getLinkerConfigFile();
+	/** Linking needs its own args - two datasets and no training samples. */
+	public abstract IArguments getLinkerArgs() throws ZinggClientException;
 
     protected abstract TrainingDataFinder<S, D, R, C, T> getTrainingDataFinder() throws ZinggClientException;
 	
