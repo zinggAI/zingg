@@ -57,4 +57,3 @@ Zingg supports both batch and streaming entity resolution natively, so the choic
 * If your pipelines run batch, **use batch**.
 * If a decision is being made at the moment an event arrives and needs a trusted identity to act on — **use streaming**.
 
-####

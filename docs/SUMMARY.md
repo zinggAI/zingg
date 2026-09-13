@@ -48,7 +48,6 @@
 ## Running Zingg
 
 * [Step-by-Step Overview](running-zingg/step-by-step-guide.md)
-* [Experience Zingg](running-zingg/experience-zingg.md)
 * [Quick Start (Docker)](running-zingg/quick-start-docker.md)
 * [Install Zingg](running-zingg/install-zingg.md)
 * [Configure Zingg](running-zingg/configure-zingg.md)

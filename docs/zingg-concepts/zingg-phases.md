@@ -80,7 +80,7 @@ Reports what percentage of your known matching pairs are being blocked together 
 
 <details>
 
-<summary><strong><code>stopwords</code> recommend</strong></summary>
+<summary><strong><code>recommend</code></strong> </summary>
 
 Analyses a specified column and returns a list of high-frequency words that should be treated as stopwords. Optional phase used before training when address or company name fields contain repeated noise words like 'St', 'Ave', 'Inc', 'Ltd'.
 
