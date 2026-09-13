@@ -1,6 +1,10 @@
-# Deduplication, linking and resolving
+---
+description: >-
+  These three operations are often confused. They are distinct in scope and
+  complexity.
+---
 
-These three operations are often confused. They are distinct in scope and complexity.
+# Deduplication, linking and resolving
 
 **DEDUPLICATION - within one dataset**
 

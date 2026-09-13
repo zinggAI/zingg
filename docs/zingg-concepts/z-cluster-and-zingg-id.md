@@ -6,7 +6,7 @@ description: >-
 
 # Z Cluster and Zingg ID
 
-Zingg writes a cluster identifier into your match output so every record belonging to the same resolved entity carries the same value. Community uses `Z_CLUSTER`, a non-persistent identifier. Enterprise uses `Zingg_ID`, a persistent globally unique identifier. This page covers the difference between the two, the lifecycle behaviour, and how to use Zingg ID in your downstream systems.
+Zingg writes a cluster identifier into your match output so every record belonging to the same resolved entity carries the same value. Community uses `Z_Cluster`, a non-persistent identifier. Enterprise uses `Zingg_ID`, a persistent globally unique identifier. This page covers the difference between the two, the lifecycle behaviour, and how to use Zingg ID in your downstream systems.
 
 ### `Z_Cluster` - Community
 
