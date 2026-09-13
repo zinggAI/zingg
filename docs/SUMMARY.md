@@ -120,6 +120,7 @@
 * [Identity RAG with Zingg and LangChain](recipes-and-integration/identity-rag-with-zingg-and-langchain.md)
 * [Combine Match Models](recipes-and-integration/combine-match-models.md)
 * [Pre-trained Models](recipes-and-integration/pre-trained-models.md)
+* [Configuring through environment variables](recipes-and-integration/configuring-through-environment-variables.md)
 
 ## Reference
 

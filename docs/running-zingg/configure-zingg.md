@@ -219,28 +219,6 @@ args.setOutput(outputPipe)
 }
 ```
 
-#### Configuring through environment variables
-
-If you do not want to pass sensitive values such as passwords through the config file, configure them through system environment variables. Wrap the variable name in dollar signs in your config:
-
-* Strings: `"$var$"` (with quotes)
-* Booleans and numerics: `$var$` (without quotes)
-
-```json
-{
-  "output" : [ {
-    "name" : "unifiedCustomers",
-    "format" : "net.snowflake.spark.snowflake",
-    "props" : {"path" : "$location$", "password" : "$passwd$"}
-  } ],
-  "labelDataSampleSize" : 0.5,
-  "numPartitions" : 4,
-  "modelId" : "$modelId$",
-  "zinggDir" : "models",
-  "collectMetrics" : "$collectMetrics$"
-}
-```
-
 {% hint style="success" icon="right-long" %}
 **Read more**: For all supported connector types and formats - [Connect Your Data](../connect-your-data/pipes-and-data-connections.md)
 {% endhint %}
