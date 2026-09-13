@@ -68,10 +68,7 @@
 * [Cluster Approval](running-zingg/cluster-approval.md)
 * [Compare Model Results](running-zingg/compare-model-results.md)
 * [Knowledge Graph](running-zingg/knowledge-graph.md)
-
-***
-
-* [Standardize Fields and Results](standardize-fields-and-results.md)
+* [Standardize Fields and Results](running-zingg/standardize-fields-and-results.md)
 
 ## Connect Your Data
 

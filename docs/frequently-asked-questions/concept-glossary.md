@@ -19,8 +19,7 @@ Learn how Zingg reduces candidate comparisons, learns matching behavior from lab
 
 <summary><strong>Blocking model</strong></summary>
 
-Blocking group records into candidate buckets before any matching begins. Without it, Zingg would need to compare every record against every other; at 1 million records, that is 500 billion pairs before any field-level comparison runs. The blocking model reduces Zingg's actual comparison space to 0.05–1% of the full problem, making\
-Enterprise-scale entity resolution is computationally feasible.
+{% include "../.gitbook/includes/blocking-group-records-into....md" %}
 
 {% hint style="success" icon="right-long" %}
 **Read more:** [How Zingg learns](../running-zingg/step-by-step-guide.md) | [Verify blocking](../running-zingg/create-training-data/verify-blocking.md)
@@ -32,8 +31,7 @@ Enterprise-scale entity resolution is computationally feasible.
 
 <summary><strong>Active learning</strong></summary>
 
-The process by which Zingg builds its matching model from your feedback rather than a pre-labeled dataset. Zingg presents record pairs; you label each as Match, No Match or Can't Say. Because Zingg selects the pairs where it is most uncertain, 30–50 labelled pairs are\
-typically enough to train a high-accuracy model on datasets of 100,000+ records.
+{% include "../.gitbook/includes/the-process-by-which-zingg-....md" %}
 
 {% hint style="success" icon="right-long" %}
 **Read more:** [How Zingg learns](../zingg-concepts/how-zingg-learns/) | [Label training pairs](../running-zingg/create-training-data/label-training-pairs.md)
@@ -45,10 +43,9 @@ typically enough to train a high-accuracy model on datasets of 100,000+ records.
 
 <summary><strong>Probabilistic matching</strong></summary>
 
-Zingg's default matching mode. The model learns similarity weights for each field from your labeled pairs and assigns a match score to every candidate pair. Records above the threshold are grouped into a cluster. The threshold is automatically chosen to balance accuracy and recall. Zingg optimizes it so you do not need to tune a cut-off manually.
+{% include "../.gitbook/includes/zinggs-default-matching-mo... (1).md" %}
 
-Probabilistic matching handles variations in names, addresses, and other messy real-world data that exact rules cannot account for.\
-\&#xNAN;_Available in all editions_
+
 
 {% hint style="success" icon="right-long" %}
 **Read more:** [Deterministic vs probabilistic matching](../zingg-concepts/zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
