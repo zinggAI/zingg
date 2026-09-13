@@ -17,11 +17,11 @@ The following prerequisites apply to local and self-managed Spark installations 
 
 {% tabs %}
 {% tab title="Notebook Environments" %}
-### **Step 1: Install Zingg on your Databricks cluster**
+### **Step 1: Install Zingg Jar on your Spark cluster**
 
-Go to **Compute → your cluster → Libraries → Install new → PyPI**.
+The steps for installing a jar on your Spark cluster will vary based on the platform. Please refer tot he platform guide or Zingg Platform specific guides for the steps.&#x20;
 
-Install the Zingg Python package matching your edition.
+### **Step 2: Install Zingg Python Packages**
 
 #### **Community**
 
@@ -48,56 +48,9 @@ Restart the Python kernel: **Runtime → Restart Python**.
 
 ```bash
 %pip show zingg
-```
-{% endtab %}
+%pip show zinggEC
+%pip show zinggES
 
-{% tab title="AWS EMR" %}
-Two options for running Zingg on AWS EMR.
-
-### Option A - spark-submit with Zingg JAR
-
-Use the `spark-submit` option passing the Zingg JAR, phase name, and config file. `config.json` must be available locally on the driver.
-
-{% code title="spark-submit example" expandable="true" %}
-```bash
-aws emr create-cluster \
-  --name "Add Spark Step Cluster" \
-  --release-label emr-6.2.0 \
-  --applications Name=Zingg \
-  --ec2-attributes KeyName=myKey \
-  --instance-type <instance type> \
-  --instance-count <num instances> \
-  --steps Type=Spark,Name="Zingg",ActionOnFailure=CONTINUE,Args=[--class,zingg.spark.client.SparkClient,<s3 location of zingg.jar>,--phase,<findTrainingData or match etc>,--conf,<local location of config.json>] \
-  --use-default-roles
-```
-{% endcode %}
-
-### Option B - AWS EMR Notebooks
-
-Run Zingg Python code directly in AWS EMR Notebooks using the Python API. Install the Zingg Python package matching your edition.
-
-#### Community
-
-```bash
-%pip install zingg
-```
-
-#### Enterprise Lite or Enterprise
-
-```bash
-%pip install zinggEC
-```
-
-#### Enterprise Plus
-
-```bash
-%pip install zinggES
-```
-
-#### **Verify the installation**
-
-```bash
-%pip show zingg
 ```
 {% endtab %}
 
@@ -115,9 +68,9 @@ Download the latest release from GitHub: `github.com/zinggAI/zingg/releases`
 **Prerequisites**: Java JDK 11.0.23, Spark 3.5.2
 
 ```bash
-wget https://github.com/zinggAI/zingg/releases/download/v0.7.0/zingg-0.7.0-spark_3.5.tar.gz
+wget https://github.com/zinggAI/zingg/releases/download/v0.7.0/zingg-0.7.0-spark-3.5.5.tar.gz
 
-tar -xvf zingg-0.7.0-spark_3.5.tar.gz
+tar -xvf zingg-0.7.0-spark-3.5.5.tar.gz
 ```
 
 ### Set up environment variables
