@@ -3,6 +3,7 @@ package zingg.common.core.executor;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.executor.validate.ExecutorValidator;
 
@@ -15,9 +16,9 @@ public class FtdAndLabelCombinedExecutorTester<S, D, R, C, T> extends MatchThres
 
     //setting labeller properties here
     //ftd properties are already set by super
-    public FtdAndLabelCombinedExecutorTester(ZinggBase<S, D, R, C, T> ftdExecutor, ExecutorValidator<S, D, R, C, T> ftdValidator, String configFile,
+    public FtdAndLabelCombinedExecutorTester(ZinggBase<S, D, R, C, T> ftdExecutor, ExecutorValidator<S, D, R, C, T> ftdValidator, IArguments args,
                                              ZinggBase<S, D, R, C, T> labelExecutor, ExecutorValidator<S, D, R, C, T> labelValidator, String modelId, DFObjectUtil<S,D,R,C> dfObjectUtil) throws ZinggClientException, IOException, NoSuchMethodException {
-        super(ftdExecutor, ftdValidator,configFile,modelId,dfObjectUtil);
+        super(ftdExecutor, ftdValidator,args,modelId,dfObjectUtil);
         this.labelExecutor = labelExecutor;
         this.labelValidator = labelValidator;
     }
