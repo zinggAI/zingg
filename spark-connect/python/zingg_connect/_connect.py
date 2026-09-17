@@ -12,6 +12,8 @@ never special-cases Databricks Connect -- Spark Connect's own wire protocol
 is the only integration point.
 """
 
+import inspect
+
 from google.protobuf import any_pb2
 from pyspark.sql.connect.client.core import SparkConnectClient
 from pyspark.sql.connect.proto import commands_pb2
@@ -148,8 +150,14 @@ def fetch_zingg_relation(remote, zingg_command):
     plan.root.CopyFrom(relation)
 
     try:
-        table, _schema = client.to_table(plan)
-        return table
+        # SparkConnectClient.to_table gained a required `observations` argument
+        # in pyspark 4.x and returns a 3-tuple there (table, schema,
+        # execution_info) versus 2 on 3.5, so probe rather than assume.
+        if "observations" in inspect.signature(client.to_table).parameters:
+            result = client.to_table(plan, {})
+        else:
+            result = client.to_table(plan)
+        return result[0]
     except Exception as e:
         raise ZinggConnectError(
             f"Zingg relation for phase '{zingg_command.phase}' failed over Spark Connect: {e}"
