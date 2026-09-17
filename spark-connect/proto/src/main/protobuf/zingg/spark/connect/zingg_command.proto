@@ -93,14 +93,19 @@ message ClientOptions {
 // NOTE: Spark Connect's CommandPlugin.process(bytes, planner) -> boolean has
 // no channel back to the client for a data payload -- a thrown exception
 // propagates as a gRPC error, and a normal return just completes the RPC.
-// That is sufficient for phases that only need success/failure (train,
-// match, trainMatch, link, findTrainingData, generateDocs, recommend,
-// updateLabel). Phases that need to return row data to the client (the
-// interactive label/findAndLabel loop) cannot be modeled as a CommandPlugin
-// and need a RelationPlugin instead -- not yet implemented here.
+// That is sufficient for every phase that only needs success/failure, and for
+// recording labels the client already collected (see `labels`). Reading the
+// unmarked pairs back out is the one direction a command cannot serve, so the
+// same message is also sent as a Relation, where ZinggRelationPlugin answers
+// it with the pairs still needing a label.
 message ZinggCommand {
   string phase = 1; // matches zingg.common.client.options.ZinggOptions value, e.g. "train","match","label",...
   Arguments args = 2;
   ClientOptions options = 3;
-  // next available field number: 4
+  // Labels collected on the client, keyed by the z_cluster value of the pair.
+  // Values match zingg.common.client.util.ColValues.MATCH_TYPE_*: 1 match,
+  // 0 no match, 2 not sure. Only read for the labelling phases; when set, the
+  // server records them instead of trying to prompt for them.
+  map<string, int32> labels = 4;
+  // next available field number: 5
 }

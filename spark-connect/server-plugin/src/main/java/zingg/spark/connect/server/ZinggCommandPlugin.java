@@ -34,11 +34,12 @@ import zingg.spark.connect.proto.ZinggCommand;
  * Limitation: CommandPlugin#process only signals handled/not-handled -- there
  * is no channel back to the client for a data payload. A thrown exception
  * propagates to the client as a gRPC error; a normal return just completes
- * the RPC with no result rows. That is sufficient for fire-and-execute phases
- * (train, match, trainMatch, link, findTrainingData, generateDocs, recommend,
- * updateLabel) but NOT for phases that must return row data to the caller
- * (the interactive label/findAndLabel loop) -- those need a RelationPlugin
- * instead, which is not implemented in this module yet.
+ * the RPC with no result rows. That is sufficient for the fire-and-execute
+ * phases, and for the write half of the label loop: a label command carrying
+ * ZinggCommand.labels is recorded through Client.applyLabels, which runs the
+ * same pipeline (preprocess, postProcessLabel, write) the terminal labeller
+ * does. Only the read half -- handing the unmarked pairs back to the client --
+ * needs row data, and that is served by ZinggRelationPlugin.
  */
 public class ZinggCommandPlugin implements CommandPlugin {
 
@@ -101,10 +102,15 @@ public class ZinggCommandPlugin implements CommandPlugin {
 		String phase = zinggCommand.getPhase();
 		ZinggOptions.verifyPhase(phase);
 		ZinggOption zinggOption = ZinggOptions.getByValue(phase);
-		if (zinggOption.equals(ZinggOptions.LABEL) || zinggOption.equals(ZinggOptions.FIND_AND_LABEL)) {
+		boolean isLabelling = zinggOption.equals(ZinggOptions.LABEL) || zinggOption.equals(ZinggOptions.FIND_AND_LABEL);
+		if (isLabelling && zinggCommand.getLabelsCount() == 0) {
+			// Labelling without labels would mean prompting a human on the server,
+			// which has no terminal. Fetch the pairs as a relation, label them on
+			// the client, then send them back on this channel with labels set.
 			throw new ZinggClientException(
-					"Phase '" + phase + "' returns row data to the caller and is not yet supported over "
-							+ "the Spark Connect CommandPlugin path -- it needs a RelationPlugin implementation.");
+					"Phase '" + phase + "' needs labels to record: fetch the unmarked pairs via the "
+							+ "relation plugin, label them client-side, and resend this command with "
+							+ "ZinggCommand.labels populated.");
 		}
 
 		IZArgs args = ZinggProtoConverters.toJavaArguments(zinggCommand.getArgs());
@@ -113,7 +119,13 @@ public class ZinggCommandPlugin implements CommandPlugin {
 		LOG.info("Running Zingg phase '" + phase + "' via Spark Connect command plugin");
 		SparkClient client = new SparkClient(args, options, session);
 		client.init();
-		client.execute();
+		if (isLabelling) {
+			// The client already collected the decisions; record them through the
+			// same pipeline the terminal labeller uses.
+			client.applyLabels(zinggCommand.getLabelsMap());
+		} else {
+			client.execute();
+		}
 		// No client.stop() here: over Spark Connect the SparkSession is owned by
 		// the long-running server and shared across requests, so stopping it would
 		// tear down Spark for every subsequent phase. (The CLI's init/execute/stop

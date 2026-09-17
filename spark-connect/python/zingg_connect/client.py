@@ -6,21 +6,19 @@ zingg.client.Zingg's py4j object-proxy with a single gRPC command per run.
 No py4j, no _jvm/_gateway, no _jsparkSession/_jdf reach-ins, no Databricks
 Connect special-casing -- see zingg_connect._connect for the wire bridge.
 
-Known limitation: the interactive label/findAndLabel loop needs a Spark
-Connect RelationPlugin (to stream row data back), which is not implemented
-in this module yet -- see zingg.spark.connect.server.ZinggCommandPlugin's
-docstring. Only the fire-and-execute phases are supported here: train,
+Every phase runs as one ZinggCommand. The fire-and-execute phases (train,
 match, trainMatch, link, findTrainingData, generateDocs, recommend,
-updateLabel.
+updateLabel) go through execute(). The interactive label/findAndLabel loop
+is two calls instead of one, because the decisions are made where the human
+is: getUnmarkedPairs() reads the pairs back through the RelationPlugin, and
+writeMarkedPairs() sends the labels for the server to record.
 """
 
-from zingg_connect._connect import (
-    execute_zingg_command, fetch_zingg_relation, write_marked_pairs,
-)
+from zingg_connect._connect import execute_zingg_command, fetch_zingg_relation
 from zingg_connect.options import ZinggOptions
 from zingg_connect.proto import zingg_command_pb2 as pb2
 
-_UNSUPPORTED_PHASES = {ZinggOptions.LABEL, ZinggOptions.FIND_AND_LABEL}
+_LOOP_PHASES = {ZinggOptions.LABEL, ZinggOptions.FIND_AND_LABEL}
 
 
 class Zingg:
@@ -41,18 +39,17 @@ class Zingg:
         self.remote = remote
 
     def init(self):
-        """Validates the requested phase is supported over this module's
-        CommandPlugin path. Kept as a separate method (a no-op otherwise) so
-        existing call sites that do `z.init(); z.execute()` keep working --
-        unlike the py4j client, init/execute/cleanup all run atomically,
-        server-side, inside a single ZinggCommand RPC."""
+        """Validates the requested phase can run as a single fire-and-execute
+        command. Kept as a separate method (a no-op otherwise) so existing call
+        sites that do `z.init(); z.execute()` keep working -- unlike the py4j
+        client, init/execute/cleanup all run atomically, server-side, inside a
+        single ZinggCommand RPC."""
         phase = self.inpOptions.getPhase()
-        if phase in _UNSUPPORTED_PHASES:
+        if phase in _LOOP_PHASES:
             raise NotImplementedError(
-                f"Phase '{phase}' returns row data to the caller and needs a "
-                "Spark Connect RelationPlugin -- not implemented yet in "
-                "zingg_connect. Supported phases: "
-                + ", ".join(p for p in ZinggOptions.ALL if p not in _UNSUPPORTED_PHASES)
+                f"Phase '{phase}' is a loop, not a single call: the server has no "
+                "terminal to prompt at. Use getUnmarkedPairs() to read the pairs, "
+                "label them here, then writeMarkedPairs() to record them."
             )
 
     def execute(self):
@@ -88,25 +85,43 @@ class Zingg:
         labelled on the client. Uses the RelationPlugin path (returns row data),
         unlike execute() which is fire-and-execute only.
 
-        Returns a PyArrow Table of the pairs still needing a label. Intended for
-        the label / findAndLabel phases; requires findTrainingData to have run.
+        Returns a PyArrow Table of the pairs still needing a label. For the
+        label phase this requires findTrainingData to have run; for
+        findAndLabel the finder is run here first, as its own command, so that
+        no job is executed while the server is transforming the relation plan.
         """
+        phase = self.inpOptions.getPhase()
+        if phase == ZinggOptions.FIND_AND_LABEL:
+            execute_zingg_command(self.remote, pb2.ZinggCommand(
+                phase=ZinggOptions.FIND_TRAINING_DATA,
+                args=self.inpArgs.to_proto(),
+                options=self.inpOptions.to_proto(),
+            ))
         command = pb2.ZinggCommand(
-            phase=self.inpOptions.getPhase(),
+            phase=phase,
             args=self.inpArgs.to_proto(),
             options=self.inpOptions.to_proto(),
         )
         return fetch_zingg_relation(self.remote, command)
 
     def writeMarkedPairs(self, labels):
-        """Write the client's label decisions back to the model's marked
-        training data, so a subsequent train() picks them up. Paths are derived
-        from the Arguments (zinggDir + modelId) -- nothing is hardcoded.
+        """Send the client's label decisions to the server, which records them
+        through Zingg's own labelling pipeline (the same preprocessing,
+        postprocessing and marked-pipe write the terminal labeller performs),
+        so a subsequent train() picks them up.
 
         :param labels: iterable of (z_cluster, label), label 1=match, 0=no, 2=not sure
-        :returns: number of pairs written
+        :returns: number of labelled pairs sent
         """
-        zingg_dir = self.inpArgs.getZinggDir()
-        model_id = self.inpArgs.getModelId()
-        base = f"{zingg_dir}/{model_id}/trainingData"
-        return write_marked_pairs(self.remote, f"{base}/unmarked", f"{base}/marked", labels)
+        labels = dict(labels)
+        if not labels:
+            return 0
+        command = pb2.ZinggCommand(
+            phase=self.inpOptions.getPhase(),
+            args=self.inpArgs.to_proto(),
+            options=self.inpOptions.to_proto(),
+        )
+        for cluster, label in labels.items():
+            command.labels[str(cluster)] = int(label)
+        execute_zingg_command(self.remote, command)
+        return len(labels)

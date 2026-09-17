@@ -62,16 +62,24 @@ field to `Arguments` later cannot silently reinterpret an existing one.
   spark.connect.extensions.command.classes=zingg.spark.connect.server.ZinggCommandPlugin`
   and point `zingg_connect.Zingg` at it).
 
-## Known gap: the interactive label loop
+## The interactive label loop
 
 `CommandPlugin#process` only signals handled/not-handled back to Spark
 Connect's planner -- there is no channel for it to return row data to the
-client. That's fine for phases that only need success/failure (train, match,
-trainMatch, link, findTrainingData, generateDocs, recommend, updateLabel),
-which is what `ZinggCommandPlugin` and `zingg_connect.client.Zingg` support
-today. The interactive `label`/`findAndLabel` loop needs to stream row data
-back and forth and therefore needs a `RelationPlugin` (which produces a
-queryable `LogicalPlan`/DataFrame the client can `collect()`), not a
-`CommandPlugin` -- both the Python client and the server plugin raise a clear
-error for these two phases rather than silently doing the wrong thing. Not
-implemented in this pass.
+client. That is fine for every phase that only needs success/failure, but the
+`label`/`findAndLabel` loop also has to hand the unmarked pairs *to* the
+client, so it is split across both extension points:
+
+1. `Zingg.getUnmarkedPairs()` sends the `ZinggCommand` as a **Relation**.
+   `ZinggRelationPlugin` answers with a `LogicalPlan` of the pairs still
+   needing a label, and Spark streams the rows back.
+2. The marking happens on the client, where the human is.
+3. `Zingg.writeMarkedPairs()` sends the decisions back as a **Command**, with
+   `ZinggCommand.labels` populated (cluster id -> 1/0/2).
+   `ZinggCommandPlugin` records them via `Client.applyLabels`.
+
+Step 3 deliberately does not write the marked pipe itself. `applyLabels`
+installs a `MapLabelCollector` and runs `Labeller.execute()`, so a remote
+front end goes through the same pipeline as the terminal one -- same
+preprocessing, same `LabellerUtil.postProcessLabel`, same marked-pipe write.
+Anything a front end could get subtly wrong lives on the server, once.

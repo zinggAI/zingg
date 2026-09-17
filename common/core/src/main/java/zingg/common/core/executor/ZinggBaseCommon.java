@@ -10,6 +10,7 @@ import zingg.common.client.ClientOptions;
 import zingg.common.client.arguments.model.IZArgs;
 import zingg.common.client.IZingg;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.ILabelDataViewHelper;
 import zingg.common.client.ITrainingDataModel;
 import zingg.common.client.options.ZinggOption;
 import zingg.common.client.util.DSUtil;
@@ -169,5 +170,16 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
     @Override
     public ITrainingDataModel<S, D, R, C> getTrainingDataModel() {
         return null;
+    }
+
+    @Override
+    public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() {
+        return null;
+    }
+
+    @Override
+    public void applyLabels(java.util.Map<String, Integer> clusterLabels) throws ZinggClientException {
+        throw new UnsupportedOperationException(
+            "Phase " + getName() + " does not label records; only the labelling phases accept labels.");
     }
  }

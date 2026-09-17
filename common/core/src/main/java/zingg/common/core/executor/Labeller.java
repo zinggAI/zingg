@@ -1,11 +1,13 @@
 package zingg.common.core.executor;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import zingg.common.client.ILabelCollector;
 import zingg.common.client.ILabelDataViewHelper;
 import zingg.common.client.ITrainingDataModel;
 import zingg.common.client.ZFrame;
@@ -26,6 +28,7 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 	public static final Log LOG = LogFactory.getLog(Labeller.class);
 	protected ITrainingDataModel<S, D, R, C> trainingDataModel;
 	protected ILabelDataViewHelper<S, D, R, C> labelDataViewHelper;
+	protected ILabelCollector<D, R, C> labelCollector;
 	
 	public Labeller() {
 		setZinggOption(ZinggOptions.LABEL);
@@ -33,21 +36,58 @@ public abstract class Labeller<S,D,R,C,T> extends ZinggBase<S,D,R,C,T> implement
 
 	public void execute() throws ZinggClientException {
 		try {
-			LabellerUtil<D, R, C> labellerUtil = new LabellerUtil<D, R, C>();
 			LOG.info("Reading inputs for labelling phase ...");
 			getTrainingDataModel().setMarkedRecordsStat(getMarkedRecords());
 			ZFrame<D,R,C>  unmarkedRecords = getUnmarkedRecords();
 			ZFrame<D, R, C> preprocessedUnmarkedRecords = preprocess(unmarkedRecords);
-			ZFrame<D,R,C>  updatedLabelledRecords = processRecordsCli(preprocessedUnmarkedRecords);
-			//only post processing if there are labelled records
-			if(updatedLabelledRecords != null){
-				ZFrame<D, R, C> postProcessedLabelledRecords = labellerUtil.postProcessLabel(updatedLabelledRecords, unmarkedRecords);
-				getTrainingDataModel().writeLabelledOutput(postProcessedLabelledRecords,args);
-			}
+			ZFrame<D,R,C>  updatedLabelledRecords = getLabelCollector().collectLabels(preprocessedUnmarkedRecords);
+			writeLabelledRecords(updatedLabelledRecords, unmarkedRecords);
 			LOG.info("Finished labelling phase");
 		} catch (Exception e) {
 			throw new ZinggClientException("Error in labelling phase ", e);
 		}
+	}
+
+	/**
+	 * Records labels collected elsewhere -- a Spark Connect client, a notebook,
+	 * a web form -- through the same pipeline the terminal session uses, so the
+	 * preprocessing and postprocessing cannot be skipped by a front end that
+	 * only knows how to ask a human.
+	 *
+	 * @param clusterLabels ColName.CLUSTER_COLUMN value -> label
+	 */
+	public void applyLabels(Map<String, Integer> clusterLabels) throws ZinggClientException {
+		setLabelCollector(new MapLabelCollector<S, D, R, C, T>(this, clusterLabels));
+		execute();
+	}
+
+	/**
+	 * Restores the shape of the original unmarked rows and writes them to the
+	 * marked pipe. Every front end goes through here, so postProcessLabel can
+	 * never be skipped for one transport and not another.
+	 */
+	public void writeLabelledRecords(ZFrame<D,R,C> updatedLabelledRecords, ZFrame<D,R,C> unmarkedRecords)
+			throws ZinggClientException {
+		//only post processing if there are labelled records
+		if (updatedLabelledRecords == null) {
+			return;
+		}
+		LabellerUtil<D, R, C> labellerUtil = new LabellerUtil<D, R, C>();
+		ZFrame<D, R, C> postProcessedLabelledRecords = labellerUtil.postProcessLabel(updatedLabelledRecords,
+				unmarkedRecords);
+		getTrainingDataModel().writeLabelledOutput(postProcessedLabelledRecords, args);
+	}
+
+	/** Defaults to the terminal session; replace it to label from anywhere else. */
+	public ILabelCollector<D, R, C> getLabelCollector() {
+		if (labelCollector == null) {
+			labelCollector = new CliLabelCollector<S, D, R, C, T>(this);
+		}
+		return labelCollector;
+	}
+
+	public void setLabelCollector(ILabelCollector<D, R, C> labelCollector) {
+		this.labelCollector = labelCollector;
 	}
 
 	

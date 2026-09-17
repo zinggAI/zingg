@@ -20,8 +20,7 @@ import zingg.common.client.ClientOptions;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
 import zingg.common.client.arguments.model.IZArgs;
-import zingg.spark.core.executor.SparkLabeller;
-import zingg.spark.core.executor.SparkFindAndLabeller;
+import zingg.spark.client.SparkClient;
 import zingg.spark.connect.proto.ZinggCommand;
 
 /**
@@ -31,9 +30,13 @@ import zingg.spark.connect.proto.ZinggCommand;
  * Unlike a CommandPlugin (which can only signal handled/failed), a RelationPlugin
  * returns a LogicalPlan -- so Spark streams the resulting rows back to the client,
  * which is exactly the two-way channel the label loop needs. The server side here
- * only produces the pairs (via the existing Labeller.getUnmarkedRecords()); the
- * actual yes/no/skip marking happens client-side, where a human is, and the marked
- * pairs are written back separately.
+ * only produces the pairs (via Client.getUnmarkedRecords(), the same accessor the
+ * py4j client uses); the actual yes/no/skip marking happens client-side, where a
+ * human is, and the marked pairs are written back separately.
+ *
+ * This plugin only reads: for findAndLabel the caller must run the finder first,
+ * as its own findTrainingData command. Executing a job here would mean running it
+ * during plan transformation, which Spark may invoke more than once.
  *
  * Registration (server side):
  *   --conf spark.connect.extensions.relation.classes=zingg.spark.connect.server.ZinggRelationPlugin
@@ -98,18 +101,11 @@ public class ZinggRelationPlugin implements RelationPlugin {
 		LOG.info("Producing unmarked pairs for Zingg phase '" + zinggCommand.getPhase()
 				+ "' via Spark Connect relation plugin");
 
-		ZFrame<Dataset<Row>, Row, Column> unmarked;
-		if (zinggCommand.getPhase().equals("findAndLabel")) {
-			// findAndLabel = generate fresh pairs (finder) then hand them back to label
-			SparkFindAndLabeller findAndLabeller = new SparkFindAndLabeller();
-			findAndLabeller.init(args, session, options);
-			findAndLabeller.getFinder().execute();
-			unmarked = findAndLabeller.getLabeller().getUnmarkedRecords();
-		} else {
-			SparkLabeller labeller = new SparkLabeller();
-			labeller.init(args, session, options);
-			unmarked = labeller.getUnmarkedRecords();
-		}
+		// Same entry point the command plugin uses: SparkClient builds the executor
+		// for the phase and exposes the pairs through Client.getUnmarkedRecords().
+		SparkClient client = new SparkClient(args, options, session);
+		client.init();
+		ZFrame<Dataset<Row>, Row, Column> unmarked = client.getUnmarkedRecords();
 
 		if (unmarked == null) {
 			throw new ZinggClientException("No unmarked training pairs found -- run findTrainingData first.");
