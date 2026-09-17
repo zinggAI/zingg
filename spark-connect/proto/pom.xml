@@ -12,7 +12,8 @@
 	<parent>
 		<groupId>zingg</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.7.0</version>
+		<version>${zingg.version}</version>
+		<!-- two levels down, so the default ../pom.xml would miss the root -->
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
@@ -20,37 +21,6 @@
 	<packaging>jar</packaging>
 	<name>zingg-spark-connect-proto</name>
 
-	<profiles>
-		<profile>
-			<id>spark-4.0</id>
-			<activation><property><name>spark</name><value>4.0</value></property></activation>
-			<properties><protobuf.version>4.29.3</protobuf.version></properties>
-		</profile>
-		<profile>
-			<id>spark-4.1</id>
-			<activation><property><name>spark</name><value>4.1</value></property></activation>
-			<properties><protobuf.version>4.33.0</protobuf.version></properties>
-		</profile>
-		<profile>
-			<id>spark-4.2</id>
-			<activation><property><name>spark</name><value>4.2</value></property></activation>
-			<properties><protobuf.version>4.33.5</protobuf.version></properties>
-		</profile>
-		<profile>
-			<id>spark-3.5</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>spark</name>
-					<value>3.5</value>
-				</property>
-			</activation>
-			<properties>
-				<!-- must match the protobuf-java version Spark 3.5.5's spark-connect_2.12 server pins -->
-				<protobuf.version>3.23.4</protobuf.version>
-			</properties>
-		</profile>
-	</profiles>
 
 	<properties>
 		<!-- Where the generated Python stubs land, consumed directly by the
@@ -62,7 +32,6 @@
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>${protobuf.version}</version>
 		</dependency>
 	</dependencies>
 

@@ -36,6 +36,7 @@
 			<activation><property><name>spark</name><value>4.0</value></property></activation>
 			<properties>
 				<spark.version>4.0.3</spark.version>
+				<protobuf.version>4.29.3</protobuf.version>
 				<scala.version>2.13.16</scala.version>
 				<spark.binary.version>4.0</spark.binary.version>
 				<scala.binary.version>2.13</scala.binary.version>
@@ -50,6 +51,7 @@
 			<activation><property><name>spark</name><value>4.1</value></property></activation>
 			<properties>
 				<spark.version>4.1.3</spark.version>
+				<protobuf.version>4.33.0</protobuf.version>
 				<scala.version>2.13.17</scala.version>
 				<spark.binary.version>4.1</spark.binary.version>
 				<scala.binary.version>2.13</scala.binary.version>
@@ -64,6 +66,7 @@
 			<activation><property><name>spark</name><value>4.2</value></property></activation>
 			<properties>
 				<spark.version>4.2.0</spark.version>
+				<protobuf.version>4.33.5</protobuf.version>
 				<scala.version>2.13.18</scala.version>
 				<spark.binary.version>4.2</spark.binary.version>
 				<scala.binary.version>2.13</scala.binary.version>
@@ -84,6 +87,7 @@
 			</activation>
 			<properties>
 				<spark.version>3.5.5</spark.version>
+				<protobuf.version>3.23.4</protobuf.version>
 				<scala.version>2.12.10</scala.version>
 				<spark.binary.version>3.5</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
@@ -94,6 +98,11 @@
 	</profiles>
 	<properties>
 		<zingg.version>0.7.0</zingg.version>
+		<!-- Default matches the spark-3.5 profile; each spark-4.x profile
+		     overrides it with the protobuf version that Spark line's
+		     spark-connect server pins. Declared here as well as in the
+		     profiles so child modules can resolve it at model-build time. -->
+		<protobuf.version>3.23.4</protobuf.version>
 		<skipTests>false</skipTests>
 		<failIfNoTests>false</failIfNoTests>
 		<maven.compiler.source>11</maven.compiler.source>
@@ -121,6 +130,19 @@
 		</repository>		
 	</repositories>
 
+	<!-- protobuf-java's version varies per Spark profile. Managing it here lets
+	     the spark-connect modules declare the dependency without a version, which
+	     they must: Maven cannot interpolate an inherited property for a child
+	     module's dependency.version at model-build time. -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.google.protobuf</groupId>
+				<artifactId>protobuf-java</artifactId>
+				<version>${protobuf.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.mockito</groupId>
