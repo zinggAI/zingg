@@ -180,6 +180,6 @@ public abstract class ZinggBaseCommon<S,D, R, C, T> implements Serializable, IZi
     @Override
     public void applyLabels(java.util.Map<String, Integer> clusterLabels) throws ZinggClientException {
         throw new UnsupportedOperationException(
-            "Phase " + getName() + " does not label records; only the labelling phases accept labels.");
+            getClass().getSimpleName() + " does not label records; only the labelling phases accept labels.");
     }
  }

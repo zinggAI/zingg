@@ -22,7 +22,7 @@ import argparse
 
 from zingg_connect import (
     Zingg, Arguments, ClientOptions, ZinggOptions,
-    FieldDefinition, CsvPipe, MatchType,
+    FieldDefinition, CsvPipe, MatchType, loadArguments,
 )
 
 FEBRL_SCHEMA = ("id string, fname string, lname string, stNo string, add1 string, "
@@ -54,10 +54,13 @@ def main():
     p.add_argument("--data", default="examples/febrl/test.csv", help="input data file")
     p.add_argument("--zingg-dir", default="/tmp/zinggConnectModels", help="Zingg model directory")
     p.add_argument("--model-id", default="100", help="model id")
+    p.add_argument("--conf", help="Zingg conf JSON (e.g. examples/febrl/config.json); "
+                                 "supplies schema, fieldDefinition and pipes. When given, "
+                                 "--data/--zingg-dir/--model-id are ignored.")
     a = p.parse_args()
 
-    zingg = Zingg(build_args(a.data, a.zingg_dir, a.model_id),
-                  ClientOptions(phase=a.phase), a.remote)
+    args = loadArguments(a.conf) if a.conf else build_args(a.data, a.zingg_dir, a.model_id)
+    zingg = Zingg(args, ClientOptions(phase=a.phase), a.remote)
     zingg.initAndExecute()
     print(f"DONE -- {a.phase} ran on the Spark Connect server")
 

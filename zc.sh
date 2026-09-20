@@ -10,20 +10,23 @@
 #   ./zc.sh start          # start the Spark Connect server (with Zingg plugins)
 #   ./zc.sh stop           # stop the server
 #   ./zc.sh run [phase]    # run_over_connect.py for a phase (default findTrainingData)
-#   ./zc.sh pairs [auto]   # label_over_connect.py: fetch pairs, mark, write back (over Connect)
-#   ./zc.sh label          # SEED pre-labeled data (stand-in; see note below)
+#   ./zc.sh label [auto]   # label_over_connect.py: fetch pairs, mark, write back (over Connect)
+#   ./zc.sh seed           # SEED pre-labeled data (stand-in; see note below)
 #   ./zc.sh clean          # remove previous model/output dirs
 #   ./zc.sh fullloop       # full pipeline with REAL labelling over Connect: ftd -> label(auto) -> train -> match
 #   ./zc.sh workflow       # full pipeline with SEEDED labels: ftd -> label(seed) -> train -> match
 #   ./zc.sh env            # print the resolved settings and exit (useful when debugging)
 #
+# For a dataset other than Febrl, point CONF at a Zingg conf JSON:
+#   CONF=examples/febrl/config.json ./zc.sh run findTrainingData
+#
 # Overridable by exporting before invoking: VENV_PY, MODEL_DIR, MODEL_ID,
 # PROTOBUF_VERSION, SCALA_BIN, SPARK_VERSION, JAVA_HOME, M2.
 #
-# NOTE on 'label' vs 'pairs': real labelling over Spark Connect works via the
-# ZinggRelationPlugin (see `pairs`/label_over_connect.py -- fetch unmarked
+# NOTE on 'label' vs 'seed': real labelling over Spark Connect works via the
+# ZinggRelationPlugin (see `label`/label_over_connect.py -- fetch unmarked
 # pairs, mark, write back) and is exercised end to end by `fullloop`. The
-# `label` step is a separate, faster stand-in: it copies pre-labeled
+# `seed` step is a separate, faster stand-in: it copies pre-labeled
 # ("marked") Febrl training data shipped in the repo into the model dir, in
 # place of a real labelling session -- `workflow` uses this shortcut.
 
@@ -119,6 +122,10 @@ fi
 EXAMPLES="$WORKTREE/spark-connect/python/examples"
 DATA="${DATA:-$WORKTREE/examples/febrl/test.csv}"
 CONN_ARGS=(--remote sc://localhost:15002 --data "$DATA" --zingg-dir "$MODEL_DIR" --model-id "$MODEL_ID")
+# Export CONF to describe the dataset with a Zingg conf JSON instead -- the same
+# file the CLI and py4j clients take. It supplies schema/fieldDefinition/pipes,
+# so --data/--zingg-dir/--model-id above no longer apply.
+[ -n "${CONF:-}" ] && CONN_ARGS+=(--conf "$CONF")
 
 # ---------- commands -------------------------------------------------------
 
@@ -132,7 +139,7 @@ connect package  $CONNECT_PKG_DESC
 python           $VENV_PY
 driver memory    $DRIVER_MEMORY
 model dir        $MODEL_DIR (model $MODEL_ID)
-data             $DATA
+data             ${CONF:+<from conf: $CONF>}${CONF:-$DATA}
 EOF
 }
 
@@ -172,7 +179,7 @@ wait_up() {
 
 run()   { preflight; "$VENV_PY" "$EXAMPLES/run_over_connect.py" "${1:-findTrainingData}" "${CONN_ARGS[@]}"; }
 
-pairs() {
+label() {
   preflight
   local args=("${CONN_ARGS[@]}")
   [ "${1:-}" = "auto" ] && args+=(--auto)
@@ -182,7 +189,7 @@ pairs() {
 # full loop with REAL labelling over Connect (auto-marked for an unattended test)
 fullloop() {
   echo "===== 1/4 findTrainingData ====="; run findTrainingData
-  echo "===== 2/4 label (fetch pairs -> mark -> write back, over Connect) ====="; pairs auto
+  echo "===== 2/4 label (fetch pairs -> mark -> write back, over Connect) ====="; label auto
   echo "===== 3/4 train ====="; run train
   echo "===== 4/4 match ====="; run match
   echo "===== full label loop complete -- results under $OUTPUT_DIR ====="
@@ -191,22 +198,22 @@ fullloop() {
 stop()  { "$SPARK/sbin/stop-connect-server.sh"; }
 clean() { rm -rf "$MODEL_DIR"; echo "cleaned $MODEL_DIR"; }
 
-label() {
-  echo ">>> [label] Seeding pre-labeled Febrl data as a fast stand-in for a human labeling session."
-  echo ">>> [label] For real labelling over Spark Connect instead, use: ./zc.sh pairs [auto]"
+seed() {
+  echo ">>> [seed] Seeding pre-labeled Febrl data as a fast stand-in for a human labeling session."
+  echo ">>> [seed] For real labelling over Spark Connect instead, use: ./zc.sh label [auto]"
   if [ ! -d "$MARKED_SRC" ]; then
     echo "ERROR: marked source not found: $MARKED_SRC" >&2; exit 1
   fi
   mkdir -p "$MARKED_DST"
   cp "$MARKED_SRC"/*.parquet "$MARKED_DST"/ 2>/dev/null || cp -R "$MARKED_SRC"/. "$MARKED_DST"/
-  echo ">>> [label] seeded $(ls "$MARKED_DST"/*.parquet 2>/dev/null | wc -l | tr -d ' ') parquet file(s) into $MARKED_DST"
+  echo ">>> [seed] seeded $(ls "$MARKED_DST"/*.parquet 2>/dev/null | wc -l | tr -d ' ') parquet file(s) into $MARKED_DST"
 }
 
 workflow() {
   echo "===== STEP 1/4: findTrainingData (over Spark Connect) ====="
   run findTrainingData
   echo "===== STEP 2/4: label (SEEDED stand-in -- not over Connect) ====="
-  label
+  seed
   echo "===== STEP 3/4: train (over Spark Connect) ====="
   run train
   echo "===== STEP 4/4: match (over Spark Connect) ====="
@@ -217,12 +224,12 @@ workflow() {
 case "${1:-}" in
   start)    start ;;
   run)      run "${2:-}" ;;
-  pairs)    pairs "${2:-}" ;;
+  label)    label "${2:-}" ;;
   fullloop) fullloop ;;
   stop)     stop ;;
   clean)    clean ;;
-  label)    label ;;
+  seed)     seed ;;
   workflow) workflow ;;
   env)      env_show ;;
-  *) echo "usage: $0 {start|stop|run [phase]|pairs [auto]|fullloop|label|clean|workflow|env}"; exit 1 ;;
+  *) echo "usage: $0 {start|stop|run [phase]|label [auto]|fullloop|seed|clean|workflow|env}"; exit 1 ;;
 esac

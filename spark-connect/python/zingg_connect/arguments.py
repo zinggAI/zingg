@@ -11,7 +11,23 @@ getGateway().new_array(...) for building Pipe[] arrays -- a repeated proto
 field is just appended to directly.
 """
 
+from zingg_connect import _conf
 from zingg_connect.proto import zingg_command_pb2 as pb2
+
+
+def loadArguments(conf):
+    """Build Arguments from Zingg's conf JSON -- the same file the CLI and
+    py4j clients take, so a dataset's schema, field definitions and pipes are
+    described in one place for every client.
+
+    :param conf: path to a conf JSON file, or an already-parsed dict
+    :returns: Arguments
+    """
+    if isinstance(conf, str):
+        conf = _conf.read_conf(conf)
+    args = Arguments()
+    args._args = _conf.arguments_to_proto(conf)
+    return args
 
 
 class FieldDefinition:

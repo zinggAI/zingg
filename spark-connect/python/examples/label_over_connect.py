@@ -22,7 +22,7 @@ import argparse
 
 from zingg_connect import (
     Zingg, Arguments, ClientOptions, ZinggOptions,
-    FieldDefinition, CsvPipe, MatchType,
+    FieldDefinition, CsvPipe, MatchType, loadArguments,
 )
 
 MATCH, NO_MATCH, NOT_SURE = 1, 0, 2
@@ -68,11 +68,14 @@ def main():
     p.add_argument("--data", default="examples/febrl/test.csv", help="input data file")
     p.add_argument("--zingg-dir", default="/tmp/zinggConnectModels", help="Zingg model directory")
     p.add_argument("--model-id", default="100", help="model id")
+    p.add_argument("--conf", help="Zingg conf JSON (e.g. examples/febrl/config.json); "
+                                 "supplies schema, fieldDefinition and pipes. When given, "
+                                 "--data/--zingg-dir/--model-id are ignored.")
     p.add_argument("--auto", action="store_true", help="auto-label (no human) for smoke tests")
     a = p.parse_args()
 
-    zingg = Zingg(build_args(a.data, a.zingg_dir, a.model_id),
-                  ClientOptions(phase=ZinggOptions.LABEL), a.remote)
+    args = loadArguments(a.conf) if a.conf else build_args(a.data, a.zingg_dir, a.model_id)
+    zingg = Zingg(args, ClientOptions(phase=ZinggOptions.LABEL), a.remote)
 
     # 1) fetch pairs
     pairs = zingg.getUnmarkedPairs().to_pandas()
