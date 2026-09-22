@@ -20,31 +20,10 @@ Use --auto to label without a human (match if ssn is equal), for smoke tests.
 """
 import argparse
 
-from zingg_connect import (
-    Zingg, Arguments, ClientOptions, ZinggOptions,
-    FieldDefinition, CsvPipe, MatchType, loadArguments,
-)
+from zingg_connect import Zingg, ClientOptions, ZinggOptions, loadArguments
+from _common import build_args, add_connection_args, resolve_remote
 
 MATCH, NO_MATCH, NOT_SURE = 1, 0, 2
-FEBRL_SCHEMA = ("id string, fname string, lname string, stNo string, add1 string, "
-                "add2 string, city string, areacode string, state string, "
-                "dob string, ssn string")
-
-
-def build_args(data_path, zingg_dir, model_id):
-    args = Arguments()
-    # id carried through (DONT_USE) so it shows up in the pairs; the rest are fuzzy-matched
-    defs = [FieldDefinition("id", "string", MatchType.DONT_USE)]
-    defs += [FieldDefinition(n, "string", MatchType.FUZZY) for n in
-             ("fname", "lname", "stNo", "add1", "add2", "city", "areacode", "state", "dob", "ssn")]
-    args.setFieldDefinition(defs)
-    args.setModelId(model_id)
-    args.setZinggDir(zingg_dir)
-    args.setNumPartitions(4)
-    args.setLabelDataSampleSize(0.5)
-    args.setData(CsvPipe("labelInput", data_path, FEBRL_SCHEMA))
-    args.setOutput(CsvPipe("labelOutput", f"{zingg_dir}/output"))
-    return args
 
 
 def mark_one(rows, auto):
@@ -62,20 +41,15 @@ def mark_one(rows, auto):
         print("please type 0, 1 or 2")
 
 
+
 def main():
     p = argparse.ArgumentParser(description="Label Zingg training pairs over Spark Connect")
-    p.add_argument("--remote", default="sc://localhost:15002", help="Spark Connect connection string")
-    p.add_argument("--data", default="examples/febrl/test.csv", help="input data file")
-    p.add_argument("--zingg-dir", default="/tmp/zinggConnectModels", help="Zingg model directory")
-    p.add_argument("--model-id", default="100", help="model id")
-    p.add_argument("--conf", help="Zingg conf JSON (e.g. examples/febrl/config.json); "
-                                 "supplies schema, fieldDefinition and pipes. When given, "
-                                 "--data/--zingg-dir/--model-id are ignored.")
+    add_connection_args(p)
     p.add_argument("--auto", action="store_true", help="auto-label (no human) for smoke tests")
     a = p.parse_args()
 
-    args = loadArguments(a.conf) if a.conf else build_args(a.data, a.zingg_dir, a.model_id)
-    zingg = Zingg(args, ClientOptions(phase=ZinggOptions.LABEL), a.remote)
+    args = loadArguments(a.conf) if a.conf else build_args(a.data, a.zingg_dir, a.model_id, "label")
+    zingg = Zingg(args, ClientOptions(phase=ZinggOptions.LABEL), resolve_remote(a))
 
     # 1) fetch pairs
     pairs = zingg.getUnmarkedPairs().to_pandas()

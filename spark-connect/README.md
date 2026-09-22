@@ -1,10 +1,12 @@
-# zingg-spark-connect (spike / WIP)
+# zingg-spark-connect
 
-Standalone modules exploring a py4j-free Python API for Zingg, built on Apache
-Spark Connect's command-plugin extension mechanism. **Nothing here is wired
-into the root build yet** (root `pom.xml`'s `<modules>` list, the `assembly`
-jar, and `python/zingg` are all untouched) -- this is meant to be merged in
-deliberately once it's been exercised against a real Spark Connect server.
+A py4j-free Python API for Zingg, built on Apache Spark Connect's plugin
+extension mechanism. `proto/` and `server-plugin/` are modules of the root
+build; `python/zingg_connect` is a separate pip package alongside
+`python/zingg`, which is left untouched.
+
+For step-by-step setup and phase runs -- local and Databricks -- see
+[SPARK_CONNECT_GUIDE.md](../SPARK_CONNECT_GUIDE.md) at the repo root.
 
 ## Layout
 
@@ -16,11 +18,13 @@ spark-connect/
                    the Java classes (target/generated-sources/protobuf) and
                    the Python stub (python/zingg_connect/proto/zingg_command_pb2.py)
                    from the same .proto file in one step.
-  server-plugin/   ZinggCommandPlugin -- a Spark Connect CommandPlugin that
-                   unpacks a ZinggCommand and dispatches it into the existing,
-                   completely unmodified IZingg/ZinggOptions/SparkZFactory
-                   execution path (zingg.spark.client.SparkClient underneath).
-                   No matching/training logic lives here, only the bridge.
+  server-plugin/   ZinggCommandPlugin (CommandPlugin) and ZinggRelationPlugin
+                   (RelationPlugin). Both unpack a ZinggCommand and dispatch it
+                   into the existing, completely unmodified
+                   IZingg/ZinggOptions/SparkZFactory execution path
+                   (zingg.spark.client.SparkClient underneath). No
+                   matching/training logic lives here, only the bridge. A `dbr`
+                   profile additionally emits a Databricks-compatible jar.
   python/          zingg_connect -- a new pip package (not zingg.client) with
                    the same public method names as today's python/zingg/client.py
                    and python/zingg/pipes.py, built entirely on
@@ -39,28 +43,54 @@ assignment (`args.zingg_dir = ...`, `pipe.props[name] = value`,
 `args.field_definition.add().CopyFrom(...)`), never positionally, so adding a
 field to `Arguments` later cannot silently reinterpret an existing one.
 
-## What actually works today
+## Building
 
-- `mvn install` in `proto/` then `server-plugin/` builds cleanly against the
-  already-installed `zingg:*:0.7.0` artifacts, for both the `spark-3.4` and
-  `spark-3.5` Maven profiles (`-Dspark=3.4` / `-Dspark=3.5`, mirroring the
-  root pom's profiles). The plugin interface shape was verified by
-  decompiling the actual released `spark-connect_2.12` jars for 3.4.0 and
-  3.5.5 (both match: a Scala trait, `Option[BoxedUnit] process(shaded Any,
-  SparkConnectPlanner)` -- this differs from the plain `boolean`/`byte[]`
-  shape currently on the apache/spark master branch source, so if zingg ever
-  moves to Spark 4.x this signature needs re-verifying against that release's
-  actual jar, not just its GitHub source).
-- The Python package (`python/zingg_connect`) imports and builds real
-  `ZinggCommand` proto messages end to end (see the sanity check below) using
-  only `pyspark.sql.connect.client.core.SparkConnectClient` -- no py4j,
-  `_jvm`, `_gateway`, `_jsparkSession`/`_jdf`, and no Databricks Connect
-  sideloading anywhere in this module.
-- Not yet run against a live Spark Connect server end-to-end -- that's the
-  natural next step (start one with `sbin/start-connect-server.sh --jars
-  <zingg jars> --conf
-  spark.connect.extensions.command.classes=zingg.spark.connect.server.ZinggCommandPlugin`
-  and point `zingg_connect.Zingg` at it).
+One command per target, from the repo root:
+
+```bash
+mvn -Dspark=3.5 clean install -DskipTests    # OSS Spark 3.5 (default)
+mvn -Dspark=4.2 clean install -DskipTests    # the 4.x line: 4.0 / 4.1 / 4.2
+mvn -Dspark=dbr clean install -DskipTests    # Databricks Runtime 15.4
+```
+
+Use `install` rather than `package`: `zc.sh` reads the connect jars from `~/.m2`.
+
+Each profile pins the Spark, Scala and protobuf versions for the whole reactor,
+so switching lines needs no edits. `-Dspark=dbr` additionally builds a
+`-dbr`-classified plugin jar for the Databricks Connect runtime; that jar is
+self-contained (it carries the generated proto classes and its own protobuf
+runtime), so a Databricks cluster needs only it plus the assembly jar.
+
+The plugin interface shape differs across Spark lines -- 3.x declares Scala
+traits taking Spark's shaded protobuf `Any`, while 4.x moved to plain
+`byte[]`/`Optional`. Both plugins implement both overloads, so one jar serves
+either. Verify against a release's actual jar (`javap`), never its GitHub
+source, which has diverged from the shipped artifacts before.
+
+## Running
+
+Local, via `zc.sh` at the repo root:
+
+```bash
+export SPARK_HOME=~/spark
+./zc.sh start
+./zc.sh run findTrainingData
+./zc.sh label auto
+./zc.sh stop
+```
+
+Against Databricks, via `zc-dbr.sh`:
+
+```bash
+export DATABRICKS_PROFILE=<profile>
+./zc-dbr.sh run findTrainingData
+./zc-dbr.sh label auto
+```
+
+Both are exercised end to end -- every phase except `updateLabel` (prompts on
+stdin, which a server has none of) and, on Unity Catalog volumes,
+`generateDocs` (writes through the local filesystem API). See the guide for
+cluster setup, the conf JSON, and troubleshooting.
 
 ## The interactive label loop
 

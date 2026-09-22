@@ -20,47 +20,19 @@ label_over_connect.py (or seed marked pairs) before them.
 """
 import argparse
 
-from zingg_connect import (
-    Zingg, Arguments, ClientOptions, ZinggOptions,
-    FieldDefinition, CsvPipe, MatchType, loadArguments,
-)
-
-FEBRL_SCHEMA = ("id string, fname string, lname string, stNo string, add1 string, "
-                "add2 string, city string, areacode string, state string, "
-                "dob string, ssn string")
-
-
-def build_args(data_path, zingg_dir, model_id):
-    args = Arguments()
-    # id carried through (DONT_USE) so it shows up in the pairs; the rest are fuzzy-matched
-    defs = [FieldDefinition("id", "string", MatchType.DONT_USE)]
-    defs += [FieldDefinition(n, "string", MatchType.FUZZY) for n in
-             ("fname", "lname", "stNo", "add1", "add2", "city", "areacode", "state", "dob", "ssn")]
-    args.setFieldDefinition(defs)
-    args.setModelId(model_id)
-    args.setZinggDir(zingg_dir)
-    args.setNumPartitions(4)
-    args.setLabelDataSampleSize(0.5)
-    args.setData(CsvPipe("runInput", data_path, FEBRL_SCHEMA))
-    args.setOutput(CsvPipe("runOutput", f"{zingg_dir}/output"))
-    return args
+from zingg_connect import Zingg, ClientOptions, ZinggOptions, loadArguments
+from _common import build_args, add_connection_args, resolve_remote
 
 
 def main():
     p = argparse.ArgumentParser(description="Run a Zingg phase over Spark Connect")
     p.add_argument("phase", nargs="?", default=ZinggOptions.FIND_TRAINING_DATA,
                     help="Zingg phase to run (default: findTrainingData)")
-    p.add_argument("--remote", default="sc://localhost:15002", help="Spark Connect connection string")
-    p.add_argument("--data", default="examples/febrl/test.csv", help="input data file")
-    p.add_argument("--zingg-dir", default="/tmp/zinggConnectModels", help="Zingg model directory")
-    p.add_argument("--model-id", default="100", help="model id")
-    p.add_argument("--conf", help="Zingg conf JSON (e.g. examples/febrl/config.json); "
-                                 "supplies schema, fieldDefinition and pipes. When given, "
-                                 "--data/--zingg-dir/--model-id are ignored.")
+    add_connection_args(p)
     a = p.parse_args()
 
-    args = loadArguments(a.conf) if a.conf else build_args(a.data, a.zingg_dir, a.model_id)
-    zingg = Zingg(args, ClientOptions(phase=a.phase), a.remote)
+    args = loadArguments(a.conf) if a.conf else build_args(a.data, a.zingg_dir, a.model_id, "run")
+    zingg = Zingg(args, ClientOptions(phase=a.phase), resolve_remote(a))
     zingg.initAndExecute()
     print(f"DONE -- {a.phase} ran on the Spark Connect server")
 

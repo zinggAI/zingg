@@ -1,5 +1,6 @@
 pyproject.toml
 zingg_connect/__init__.py
+zingg_connect/_conf.py
 zingg_connect/_connect.py
 zingg_connect/arguments.py
 zingg_connect/client.py
