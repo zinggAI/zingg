@@ -16,4 +16,10 @@ public interface IZinggModelInfo<S,D,R,C> {
 
     ITrainingDataModel<S, D, R, C> getTrainingDataModel();
 
+    /**
+     * View helper for the labelling phases. Returns null for phases that do
+     * no labelling, mirroring getTrainingDataModel().
+     */
+    ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper();
+
 }

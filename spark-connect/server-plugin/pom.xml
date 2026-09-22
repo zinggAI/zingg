@@ -10,7 +10,8 @@
 	<parent>
 		<groupId>zingg</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.7.0</version>
+		<version>${zingg.version}</version>
+		<!-- two levels down, so the default ../pom.xml would miss the root -->
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
@@ -28,36 +29,6 @@
 	  the server supplies them at runtime.
 	-->
 
-	<profiles>
-		<profile>
-			<id>spark-4.0</id>
-			<activation><property><name>spark</name><value>4.0</value></property></activation>
-			<properties><protobuf.version>4.29.3</protobuf.version></properties>
-		</profile>
-		<profile>
-			<id>spark-4.1</id>
-			<activation><property><name>spark</name><value>4.1</value></property></activation>
-			<properties><protobuf.version>4.33.0</protobuf.version></properties>
-		</profile>
-		<profile>
-			<id>spark-4.2</id>
-			<activation><property><name>spark</name><value>4.2</value></property></activation>
-			<properties><protobuf.version>4.33.5</protobuf.version></properties>
-		</profile>
-		<profile>
-			<id>spark-3.5</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>spark</name>
-					<value>3.5</value>
-				</property>
-			</activation>
-			<properties>
-				<protobuf.version>3.23.4</protobuf.version>
-			</properties>
-		</profile>
-	</profiles>
 
 	<dependencies>
 		<dependency>
@@ -83,7 +54,6 @@
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>${protobuf.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -99,4 +69,101 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+
+	<!--
+	  Databricks Runtime variant.
+
+	  DBR ships its own Spark Connect build that relocates Spark's shaded
+	  protobuf to grpc_shaded.com.google.protobuf, so its RelationPlugin /
+	  CommandPlugin traits declare (verified by reflection on DBR's Spark
+	  3.5.0):
+	    transform(grpc_shaded.com.google.protobuf.Any, SparkConnectPlanner)
+	  while OSS spark-connect uses org.sparkproject.connect.protobuf.Any.
+	  Compiling against OSS and rewriting the package in the emitted bytecode
+	  is enough, because both plugins mention the shaded Any ONLY in the
+	  method signature and immediately round-trip it through toByteArray().
+	  Every other protobuf reference is plain com.google.protobuf, which must
+	  NOT be relocated or the generated ZinggCommand classes (shipped
+	  unshaded in zingg-spark-connect-proto) would no longer match
+	  Any.unpack().
+
+	  Build:  mvn -Dspark=dbr clean install -DskipTests
+	  Output: target/zingg-spark-connect-server-plugin-<ver>-dbr.jar
+	  Upload that in place of the plain server-plugin jar; the proto jar and
+	  the assembly jar are used as-is. Verify before uploading with
+	    javap -p -cp <jar> zingg.spark.connect.server.ZinggRelationPlugin
+	-->
+	<profiles>
+		<profile>
+			<id>dbr</id>
+			<activation>
+				<property>
+					<name>spark</name>
+					<value>dbr</value>
+				</property>
+			</activation>
+			<properties>
+				<!-- override if a future DBR relocates it somewhere else -->
+				<dbr.shaded.protobuf.package>grpc_shaded.com.google.protobuf</dbr.shaded.protobuf.package>
+				<!-- our own protobuf, hidden from DBR's older com.google.protobuf -->
+				<zingg.shaded.protobuf.package>zingg.shaded.protobuf</zingg.shaded.protobuf.package>
+			</properties>
+			<dependencies>
+				<!-- compile scope (not provided) so shade bundles it into the jar -->
+				<dependency>
+					<groupId>com.google.protobuf</groupId>
+					<artifactId>protobuf-java</artifactId>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-shade-plugin</artifactId>
+						<version>3.5.1</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals><goal>shade</goal></goals>
+								<configuration>
+									<!-- extra classified artifact; the plain jar is untouched -->
+									<shadedArtifactAttached>true</shadedArtifactAttached>
+									<shadedClassifierName>dbr</shadedClassifierName>
+									<createDependencyReducedPom>false</createDependencyReducedPom>
+									<!-- this module's classes only, not an uber jar -->
+									<artifactSet>
+										<includes>
+											<include>zingg:zingg-spark-connect-server-plugin</include>
+											<include>zingg:zingg-spark-connect-proto</include>
+											<include>com.google.protobuf:protobuf-java</include>
+										</includes>
+									</artifactSet>
+									<relocations>
+										<!-- what DBR hands us at the door; it supplies this one -->
+										<relocation>
+											<pattern>org.sparkproject.connect.protobuf</pattern>
+											<shadedPattern>${dbr.shaded.protobuf.package}</shadedPattern>
+										</relocation>
+										<!--
+										  Everything we use internally. DBR carries its own, older
+										  com.google.protobuf on the runtime classpath, and cluster
+										  libraries load after it, so an uploaded protobuf-java never
+										  wins: Any.is()/unpack() then fail with NoSuchMethodError on
+										  Internal.getDefaultInstance(Class). Relocating ours (and
+										  bundling the runtime, above) removes the shared package
+										  entirely, so classpath order stops mattering.
+										-->
+										<relocation>
+											<pattern>com.google.protobuf</pattern>
+											<shadedPattern>${zingg.shaded.protobuf.package}</shadedPattern>
+										</relocation>
+									</relocations>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

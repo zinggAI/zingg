@@ -1,5 +1,7 @@
 package zingg.common.core.executor;
 
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -31,6 +33,15 @@ public abstract class FindAndLabeller<S, D, R, C, T> extends ZinggBase<S,D,R,C,T
 	public void execute() throws ZinggClientException {
 		finder.execute();
 		labeller.execute();
+	}
+
+	/**
+	 * Labels supplied from outside go to the labeller half. The finder is not
+	 * re-run: the pairs being labelled are the ones it already produced.
+	 */
+	@Override
+	public void applyLabels(Map<String, Integer> clusterLabels) throws ZinggClientException {
+		labeller.applyLabels(clusterLabels);
 	}
 
 	public void setLabeller(Labeller<S, D, R, C, T> labeller){

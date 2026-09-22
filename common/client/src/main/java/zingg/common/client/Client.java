@@ -378,5 +378,18 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		return zingg.getTrainingDataModel();
 	}
 
+	public ILabelDataViewHelper<S, D, R, C> getLabelDataViewHelper() throws UnsupportedOperationException {
+		return zingg.getLabelDataViewHelper();
+	}
+
+	/**
+	 * Record labels decided outside this process. The phase this client was
+	 * built with must be a labelling phase.
+	 */
+	public void applyLabels(java.util.Map<String, Integer> clusterLabels) throws ZinggClientException {
+		zingg.applyLabels(clusterLabels);
+		postMetrics();
+	}
+
 
 }

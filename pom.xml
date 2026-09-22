@@ -36,6 +36,7 @@
 			<activation><property><name>spark</name><value>4.0</value></property></activation>
 			<properties>
 				<spark.version>4.0.3</spark.version>
+				<protobuf.version>4.29.3</protobuf.version>
 				<scala.version>2.13.16</scala.version>
 				<spark.binary.version>4.0</spark.binary.version>
 				<scala.binary.version>2.13</scala.binary.version>
@@ -50,6 +51,7 @@
 			<activation><property><name>spark</name><value>4.1</value></property></activation>
 			<properties>
 				<spark.version>4.1.3</spark.version>
+				<protobuf.version>4.33.0</protobuf.version>
 				<scala.version>2.13.17</scala.version>
 				<spark.binary.version>4.1</spark.binary.version>
 				<scala.binary.version>2.13</scala.binary.version>
@@ -64,6 +66,7 @@
 			<activation><property><name>spark</name><value>4.2</value></property></activation>
 			<properties>
 				<spark.version>4.2.0</spark.version>
+				<protobuf.version>4.33.5</protobuf.version>
 				<scala.version>2.13.18</scala.version>
 				<spark.binary.version>4.2</spark.binary.version>
 				<scala.binary.version>2.13</scala.binary.version>
@@ -84,6 +87,7 @@
 			</activation>
 			<properties>
 				<spark.version>3.5.5</spark.version>
+				<protobuf.version>3.23.4</protobuf.version>
 				<scala.version>2.12.10</scala.version>
 				<spark.binary.version>3.5</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
@@ -91,9 +95,51 @@
 				<graphframes.artifact>graphframes-spark3_2.12</graphframes.artifact>
 			</properties>
 		</profile>
+		<!--
+		  Databricks Runtime target. Pins to exactly what the cluster runs
+		  rather than the newest patch of the line, so we never compile
+		  against an API the cluster's older Spark lacks. Verified on the
+		  cluster by reflection: Spark 3.5.0, and its Connect traits declare
+		  grpc_shaded.com.google.protobuf.Any (see the shade relocation in
+		  spark-connect/server-plugin/pom.xml, activated by this same
+		  -Dspark=dbr).
+
+		  Build:  mvn -Dspark=dbr clean install -DskipTests
+		  The JDK target is dbr.java.release (default 11). Confirm against the
+		  cluster with System.getProperty("java.version") and override with
+		  -Ddbr.java.release=8 (or 17) if it differs: a class file newer than
+		  the cluster JVM fails to load with UnsupportedClassVersionError.
+		-->
+		<profile>
+			<id>databricks</id>
+			<activation>
+				<property>
+					<name>spark</name>
+					<value>dbr</value>
+				</property>
+			</activation>
+			<properties>
+				<spark.version>3.5.0</spark.version>
+				<protobuf.version>3.23.4</protobuf.version>
+				<scala.version>2.12.18</scala.version>
+				<spark.binary.version>3.5</spark.binary.version>
+				<scala.binary.version>2.12</scala.binary.version>
+				<graphframes.version>0.10.0</graphframes.version>
+				<graphframes.artifact>graphframes-spark3_2.12</graphframes.artifact>
+				<maven.compiler.source>${dbr.java.release}</maven.compiler.source>
+				<maven.compiler.target>${dbr.java.release}</maven.compiler.target>
+			</properties>
+		</profile>
 	</profiles>
 	<properties>
 		<zingg.version>0.7.0</zingg.version>
+		<!-- Default matches the spark-3.5 profile; each spark-4.x profile
+		     overrides it with the protobuf version that Spark line's
+		     spark-connect server pins. Declared here as well as in the
+		     profiles so child modules can resolve it at model-build time. -->
+		<protobuf.version>3.23.4</protobuf.version>
+		<!-- JDK the databricks profile compiles for; see that profile's comment -->
+		<dbr.java.release>11</dbr.java.release>
 		<skipTests>false</skipTests>
 		<failIfNoTests>false</failIfNoTests>
 		<maven.compiler.source>11</maven.compiler.source>
@@ -121,6 +167,19 @@
 		</repository>		
 	</repositories>
 
+	<!-- protobuf-java's version varies per Spark profile. Managing it here lets
+	     the spark-connect modules declare the dependency without a version, which
+	     they must: Maven cannot interpolate an inherited property for a child
+	     module's dependency.version at model-build time. -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.google.protobuf</groupId>
+				<artifactId>protobuf-java</artifactId>
+				<version>${protobuf.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.mockito</groupId>
