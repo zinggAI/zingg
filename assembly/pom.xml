@@ -46,7 +46,7 @@
                 <outputDirectory>${basedir}/target/classes/python/phases</outputDirectory>
                 <resources>
                     <resource>
-                        <directory>${project.parent.basedir}/python/phases</directory>
+                        <directory>${project.basedir}/../python/phases</directory>
                     </resource>
                 </resources>
             </configuration>
