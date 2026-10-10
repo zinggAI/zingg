@@ -90,7 +90,7 @@
 		</dependency>	
 		<dependency>
 			<groupId>io.graphframes</groupId>
-			<artifactId>graphframes-spark3_2.12</artifactId>
+			<artifactId>${graphframes.artifactId}</artifactId>
 			<version>${graphframes.version}</version>
 			<exclusions>
 				<exclusion>
@@ -103,32 +103,32 @@
 		<dependency>
   					<groupId>io.netty</groupId>
   					<artifactId>netty-codec-http2</artifactId>
-					<version>4.1.125.Final</version>
+					<version>${netty.version}</version>
 					<scope>test</scope>
 				</dependency>
 				<dependency>
   					<groupId>io.netty</groupId>
   					<artifactId>netty-handler</artifactId>
-					<version>4.1.125.Final</version>
+					<version>${netty.version}</version>
 					<scope>test</scope>		
 				</dependency>
 				<dependency>
 					<groupId>io.netty</groupId>
   					<artifactId>netty-codec</artifactId>
-					<version>4.1.125.Final</version>
+					<version>${netty.version}</version>
 					<scope>test</scope>		
 				</dependency>
 				<dependency>
 					<groupId>io.netty</groupId>
   					<artifactId>netty-codec-http</artifactId>
-					<version>4.1.125.Final</version>
+					<version>${netty.version}</version>
 					<scope>test</scope>		
 				</dependency>
 				<dependency>
-  					<groupId>org.lz4</groupId>
+  					<groupId>${lz4.groupId}</groupId>
   					<artifactId>lz4-java</artifactId>
-					<version>1.8.1</version>
-					<scope>test</scope>		
+					<version>${lz4.version}</version>
+					<scope>test</scope>
 				</dependency>
 	</dependencies>
 	

@@ -135,8 +135,15 @@ public class TestImageType {
 
 		// call the UDF from select clause of DF
 		df = df.withColumn("cosine", callUDF("testUDFDoubleSeq",df.col("image_embedding"),df.col("image_embedding")));
-		// see if error is reproduced
-		assertThrows(SparkException.class, df::show);
+		// on Spark 3.x, a UDF2 declared with scala.collection.immutable.Seq mismatches the
+		// runtime WrappedArray for an array column and throws; Spark 4.x's UDF argument
+		// conversion no longer makes this distinction, so the call succeeds.
+		final Dataset<Row> finalDf = df;
+		if (sparkSession.version().startsWith("3.")) {
+			assertThrows(SparkException.class, finalDf::show);
+		} else {
+			assertDoesNotThrow(() -> finalDf.show());
+		}
 	}
 
 	@Test

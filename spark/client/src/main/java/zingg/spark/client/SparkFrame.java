@@ -11,7 +11,6 @@ import org.apache.spark.sql.functions;
 import org.apache.spark.sql.types.StructField;
 
 import scala.collection.JavaConverters;
-import scala.collection.Seq;
 import zingg.common.client.FieldData;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
@@ -207,14 +206,9 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
 
     @Override
     public ZFrame<Dataset<Row>, Row, Column> withColumns(String[] columns, Column[] columnValues) {
-        Seq<String> columnsSeq = JavaConverters.asScalaIteratorConverter(Arrays.asList(columns).iterator())
-                .asScala()
-                .toSeq();
-        Seq<Column> columnValuesSeq = JavaConverters.asScalaIteratorConverter(Arrays.asList(columnValues).iterator())
-                .asScala()
-                .toSeq();
-
-        return new SparkFrame(df.withColumns(columnsSeq, columnValuesSeq));
+        return new SparkFrame(df.withColumns(
+                JavaConverters.asScalaIteratorConverter(Arrays.asList(columns).iterator()).asScala().toSeq(),
+                JavaConverters.asScalaIteratorConverter(Arrays.asList(columnValues).iterator()).asScala().toSeq()));
     }
 
     public ZFrame<Dataset<Row>, Row, Column> repartition(int nul){
@@ -226,11 +220,13 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     }
 
     public ZFrame<Dataset<Row>, Row, Column> repartition(int num,scala.collection.Seq<Column> partitionExprs){
-         return new SparkFrame(df.repartition(num, partitionExprs));
+         return new SparkFrame(df.repartition(num,
+                 JavaConverters.asScalaIteratorConverter(JavaConverters.seqAsJavaListConverter(partitionExprs).asJava().iterator()).asScala().toSeq()));
     }
 
     public ZFrame<Dataset<Row>, Row, Column> repartition(scala.collection.Seq<Column> partitionExprs){
-        return new SparkFrame(df.repartition(partitionExprs));
+        return new SparkFrame(df.repartition(
+                JavaConverters.asScalaIteratorConverter(JavaConverters.seqAsJavaListConverter(partitionExprs).asJava().iterator()).asScala().toSeq()));
    }
 
     @Override
