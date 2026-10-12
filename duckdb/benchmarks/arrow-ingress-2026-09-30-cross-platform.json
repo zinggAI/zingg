@@ -1,0 +1,67 @@
+{
+  "benchmark": "zingg-duckdb-arrow-ingress",
+  "capturedOn": "2026-09-30",
+  "command": "BenchmarkMain --arrow-only --size 10000 --repetitions 7",
+  "method": "One excluded warmup; seven timing repetitions with no concurrent resource sampler; both import paths validate 10000-row cardinality. JDBC-first/Appender-first order alternates by measured repetition. A separate diagnostic run samples resources every 50 ms in the same process.",
+  "fixture": {
+    "rows": 10000,
+    "arrowIpcBytes": 294888,
+    "duckdbJdbc": "1.5.5.1"
+  },
+  "host": {
+    "cpu": "13th Gen Intel Core i7-1355U",
+    "windowsLogicalProcessors": 12,
+    "wslLogicalProcessors": 8
+  },
+  "results": [
+    {
+      "environment": "Windows host",
+      "java": "Microsoft OpenJDK 21.0.12.1",
+      "jdbcMedianNs": 2616854800,
+      "appenderMedianNs": 20050500,
+      "appenderSpeedup": 130.513,
+      "jdbcSamplesNs": [2551119600, 2852455600, 2944560300, 2537607500, 2535183900, 2708939300, 2616854800],
+      "appenderSamplesNs": [28938700, 28161200, 17938300, 18821300, 21550300, 19834600, 20050500],
+      "jdbcStats": {"minNs": 2535183900, "maxNs": 2944560300, "meanNs": 2678103000.000, "populationStdDevNs": 152310856.846},
+      "appenderStats": {"minNs": 17938300, "maxNs": 28938700, "meanNs": 22184985.714, "populationStdDevNs": 4160351.689},
+      "resourceSampling": {
+        "intervalMs": 50,
+        "jdbcMaxObservedRssBytes": [140959744, 186888192, 188731392, 213405696, 253222912, 263786496, 283533312],
+        "jdbcMaxObservedSpillBytes": [0, 0, 0, 0, 0, 0, 0],
+        "jdbcSampleCounts": [11, 10, 11, 10, 11, 10, 11],
+        "appenderMaxObservedRssBytes": [148914176, 172396544, 188530688, 195780608, 253927424, 247328768, 287379456],
+        "appenderMaxObservedSpillBytes": [0, 0, 0, 0, 0, 0, 0],
+        "appenderSampleCounts": [2, 2, 2, 2, 2, 2, 2],
+        "processRssBeforeBenchmarkBytes": 50257920,
+        "processRssAfterBenchmarkBytes": 285114368,
+        "spillDirectoryBytesBefore": 0,
+        "spillDirectoryBytesAfter": 0
+      }
+    },
+    {
+      "environment": "Ubuntu 24.04 on WSL2, Linux 6.18.33.2-microsoft-standard-WSL2 x86_64",
+      "java": "Ubuntu OpenJDK 21.0.12.1",
+      "jdbcMedianNs": 4158948478,
+      "appenderMedianNs": 17084081,
+      "appenderSpeedup": 243.440,
+      "jdbcSamplesNs": [4029394162, 4215260785, 3938153236, 4158948478, 4534252667, 4333858298, 3879527837],
+      "appenderSamplesNs": [17084081, 16346994, 14581159, 17837978, 21899337, 26851626, 14509760],
+      "jdbcStats": {"minNs": 3879527837, "maxNs": 4534252667, "meanNs": 4155627923.286, "populationStdDevNs": 213190500.676},
+      "appenderStats": {"minNs": 14509760, "maxNs": 26851626, "meanNs": 18444419.286, "populationStdDevNs": 4134202.099},
+      "resourceSampling": {
+        "intervalMs": 50,
+        "jdbcMaxObservedRssBytes": [171253760, 225091584, 230633472, 266059776, 279121920, 296382464, 315305984],
+        "jdbcMaxObservedSpillBytes": [0, 0, 0, 0, 0, 0, 0],
+        "jdbcSampleCounts": [79, 73, 74, 77, 74, 78, 79],
+        "appenderMaxObservedRssBytes": [170262528, 181907456, 210792448, 238870528, 267284480, 275169280, 318103552],
+        "appenderMaxObservedSpillBytes": [0, 0, 0, 0, 0, 0, 0],
+        "appenderSampleCounts": [2, 2, 2, 2, 2, 2, 2],
+        "processRssBeforeBenchmarkBytes": 46465024,
+        "processRssAfterBenchmarkBytes": 317095936,
+        "spillDirectoryBytesBefore": 0,
+        "spillDirectoryBytesAfter": 0
+      }
+    }
+  ],
+  "limitations": "Local same-laptop diagnostic, not independent-runner or production-capacity evidence. Windows and WSL2 share hardware; WSL uses the Windows-mounted /mnt/c checkout/storage. Timings come from separate runs without a concurrent resource sampler. RSS and spill values are 50ms sampled maxima in another run (best effort, not guaranteed peaks); short Appender runs have only start/end samples. Resource observations are process-wide and cumulative across a shared JVM, though method order alternates; they do not isolate process memory by method. There are no CPU counters, confidence intervals, or vectorized Arrow C Data/CTAS comparison. Only 10000 rows were measured; no agreed release threshold is established."
+}

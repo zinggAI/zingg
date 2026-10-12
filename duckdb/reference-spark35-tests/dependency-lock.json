@@ -1,0 +1,12 @@
+{
+  "module": "reference-spark35-tests",
+  "scope": "opt-in-test-only",
+  "java": "21",
+  "dependencies": [
+    "compat-zingg07-runtime (zingg07-contract profile)",
+    "zingg-common-client-capsule:0.7.0 (pinned bytes via zingg07.contract.jar)",
+    "org.apache.spark:spark-sql_2.12:3.5.5 (test)",
+    "org.scala-lang:scala-library:2.12.18 (test; Spark runtime patch version)"
+  ],
+  "forbiddenRuntimeDependency": "Spark must not enter engine or worker runtime packages"
+}

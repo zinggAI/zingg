@@ -1,0 +1,3 @@
+package io.zingg.duckdb.model;
+import java.nio.file.Path; import java.util.List;
+public record LegacyImporterSpec(String name,String version,Path launcher,List<String> allowedClasses,ImportLimits limits){public LegacyImporterSpec{if(name==null||name.isBlank()||version==null||version.isBlank()||launcher==null)throw new IllegalArgumentException("importer identity and launcher required");allowedClasses=List.copyOf(allowedClasses==null?List.of():allowedClasses);if(allowedClasses.stream().anyMatch(c->c==null||c.isBlank()||!c.matches("[A-Za-z_$][A-Za-z0-9_$]*(\\.[A-Za-z_$][A-Za-z0-9_$]*)*")))throw new IllegalArgumentException("invalid legacy class allowlist entry");limits=limits==null?ImportLimits.defaults():limits;}}

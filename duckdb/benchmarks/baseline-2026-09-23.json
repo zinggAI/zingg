@@ -1,0 +1,17 @@
+{
+  "benchmark": "zingg-duckdb-smoke",
+  "recordedAt": "2026-09-23",
+  "size": 1000,
+  "repetitions": 5,
+  "graphInputEdges": 999,
+  "startupMedianNs": 31598500,
+  "sqlMedianNs": 1387500,
+  "graphMedianNs": 66530200,
+  "environment": {
+    "os": "Windows",
+    "cpu": "13th Gen Intel(R) Core(TM) i7-1355U",
+    "java": "21.0.12.1 Microsoft-14941484",
+    "duckdbJdbc": "1.5.5.1"
+  },
+  "notes": "Smoke baseline only; not a release threshold. Repeat on a controlled host before regression comparisons."
+}

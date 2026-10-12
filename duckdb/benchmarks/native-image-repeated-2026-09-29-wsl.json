@@ -1,0 +1,634 @@
+{
+  "environment": {
+    "logicalCpuCount": 8,
+    "measuredRepetitions": 5,
+    "measurementPolicy": "fresh worker process per sample; paired runtimes alternate launch order",
+    "nativeSha256": "4d071c382bc8ce5ecd2dc1fe6430e65db24e6b0096378f453e0c201edda3e5eb",
+    "python": "3.12.3",
+    "warmups": 1,
+    "workerJarSha256": "7bafed362f4f1dd22cde7bf07bff29b18317d1517860ec42dd80aaa640b85a37"
+  },
+  "functionalParity": "PASS",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "runs": [
+    {
+      "index": 0,
+      "jvm": {
+        "artifactBytes": 91790401,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 88616960,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.593216,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11217392",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "88616960",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 114470912,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.583473,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114470912",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "native",
+        "jvm"
+      ]
+    },
+    {
+      "index": 1,
+      "jvm": {
+        "artifactBytes": 91790401,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 88281088,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.582116,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11182520",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "88281088",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 114147328,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.703627,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114147328",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "jvm",
+        "native"
+      ]
+    },
+    {
+      "index": 2,
+      "jvm": {
+        "artifactBytes": 91790401,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 88887296,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 2.629276,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11217392",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "88887296",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 114655232,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.749455,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114655232",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "native",
+        "jvm"
+      ]
+    },
+    {
+      "index": 3,
+      "jvm": {
+        "artifactBytes": 91790401,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 88506368,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.686661,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11218000",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "88506368",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 114364416,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.711704,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114364416",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "jvm",
+        "native"
+      ]
+    },
+    {
+      "index": 4,
+      "jvm": {
+        "artifactBytes": 91790401,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 87650304,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 2.736044,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11182648",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "87650304",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 114126848,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.144365,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114126848",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "native",
+        "jvm"
+      ]
+    },
+    {
+      "index": 5,
+      "jvm": {
+        "artifactBytes": 91790401,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 87937024,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 2.522008,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11182648",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "87937024",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 114307072,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.888765,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114307072",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "jvm",
+        "native"
+      ]
+    }
+  ],
+  "schema": "zingg-duckdb-native-image-comparison-2",
+  "summary": {
+    "jvm": {
+      "artifactBytes": {
+        "max": 91790401.0,
+        "median": 91790401.0,
+        "min": 91790401.0,
+        "populationStdDev": 0.0,
+        "samples": 5
+      },
+      "processResidentBytes": {
+        "max": 88887296.0,
+        "median": 88281088.0,
+        "min": 87650304.0,
+        "populationStdDev": 431369.2827487836,
+        "samples": 5
+      },
+      "startupToPingSeconds": {
+        "max": 2.736044,
+        "median": 2.522008,
+        "min": 1.582116,
+        "populationStdDev": 0.4930991823858563,
+        "samples": 5
+      }
+    },
+    "nativeImage": {
+      "artifactBytes": {
+        "max": 110472752.0,
+        "median": 110472752.0,
+        "min": 110472752.0,
+        "populationStdDev": 0.0,
+        "samples": 5
+      },
+      "processResidentBytes": {
+        "max": 114655232.0,
+        "median": 114307072.0,
+        "min": 114126848.0,
+        "populationStdDev": 190600.92454592133,
+        "samples": 5
+      },
+      "startupToPingSeconds": {
+        "max": 1.144365,
+        "median": 0.749455,
+        "min": 0.703627,
+        "populationStdDev": 0.16629555953710853,
+        "samples": 5
+      }
+    }
+  }
+}

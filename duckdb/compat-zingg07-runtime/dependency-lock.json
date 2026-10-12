@@ -1,0 +1,1 @@
+{"module":"compat-zingg07-runtime","java":"21","dependencies":["engine-api","engine-duckdb","model-format"],"zinggCompatibility":"0.7.0"}
