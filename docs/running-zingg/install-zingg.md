@@ -61,7 +61,7 @@ Restart the Python kernel: **Runtime → Restart Python**.
 
 ### Installing from Release
 
-Download the latest release from GitHub: `github.com/zinggAI/zingg/releases`
+Download the latest release from GitHub: [`github.com/zinggAI/zingg/releases`](https://github.com/zinggAI/zingg/releases)
 
 **Example for Zingg 0.7.0 on Spark 3.5.2**
 

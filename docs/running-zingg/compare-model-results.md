@@ -11,7 +11,7 @@ tags:
 # Compare Model Results
 
 {% hint style="info" icon="right-long" %}
-**Enterprise** **Plus** only. Comparing model results is available in Zingg Enterprise Plus (ZinggES).\
+**Enterprise** **Plus** **only**. Comparing model results is available in Zingg Enterprise Plus (ZinggES).\
 Not available in Community, Enterprise Lite, or Enterprise.
 {% endhint %}
 
@@ -100,7 +100,6 @@ diffOptions = EClientOptions([EClientOptions.PHASE, "diff"])
 zinggDiff = EZingg(diffArgs, diffOptions)
 zinggDiff.initAndExecute()
 ```
-
 {% endtab %}
 
 {% tab title="Enterprise CLI" %}

@@ -87,9 +87,9 @@ USING (PHASE => 'train', CONFIG => '<config-name>');
 
 `<config-name>` is the name of your Zingg configuration json file.
 
-\*\***Monitor the job**
+**Monitor the job**
 
-Retrieve the service logs to monitor execution and debug any failures.\*\*
+Retrieve the service logs to monitor execution and debug any failures.
 
 ```sql
 SELECT SYSTEM$GET_SERVICE_LOGS('ZINGG_TRAIN_ASYNC_JOB_SERVICE', 0, 'zingg-async-job-container');

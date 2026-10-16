@@ -1,7 +1,7 @@
 ---
 description: >-
-  Matches postal and ZIP codes across the common format variants they appear
-  in—5-digit, 9-digit with hyphen, and others. The right choice for postal code
+  Matches postal and ZIP codes across the common format variants they appear in
+  5-digit, 9-digit with hyphen, and others. The right choice for postal code
   fields instead of EXACT or FUZZY.
 ---
 

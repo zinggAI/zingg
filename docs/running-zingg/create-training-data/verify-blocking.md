@@ -11,8 +11,7 @@ tags:
 
 The blocking model filters your dataset before any similarity comparisons happen. Records in different blocks are never compared. This is what makes Zingg scalable, but it also means that if the blocking model puts two matching records in different blocks, those records will never be matched no matter how well the similarity model is trained.
 
-`verifyBlocking` tells you what percentage of your known matching pairs are being blocked together correctly. Run this test after configuring Zingg and again after training if you suspect missed matches.\
-<br>
+`verifyBlocking` tells you what percentage of your known matching pairs are being blocked together correctly. Run this test after configuring Zingg and again after training if you suspect missed matches.
 
 TODO - move to verify blocking
 
@@ -26,10 +25,7 @@ If your results are missing matches you expect to see, start here.
 
 The `verifyBlocking` phase produces two output directories under `zinggDir/modelId/blocks/timestamp/`:
 
-| Output path    | What it contains                                                                                                                                         |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `counts`       | Record count per block. Shows how many records are in each block. Very large blocks indicate poor blocking specificity.                                  |
-| `blockSamples` | The top 10% of records associated with each block. Use this to understand which records are being grouped together and whether the groupings make sense. |
+<table><thead><tr><th width="202.64691162109375">Output path</th><th>What it contains</th></tr></thead><tbody><tr><td><code>counts</code></td><td>Record count per block. Shows how many records are in each block. Very large blocks indicate poor blocking specificity.</td></tr><tr><td><code>blockSamples</code></td><td>The top 10% of records associated with each block. Use this to understand which records are being grouped together and whether the groupings make sense.</td></tr></tbody></table>
 
 {% hint style="success" icon="right-long" %}
 **Read more**: To run the `verifyBlocking` phase and inspect output coverage→ [Verify Blocking](verify-blocking.md)

@@ -54,7 +54,7 @@ Use `ONLY_ALPHABETS_FUZZY` for the street name component (ignores numbers, appli
 
 <details>
 
-<summary><strong>Trusted identifiers—SSN, passport, tax ID, national ID</strong></summary>
+<summary><strong>Trusted identifiers- SSN, passport, tax ID, national ID</strong></summary>
 
 Never use `FUZZY` on fields that are reliable unique identifiers. `FUZZY` tolerance on an SSN field means "123-45-6789" and "123-45-6780" could score above the match threshold, that is a false positive you cannot afford in a compliance context.
 

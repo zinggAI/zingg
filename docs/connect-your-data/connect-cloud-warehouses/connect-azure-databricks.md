@@ -21,7 +21,7 @@ On Azure Databricks, data sits in cloud storage (Azure Data Lake Storage Gen2) o
 ### **Python API - Community**
 
 {% hint style="info" icon="right-long" %}
-`dbfs:/` paths are deprecated in Databricks. Use Unity Catalog paths for tables or cloud storage paths (`s3a://`, `abfss://)` for files. For Unity Catalog table access, Enterprise uses UCPipe—see below.
+`dbfs:/` paths are deprecated in Databricks. Use Unity Catalog paths for tables or cloud storage paths (`s3a://`, `abfss://)` for files. For Unity Catalog table access, Enterprise uses UCPipe, see below.
 {% endhint %}
 
 ```python

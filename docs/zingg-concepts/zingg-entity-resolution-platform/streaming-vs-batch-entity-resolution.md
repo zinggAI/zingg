@@ -10,12 +10,12 @@ This page explains why Zingg supports both architectures natively, what each is 
 
 ### The core distinction: when is identity needed?
 
-Entity resolution always answers the same question — "is this the same entity I've seen before?" — but systems ask that question at different points in time:
+Entity resolution always answers the same question — "is this the same entity I've seen before?" but systems ask that question at different points in time:
 
 * **Before a decision is made**, as part of a scheduled process: nightly customer master builds, weekly deduplication runs, periodic golden record refreshes.
 * **At the moment a decision is made**, inline with a live event: a fraud check during checkout, a personalization decision on page load, a real-time risk score before a transaction clears.
 
-Batch entity resolution is built for the first case. Streaming entity resolution is built for the second. Neither is a more evolved version of the other — they're solving for different constraints.
+Batch entity resolution is built for the first case. Streaming entity resolution is built for the second. Neither is a more evolved version of the other, they're solving for different constraints.
 
 ### Batch entity resolution: the system of record
 
@@ -55,5 +55,5 @@ Warehouses and datalakes are still not ready for real time design patterns. Whil
 Zingg supports both batch and streaming entity resolution natively, so the choice is driven by your use case rather than by platform limitations:
 
 * If your pipelines run batch, **use batch**.
-* If a decision is being made at the moment an event arrives and needs a trusted identity to act on — **use streaming**.
+* If a decision is being made at the moment an event arrives and needs a trusted identity to act on  **use streaming**.
 

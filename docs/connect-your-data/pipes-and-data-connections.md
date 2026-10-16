@@ -51,9 +51,7 @@ args.setOutput(outputPipe)
 {% endtab %}
 
 {% tab title="Enterprise" %}
-
-
-### **Enterprise**
+#### **Enterprise**
 
 ```python
 from zinggEC.enterprise.common.epipes import *
@@ -160,4 +158,3 @@ Zingg connects to any datastore that has a Spark connector, plus Snowflake nativ
 * To configure your pipes step by step as part of your Zingg setup - [Configure Zingg](../running-zingg/configure-zingg.md)
 * To understand what Zingg adds to your output alongside your input fields (`Z_CLUSTER`, `Z_MINSCORE`, `Zingg ID` and others) - [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)
 {% endhint %}
-
