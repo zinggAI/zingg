@@ -1,7 +1,7 @@
 ---
 description: >-
-  Verify that your blocking model is grouping known matching pairs into the same
-  block before training and after.
+  How to inspect the blocking model, understand its coverage, and fix missed
+  matches caused by blocking
 tags:
   - tag: enterprise-only
     primary: true
@@ -9,17 +9,11 @@ tags:
 
 # Verify Blocking
 
-The blocking model filters your dataset before any similarity comparisons happen. Records in different blocks are never compared. This is what makes Zingg scalable, but it also means that if the blocking model puts two matching records in different blocks, those records will never be matched no matter how well the similarity model is trained.
+The blocking model filters your dataset before any similarity comparisons happen. Records in different blocks are never compared. This is what makes Zingg scalable, but it also means that if the blocking model puts two matching records in different blocks, those records will never be matched and the match will be missed regardless of how well the similarity model is trained.&#x20;
+
+If your results are missing matches you expect to see, or if the match job is slow, start here.
 
 `verifyBlocking` tells you what percentage of your known matching pairs are being blocked together correctly. Run this test after configuring Zingg and again after training if you suspect missed matches.
-
-TODO - move to verify blocking
-
-How to inspect the blocking model, understand its coverage, and fix missed matches caused by blocking.
-
-The blocking model is the first filter in every Zingg run. It decides which record pairs the similarity model ever sees. If it places two matching records in different buckets, those records will never be compared, and the match will be missed regardless of how well everything else is configured.
-
-If your results are missing matches you expect to see, start here.
 
 ### **What `verifyBlocking` output contains**
 
@@ -31,7 +25,7 @@ The `verifyBlocking` phase produces two output directories under `zinggDir/model
 **Read more**: To run the `verifyBlocking` phase and inspect output coverage→ [Verify Blocking](verify-blocking.md)
 {% endhint %}
 
-### Why blocking coverage fails and how to fix it
+### If `verifyBlocking` shows low coverage, what to do in order
 
 Poor blocking coverage means matching pairs are being placed in different buckets and never compared. Four causes account for most cases:
 
@@ -60,7 +54,7 @@ If you supplement your training data with manually created pairs rather than pai
 
 <summary><strong>Too few training examples</strong></summary>
 
-30 to 50 labeled `match` pairs is a good starting point for the similarity model. But the blocking model may need more examples, especially on large datasets with many field variations; before it learns blocking rules that are generic enough to cover the full problem space.
+30 to 50 labeled `match` pairs is a good starting point for Zingg, these pairs are used to learn the blocking as well as the similarity model. But the blocking model may need more examples, especially on large datasets with many field variations; before it learns blocking rules that are generic enough to cover the full problem space.
 
 **Fix**: Run `findTrainingData` and `label` additional round. Pay particular attention to `match` pairs that cover different field value patterns different name formats, address abbreviations, and missing field combinations.
 
@@ -78,9 +72,9 @@ influence matching.
 
 </details>
 
-### If `verifyBlocking` shows low coverage, what to do in order
+### TODO
 
-1. Add more labeled training pairs of the type being missed. The blocking model learns from the same training data as the similarity model. Focus on pairs that represent the variation patterns missing from your current training set.
+1. Add more labeled training pairs of the type being missed. Focus on pairs that represent the variation patterns missing from your current training set.
 2. Review your field match types. Fields marked `DONT_US`E are excluded from blocking as well as similarity. If a field has a strong identity signal - a consistent identifier that appears across matching records - consider changing it from `DONT_USE` to `FUZZY`.
 3. Check whether missed pairs share a common characteristic. If all missed pairs have empty values in a key field, empty fields cannot contribute to blocking. Either remove that field from your blocking config or improve data completeness upstream.
 4. If standard blocking consistently misses a specific pattern in your data, consider custom blocking functions.
@@ -91,7 +85,6 @@ influence matching.
 * [Label Training Pairs](label-training-pairs.md) - how to add more training data
 * [Configure Zingg](../configure-zingg.md) - changing field match types
 * [Blocking Strategies: DEFAULT vs WIDER](../../tuning/blocking-strategy.md) - reorder candidate fields in the blocking tree (Enterprise only)
-* [Custom Blocking and Similarity](/broken/pages/DWdyf7az3MmhJaVca3k7) Functions
 {% endhint %}
 
 {% hint style="success" icon="right-long" %}

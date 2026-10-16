@@ -47,9 +47,9 @@ Define your field definitions, match types, relevant Enterprise features (determ
 
 <details>
 
-<summary>Configure model id, number of partitions and labelDataSampleSize</summary>
+<summary>Configure model id, and performance settings <br></summary>
 
-
+Separate different models through model ids, define number of partitions and labelDataSampleSize for faster running jobs
 
 </details>
 {% endstep %}

@@ -85,7 +85,19 @@ Zingg internally applies the negation of `passthroughExpr` to filter which recor
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-_**CHECK WITH SONAL - Enterprise Snowflake content for this topic to be provivded by Sonal**_
+#### JSON
+
+```json
+{ "passthroughExpr" : "fname = 'matilda'" }
+```
+
+For nullable fields, ensure the negative of your expression correctly identifies non-passthrough records:
+
+```json
+{ "passthroughExpr" : "is_deceased = true AND is_deceased IS NOT NULL" }
+```
+
+Zingg internally applies the negation of `passthroughExpr` to filter which records participate in matching. If you apply the condition to a nullable field without the null guard, records with null values in that field may behave unexpectedly.
 {% endtab %}
 {% endtabs %}
 
