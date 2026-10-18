@@ -44,6 +44,52 @@
 				<spark.binary.version>3.5</spark.binary.version>
 				<scala.binary.version>2.12</scala.binary.version>
 				<graphframes.version>0.11.0</graphframes.version>
+				<graphframes.artifactId>graphframes-spark3_2.12</graphframes.artifactId>
+				<netty.version>4.1.125.Final</netty.version>
+				<lz4.groupId>org.lz4</lz4.groupId>
+				<lz4.version>1.8.1</lz4.version>
+				<test.extraJavaModuleOptions></test.extraJavaModuleOptions>
+			</properties>
+		</profile>
+		<profile>
+			<id>spark-4.2</id>
+			<activation>
+				<property>
+					<name>spark</name>
+					<value>4.2</value>
+				</property>
+			</activation>
+			<properties>
+				<spark.version>4.2.0</spark.version>
+				<scala.version>2.13.18</scala.version>
+				<spark.binary.version>4.2</spark.binary.version>
+				<scala.binary.version>2.13</scala.binary.version>
+				<graphframes.version>0.12.3</graphframes.version>
+				<graphframes.artifactId>graphframes-spark4_2.13</graphframes.artifactId>
+				<maven.compiler.source>17</maven.compiler.source>
+				<maven.compiler.target>17</maven.compiler.target>
+				<netty.version>4.2.13.Final</netty.version>
+				<lz4.groupId>at.yawk.lz4</lz4.groupId>
+				<lz4.version>1.11.0</lz4.version>
+				<!-- JDK 17+ strong encapsulation requires these opens for Spark's reflective access to JDK internals, matching org.apache.spark.launcher.JavaModuleOptions -->
+				<test.extraJavaModuleOptions>
+					--add-modules=jdk.incubator.vector
+					--add-opens=java.base/java.lang=ALL-UNNAMED
+					--add-opens=java.base/java.lang.invoke=ALL-UNNAMED
+					--add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+					--add-opens=java.base/java.io=ALL-UNNAMED
+					--add-opens=java.base/java.net=ALL-UNNAMED
+					--add-opens=java.base/java.nio=ALL-UNNAMED
+					--add-opens=java.base/java.util=ALL-UNNAMED
+					--add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+					--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED
+					--add-opens=java.base/jdk.internal.ref=ALL-UNNAMED
+					--add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+					--add-opens=java.base/sun.nio.cs=ALL-UNNAMED
+					--add-opens=java.base/sun.security.action=ALL-UNNAMED
+					--add-opens=java.base/sun.util.calendar=ALL-UNNAMED
+					--add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED
+				</test.extraJavaModuleOptions>
 			</properties>
 		</profile>
 	</profiles>
@@ -147,7 +193,7 @@
         </dependency>	
        <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-scala_2.12</artifactId>
+            <artifactId>jackson-module-scala_${scala.binary.version}</artifactId>
             <version>2.15.2</version>
         </dependency>
 																	
@@ -180,6 +226,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.2.2</version>
 				<configuration>
+					<argLine>@{argLine} ${test.extraJavaModuleOptions}</argLine>
 					<statelessTestsetReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
 						<disable>false</disable>
 						<version>3.0</version>
@@ -207,7 +254,7 @@
 			<plugin>
   					<groupId>org.jacoco</groupId>
  	    			<artifactId>jacoco-maven-plugin</artifactId>
-  					<version>0.8.6</version>
+  					<version>0.8.13</version>
    					<executions>
   						<execution>
     			  			<id>prepare-agent</id>

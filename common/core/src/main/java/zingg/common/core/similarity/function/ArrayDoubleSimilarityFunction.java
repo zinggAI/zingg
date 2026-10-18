@@ -3,9 +3,9 @@ package zingg.common.core.similarity.function;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import scala.collection.mutable.WrappedArray;
+import scala.collection.Seq;
 
-public class ArrayDoubleSimilarityFunction extends SimFunction<WrappedArray<Double>> {
+public class ArrayDoubleSimilarityFunction extends SimFunction<Seq<Double>> {
 	private static final long serialVersionUID = 1L;
 	public static final Log LOG = LogFactory
 			.getLog(ArrayDoubleSimilarityFunction.class);
@@ -55,7 +55,7 @@ public class ArrayDoubleSimilarityFunction extends SimFunction<WrappedArray<Doub
 	}
 	
 	@Override
-	public Double call(WrappedArray<Double> t1, WrappedArray<Double> t2) {
+	public Double call(Seq<Double> t1, Seq<Double> t2) {
 		Double[] t1Arr = new Double[] {};
 		if (t1!=null) {
 			t1Arr = new Double[t1.length()];
