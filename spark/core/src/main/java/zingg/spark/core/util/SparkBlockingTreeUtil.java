@@ -47,7 +47,7 @@ public class SparkBlockingTreeUtil extends BlockingTreeUtil<SparkSession, Datase
     }
 
     public StructType appendHashCol(StructType s) {
-        StructType retSchema = SchemaUtils.appendColumn(s, ColName.HASH_COL, DataTypes.IntegerType, false);
+        StructType retSchema = SchemaUtils.appendColumn(s, ColName.HASH_COL, DataTypes.LongType, false);
         LOG.debug("returning schema after step 1 is " + retSchema);
         return retSchema;
 }
