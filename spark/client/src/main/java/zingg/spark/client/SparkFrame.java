@@ -11,7 +11,7 @@ import org.apache.spark.sql.functions;
 import org.apache.spark.sql.types.StructField;
 
 import scala.collection.JavaConverters;
-import scala.collection.immutable.Seq;
+import scala.collection.Seq;
 import zingg.common.client.FieldData;
 import zingg.common.client.ZFrame;
 import zingg.common.client.util.ColName;
@@ -209,10 +209,10 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     public ZFrame<Dataset<Row>, Row, Column> withColumns(String[] columns, Column[] columnValues) {
         Seq<String> columnsSeq = JavaConverters.asScalaIteratorConverter(Arrays.asList(columns).iterator())
                 .asScala()
-                .toList();
+                .toSeq();
         Seq<Column> columnValuesSeq = JavaConverters.asScalaIteratorConverter(Arrays.asList(columnValues).iterator())
                 .asScala()
-                .toList();
+                .toSeq();
 
         return new SparkFrame(df.withColumns(columnsSeq, columnValuesSeq));
     }
@@ -226,11 +226,11 @@ public class SparkFrame implements ZFrame<Dataset<Row>, Row, Column> {
     }
 
     public ZFrame<Dataset<Row>, Row, Column> repartition(int num,scala.collection.Seq<Column> partitionExprs){
-         return new SparkFrame(df.repartition(num, partitionExprs.toList()));
+         return new SparkFrame(df.repartition(num, partitionExprs));
     }
 
     public ZFrame<Dataset<Row>, Row, Column> repartition(scala.collection.Seq<Column> partitionExprs){
-        return new SparkFrame(df.repartition(partitionExprs.toList()));
+        return new SparkFrame(df.repartition(partitionExprs));
    }
 
     @Override
