@@ -2,21 +2,25 @@ package zingg.spark.core;
 
 import org.apache.spark.sql.api.java.UDF2;
 
-import scala.collection.Seq;
+import scala.collection.mutable.WrappedArray;
 import zingg.common.core.similarity.function.ArrayDoubleSimilarityFunction;
 
-public class TestUDFDoubleWrappedArr implements UDF2<Seq<Double>,Seq<Double>, Double>{
+public class TestUDFDoubleWrappedArr implements UDF2<WrappedArray<Double>,WrappedArray<Double>, Double>{
 	
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Double call(Seq<Double> t1, Seq<Double> t2) throws Exception {
+	public Double call(WrappedArray<Double> t1, WrappedArray<Double> t2) throws Exception {
 		System.out.println("TestUDFDoubleWrappedArr class" +t1.getClass());
 		
 		Double[] t1Arr = new Double[t1.length()];
-		for (int i = 0; i < t1.length(); i++) t1Arr[i] = t1.apply(i);
+		if (t1!=null) {
+			t1.copyToArray(t1Arr);
+		}
 		Double[] t2Arr = new Double[t2.length()];
-		for (int i = 0; i < t2.length(); i++) t2Arr[i] = t2.apply(i);
+		if (t2!=null) {
+			t2.copyToArray(t2Arr);
+		}
 		return ArrayDoubleSimilarityFunction.cosineSimilarity(t1Arr, t2Arr);
 	}
 	
