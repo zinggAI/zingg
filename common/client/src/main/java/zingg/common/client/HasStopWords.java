@@ -1,6 +1,6 @@
 package zingg.common.client;
 
-import scala.Serializable;
+import java.io.Serializable;
 
 public class HasStopWords implements Serializable {
 
