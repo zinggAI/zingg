@@ -28,7 +28,6 @@ Class that contains Client options for Zingg object
 | [`COLUMN`](#zingg.client.ClientOptions.COLUMN)       | Column whose stop words are to be recommended through Zingg   |
 |------------------------------------------------------|---------------------------------------------------------------|
 | [`CONF`](#zingg.client.ClientOptions.CONF)           | conf parameter for this class                                 |
-| [`EMAIL`](#zingg.client.ClientOptions.EMAIL)         | e-mail parameter for this class                               |
 | [`LICENSE`](#zingg.client.ClientOptions.LICENSE)     | license parameter for this class                              |
 | [`LOCATION`](#zingg.client.ClientOptions.LOCATION)   | location parameter for this class                             |
 | [`MODEL_ID`](#zingg.client.ClientOptions.MODEL_ID)   | ZINGG_DIR/MODEL_ID is used to save the model                  |
@@ -49,13 +48,6 @@ conf parameter for this class
 
 * **Type:**
   CONF
-
-#### EMAIL *= <py4j.java_gateway.JavaPackage object>*
-
-e-mail parameter for this class
-
-* **Type:**
-  EMAIL
 
 #### LICENSE *= <py4j.java_gateway.JavaPackage object>*
 

@@ -36,7 +36,6 @@
    
       ~ClientOptions.COLUMN
       ~ClientOptions.CONF
-      ~ClientOptions.EMAIL
       ~ClientOptions.LICENSE
       ~ClientOptions.LOCATION
       ~ClientOptions.MODEL_ID

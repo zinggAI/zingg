@@ -12,7 +12,6 @@ public class TestClientOption {
 		String[] args = {"--phase", "train", 
 				"--conf", "conf.json", 
 				"--zinggDir", "/tmp/z_main", 
-				"--email", "zingg@zingg.ai", 
 				"--license", "zinggLicense.txt"};
 		
 		ClientOptions co = new ClientOptions(args);
@@ -27,7 +26,6 @@ public class TestClientOption {
 		String[] args = {"--phase", "train",
 				"--conf1", "conf.json",
 				"--zinggDir", "/tmp/z_main",
-				"--email", "zingg@zingg.ai",
 				"--license", "zinggLicense.txt"};
 
 		assertThrows(UnsupportedOperationException.class, () -> {
@@ -40,7 +38,6 @@ public class TestClientOption {
 		String[] args = {"--phase1", "train",
 				"--conf1", "conf.json",
 				"--zinggDir", "/tmp/z_main",
-				"--email", "zingg@zingg.ai",
 				"--license", "zinggLicense.txt"};
 
 		assertThrows(UnsupportedOperationException.class, () -> {

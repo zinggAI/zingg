@@ -7,11 +7,4 @@
 	</parent>
 	<artifactId>zingg-common-client</artifactId>
 	<packaging>jar</packaging>
-	<dependencies>
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4</version>
-		</dependency>
-	</dependencies>
 </project>
