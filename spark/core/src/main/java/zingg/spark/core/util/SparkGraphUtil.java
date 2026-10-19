@@ -20,7 +20,6 @@ public class SparkGraphUtil implements GraphUtil<Dataset<Row>, Row, Column> {
 		// we need to transform the input here by using stop words
 		//rename id field which is a common field in data to another field as it 
 		//clashes with graphframes :-(
-		vOrig = vOrig.cache();
 		Dataset<Row> vertices = vOrig.df();	
 		Dataset<Row> edges = ed.df();
 		vertices = vertices.withColumnRenamed(ColName.ID_EXTERNAL_ORIG_COL, ColName.ID_EXTERNAL_COL);
@@ -37,12 +36,19 @@ public class SparkGraphUtil implements GraphUtil<Dataset<Row>, Row, Column> {
 		GraphFrame gf = new GraphFrame(v, e);
 		//gf = gf.dropIsolatedVertices();
 		//Dataset<Row> returnGraph = gf.connectedComponents().setAlgorithm("graphx").run().cache();
-		Dataset<Row> returnGraph = gf.connectedComponents().run().cache();
+		Dataset<Row> connectedComponents = gf.connectedComponents().run().cache();
 		//reverse back o avoid graphframes id :-()
-		returnGraph = returnGraph.join(vertices, returnGraph.col("id").equalTo(vertices.col(ColName.ID_COL)));
+		Dataset<Row> returnGraph = connectedComponents.join(vertices, connectedComponents.col("id").equalTo(vertices.col(ColName.ID_COL)));
 		returnGraph = returnGraph.drop(ColName.ID_COL).withColumnRenamed("id", ColName.ID_COL);		
 		returnGraph = returnGraph.withColumnRenamed("component", ColName.CLUSTER_COLUMN);
-		returnGraph = returnGraph.withColumnRenamed(ColName.ID_EXTERNAL_COL, ColName.ID_EXTERNAL_ORIG_COL);
+		returnGraph = returnGraph.withColumnRenamed(ColName.ID_EXTERNAL_COL, ColName.ID_EXTERNAL_ORIG_COL).cache();
+
+		// The returned frame owns this materialized result. Release all internal
+		// caches after materialization so repeated graph builds do not retain them.
+		returnGraph.count();
+		v.unpersist(false);
+		e.unpersist(false);
+		connectedComponents.unpersist(false);
 		return new SparkFrame(returnGraph);
 	}
 
