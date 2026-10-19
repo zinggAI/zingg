@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.spark.ml.util.SchemaUtils;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
@@ -47,7 +46,9 @@ public class SparkBlockingTreeUtil extends BlockingTreeUtil<SparkSession, Datase
     }
 
     public StructType appendHashCol(StructType s) {
-        StructType retSchema = SchemaUtils.appendColumn(s, ColName.HASH_COL, DataTypes.IntegerType, false);
+        // plain StructType instead of spark ml SchemaUtils.appendColumn, so blocking does not need
+        // spark-mllib on the classpath (it is not there for Spark Connect clients)
+        StructType retSchema = s.add(ColName.HASH_COL, DataTypes.IntegerType, false);
         LOG.debug("returning schema after step 1 is " + retSchema);
         return retSchema;
 }
