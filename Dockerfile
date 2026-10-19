@@ -17,7 +17,6 @@ RUN curl --fail --show-error --silent --location \
     tar --extract --gzip --file /tmp/zingg-0.7.0-spark-3.5.5.tar.gz --strip=1 && \
     rm --force /tmp/zingg-0.7.0-spark-3.5.5.tar.gz
 RUN pip install -r python/requirements.txt
-RUN pip install zingg
 RUN chown -R spark:spark /zingg-0.7.0/models && \
     find /zingg-0.7.0/models -type d -exec chmod 0770 {} + && \
     find /zingg-0.7.0/models -type f -exec chmod 0660 {} +

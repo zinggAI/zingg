@@ -1,0 +1,30 @@
+name: Docker smoke test
+
+on:
+  pull_request:
+    paths:
+      - Dockerfile
+      - python/requirements.txt
+      - .github/workflows/docker-smoke.yml
+  push:
+    branches: [main]
+    paths:
+      - Dockerfile
+      - python/requirements.txt
+      - .github/workflows/docker-smoke.yml
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build --tag zingg:smoke .
+      - name: Verify runtime versions
+        run: >-
+          docker run --rm zingg:smoke python -c
+          "import importlib.metadata as m, numpy, pandas, pyspark;
+          assert m.version('zingg') == '0.7.0';
+          assert pyspark.__version__ == '3.5.5';
+          assert numpy.__version__ == '1.26.4';
+          assert pandas.__version__ == '2.2.3'"
