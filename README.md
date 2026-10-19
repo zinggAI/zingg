@@ -75,6 +75,17 @@ docker run -it zingg/zingg bash
 
 Check the [step by step guide](https://docs.zingg.ai/latest/stepbystep) for more details.
 
+## Optional DuckDB backend
+
+The default Maven reactor remains Java 11 and Spark-based. The DuckDB backend is an opt-in Java 21 module:
+
+```bash
+mvn -B -Dduckdb=true -pl duckdb -am validate
+mvn -B -f duckdb/pom.xml test
+```
+
+The first command validates the upstream reactor with the optional module selected; the second runs the DuckDB module's nested Java 21 reactor. See [duckdb/README.md](duckdb/README.md) for the backend architecture and runtime instructions.
+
 ## Connectors
 
 Zingg connects, reads and writes to most on-premise and cloud data sources. Zingg runs on any private or cloud based Spark service.

@@ -1,0 +1,1 @@
+{"module":"runtime-worker","java":"21","dependencies":["compat-zingg07-runtime","protocol"],"distribution":"shaded"}

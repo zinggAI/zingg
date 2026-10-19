@@ -24,3 +24,18 @@ jobs:
           cache: maven
       - name: Build 
         run: mvn install
+
+  duckdb-java21:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Validate optional DuckDB profile
+        run: mvn -B -Dduckdb=true -pl duckdb -am validate
+      - name: Test DuckDB module
+        run: mvn -B -f duckdb/pom.xml test

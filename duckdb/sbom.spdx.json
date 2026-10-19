@@ -1,0 +1,5002 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "zingg-duckdb-0.1.0",
+  "documentNamespace": "https://zingg-duckdb.invalid/spdx/b45dcdaf9581867447a0e47ff3cf6e498052ad4195ebd3c0b87ee4401ad3589d",
+  "creationInfo": {
+    "creators": [
+      "Tool: zingg-duckdb-generate-sbom-1.0"
+    ],
+    "created": "2026-09-29T07:58:52Z"
+  },
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-a94b6cf559942b460bdab405",
+      "name": "Java runtime",
+      "versionInfo": "21",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "comment": "The bundle may use a system JDK or include a jlink runtime; vendor/license provenance is distribution-specific.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/java-runtime@21"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-2fbbd117f6b1a8e195a06913",
+      "name": "com.clearspring.analytics:stream",
+      "versionInfo": "2.9.6",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.clearspring.analytics/stream@2.9.6"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-bed3ed55b223a2d0c915c867",
+      "name": "com.esotericsoftware:kryo-shaded",
+      "versionInfo": "4.0.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.esotericsoftware/kryo-shaded@4.0.2"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-3ef2e9f60d921321cb300f2d",
+      "name": "com.esotericsoftware:minlog",
+      "versionInfo": "1.3.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.esotericsoftware/minlog@1.3.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-97e11c04576883457b8beebc",
+      "name": "com.fasterxml.jackson.core:jackson-annotations",
+      "versionInfo": "2.15.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.15.2"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-1938f42850c8e463a888cbdb",
+      "name": "com.fasterxml.jackson.core:jackson-annotations",
+      "versionInfo": "2.21",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ca218583120bbe528c0d8d25",
+      "name": "com.fasterxml.jackson.core:jackson-core",
+      "versionInfo": "2.15.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.15.2"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-56e124f7f81fff631115fc13",
+      "name": "com.fasterxml.jackson.core:jackson-core",
+      "versionInfo": "2.21.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-004d4dcab1d24fa824b17805",
+      "name": "com.fasterxml.jackson.core:jackson-databind",
+      "versionInfo": "2.15.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.15.2"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-77d70bd389e7721b491eb111",
+      "name": "com.fasterxml.jackson.core:jackson-databind",
+      "versionInfo": "2.21.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-72c07c8a870d4b31a9358b7c",
+      "name": "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
+      "versionInfo": "2.15.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.15.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-05d5fac10cb71826d6e7d16b",
+      "name": "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
+      "versionInfo": "2.21.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-d3a53eff32d38154b688ea46",
+      "name": "com.fasterxml.jackson.module:jackson-module-scala_2.12",
+      "versionInfo": "2.15.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.fasterxml.jackson.module/jackson-module-scala_2.12@2.15.2"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-9c82c1eed72f2f097c4b6840",
+      "name": "com.github.luben:zstd-jni",
+      "versionInfo": "1.5.5-4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.github.luben/zstd-jni@1.5.5-4"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-65efc8427e99345ecebf15c1",
+      "name": "com.github.wendykierp:JTransforms",
+      "versionInfo": "3.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.github.wendykierp/JTransforms@3.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-d4548992b80dfe2d6f2514f0",
+      "name": "com.google.code.findbugs:jsr305",
+      "versionInfo": "3.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.google.code.findbugs/jsr305@3.0.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-49827d6e2dfd8d08da4d266b",
+      "name": "com.google.code.gson:gson",
+      "versionInfo": "2.10.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.google.code.gson/gson@2.10.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-cb6f615547193e38e9ab61cb",
+      "name": "com.google.crypto.tink:tink",
+      "versionInfo": "1.9.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.google.crypto.tink/tink@1.9.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-e3de58f69b859485cabc1074",
+      "name": "com.google.flatbuffers:flatbuffers-java",
+      "versionInfo": "1.12.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.google.flatbuffers/flatbuffers-java@1.12.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-04d23d69c3b80a6199deb0f1",
+      "name": "com.google.flatbuffers:flatbuffers-java",
+      "versionInfo": "25.2.10",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.google.flatbuffers/flatbuffers-java@25.2.10"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-d430a8e308e1be857e4cb9da",
+      "name": "com.google.guava:guava",
+      "versionInfo": "16.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.google.guava/guava@16.0.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-0f0104809af8e8c6f59b0044",
+      "name": "com.google.protobuf:protobuf-java",
+      "versionInfo": "3.19.6",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.google.protobuf/protobuf-java@3.19.6"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-fce806822e2f9907b9821af5",
+      "name": "com.ning:compress-lzf",
+      "versionInfo": "1.1.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.ning/compress-lzf@1.1.2"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-da5971baec51fd39c28bb74c",
+      "name": "com.sun.istack:istack-commons-runtime",
+      "versionInfo": "3.0.8",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.sun.istack/istack-commons-runtime@3.0.8"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-4c48498104e6e98ef09c0f39",
+      "name": "com.thoughtworks.paranamer:paranamer",
+      "versionInfo": "2.8",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.thoughtworks.paranamer/paranamer@2.8"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-e1736b993374b5f82337b745",
+      "name": "com.twitter:chill-java",
+      "versionInfo": "0.10.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.twitter/chill-java@0.10.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-88d80dfda8cb191ceeadb199",
+      "name": "com.twitter:chill_2.12",
+      "versionInfo": "0.10.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.twitter/chill_2.12@0.10.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-5744f2dec3b9687de7fa4c5d",
+      "name": "com.univocity:univocity-parsers",
+      "versionInfo": "2.9.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/com.univocity/univocity-parsers@2.9.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-d14f6529a94cb2dda3ae406f",
+      "name": "commons-codec:commons-codec",
+      "versionInfo": "1.16.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/commons-codec/commons-codec@1.16.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-cbd62720150159d9270a5ec4",
+      "name": "commons-codec:commons-codec",
+      "versionInfo": "1.21.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/commons-codec/commons-codec@1.21.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-8036d51cf1d16b27dca90794",
+      "name": "commons-collections:commons-collections",
+      "versionInfo": "3.2.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/commons-collections/commons-collections@3.2.2"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-a361e35b7f706e72168a7cbe",
+      "name": "commons-io:commons-io",
+      "versionInfo": "2.16.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/commons-io/commons-io@2.16.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-74563abb60dfb07d9e5efb8e",
+      "name": "commons-logging:commons-logging",
+      "versionInfo": "1.1.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/commons-logging/commons-logging@1.1.3"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-36620a64b40ea5c5cea8d657",
+      "name": "dev.ludovic.netlib:arpack",
+      "versionInfo": "3.0.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/dev.ludovic.netlib/arpack@3.0.3"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-cd766303a06736c842a2b7f9",
+      "name": "dev.ludovic.netlib:blas",
+      "versionInfo": "3.0.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/dev.ludovic.netlib/blas@3.0.3"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-fb2aa387559afd5ec608d44f",
+      "name": "dev.ludovic.netlib:lapack",
+      "versionInfo": "3.0.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/dev.ludovic.netlib/lapack@3.0.3"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-c307a241231fcae1f6af7d29",
+      "name": "io.airlift:aircompressor",
+      "versionInfo": "0.27",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.airlift/aircompressor@0.27"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-1f0c2c46cefbc33edd86c587",
+      "name": "io.dropwizard.metrics:metrics-core",
+      "versionInfo": "4.2.19",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.dropwizard.metrics/metrics-core@4.2.19"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-a3d802851dd91ba264b79777",
+      "name": "io.dropwizard.metrics:metrics-graphite",
+      "versionInfo": "4.2.19",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.dropwizard.metrics/metrics-graphite@4.2.19"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-0c6594c466b798baca082068",
+      "name": "io.dropwizard.metrics:metrics-jmx",
+      "versionInfo": "4.2.19",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.dropwizard.metrics/metrics-jmx@4.2.19"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-03417230e2d7149f968e1204",
+      "name": "io.dropwizard.metrics:metrics-json",
+      "versionInfo": "4.2.19",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.dropwizard.metrics/metrics-json@4.2.19"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-25dfe4f52e25a061a0d04df1",
+      "name": "io.dropwizard.metrics:metrics-jvm",
+      "versionInfo": "4.2.19",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.dropwizard.metrics/metrics-jvm@4.2.19"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "name": "io.netty:netty-all",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-all@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-1ef61372e2ddb5f9dfcf5f5a",
+      "name": "io.netty:netty-buffer",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-buffer@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-10d80155a51477e7e9af818d",
+      "name": "io.netty:netty-buffer",
+      "versionInfo": "4.2.9.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-buffer@4.2.9.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-3481d19ec748d67f64be9a58",
+      "name": "io.netty:netty-codec",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-codec@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-f1dc6592a21d328a7eb4a0c5",
+      "name": "io.netty:netty-codec-http",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-codec-http@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-55d9c90991b632677b15a565",
+      "name": "io.netty:netty-codec-http2",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-codec-http2@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-a3ee26304f1719ca976d9721",
+      "name": "io.netty:netty-codec-socks",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-codec-socks@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-c4d4ef8aee1fe9a87c0f0178",
+      "name": "io.netty:netty-common",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-common@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-951c50aec453d15e04e389e7",
+      "name": "io.netty:netty-common",
+      "versionInfo": "4.2.9.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-common@4.2.9.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ed1ddc6cbaec9449a58fff3a",
+      "name": "io.netty:netty-handler",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-handler@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-4beb27c3b4d7e003f72d9d85",
+      "name": "io.netty:netty-handler-proxy",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-handler-proxy@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-be8bc8994d0dc7c4d159fd9a",
+      "name": "io.netty:netty-resolver",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-resolver@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-c8f965d2ffd5726fe83e3582",
+      "name": "io.netty:netty-transport",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-transport@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-9f86c5df69ed84ce29ca6873",
+      "name": "io.netty:netty-transport-classes-epoll",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-transport-classes-epoll@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-d677d8b9d8ad419ce3106a92",
+      "name": "io.netty:netty-transport-classes-kqueue",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-transport-classes-kqueue@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-5ab87197ffa8cf2175db9132",
+      "name": "io.netty:netty-transport-native-epoll",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-transport-native-epoll@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-f2fc20b92ab8dea4d64ad217",
+      "name": "io.netty:netty-transport-native-epoll",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-transport-native-epoll@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-393f7c86f8cd1647ab11da2c",
+      "name": "io.netty:netty-transport-native-kqueue",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-transport-native-kqueue@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-e3b83bd2f3cfa52a0dd422d4",
+      "name": "io.netty:netty-transport-native-kqueue",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-transport-native-kqueue@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-28de0a40d2874190b4bb67ca",
+      "name": "io.netty:netty-transport-native-unix-common",
+      "versionInfo": "4.1.96.Final",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.netty/netty-transport-native-unix-common@4.1.96.Final"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-6d077d1c1da59659260fd830",
+      "name": "io.zingg.duckdb:compat-zingg07-runtime",
+      "versionInfo": "0.1.0-SNAPSHOT",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "AGPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.zingg.duckdb/compat-zingg07-runtime@0.1.0-SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ec38e7baf826832495653d04",
+      "name": "io.zingg.duckdb:engine-api",
+      "versionInfo": "0.1.0-SNAPSHOT",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "AGPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.zingg.duckdb/engine-api@0.1.0-SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-c01afe220f0d3f1a231516d6",
+      "name": "io.zingg.duckdb:engine-duckdb",
+      "versionInfo": "0.1.0-SNAPSHOT",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "AGPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.zingg.duckdb/engine-duckdb@0.1.0-SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ebbbd79b3cc4ecf6c4f63763",
+      "name": "io.zingg.duckdb:legacy-blocking-import-zingg07-spark35",
+      "versionInfo": "0.1.0-SNAPSHOT",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "AGPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.zingg.duckdb/legacy-blocking-import-zingg07-spark35@0.1.0-SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-54ef6f6162b9b830905ecb22",
+      "name": "io.zingg.duckdb:legacy-classifier-import-zingg07-spark35",
+      "versionInfo": "0.1.0-SNAPSHOT",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "AGPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.zingg.duckdb/legacy-classifier-import-zingg07-spark35@0.1.0-SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-d672c6085a14f524c92e6ced",
+      "name": "io.zingg.duckdb:model-format",
+      "versionInfo": "0.1.0-SNAPSHOT",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "AGPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.zingg.duckdb/model-format@0.1.0-SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-8fd09b56f36bdfd85adb4c89",
+      "name": "io.zingg.duckdb:protocol",
+      "versionInfo": "0.1.0-SNAPSHOT",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "AGPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.zingg.duckdb/protocol@0.1.0-SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-5af4e6996a7eb8995842d135",
+      "name": "io.zingg.duckdb:runtime-worker",
+      "versionInfo": "0.1.0-SNAPSHOT",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "AGPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.zingg.duckdb/runtime-worker@0.1.0-SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-20c581bdc5ca6233ba5a4df6",
+      "name": "io.zingg.duckdb:zingg-duckdb",
+      "versionInfo": "0.1.0-SNAPSHOT",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "AGPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/io.zingg.duckdb/zingg-duckdb@0.1.0-SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-25cd28d254aa33d13f11cdd2",
+      "name": "jakarta.annotation:jakarta.annotation-api",
+      "versionInfo": "1.3.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/jakarta.annotation/jakarta.annotation-api@1.3.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-30cd632a60bdd01c5515590f",
+      "name": "jakarta.servlet:jakarta.servlet-api",
+      "versionInfo": "4.0.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/jakarta.servlet/jakarta.servlet-api@4.0.3"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-0614ce79e5ecbc7fcfae1301",
+      "name": "jakarta.validation:jakarta.validation-api",
+      "versionInfo": "2.0.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/jakarta.validation/jakarta.validation-api@2.0.2"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-5f6bb1e86899a0eca805f5c8",
+      "name": "jakarta.ws.rs:jakarta.ws.rs-api",
+      "versionInfo": "2.1.6",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@2.1.6"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-e9b498276300130837f4cde1",
+      "name": "jakarta.xml.bind:jakarta.xml.bind-api",
+      "versionInfo": "2.3.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@2.3.2"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-1e4fcf607ce537048f7e57e9",
+      "name": "javax.activation:activation",
+      "versionInfo": "1.1.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/javax.activation/activation@1.1.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-e137b9af60bf436e6763a63e",
+      "name": "joda-time:joda-time",
+      "versionInfo": "2.12.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/joda-time/joda-time@2.12.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-d405ab13daad061db6313a54",
+      "name": "net.razorvine:pickle",
+      "versionInfo": "1.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/net.razorvine/pickle@1.3"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-934791396d256c2cec09616d",
+      "name": "net.sf.opencsv:opencsv",
+      "versionInfo": "2.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/net.sf.opencsv/opencsv@2.3"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-e0a8ded229dc90efed6fefda",
+      "name": "net.sf.py4j:py4j",
+      "versionInfo": "0.10.9.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/net.sf.py4j/py4j@0.10.9.7"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-5532f8ef09ca9240d63b5bb2",
+      "name": "net.sourceforge.f2j:arpack_combined_all",
+      "versionInfo": "0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/net.sourceforge.f2j/arpack_combined_all@0.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-a88ce2b4532be327722fcda0",
+      "name": "org.antlr:antlr4-runtime",
+      "versionInfo": "4.9.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.antlr/antlr4-runtime@4.9.3"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-0d3cc82d9ef02f1236262147",
+      "name": "org.apache.arrow:arrow-format",
+      "versionInfo": "12.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.arrow/arrow-format@12.0.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-1a5593954b86283a02e868ae",
+      "name": "org.apache.arrow:arrow-format",
+      "versionInfo": "19.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.arrow/arrow-format@19.0.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-9bae73c0351efde2e1ce5b79",
+      "name": "org.apache.arrow:arrow-memory-core",
+      "versionInfo": "12.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.arrow/arrow-memory-core@12.0.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-80677538e4d17cdb6ae6a3b6",
+      "name": "org.apache.arrow:arrow-memory-core",
+      "versionInfo": "19.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.arrow/arrow-memory-core@19.0.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-81596dbedeb85e5ce7042f0b",
+      "name": "org.apache.arrow:arrow-memory-netty",
+      "versionInfo": "12.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.arrow/arrow-memory-netty@12.0.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-48036a8c7177e16898dec7e9",
+      "name": "org.apache.arrow:arrow-memory-netty",
+      "versionInfo": "19.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.arrow/arrow-memory-netty@19.0.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-41feb59626ba1fb67400935c",
+      "name": "org.apache.arrow:arrow-memory-netty-buffer-patch",
+      "versionInfo": "19.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.arrow/arrow-memory-netty-buffer-patch@19.0.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-0f1e61b8802252d179f7df0b",
+      "name": "org.apache.arrow:arrow-vector",
+      "versionInfo": "12.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.arrow/arrow-vector@12.0.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-0a136a05c1b610b98b565304",
+      "name": "org.apache.arrow:arrow-vector",
+      "versionInfo": "19.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.arrow/arrow-vector@19.0.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-12ea6820bc00452410e313d4",
+      "name": "org.apache.avro:avro",
+      "versionInfo": "1.11.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.avro/avro@1.11.4"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-5247eacfdf755fdc78aa7094",
+      "name": "org.apache.avro:avro-ipc",
+      "versionInfo": "1.11.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.avro/avro-ipc@1.11.4"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-931cd35c393be30ef30bb74a",
+      "name": "org.apache.avro:avro-mapred",
+      "versionInfo": "1.11.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.avro/avro-mapred@1.11.4"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-002bf168ba1c9e322327ff80",
+      "name": "org.apache.commons:commons-collections4",
+      "versionInfo": "4.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.commons/commons-collections4@4.4"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-0dc9956250abee77c7bc30c1",
+      "name": "org.apache.commons:commons-compress",
+      "versionInfo": "1.23.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.commons/commons-compress@1.23.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-89423aa4dc0b1b9216d40d7b",
+      "name": "org.apache.commons:commons-crypto",
+      "versionInfo": "1.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.commons/commons-crypto@1.1.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-54e1aa2635f19609fe50c8bd",
+      "name": "org.apache.commons:commons-lang3",
+      "versionInfo": "3.12.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.commons/commons-lang3@3.12.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-bc3058709ceaf5ddc65afb2a",
+      "name": "org.apache.commons:commons-math3",
+      "versionInfo": "3.6.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.commons/commons-math3@3.6.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-cf60df7fab7a8457d498d0c4",
+      "name": "org.apache.commons:commons-text",
+      "versionInfo": "1.10.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.commons/commons-text@1.10.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-2058b13c3f8ca6782a4e9fde",
+      "name": "org.apache.curator:curator-client",
+      "versionInfo": "2.13.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.curator/curator-client@2.13.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-f91ea93ed30c5f22d818f2ab",
+      "name": "org.apache.curator:curator-framework",
+      "versionInfo": "2.13.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.curator/curator-framework@2.13.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-29c89554b3a09dbdcc873cd6",
+      "name": "org.apache.curator:curator-recipes",
+      "versionInfo": "2.13.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.curator/curator-recipes@2.13.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-629c9489685026af7b8f1043",
+      "name": "org.apache.datasketches:datasketches-java",
+      "versionInfo": "3.3.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.datasketches/datasketches-java@3.3.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-9c34372ec201a4c42d4769c2",
+      "name": "org.apache.datasketches:datasketches-memory",
+      "versionInfo": "2.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.datasketches/datasketches-memory@2.1.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-72350f74d00e516f06bd1de5",
+      "name": "org.apache.hadoop:hadoop-client-api",
+      "versionInfo": "3.3.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.hadoop/hadoop-client-api@3.3.4"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-e2808e2ef5ee40b35e93ea13",
+      "name": "org.apache.hadoop:hadoop-client-runtime",
+      "versionInfo": "3.3.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.hadoop/hadoop-client-runtime@3.3.4"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-c43c06474131b41759156580",
+      "name": "org.apache.hive:hive-storage-api",
+      "versionInfo": "2.8.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.hive/hive-storage-api@2.8.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-caec35d1bce5a8ba9dd9b0ff",
+      "name": "org.apache.ivy:ivy",
+      "versionInfo": "2.5.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.ivy/ivy@2.5.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-7ffc9e8629144ef27c28501a",
+      "name": "org.apache.logging.log4j:log4j-1.2-api",
+      "versionInfo": "2.20.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.logging.log4j/log4j-1.2-api@2.20.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-e9dc937c3599a9a005d9d54a",
+      "name": "org.apache.logging.log4j:log4j-api",
+      "versionInfo": "2.20.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.logging.log4j/log4j-api@2.20.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-1df5b53a55ed44accf54bf7f",
+      "name": "org.apache.logging.log4j:log4j-core",
+      "versionInfo": "2.20.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.logging.log4j/log4j-core@2.20.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-f02ada769869ab546a1c0f71",
+      "name": "org.apache.logging.log4j:log4j-slf4j2-impl",
+      "versionInfo": "2.20.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.logging.log4j/log4j-slf4j2-impl@2.20.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-9ceee2922ce76eebf50c3c10",
+      "name": "org.apache.orc:orc-core",
+      "versionInfo": "1.9.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.orc/orc-core@1.9.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ff9bfbef72ce5be50547d926",
+      "name": "org.apache.orc:orc-mapreduce",
+      "versionInfo": "1.9.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.orc/orc-mapreduce@1.9.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-d2356be362a082c5189847a0",
+      "name": "org.apache.orc:orc-shims",
+      "versionInfo": "1.9.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.orc/orc-shims@1.9.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-d2c0f88ebc1104b9c5e22e7f",
+      "name": "org.apache.parquet:parquet-column",
+      "versionInfo": "1.13.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.parquet/parquet-column@1.13.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-58636925238486b5dd6a3705",
+      "name": "org.apache.parquet:parquet-common",
+      "versionInfo": "1.13.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.parquet/parquet-common@1.13.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-7332cd25ec3bf0a473c4af4f",
+      "name": "org.apache.parquet:parquet-encoding",
+      "versionInfo": "1.13.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.parquet/parquet-encoding@1.13.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-bf8dff76d8b07bacfad0acd1",
+      "name": "org.apache.parquet:parquet-format-structures",
+      "versionInfo": "1.13.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.parquet/parquet-format-structures@1.13.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-98114a4e94939e1fc3661f44",
+      "name": "org.apache.parquet:parquet-hadoop",
+      "versionInfo": "1.13.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.parquet/parquet-hadoop@1.13.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-14819852134f71ac6e03f810",
+      "name": "org.apache.parquet:parquet-jackson",
+      "versionInfo": "1.13.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.parquet/parquet-jackson@1.13.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-beda37cd9b19aa197c2c846e",
+      "name": "org.apache.spark:spark-catalyst_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-catalyst_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-96fd01e5c127e777e31862fa",
+      "name": "org.apache.spark:spark-common-utils_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-common-utils_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "name": "org.apache.spark:spark-core_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-core_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-59923e2f100e3ae9a7ffdbaa",
+      "name": "org.apache.spark:spark-graphx_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-graphx_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-2206c4f7aead3ed137162258",
+      "name": "org.apache.spark:spark-kvstore_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-kvstore_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-e8aa81c8133950a2296181ca",
+      "name": "org.apache.spark:spark-launcher_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-launcher_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-17f157ed81bdf797a147efbc",
+      "name": "org.apache.spark:spark-mllib-local_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-mllib-local_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-0f24200083550b147c65c764",
+      "name": "org.apache.spark:spark-mllib_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-mllib_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-0469eeb1818969631a0d5569",
+      "name": "org.apache.spark:spark-network-common_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-network-common_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-d7ab220c625d73a26da356e1",
+      "name": "org.apache.spark:spark-network-shuffle_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-network-shuffle_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-838e8f84b8c4c389e41993bb",
+      "name": "org.apache.spark:spark-sketch_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-sketch_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-a08bbd1dea7c67835256b735",
+      "name": "org.apache.spark:spark-sql-api_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-sql-api_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "name": "org.apache.spark:spark-sql_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-sql_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-fed4935dda28d3451b55e268",
+      "name": "org.apache.spark:spark-streaming_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-streaming_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-da4c509259d121e25357dcc8",
+      "name": "org.apache.spark:spark-tags_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-tags_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-bab3f2b1e59bff4d4ece2eb2",
+      "name": "org.apache.spark:spark-unsafe_2.12",
+      "versionInfo": "3.5.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.spark/spark-unsafe_2.12@3.5.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-2373377236f3e65c59d53775",
+      "name": "org.apache.xbean:xbean-asm9-shaded",
+      "versionInfo": "4.23",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.xbean/xbean-asm9-shaded@4.23"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-35c8f74cc888dfdd0709b294",
+      "name": "org.apache.yetus:audience-annotations",
+      "versionInfo": "0.13.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.yetus/audience-annotations@0.13.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-1780659c2ed4213f1b7dbfa1",
+      "name": "org.apache.zookeeper:zookeeper",
+      "versionInfo": "3.6.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.zookeeper/zookeeper@3.6.3"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-4b29ce1f3f83c3ca73064d59",
+      "name": "org.apache.zookeeper:zookeeper-jute",
+      "versionInfo": "3.6.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apache.zookeeper/zookeeper-jute@3.6.3"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-7bfe44c330efdf355dcbe98b",
+      "name": "org.apiguardian:apiguardian-api",
+      "versionInfo": "1.1.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.apiguardian/apiguardian-api@1.1.2"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ed60e31d2d3f767581b24dda",
+      "name": "org.codehaus.janino:commons-compiler",
+      "versionInfo": "3.1.9",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.codehaus.janino/commons-compiler@3.1.9"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-6d4c4a287a03a4ba1084804b",
+      "name": "org.codehaus.janino:janino",
+      "versionInfo": "3.1.9",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.codehaus.janino/janino@3.1.9"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-b8ef88f222878e336c15cf62",
+      "name": "org.duckdb:duckdb_jdbc",
+      "versionInfo": "1.5.5.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.duckdb/duckdb_jdbc@1.5.5.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-3f6bc2e9125c3c4b0b24046e",
+      "name": "org.fusesource.leveldbjni:leveldbjni-all",
+      "versionInfo": "1.8",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.fusesource.leveldbjni/leveldbjni-all@1.8"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-d48862e77fe2eda87447bdfb",
+      "name": "org.glassfish.hk2.external:aopalliance-repackaged",
+      "versionInfo": "2.6.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.glassfish.hk2.external/aopalliance-repackaged@2.6.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-9607d3245548adc93be8edcf",
+      "name": "org.glassfish.hk2.external:jakarta.inject",
+      "versionInfo": "2.6.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.glassfish.hk2.external/jakarta.inject@2.6.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-c747c734821ac7507bdb2f57",
+      "name": "org.glassfish.hk2:hk2-api",
+      "versionInfo": "2.6.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.glassfish.hk2/hk2-api@2.6.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-f9d0f019b206842ee0fab85c",
+      "name": "org.glassfish.hk2:hk2-locator",
+      "versionInfo": "2.6.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.glassfish.hk2/hk2-locator@2.6.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-a0829acffb66a0c9a1d10505",
+      "name": "org.glassfish.hk2:hk2-utils",
+      "versionInfo": "2.6.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.glassfish.hk2/hk2-utils@2.6.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-a39f6f1cd7b5f0be9408b91b",
+      "name": "org.glassfish.hk2:osgi-resource-locator",
+      "versionInfo": "1.0.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.glassfish.hk2/osgi-resource-locator@1.0.3"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-e6fc73e2d5cf2cd45190cef1",
+      "name": "org.glassfish.jaxb:jaxb-runtime",
+      "versionInfo": "2.3.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.glassfish.jaxb/jaxb-runtime@2.3.2"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-09457855b338c7317896ad61",
+      "name": "org.glassfish.jersey.containers:jersey-container-servlet",
+      "versionInfo": "2.40",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.glassfish.jersey.containers/jersey-container-servlet@2.40"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-2b94715eb1bff4e06be37b5f",
+      "name": "org.glassfish.jersey.containers:jersey-container-servlet-core",
+      "versionInfo": "2.40",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.glassfish.jersey.containers/jersey-container-servlet-core@2.40"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-87315ec4d529f20c40737ead",
+      "name": "org.glassfish.jersey.core:jersey-client",
+      "versionInfo": "2.40",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.glassfish.jersey.core/jersey-client@2.40"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-8c9c32017c9bc6bca47031a0",
+      "name": "org.glassfish.jersey.core:jersey-common",
+      "versionInfo": "2.40",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.glassfish.jersey.core/jersey-common@2.40"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-3cd9656b25cdd2eed3e18876",
+      "name": "org.glassfish.jersey.core:jersey-server",
+      "versionInfo": "2.40",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.glassfish.jersey.core/jersey-server@2.40"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-07b8c366fe63512b52b0d7b3",
+      "name": "org.glassfish.jersey.inject:jersey-hk2",
+      "versionInfo": "2.40",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.glassfish.jersey.inject/jersey-hk2@2.40"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-9bfbda413e07f4a9d55c1229",
+      "name": "org.javassist:javassist",
+      "versionInfo": "3.29.2-GA",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.javassist/javassist@3.29.2-GA"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-636e80aafad24d19d86b3200",
+      "name": "org.jetbrains:annotations",
+      "versionInfo": "17.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.jetbrains/annotations@17.0.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-78cea82b32f11fe7fdbfd84d",
+      "name": "org.json4s:json4s-ast_2.12",
+      "versionInfo": "3.7.0-M11",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.json4s/json4s-ast_2.12@3.7.0-M11"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-3bb81266a7b59bbc40b653cc",
+      "name": "org.json4s:json4s-core_2.12",
+      "versionInfo": "3.7.0-M11",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.json4s/json4s-core_2.12@3.7.0-M11"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-3cade40a1a1039aef2c8f7e9",
+      "name": "org.json4s:json4s-jackson_2.12",
+      "versionInfo": "3.7.0-M11",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.json4s/json4s-jackson_2.12@3.7.0-M11"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-abf6383a29fb1b290bd789be",
+      "name": "org.json4s:json4s-scalap_2.12",
+      "versionInfo": "3.7.0-M11",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.json4s/json4s-scalap_2.12@3.7.0-M11"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-835d80c642bb98d1f1eed677",
+      "name": "org.junit.jupiter:junit-jupiter",
+      "versionInfo": "5.11.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.junit.jupiter/junit-jupiter@5.11.4"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-5a431bc552065f3a94152fb7",
+      "name": "org.junit.jupiter:junit-jupiter-api",
+      "versionInfo": "5.11.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.11.4"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-5333b96f6a7b6929af6dbf1f",
+      "name": "org.junit.jupiter:junit-jupiter-engine",
+      "versionInfo": "5.11.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.11.4"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-7f5a1c388acc2e4a583b80ca",
+      "name": "org.junit.jupiter:junit-jupiter-params",
+      "versionInfo": "5.11.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.11.4"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-e57e4d4a9153eb56bcfed4fa",
+      "name": "org.junit.platform:junit-platform-commons",
+      "versionInfo": "1.11.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.junit.platform/junit-platform-commons@1.11.4"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-98fea768272de1e7e60d922e",
+      "name": "org.junit.platform:junit-platform-engine",
+      "versionInfo": "1.11.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.junit.platform/junit-platform-engine@1.11.4"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ddccf43c31f31ce3524658b7",
+      "name": "org.lz4:lz4-java",
+      "versionInfo": "1.8.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.lz4/lz4-java@1.8.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-8661c4dd5b01992fc6306294",
+      "name": "org.objenesis:objenesis",
+      "versionInfo": "2.5.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.objenesis/objenesis@2.5.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-7e5e6901b55ea98b23c99630",
+      "name": "org.opentest4j:opentest4j",
+      "versionInfo": "1.3.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.opentest4j/opentest4j@1.3.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-1e07a99900866101498a25b9",
+      "name": "org.roaringbitmap:RoaringBitmap",
+      "versionInfo": "0.9.45",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.roaringbitmap/RoaringBitmap@0.9.45"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-3439f30af8df6b3d8addb932",
+      "name": "org.roaringbitmap:shims",
+      "versionInfo": "0.9.45",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.roaringbitmap/shims@0.9.45"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-5b579e36bb1fdd0e8d8d1ce7",
+      "name": "org.rocksdb:rocksdbjni",
+      "versionInfo": "8.3.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.rocksdb/rocksdbjni@8.3.2"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-27ff10cc0d90539319a4438d",
+      "name": "org.scala-lang.modules:scala-collection-compat_2.12",
+      "versionInfo": "2.7.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.scala-lang.modules/scala-collection-compat_2.12@2.7.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-f1f354426079df994bce7e3b",
+      "name": "org.scala-lang.modules:scala-parser-combinators_2.12",
+      "versionInfo": "2.3.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.scala-lang.modules/scala-parser-combinators_2.12@2.3.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-43010b1c779cdb0f84979aa5",
+      "name": "org.scala-lang.modules:scala-xml_2.12",
+      "versionInfo": "2.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.scala-lang.modules/scala-xml_2.12@2.1.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-a94fb920ef2adeed31c8018e",
+      "name": "org.scala-lang:scala-library",
+      "versionInfo": "2.12.17",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.scala-lang/scala-library@2.12.17"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-9e6148fa6cb7c7509aa460c3",
+      "name": "org.scala-lang:scala-library",
+      "versionInfo": "2.12.18",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.scala-lang/scala-library@2.12.18"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-abd8e762b0c2cc860d5e7e51",
+      "name": "org.scala-lang:scala-reflect",
+      "versionInfo": "2.12.18",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.scala-lang/scala-reflect@2.12.18"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-3d4ebbf43e8146b5c93f1c22",
+      "name": "org.scalanlp:breeze-macros_2.12",
+      "versionInfo": "2.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.scalanlp/breeze-macros_2.12@2.1.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-1c24c200218013e721d0867f",
+      "name": "org.scalanlp:breeze_2.12",
+      "versionInfo": "2.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.scalanlp/breeze_2.12@2.1.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-7f8c4f7a03712558f8ae4ed9",
+      "name": "org.slf4j:jcl-over-slf4j",
+      "versionInfo": "2.0.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.7"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-70fb08a8aed0e39b53d4ed36",
+      "name": "org.slf4j:jul-to-slf4j",
+      "versionInfo": "2.0.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.slf4j/jul-to-slf4j@2.0.7"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-99b89fe599b1e37c1b2282b7",
+      "name": "org.slf4j:slf4j-api",
+      "versionInfo": "1.7.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.slf4j/slf4j-api@1.7.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-57c33a92a0328ff6bb46a78f",
+      "name": "org.slf4j:slf4j-api",
+      "versionInfo": "2.0.17",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.slf4j/slf4j-api@2.0.17"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-e78aa5049164e3e1a16c8d50",
+      "name": "org.slf4j:slf4j-api",
+      "versionInfo": "2.0.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.slf4j/slf4j-api@2.0.7"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-156a3ac96d81a98e7700cbd3",
+      "name": "org.threeten:threeten-extra",
+      "versionInfo": "1.7.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.threeten/threeten-extra@1.7.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-056ddba61b27bb931d0bc4f4",
+      "name": "org.tukaani:xz",
+      "versionInfo": "1.9",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.tukaani/xz@1.9"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-a2b9941b4d6080df9f0d334a",
+      "name": "org.typelevel:algebra_2.12",
+      "versionInfo": "2.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.typelevel/algebra_2.12@2.0.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-0c077bead81c0a9455030822",
+      "name": "org.typelevel:cats-kernel_2.12",
+      "versionInfo": "2.1.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.typelevel/cats-kernel_2.12@2.1.1"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-1a7be493c170a8ab0e63be73",
+      "name": "org.typelevel:spire-macros_2.12",
+      "versionInfo": "0.17.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.typelevel/spire-macros_2.12@0.17.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-bef782e1b781802e59531915",
+      "name": "org.typelevel:spire-platform_2.12",
+      "versionInfo": "0.17.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.typelevel/spire-platform_2.12@0.17.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-143ba936ebe70be30c9514d1",
+      "name": "org.typelevel:spire-util_2.12",
+      "versionInfo": "0.17.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.typelevel/spire-util_2.12@0.17.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-a825618fcd3fe8786d3b79ad",
+      "name": "org.typelevel:spire_2.12",
+      "versionInfo": "0.17.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.typelevel/spire_2.12@0.17.0"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-fe0bbb68406cf4c34f47d564",
+      "name": "org.xerial.snappy:snappy-java",
+      "versionInfo": "1.1.10.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/org.xerial.snappy/snappy-java@1.1.10.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-2fa7855cef7ac40828e6eb03",
+      "name": "oro:oro",
+      "versionInfo": "2.0.8",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/oro/oro@2.0.8"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-b902e0178a6864ed1591e9d5",
+      "name": "pl.edu.icm:JLargeArrays",
+      "versionInfo": "1.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:maven/pl.edu.icm/JLargeArrays@1.5"
+        }
+      ],
+      "comment": "License has not been established from reviewed authoritative notice metadata."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-3bdf602c45990c6be9b028c0",
+      "name": "zingg-duckdb",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "AGPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "comment": "Distribution release license is declared by the repository LICENSE; component-level third-party license review is pending."
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-3bdf602c45990c6be9b028c0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-004d4dcab1d24fa824b17805",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-97e11c04576883457b8beebc",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-004d4dcab1d24fa824b17805",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-ca218583120bbe528c0d8d25",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0469eeb1818969631a0d5569",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-cb6f615547193e38e9ab61cb",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-07b8c366fe63512b52b0d7b3",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-9bfbda413e07f4a9d55c1229",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-07b8c366fe63512b52b0d7b3",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-f9d0f019b206842ee0fab85c",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0a136a05c1b610b98b565304",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-04d23d69c3b80a6199deb0f1",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0a136a05c1b610b98b565304",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-05d5fac10cb71826d6e7d16b",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0a136a05c1b610b98b565304",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-1938f42850c8e463a888cbdb",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0a136a05c1b610b98b565304",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-1a5593954b86283a02e868ae",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0a136a05c1b610b98b565304",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-56e124f7f81fff631115fc13",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0a136a05c1b610b98b565304",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-57c33a92a0328ff6bb46a78f",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0a136a05c1b610b98b565304",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-77d70bd389e7721b491eb111",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0a136a05c1b610b98b565304",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-cbd62720150159d9270a5ec4",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f1e61b8802252d179f7df0b",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-0d3cc82d9ef02f1236262147",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f1e61b8802252d179f7df0b",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-72c07c8a870d4b31a9358b7c",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f1e61b8802252d179f7df0b",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-9bae73c0351efde2e1ce5b79",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f1e61b8802252d179f7df0b",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-e3de58f69b859485cabc1074",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f24200083550b147c65c764",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f24200083550b147c65c764",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-17f157ed81bdf797a147efbc",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f24200083550b147c65c764",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-1c24c200218013e721d0867f",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f24200083550b147c65c764",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-36620a64b40ea5c5cea8d657",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f24200083550b147c65c764",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-59923e2f100e3ae9a7ffdbaa",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f24200083550b147c65c764",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-bc3058709ceaf5ddc65afb2a",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f24200083550b147c65c764",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-cd766303a06736c842a2b7f9",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f24200083550b147c65c764",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-da4c509259d121e25357dcc8",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f24200083550b147c65c764",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-e6fc73e2d5cf2cd45190cef1",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f24200083550b147c65c764",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-f1f354426079df994bce7e3b",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f24200083550b147c65c764",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-fb2aa387559afd5ec608d44f",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-0f24200083550b147c65c764",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-fed4935dda28d3451b55e268",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-002bf168ba1c9e322327ff80",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-03417230e2d7149f968e1204",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-0469eeb1818969631a0d5569",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-07b8c366fe63512b52b0d7b3",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-09457855b338c7317896ad61",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-0c6594c466b798baca082068",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-0dc9956250abee77c7bc30c1",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-12ea6820bc00452410e313d4",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-1780659c2ed4213f1b7dbfa1",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-1e07a99900866101498a25b9",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-1e4fcf607ce537048f7e57e9",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-1f0c2c46cefbc33edd86c587",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-2206c4f7aead3ed137162258",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-25dfe4f52e25a061a0d04df1",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-27ff10cc0d90539319a4438d",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-29c89554b3a09dbdcc873cd6",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-2b94715eb1bff4e06be37b5f",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-2fa7855cef7ac40828e6eb03",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-2fbbd117f6b1a8e195a06913",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-30cd632a60bdd01c5515590f",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-393f7c86f8cd1647ab11da2c",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-3cade40a1a1039aef2c8f7e9",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-3cd9656b25cdd2eed3e18876",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-43010b1c779cdb0f84979aa5",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-54e1aa2635f19609fe50c8bd",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-5ab87197ffa8cf2175db9132",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-72350f74d00e516f06bd1de5",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-8036d51cf1d16b27dca90794",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-87315ec4d529f20c40737ead",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-88d80dfda8cb191ceeadb199",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-89423aa4dc0b1b9216d40d7b",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-8c9c32017c9bc6bca47031a0",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-931cd35c393be30ef30bb74a",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-96fd01e5c127e777e31862fa",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-9c82c1eed72f2f097c4b6840",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-9e6148fa6cb7c7509aa460c3",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-a361e35b7f706e72168a7cbe",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-a3d802851dd91ba264b79777",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-abd8e762b0c2cc860d5e7e51",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-bab3f2b1e59bff4d4ece2eb2",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-bc3058709ceaf5ddc65afb2a",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-caec35d1bce5a8ba9dd9b0ff",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-cf60df7fab7a8457d498d0c4",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-d14f6529a94cb2dda3ae406f",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-d3a53eff32d38154b688ea46",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-d405ab13daad061db6313a54",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-d4548992b80dfe2d6f2514f0",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-d7ab220c625d73a26da356e1",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-ddccf43c31f31ce3524658b7",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-e0a8ded229dc90efed6fefda",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-e1736b993374b5f82337b745",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-e2808e2ef5ee40b35e93ea13",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-e3b83bd2f3cfa52a0dd422d4",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-e8aa81c8133950a2296181ca",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-f2fc20b92ab8dea4d64ad217",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-fce806822e2f9907b9821af5",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-fe0bbb68406cf4c34f47d564",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-1780659c2ed4213f1b7dbfa1",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-4b29ce1f3f83c3ca73064d59",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-1c24c200218013e721d0867f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-3d4ebbf43e8146b5c93f1c22",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-1c24c200218013e721d0867f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-65efc8427e99345ecebf15c1",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-1c24c200218013e721d0867f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-934791396d256c2cec09616d",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-1c24c200218013e721d0867f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-99b89fe599b1e37c1b2282b7",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-1c24c200218013e721d0867f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-a825618fcd3fe8786d3b79ad",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-1e07a99900866101498a25b9",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-3439f30af8df6b3d8addb932",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-2058b13c3f8ca6782a4e9fde",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-d430a8e308e1be857e4cb9da",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-2206c4f7aead3ed137162258",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-3f6bc2e9125c3c4b0b24046e",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-29c89554b3a09dbdcc873cd6",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-f91ea93ed30c5f22d818f2ab",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-3bb81266a7b59bbc40b653cc",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-78cea82b32f11fe7fdbfd84d",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-3bb81266a7b59bbc40b653cc",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-abf6383a29fb1b290bd789be",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-3bdf602c45990c6be9b028c0",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-Package-54ef6f6162b9b830905ecb22"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-3bdf602c45990c6be9b028c0",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-Package-5af4e6996a7eb8995842d135"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-3bdf602c45990c6be9b028c0",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-Package-6d077d1c1da59659260fd830"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-3bdf602c45990c6be9b028c0",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-Package-8fd09b56f36bdfd85adb4c89"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-3bdf602c45990c6be9b028c0",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-Package-c01afe220f0d3f1a231516d6"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-3bdf602c45990c6be9b028c0",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-Package-d672c6085a14f524c92e6ced"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-3bdf602c45990c6be9b028c0",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-Package-ebbbd79b3cc4ecf6c4f63763"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-3bdf602c45990c6be9b028c0",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-Package-ec38e7baf826832495653d04"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-3bdf602c45990c6be9b028c0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-a94b6cf559942b460bdab405",
+      "comment": "Maven scope: runtime-or-bundled"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-3cade40a1a1039aef2c8f7e9",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-3bb81266a7b59bbc40b653cc",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-3cd9656b25cdd2eed3e18876",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-0614ce79e5ecbc7fcfae1301",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-41feb59626ba1fb67400935c",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-10d80155a51477e7e9af818d",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-48036a8c7177e16898dec7e9",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-41feb59626ba1fb67400935c",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-48036a8c7177e16898dec7e9",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-951c50aec453d15e04e389e7",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-5247eacfdf755fdc78aa7094",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-056ddba61b27bb931d0bc4f4",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-5333b96f6a7b6929af6dbf1f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-98fea768272de1e7e60d922e",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-54ef6f6162b9b830905ecb22",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-0f24200083550b147c65c764",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-54ef6f6162b9b830905ecb22",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-54ef6f6162b9b830905ecb22",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-d672c6085a14f524c92e6ced",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-59923e2f100e3ae9a7ffdbaa",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-5532f8ef09ca9240d63b5bb2",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-5a431bc552065f3a94152fb7",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-7bfe44c330efdf355dcbe98b",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-5a431bc552065f3a94152fb7",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-7e5e6901b55ea98b23c99630",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-5a431bc552065f3a94152fb7",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-e57e4d4a9153eb56bcfed4fa",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-5af4e6996a7eb8995842d135",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-6d077d1c1da59659260fd830",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-5af4e6996a7eb8995842d135",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-835d80c642bb98d1f1eed677",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-5af4e6996a7eb8995842d135",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-8fd09b56f36bdfd85adb4c89",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-629c9489685026af7b8f1043",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-9c34372ec201a4c42d4769c2",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-65efc8427e99345ecebf15c1",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-b902e0178a6864ed1591e9d5",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-6d077d1c1da59659260fd830",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-835d80c642bb98d1f1eed677",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-6d077d1c1da59659260fd830",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-c01afe220f0d3f1a231516d6",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-6d077d1c1da59659260fd830",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-d672c6085a14f524c92e6ced",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-6d077d1c1da59659260fd830",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-ec38e7baf826832495653d04",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-1ef61372e2ddb5f9dfcf5f5a",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-28de0a40d2874190b4bb67ca",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-3481d19ec748d67f64be9a58",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-4beb27c3b4d7e003f72d9d85",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-55d9c90991b632677b15a565",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-9f86c5df69ed84ce29ca6873",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-a3ee26304f1719ca976d9721",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-be8bc8994d0dc7c4d159fd9a",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-c4d4ef8aee1fe9a87c0f0178",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-c8f965d2ffd5726fe83e3582",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-d677d8b9d8ad419ce3106a92",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-ed1ddc6cbaec9449a58fff3a",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-808646e2f2b0a1334bbeb812",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-f1dc6592a21d328a7eb4a0c5",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-004d4dcab1d24fa824b17805",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-12124d16d350b00230bc169f",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-2373377236f3e65c59d53775",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-5744f2dec3b9687de7fa4c5d",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-5b579e36bb1fdd0e8d8d1ce7",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-838e8f84b8c4c389e41993bb",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-98114a4e94939e1fc3661f44",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-9ceee2922ce76eebf50c3c10",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-beda37cd9b19aa197c2c846e",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-c43c06474131b41759156580",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-d2c0f88ebc1104b9c5e22e7f",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-da4c509259d121e25357dcc8",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-ff9bfbef72ce5be50547d926",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-835d80c642bb98d1f1eed677",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-5333b96f6a7b6929af6dbf1f",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-835d80c642bb98d1f1eed677",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-5a431bc552065f3a94152fb7",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-835d80c642bb98d1f1eed677",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-7f5a1c388acc2e4a583b80ca",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-87315ec4d529f20c40737ead",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-5f6bb1e86899a0eca805f5c8",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-87315ec4d529f20c40737ead",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-9607d3245548adc93be8edcf",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-88d80dfda8cb191ceeadb199",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-bed3ed55b223a2d0c915c867",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-8c9c32017c9bc6bca47031a0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-25cd28d254aa33d13f11cdd2",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-8c9c32017c9bc6bca47031a0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-a39f6f1cd7b5f0be9408b91b",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-8fd09b56f36bdfd85adb4c89",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-835d80c642bb98d1f1eed677",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-931cd35c393be30ef30bb74a",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-5247eacfdf755fdc78aa7094",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-96fd01e5c127e777e31862fa",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-1df5b53a55ed44accf54bf7f",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-96fd01e5c127e777e31862fa",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-70fb08a8aed0e39b53d4ed36",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-96fd01e5c127e777e31862fa",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-7f8c4f7a03712558f8ae4ed9",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-96fd01e5c127e777e31862fa",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-7ffc9e8629144ef27c28501a",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-96fd01e5c127e777e31862fa",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-e9dc937c3599a9a005d9d54a",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-96fd01e5c127e777e31862fa",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-f02ada769869ab546a1c0f71",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-98114a4e94939e1fc3661f44",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-14819852134f71ac6e03f810",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-98114a4e94939e1fc3661f44",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-bf8dff76d8b07bacfad0acd1",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-9ceee2922ce76eebf50c3c10",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-156a3ac96d81a98e7700cbd3",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-9ceee2922ce76eebf50c3c10",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-636e80aafad24d19d86b3200",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-9ceee2922ce76eebf50c3c10",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-c307a241231fcae1f6af7d29",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-9ceee2922ce76eebf50c3c10",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-d2356be362a082c5189847a0",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-9ceee2922ce76eebf50c3c10",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-e78aa5049164e3e1a16c8d50",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-a08bbd1dea7c67835256b735",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-0f1e61b8802252d179f7df0b",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-a08bbd1dea7c67835256b735",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-81596dbedeb85e5ce7042f0b",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-a08bbd1dea7c67835256b735",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-a88ce2b4532be327722fcda0",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-a08bbd1dea7c67835256b735",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-f1f354426079df994bce7e3b",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-a2b9941b4d6080df9f0d334a",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-0c077bead81c0a9455030822",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-a825618fcd3fe8786d3b79ad",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-143ba936ebe70be30c9514d1",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-a825618fcd3fe8786d3b79ad",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-1a7be493c170a8ab0e63be73",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-a825618fcd3fe8786d3b79ad",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-a2b9941b4d6080df9f0d334a",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-a825618fcd3fe8786d3b79ad",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-bef782e1b781802e59531915",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-bed3ed55b223a2d0c915c867",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-3ef2e9f60d921321cb300f2d",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-bed3ed55b223a2d0c915c867",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-8661c4dd5b01992fc6306294",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-beda37cd9b19aa197c2c846e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-629c9489685026af7b8f1043",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-beda37cd9b19aa197c2c846e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-6d4c4a287a03a4ba1084804b",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-beda37cd9b19aa197c2c846e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-a08bbd1dea7c67835256b735",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-beda37cd9b19aa197c2c846e",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-ed60e31d2d3f767581b24dda",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-c01afe220f0d3f1a231516d6",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-0a136a05c1b610b98b565304",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-c01afe220f0d3f1a231516d6",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-48036a8c7177e16898dec7e9",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-c01afe220f0d3f1a231516d6",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-80677538e4d17cdb6ae6a3b6",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-c01afe220f0d3f1a231516d6",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-835d80c642bb98d1f1eed677",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-c01afe220f0d3f1a231516d6",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-b8ef88f222878e336c15cf62",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-c01afe220f0d3f1a231516d6",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-ec38e7baf826832495653d04",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-cb6f615547193e38e9ab61cb",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-0f0104809af8e8c6f59b0044",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-cb6f615547193e38e9ab61cb",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-49827d6e2dfd8d08da4d266b",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-cb6f615547193e38e9ab61cb",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-e137b9af60bf436e6763a63e",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-d2c0f88ebc1104b9c5e22e7f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-35c8f74cc888dfdd0709b294",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-d2c0f88ebc1104b9c5e22e7f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-58636925238486b5dd6a3705",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-d2c0f88ebc1104b9c5e22e7f",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-7332cd25ec3bf0a473c4af4f",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-d3a53eff32d38154b688ea46",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-4c48498104e6e98ef09c0f39",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-d672c6085a14f524c92e6ced",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-835d80c642bb98d1f1eed677",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-d672c6085a14f524c92e6ced",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-ec38e7baf826832495653d04",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-e2808e2ef5ee40b35e93ea13",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-74563abb60dfb07d9e5efb8e",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-e6fc73e2d5cf2cd45190cef1",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-da5971baec51fd39c28bb74c",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-e6fc73e2d5cf2cd45190cef1",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-e9b498276300130837f4cde1",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-ebbbd79b3cc4ecf6c4f63763",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-80956fcacf005fde6f305b1e",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-ebbbd79b3cc4ecf6c4f63763",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-835d80c642bb98d1f1eed677",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-ebbbd79b3cc4ecf6c4f63763",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-d672c6085a14f524c92e6ced",
+      "comment": "Maven scope: compile"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-ec38e7baf826832495653d04",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-835d80c642bb98d1f1eed677",
+      "comment": "Maven scope: test"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-f1f354426079df994bce7e3b",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-a94fb920ef2adeed31c8018e",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-f91ea93ed30c5f22d818f2ab",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-2058b13c3f8ca6782a4e9fde",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-f9d0f019b206842ee0fab85c",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-a0829acffb66a0c9a1d10505",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-f9d0f019b206842ee0fab85c",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-c747c734821ac7507bdb2f57",
+      "comment": "Maven scope: provided"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-f9d0f019b206842ee0fab85c",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-d48862e77fe2eda87447bdfb",
+      "comment": "Maven scope: provided"
+    }
+  ]
+}

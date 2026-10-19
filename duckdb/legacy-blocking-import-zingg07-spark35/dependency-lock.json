@@ -1,0 +1,1 @@
+{"module":"legacy-blocking-import-zingg07-spark35","java":"21","dependencies":["engine-api","model-format","org.apache.spark:spark-sql_2.12:3.5.5(provided)"],"sparkBoundary":"out-of-process","spark":"3.5.5"}

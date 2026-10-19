@@ -1,0 +1,18 @@
+{
+  "benchmark": "zingg-duckdb-arrow-ingress",
+  "capturedOn": "2026-09-28",
+  "command": "BenchmarkMain --arrow-only --size {1000,10000} --repetitions 5",
+  "method": "one warmup excluded; median of five runs; same Arrow IPC file and fresh DuckDB runtime for each JDBC and Appender import; cardinality checked after timed materialization",
+  "environment": {
+    "os": "Ubuntu 24.04 in WSL2; Linux 6.18.33.2-microsoft-standard-WSL2 x86_64",
+    "cpu": "13th Gen Intel Core i7-1355U; WSL reports 8 logical CPUs",
+    "java": "OpenJDK 21.0.12.1 Ubuntu 24.04.4",
+    "duckdbJdbc": "1.5.5.1",
+    "javaFlags": ["--add-opens=java.base/java.nio=ALL-UNNAMED", "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"]
+  },
+  "results": [
+    {"size": 1000, "repetitions": 5, "warmupRuns": 1, "fileBytes": 29688, "writeMedianNs": 4256047, "ingestMedianNs": 405018418, "ingestRowsPerSecond": 2469, "ingestBytesPerSecond": 73300, "appenderMedianNs": 3702942, "appenderRowsPerSecond": 270056, "appenderSpeedup": 109.377},
+    {"size": 10000, "repetitions": 5, "warmupRuns": 1, "fileBytes": 294888, "writeMedianNs": 16154015, "ingestMedianNs": 4106091009, "ingestRowsPerSecond": 2435, "ingestBytesPerSecond": 71817, "appenderMedianNs": 13924690, "appenderRowsPerSecond": 718149, "appenderSpeedup": 294.878}
+  ],
+  "limitations": "Local diagnostic only. This compares two row-wise import paths, not zero-copy/vectorized Arrow C Data or CTAS. No process RSS, spill, confidence intervals, runner isolation, 100k/capacity-sized cases, or release threshold. The apparent speedup needs independent-runner reproduction; do not use as a release claim."
+}
