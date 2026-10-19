@@ -1,6 +1,7 @@
 package zingg.common.core.block;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.rmi.NoSuchObjectException;
 import java.util.ArrayList;
@@ -54,6 +55,21 @@ public abstract class TestBlockBase<S, D, R, C, T> {
 		Canopy<R> head = blockingTree.getHead();
 		assertEquals("identityInteger", head.getFunction().getName());
 		blockingTree.toString();
+	}
+
+	@Test
+	public void testCreateBlockingTreeRejectsOversizedSample() throws Throwable {
+		ZFrame<D, R, C> testData = dfObjectUtil.getDFFromObjectList(BlockBaseData.createSampleEventData(), EventBase.class);
+		ZFrame<D, R, C> positives = dfObjectUtil.getDFFromObjectList(BlockBaseData.createSampleClusterEventData(), EventPair.class);
+		IArguments args = getArguments();
+		args.setBlockingTreeMaxRows(1);
+
+		ZinggClientException exception = assertThrows(ZinggClientException.class, () ->
+				blockingTreeUtil.createBlockingTree(testData, positives, 1.0, -1,
+						args, hashUtil.getHashFunctionList()));
+
+		assertEquals("The blocking-tree sample exceeds blockingTreeMaxRows=1. Reduce the training sample or increase this limit.",
+				exception.getMessage());
 	}
 
 	private IArguments getArguments() throws ZinggClientException, NoSuchObjectException {

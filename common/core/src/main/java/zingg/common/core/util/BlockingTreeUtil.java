@@ -56,7 +56,8 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
        
 		positives = positives.coalesce(1); 
 		Block<D,R,C,T> cblock = getBlock(sample, positives, hashFunctions, blockSize, args);
-		Canopy<R> root = new Canopy<R>(sample.collectAsList(), positives.collectAsList());
+		Canopy<R> root = new Canopy<R>(collectWithLimits(sample, "blocking-tree sample", args),
+				collectWithLimits(positives, "blocking-tree positives", args));
 
 		List<FieldDefinition> fd = new ArrayList<FieldDefinition> ();
 
@@ -72,6 +73,27 @@ public abstract class BlockingTreeUtil<S, D,R,C,T> {
 		}
 		
 		return blockingTree;
+	}
+
+	private List<R> collectWithLimits(ZFrame<D, R, C> frame, String name, IArguments args)
+			throws Exception, ZinggClientException {
+		long maxRows = args.getBlockingTreeMaxRows();
+		int limit = maxRows >= Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) maxRows + 1;
+		List<R> rows = frame.limit(limit).collectAsList();
+		if (rows.size() > maxRows) {
+			throw new ZinggClientException("The " + name + " exceeds blockingTreeMaxRows=" + maxRows
+					+ ". Reduce the training sample or increase this limit.");
+		}
+		long estimatedBytes = 0;
+		for (R row : rows) {
+			long rowBytes = Util.convertObjectIntoByteArray(row).length;
+			if (rowBytes > args.getBlockingTreeMaxBytes() - estimatedBytes) {
+				throw new ZinggClientException("The " + name + " exceeds blockingTreeMaxBytes="
+						+ args.getBlockingTreeMaxBytes() + ". Reduce the training sample or increase this limit.");
+			}
+			estimatedBytes += rowBytes;
+		}
+		return rows;
 	}
 
 
