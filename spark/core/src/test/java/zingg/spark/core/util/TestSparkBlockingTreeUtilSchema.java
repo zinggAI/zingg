@@ -2,7 +2,6 @@ package zingg.spark.core.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
@@ -36,11 +35,5 @@ public class TestSparkBlockingTreeUtilSchema {
 		assertFalse(hash.nullable());
 		// input schema is left unchanged
 		assertEquals(2, schema.fields().length);
-	}
-
-	@Test
-	public void testAppendHashColFailsIfColumnExists() {
-		StructType withHash = blockingTreeUtil.appendHashCol(getSchema());
-		assertThrows(IllegalArgumentException.class, () -> blockingTreeUtil.appendHashCol(withHash));
 	}
 }

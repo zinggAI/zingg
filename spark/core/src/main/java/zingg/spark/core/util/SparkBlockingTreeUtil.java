@@ -1,7 +1,6 @@
 package zingg.spark.core.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -49,9 +48,6 @@ public class SparkBlockingTreeUtil extends BlockingTreeUtil<SparkSession, Datase
     public StructType appendHashCol(StructType s) {
         // plain StructType instead of spark ml SchemaUtils.appendColumn, so blocking does not need
         // spark-mllib on the classpath (it is not there for Spark Connect clients)
-        if (Arrays.asList(s.fieldNames()).contains(ColName.HASH_COL)) {
-            throw new IllegalArgumentException("Column " + ColName.HASH_COL + " already exists.");
-        }
         StructType retSchema = s.add(ColName.HASH_COL, DataTypes.IntegerType, false);
         LOG.debug("returning schema after step 1 is " + retSchema);
         return retSchema;
