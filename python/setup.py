@@ -126,8 +126,7 @@ try:
     script_names = os.listdir(SCRIPTS_TARGET)
     scripts = list(map(lambda script: os.path.join(SCRIPTS_TARGET, script), script_names))
     
-    packages = []
-    packages.append('zingg')
+    packages = ['zingg', 'zingg.label']
     #packages.append('zingg.pipes')
 
     with open('README.md') as f:
