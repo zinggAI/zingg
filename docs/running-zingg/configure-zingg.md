@@ -6,7 +6,7 @@ description: >-
 
 # Configure Zingg
 
-Configuring Zingg is the first step in every Zingg workflow. This page follows notebook 01 step by step; defining your fields, configuring your pipes, and creating the arguments object that all subsequent phases inherit.
+Configuring Zingg is the first step in every Zingg workflow. This page follows notebook 01 step by step: defining your fields, configuring your pipes, and creating the arguments object that all subsequent phases inherit.
 
 Complete this page before running any other phase. Every phase reads the configuration set here:
 

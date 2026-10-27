@@ -109,7 +109,7 @@ output.groupBy("ZINGG_ID") \
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-**CONTENT FOR THIS SECTION TO BE GIVEN BY SONAL LATER**
+
 {% endtab %}
 {% endtabs %}
 

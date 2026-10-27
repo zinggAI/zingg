@@ -9,7 +9,7 @@ description: >-
 
 ### What `TEXT` does
 
-`TEXT` compares two string values by measuring the overlap of words between them, how many words appear in both. It is designed for longer descriptive fields like product descriptions, notes, professional bios, or service descriptions where the overall word content matters more than exact character matches. The score is a continuous similarity value in \[0, 1].
+`TEXT` compares two string values by measuring the overlap of words between them: how many words appear in both. It is designed for longer descriptive fields like product descriptions, notes, professional bios, or service descriptions where the overall word content matters more than exact character matches. The score is a continuous similarity value in \[0, 1].
 
 `TEXT` works best when your text fields do not have many typos - the comparison is at word level, not character level, tokens are lowercased but not stemmed, so it will not catch spelling errors or inflections ("model" vs "models") within words. For shorter name and address fields, use `FUZZY` instead.
 

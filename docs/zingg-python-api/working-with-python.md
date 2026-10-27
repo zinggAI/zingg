@@ -28,7 +28,7 @@ To run on a local machine, install Zingg from the release before running Zingg P
 
 ### Common pattern across all editions
 
-Every Zingg Python program regardless of edition, follows the same five-step pattern:
+Every Zingg Python program regardless of edition follows the same five-step pattern:
 
 1. **Imports** - import Zingg client and pipes modules
 2. **Build `args`** - create the arguments object (`Arguments` in Community, `EArguments` in Enterprise)

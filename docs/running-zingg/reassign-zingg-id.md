@@ -14,7 +14,7 @@ tags:
 Enterprise Plus only. Preserves Zingg IDs when switching to a new model. Maximises ID continuity and minimises downstream disruption. Available in ZinggES (Enterprise Plus).
 {% endhint %}
 
-When you evolve your Zingg setup - upgrading your model, migrating infrastructure, changing data schemas, or moving to a new platform; you want to preserve the Zingg IDs already flowing through your production systems.
+When you evolve your Zingg setup — upgrading your model, migrating infrastructure, changing data schemas, or moving to a new platform — you want to preserve the Zingg IDs already flowing through your production systems.
 
 The `reassignZinggId` phase carries Zingg IDs from your original production model to a new model's output. It maps clusters from the new model back to the original cluster assignments and preserves the original Zingg IDs wherever clusters overlap. New IDs are generated only where no match is found.
 
@@ -64,7 +64,7 @@ The reassign phase compares two configurations:
 * **Original configuration**: your production model with established Zingg IDs.
 * **New configuration**: your updated model with improved features, new infrastructure, or schema changes.
 
-The reassign phase then,
+The reassign phase then:
 
 1. Identifies clusters in the new output that overlap with original clusters via primary key matching
 2. Reassigns the original Zingg IDs to matching clusters wherever possible
@@ -205,11 +205,9 @@ The CLI command takes three arguments:
   --originalZinggId examples/febrl5M/config.json \
   --properties-file config/zingg.conf
 ```
-
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-
 ### **Configuration wrapper (`reassignConf.json`)**
 
 The JSON wrapper config references your new model config and specifies the destination for the reassigned output.
@@ -240,6 +238,5 @@ The CLI command takes three arguments:
   --originalZinggId examples/febrl5M/config.json \
   --properties-file ./snowflakeConn.properties
 ```
-
 {% endtab %}
 {% endtabs %}

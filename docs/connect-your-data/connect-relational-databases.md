@@ -1,6 +1,6 @@
 ---
 description: >-
-  Connect Zingg to MySQL, PostgreSQL,  SQL Server, DB2, MariaDB, and Oracle  via
+  Connect Zingg to MySQL, PostgreSQL, SQL Server, DB2, MariaDB, and Oracle via
   JDBC.
 ---
 

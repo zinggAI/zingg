@@ -1,6 +1,6 @@
 ---
 description: >-
-  Configure Zingg pipes for CSV, Parquet,  Avro, JSON, TSV, and XML flat file
+  Configure Zingg pipes for CSV, Parquet, Avro, JSON, TSV, and XML flat file
   formats.
 ---
 
@@ -184,10 +184,6 @@ args.setData(jsonPipe)
 * For multiline JSON files, add `multiLine`: `true` to props.
 * For JSON Lines (one object per line), no additional props needed.
 {% endhint %}
-{% endtab %}
-
-{% tab title="XML" %}
-_**XML connector documentation is being confirmed. This section will be updated with the JSON config and Python API once verified**_
 {% endtab %}
 {% endtabs %}
 

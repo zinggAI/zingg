@@ -91,7 +91,7 @@ Zingg ships with a pre-trained model for FEBRL under the models folder in the re
 
 <summary><strong>What happens after this?</strong></summary>
 
-Coingratulations! You just experience Zingg uses a pre-trained model on a sample dataset. In a real implementation, you would:
+Congratulations! You just experience Zingg using a pre-trained model on a sample dataset. In a real implementation, you would:
 
 1. Connect your own data using Zingg pipes.
 2. Define the fields you want to match on and choose a match type for each.

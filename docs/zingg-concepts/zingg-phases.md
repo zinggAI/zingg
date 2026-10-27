@@ -4,13 +4,13 @@ description: Steps in the entity resolution pipeline
 
 # Zingg Phases
 
-Zingg programs run different aspects of the entity resolution pipeline. Each phase covers one aspect of the pipeline. Here are the phases Zingg defines.&#x20;
+Zingg programs run different aspects of the entity resolution pipeline. Each phase covers one aspect of the pipeline. Here are the phases Zingg defines.
 
 <details>
 
 <summary><strong><code>findTrainingData</code></strong></summary>
 
-Scans your dataset and selects the most informative candidate record pairs for labeling - edge cases where the model has the most to learn. Candidate pairs are written within the warehouse/lakehouse based on your configuration.&#x20;
+Scans your dataset and selects the most informative candidate record pairs for labelling - edge cases where the model has the most to learn. Candidate pairs are written within the warehouse/lakehouse based on your configuration.
 
 </details>
 
@@ -18,7 +18,7 @@ Scans your dataset and selects the most informative candidate record pairs for l
 
 <summary><strong><code>label</code></strong></summary>
 
-Loads the candidate pairs from `findTrainingData` and presents them in a labeling widget. You mark each pair as Match, No Match, or Uncertain.&#x20;
+Loads the candidate pairs from `findTrainingData` and presents them in a labelling widget. You mark each pair as Match, No Match, or Uncertain.
 
 </details>
 
@@ -26,7 +26,7 @@ Loads the candidate pairs from `findTrainingData` and presents them in a labelin
 
 <summary><strong><code>train</code></strong></summary>
 
-Builds the blocking and similarity models from your labeled pairs. Both models are persisted to the customer environment. Once trained, the model can be reused on new data without retraining.
+Builds the blocking and similarity models from your labelled pairs. Both models are persisted to the customer environment. Once trained, the model can be reused on new data without retraining.
 
 </details>
 
@@ -66,7 +66,7 @@ Shows how a specific cluster was formed, which record pairs were compared, their
 
 <summary><strong><code>generateDocs</code></strong></summary>
 
-Produces HTML documentation of your labeled training pairs and model statistics. Useful for sharing with subject matter experts before training, or for audit and governance after.
+Produces HTML documentation of your labelled training pairs and model statistics. Useful for sharing with subject matter experts before training, or for audit and governance after.
 
 </details>
 
@@ -80,7 +80,7 @@ Reports what percentage of your known matching pairs are being blocked together 
 
 <details>
 
-<summary><strong><code>recommend</code></strong> </summary>
+<summary><strong><code>recommend</code></strong></summary>
 
 Analyses a specified column and returns a list of high-frequency words that should be treated as stopwords. Optional phase used before training when address or company name fields contain repeated noise words like 'St', 'Ave', 'Inc', 'Ltd'.
 
@@ -90,6 +90,6 @@ Analyses a specified column and returns a list of high-frequency words that shou
 
 <summary><strong><code>transform</code> (Enterprise)</strong></summary>
 
-Post processes Zingg output to consume in downstream applications. Supports disctionary based value substitution
+Post processes Zingg output to consume in downstream applications. Supports dictionary based value substitution.
 
 </details>

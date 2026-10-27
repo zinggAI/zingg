@@ -93,7 +93,7 @@ This process is the Identity RAG pattern entity resolution as infrastructure for
 
 <summary><strong>Fraud Detection</strong></summary>
 
-Fraudulent actors create multiple accounts or profiles with small variations in identity fields to evade detection different email formats, transposed date of birth, and slight name variations.
+Fraudulent actors create multiple accounts or profiles with small variations in identity fields to evade detection—different email formats, transposed date of birth, and slight name variations.
 
 Entity resolution identifies when records that look different actually belong to the same entity, surfacing hidden connections that threshold-based or rule-based systems miss.
 
@@ -105,7 +105,7 @@ Zingg's probabilistic matching is calibrated to detect these deliberate variatio
 
 <summary><strong>KYC and AML</strong></summary>
 
-Know Your Customer and Anti-Money Laundering workflows require matching incoming data against existing records, sanctions lists, and watchlists often across inconsistent name formats, transliterations, and missing fields.
+Know Your Customer and Anti-Money Laundering workflows require matching incoming data against existing records, sanctions lists, and watchlists, often across inconsistent name formats, transliterations, and missing fields.
 
 Entity resolution handles these variations systematically, reducing false positives and ensuring compliance teams review the right cases rather than being overwhelmed by noise.
 

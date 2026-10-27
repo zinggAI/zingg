@@ -331,7 +331,7 @@ Enterprise requires a Zingg licence and the `zinggEC` and `zinggES` packages. [C
 5. Open the cluster → **Libraries** → **Install New** → **Volumes** → navigate to: `/Volumes/catalog_name/schema_name/volume_name/zingg-enterprise-spark-0.6.0.jar`
 6. Repeat for `zingg_license.jar`.
 
-_**IMAGE TO BE ADDED — Databricks cluster Libraries tab showing the Enterprise JAR files installed from a Volume path. Tanwi to check with team for screenshot from a live Enterprise cluster setup.**_
+
 
 #### Step 2: Verify all three packages are installed
 
@@ -533,7 +533,7 @@ stopwordsForStreet = spark.read.csv(
 stopwordsForStreet.show()
 ```
 
-_**IMAGE TO BE ADDED — Databricks notebook showing the stopwords output table with word and frequency columns. Tanwi to check with team for screenshot from a live notebook run. A simple table with 10–15 rows is sufficient that tells the reader what the recommendation output looks like before they run it.**_
+
 
 #### **Step 15: Apply stopwords to the field definition**
 
@@ -591,7 +591,7 @@ else:
 
 The Enterprise widget shows one pair at a time with Prev and Next navigation. For each pair select `Match`, `No Match`, or `Uncertain`. Labels are saved directly to the `DataFrame` as you click.
 
-_**IMAGE TO BE ADDED — Enterprise labeling widget in a Databricks notebook: two records displayed in a table, Match / No Match / Uncertain toggle buttons, Prev and Next navigation. Tanwi to check with team for screenshot from a live Enterprise notebook run. If the OS and Enterprise widgets look identical, the same screenshot can be reused.**_
+
 
 {% hint style="info" icon="right-long" %}
 Target 30–40 match pairs and 30–40 non-match pairs before training. Repeat Steps 17–19 until all field types and data patterns are represented. If accuracy needs improvement after the first match run, return here and focus on patterns that are underrepresented.
@@ -630,7 +630,7 @@ data_html = "\n".join(r.value for r in data_doc.collect())
 displayHTML(data_html)
 ```
 
-_**IMAGE TO BE ADDED —****&#x20;****`generateDocs`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*output rendered inside a Databricks notebook showing labeled pair examples in HTML. Tanwi to check with team for screenshot from a live notebook run. Can reuse the OS version if the output looks the same.**_
+
 
 ### Notebook 05: Train and match
 
@@ -658,7 +658,7 @@ display(outputDF)
 print(outputDF.count())
 ```
 
-_**IMAGE TO BE ADDED — Enterprise match output in Databricks showing\*\*\*\*****&#x20;****`ZINGG_ID`****&#x20;****column alongside resolved records. Show two rows with the same****&#x20;****`ZINGG_ID`****&#x20;****\*\*\*\*to illustrate entity resolution. Tanwi to check with team for screenshot from a live notebook run.**_
+
 
 {% hint style="success" icon="right-long" %}
 **Read more**: Enterprise output includes `ZINGG_ID` — a globally unique, persistent identifier for each resolved entity. Unlike `Z_CLUSTER` in Community, `ZINGG_ID` does not change between runs including incremental runs.
@@ -757,7 +757,7 @@ display(outputDF)
 print(outputDF.count())
 ```
 
-_**IMAGE TO BE ADDED — explain output table in Databricks showing\*\*\*\*****&#x20;****`pk1`****,****&#x20;****`pk2`****\*\*\*\*, and similarity score columns for matched pairs within the cluster. Tanwi to check with team for screenshot from a live notebook run. A small 5–10 row output table is sufficient.**_
+
 
 {% hint style="success" icon="right-long" %}
 **Read more**: Each row in the output represents a matched record pair within the cluster — `pk1` and `pk2` are the primary keys of the two records, with their similarity score.

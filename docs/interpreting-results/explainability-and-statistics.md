@@ -25,7 +25,7 @@ in explain output at this time. Clusters formed primarily through deterministic 
 If you get empty results, verify that the Zingg ID you are querying exists in your match output before running explain.
 {% endhint %}
 
-Explain answers "why did these specific records end up together?" for one cluster at a time. If you instead want aggregate, run-level visibility , how many clusters formed, how dense they are, how much of the matching came from deterministic rules versus probabilistic scoring, and whether clusters are stable across incremental runs , that's what **output statistics** provides, at three levels: a run-wide **Summary**, per-**Cluster** detail, and per-**Record** detail.
+Explain answers "why did these specific records end up together?" for one cluster at a time. If you instead want aggregate, run-level visibility, how many clusters formed, how dense they are, how much of the matching came from deterministic rules versus probabilistic scoring, and whether clusters are stable across incremental runs, that's what **output statistics** provides, at three levels: a run-wide **Summary**, per-**Cluster** detail, and per-**Record** detail.
 
 {% hint style="success" icon="right-long" %}
 **Read more**:

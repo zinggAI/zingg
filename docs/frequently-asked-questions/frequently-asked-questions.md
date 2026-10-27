@@ -12,7 +12,7 @@ description: >-
 
 <summary><strong>What kind of preprocessing and data cleaning do I need before running Zingg?</strong></summary>
 
-Zingg does not mandate any preprocessing on the input data. Zingg automatically takes care of extra spaces, punctutation characters and cases so you dont have to.
+Zingg does not mandate any preprocessing on the input data. Zingg automatically takes care of extra spaces, punctuation characters and cases so you don't have to.
 
 </details>
 

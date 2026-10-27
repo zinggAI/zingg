@@ -31,6 +31,8 @@ If the number of clusters changes disproportionately to the number of records up
 
 The stats pipe is configured in Configure Zingg alongside your input and output pipes. The `$ZINGG_DYNAMIC_STAT_NAME` placeholder is replaced at runtime with `SUMMARY`, `CLUSTER`, or `RECORD` for the three statistics files.
 
+
+
 #### Python
 
 ```python
@@ -61,7 +63,19 @@ The `$ZINGG_DYNAMIC_STAT_NAME` placeholder is automatically substituted with the
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-**CONTENT FOR THIS SECTION TO BE PROVIDED BY SONAL LATER**
+#### Configure the stats output pipe
+
+Add `outputStats` to your Zingg Snowflake config. The `$ZINGG_DYNAMIC_STAT_NAME` placeholder is replaced at runtime with `SUMMARY`, `CLUSTER`, or `RECORD`, so each statistics level is written to its own table.
+
+```json
+"outputStats" : {
+  "name" : "stats",
+  "format" : "snowflake",
+  "props" : {
+    "table" : "zinggStats_$ZINGG_DYNAMIC_STAT_NAME"
+  }
+}
+```
 {% endtab %}
 {% endtabs %}
 
@@ -79,7 +93,7 @@ Summary statistics give a high-level view of the match run:
 
 ### Summary statistics field names
 
-<table><thead><tr><th width="244.69921875" valign="top">Field</th><th valign="top">Descriptio</th></tr></thead><tbody><tr><td valign="top"><code>z_num_records</code></td><td valign="top">Total number of records processed in this run</td></tr><tr><td valign="top"><code>z_num_clusters</code></td><td valign="top">Total number of clusters formed</td></tr><tr><td valign="top"><code>z_time_stamp</code></td><td valign="top">Timestamp of the match or incremental run</td></tr></tbody></table>
+<table><thead><tr><th width="244.69921875" valign="top">Field</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top"><code>z_num_records</code></td><td valign="top">Total number of records processed in this run</td></tr><tr><td valign="top"><code>z_num_clusters</code></td><td valign="top">Total number of clusters formed</td></tr><tr><td valign="top"><code>z_time_stamp</code></td><td valign="top">Timestamp of the match or incremental run</td></tr><tr><td valign="top"></td><td valign="top"></td></tr></tbody></table>
 
 ### Reading summary statistics
 

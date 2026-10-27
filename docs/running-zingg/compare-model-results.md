@@ -27,7 +27,7 @@ Retrained an existing model with more labeled data and want to confirm the updat
 
 * Changed field match types; for example, switching a field from `FUZZY` to `EXACT` or adding a new field and want to validate the impact before promoting the change.
 * Run an A/B test between two modeling strategies and need a quantitative basis for choosing one over the other.
-* Changed blocking strategy settings and want to measure the effect on cluster quality before committing to production
+* Changed blocking strategy settings and want to measure the effect on cluster quality before committing to production.
 
 {% hint style="success" icon="right-long" %}
 **Read more:**
@@ -113,7 +113,26 @@ zinggDiff.initAndExecute()
 {% endtab %}
 
 {% tab title="Enterprise for Snowflake" %}
-_**Enterprise Snowflake content for this topic to be provided by Sonal**_
+#### CLI
+
+```bash
+./scripts/zingg.sh --phase diff \
+  --conf <location to configdiff.json> \
+  --compareTo <location to configBaseline.json> \
+  --properties-file <location to snowflake.properties>
+```
+
+#### Snowflake (job service)
+
+```sql
+EXECUTE JOB SERVICE
+IN COMPUTE POOL CONTAINER_ZINGG_POOL
+NAME = ZINGG_DIFF_ASYNC_JOB_SERVICE
+ASYNC = true
+EXTERNAL_ACCESS_INTEGRATIONS = (ALLOW_ALL_EAI)
+FROM @specs SPECIFICATION_TEMPLATE_FILE = '<zingg-job-spec-file>'
+USING (PHASE => 'diff', CONFIG => '<config-name>', COMPARE_TO => '<baseline-config-name>');
+```
 {% endtab %}
 {% endtabs %}
 

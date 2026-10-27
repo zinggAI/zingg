@@ -79,8 +79,29 @@ zingg.initAndExecute()
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
+
+
 Stopwords are stored as a table: `zingg_stopWords_columnName_modelId`
 
-**CHECK WITH SONAL ABOUT THIS TOPIC - NEEDS ENTIRELY DIFFERENT SET OF CONTENT TO BE DISCUSSED LATER.**
+#### CLI
+
+```bash
+./scripts/zingg.sh --phase recommend --conf config.json --column <column_name> \
+--properties-file <location to snowflake.properties>
+```
+
+#### Snowflake (job service)
+
+```sql
+EXECUTE JOB SERVICE
+IN COMPUTE POOL CONTAINER_ZINGG_POOL
+NAME = ZINGG_RECOMMEND_ASYNC_JOB_SERVICE
+ASYNC = true
+EXTERNAL_ACCESS_INTEGRATIONS = (ALLOW_ALL_EAI)
+FROM @specs SPECIFICATION_TEMPLATE_FILE = '<zingg-job-spec-file>'
+USING (PHASE => 'recommend', CONFIG => '<config-name>', COLUMN => '<column_name>');
+```
+
+Stopwords are stored as a table: `zingg_stopWords_columnName_modelIds`
 {% endtab %}
 {% endtabs %}

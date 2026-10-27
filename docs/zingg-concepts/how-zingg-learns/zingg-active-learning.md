@@ -1,5 +1,5 @@
 ---
-description: Yes, no, cant say is all it takes
+description: Yes, no, can't say is all it takes
 ---
 
 # Zingg Active Learning

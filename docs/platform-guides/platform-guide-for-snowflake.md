@@ -345,6 +345,101 @@ Enterprise only. Zingg Enterprise runs natively inside Snowflake using Snowpark.
 Enterprise requires a Zingg licence and the Enterprise Snowflake package. [Contact Zingg to get access](https://www.zingg.ai/company/contact/contact).
 {% endhint %}
 
-**Content for the Enterprise Snowflake platform guide is being prepared. This section will be updated with full step-by-step instructions once confirmed by the team.**
+### Zingg Enterprise on Snowflake
+
+Zingg Enterprise runs entirely inside Snowflake using Snowpark Container Services. No data leaves your Snowflake account.
+
+#### 1. Account setup (ACCOUNTADMIN)
+
+```sql
+USE ROLE ACCOUNTADMIN;
+CREATE ROLE ZINGG_ROLE;
+GRANT CREATE DATABASE ON ACCOUNT TO ROLE ZINGG_ROLE;
+GRANT CREATE WAREHOUSE ON ACCOUNT TO ROLE ZINGG_ROLE;
+GRANT CREATE COMPUTE POOL ON ACCOUNT TO ROLE ZINGG_ROLE;
+GRANT CREATE INTEGRATION ON ACCOUNT TO ROLE ZINGG_ROLE;
+GRANT MONITOR USAGE ON ACCOUNT TO ROLE ZINGG_ROLE;
+GRANT BIND SERVICE ENDPOINT ON ACCOUNT TO ROLE ZINGG_ROLE;
+GRANT IMPORTED PRIVILEGES ON DATABASE snowflake TO ROLE ZINGG_ROLE;
+GRANT ROLE ZINGG_ROLE TO ROLE ACCOUNTADMIN;
+
+USE ROLE ZINGG_ROLE;
+CREATE OR REPLACE DATABASE ZINGG_DB;
+CREATE OR REPLACE WAREHOUSE ZINGG_WH WAREHOUSE_SIZE = XSMALL AUTO_SUSPEND = 120 AUTO_RESUME = TRUE;
+CREATE STAGE IF NOT EXISTS specs ENCRYPTION = (TYPE='SNOWFLAKE_SSE');
+CREATE STAGE IF NOT EXISTS volumes ENCRYPTION = (TYPE='SNOWFLAKE_SSE') DIRECTORY = (ENABLE = TRUE);
+```
+
+#### 2. Network, compute pool and image repository
+
+```sql
+USE ROLE ACCOUNTADMIN;
+CREATE OR REPLACE NETWORK RULE ALLOW_ALL_RULE TYPE = 'HOST_PORT' MODE = 'EGRESS' VALUE_LIST = ('0.0.0.0:443', '0.0.0.0:80');
+CREATE EXTERNAL ACCESS INTEGRATION ALLOW_ALL_EAI ALLOWED_NETWORK_RULES = (ALLOW_ALL_RULE) ENABLED = true;
+GRANT USAGE ON INTEGRATION ALLOW_ALL_EAI TO ROLE ZINGG_ROLE;
+
+USE ROLE ZINGG_ROLE;
+CREATE COMPUTE POOL IF NOT EXISTS ZINGG_POOL MIN_NODES = 1 MAX_NODES = 1 INSTANCE_FAMILY = CPU_X64_XS;
+CREATE IMAGE REPOSITORY ZINGG_DB.PUBLIC.IMAGE_REPO;
+```
+
+#### 3. Push the Zingg image
+
+```bash
+docker login <org>-<account>.registry.snowflakecomputing.com -u <user>
+docker tag zingg_<VERSION>:latest <repository_url>/zingg_<VERSION>:latest
+docker push <repository_url>/zingg_<VERSION>:latest
+```
+
+#### 4. Upload artifacts
+
+| Artifact                                                              | Stage + path              |
+| --------------------------------------------------------------------- | ------------------------- |
+| Service/job YAML spec files                                           | `@specs/`                 |
+| Config JSON files, `zingg.license`, `<conn>.properties`, `set_env.sh` | `@volumes/zingg-persist/` |
+
+Connection properties file:
+
+```
+[SNOWFLAKE]
+URL=https://<org>-<account>.snowflakecomputing.com
+USER=<user>
+PASSWORD=<password or PAT token>
+WAREHOUSE=ZINGG_WH
+DB=ZINGG_DB
+SCHEMA=PUBLIC
+ACCOUNT=<org>-<account>
+CLIENT_SESSION_KEEP_ALIVE_HEARTBEAT_FREQUENCY=900
+```
+
+#### 5. Run findTrainingData, train and match (job service)
+
+```sql
+EXECUTE JOB SERVICE
+  IN COMPUTE POOL ZINGG_POOL
+  NAME = <JOB_SERVICE_NAME>
+  ASYNC = true
+  EXTERNAL_ACCESS_INTEGRATIONS = (ALLOW_ALL_EAI)
+  FROM @specs SPECIFICATION_TEMPLATE_FILE='zingg-job.yaml'
+  USING (PHASE => '<PHASE>', CONFIG => '<CONFIG_NAME>');
+```
+
+`<PHASE>` is `findTrainingData`, `train`, `match` or `runIncremental`. `<CONFIG_NAME>` is the config file name without `.json`.
+
+#### 6. Run label (CLI service)
+
+```sql
+CREATE SERVICE ZINGG_DB.PUBLIC.<CLI_SERVICE_NAME>
+  IN COMPUTE POOL ZINGG_POOL
+  FROM @specs SPECIFICATION_FILE='zingg-cli.yaml'
+  EXTERNAL_ACCESS_INTEGRATIONS = (ALLOW_ALL_EAI);
+SHOW ENDPOINTS IN SERVICE ZINGG_DB.PUBLIC.<CLI_SERVICE_NAME>;
+```
+
+Open the ingress URL with `/zingg` appended, log in as `zingg`, then run:
+
+```bash
+scripts/zingg.sh --phase label --conf input/<config>.json --properties-file input/<conn>.properties
+```
 {% endtab %}
 {% endtabs %}

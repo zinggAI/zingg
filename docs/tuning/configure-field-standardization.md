@@ -112,7 +112,30 @@ Use `STANDARDISE_<basename>` to reference a mapping file named `<basename>.json`
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-**CONTENT FOR THIS SECTION TO BE PROVIDED BY SONAL LATER**
+#### Configure postprocessing
+
+Add `postProcessors` to the field in your Zingg configuration JSON file. Use `STANDARDISE_<basename>` to reference a mapping file named `<basename>.json`.
+
+```json
+{
+  "fieldDefinition": [
+    {
+      "fieldName": "id",
+      "matchType": "dont_use",
+      "dataType": "string",
+      "primaryKey": true
+    },
+    {
+      "fieldName": "job_title",
+      "matchType": "fuzzy",
+      "dataType": "string",
+      "postProcessors": "STANDARDISE_jobtitles"
+    }
+  ]
+}
+```
+
+Then run `match` or `runIncremental` as usual.
 {% endtab %}
 {% endtabs %}
 

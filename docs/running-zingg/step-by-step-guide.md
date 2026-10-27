@@ -26,7 +26,7 @@ New to entity resolution or want to understand the problem space before diving i
 <summary>Define your data and output</summary>
 
 {% hint style="success" icon="right-long" %}
-**Read more**: [Content your Data](../connect-your-data/pipes-and-data-connections.md)
+**Read more**: [Configure your Data](../connect-your-data/pipes-and-data-connections.md)
 {% endhint %}
 
 Configure input and output pipes to tell Zingg where your source data lives and where to write results. Zingg connects to the data where it lives - it does not move it.
@@ -38,7 +38,7 @@ Configure input and output pipes to tell Zingg where your source data lives and 
 <summary>Configure fields</summary>
 
 {% hint style="success" icon="right-long" %}
-**Read more**: [Content your Data](../connect-your-data/pipes-and-data-connections.md)
+**Read more**: [Configure your Data](../connect-your-data/pipes-and-data-connections.md)
 {% endhint %}
 
 Define your field definitions, match types, relevant Enterprise features (deterministic matching, primary key, pass through, standardization). The configuration drives every downstream phase.
@@ -47,9 +47,9 @@ Define your field definitions, match types, relevant Enterprise features (determ
 
 <details>
 
-<summary>Configure model id, and performance settings <br></summary>
+<summary>Configure model id and performance settings<br></summary>
 
-Separate different models through model ids, define number of partitions and labelDataSampleSize for faster running jobs
+Separate different models through model ids, define number of partitions and labelDataSampleSize for faster running jobs.
 
 </details>
 {% endstep %}
@@ -70,7 +70,7 @@ Run `findTrainingData` to generate candidate pairs, then label each pair as Matc
 {% step %}
 ### Verify Blocking (Enterprise Only)
 
-Run `verifyBlocking` to check what percentage of your known matching pairs are being blocked together correctly. Run after labelling and before committing to a full training run. If coverage is low, return to labelling.&#x20;
+Run `verifyBlocking` to check what percentage of your known matching pairs are being blocked together correctly. Run after labelling and before committing to a full training run. If coverage is low, return to labelling.
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Verify Blocking](create-training-data/verify-blocking.md)
@@ -80,7 +80,7 @@ Run `verifyBlocking` to check what percentage of your known matching pairs are b
 {% step %}
 ### Verify Model (Optional)
 
-Run `generateDocs` to produce a human-readable HTML report of your training data, including pairs labeled as matches and non-matches. Useful for sharing with subject-matter experts for feedback before training. Run `updateLabel` if needed to incorporate SME comments.&#x20;
+Run `generateDocs` to produce a human-readable HTML report of your training data, including pairs labeled as matches and non-matches. Useful for sharing with subject-matter experts for feedback before training. Run `updateLabel` if needed to incorporate SME comments.
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Generate Model Documentation](generate-model-documentation.md)
@@ -116,11 +116,11 @@ Apply the trained model to your data:
 {% endstep %}
 
 {% step %}
-### Interpret Output&#x20;
+### Interpret Output
 
 Review output scores to understand match quality. Use `Z_MINSCORE` and `Z_MAXSCORE` to set confidence thresholds for automated vs human-reviewed clusters.
 
-Run `explain` to understand cluster formation and check the output statistics (Enterprise Only) to understand and explain matches.&#x20;
+Run `explain` to understand cluster formation and check the output statistics (Enterprise Only) to understand and explain matches.
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Interpret Output Scores](../interpreting-results/interpret-output-scores.md)
@@ -130,9 +130,9 @@ Run `explain` to understand cluster formation and check the output statistics (E
 {% step %}
 ### Tune (if needed)
 
-If match results need improvement, return to find-and-label with focused training data for the patterns being missed, then retrain. Remove stopwords from fields like addresses and company names to improve blocking.&#x20;
+If match results need improvement, return to find-and-label with focused training data for the patterns being missed, then retrain. Remove stopwords from fields like addresses and company names to improve blocking.
 
-If the Zingg job is slow, add more labels. The blocking model learns from the labels and adding more matches will help it branch better.&#x20;
+If the Zingg job is slow, add more labels. The blocking model learns from the labels and adding more matches will help it branch better.
 
 {% hint style="success" icon="right-long" %}
 **Read more**: [Improve Accuracy](../tuning/improve-accuracy/)

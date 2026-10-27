@@ -6,7 +6,7 @@ tags:
 # Set Deterministic Matching Conditions
 
 {% hint style="info" icon="right-long" %}
-Deterministic matching is Enterprise only. Available in Enterprise Lite and above
+Deterministic matching is Enterprise only. Available in Enterprise Lite and above.
 {% endhint %}
 
 To configure deterministic matching, define each rule as a `DeterministicMatching` condition in Python or as a `matchCondition` block in JSON, then pass all conditions to `setDeterministicMatchingCondition()`. Full Python and JSON examples → [Configure Zingg](configure-zingg.md)

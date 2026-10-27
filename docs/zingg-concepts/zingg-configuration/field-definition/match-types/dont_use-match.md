@@ -10,7 +10,7 @@ description: >-
 
 `DONT_USE` tells Zingg to carry a field through to the output without using it in any similarity computation. No matching algorithm is applied. The field appears in every output record exactly as it appeared in the input.
 
-`DONT_USE` fields are also hidden from the labeller when the `showConcise` flag is set to `true`  so your domain experts see only the fields that are actually being used for matching when they label pairs.
+`DONT_USE` fields are also hidden from the labeller when the `showConcise` flag is set to `true` so your domain experts see only the fields that are actually being used for matching when they label pairs.
 
 {% hint style="success" icon="right-long" %}
 `DONT_USE` performs no computation. There is no similarity algorithm to describe - the field is passed through to output unchanged.
@@ -53,7 +53,7 @@ interface cleaner. Labellers see only the fields that drive decisions.
 
 <summary><strong>When the field carries a matching signal</strong></summary>
 
-If a field has information that should influence whether two records represent the same entity, even as a weak signal do not use `DONT_USE`. Use `FUZZY`.
+If a field has information that should influence whether two records represent the same entity, even as a weak signal, do not use `DONT_USE`. Use `FUZZY`.
 
 `DONT_USE` is for fields that carry zero matching information.
 

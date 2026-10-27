@@ -1,6 +1,6 @@
 ---
 description: >-
-  Run the link phase to match records  across two separate datasets using  your
+  Run the link phase to match records across two separate datasets using your
   trained Zingg model.
 ---
 
@@ -90,7 +90,6 @@ Enterprise link output includes Zingg ID instead of `Z_CLUSTER`, plus the `Z_SOU
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-
 ### CLI
 
 ```bash
@@ -101,7 +100,6 @@ Enterprise link output includes Zingg ID instead of `Z_CLUSTER`, plus the `Z_SOU
 {% hint style="info" icon="right-long" %}
 Enterprise link output includes Zingg ID instead of `Z_CLUSTER`, plus the `Z_SOURCE` column identifying the source dataset of each record.
 {% endhint %}
-
 {% endtab %}
 {% endtabs %}
 

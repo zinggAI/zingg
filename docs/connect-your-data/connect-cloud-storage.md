@@ -157,7 +157,7 @@ Setting `zinggDir` to an S3 path stores all Zingg model files and training data 
 {% endtab %}
 
 {% tab title="Azure Blob" %}
-_**CHECK WITH SONAL - - NEED TEAMS HELP TO CHECK WHAT EXACTLY TO BE ADDED HERE**_
+
 {% endtab %}
 
 {% tab title="GCS" %}

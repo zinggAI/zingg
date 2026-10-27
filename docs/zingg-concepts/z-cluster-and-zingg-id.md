@@ -24,10 +24,10 @@ Any system that stores `Z_Cluster` as a customer or entity identifier will break
 
 Common failure scenarios:
 
-* A CRM storing `Z_Cluster` as the unified customer key - after re-run, the key no longer exists or resolves to a different cluster
-* An analytics dashboard segmenting by cluster - segment membership changes unpredictably
-* An AI model trained on `Z_Cluster`-based features - features become invalid after each re-run
-* A compliance system linking transactions to a cluster identifier - audit trail breaks
+* A CRM storing `Z_Cluster` as the unified customer key - after re-run, the key no longer exists or resolves to a different cluster.
+* An analytics dashboard segmenting by cluster - segment membership changes unpredictably.
+* An AI model trained on `Z_Cluster`-based features - features become invalid after each re-run.
+* A compliance system linking transactions to a cluster identifier - audit trail breaks.
 
 If any downstream system needs a stable entity identifier to reference across time, `Z_Cluster` is not suitable. This is the core use case for Zingg Enterprise and the `Zingg_ID`.
 
@@ -39,9 +39,9 @@ Need stable entity IDs across runs? [Talk to us about Enterprise](https://www.zi
 
 ### `Zingg_ID` - Enterprise
 
-Zingg Enterprise assigns a globally unique, persistent GUID - the `Zingg ID` , to each resolved entity. Once assigned, the `Zingg ID` is stable across incremental runs. New records that match an existing cluster inherit its `Zingg ID`, and cluster merges are handled automatically.
+Zingg Enterprise assigns a globally unique, persistent GUID - the `Zingg ID` to each resolved entity. Once assigned, the `Zingg ID` is stable across incremental runs. New records that match an existing cluster inherit its `Zingg ID`, and cluster merges are handled automatically.
 
-However, if cluster membership changes significantly between runs. For example, a cluster splits due to new data or updated training, the `Zingg ID` may be reassigned. Downstream systems should treat the `Zingg ID` as stable within a deployment lifecycle, not as an indefinitely immutable identifier.
+However, if cluster membership changes significantly between runs—for example, a cluster splits due to new data or updated training—the `Zingg ID` may be reassigned. Downstream systems should treat the `Zingg ID` as stable within a deployment lifecycle, not as an indefinitely immutable identifier.
 
 #### **Lifecycle behaviour**
 

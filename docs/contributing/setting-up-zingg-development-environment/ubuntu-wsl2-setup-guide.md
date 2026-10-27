@@ -203,4 +203,4 @@ Run this script in the terminal opened in Zingg clones directory `./scripts/zing
 
 Run this script in the terminal opened in Zingg clones directory `./scripts/zingg.sh --phase match --conf examples/febrl/config.json --properties-file config/zingg.conf`
 
-Change the directory `cd /tmp/zinggOutput` (path provided in the configconfig file) to see the output files.
+Change the directory `cd /tmp/zinggOutput` (path provided in the config file) to see the output files.

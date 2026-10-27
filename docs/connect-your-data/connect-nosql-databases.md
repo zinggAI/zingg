@@ -1,6 +1,6 @@
 ---
 description: >-
-  Connect Zingg to Cassandra and MongoDB  as data sources and output
+  Connect Zingg to Cassandra and MongoDB as data sources and output
   destinations.
 ---
 

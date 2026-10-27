@@ -19,7 +19,7 @@ The following prerequisites apply to local and self-managed Spark installations 
 {% tab title="Notebook Environments" %}
 ### **Step 1: Install Zingg Jar on your Spark cluster**
 
-The steps for installing a jar on your Spark cluster will vary based on the platform. Please refer tot he platform guide or Zingg Platform specific guides for the steps.&#x20;
+The steps for installing a jar on your Spark cluster will vary based on the platform. Please refer to the platform guide or Zingg Platform specific guides for the steps.&#x20;
 
 ### **Step 2: Install Zingg Python Packages**
 

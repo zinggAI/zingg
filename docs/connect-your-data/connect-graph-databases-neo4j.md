@@ -1,6 +1,6 @@
 ---
 description: >-
-  Configure Zingg to connect to Neo4j  for writing resolved entity output  to a
+  Configure Zingg to connect to Neo4j for writing resolved entity output to a
   graph database.
 ---
 

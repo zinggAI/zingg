@@ -11,7 +11,7 @@ The `findTrainingData` phase prompts Zingg to search for edge cases in your data
 Run `findTrainingData` first, then run the `label` phase. Repeat this cycle until you have enough labeled pairs.
 
 {% hint style="success" icon="right-long" %}
-Zingg selects the most informative pairs from your data not random samples. Label until all field types and data variation patterns in your schema are represented. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
+Zingg selects the most informative pairs from your data, not random samples. Label until all field types and data variation patterns in your schema are represented. If accuracy needs improvement after the first match run, return to labeling and focus on patterns that are missing or underrepresented.
 {% endhint %}
 
 {% tabs %}
@@ -95,7 +95,6 @@ Candidate pairs are written to `zinggDir/modelId`. Run the label phase next to r
 {% endtab %}
 
 {% tab title="Enterprise Snowflake" %}
-
 ### Run findTrainingData
 
 Zingg on Snowflake can be run either from a local terminal via the CLI, or natively inside Snowflake as a job service.
@@ -134,9 +133,11 @@ The specification file passed via `SPECIFICATION_TEMPLATE_FILE` defines the cont
 **Monitor the job**
 
 Retrieve the service logs to monitor execution and debug any failures.
+
 ```sql
 SELECT SYSTEM$GET_SERVICE_LOGS('ZINGG_FTD_ASYNC_JOB_SERVICE', 0, 'zingg-async-job-container');
 ```
+
 `zingg-async-job-container` refers to the container name defined in the job specification.
 
 **Stop the compute pool**
@@ -146,6 +147,5 @@ Once the job completes, stop the compute pool to release resources.
 ```sql
 ALTER COMPUTE POOL CONTAINER_ZINGG_POOL STOP ALL;
 ```
-
 {% endtab %}
 {% endtabs %}

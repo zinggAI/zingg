@@ -12,7 +12,7 @@ tags:
 
 ### What `EMAIL_OPTIMISED` does
 
-`EMAIL_OPTIMISED` produces the same matching results as `EMAIL` - it splits on `@`, discards the domain, and scores the local part using the similarity function. It is not an exact/binary comparison, it is `FUZZY`.
+`EMAIL_OPTIMISED` produces the same matching results as `EMAIL` - it splits on `@`, discards the domain, and scores the local part using the similarity function. It is not an exact/binary comparison; it is `FUZZY`.
 
 The scoring pattern is exactly the same as `EMAIL` - only the computation time differs. `EMAIL_OPTIMISED` is substantially faster when comparing large numbers of email addresses.
 

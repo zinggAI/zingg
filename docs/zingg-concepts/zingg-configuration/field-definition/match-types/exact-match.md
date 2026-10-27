@@ -25,7 +25,7 @@ Use `EXACT` for any field where a difference in value means a definite differenc
 
 These fields are reliable unique identifiers. An exact match on SSN means the two records are definitively the same entity. Any tolerance on these fields creates false positives that are very difficult to correct after the fact.
 
-Always use `EXACT` on trusted identifiers. In Zingg Enterprise, also add them as deterministic matching conditions, an exact match on a trusted identifier produces a guaranteed match with score 1 before the probabilistic model runs.
+Always use `EXACT` on trusted identifiers. In Zingg Enterprise, also add them as deterministic matching conditions; an exact match on a trusted identifier produces a guaranteed match with score 1 before the probabilistic model runs.
 
 → [Deterministic vs Probabilistic Matching](../../../zingg-entity-resolution-platform/deterministic-vs-probabilistic-matching.md)
 

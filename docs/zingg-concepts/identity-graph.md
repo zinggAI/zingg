@@ -8,7 +8,7 @@ tags:
 
 # Identity Graph
 
-Zingg produces an identity graph as its output. Nodes are records. Edges connect records that Zingg has identified as representing the same real-world entity. A cluster is a connected component in this graph, a group of records that all resolve to the same entity. Not all entity resolution systems work this way; some only produce pairwise match decisions without joining them into a graph. Zingg always produces the complete graph
+Zingg produces an identity graph as its output. Nodes are records. Edges connect records that Zingg has identified as representing the same real-world entity. A cluster is a connected component in this graph, a group of records that all resolve to the same entity. Not all entity resolution systems work this way; some only produce pairwise match decisions without joining them into a graph. Zingg always produces the complete graph.
 
 Zingg's identity graph is this structure. What differs between Community and Enterprise is not the graph itself but how it is managed over time.
 
@@ -39,7 +39,7 @@ Persistent identity graph with stable Zingg ID across runs is Enterprise only.\
 {% hint style="success" icon="right-long" %}
 Community gives you a complete, accurate identity graph after every run.
 
-Enterprise gives you the same graph with stable `Zingg IDs` , so the graph can grow incrementally and downstream systems can reference it safely across time.
+Enterprise gives you the same graph with stable `Zingg IDs`, so the graph can grow incrementally and downstream systems can reference it safely across time.
 
 **Read more**:
 

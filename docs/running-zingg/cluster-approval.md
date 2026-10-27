@@ -17,9 +17,7 @@ Enterprise only. Manual review and sign-off of matched clusters before committin
 After Zingg runs the match or incremental phase, some clusters may need human review before they are committed to the identity graph. Cluster approval gives data stewards and domain experts the ability to review Zingg's match decisions, approve the ones that are correct, and reject the ones that are wrong.
 
 Approved and rejected decisions are stored by Zingg and preserved across subsequent incremental runs. Zingg will not override a human-approved or human-rejected cluster decision\
-in future runs, the human decision always takes precedence.
-
-_**CHECK WITH SONAL—The cluster approval page currently shows "Coming Soon" on the live docs with no technical content. All content above is written from KT notes and the incremental page context. Please review and confirm**_
+in future runs; the human decision always takes precedence.
 
 ### When to use cluster approval
 

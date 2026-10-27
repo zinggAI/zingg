@@ -15,7 +15,7 @@ Entity resolution always answers the same question — "is this the same entity 
 * **Before a decision is made**, as part of a scheduled process: nightly customer master builds, weekly deduplication runs, periodic golden record refreshes.
 * **At the moment a decision is made**, inline with a live event: a fraud check during checkout, a personalization decision on page load, a real-time risk score before a transaction clears.
 
-Batch entity resolution is built for the first case. Streaming entity resolution is built for the second. Neither is a more evolved version of the other, they're solving for different constraints.
+Batch entity resolution is built for the first case. Streaming entity resolution is built for the second. Neither is a more evolved version of the other. They're solving for different constraints.
 
 ### Batch entity resolution: the system of record
 
@@ -42,18 +42,17 @@ The requirement underneath all of these is the same: **real-time decisioning req
 
 ### Why not just make batch faster?
 
-It's tempting to think streaming ER is just batch ER running on a shorter schedule. It isn't, for a structural reason: architectures are built differently in data platforms.&#x20;
+It's tempting to think streaming ER is just batch ER running on a shorter schedule. It isn't, for a structural reason: architectures are built differently in data platforms.
 
-Streaming entity resolution is different engineering problem (stateful stream processing, incremental identity graphs) rather than a smaller version of the same one.
+Streaming entity resolution is a different engineering problem (stateful stream processing, incremental identity graphs) rather than a smaller version of the same one.
 
 ### Why not real time?
 
-Warehouses and datalakes are still not ready for real time design patterns. While there is promising movement towards LTAP/HTAP with Lakebase and Postgres suppoer in Snowflake, we are watching this space keenly and will build something when the technology is right. Going out of the warehouse and supporting real time is one option, but that becomes a separate source of truth with its own ETL and governance. Hence it gets limited to single departments and fails to become the universal source of truth. &#x20;
+Warehouses and datalakes are still not ready for real time design patterns. While there is promising movement towards LTAP/HTAP with Lakebase and Postgres support in Snowflake, we are watching this space keenly and will build something when the technology is right. Going out of the warehouse and supporting real time is one option, but that becomes a separate source of truth with its own ETL and governance. Hence it gets limited to single departments and fails to become the universal source of truth.
 
 ### Choosing an architecture in Zingg
 
 Zingg supports both batch and streaming entity resolution natively, so the choice is driven by your use case rather than by platform limitations:
 
 * If your pipelines run batch, **use batch**.
-* If a decision is being made at the moment an event arrives and needs a trusted identity to act on  **use streaming**.
-
+* If a decision is being made at the moment an event arrives and needs a trusted identity to act on **use streaming**.

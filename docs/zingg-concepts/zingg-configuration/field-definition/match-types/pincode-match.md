@@ -27,7 +27,7 @@ A null or blank value on either side is an automatic match.
 
 Any field containing a postal code or PIN code. `PINCODE` is always preferable to `EXACT` (which misses format variants) or `FUZZY` (which introduces tolerance that causes false matches between nearby but different codes).
 
-This is the only match type specifically designed for postal codes
+This is the only match type specifically designed for postal codes.
 
 </details>
 
