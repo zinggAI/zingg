@@ -16,8 +16,6 @@ import zingg.common.client.event.listeners.IEventListener;
 import zingg.common.client.event.listeners.ZinggStartListener;
 import zingg.common.client.event.listeners.ZinggStopListener;
 import zingg.common.client.options.ZinggOptions;
-import zingg.common.client.util.Email;
-import zingg.common.client.util.EmailBody;
 import zingg.common.client.util.PipeUtilBase;
 
 import java.io.Serializable;
@@ -218,12 +216,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 		} 
 		catch(Throwable throwable) {
 			success = false;
-
-			if (options != null && options.get(ClientOptions.EMAIL) != null) {
-				Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
-					"Zingg Error ",
-						throwable.getMessage()));
-			}
 			LOG.warn("Apologies for this message. Zingg has encountered an error. "
 					+ throwable.getMessage());
 			if (LOG.isDebugEnabled()) throwable.printStackTrace();
@@ -241,11 +233,6 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 				}
 			}
 			catch(ZinggClientException e) {
-				if (options != null && options.get(ClientOptions.EMAIL) != null) {
-					Email.email(options.get(ClientOptions.EMAIL).value, new EmailBody("Error running Zingg job",
-						"Zingg Error ",
-						e.getMessage()));
-				}
 				if (!success) {
 					System.exit(1);
 				}
