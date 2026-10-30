@@ -1,0 +1,1 @@
+{"kind":"linear-classifier","features":["name_similarity","address_similarity"],"weights":[1.25,0.75],"intercept":-0.5,"logistic":true,"threshold":0.5}

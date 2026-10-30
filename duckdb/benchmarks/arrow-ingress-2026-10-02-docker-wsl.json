@@ -1,0 +1,81 @@
+{
+  "benchmark": "zingg-duckdb-arrow-ingress",
+  "environment": {
+    "containerImage": "maven:3.9.9-eclipse-temurin-21",
+    "containerOs": "Ubuntu 24.04.2 LTS",
+    "kernel": "Linux 6.18.33.2-microsoft-standard-WSL2",
+    "architecture": "x86_64",
+    "java": "Temurin 21.0.7+6-LTS",
+    "duckdbJdbc": "1.5.5.1",
+    "execution": "Docker container on WSL2; host hardware limits not captured"
+  },
+  "method": {
+    "warmupRuns": 1,
+    "measuredRepetitions": 3,
+    "resourceSamplingEnabled": false,
+    "jdbcPath": "prepared JDBC row insertion",
+    "appenderPath": "DuckDB row-wise Appender",
+    "cardinalityCheckedEveryRun": true,
+    "note": "Appenders are not Arrow C Data, zero-copy, or vectorized ingestion. Timings are single-container diagnostics, not release thresholds."
+  },
+  "runs": [
+    {
+      "size": 1000,
+      "fileBytes": 29688,
+      "writeSamplesNs": [6822872, 9076201, 6740123],
+      "writeMedianNs": 6822872,
+      "jdbcIngestSamplesNs": [586840751, 628201650, 466832898],
+      "jdbcMedianNs": 586840751,
+      "jdbcRowsPerSecond": 1704,
+      "appenderSamplesNs": [15972661, 4724020, 3270049],
+      "appenderMedianNs": 4724020,
+      "appenderRowsPerSecond": 211684,
+      "appenderSpeedup": 124.225,
+      "rssBeforeBytes": 44949504,
+      "rssAfterBytes": 139550720,
+      "spillBeforeBytes": 0,
+      "spillAfterBytes": 0
+    },
+    {
+      "size": 10000,
+      "fileBytes": 294888,
+      "writeSamplesNs": [20359706, 24360572, 13240677],
+      "writeMedianNs": 20359706,
+      "jdbcIngestSamplesNs": [4457713135, 4170935042, 4201402456],
+      "jdbcMedianNs": 4201402456,
+      "jdbcRowsPerSecond": 2380,
+      "appenderSamplesNs": [18878282, 15935632, 13626190],
+      "appenderMedianNs": 15935632,
+      "appenderRowsPerSecond": 627525,
+      "appenderSpeedup": 263.648,
+      "rssBeforeBytes": 45096960,
+      "rssAfterBytes": 200974336,
+      "spillBeforeBytes": 0,
+      "spillAfterBytes": 0
+    },
+    {
+      "size": 100000,
+      "fileBytes": 2946392,
+      "writeSamplesNs": [86572167, 61115328, 56364529],
+      "writeMedianNs": 61115328,
+      "jdbcIngestSamplesNs": [43207266625, 41009245815, 41024774632],
+      "jdbcMedianNs": 41024774632,
+      "jdbcRowsPerSecond": 2438,
+      "appenderSamplesNs": [89918728, 119800799, 113238554],
+      "appenderMedianNs": 113238554,
+      "appenderRowsPerSecond": 883091,
+      "appenderSpeedup": 362.286,
+      "rssBeforeBytes": 44883968,
+      "rssAfterBytes": 361246720,
+      "spillBeforeBytes": 0,
+      "spillAfterBytes": 0
+    }
+  ],
+  "limitations": [
+    "One Docker/WSL2 host, no independent runner reproduction or regression threshold.",
+    "Three measured repetitions only; small sample count and timing variance are not confidence intervals.",
+    "RSS is before/after process-wide observation, not per-import peak; spill bytes are before/after only and can miss transient files.",
+    "No CPU counters, memory limit capture, vectorized Arrow C Data/CTAS candidate, or larger capacity run.",
+    "Raw sample reproducibility depends on the checked-out source and Docker host load; do not treat the speedup as a release claim."
+  ]
+}

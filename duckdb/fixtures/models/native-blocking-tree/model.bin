@@ -1,0 +1,1 @@
+{"kind":"native-blocking-tree","profile":"zingg-0.7.0","blockingExpression":"lower(name)","blockingColumn":"block_key","features":["name"],"sampleRows":3,"distinctBlockingKeys":2,"maxBucketSize":2,"blockingFrequencies":[{"key":"alice","count":2},{"key":"bob","count":1}]}

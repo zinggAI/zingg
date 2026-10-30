@@ -1,0 +1,16 @@
+{
+  "benchmark": "zingg-duckdb-smoke",
+  "recordedAt": "2026-09-24",
+  "size": 1000,
+  "repetitions": 3,
+  "graphInputEdges": 999,
+  "startupMedianNs": 30210600,
+  "sqlMedianNs": 2560600,
+  "graphMedianNs": 99252200,
+  "environment": {
+    "os": "Windows",
+    "java": "21.0.12.1 Microsoft-14941484",
+    "duckdbJdbc": "1.5.5.1"
+  },
+  "notes": "Post-rebuild smoke result; observational only and not a release threshold."
+}

@@ -1,0 +1,35 @@
+{
+  "benchmark": "zingg-duckdb-graph-compare-matrix",
+  "date": "2026-10-02",
+  "container": "maven:3.9.9-eclipse-temurin-21",
+  "environment": "Docker on WSL2; shared host resources",
+  "warmupRuns": 1,
+  "repetitions": 3,
+  "resourceSamplingEnabled": false,
+  "timingScope": "computation only; CSV serialization measured separately by runner but not retained in this summary",
+  "cases": [
+    {"shape":"path","vertices":100,"inputEdges":99,"closurePairs":4950,"entityScoresMedianNs":1607758,"entityScoresRows":100,"entityScoresOutputBytes":2709,"transitiveEdgesMedianNs":8865300,"transitiveEdgesRows":4950,"transitiveEdgesOutputBytes":48527},
+    {"shape":"path","vertices":500,"inputEdges":499,"closurePairs":124750,"entityScoresMedianNs":13882149,"entityScoresRows":500,"entityScoresOutputBytes":13909,"transitiveEdgesMedianNs":123061230,"transitiveEdgesRows":124750,"transitiveEdgesOutputBytes":1442127},
+    {"shape":"star","vertices":100,"inputEdges":99,"closurePairs":4950,"entityScoresMedianNs":3428558,"entityScoresRows":100,"entityScoresOutputBytes":2709,"transitiveEdgesMedianNs":17641913,"transitiveEdgesRows":4950,"transitiveEdgesOutputBytes":48527},
+    {"shape":"star","vertices":500,"inputEdges":499,"closurePairs":124750,"entityScoresMedianNs":12073206,"entityScoresRows":500,"entityScoresOutputBytes":13909,"transitiveEdgesMedianNs":111193756,"transitiveEdgesRows":124750,"transitiveEdgesOutputBytes":1442127},
+    {"shape":"dense","vertices":100,"inputEdges":4950,"closurePairs":4950,"entityScoresMedianNs":35577681,"entityScoresRows":100,"entityScoresOutputBytes":2709,"transitiveEdgesMedianNs":36294447,"transitiveEdgesRows":4950,"transitiveEdgesOutputBytes":48527},
+    {"shape":"dense","vertices":500,"inputEdges":124750,"closurePairs":124750,"entityScoresMedianNs":309740524,"entityScoresRows":500,"entityScoresOutputBytes":13909,"transitiveEdgesMedianNs":419216431,"transitiveEdgesRows":124750,"transitiveEdgesOutputBytes":1442127},
+    {"shape":"disconnected","vertices":100,"inputEdges":50,"closurePairs":50,"entityScoresMedianNs":2819884,"entityScoresRows":100,"entityScoresOutputBytes":2799,"transitiveEdgesMedianNs":4105275,"transitiveEdgesRows":50,"transitiveEdgesOutputBytes":507},
+    {"shape":"disconnected","vertices":500,"inputEdges":250,"closurePairs":250,"entityScoresMedianNs":14080158,"entityScoresRows":500,"entityScoresOutputBytes":14799,"transitiveEdgesMedianNs":11613978,"transitiveEdgesRows":250,"transitiveEdgesOutputBytes":2907}
+  ],
+  "additionalChecks": {
+    "oddDisconnectedVertices": 101,
+    "oddDisconnectedExpectedAndObservedPairs": 52,
+    "oversizedDenseVertices": 1500,
+    "oversizedDenseRequiredPairs": 1124250,
+    "oversizedDenseRejectedBeforeEdgeConstruction": true,
+    "graphOutputTest": "14/14 passed in Docker"
+  },
+  "limitations": [
+    "one Docker-on-WSL2 host; no independent-runner reproduction",
+    "resource sampling disabled for the timing matrix; no peak-memory claim",
+    "three measured samples per case; exploratory timing only",
+    "dense shape increases input-edge count quadratically, unlike path/star",
+    "no agreed performance budget or release threshold"
+  ]
+}

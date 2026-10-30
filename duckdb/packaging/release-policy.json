@@ -1,0 +1,14 @@
+{
+  "schema": "zingg-duckdb-release-policy-1",
+  "requiredLicenses": ["Apache-2.0", "MIT", "AGPL-3.0", "JDK-vendor-license", "CC0-1.0"],
+  "jdk": {
+    "major": 21,
+    "securityUpdates": "Track the selected vendor's quarterly CPU release and rebuild before distribution when the active CPU is superseded.",
+    "provenanceRequired": true
+  },
+  "signing": {
+    "artifact": "SHA256SUMS",
+    "authenticodeRequiredForRelease": true,
+    "timestampRequired": true
+  }
+}

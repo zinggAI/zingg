@@ -1,0 +1,12 @@
+{
+  "benchmark": "zingg-duckdb-smoke",
+  "size": 1000,
+  "repetitions": 5,
+  "graphInputEdges": 999,
+  "startupMedianNs": 30771300,
+  "sqlMedianNs": 1861101,
+  "graphMedianNs": 83548100,
+  "capturedOn": "2026-09-24",
+  "duckdbJdbc": "1.5.5.1",
+  "java": "21"
+}
