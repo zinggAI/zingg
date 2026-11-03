@@ -1,0 +1,6 @@
+command: ['streamlit', 'run', 'Zingg.py']
+env:
+  - name: 'STREAMLIT_BROWSER_GATHER_USAGE_STATS'
+    value: 'false'
+  - name: 'ZINGG_JAR_VOLUME'
+    valueFrom: volume

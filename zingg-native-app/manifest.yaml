@@ -1,0 +1,3 @@
+version: 1
+name: "Zingg"
+description: "Zingg is an end to end pipeline for entity resolution, helping you resolve scattered records into one accurate view, running natively on your own data."
