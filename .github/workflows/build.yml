@@ -11,16 +11,25 @@ env:
 
 jobs:
   build:
+    name: build (spark ${{ matrix.spark }}, java ${{ matrix.java }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      matrix:
+        include:
+          - spark: '3.5'
+            java: '11'
+          - spark: '4.1'
+            java: '17'
+          - spark: '4.2'
+            java: '17'
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 11
+      - name: Set up JDK ${{ matrix.java }}
         uses: actions/setup-java@v4
         with:
-          java-version: '11'
+          java-version: ${{ matrix.java }}
           distribution: 'adopt'
           cache: maven
-      - name: Build 
-        run: mvn install
+      - name: Build
+        run: mvn install -Dspark=${{ matrix.spark }}

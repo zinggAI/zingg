@@ -137,6 +137,7 @@
 * [Setting Up Zingg Development Environment](contributing/setting-up-zingg-development-environment/README.md)
   * [macOS Setup Guide](contributing/setting-up-zingg-development-environment/macos-setup-guide.md)
   * [Ubuntu/WSL2 Setup Guide](contributing/setting-up-zingg-development-environment/ubuntu-wsl2-setup-guide.md)
+* [Spark 4.1 / Scala 2.13 Build Verification](contributing/spark-4.1-verification.md)
 
 ## Frequently Asked Questions
 
