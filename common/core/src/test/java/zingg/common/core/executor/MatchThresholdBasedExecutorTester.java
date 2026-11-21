@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.ZinggException;
 import zingg.common.core.executor.validate.ExecutorValidator;
@@ -21,9 +22,9 @@ public abstract class MatchThresholdBasedExecutorTester<S, D, R, C, T> extends E
     protected long matchCount = 0;
     protected long notAMatchCount = 0;
 
-    public MatchThresholdBasedExecutorTester(ZinggBase<S, D, R, C, T> executor, ExecutorValidator<S, D, R, C, T> validator, String configFile, String modelId, DFObjectUtil<S, D, R, C> dfObjectUtil)
+    public MatchThresholdBasedExecutorTester(ZinggBase<S, D, R, C, T> executor, ExecutorValidator<S, D, R, C, T> validator, IArguments args, String modelId, DFObjectUtil<S, D, R, C> dfObjectUtil)
             throws ZinggClientException, IOException {
-        super(executor, validator, configFile, modelId, dfObjectUtil);
+        super(executor, validator, args, modelId, dfObjectUtil);
     }
 
     protected void runUntilThreshold() {

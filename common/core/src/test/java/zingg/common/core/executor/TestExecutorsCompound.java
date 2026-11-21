@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.AfterEach;
 
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.core.executor.validate.FindAndLabelValidator;
 import zingg.common.core.executor.validate.TrainMatchValidator;
 import zingg.common.core.util.IPerformCleanUpUtil;
@@ -24,14 +25,15 @@ public abstract class TestExecutorsCompound<S, D, R, C, T> extends TestExecutors
 	public List<ExecutorTester<S, D, R, C, T>> getExecutors() throws ZinggClientException, IOException, NoSuchMethodException {
 		FindAndLabeller<S, D, R, C, T> findAndLabel = getFindAndLabeller();
 		FindAndLabelValidator<S, D, R, C, T> falValidator = new FindAndLabelValidator<S, D, R, C, T>(findAndLabel);
-		ExecutorTester<S, D, R, C, T> et = new FindAndLabellerExecutorTester<>(findAndLabel, falValidator,getConfigFile(),getModelId(),getDFObjectUtil());
+		ExecutorTester<S, D, R, C, T> et = new FindAndLabellerExecutorTester<>(findAndLabel, falValidator,getArgs(),getModelId(),getDFObjectUtil());
 		executorTesterList.add(et);
 		TrainMatcher<S, D, R, C, T> trainMatch = getTrainMatcher();
-		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainMatch,getTrainMatchValidator(trainMatch), getConfigFile(),getModelId(),getDFObjectUtil()));
+		executorTesterList.add(new ExecutorTester<S, D, R, C, T>(trainMatch,getTrainMatchValidator(trainMatch), getArgs(),getModelId(),getDFObjectUtil()));
 		return executorTesterList;
 	}
 	
-	public abstract String getConfigFile();
+	/** The args both compound phases run on; built in code, not read from a file. */
+	public abstract IArguments getArgs() throws ZinggClientException;
 
 	protected abstract FindAndLabeller<S, D, R, C, T> getFindAndLabeller() throws ZinggClientException;
 
