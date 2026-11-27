@@ -22,7 +22,6 @@ public class ClientOptions {
 	public static final String LICENSE = "--license";
 	public static final String PREPROCESS = "--preprocess";
 	public static final String JOBID = "--jobId";
-	public static final String EMAIL = "--email";
 	public static final String FORMAT = "--format";
 	public static final String ZINGG_DIR = "--zinggDir";
 	public static final String MODEL_ID = "--modelId";
@@ -57,7 +56,6 @@ public class ClientOptions {
 		optionMaster.put(PHASE, new Option(PHASE, true, Util.join(ZinggOptions.getAllZinggOptions(), "|"), false, true, ZinggOptions.getAllZinggOptions()));
 		optionMaster.put(LICENSE, new Option(LICENSE, true, "location of license file", false, true));
 		optionMaster.put(JOBID, new Option(JOBID, true, "database job id for logging", false, false));
-		optionMaster.put(EMAIL, new Option(EMAIL, true, "notification email id. Can be an alias", false, false));
 		optionMaster.put(FORMAT, new Option(FORMAT, true, "format of the data", false, false));
 		optionMaster.put(ZINGG_DIR, new Option(ZINGG_DIR, true, "location of Zingg models, defaults to /tmp/zingg", false, false));
 		optionMaster.put(MODEL_ID, new Option(MODEL_ID, true, "model identifier, can be a number ", false, false));
@@ -259,7 +257,7 @@ public class ClientOptions {
 		s.append("zingg.sh --phase findTrainingData --conf config.json --zinggDir /location \n");
 		s.append("zingg.sh --phase label --conf config.json --zinggDir /location \n");
 		s.append("zingg.sh --phase verifyBlocking --conf config.json --zinggDir /location \n");
-		s.append("zingg.sh --phase trainMatch --conf config.json --email sendMe@email.com\n");
+		s.append("zingg.sh --phase trainMatch --conf config.json\n");
 		s.append("zingg.sh --phase findAndLabel --conf config.json --zinggDir /location\n");
 		s.append("options\n");
 

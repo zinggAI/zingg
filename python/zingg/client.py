@@ -146,7 +146,6 @@ def getJVM():
                                                 "PHASE": None,
                                                 "CONF": None,
                                                 "LICENSE": None,
-                                                "EMAIL": None,
                                                 "LOCATION": None,
                                                 "REMOTE": None,
                                                 "ZINGG_DIR": None,
@@ -702,8 +701,6 @@ class ClientOptions:
     """:CONF: conf parameter for this class"""
     LICENSE = getJVM().zingg.common.client.ClientOptions.LICENSE
     """:LICENSE: license parameter for this class"""
-    EMAIL = getJVM().zingg.common.client.ClientOptions.EMAIL
-    """:EMAIL: e-mail parameter for this class"""
     LOCATION = getJVM().zingg.common.client.ClientOptions.LOCATION
     """:LOCATION: location parameter for this class"""
     REMOTE = getJVM().zingg.common.client.ClientOptions.REMOTE
@@ -726,9 +723,6 @@ class ClientOptions:
         if self.LICENSE not in args:
             args.append(self.LICENSE)
             args.append("zinggLic.txt")
-        if self.EMAIL not in args:
-            args.append(self.EMAIL)
-            args.append("zingg@zingg.ai")
         if self.CONF not in args:
             args.append(self.CONF)
             args.append("dummyConf.json")

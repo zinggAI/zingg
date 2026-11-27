@@ -104,7 +104,7 @@ val outputPipe = new InMemoryPipe();
 val pipes = Array[zingg.client.pipe.Pipe](outputPipe);
 args.setOutput(pipes);
 
-val options = new ClientOptions("--phase", "match",  "--conf", "dummy", "--license", "dummy", "--email", "xxx@yyy.com");
+val options = new ClientOptions("--phase", "match",  "--conf", "dummy", "--license", "dummy");
 
 //Zingg execution for the given phase
 val client = new Client(args, options);
