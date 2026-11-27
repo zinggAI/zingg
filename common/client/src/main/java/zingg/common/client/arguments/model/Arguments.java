@@ -97,6 +97,8 @@ public class Arguments extends ZArgs implements Serializable, IArguments {
 	boolean showConcise = false;
 	float stopWordsCutoff = 0.1f;
 	long blockSize = 100L;
+	long blockingTreeMaxRows = 1000000L;
+	long blockingTreeMaxBytes = 268435456L;
 	String column;
 	
 	
@@ -327,6 +329,32 @@ public class Arguments extends ZArgs implements Serializable, IArguments {
 	@Override
 	public void setBlockSize(long blockSize){
 		this.blockSize = blockSize;
+	}
+
+	@Override
+	public long getBlockingTreeMaxRows() {
+		return blockingTreeMaxRows;
+	}
+
+	@Override
+	public void setBlockingTreeMaxRows(long blockingTreeMaxRows) throws ZinggClientException {
+		if (blockingTreeMaxRows <= 0) {
+			throw new ZinggClientException("Blocking tree maximum rows must be greater than 0");
+		}
+		this.blockingTreeMaxRows = blockingTreeMaxRows;
+	}
+
+	@Override
+	public long getBlockingTreeMaxBytes() {
+		return blockingTreeMaxBytes;
+	}
+
+	@Override
+	public void setBlockingTreeMaxBytes(long blockingTreeMaxBytes) throws ZinggClientException {
+		if (blockingTreeMaxBytes <= 0) {
+			throw new ZinggClientException("Blocking tree maximum bytes must be greater than 0");
+		}
+		this.blockingTreeMaxBytes = blockingTreeMaxBytes;
 	}
 
 	@Override

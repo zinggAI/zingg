@@ -117,6 +117,14 @@ public interface IArguments extends IZArgs {
 
 	void setBlockSize(long blockSize);
 
+	long getBlockingTreeMaxRows();
+
+	void setBlockingTreeMaxRows(long blockingTreeMaxRows) throws ZinggClientException;
+
+	long getBlockingTreeMaxBytes();
+
+	void setBlockingTreeMaxBytes(long blockingTreeMaxBytes) throws ZinggClientException;
+
 	String[] getPipeNames();
 
 	String getStopWordsDir();
