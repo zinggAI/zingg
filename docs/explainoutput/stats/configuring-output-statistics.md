@@ -32,4 +32,4 @@ eArgs.setOutputStats(statsOutputPipe)
 
 When you execute **match** or **incrementalRun** phases with the output stats pipe, Zingg writes stats for this run under the configured location with timestamp. If the outputStats are not configured, Zingg will not write them and the run will proceed as is.&#x20;
 
-[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.
+[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/pricing for individual tier features.

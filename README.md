@@ -25,13 +25,13 @@ With Zingg, the analytics engineer and the data scientist can quickly integrate 
 
 Zingg is an ML based tool for master data management and entity resolution. Zingg's ML is purpose built for entity resolution to overcome the challenges of [Fellegi Sunter](https://www.zingg.ai/post/fellegi-sunter-model-limitations-modern-entity-resolution) and [Entity Centric Matching](https://www.zingg.ai/post/limits-of-entity-centric-matching). The following features set Zingg apart from other tools and libraries: 
 
-- [Interactive training data builder](https://docs.zingg.ai/latest/stepbystep/createtrainingdata/label) using active learning that builds models on frugally small training samples to high accuracy. 
+- [Interactive training data builder](https://docs.zingg.ai/zingg/running-zingg/create-training-data/label-training-pairs) using active learning that builds models on frugally small training samples to high accuracy. 
 
 ![Shows records and asks user to mark yes, no, cant say on the cli.](/assets/labelvertical.gif) 
 
-- Auto learning blocking model to scale entity resolution to millions of records. [See why this is important](https://docs.zingg.ai/latest/zmodels/) and [Zingg performance numbers](https://docs.zingg.ai/zingg/stepbystep/hardwaresizing)
+- Auto learning blocking model to scale entity resolution to millions of records. [See why this is important](https://docs.zingg.ai/zingg/zingg-concepts/how-zingg-learns/zingg-models) and [Zingg performance numbers](https://docs.zingg.ai/zingg/reference/hardware-sizing-and-benchmarks)
 - Ability to handle any entity like customer, patient, supplier, product etc 
-- Ability to connect to [disparate data sources](https://docs.zingg.ai/latest/connectors). Local and cloud file systems in any format, enterprise applications and relational, NoSQL and cloud databases and warehouses
+- Ability to connect to [disparate data sources](https://docs.zingg.ai/zingg/connect-your-data/pipes-and-data-connections). Local and cloud file systems in any format, enterprise applications and relational, NoSQL and cloud databases and warehouses
 - Ability to define domain specific functions to improve matching  
 - Out of the box support for English as well as Chinese, Thai, Japanese, Hindi and other languages
 
@@ -73,7 +73,7 @@ docker run -it zingg/zingg bash
 ./scripts/zingg.sh --phase match --conf examples/febrl/config.json
 ``` 
 
-Check the [step by step guide](https://docs.zingg.ai/latest/stepbystep) for more details.
+Check the [step by step guide](https://docs.zingg.ai/zingg/running-zingg/step-by-step-guide) for more details.
 
 ## Connectors
 
@@ -117,7 +117,7 @@ Or you can use [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcno
 
 Want to report a bug or request a feature? Let us know on [Slack](https://join.slack.com/t/zinggai/shared_invite/zt-w7zlcnol-vEuqU9m~Q56kLLUVxRgpOA), or open an [issue](https://github.com/zinggAI/zingg/issues/new/choose)
 
-Want to commit code? Please check the [contributing documentation.](https://docs.zingg.ai/zingg/contributing)
+Want to commit code? Please check the [contributing documentation.](https://docs.zingg.ai/zingg/contributing/contributing-to-zingg)
 
 ## License
 

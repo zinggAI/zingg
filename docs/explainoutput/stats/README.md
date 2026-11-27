@@ -32,4 +32,4 @@ Zingg writes statistics to the stats directory whenever you run phases like matc
 
 
 
-[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to [Zingg Entity Resolution Compare Versions](https://www.zingg.ai/product/zingg-entity-resolution-compare-versions) for individual tier features.
+[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to [Zingg Entity Resolution Compare Versions](https://www.zingg.ai/product/pricing) for individual tier features.

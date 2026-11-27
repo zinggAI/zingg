@@ -386,4 +386,4 @@ Migrating from Databricks to Fabric, or vice versa? When migrating data to new s
 Upgrading Spark versions, Snowflake features, or other platform components? Keep your IDs stable through the upgrade process.
 
 
-[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.
+[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/pricing for individual tier features.

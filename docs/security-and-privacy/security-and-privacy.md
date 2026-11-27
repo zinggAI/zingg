@@ -46,6 +46,6 @@ Zingg is a processing tool. GDPR and CCPA compliance obligations apply to how yo
 {% hint style="success" icon="right-long" %}
 **Read more**: For GDPR and CCPA identity resolution use cases:
 
-* [GDPR use case on identity resolution](https://zingg.ai/product/entity-resolution-solutions/gdpr)
-* [CCPA use case on identity resolution](https://zingg.ai/product/entity-resolution-solutions/ccpa)
+* [GDPR use case on identity resolution](https://www.zingg.ai/product/entity-resolution-solutions/gdpr)
+* [CCPA use case on identity resolution](https://www.zingg.ai/product/entity-resolution-solutions/ccpa)
 {% endhint %}

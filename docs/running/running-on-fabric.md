@@ -8,7 +8,7 @@ You can run the **Zingg Community Version** on Microsoft Fabric directly using t
 
 ## For running the Zingg Community version on Microsoft Fabric:
 
-This uses the Zingg Community Python API and an [example notebook](../../examples/fabric/ExampleNotebook.ipynb) and a [step by step guide](https://www.zingg.ai/documentation-article/step-by-step-identity-resolution-with-zingg-on-fabric) is available.
+This uses the Zingg Community Python API and an [example notebook](../../examples/fabric/ExampleNotebook.ipynb) and a [step by step guide](https://www.zingg.ai/guides/step-by-step-identity-resolution-with-zingg-on-fabric) is available.
 
 ## For running the Zingg Enterprise version on Microsoft Fabric:
 

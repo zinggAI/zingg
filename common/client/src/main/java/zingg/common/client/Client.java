@@ -170,7 +170,7 @@ public abstract class Client<S,D,R,C,T> implements Serializable {
 			LOG.info("*  runtime parameters. However, no personal data or application data     *");
 			LOG.info("*  is captured. If you want to switch off this feature, please set the   *");
 			LOG.info("*  flag collectMetrics to false in config. For details, please refer to  *");
-			LOG.info("*  the Zingg docs (https://docs.zingg.ai/zingg/security).                *");
+			LOG.info("*  the Zingg docs (https://docs.zingg.ai/zingg/security-and-privacy/security-and-privacy).                *");
 			LOG.info("*                                                                        *");
 			LOG.info("**************************************************************************");
 			LOG.info("");

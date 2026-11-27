@@ -88,4 +88,4 @@ In such cases, Zingg can build the entire graph and relate different models toge
 ```
 ````
 
-[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.
+[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/pricing for individual tier features.

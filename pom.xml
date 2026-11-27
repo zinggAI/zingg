@@ -6,7 +6,7 @@
 	<packaging>pom</packaging>
 	<organization>
 		<name>Zingg</name>
-		<url>http://www.zingg.ai</url>
+		<url>https://www.zingg.ai</url>
 	</organization>
 	<licenses>
 		<license>
@@ -20,7 +20,7 @@
 			<id>zingg</id>
 			<name>Zingg Dev</name>
 			<organization>Zingg</organization>
-			<organizationUrl>http://www.zingg.ai</organizationUrl>
+			<organizationUrl>https://www.zingg.ai</organizationUrl>
 		</developer>
 	</developers>
 	<modules>

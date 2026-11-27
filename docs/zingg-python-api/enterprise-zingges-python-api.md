@@ -152,7 +152,7 @@ zingg.initAndExecute()
 ```
 
 {% hint style="success" icon="right-long" %}
-**Read more**: The full example shown on the [ZinggEC Python API reference](https://docs.zingg.ai/latest/working-with-python/working-with-python-enterprise/index) and the [ZinggES Python API reference](https://docs.zingg.ai/latest/working-with-python/working-with-python-enterprise/index-1) is identical, except for which Spark client package is imported.
+**Read more**: The full example shown on the [ZinggEC Python API reference](https://docs.zingg.ai/zingg/zingg-python-api/enterprise-zinggec-python-api) and the [ZinggES Python API reference](https://docs.zingg.ai/zingg/zingg-python-api/enterprise-zingges-python-api) is identical, except for which Spark client package is imported.
 {% endhint %}
 
 {% hint style="info" icon="right-long" %}
