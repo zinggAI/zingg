@@ -55,7 +55,7 @@ zinggDir = "/models"
 modelId = "zinggTrial"
 ```
 
-Update `zinggDir` to an `abfss://` or `s3a://` path if you want model files stored in cloud storage. `dbfs:/` paths are deprecated in Databricks—use Unity Catalog storage paths or external cloud storage instead.
+Keep `zinggDir` as a path starting with `/`, such as `/models`. Unity Catalog Volume paths (`/Volumes/...`) are not supported for `zinggDir`.
 
 ```python
 MARKED_DIR = zinggDir + "/" + modelId + "/trainingData/marked/"
