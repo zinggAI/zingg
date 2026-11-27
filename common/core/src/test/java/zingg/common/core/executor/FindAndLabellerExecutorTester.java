@@ -3,6 +3,7 @@ package zingg.common.core.executor;
 import zingg.common.client.ClientOptions;
 import zingg.common.client.ZFrame;
 import zingg.common.client.ZinggClientException;
+import zingg.common.client.arguments.model.IArguments;
 import zingg.common.client.util.DFObjectUtil;
 import zingg.common.core.executor.validate.ExecutorValidator;
 
@@ -10,8 +11,8 @@ import java.io.IOException;
 
 public class FindAndLabellerExecutorTester<S, D, R, C, T> extends MatchThresholdBasedExecutorTester<S, D, R, C, T> {
 
-    public FindAndLabellerExecutorTester(ZinggBase<S, D, R, C, T> ftdLabelerExecutor, ExecutorValidator<S, D, R, C, T> ftdLabelerValidator, String configFile, String modelId, DFObjectUtil<S, D, R, C> dfObjectUtil) throws ZinggClientException, IOException{
-        super(ftdLabelerExecutor, ftdLabelerValidator, configFile, modelId, dfObjectUtil);
+    public FindAndLabellerExecutorTester(ZinggBase<S, D, R, C, T> ftdLabelerExecutor, ExecutorValidator<S, D, R, C, T> ftdLabelerValidator, IArguments args, String modelId, DFObjectUtil<S, D, R, C> dfObjectUtil) throws ZinggClientException, IOException{
+        super(ftdLabelerExecutor, ftdLabelerValidator, args, modelId, dfObjectUtil);
     }
 
     //need to execute until we get
