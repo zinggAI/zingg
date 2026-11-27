@@ -11,7 +11,7 @@ You can run the **Zingg Community Version** on Databricks directly using the Dat
 
 ## For running the Zingg Community version on Databricks:
 
-This uses the Zingg Community Python API and supports Delta tables as well as Unity Catalog (for governed Delta tables) using UCPipe. An [example notebook](../../examples/databricks/FebrlExample.ipynb) and a [step by step guide](https://www.zingg.ai/documentation-article/identity-resolution-on-databricks-for-customer-360) is available.
+This uses the Zingg Community Python API and supports Delta tables as well as Unity Catalog (for governed Delta tables) using UCPipe. An [example notebook](../../examples/databricks/FebrlExample.ipynb) and a [step by step guide](https://www.zingg.ai/guides/identity-resolution-on-databricks-for-customer-360) is available.
 
 ## For running the Zingg Enterprise version on Databricks:
 

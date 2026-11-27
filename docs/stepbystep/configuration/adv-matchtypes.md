@@ -63,4 +63,4 @@ When we use it for the gender field like below, Zingg would automatically handle
    	},
 ```
 
-[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/zingg-entity-resolution-compare-versions for individual tier features.
+[^1]: Zingg Enterprise is the suite of proprietary products licensed by Zingg. Please refer to https://www.zingg.ai/product/pricing for individual tier features.
