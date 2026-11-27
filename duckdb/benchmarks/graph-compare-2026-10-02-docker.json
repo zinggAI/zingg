@@ -1,0 +1,55 @@
+{
+  "benchmark": "zingg-duckdb-graph-compare",
+  "date": "2026-10-02",
+  "container": "maven:3.9.9-eclipse-temurin-21",
+  "environment": "Docker on WSL2; shared host resources",
+  "shape": "connected-path",
+  "vertices": 500,
+  "inputEdges": 499,
+  "closurePairs": 124750,
+  "warmupRuns": 1,
+  "repetitions": 3,
+  "outputFormat": "UTF-8 CSV with header; serialization excluded from computation timing",
+  "cleanTiming": {
+    "resourceSamplingEnabled": false,
+    "entityScores": {
+      "samplesNs": [2652005, 6467645, 5900526],
+      "medianNs": 5900526,
+      "rows": [500, 500, 500],
+      "serializedOutputBytes": [13909, 13909, 13909],
+      "serializationSamplesNs": [1027872, 1810169, 1175228]
+    },
+    "transitiveEdges": {
+      "samplesNs": [9145498, 30903887, 28446691],
+      "medianNs": 28446691,
+      "rows": [124750, 124750, 124750],
+      "serializedOutputBytes": [1442127, 1442127, 1442127],
+      "serializationSamplesNs": [21875045, 35858521, 24012828]
+    }
+  },
+  "resourceDiagnostic": {
+    "resourceSamplingEnabled": true,
+    "samplingIntervalMs": 50,
+    "entityScores": {
+      "samplesNs": [2758825, 1759535, 1587006],
+      "maxObservedProcessRssBytes": [231518208, 239046656, 234909696],
+      "rssSampleCounts": [2, 2, 2],
+      "spillSampleCounts": [2, 2, 2],
+      "serializedOutputBytes": [13909, 13909, 13909]
+    },
+    "transitiveEdges": {
+      "samplesNs": [20070937, 13845722, 6957915],
+      "maxObservedProcessRssBytes": [233218048, 238272512, 234938368],
+      "rssSampleCounts": [2, 2, 2],
+      "spillSampleCounts": [2, 2, 2],
+      "serializedOutputBytes": [1442127, 1442127, 1442127]
+    }
+  },
+  "limitations": [
+    "single Docker-on-WSL2 host; not independent-runner evidence",
+    "resource RSS is process-wide and sampled maxima are not guaranteed peaks",
+    "only a connected path at 500 vertices; does not qualify other graph shapes or capacity scale",
+    "sampled timing and clean timing are separate and not directly comparable",
+    "no accepted regression threshold or release performance claim"
+  ]
+}

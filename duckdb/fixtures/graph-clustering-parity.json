@@ -1,0 +1,30 @@
+{
+  "profile": "zingg-0.7.0-duckdb-1.5.5.1",
+  "cases": [
+    {
+      "name": "connected-components-and-implied-pairs",
+      "edges": [[1, 2, 0.91], [2, 3, 0.82], [10, 11, 0.77]],
+      "expectedTransitiveEdges": [[1, 2, 0.91], [1, 3, 0.0], [2, 3, 0.82], [10, 11, 0.77]]
+    },
+    {
+      "name": "maximum-direct-score-wins",
+      "edges": [[4, 5, 0.61], [5, 4, 0.88]],
+      "expectedTransitiveEdges": [[4, 5, 0.88]]
+    },
+    {
+      "name": "zero-score-propagation-and-min-max",
+      "edges": [[20, 21, 0.72], [21, 22, 0.64]],
+      "expectedEntityScores": [
+        {"id": 20, "min": 0.0, "max": 0.72},
+        {"id": 21, "min": 0.64, "max": 0.72},
+        {"id": 22, "min": 0.0, "max": 0.64}
+      ]
+    },
+    {
+      "name": "link-output-asymmetry",
+      "links": [[30, 31, 0.9], [30, 32, 0.8], [31, 33, 0.7]],
+      "expectedAsymmetric": [[30, 31, 0.9], [31, 33, 0.7]],
+      "expectedPreserveRight": [[30, 31, 0.9], [30, 32, 0.8], [31, 33, 0.7]]
+    }
+  ]
+}

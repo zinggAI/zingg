@@ -1,0 +1,9 @@
+{
+  "product": "zingg-duckdb",
+  "version": "0.1.0",
+  "compatibilityProfile": "zingg-0.7.0-duckdb-1.5.6.0",
+  "java": {"major": 21, "bundled": true, "layout": "runtime/java"},
+  "duckdbJdbc": "1.5.6.0",
+  "workerArtifact": "worker/runtime-worker-0.1.0-SNAPSHOT.jar",
+  "extensions": {"autoInstall": false}
+}

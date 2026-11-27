@@ -1,0 +1,18 @@
+{
+  "benchmark": "zingg-duckdb-arrow-ingress",
+  "capturedOn": "2026-09-28",
+  "command": "BenchmarkMain --arrow-only --size {1000,10000} --repetitions 3",
+  "method": "one warmup excluded; median of three runs; direct ArrowFileSupport.read; cardinality checked after timed materialization",
+  "environment": {
+    "os": "Microsoft Windows 11 Pro 10.0.26200",
+    "cpu": "13th Gen Intel Core i7-1355U (Windows reports 10 cores, 12 logical processors)",
+    "java": "OpenJDK 21.0.12.1 Microsoft-14941484",
+    "duckdbJdbc": "1.5.5.1",
+    "javaFlags": ["--add-opens=java.base/java.nio=ALL-UNNAMED", "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"]
+  },
+  "results": [
+    {"size": 1000, "repetitions": 3, "warmupRuns": 1, "fileBytes": 29688, "writeMedianNs": 30463500, "ingestMedianNs": 459749200, "ingestRowsPerSecond": 2175, "ingestBytesPerSecond": 64574},
+    {"size": 10000, "repetitions": 3, "warmupRuns": 1, "fileBytes": 294888, "writeMedianNs": 58309100, "ingestMedianNs": 3792232200, "ingestRowsPerSecond": 2637, "ingestBytesPerSecond": 77761}
+  ],
+  "limitations": "Local diagnostic baseline only; no process RSS, spill, statistical confidence interval, clean-runner isolation, or competing vectorized implementation comparison. Do not use as a release threshold."
+}

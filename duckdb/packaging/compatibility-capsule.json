@@ -1,0 +1,22 @@
+{
+  "schema": "zingg-duckdb-compatibility-capsule-1",
+  "profile": "zingg-0.7.0-duckdb-1.5.6.0",
+  "upstream": {
+    "product": "zingg",
+    "version": "0.7.0",
+    "sourceArchive": "zingg-duckdb-source.zip",
+    "sourceProvenance": "config/source-provenance.json"
+  },
+  "dependencyProvenance": {
+    "rootLock": "dependency-lock.json",
+    "moduleLocks": "config/source-provenance.json",
+    "runtimeSbom": "sbom.spdx.json"
+  },
+  "notices": ["NOTICE.md", "LICENSE"],
+  "patches": [],
+  "isolation": {
+    "legacyImporters": "separate-process",
+    "sparkRuntime": "3.5.5",
+    "workerRuntime": "pure-duckdb"
+  }
+}

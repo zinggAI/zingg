@@ -1,0 +1,1 @@
+{"module":"engine-duckdb","java":"21","dependencies":["engine-api","org.duckdb:duckdb_jdbc:1.5.6.0","org.apache.arrow:arrow-vector:19.0.0","org.apache.arrow:arrow-memory-core:19.0.0","org.apache.arrow:arrow-memory-netty:19.0.0"]}

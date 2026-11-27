@@ -1,0 +1,93 @@
+{
+  "functionalParity": "PASS",
+  "jvm": {
+    "artifactBytes": 91790401,
+    "matches": [
+      {
+        "block": "g",
+        "feature": "1",
+        "id": "B",
+        "z_block": "g",
+        "z_feature": "0",
+        "z_id": "C",
+        "z_prediction": "1",
+        "z_score": "0.95462548319677",
+        "z_source": "0",
+        "z_z_source": "0",
+        "z_z_zid": "2",
+        "z_zid": "1"
+      }
+    ],
+    "modelReloadMatchRows": 1,
+    "ping": "pong",
+    "processResidentBytes": 89194496,
+    "queryRowCounts": [
+      1,
+      2
+    ],
+    "startupToPingSeconds": 1.712749,
+    "status": {
+      "allowed_extensions": "",
+      "heap_max_bytes": "6304038912",
+      "heap_used_bytes": "11182520",
+      "max_collect_bytes": "0",
+      "max_output_bytes": "0",
+      "max_rows": "0",
+      "max_spill_bytes": "0",
+      "max_temp_directory_size": "90% of available disk space",
+      "memory_limit": "18.7 GiB",
+      "offline_mode": "true",
+      "process_resident_bytes": "89194496",
+      "temp_directory": ".tmp",
+      "temp_directory_used_bytes": "0",
+      "threads": "8",
+      "unsafe_debug_sql": "true"
+    }
+  },
+  "nativeImage": {
+    "artifactBytes": 110472752,
+    "matches": [
+      {
+        "block": "g",
+        "feature": "1",
+        "id": "B",
+        "z_block": "g",
+        "z_feature": "0",
+        "z_id": "C",
+        "z_prediction": "1",
+        "z_score": "0.95462548319677",
+        "z_source": "0",
+        "z_z_source": "0",
+        "z_z_zid": "2",
+        "z_zid": "1"
+      }
+    ],
+    "modelReloadMatchRows": 1,
+    "ping": "pong",
+    "processResidentBytes": 114266112,
+    "queryRowCounts": [
+      1,
+      2
+    ],
+    "startupToPingSeconds": 0.718931,
+    "status": {
+      "allowed_extensions": "",
+      "heap_max_bytes": "20160446464",
+      "heap_used_bytes": "1048576",
+      "max_collect_bytes": "0",
+      "max_output_bytes": "0",
+      "max_rows": "0",
+      "max_spill_bytes": "0",
+      "max_temp_directory_size": "90% of available disk space",
+      "memory_limit": "18.7 GiB",
+      "offline_mode": "true",
+      "process_resident_bytes": "114266112",
+      "temp_directory": ".tmp",
+      "temp_directory_used_bytes": "0",
+      "threads": "8",
+      "unsafe_debug_sql": "true"
+    }
+  },
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "schema": "zingg-duckdb-native-image-comparison-1"
+}

@@ -1,0 +1,36 @@
+{
+  "benchmark": "zingg-duckdb-graph-resource-sampling",
+  "date": "2026-10-02",
+  "container": "maven:3.9.9-eclipse-temurin-21",
+  "environment": "Docker on WSL2; shared host resources",
+  "warmupRuns": 1,
+  "repetitions": 3,
+  "resourceSamplingIntervalMs": 50,
+  "metric": "maximum observed process-wide RSS during operation; not operation-attributed peak memory",
+  "profiles": [
+    {
+      "shape": "path",
+      "vertices": 1200,
+      "inputEdges": 1199,
+      "closurePairs": 719400,
+      "entityScores": {"medianNs": 6706381, "outputBytes": 33709, "observedRssBytes": [327233536, 502661120, 499777536], "sampleCounts": [2, 2, 2]},
+      "transitiveEdges": {"medianNs": 159855637, "outputBytes": 8740727, "observedRssBytes": [350797824, 421011456, 586649600], "sampleCounts": [4, 7, 4]}
+    },
+    {
+      "shape": "dense",
+      "vertices": 1000,
+      "inputEdges": 499500,
+      "closurePairs": 499500,
+      "entityScores": {"medianNs": 488140334, "outputBytes": 27909, "observedRssBytes": [689000448, 1221931008, 1398513664], "sampleCounts": [10, 9, 14]},
+      "transitiveEdges": {"medianNs": 737737102, "outputBytes": 5884127, "observedRssBytes": [880877568, 1111756800, 1434083328], "sampleCounts": [20, 14, 14]}
+    }
+  ],
+  "limitations": [
+    "single Docker-on-WSL2 process and shared host; no independent-runner reproduction",
+    "RSS is process-wide, includes JVM/native allocations and is not attributable to a single operation",
+    "50 ms sampling may miss short-lived peaks; sample counts vary by operation duration",
+    "spill bytes are not emitted by this graph-comparison profile",
+    "separate sampled timings are not comparable with clean timing runs",
+    "diagnostic only; no capacity guarantee or accepted regression threshold"
+  ]
+}

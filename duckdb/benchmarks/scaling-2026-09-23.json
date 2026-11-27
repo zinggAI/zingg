@@ -1,0 +1,13 @@
+{
+  "benchmark": "zingg-duckdb-smoke",
+  "recordedAt": "2026-09-23",
+  "repetitions": 3,
+  "environment": {"os": "Windows", "java": "21.0.12.1 Microsoft-14941484", "duckdbJdbc": "1.5.5.1"},
+  "results": [
+    {"size": 100, "graphInputEdges": 99, "startupMedianNs": 16533900, "sqlMedianNs": 987400, "graphMedianNs": 4713400},
+    {"size": 500, "graphInputEdges": 499, "startupMedianNs": 26200300, "sqlMedianNs": 1814500, "graphMedianNs": 20624300},
+    {"size": 1000, "graphInputEdges": 999, "startupMedianNs": 17480500, "sqlMedianNs": 1469100, "graphMedianNs": 55302500},
+    {"size": 2000, "graphInputEdges": 1999, "startupMedianNs": 28406700, "sqlMedianNs": 1917600, "graphMedianNs": 384297300}
+  ],
+  "notes": "Graph timing rises superlinearly as expected from the current O(k²) closure. Values are exploratory and not release thresholds."
+}

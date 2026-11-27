@@ -1,0 +1,18 @@
+{
+  "benchmark": "zingg-duckdb-arrow-ingress",
+  "capturedOn": "2026-09-28",
+  "command": "BenchmarkMain --arrow-only --size {1000,10000} --repetitions 5",
+  "method": "one warmup excluded; median of five runs; same Arrow IPC file and fresh DuckDB runtime for each JDBC and Appender import; cardinality checked after timed materialization",
+  "environment": {
+    "os": "Microsoft Windows 11 Pro 10.0.26200",
+    "cpu": "13th Gen Intel Core i7-1355U (Windows reports 10 cores, 12 logical processors)",
+    "java": "OpenJDK 21.0.12.1 Microsoft-14941484",
+    "duckdbJdbc": "1.5.5.1",
+    "javaFlags": ["--add-opens=java.base/java.nio=ALL-UNNAMED", "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"]
+  },
+  "results": [
+    {"size": 1000, "repetitions": 5, "warmupRuns": 1, "fileBytes": 29688, "writeMedianNs": 21989100, "ingestMedianNs": 531905000, "ingestRowsPerSecond": 1880, "ingestBytesPerSecond": 55814, "appenderMedianNs": 12710500, "appenderRowsPerSecond": 78675, "appenderSpeedup": 41.848},
+    {"size": 10000, "repetitions": 5, "warmupRuns": 1, "fileBytes": 294888, "writeMedianNs": 60692700, "ingestMedianNs": 4276496600, "ingestRowsPerSecond": 2338, "ingestBytesPerSecond": 68956, "appenderMedianNs": 34904200, "appenderRowsPerSecond": 286498, "appenderSpeedup": 122.521}
+  ],
+  "limitations": "Local diagnostic only. This compares two row-wise import paths, not zero-copy/vectorized Arrow C Data or CTAS. No process RSS, spill, confidence intervals, runner isolation, 100k/capacity-sized cases, or release threshold. The apparent speedup needs independent-runner reproduction; do not use as a release claim."
+}

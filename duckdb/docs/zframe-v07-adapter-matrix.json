@@ -1,0 +1,1600 @@
+{
+  "upstreamRepository": "https://github.com/zinggai/zingg",
+  "upstreamCommit": "48cb157b4f35fcfa733e2e7f9699ea988e018738",
+  "capsuleSha256": "a289903fae2ed9ff3a0a3360fed3c80232d70fce848df27e2c6a6ee8406c4b5d",
+  "interface": "zingg.common.client.ZFrame",
+  "signatureCount": 93,
+  "dispositionCounts": {
+    "PER_OVERLOAD_SPARK_DIFFERENTIAL": 64,
+    "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN": 29,
+    "EXACT_CONTRACT_ONLY": 0,
+    "MAPPED_NOT_DIFFERENTIAL": 0,
+    "CONDITIONAL": 0,
+    "UNSUPPORTED": 0,
+    "UNMAPPED": 0
+  },
+  "releaseParityProven": false,
+  "methods": [
+    {
+      "signature": "public abstract <A> zingg.common.client.ZFrame<D, R, C> withColumn(java.lang.String, A);",
+      "method": "withColumn",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "withColumnLiteralMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C and(C, C);",
+      "method": "and",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "andColumnsMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C col(java.lang.String);",
+      "method": "col",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "colStringMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C concat(C, C);",
+      "method": "concat",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "concatColumnsMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C equalTo(C, C);",
+      "method": "equalTo",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "equalToColumnsMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C equalTo(java.lang.String, double);",
+      "method": "equalTo",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "equalToDoubleMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C equalTo(java.lang.String, int);",
+      "method": "equalTo",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "equalToIntMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C equalTo(java.lang.String, java.lang.String);",
+      "method": "equalTo",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "equalToStringMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C gt(C, C);",
+      "method": "gt",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "gtColumnsMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C gt(java.lang.String);",
+      "method": "gt",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "gtColumnToIdentityMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C gt(java.lang.String, double);",
+      "method": "gt",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "gtDoubleMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C gt(zingg.common.client.ZFrame<D, R, C>, java.lang.String);",
+      "method": "gt",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract C isNotNull(C);",
+      "method": "isNotNull",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "isNotNullColumnMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C not(C);",
+      "method": "not",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "notColumnMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C notEqual(java.lang.String);",
+      "method": "notEqual",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "notEqualColumnToIdentityMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C notEqual(java.lang.String, int);",
+      "method": "notEqual",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "notEqualIntMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C notEqual(java.lang.String, java.lang.String);",
+      "method": "notEqual",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "notEqualStringMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C or(C, C);",
+      "method": "or",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "orColumnsMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C substr(C, int, int);",
+      "method": "substr",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "substrMatchesSparkForNegativeZeroAndLongRanges",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract C[] getCols();",
+      "method": "getCols",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "getColsMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract D df();",
+      "method": "df",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract R head();",
+      "method": "head",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "headMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract boolean isEmpty();",
+      "method": "isEmpty",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "isEmptyMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract double aggSum(java.lang.String);",
+      "method": "aggSum",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "aggSumMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract double getAsDouble(R, java.lang.String);",
+      "method": "getAsDouble",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "getAsDoubleMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract int fieldIndex(java.lang.String);",
+      "method": "fieldIndex",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "fieldIndexMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract int getAsInt(R, java.lang.String);",
+      "method": "getAsInt",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "getAsIntMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract java.lang.Object get(R, java.lang.String);",
+      "method": "get",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "getMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract java.lang.Object getMaxVal(java.lang.String);",
+      "method": "getMaxVal",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "getMaxValMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract java.lang.Object getOnlyObjectFromRow(R);",
+      "method": "getOnlyObjectFromRow",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "getOnlyObjectFromRowMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract java.lang.String getAsString(R, java.lang.String);",
+      "method": "getAsString",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "getAsStringMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract java.lang.String showSchema();",
+      "method": "showSchema",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "showSchemaMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract java.lang.String[] columns();",
+      "method": "columns",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "columnsMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract java.lang.String[] fieldNames();",
+      "method": "fieldNames",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "fieldNamesMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract java.util.List<R> collectAsList();",
+      "method": "collectAsList",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "collectAsListMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract java.util.List<java.lang.String> collectFirstColumn();",
+      "method": "collectFirstColumn",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "collectFirstColumnMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract long count();",
+      "method": "count",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "countMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract long getAsLong(R, java.lang.String);",
+      "method": "getAsLong",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "getAsLongMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract void show();",
+      "method": "show",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "showNoArgsMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract void show(boolean);",
+      "method": "show",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "showBooleanMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract void show(int);",
+      "method": "show",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "showIntMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract void show(int, boolean);",
+      "method": "show",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "showIntBooleanMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.FieldData[] fields();",
+      "method": "fields",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "fieldsMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> as(java.lang.String);",
+      "method": "as",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "asStringMatchesSparkForQualifiedSelfJoin",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> cache();",
+      "method": "cache",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> coalesce(int);",
+      "method": "coalesce",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> countDistinct(java.lang.String, java.lang.String, java.lang.String);",
+      "method": "countDistinct",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> distinct();",
+      "method": "distinct",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "distinctMatchesSparkForDuplicateAndNullRows",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> drop(C);",
+      "method": "drop",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> drop(java.lang.String);",
+      "method": "drop",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> drop(java.lang.String...);",
+      "method": "drop",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> dropDuplicates(java.lang.String, java.lang.String...);",
+      "method": "dropDuplicates",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "dropDuplicatesVarargsMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> dropDuplicates(java.lang.String[]);",
+      "method": "dropDuplicates",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "dropDuplicatesArrayMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> except(zingg.common.client.ZFrame<D, R, C>);",
+      "method": "except",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "exceptAndIntersectMatchSparkSetSemanticsForDuplicatesAndNulls",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> explode(java.lang.String, java.lang.String);",
+      "method": "explode",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "explodeMatchesSparkForNullEmptyAndDuplicateArrayElements",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> filter(C);",
+      "method": "filter",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> filterInCond(java.lang.String, zingg.common.client.ZFrame<D, R, C>, java.lang.String);",
+      "method": "filterInCond",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> filterNotNullCond(java.lang.String);",
+      "method": "filterNotNullCond",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "filterNotNullCondMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> filterNullCond(java.lang.String);",
+      "method": "filterNullCond",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "filterNullCondMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> groupByCount(java.lang.String, java.lang.String);",
+      "method": "groupByCount",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "groupByCountOverloadsMatchSparkForDuplicatesAndNullKeys",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> groupByCount(java.lang.String, java.lang.String, java.lang.String);",
+      "method": "groupByCount",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "groupByCountOverloadsMatchSparkForDuplicatesAndNullKeys",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> groupByMinMaxScore(C);",
+      "method": "groupByMinMaxScore",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> intersect(zingg.common.client.ZFrame<D, R, C>);",
+      "method": "intersect",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "exceptAndIntersectMatchSparkSetSemanticsForDuplicatesAndNulls",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> join(zingg.common.client.ZFrame<D, R, C>, C, java.lang.String);",
+      "method": "join",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "aliasedSelfJoinPreservesDuplicateNamesAndSqlNullEquality",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> join(zingg.common.client.ZFrame<D, R, C>, java.lang.String);",
+      "method": "join",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "prefixedJoinMatchesSparkForDuplicatesAndNulls",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> join(zingg.common.client.ZFrame<D, R, C>, java.lang.String, boolean, java.lang.String);",
+      "method": "join",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> join(zingg.common.client.ZFrame<D, R, C>, java.lang.String, java.lang.String);",
+      "method": "join",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> join(zingg.common.client.ZFrame<D, R, C>, java.lang.String, java.lang.String, java.lang.String);",
+      "method": "join",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> joinOnCol(zingg.common.client.ZFrame<D, R, C>, C);",
+      "method": "joinOnCol",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "joinOnColumnExpressionPreservesSparkDuplicateNames",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> joinOnCol(zingg.common.client.ZFrame<D, R, C>, java.lang.String);",
+      "method": "joinOnCol",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "joinOnColumnUsingMatchesSparkForDuplicatesAndNulls",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> joinRight(zingg.common.client.ZFrame<D, R, C>, java.lang.String);",
+      "method": "joinRight",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "rightJoinMatchesSparkForDuplicateNullAndUnmatchedKeys",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> limit(int);",
+      "method": "limit",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "limitMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> orderBy(java.lang.String);",
+      "method": "orderBy",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> repartition(int);",
+      "method": "repartition",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> repartition(int, C);",
+      "method": "repartition",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> repartition(int, scala.collection.Seq<C>);",
+      "method": "repartition",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> repartition(scala.collection.Seq<C>);",
+      "method": "repartition",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> sample(boolean, double);",
+      "method": "sample",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "sampleDoubleMatchesSparkForNoReplacementStatistics",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> sample(boolean, float);",
+      "method": "sample",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> select(C...);",
+      "method": "select",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> select(java.lang.String...);",
+      "method": "select",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectStringVarargsMatchesSparkForOrderDuplicatesAndNulls",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> select(java.util.List<C>);",
+      "method": "select",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> selectExpr(java.lang.String...);",
+      "method": "selectExpr",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> sortAscending(java.lang.String);",
+      "method": "sortAscending",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> sortDescending(java.lang.String);",
+      "method": "sortDescending",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> split(java.lang.String, java.lang.String, java.lang.String);",
+      "method": "split",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "splitMatchesSparkForRepeatedTrailingEmptyAndNullValues",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> toDF(java.lang.String, java.lang.String);",
+      "method": "toDF",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> toDF(java.lang.String[]);",
+      "method": "toDF",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> union(zingg.common.client.ZFrame<D, R, C>);",
+      "method": "union",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> unionAll(zingg.common.client.ZFrame<D, R, C>);",
+      "method": "unionAll",
+      "adapterDisposition": "OVERLOAD_SELECTED_SEMANTICS_UNPROVEN",
+      "evidence": {
+        "level": "OVERLOAD_SELECTED_IN_SHARED_SPARK_FIXTURE",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "selectedOperationsMatchSparkForNullAndDuplicateFixtures",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "NOT_ATTRIBUTABLE_TO_THIS_OVERLOAD",
+        "semanticCoverage": "UNPROVEN_PER_OVERLOAD",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "Javac confirms this overload is called inside a shared Spark 3.5.5 fixture, but its behavioral assertions are not attributable to this overload; per-overload semantics, edge cases, and approved Zingg v0.7 phase parity remain unproven."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> unionByName(zingg.common.client.ZFrame<D, R, C>, boolean);",
+      "method": "unionByName",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "unionByNameAllowMissingMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> withColumnRenamed(java.lang.String, java.lang.String);",
+      "method": "withColumnRenamed",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "withColumnRenamedMatchesSparkForExistingAndMissingNames",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    },
+    {
+      "signature": "public abstract zingg.common.client.ZFrame<D, R, C> withColumns(java.lang.String[], C[]);",
+      "method": "withColumns",
+      "adapterDisposition": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+      "evidence": {
+        "level": "PER_OVERLOAD_SPARK_DIFFERENTIAL",
+        "testClass": "ZFrameCoreDifferentialTest",
+        "testMethod": "withColumnsMatchesSpark",
+        "overloadResolution": "JAVAC_ATTRIBUTED_EXACT",
+        "semanticAssertionScope": "ISOLATED_TEST_METHOD",
+        "semanticCoverage": "DIRECT_SPARK_OUTPUT_COMPARISON",
+        "overloadResolutionTestClass": "ZFrameOverloadResolutionTest",
+        "overloadResolutionTestMethod": "differentialCallsResolveToThePinnedZFrameSignatures",
+        "source": "reference-spark35-tests/src/test/java/io/zingg/duckdb/reference/ZFrameCoreDifferentialTest.java"
+      },
+      "rationale": "A dedicated differential test invokes this exact overload and directly compares its observable output with Spark; edge-case breadth and approved Zingg v0.7 phase parity remain separate requirements."
+    }
+  ]
+}

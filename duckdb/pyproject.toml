@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zingg-duckdb"
+version = "0.1.0"
+description = "Python control plane for the standalone Zingg DuckDB backend"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = ["python"]
+include = ["zingg_duckdb*"]
+exclude = ["tests*"]
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
+pythonpath = ["python"]
+norecursedirs = ["dist-*", "target", ".git", ".venv", "venv"]
+
+[tool.setuptools.package-dir]
+"" = "python"

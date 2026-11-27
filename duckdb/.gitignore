@@ -1,0 +1,19 @@
+target/
+build/
+*.egg-info/
+__pycache__/
+.venv/
+*.log
+runtime/
+dist/
+dist-current/
+dist-wsl/
+dist-native*/
+dist-jdk-module-check/
+dist-*/
+fixtures/generated/
+snapshot_failures/
+
+# Local benchmark run outputs are generated artifacts. Keep checked-in baseline
+# and historical evidence files that are referenced by the plans/documentation.
+benchmarks/docker-full-*/

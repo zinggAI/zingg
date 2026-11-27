@@ -1,0 +1,5 @@
+id,name,email,city
+1,Ana García,ana@example.test,Madrid
+2,Ana Garcia,ana@example.test,Madrid
+3,Bruno Díaz,bruno@example.test,Barcelona
+4,,missing@example.test,Valencia

@@ -1,0 +1,11 @@
+{
+  "benchmark": "zingg-duckdb-smoke",
+  "size": 1000,
+  "repetitions": 3,
+  "graphInputEdges": 999,
+  "startupMedianNs": 21832402,
+  "sqlMedianNs": 2568726,
+  "graphMedianNs": 93540367,
+  "platform": "WSL2 Ubuntu 24.04 amd64",
+  "runtime": "bundled Java 21 jlink runtime"
+}

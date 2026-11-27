@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.zingg.duckdb</groupId><artifactId>zingg-duckdb</artifactId><version>0.1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>Zingg DuckDB</name>
+  <properties><maven.compiler.release>21</maven.compiler.release><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><duckdb.version>1.5.6.0</duckdb.version><junit.version>5.11.4</junit.version></properties>
+  <modules><module>engine-api</module><module>model-format</module><module>engine-duckdb</module><module>protocol</module><module>legacy-blocking-import-zingg07-spark35</module><module>legacy-classifier-import-zingg07-spark35</module><module>compat-zingg07-runtime</module><module>runtime-worker</module></modules>
+  <dependencyManagement><dependencies><dependency><groupId>org.duckdb</groupId><artifactId>duckdb_jdbc</artifactId><version>${duckdb.version}</version></dependency><dependency><groupId>org.junit</groupId><artifactId>junit-bom</artifactId><version>${junit.version}</version><type>pom</type><scope>import</scope></dependency></dependencies></dependencyManagement>
+  <profiles>
+    <profile>
+      <id>zingg07-spark35-reference</id>
+      <activation><property><name>zingg07.contract.profile</name><value>true</value></property></activation>
+      <modules><module>reference-spark35-tests</module></modules>
+    </profile>
+  </profiles>
+  <build><pluginManagement><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.14.0</version></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.5.2</version><configuration><failIfNoSpecifiedTests>false</failIfNoSpecifiedTests></configuration></plugin></plugins></pluginManagement></build>
+</project>

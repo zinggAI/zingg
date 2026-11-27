@@ -1,0 +1,654 @@
+{
+  "environment": {
+    "architecture": "x86_64",
+    "javaExecutable": "java",
+    "javaRuntimeVersion": "openjdk 21.0.12.1 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-24.04.4-Ubuntu)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-24.04.4-Ubuntu, mixed mode, sharing)",
+    "launchCommands": {
+      "jvm": [
+        "java",
+        "--add-opens=java.base/java.nio=ALL-UNNAMED",
+        "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+        "-jar",
+        "<worker-jar>",
+        "--unsafe-debug-sql"
+      ],
+      "nativeImage": [
+        "<native-image-worker>",
+        "--unsafe-debug-sql"
+      ]
+    },
+    "logicalCpuCount": 8,
+    "measuredRepetitions": 5,
+    "measurementPolicy": "fresh worker process per sample; paired runtimes alternate launch order",
+    "nativeImageToolchainVersion": "Oracle GraalVM 21.0.12+7.1",
+    "nativeSha256": "4d071c382bc8ce5ecd2dc1fe6430e65db24e6b0096378f453e0c201edda3e5eb",
+    "operatingSystem": "Linux",
+    "osRelease": "6.18.33.2-microsoft-standard-WSL2",
+    "python": "3.12.3",
+    "warmups": 1,
+    "workerJarSha256": "dd37b53b76c8c5b4126441b24f40f073233b500f83ca8b0d2707e525f20c52be"
+  },
+  "functionalParity": "PASS",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "runs": [
+    {
+      "index": 0,
+      "jvm": {
+        "artifactBytes": 91795427,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 88125440,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.368857,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11217392",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "88125440",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 114507776,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.91516,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114507776",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "native",
+        "jvm"
+      ]
+    },
+    {
+      "index": 1,
+      "jvm": {
+        "artifactBytes": 91795427,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 87937024,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.836229,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11217392",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "87937024",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 114380800,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.927818,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114380800",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "jvm",
+        "native"
+      ]
+    },
+    {
+      "index": 2,
+      "jvm": {
+        "artifactBytes": 91795427,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 89120768,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.686749,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11217392",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "89120768",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 114446336,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.829962,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114446336",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "native",
+        "jvm"
+      ]
+    },
+    {
+      "index": 3,
+      "jvm": {
+        "artifactBytes": 91795427,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 88772608,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 2.069329,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11217392",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "88772608",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 114229248,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.882085,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114229248",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "jvm",
+        "native"
+      ]
+    },
+    {
+      "index": 4,
+      "jvm": {
+        "artifactBytes": 91795427,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 88096768,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.613653,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11217392",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "88096768",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 114274304,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.761159,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114274304",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "native",
+        "jvm"
+      ]
+    },
+    {
+      "index": 5,
+      "jvm": {
+        "artifactBytes": 91795427,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 88170496,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.582746,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11217392",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "88170496",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytes": 114548736,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.764182,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114548736",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "jvm",
+        "native"
+      ]
+    }
+  ],
+  "schema": "zingg-duckdb-native-image-comparison-3",
+  "summary": {
+    "jvm": {
+      "artifactBytes": {
+        "max": 91795427.0,
+        "median": 91795427.0,
+        "min": 91795427.0,
+        "populationStdDev": 0.0,
+        "samples": 5
+      },
+      "processResidentBytes": {
+        "max": 89120768.0,
+        "median": 88170496.0,
+        "min": 87937024.0,
+        "populationStdDev": 450644.89091185754,
+        "samples": 5
+      },
+      "startupToPingSeconds": {
+        "max": 2.069329,
+        "median": 1.686749,
+        "min": 1.582746,
+        "populationStdDev": 0.17870193827756883,
+        "samples": 5
+      }
+    },
+    "nativeImage": {
+      "artifactBytes": {
+        "max": 110472752.0,
+        "median": 110472752.0,
+        "min": 110472752.0,
+        "populationStdDev": 0.0,
+        "samples": 5
+      },
+      "processResidentBytes": {
+        "max": 114548736.0,
+        "median": 114380800.0,
+        "min": 114229248.0,
+        "populationStdDev": 115486.86345797083,
+        "samples": 5
+      },
+      "startupToPingSeconds": {
+        "max": 0.927818,
+        "median": 0.829962,
+        "min": 0.761159,
+        "populationStdDev": 0.06527795602008384,
+        "samples": 5
+      }
+    }
+  }
+}

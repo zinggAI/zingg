@@ -1,0 +1,544 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  compile:
+    name: Compile (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm, macos-13, macos-14, windows-2025]
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Python for packaging checks
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run packaging tests
+        shell: bash
+        run: python -m unittest discover -s packaging/tests -p 'test_*.py' -v
+      - name: Verify Unix Maven wrapper permissions
+        if: runner.os != 'Windows'
+        shell: bash
+        run: test -x ./mvnw
+      - name: Validate POSIX packaging scripts
+        if: runner.os != 'Windows'
+        shell: bash
+        run: bash -n packaging/create-jre.sh packaging/package.sh packaging/zingg-duckdb.sh
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Compile without tests
+        shell: bash
+        run: ./mvnw -DskipTests clean package
+
+  native-validation:
+    name: Native tests (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: linux-amd64, os: ubuntu-24.04 }
+          - { target: linux-arm64, os: ubuntu-24.04-arm }
+          - { target: macos-x86_64, os: macos-13 }
+          - { target: macos-arm64, os: macos-14 }
+          - { target: windows-x86_64, os: windows-2025 }
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run full Maven tests (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: ./mvnw -B -ntp -Dduckdb.version=1.5.6.0 -Dsurefire.timeout=300 test
+      - name: Run full Maven tests (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./mvnw.cmd -B -ntp '-Dduckdb.version=1.5.6.0' '-Dsurefire.timeout=300' test
+      - name: Run Python tests (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: PYTHONPATH=python PYTHONWARNINGS=error python -m unittest discover -s python/tests -v
+      - name: Run Python tests (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $env:PYTHONPATH = 'python'
+          $env:PYTHONWARNINGS = 'error'
+          python -m unittest discover -s python/tests -v
+      - name: Fetch pinned SecondString oracle (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          curl --fail --location --output "$RUNNER_TEMP/secondstring.jar" \
+            https://raw.githubusercontent.com/zinggAI/zingg/21f54e9b4693d49d6f26b2851853b140951a7502/thirdParty/lib/secondstring.jar
+          test "$(sha256sum "$RUNNER_TEMP/secondstring.jar" | cut -d' ' -f1)" = 5267ae94cb2feff6b75bf112c1d22976b7835e04bad14b369cbd5525f20b520
+      - name: Fetch pinned SecondString oracle (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $oracle = Join-Path $env:RUNNER_TEMP 'secondstring.jar'
+          Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/zinggAI/zingg/21f54e9b4693d49d6f26b2851853b140951a7502/thirdParty/lib/secondstring.jar' -OutFile $oracle
+          if ((Get-FileHash $oracle -Algorithm SHA256).Hash.ToLowerInvariant() -ne '5267ae94cb2feff6b75bf112c1d22976b7835e04bad14b369cbd5525f20b520') { throw 'SecondString oracle checksum mismatch' }
+      - name: Run exact SecondString differential (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: ./mvnw -B -ntp -pl engine-duckdb -am -Dsecondstring.oracle=true "-Dsecondstring.jar=$RUNNER_TEMP/secondstring.jar" -Dtest=SecondStringJaccardDifferentialTest -Dsurefire.failIfNoSpecifiedTests=false test
+      - name: Run exact SecondString differential (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./mvnw.cmd -B -ntp -pl engine-duckdb -am '-Dsecondstring.oracle=true' "-Dsecondstring.jar=$env:RUNNER_TEMP\secondstring.jar" '-Dtest=SecondStringJaccardDifferentialTest' '-Dsurefire.failIfNoSpecifiedTests=false' test
+
+  windows-package:
+    name: Assemble Windows distribution
+    runs-on: windows-2025
+    needs: compile
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Build and verify package without tests
+        shell: pwsh
+        run: ./packaging/package.ps1 -Output dist -CreateJre
+      - name: Set up Python 3.10 for worker integration checks
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Verify durable worker labels on Windows
+        shell: pwsh
+        run: |
+          $jar = 'runtime-worker/target/runtime-worker-0.1.0-SNAPSHOT.jar'
+          $java = 'dist/zingg-duckdb-0.1.0/runtime/java/bin/java.exe'
+          python tools/verify-worker-label-restart.py $jar $java
+          if ($LASTEXITCODE -ne 0) { throw 'label restart verification failed' }
+          python tools/verify-worker-label-concurrency.py $jar $java
+          if ($LASTEXITCODE -ne 0) { throw 'label concurrency verification failed' }
+          python tools/verify-worker-label-kill.py $jar $java
+          if ($LASTEXITCODE -ne 0) { throw 'label kill verification failed' }
+          python tools/verify-worker-failure-matrix.py $jar $java
+          if ($LASTEXITCODE -ne 0) { throw 'worker failure matrix failed' }
+      - name: Smoke bundled Windows runtime without system Java
+        shell: pwsh
+        run: |
+          $env:Path = "$env:SystemRoot\System32"
+          "smoke`tping`t`nsmoke`tshutdown`t" | & "${{ github.workspace }}\dist\zingg-duckdb-0.1.0\bin\zingg-duckdb.cmd"
+          if ($LASTEXITCODE -ne 0) { throw "bundled Windows runtime smoke failed: $LASTEXITCODE" }
+      - name: Upload package artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: zingg-duckdb-windows
+          path: |
+            dist/zingg-duckdb-0.1.0
+            dist/zingg-duckdb-source.zip
+          if-no-files-found: error
+
+  zingg07-contract:
+    name: Pinned upstream ZFrame contract
+    runs-on: windows-2025
+    needs: compile
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Test capsule canonicalizer
+        shell: pwsh
+        run: python -m unittest discover -s packaging/tests -p 'test_*.py' -v
+      - name: Build pinned upstream capsule
+        shell: pwsh
+        run: ./packaging/prepare-zingg07-capsule.ps1 -ManifestPath dist/zingg07-capsule-manifest.json
+      - name: Verify ZFrame inventory and exact symbols
+        shell: pwsh
+        run: |
+          $jar = Join-Path $env:GITHUB_WORKSPACE 'dist\zingg-common-client-0.7.0.jar'
+          python tools/verify-zframe-inventory.py $jar
+          if ($LASTEXITCODE -ne 0) { throw 'pinned ZFrame inventory verification failed' }
+          python tools/generate-zframe-adapter-matrix.py --check
+          if ($LASTEXITCODE -ne 0) { throw 'ZFrame adapter matrix is stale' }
+          ./mvnw.cmd -pl compat-zingg07-runtime -am '-Dzingg07.contract.profile=true' "-Dzingg07.contract.jar=$jar" '-Dtest=Zingg07ExactCompileChecks,Zingg07ContractProbeTest' '-Dsurefire.failIfNoSpecifiedTests=false' test
+          if ($LASTEXITCODE -ne 0) { throw 'exact Zingg contract tests failed' }
+      - name: Differential ZFrame semantics and resolve exact overloads
+        shell: pwsh
+        run: |
+          $jar = Join-Path $env:GITHUB_WORKSPACE 'dist\zingg-common-client-0.7.0.jar'
+          ./mvnw.cmd -pl reference-spark35-tests -am '-Dzingg07.contract.profile=true' "-Dzingg07.contract.jar=$jar" '-Dtest=ZFrameCoreDifferentialTest,ZFrameOverloadResolutionTest' '-Dsurefire.failIfNoSpecifiedTests=false' test
+          if ($LASTEXITCODE -ne 0) { throw 'ZFrame Spark differential or javac overload-resolution tests failed' }
+      - name: Upload capsule provenance
+        uses: actions/upload-artifact@v4
+        with:
+          name: zingg07-capsule-provenance
+          path: dist/zingg07-capsule-manifest.json
+          if-no-files-found: error
+
+  zingg07-contract-linux:
+    name: Pinned upstream ZFrame contract (Linux)
+    runs-on: ubuntu-24.04
+    needs: compile
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Test capsule canonicalizer
+        shell: bash
+        run: python -m unittest discover -s packaging/tests -p 'test_*.py' -v
+      - name: Build and verify pinned upstream capsule
+        shell: bash
+        run: bash packaging/prepare-zingg07-capsule.sh "$PWD/dist/zingg07-capsule"
+      - name: Check method coverage matrix
+        shell: bash
+        run: python tools/generate-zframe-adapter-matrix.py --check
+      - name: Verify exact Zingg symbols
+        shell: bash
+        run: |
+          jar="$PWD/dist/zingg07-capsule/zingg-common-client-0.7.0.jar"
+          ./mvnw -pl compat-zingg07-runtime -am -Dzingg07.contract.profile=true "-Dzingg07.contract.jar=$jar" -Dtest=Zingg07ExactCompileChecks,Zingg07ContractProbeTest -Dsurefire.failIfNoSpecifiedTests=false test
+      - name: Differential group-count semantics against Spark 3.5.5
+        shell: bash
+        run: |
+          jar="$PWD/dist/zingg07-capsule/zingg-common-client-0.7.0.jar"
+          ./mvnw -pl reference-spark35-tests -am -Dzingg07.contract.profile=true "-Dzingg07.contract.jar=$jar" -Dtest=ZFrameCoreDifferentialTest,ZFrameOverloadResolutionTest -Dsurefire.failIfNoSpecifiedTests=false test
+      - name: Upload capsule provenance
+        uses: actions/upload-artifact@v4
+        with:
+          name: zingg07-capsule-provenance-linux
+          path: dist/zingg07-capsule/zingg07-capsule-manifest.json
+          if-no-files-found: error
+
+  offline-packages:
+    name: Offline package (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    needs: compile
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: linux-amd64, os: ubuntu-24.04, shell: bash }
+          - { target: linux-arm64, os: ubuntu-24.04-arm, shell: bash }
+          - { target: macos-x86_64, os: macos-13, shell: bash }
+          - { target: macos-arm64, os: macos-14, shell: bash }
+          - { target: windows-x86_64, os: windows-2025, shell: pwsh }
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Set up Python for packaged worker protocol checks
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Build offline package (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          ./mvnw -DskipTests package
+          CREATE_JRE=true ./packaging/package-native.sh dist
+          ZINGG_TEST_WORKER_JAR="$PWD/dist/zingg-duckdb-0.1.0/worker/runtime-worker-0.1.0-SNAPSHOT.jar" \
+            ZINGG_TEST_JAVA="$PWD/dist/zingg-duckdb-0.1.0/runtime/java/bin/java" \
+            PYTHONPATH=python PYTHONWARNINGS=error python -m unittest discover -s python/tests -p 'test_worker_process_cancellation.py' -v
+          test -f "dist/zingg-duckdb-0.1.0/config/runtime-manifest.json"
+          test -f "dist/zingg-duckdb-source.zip"
+          ./packaging/verify-package.sh dist/zingg-duckdb-0.1.0 true
+          sh packaging/verify-no-system-java.sh dist/zingg-duckdb-0.1.0
+          if [ "$RUNNER_OS" = Linux ]; then
+            sh packaging/verify-docker-package.sh dist/zingg-duckdb-0.1.0
+            sh packaging/verify-rss-linux.sh dist/zingg-duckdb-0.1.0
+            sh packaging/verify-process-kill-linux.sh dist/zingg-duckdb-0.1.0
+          fi
+      - name: Build offline package (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          ./mvnw.cmd -DskipTests package
+          ./packaging/package.ps1 -Output dist -CreateJre
+          $env:PYTHONPATH = 'python'
+          $env:PYTHONWARNINGS = 'error'
+          $env:ZINGG_TEST_WORKER_JAR = (Join-Path $PWD 'dist/zingg-duckdb-0.1.0/worker/runtime-worker-0.1.0-SNAPSHOT.jar')
+          $env:ZINGG_TEST_JAVA = (Join-Path $PWD 'dist/zingg-duckdb-0.1.0/runtime/java/bin/java.exe')
+          python -m unittest discover -s python/tests -p 'test_worker_process_cancellation.py' -v
+          if ($LASTEXITCODE -ne 0) { throw 'packaged worker request-cancellation check failed' }
+          if (!(Test-Path "dist/zingg-duckdb-0.1.0/config/runtime-manifest.json")) { throw "runtime manifest missing" }
+          if (!(Test-Path "dist/zingg-duckdb-source.zip")) { throw "source archive missing" }
+          ./packaging/verify-process-kill-windows.ps1 -Bundle dist/zingg-duckdb-0.1.0
+      - name: Upload offline package
+        uses: actions/upload-artifact@v4
+        with:
+          name: zingg-duckdb-${{ matrix.target }}
+          path: |
+            dist/zingg-duckdb-0.1.0
+            dist/zingg-duckdb-source.zip
+          if-no-files-found: error
+
+  duckdb-canary:
+    name: DuckDB compatibility (${{ matrix.lane }})
+    runs-on: ubuntu-24.04
+    continue-on-error: ${{ matrix.nonBlocking }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { lane: pinned-1.5.6.0, version: '1.5.6.0', nonBlocking: false }
+          - { lane: published-1.4.5.0, version: '1.4.5.0', nonBlocking: true }
+          - { lane: published-1.4.4.0, version: '1.4.4.0', nonBlocking: true }
+          # Forward-looking lane: remains informational until DuckDB 2.0 is published.
+          - { lane: prequalification-2.0.0, version: '2.0.0', nonBlocking: true }
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Compile compatibility lane without tests
+        run: ./mvnw -DskipTests -Dduckdb.version=${{ matrix.version }} package
+      - name: Publish canary result
+        if: always()
+        run: echo "DuckDB lane ${{ matrix.lane }} completed; nonBlocking=${{ matrix.nonBlocking }}"
+
+  validation:
+    name: Java, Python, runtime, and benchmark validation
+    runs-on: ubuntu-24.04
+    needs: compile
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Run Java tests
+        run: ./mvnw test
+      - name: Verify internal Frame declaration coverage (not ZFrame parity)
+        shell: bash
+        run: |
+          java -cp "engine-duckdb/target/classes:engine-api/target/classes" \
+            io.zingg.duckdb.engine.FrameCapabilityReport > frame-capability-report.json
+          python3 - <<'PY'
+          import json
+          with open('frame-capability-report.json', encoding='utf-8') as handle:
+              report = json.load(handle)
+          assert report['total'] > 0
+          assert report['implemented'] == report['total'], report
+          assert report['interface'] == 'io.zingg.duckdb.api.Frame', report['interface']
+          print(f"INTERNAL_FRAME_DECLARATION_COVERAGE_SUCCESS {report['implemented']}/{report['total']} (not ZFrame parity)")
+      - name: Verify pinned upstream ZFrame API inventory (not semantic parity)
+        shell: bash
+        run: |
+          jar="$PWD/dist/zingg07-capsule/zingg-common-client-0.7.0.jar"
+          bash packaging/prepare-zingg07-capsule.sh "$PWD/dist/zingg07-capsule"
+          python3 tools/verify-zframe-inventory.py "$jar"
+          python3 tools/generate-zframe-adapter-matrix.py --check
+      - name: Run Python tests and syntax checks
+        shell: bash
+        run: |
+          python3 -m py_compile python/zingg_duckdb/client.py python/zingg_duckdb/worker.py
+          PYTHONPATH=python PYTHONWARNINGS=error python3 -m unittest discover -s python/tests -v
+      - name: Run JDBC lifecycle probe
+        shell: bash
+        run: |
+          java -cp "engine-duckdb/target/classes:engine-api/target/classes:$HOME/.m2/repository/org/duckdb/duckdb_jdbc/1.5.6.0/duckdb_jdbc-1.5.6.0.jar" \
+            io.zingg.duckdb.engine.JdbcLifecycleProbe
+      - name: Run benchmark smoke
+        shell: bash
+        run: |
+          java --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED \
+            -cp "engine-duckdb/target/classes:engine-api/target/classes:$HOME/.m2/repository/org/duckdb/duckdb_jdbc/1.5.6.0/duckdb_jdbc-1.5.6.0.jar" \
+            io.zingg.duckdb.engine.BenchmarkMain --size 1000 --repetitions 3 | tee benchmark-linux.json
+          java --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED \
+            -cp "engine-duckdb/target/classes:engine-api/target/classes:$HOME/.m2/repository/org/duckdb/duckdb_jdbc/1.5.6.0/duckdb_jdbc-1.5.6.0.jar" \
+            io.zingg.duckdb.engine.BenchmarkMain --arrow-only --size 1000 --repetitions 3 | tee benchmark-arrow-linux.json
+          java --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED \
+            -cp "engine-duckdb/target/classes:engine-api/target/classes:$HOME/.m2/repository/org/duckdb/duckdb_jdbc/1.5.6.0/duckdb_jdbc-1.5.6.0.jar" \
+            io.zingg.duckdb.engine.BenchmarkMain --arrow-only --resource-sampling --size 1000 --repetitions 3 | tee benchmark-arrow-resources-linux.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path('benchmark-linux.json').read_text())
+          required = ('benchmark', 'size', 'repetitions', 'startupMedianNs', 'sqlMedianNs', 'graphMedianNs')
+          missing = [key for key in required if key not in result]
+          if missing or result['benchmark'] != 'zingg-duckdb-smoke' or result.get('warmupRuns') != 1 or any(result[key] <= 0 for key in required[3:]):
+              raise SystemExit(f'invalid benchmark result: missing={missing}, result={result}')
+          for metric in ('startup', 'sql', 'graph', 'arrowWrite', 'arrowRead'):
+              samples = result.get(f'{metric}SamplesNs')
+              stats = result.get(f'{metric}Stats')
+              if not isinstance(samples, list) or len(samples) != result['repetitions'] or any(not isinstance(x, int) or x <= 0 for x in samples):
+                  raise SystemExit(f'invalid {metric} timing samples: {samples}')
+              if not isinstance(stats, dict) or stats.get('minNs') != min(samples) or stats.get('maxNs') != max(samples) or stats.get('populationStdDevNs', -1) < 0:
+                  raise SystemExit(f'invalid {metric} timing summary: {stats}')
+          arrow = json.loads(Path('benchmark-arrow-linux.json').read_text())
+          if arrow.get('resourceSamplingEnabled') is not False or arrow.get('resourceSamplingIntervalMs') != 0:
+              raise SystemExit('timing-only Arrow run must not have a concurrent resource sampler')
+          for metric in ('write', 'jdbcIngest', 'appenderIngest'):
+              samples = arrow.get(f'{metric}SamplesNs')
+              if not isinstance(samples, list) or len(samples) != arrow.get('repetitions') or any(not isinstance(x, int) or x <= 0 for x in samples):
+                  raise SystemExit(f'invalid Arrow {metric} timing samples: {samples}')
+              stats = arrow.get(f'{metric}Stats')
+              if not isinstance(stats, dict) or stats.get('minNs') != min(samples) or stats.get('maxNs') != max(samples) or stats.get('populationStdDevNs', -1) < 0:
+                  raise SystemExit(f'invalid Arrow {metric} timing summary: {stats}')
+          if arrow.get('benchmark') != 'zingg-duckdb-arrow-ingress' or arrow.get('size') != 1000 or arrow.get('warmupRuns') != 1:
+              raise SystemExit(f'invalid Arrow benchmark result: {arrow}')
+          resources = json.loads(Path('benchmark-arrow-resources-linux.json').read_text())
+          if resources.get('benchmark') != 'zingg-duckdb-arrow-ingress' or resources.get('resourceSamplingEnabled') is not True or resources.get('resourceSamplingIntervalMs') != 50:
+              raise SystemExit(f'invalid Arrow resource-monitor run: {resources}')
+          for key in ('processRssBeforeBenchmarkBytes', 'processRssAfterBenchmarkBytes', 'spillDirectoryBytesBefore', 'spillDirectoryBytesAfter'):
+              if not isinstance(resources.get(key), int) or resources[key] < 0:
+                  raise SystemExit(f'invalid Arrow resource observation {key}: {resources.get(key)}')
+          if resources['processRssBeforeBenchmarkBytes'] == 0 or resources['processRssAfterBenchmarkBytes'] == 0:
+              raise SystemExit(f'Arrow benchmark did not observe positive process RSS: {resources}')
+          for prefix in ('jdbc', 'appender'):
+              rss = resources.get(f'{prefix}MaxObservedRssBytes')
+              spill = resources.get(f'{prefix}MaxObservedSpillBytes')
+              sample_counts = resources.get(f'{prefix}ResourceSampleCounts')
+              if not all(isinstance(values, list) and len(values) == resources['repetitions'] for values in (rss, spill, sample_counts)):
+                  raise SystemExit(f'invalid {prefix} resource sample vectors')
+              if any(not isinstance(value, int) or value <= 0 for value in rss):
+                  raise SystemExit(f'invalid {prefix} RSS samples: {rss}')
+              if any(not isinstance(value, int) or value < 0 for value in spill):
+                  raise SystemExit(f'invalid {prefix} spill samples: {spill}')
+              if any(not isinstance(value, int) or value < 2 for value in sample_counts):
+                  raise SystemExit(f'insufficient {prefix} resource observations: {sample_counts}')
+          print('BENCHMARK_RESULT_VALID')
+          PY
+          python3 packaging/verify-benchmark-report.py benchmark-arrow-linux.json --timing-only
+          python3 packaging/verify-benchmark-report.py benchmark-arrow-resources-linux.json --resource-sampling
+      - name: Build and verify release package
+        shell: bash
+        run: CREATE_JRE=true ./packaging/package-native.sh dist
+      - name: Verify durable worker labels on Linux
+        shell: bash
+        run: |
+          jar=runtime-worker/target/runtime-worker-0.1.0-SNAPSHOT.jar
+          python3 tools/verify-worker-label-restart.py "$jar"
+          python3 tools/verify-worker-label-concurrency.py "$jar"
+          python3 tools/verify-worker-label-kill.py "$jar"
+          python3 tools/verify-worker-failure-matrix.py "$jar"
+      - name: Verify module locks and pure runtime boundary
+        shell: pwsh
+        run: |
+          ./packaging/check-module-locks.ps1
+          ./packaging/check-pure-runtime.ps1 -Root .
+      - name: Verify generated release artifacts
+        shell: bash
+        run: |
+          ./packaging/verify-source-archive.sh dist/zingg-duckdb-source.zip
+          ./packaging/verify-package.sh dist/zingg-duckdb-0.1.0 true
+      - name: Generate release provenance
+        shell: bash
+        run: ./packaging/generate-provenance.sh . dist/zingg-duckdb-provenance.json
+      - name: Upload release provenance
+        uses: actions/upload-artifact@v4
+        with:
+          name: zingg-duckdb-provenance
+          path: dist/zingg-duckdb-provenance.json
+          if-no-files-found: error
+      - name: Upload benchmark result
+        uses: actions/upload-artifact@v4
+        with:
+          name: zingg-duckdb-benchmark
+          path: |
+            benchmark-linux.json
+            benchmark-arrow-linux.json
+            benchmark-arrow-resources-linux.json
+          if-no-files-found: error
+
+  python-matrix:
+    name: Python control-plane (${{ matrix.python-version }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run Python syntax and unit tests
+        shell: bash
+        run: |
+          python -m py_compile python/zingg_duckdb/client.py python/zingg_duckdb/worker.py
+          PYTHONPATH=python PYTHONWARNINGS=error python -m unittest discover -s python/tests -v
+
+  security-scan:
+    name: Dependency security scan
+    if: ${{ vars.ENABLE_SECURITY_SCAN == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Install reactor artifacts
+        run: ./mvnw -DskipTests install
+      - name: Run OWASP Dependency-Check
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: >-
+          ./mvnw org.owasp:dependency-check-maven:check
+          -DskipTests -DfailOnError=true -Dformat=JSON
+          -Daggregate=true
+          -Dnvd.apiKey="$NVD_API_KEY"
+          -Ddependency-check.skipTestScope=true
+      - name: Upload security report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-report
+          path: '**/target/dependency-check-report.json'
+          if-no-files-found: error

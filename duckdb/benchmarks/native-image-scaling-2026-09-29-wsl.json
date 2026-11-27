@@ -1,0 +1,1353 @@
+{
+  "environment": {
+    "architecture": "x86_64",
+    "javaExecutable": "java",
+    "javaRuntimeVersion": "openjdk 21.0.12.1 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-24.04.4-Ubuntu)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-24.04.4-Ubuntu, mixed mode, sharing)",
+    "launchCommands": {
+      "jvm": [
+        "java",
+        "--add-opens=java.base/java.nio=ALL-UNNAMED",
+        "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+        "-jar",
+        "<worker-jar>",
+        "--unsafe-debug-sql"
+      ],
+      "nativeImage": [
+        "<native-image-worker>",
+        "--unsafe-debug-sql"
+      ]
+    },
+    "logicalCpuCount": 8,
+    "matchInputSizes": [
+      64,
+      128,
+      256
+    ],
+    "measuredRepetitions": 5,
+    "measurementPolicy": "fresh worker process per sample; paired runtimes alternate launch order",
+    "nativeImageToolchainVersion": "Oracle GraalVM 21.0.12+7.1",
+    "nativeSha256": "4d071c382bc8ce5ecd2dc1fe6430e65db24e6b0096378f453e0c201edda3e5eb",
+    "operatingSystem": "Linux",
+    "osRelease": "6.18.33.2-microsoft-standard-WSL2",
+    "python": "3.12.3",
+    "warmups": 1,
+    "workerJarSha256": "dd37b53b76c8c5b4126441b24f40f073233b500f83ca8b0d2707e525f20c52be"
+  },
+  "functionalParity": "PASS",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "runs": [
+    {
+      "index": 0,
+      "jvm": {
+        "artifactBytes": 91795427,
+        "matchWorkloadsBySize": {
+          "128": {
+            "inputBytes": 2577,
+            "inputRows": 128,
+            "inputRowsPerSecond": 5161.588,
+            "matchLatencySeconds": 0.024799,
+            "matchOutputSha256": "9a19f1b7d7b02806b286b4d237b13c4b80995e57668595405c9382bf1398111a",
+            "outputBytes": 279437,
+            "outputRows": 4032,
+            "outputRowsPerSecond": 162590.014,
+            "processResidentBytesAfterMatch": 119050240,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "256": {
+            "inputBytes": 5137,
+            "inputRows": 256,
+            "inputRowsPerSecond": 7365.109,
+            "matchLatencySeconds": 0.034758,
+            "matchOutputSha256": "963390cbfb7d0f69150e10166fd7a9276569e1ce4df9cc1a286726693efa2cb2",
+            "outputBytes": 1140301,
+            "outputRows": 16256,
+            "outputRowsPerSecond": 467684.406,
+            "processResidentBytesAfterMatch": 121204736,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "64": {
+            "inputBytes": 1297,
+            "inputRows": 64,
+            "inputRowsPerSecond": 3029.631,
+            "matchLatencySeconds": 0.021125,
+            "matchOutputSha256": "3e4fa1ea23b96682398e5a7fa5a7c0bcdb61091d8df9c7642d87ee9cf80e9378",
+            "outputBytes": 68233,
+            "outputRows": 992,
+            "outputRowsPerSecond": 46959.287,
+            "processResidentBytesAfterMatch": 117014528,
+            "tempDirectoryBytesAfterMatch": 0
+          }
+        },
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytesAfterMatch": 121204736,
+        "processResidentBytesAtStartup": 88682496,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.485371,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11217392",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "88682496",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matchWorkloadsBySize": {
+          "128": {
+            "inputBytes": 2577,
+            "inputRows": 128,
+            "inputRowsPerSecond": 6504.943,
+            "matchLatencySeconds": 0.019677,
+            "matchOutputSha256": "9a19f1b7d7b02806b286b4d237b13c4b80995e57668595405c9382bf1398111a",
+            "outputBytes": 279437,
+            "outputRows": 4032,
+            "outputRowsPerSecond": 204905.703,
+            "processResidentBytesAfterMatch": 133238784,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "256": {
+            "inputBytes": 5137,
+            "inputRows": 256,
+            "inputRowsPerSecond": 8215.203,
+            "matchLatencySeconds": 0.031162,
+            "matchOutputSha256": "963390cbfb7d0f69150e10166fd7a9276569e1ce4df9cc1a286726693efa2cb2",
+            "outputBytes": 1140301,
+            "outputRows": 16256,
+            "outputRowsPerSecond": 521665.417,
+            "processResidentBytesAfterMatch": 135286784,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "64": {
+            "inputBytes": 1297,
+            "inputRows": 64,
+            "inputRowsPerSecond": 3022.998,
+            "matchLatencySeconds": 0.021171,
+            "matchOutputSha256": "3e4fa1ea23b96682398e5a7fa5a7c0bcdb61091d8df9c7642d87ee9cf80e9378",
+            "outputBytes": 68233,
+            "outputRows": 992,
+            "outputRowsPerSecond": 46856.463,
+            "processResidentBytesAfterMatch": 131133440,
+            "tempDirectoryBytesAfterMatch": 0
+          }
+        },
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytesAfterMatch": 135286784,
+        "processResidentBytesAtStartup": 114143232,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.673171,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114143232",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "native",
+        "jvm"
+      ]
+    },
+    {
+      "index": 1,
+      "jvm": {
+        "artifactBytes": 91795427,
+        "matchWorkloadsBySize": {
+          "128": {
+            "inputBytes": 2577,
+            "inputRows": 128,
+            "inputRowsPerSecond": 5388.558,
+            "matchLatencySeconds": 0.023754,
+            "matchOutputSha256": "9a19f1b7d7b02806b286b4d237b13c4b80995e57668595405c9382bf1398111a",
+            "outputBytes": 279437,
+            "outputRows": 4032,
+            "outputRowsPerSecond": 169739.59,
+            "processResidentBytesAfterMatch": 118046720,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "256": {
+            "inputBytes": 5137,
+            "inputRows": 256,
+            "inputRowsPerSecond": 7350.701,
+            "matchLatencySeconds": 0.034827,
+            "matchOutputSha256": "963390cbfb7d0f69150e10166fd7a9276569e1ce4df9cc1a286726693efa2cb2",
+            "outputBytes": 1140301,
+            "outputRows": 16256,
+            "outputRowsPerSecond": 466769.519,
+            "processResidentBytesAfterMatch": 119980032,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "64": {
+            "inputBytes": 1297,
+            "inputRows": 64,
+            "inputRowsPerSecond": 3152.34,
+            "matchLatencySeconds": 0.020302,
+            "matchOutputSha256": "3e4fa1ea23b96682398e5a7fa5a7c0bcdb61091d8df9c7642d87ee9cf80e9378",
+            "outputBytes": 68233,
+            "outputRows": 992,
+            "outputRowsPerSecond": 48861.269,
+            "processResidentBytesAfterMatch": 115810304,
+            "tempDirectoryBytesAfterMatch": 0
+          }
+        },
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytesAfterMatch": 119980032,
+        "processResidentBytesAtStartup": 88068096,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.262489,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11217392",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "88068096",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matchWorkloadsBySize": {
+          "128": {
+            "inputBytes": 2577,
+            "inputRows": 128,
+            "inputRowsPerSecond": 6594.52,
+            "matchLatencySeconds": 0.01941,
+            "matchOutputSha256": "9a19f1b7d7b02806b286b4d237b13c4b80995e57668595405c9382bf1398111a",
+            "outputBytes": 279437,
+            "outputRows": 4032,
+            "outputRowsPerSecond": 207727.365,
+            "processResidentBytesAfterMatch": 133230592,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "256": {
+            "inputBytes": 5137,
+            "inputRows": 256,
+            "inputRowsPerSecond": 8737.611,
+            "matchLatencySeconds": 0.029299,
+            "matchOutputSha256": "963390cbfb7d0f69150e10166fd7a9276569e1ce4df9cc1a286726693efa2cb2",
+            "outputBytes": 1140301,
+            "outputRows": 16256,
+            "outputRowsPerSecond": 554838.324,
+            "processResidentBytesAfterMatch": 135086080,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "64": {
+            "inputBytes": 1297,
+            "inputRows": 64,
+            "inputRowsPerSecond": 4001.545,
+            "matchLatencySeconds": 0.015994,
+            "matchOutputSha256": "3e4fa1ea23b96682398e5a7fa5a7c0bcdb61091d8df9c7642d87ee9cf80e9378",
+            "outputBytes": 68233,
+            "outputRows": 992,
+            "outputRowsPerSecond": 62023.941,
+            "processResidentBytesAfterMatch": 131002368,
+            "tempDirectoryBytesAfterMatch": 0
+          }
+        },
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytesAfterMatch": 135086080,
+        "processResidentBytesAtStartup": 114442240,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.614713,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114442240",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "jvm",
+        "native"
+      ]
+    },
+    {
+      "index": 2,
+      "jvm": {
+        "artifactBytes": 91795427,
+        "matchWorkloadsBySize": {
+          "128": {
+            "inputBytes": 2577,
+            "inputRows": 128,
+            "inputRowsPerSecond": 5337.166,
+            "matchLatencySeconds": 0.023983,
+            "matchOutputSha256": "9a19f1b7d7b02806b286b4d237b13c4b80995e57668595405c9382bf1398111a",
+            "outputBytes": 279437,
+            "outputRows": 4032,
+            "outputRowsPerSecond": 168120.739,
+            "processResidentBytesAfterMatch": 118177792,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "256": {
+            "inputBytes": 5137,
+            "inputRows": 256,
+            "inputRowsPerSecond": 7390.447,
+            "matchLatencySeconds": 0.034639,
+            "matchOutputSha256": "963390cbfb7d0f69150e10166fd7a9276569e1ce4df9cc1a286726693efa2cb2",
+            "outputBytes": 1140301,
+            "outputRows": 16256,
+            "outputRowsPerSecond": 469293.372,
+            "processResidentBytesAfterMatch": 120111104,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "64": {
+            "inputBytes": 1297,
+            "inputRows": 64,
+            "inputRowsPerSecond": 2959.685,
+            "matchLatencySeconds": 0.021624,
+            "matchOutputSha256": "3e4fa1ea23b96682398e5a7fa5a7c0bcdb61091d8df9c7642d87ee9cf80e9378",
+            "outputBytes": 68233,
+            "outputRows": 992,
+            "outputRowsPerSecond": 45875.121,
+            "processResidentBytesAfterMatch": 115867648,
+            "tempDirectoryBytesAfterMatch": 0
+          }
+        },
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytesAfterMatch": 120111104,
+        "processResidentBytesAtStartup": 88240128,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.23699,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11217392",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "88240128",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matchWorkloadsBySize": {
+          "128": {
+            "inputBytes": 2577,
+            "inputRows": 128,
+            "inputRowsPerSecond": 7353.536,
+            "matchLatencySeconds": 0.017407,
+            "matchOutputSha256": "9a19f1b7d7b02806b286b4d237b13c4b80995e57668595405c9382bf1398111a",
+            "outputBytes": 279437,
+            "outputRows": 4032,
+            "outputRowsPerSecond": 231636.382,
+            "processResidentBytesAfterMatch": 133402624,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "256": {
+            "inputBytes": 5137,
+            "inputRows": 256,
+            "inputRowsPerSecond": 9108.794,
+            "matchLatencySeconds": 0.028105,
+            "matchOutputSha256": "963390cbfb7d0f69150e10166fd7a9276569e1ce4df9cc1a286726693efa2cb2",
+            "outputBytes": 1140301,
+            "outputRows": 16256,
+            "outputRowsPerSecond": 578408.45,
+            "processResidentBytesAfterMatch": 134705152,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "64": {
+            "inputBytes": 1297,
+            "inputRows": 64,
+            "inputRowsPerSecond": 4012.685,
+            "matchLatencySeconds": 0.015949,
+            "matchOutputSha256": "3e4fa1ea23b96682398e5a7fa5a7c0bcdb61091d8df9c7642d87ee9cf80e9378",
+            "outputBytes": 68233,
+            "outputRows": 992,
+            "outputRowsPerSecond": 62196.619,
+            "processResidentBytesAfterMatch": 131223552,
+            "tempDirectoryBytesAfterMatch": 0
+          }
+        },
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytesAfterMatch": 134705152,
+        "processResidentBytesAtStartup": 114642944,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.668263,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114642944",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "native",
+        "jvm"
+      ]
+    },
+    {
+      "index": 3,
+      "jvm": {
+        "artifactBytes": 91795427,
+        "matchWorkloadsBySize": {
+          "128": {
+            "inputBytes": 2577,
+            "inputRows": 128,
+            "inputRowsPerSecond": 3108.913,
+            "matchLatencySeconds": 0.041172,
+            "matchOutputSha256": "9a19f1b7d7b02806b286b4d237b13c4b80995e57668595405c9382bf1398111a",
+            "outputBytes": 279437,
+            "outputRows": 4032,
+            "outputRowsPerSecond": 97930.756,
+            "processResidentBytesAfterMatch": 118509568,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "256": {
+            "inputBytes": 5137,
+            "inputRows": 256,
+            "inputRowsPerSecond": 4352.223,
+            "matchLatencySeconds": 0.058821,
+            "matchOutputSha256": "963390cbfb7d0f69150e10166fd7a9276569e1ce4df9cc1a286726693efa2cb2",
+            "outputBytes": 1140301,
+            "outputRows": 16256,
+            "outputRowsPerSecond": 276366.139,
+            "processResidentBytesAfterMatch": 120369152,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "64": {
+            "inputBytes": 1297,
+            "inputRows": 64,
+            "inputRowsPerSecond": 1591.066,
+            "matchLatencySeconds": 0.040225,
+            "matchOutputSha256": "3e4fa1ea23b96682398e5a7fa5a7c0bcdb61091d8df9c7642d87ee9cf80e9378",
+            "outputBytes": 68233,
+            "outputRows": 992,
+            "outputRowsPerSecond": 24661.523,
+            "processResidentBytesAfterMatch": 116318208,
+            "tempDirectoryBytesAfterMatch": 0
+          }
+        },
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytesAfterMatch": 120369152,
+        "processResidentBytesAtStartup": 88829952,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.455219,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11217392",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "88829952",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matchWorkloadsBySize": {
+          "128": {
+            "inputBytes": 2577,
+            "inputRows": 128,
+            "inputRowsPerSecond": 4236.634,
+            "matchLatencySeconds": 0.030213,
+            "matchOutputSha256": "9a19f1b7d7b02806b286b4d237b13c4b80995e57668595405c9382bf1398111a",
+            "outputBytes": 279437,
+            "outputRows": 4032,
+            "outputRowsPerSecond": 133453.976,
+            "processResidentBytesAfterMatch": 133107712,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "256": {
+            "inputBytes": 5137,
+            "inputRows": 256,
+            "inputRowsPerSecond": 5610.144,
+            "matchLatencySeconds": 0.045632,
+            "matchOutputSha256": "963390cbfb7d0f69150e10166fd7a9276569e1ce4df9cc1a286726693efa2cb2",
+            "outputBytes": 1140301,
+            "outputRows": 16256,
+            "outputRowsPerSecond": 356244.17,
+            "processResidentBytesAfterMatch": 135139328,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "64": {
+            "inputBytes": 1297,
+            "inputRows": 64,
+            "inputRowsPerSecond": 2524.155,
+            "matchLatencySeconds": 0.025355,
+            "matchOutputSha256": "3e4fa1ea23b96682398e5a7fa5a7c0bcdb61091d8df9c7642d87ee9cf80e9378",
+            "outputBytes": 68233,
+            "outputRows": 992,
+            "outputRowsPerSecond": 39124.407,
+            "processResidentBytesAfterMatch": 130904064,
+            "tempDirectoryBytesAfterMatch": 0
+          }
+        },
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytesAfterMatch": 135139328,
+        "processResidentBytesAtStartup": 114200576,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.794309,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114200576",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "jvm",
+        "native"
+      ]
+    },
+    {
+      "index": 4,
+      "jvm": {
+        "artifactBytes": 91795427,
+        "matchWorkloadsBySize": {
+          "128": {
+            "inputBytes": 2577,
+            "inputRows": 128,
+            "inputRowsPerSecond": 3078.839,
+            "matchLatencySeconds": 0.041574,
+            "matchOutputSha256": "9a19f1b7d7b02806b286b4d237b13c4b80995e57668595405c9382bf1398111a",
+            "outputBytes": 279437,
+            "outputRows": 4032,
+            "outputRowsPerSecond": 96983.421,
+            "processResidentBytesAfterMatch": 119107584,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "256": {
+            "inputBytes": 5137,
+            "inputRows": 256,
+            "inputRowsPerSecond": 4905.49,
+            "matchLatencySeconds": 0.052186,
+            "matchOutputSha256": "963390cbfb7d0f69150e10166fd7a9276569e1ce4df9cc1a286726693efa2cb2",
+            "outputBytes": 1140301,
+            "outputRows": 16256,
+            "outputRowsPerSecond": 311498.614,
+            "processResidentBytesAfterMatch": 121221120,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "64": {
+            "inputBytes": 1297,
+            "inputRows": 64,
+            "inputRowsPerSecond": 2088.678,
+            "matchLatencySeconds": 0.030641,
+            "matchOutputSha256": "3e4fa1ea23b96682398e5a7fa5a7c0bcdb61091d8df9c7642d87ee9cf80e9378",
+            "outputBytes": 68233,
+            "outputRows": 992,
+            "outputRowsPerSecond": 32374.51,
+            "processResidentBytesAfterMatch": 117096448,
+            "tempDirectoryBytesAfterMatch": 0
+          }
+        },
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytesAfterMatch": 121221120,
+        "processResidentBytesAtStartup": 87937024,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.67393,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11218000",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "87937024",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matchWorkloadsBySize": {
+          "128": {
+            "inputBytes": 2577,
+            "inputRows": 128,
+            "inputRowsPerSecond": 5388.158,
+            "matchLatencySeconds": 0.023756,
+            "matchOutputSha256": "9a19f1b7d7b02806b286b4d237b13c4b80995e57668595405c9382bf1398111a",
+            "outputBytes": 279437,
+            "outputRows": 4032,
+            "outputRowsPerSecond": 169726.979,
+            "processResidentBytesAfterMatch": 133009408,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "256": {
+            "inputBytes": 5137,
+            "inputRows": 256,
+            "inputRowsPerSecond": 6674.473,
+            "matchLatencySeconds": 0.038355,
+            "matchOutputSha256": "963390cbfb7d0f69150e10166fd7a9276569e1ce4df9cc1a286726693efa2cb2",
+            "outputBytes": 1140301,
+            "outputRows": 16256,
+            "outputRowsPerSecond": 423829.026,
+            "processResidentBytesAfterMatch": 134606848,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "64": {
+            "inputBytes": 1297,
+            "inputRows": 64,
+            "inputRowsPerSecond": 3092.501,
+            "matchLatencySeconds": 0.020695,
+            "matchOutputSha256": "3e4fa1ea23b96682398e5a7fa5a7c0bcdb61091d8df9c7642d87ee9cf80e9378",
+            "outputBytes": 68233,
+            "outputRows": 992,
+            "outputRowsPerSecond": 47933.767,
+            "processResidentBytesAfterMatch": 130998272,
+            "tempDirectoryBytesAfterMatch": 0
+          }
+        },
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytesAfterMatch": 134606848,
+        "processResidentBytesAtStartup": 114397184,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.860173,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114397184",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "native",
+        "jvm"
+      ]
+    },
+    {
+      "index": 5,
+      "jvm": {
+        "artifactBytes": 91795427,
+        "matchWorkloadsBySize": {
+          "128": {
+            "inputBytes": 2577,
+            "inputRows": 128,
+            "inputRowsPerSecond": 3595.598,
+            "matchLatencySeconds": 0.035599,
+            "matchOutputSha256": "9a19f1b7d7b02806b286b4d237b13c4b80995e57668595405c9382bf1398111a",
+            "outputBytes": 279437,
+            "outputRows": 4032,
+            "outputRowsPerSecond": 113261.338,
+            "processResidentBytesAfterMatch": 117637120,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "256": {
+            "inputBytes": 5137,
+            "inputRows": 256,
+            "inputRowsPerSecond": 4587.74,
+            "matchLatencySeconds": 0.055801,
+            "matchOutputSha256": "963390cbfb7d0f69150e10166fd7a9276569e1ce4df9cc1a286726693efa2cb2",
+            "outputBytes": 1140301,
+            "outputRows": 16256,
+            "outputRowsPerSecond": 291321.482,
+            "processResidentBytesAfterMatch": 119615488,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "64": {
+            "inputBytes": 1297,
+            "inputRows": 64,
+            "inputRowsPerSecond": 2248.837,
+            "matchLatencySeconds": 0.028459,
+            "matchOutputSha256": "3e4fa1ea23b96682398e5a7fa5a7c0bcdb61091d8df9c7642d87ee9cf80e9378",
+            "outputBytes": 68233,
+            "outputRows": 992,
+            "outputRowsPerSecond": 34856.973,
+            "processResidentBytesAfterMatch": 115712000,
+            "tempDirectoryBytesAfterMatch": 0
+          }
+        },
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytesAfterMatch": 119615488,
+        "processResidentBytesAtStartup": 88104960,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 1.651687,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "6304038912",
+          "heap_used_bytes": "11217392",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "88104960",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "nativeImage": {
+        "artifactBytes": 110472752,
+        "matchWorkloadsBySize": {
+          "128": {
+            "inputBytes": 2577,
+            "inputRows": 128,
+            "inputRowsPerSecond": 4870.933,
+            "matchLatencySeconds": 0.026278,
+            "matchOutputSha256": "9a19f1b7d7b02806b286b4d237b13c4b80995e57668595405c9382bf1398111a",
+            "outputBytes": 279437,
+            "outputRows": 4032,
+            "outputRowsPerSecond": 153434.396,
+            "processResidentBytesAfterMatch": 133201920,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "256": {
+            "inputBytes": 5137,
+            "inputRows": 256,
+            "inputRowsPerSecond": 6020.153,
+            "matchLatencySeconds": 0.042524,
+            "matchOutputSha256": "963390cbfb7d0f69150e10166fd7a9276569e1ce4df9cc1a286726693efa2cb2",
+            "outputBytes": 1140301,
+            "outputRows": 16256,
+            "outputRowsPerSecond": 382279.717,
+            "processResidentBytesAfterMatch": 134672384,
+            "tempDirectoryBytesAfterMatch": 0
+          },
+          "64": {
+            "inputBytes": 1297,
+            "inputRows": 64,
+            "inputRowsPerSecond": 2795.178,
+            "matchLatencySeconds": 0.022897,
+            "matchOutputSha256": "3e4fa1ea23b96682398e5a7fa5a7c0bcdb61091d8df9c7642d87ee9cf80e9378",
+            "outputBytes": 68233,
+            "outputRows": 992,
+            "outputRowsPerSecond": 43325.259,
+            "processResidentBytesAfterMatch": 131211264,
+            "tempDirectoryBytesAfterMatch": 0
+          }
+        },
+        "matches": [
+          {
+            "block": "g",
+            "feature": "1",
+            "id": "B",
+            "z_block": "g",
+            "z_feature": "0",
+            "z_id": "C",
+            "z_prediction": "1",
+            "z_score": "0.95462548319677",
+            "z_source": "0",
+            "z_z_source": "0",
+            "z_z_zid": "2",
+            "z_zid": "1"
+          }
+        ],
+        "modelReloadMatchRows": 1,
+        "ping": "pong",
+        "processResidentBytesAfterMatch": 134672384,
+        "processResidentBytesAtStartup": 114446336,
+        "queryRowCounts": [
+          1,
+          2
+        ],
+        "startupToPingSeconds": 0.841376,
+        "status": {
+          "allowed_extensions": "",
+          "heap_max_bytes": "20160446464",
+          "heap_used_bytes": "1048576",
+          "max_collect_bytes": "0",
+          "max_output_bytes": "0",
+          "max_rows": "0",
+          "max_spill_bytes": "0",
+          "max_temp_directory_size": "90% of available disk space",
+          "memory_limit": "18.7 GiB",
+          "offline_mode": "true",
+          "process_resident_bytes": "114446336",
+          "temp_directory": ".tmp",
+          "temp_directory_used_bytes": "0",
+          "threads": "8",
+          "unsafe_debug_sql": "true"
+        }
+      },
+      "order": [
+        "jvm",
+        "native"
+      ]
+    }
+  ],
+  "schema": "zingg-duckdb-native-image-comparison-4",
+  "summary": {
+    "jvm": {
+      "artifactBytes": {
+        "max": 91795427.0,
+        "median": 91795427.0,
+        "min": 91795427.0,
+        "populationStdDev": 0.0,
+        "samples": 5
+      },
+      "matchWorkloads": {
+        "128": {
+          "inputRowsPerSecond": {
+            "max": 5388.558,
+            "median": 3595.598,
+            "min": 3078.839,
+            "populationStdDev": 1045.9817943462306,
+            "samples": 5
+          },
+          "matchLatencySeconds": {
+            "max": 0.041574,
+            "median": 0.035599,
+            "min": 0.023754,
+            "populationStdDev": 0.007919728798386975,
+            "samples": 5
+          },
+          "outputRowsPerSecond": {
+            "max": 169739.59,
+            "median": 113261.338,
+            "min": 96983.421,
+            "populationStdDev": 32948.43411714971,
+            "samples": 5
+          },
+          "processResidentBytesAfterMatch": {
+            "max": 119107584.0,
+            "median": 118177792.0,
+            "min": 117637120.0,
+            "populationStdDev": 492852.1254925863,
+            "samples": 5
+          },
+          "tempDirectoryBytesAfterMatch": {
+            "max": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "populationStdDev": 0.0,
+            "samples": 5
+          }
+        },
+        "256": {
+          "inputRowsPerSecond": {
+            "max": 7390.447,
+            "median": 4905.49,
+            "min": 4352.223,
+            "populationStdDev": 1361.3079147642388,
+            "samples": 5
+          },
+          "matchLatencySeconds": {
+            "max": 0.058821,
+            "median": 0.052186,
+            "min": 0.034639,
+            "populationStdDev": 0.010437814644838258,
+            "samples": 5
+          },
+          "outputRowsPerSecond": {
+            "max": 469293.372,
+            "median": 311498.614,
+            "min": 276366.139,
+            "populationStdDev": 86443.0565936138,
+            "samples": 5
+          },
+          "processResidentBytesAfterMatch": {
+            "max": 121221120.0,
+            "median": 120111104.0,
+            "min": 119615488.0,
+            "populationStdDev": 538815.6836107873,
+            "samples": 5
+          },
+          "tempDirectoryBytesAfterMatch": {
+            "max": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "populationStdDev": 0.0,
+            "samples": 5
+          }
+        },
+        "64": {
+          "inputRowsPerSecond": {
+            "max": 3152.34,
+            "median": 2248.837,
+            "min": 1591.066,
+            "populationStdDev": 574.991975941717,
+            "samples": 5
+          },
+          "matchLatencySeconds": {
+            "max": 0.040225,
+            "median": 0.028459,
+            "min": 0.020302,
+            "populationStdDev": 0.007158711710915588,
+            "samples": 5
+          },
+          "outputRowsPerSecond": {
+            "max": 48861.269,
+            "median": 34856.973,
+            "min": 24661.523,
+            "populationStdDev": 8912.375956302525,
+            "samples": 5
+          },
+          "processResidentBytesAfterMatch": {
+            "max": 117096448.0,
+            "median": 115867648.0,
+            "min": 115712000.0,
+            "populationStdDev": 511941.6696373133,
+            "samples": 5
+          },
+          "tempDirectoryBytesAfterMatch": {
+            "max": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "populationStdDev": 0.0,
+            "samples": 5
+          }
+        }
+      },
+      "processResidentBytesAfterMatch": {
+        "max": 121221120.0,
+        "median": 120111104.0,
+        "min": 119615488.0,
+        "populationStdDev": 538815.6836107873,
+        "samples": 5
+      },
+      "startupToPingSeconds": {
+        "max": 1.67393,
+        "median": 1.455219,
+        "min": 1.23699,
+        "populationStdDev": 0.18504019250206152,
+        "samples": 5
+      }
+    },
+    "nativeImage": {
+      "artifactBytes": {
+        "max": 110472752.0,
+        "median": 110472752.0,
+        "min": 110472752.0,
+        "populationStdDev": 0.0,
+        "samples": 5
+      },
+      "matchWorkloads": {
+        "128": {
+          "inputRowsPerSecond": {
+            "max": 7353.536,
+            "median": 5388.158,
+            "min": 4236.634,
+            "populationStdDev": 1136.6400302569675,
+            "samples": 5
+          },
+          "matchLatencySeconds": {
+            "max": 0.030213,
+            "median": 0.023756,
+            "min": 0.017407,
+            "populationStdDev": 0.004618699358044427,
+            "samples": 5
+          },
+          "outputRowsPerSecond": {
+            "max": 231636.382,
+            "median": 169726.979,
+            "min": 133453.976,
+            "populationStdDev": 35804.15565789609,
+            "samples": 5
+          },
+          "processResidentBytesAfterMatch": {
+            "max": 133402624.0,
+            "median": 133201920.0,
+            "min": 133009408.0,
+            "populationStdDev": 131440.1230528943,
+            "samples": 5
+          },
+          "tempDirectoryBytesAfterMatch": {
+            "max": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "populationStdDev": 0.0,
+            "samples": 5
+          }
+        },
+        "256": {
+          "inputRowsPerSecond": {
+            "max": 9108.794,
+            "median": 6674.473,
+            "min": 5610.144,
+            "populationStdDev": 1428.217841752861,
+            "samples": 5
+          },
+          "matchLatencySeconds": {
+            "max": 0.045632,
+            "median": 0.038355,
+            "min": 0.028105,
+            "populationStdDev": 0.007000757187619064,
+            "samples": 5
+          },
+          "outputRowsPerSecond": {
+            "max": 578408.45,
+            "median": 423829.026,
+            "min": 356244.17,
+            "populationStdDev": 90691.84107551191,
+            "samples": 5
+          },
+          "processResidentBytesAfterMatch": {
+            "max": 135139328.0,
+            "median": 134705152.0,
+            "min": 134606848.0,
+            "populationStdDev": 223951.96047152614,
+            "samples": 5
+          },
+          "tempDirectoryBytesAfterMatch": {
+            "max": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "populationStdDev": 0.0,
+            "samples": 5
+          }
+        },
+        "64": {
+          "inputRowsPerSecond": {
+            "max": 4012.685,
+            "median": 3092.501,
+            "min": 2524.155,
+            "populationStdDev": 616.2513351775881,
+            "samples": 5
+          },
+          "matchLatencySeconds": {
+            "max": 0.025355,
+            "median": 0.020695,
+            "min": 0.015949,
+            "populationStdDev": 0.0037376965098841284,
+            "samples": 5
+          },
+          "outputRowsPerSecond": {
+            "max": 62196.619,
+            "median": 47933.767,
+            "min": 39124.407,
+            "populationStdDev": 9551.893332976988,
+            "samples": 5
+          },
+          "processResidentBytesAfterMatch": {
+            "max": 131223552.0,
+            "median": 131002368.0,
+            "min": 130904064.0,
+            "populationStdDev": 127094.86049718926,
+            "samples": 5
+          },
+          "tempDirectoryBytesAfterMatch": {
+            "max": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "populationStdDev": 0.0,
+            "samples": 5
+          }
+        }
+      },
+      "processResidentBytesAfterMatch": {
+        "max": 135139328.0,
+        "median": 134705152.0,
+        "min": 134606848.0,
+        "populationStdDev": 223951.96047152614,
+        "samples": 5
+      },
+      "startupToPingSeconds": {
+        "max": 0.860173,
+        "median": 0.794309,
+        "min": 0.614713,
+        "populationStdDev": 0.09722981066812791,
+        "samples": 5
+      }
+    }
+  }
+}

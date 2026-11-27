@@ -1,0 +1,3 @@
+package io.zingg.duckdb.engine;
+import io.zingg.duckdb.api.Expression; import java.sql.Date; import java.time.*;
+public record DuckExpr(String sql) implements Expression { public static DuckExpr column(String n){return new DuckExpr(quote(n));} public static DuckExpr literal(Object v){if(v==null)return new DuckExpr("NULL"); if(v instanceof Number||v instanceof Boolean)return new DuckExpr(v.toString()); if(v instanceof Date||v instanceof LocalDate||v instanceof Instant)return new DuckExpr("'"+v+"'"); return new DuckExpr("'"+v.toString().replace("'","''")+"'");} static String quote(String n){return "\""+n.replace("\"","\"\"")+"\"";} }

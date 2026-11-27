@@ -1,0 +1,12 @@
+[
+  {"name":"io.zingg.duckdb.worker.Main","allDeclaredConstructors":true,"allDeclaredMethods":true},
+  {"name":"io.zingg.duckdb.worker.ConfiguredWorkerServer","allDeclaredConstructors":true,"allDeclaredMethods":true},
+  {"name":"org.duckdb.DuckDBDriver","allDeclaredConstructors":true},
+  {"name":"org.duckdb.DuckDBConnection","allDeclaredMethods":true},
+  {"name":"java.security.SecureRandomParameters"},
+  {"name":"java.sql.SQLException","fields":[{"name":"next"}]},
+  {"name":"java.util.concurrent.atomic.AtomicBoolean","fields":[{"name":"value"}]},
+  {"name":"jdk.jfr.FlightRecorder"},
+  {"name":"sun.security.provider.NativePRNG","methods":[{"name":"<init>","parameterTypes":[]},{"name":"<init>","parameterTypes":["java.security.SecureRandomParameters"]}]},
+  {"name":"sun.security.provider.SHA","methods":[{"name":"<init>","parameterTypes":[]}]}
+]
