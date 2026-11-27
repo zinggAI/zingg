@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import zingg.common.client.arguments.ArgumentServiceImpl;
 import zingg.common.client.arguments.IArgumentService;
@@ -54,6 +55,22 @@ public abstract class TestBlockBase<S, D, R, C, T> {
 		Canopy<R> head = blockingTree.getHead();
 		assertEquals("identityInteger", head.getFunction().getName());
 		blockingTree.toString();
+	}
+
+	@Test
+	public void testCreateBlockingTreeFromSampleSamplesOnce() throws Throwable {
+		ZFrame<D, R, C> testData = dfObjectUtil.getDFFromObjectList(BlockBaseData.createSampleEventData(), EventBase.class);
+		ZFrame<D, R, C> positives = dfObjectUtil.getDFFromObjectList(BlockBaseData.createSampleClusterEventData(), EventPair.class);
+		IArguments args = getArguments();
+
+		@SuppressWarnings("unchecked")
+		ZFrame<D, R, C> sampledData = Mockito.spy(testData);
+		Mockito.doReturn(sampledData).when(sampledData).sample(false, 0.5);
+
+		blockingTreeUtil.createBlockingTreeFromSample(sampledData, positives, 0.5, -1,
+				args, hashUtil.getHashFunctionList());
+
+		Mockito.verify(sampledData, Mockito.times(1)).sample(false, 0.5);
 	}
 
 	private IArguments getArguments() throws ZinggClientException, NoSuchObjectException {
