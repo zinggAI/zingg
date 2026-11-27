@@ -16,6 +16,8 @@ import zingg.spark.client.SparkFrame;
 
 public class SparkGraphUtil implements GraphUtil<Dataset<Row>, Row, Column> {
 
+	public static final String CONNECTED_COMPONENTS_ALGORITHM = "two_phase";
+
 	public ZFrame<Dataset<Row>, Row, Column> buildGraph(ZFrame<Dataset<Row>, Row, Column> vOrig, ZFrame<Dataset<Row>, Row, Column> ed) {
 		// we need to transform the input here by using stop words
 		//rename id field which is a common field in data to another field as it 
@@ -37,7 +39,8 @@ public class SparkGraphUtil implements GraphUtil<Dataset<Row>, Row, Column> {
 		GraphFrame gf = new GraphFrame(v, e);
 		//gf = gf.dropIsolatedVertices();
 		//Dataset<Row> returnGraph = gf.connectedComponents().setAlgorithm("graphx").run().cache();
-		Dataset<Row> returnGraph = gf.connectedComponents().run().cache();
+		Dataset<Row> returnGraph = gf.connectedComponents()
+				.setAlgorithm(CONNECTED_COMPONENTS_ALGORITHM).run().cache();
 		//reverse back o avoid graphframes id :-()
 		returnGraph = returnGraph.join(vertices, returnGraph.col("id").equalTo(vertices.col(ColName.ID_COL)));
 		returnGraph = returnGraph.drop(ColName.ID_COL).withColumnRenamed("id", ColName.ID_COL);		
